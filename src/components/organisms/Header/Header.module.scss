@@ -1,0 +1,88 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: $color-primary;
+  z-index: $z-index-fixed;
+  box-shadow: $shadow-md;
+}
+
+.container {
+  @include flex-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-4 $spacing-6;
+  gap: $spacing-6;
+}
+
+.logoWrapper {
+  flex-shrink: 0;
+}
+
+.nav {
+  @include flex-center;
+  gap: $spacing-2;
+  flex: 1;
+  justify-content: center;
+  
+  @include container-query(1024px) {
+    display: none;
+  }
+}
+
+.actions {
+  @include flex-center;
+  gap: $spacing-4;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: $color-white;
+  cursor: pointer;
+  padding: $spacing-2;
+  @include flex-center;
+  transition: opacity $transition-base;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  color: $color-white;
+  cursor: pointer;
+  padding: $spacing-2;
+  @include flex-center;
+  
+  @include container-query(1024px) {
+    display: flex;
+  }
+}
+
+.mobileMenu {
+  display: none;
+  @include flex-column;
+  background-color: $color-primary;
+  padding: $spacing-4;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @include container-query(1024px) {
+    display: flex;
+    gap: $spacing-2;
+  }
+}
+
+@include respond-to(md) {
+  .container {
+    padding: $spacing-5 $spacing-8;
+  }
+}

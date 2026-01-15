@@ -1,0 +1,95 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.button {
+  @include button-base;
+  position: relative;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Variants
+.button--primary {
+  background-color: $color-primary;
+  color: $color-white;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($color-primary, 5%);
+  }
+}
+
+.button--secondary {
+  background-color: $color-gray-200;
+  color: $color-text-primary;
+  
+  &:hover:not(:disabled) {
+    background-color: $color-gray-300;
+  }
+}
+
+.button--outline {
+  background-color: transparent;
+  border: 1px solid $color-gray-300;
+  color: $color-text-primary;
+  
+  &:hover:not(:disabled) {
+    background-color: $color-gray-50;
+    border-color: $color-gray-400;
+  }
+}
+
+.button--ghost {
+  background-color: transparent;
+  color: $color-text-primary;
+  
+  &:hover:not(:disabled) {
+    background-color: $color-gray-100;
+  }
+}
+
+.button--danger {
+  background-color: $color-accent;
+  color: $color-white;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($color-accent, 5%);
+  }
+}
+
+// Sizes
+.button--sm {
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-sm;
+}
+
+.button--md {
+  padding: $spacing-3 $spacing-6;
+  font-size: $font-size-base;
+}
+
+.button--lg {
+  padding: $spacing-4 $spacing-8;
+  font-size: $font-size-lg;
+}
+
+.button--full-width {
+  width: 100%;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 $spacing-2;
+  
+  &:first-child {
+    margin-left: 0;
+  }
+  
+  &:last-child {
+    margin-right: 0;
+  }
+}

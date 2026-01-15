@@ -1,0 +1,237 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.footer {
+  background-color: $color-gray-50;
+}
+
+.partners {
+  background-color: $color-white;
+  padding: $spacing-8 $spacing-6;
+  border-bottom: 1px solid $color-gray-200;
+}
+
+.partnerLogos {
+  display: flex;
+  gap: $spacing-8;
+  align-items: center;
+  overflow-x: auto;
+  @include custom-scrollbar;
+}
+
+.partnerLogo {
+  flex-shrink: 0;
+  width: 120px;
+  height: 60px;
+}
+
+.logoPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: $color-gray-100;
+  border-radius: $radius-md;
+  @include flex-center;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  text-align: center;
+  padding: $spacing-2;
+}
+
+.partnerControls {
+  @include flex-center;
+  gap: $spacing-2;
+  margin-left: auto;
+}
+
+.controlButton {
+  background-color: $color-gray-200;
+  border: none;
+  color: $color-text-primary;
+  padding: $spacing-2;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include flex-center;
+  transition: background $transition-base;
+  
+  &:hover {
+    background-color: $color-gray-300;
+  }
+}
+
+.mainFooter {
+  padding: $spacing-12 $spacing-6;
+}
+
+.footerContent {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: $spacing-8;
+  margin-bottom: $spacing-8;
+  padding-bottom: $spacing-8;
+  border-bottom: 1px solid $color-gray-200;
+}
+
+.logoSection {
+  @include flex-column;
+}
+
+.footerLogo {
+  @include flex-column;
+  gap: $spacing-2;
+}
+
+.logoText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.logoSubtext {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.linksSection {
+  @include flex-center;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+}
+
+.footerLink {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  transition: color $transition-base;
+  
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.actionsSection {
+  @include flex-column;
+  gap: $spacing-3;
+  align-items: flex-end;
+}
+
+.actionButton {
+  @include flex-center;
+  gap: $spacing-2;
+  background-color: $color-gray-200;
+  border: none;
+  color: $color-text-primary;
+  padding: $spacing-2 $spacing-4;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: all $transition-base;
+  
+  &:hover {
+    background-color: $color-gray-300;
+  }
+}
+
+.footerBottom {
+  @include flex-between;
+  margin-bottom: $spacing-8;
+  padding-bottom: $spacing-8;
+  border-bottom: 1px solid $color-gray-200;
+  gap: $spacing-4;
+}
+
+.info {
+  @include flex-column;
+  gap: $spacing-2;
+}
+
+.address,
+.phone {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.social {
+  @include flex-center;
+  gap: $spacing-4;
+}
+
+.socialLink {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  transition: color $transition-base;
+  
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.copyright {
+  text-align: center;
+  margin-bottom: $spacing-8;
+  
+  p {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+  }
+}
+
+.certifications {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-4;
+}
+
+.certification {
+  @include card;
+  padding: $spacing-4;
+  @include flex-column;
+  gap: $spacing-2;
+}
+
+.certTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  margin-bottom: $spacing-2;
+}
+
+.certInfo,
+.certDate {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+@include respond-to(md) {
+  .partners {
+    padding: $spacing-10 $spacing-8;
+  }
+  
+  .mainFooter {
+    padding: $spacing-16 $spacing-8;
+  }
+}
+
+@include container-query(1024px) {
+  .footerContent {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+  
+  .linksSection {
+    justify-content: flex-start;
+  }
+  
+  .actionsSection {
+    align-items: flex-start;
+  }
+  
+  .footerBottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .certifications {
+    grid-template-columns: 1fr;
+  }
+}

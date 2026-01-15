@@ -1,0 +1,203 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.noticeSection {
+  padding: $spacing-16 $spacing-6;
+  background-color: $color-gray-50;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-8;
+  gap: $spacing-4;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.categories {
+  @include flex-center;
+  gap: $spacing-2;
+}
+
+.categoryButton {
+  @include button-base;
+  background-color: $color-gray-200;
+  color: $color-text-primary;
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-sm;
+  
+  &:hover {
+    background-color: $color-gray-300;
+  }
+}
+
+.categoryButton--active {
+  background-color: $color-gray-400;
+  color: $color-white;
+  @include flex-center;
+  gap: $spacing-2;
+}
+
+.closeIcon {
+  margin-left: $spacing-1;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: $spacing-8;
+}
+
+.notices {
+  @include flex-column;
+  gap: $spacing-4;
+}
+
+.banner {
+  @include card;
+  background: linear-gradient(135deg, $color-accent-orange 0%, lighten($color-accent-orange, 10%) 100%);
+  padding: $spacing-6;
+  @include flex-column;
+  position: relative;
+  min-height: 300px;
+}
+
+.bannerContent {
+  flex: 1;
+  @include flex-column;
+  gap: $spacing-4;
+  color: $color-white;
+}
+
+.bannerTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+.bannerSubtitle {
+  font-size: $font-size-sm;
+  opacity: 0.9;
+}
+
+.bannerButton {
+  @include flex-center;
+  gap: $spacing-2;
+  background-color: $color-white;
+  color: $color-accent-orange;
+  padding: $spacing-3 $spacing-6;
+  border-radius: $radius-md;
+  font-weight: $font-weight-semibold;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-base;
+  align-self: flex-start;
+  
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+.bannerImage {
+  position: absolute;
+  right: $spacing-6;
+  bottom: $spacing-6;
+  width: 150px;
+  height: 150px;
+  // 실제 이미지로 교체 필요
+}
+
+.placeholderImage {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-lg;
+  @include flex-center;
+  color: $color-white;
+  font-size: $font-size-sm;
+}
+
+.bannerControls {
+  @include flex-between;
+  margin-top: $spacing-4;
+  padding-top: $spacing-4;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pagination {
+  font-size: $font-size-sm;
+  color: $color-white;
+}
+
+.controls {
+  @include flex-center;
+  gap: $spacing-2;
+}
+
+.controlButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: $color-white;
+  padding: $spacing-2;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include flex-center;
+  transition: background $transition-base;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@include respond-to(md) {
+  .noticeSection {
+    padding: $spacing-20 $spacing-8;
+  }
+  
+  .title {
+    font-size: $font-size-3xl;
+  }
+}
+
+@include container-query(1024px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .banner {
+    min-height: auto;
+  }
+  
+  .bannerImage {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 200px;
+    margin-top: $spacing-4;
+  }
+}
+
+@include container-query(640px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .categories {
+    width: 100%;
+  }
+  
+  .categoryButton {
+    flex: 1;
+  }
+}

@@ -1,0 +1,90 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.snsSection {
+  padding: $spacing-16 $spacing-6;
+  background-color: $color-white;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-8;
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: $spacing-6;
+}
+
+.carouselTrack {
+  display: flex;
+  transition: transform $transition-slow;
+  gap: $spacing-6;
+}
+
+.carouselItem {
+  flex: 0 0 100%;
+  min-width: 0;
+  
+  @include respond-to(md) {
+    flex: 0 0 calc(50% - #{$spacing-3});
+  }
+  
+  @include respond-to(lg) {
+    flex: 0 0 calc(33.333% - #{$spacing-4});
+  }
+}
+
+.controls {
+  @include flex-between;
+  align-items: center;
+}
+
+.pagination {
+  font-size: $font-size-base;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.navigation {
+  @include flex-center;
+  gap: $spacing-2;
+}
+
+.navButton {
+  background-color: $color-gray-200;
+  border: none;
+  color: $color-text-primary;
+  padding: $spacing-3;
+  border-radius: $radius-md;
+  cursor: pointer;
+  @include flex-center;
+  transition: all $transition-base;
+  
+  &:hover {
+    background-color: $color-gray-300;
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@include respond-to(md) {
+  .snsSection {
+    padding: $spacing-20 $spacing-8;
+  }
+  
+  .title {
+    font-size: $font-size-3xl;
+  }
+}

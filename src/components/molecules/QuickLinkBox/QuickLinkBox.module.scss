@@ -1,0 +1,44 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.quickLinkBox {
+  @include glass-box;
+  @include flex-center;
+  gap: $spacing-2;
+  min-height: 60px;
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  transition: all $transition-base;
+  cursor: pointer;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.label {
+  flex: 1;
+  line-height: $line-height-tight;
+}
+
+.icon {
+  flex-shrink: 0;
+  color: $color-primary;
+}
+
+.downloadIcon {
+  flex-shrink: 0;
+  color: $color-text-secondary;
+  margin-left: auto;
+}
+
+@include respond-to(md) {
+  .quickLinkBox {
+    min-height: 70px;
+    font-size: $font-size-base;
+  }
+}

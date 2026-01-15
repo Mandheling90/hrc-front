@@ -1,0 +1,41 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.noticeCard {
+  @include card;
+  @include flex-between;
+  gap: $spacing-4;
+  padding: $spacing-4 $spacing-6;
+  transition: all $transition-base;
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.title {
+  flex: 1;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  @include text-ellipsis;
+}
+
+.date {
+  flex-shrink: 0;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  white-space: nowrap;
+}
+
+@include respond-to(md) {
+  .noticeCard {
+    padding: $spacing-5 $spacing-8;
+  }
+  
+  .title {
+    font-size: $font-size-lg;
+  }
+}

@@ -1,0 +1,12 @@
+@import '@/styles/variables.scss';
+
+.mainTemplate {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding-top: 80px; // Header 높이만큼 여백
+}
