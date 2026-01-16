@@ -1,8 +1,16 @@
-// 색상 변수
+// 색상 변수 (외부 사이트 참고)
 $color-primary: #1e3a8a; // 진한 파란색 (헤더 배경)
 $color-primary-light: #3b82f6;
+$color-primary-dark: #1e40af;
 $color-accent: #dc2626; // 빨간색 (연락처 박스)
 $color-accent-orange: #f97316; // 주황색 (배너)
+$color-accent-orange-light: #fb923c;
+
+// 다크모드 색상 변수
+$color-bg-dark: #0f172a;
+$color-bg-dark-secondary: #1e293b;
+$color-text-dark: #f1f5f9;
+$color-text-dark-secondary: #cbd5e1;
 
 $color-white: #ffffff;
 $color-gray-50: #f9fafb;
@@ -91,3 +99,6 @@ $transition-fast: 150ms;
 $transition-base: 200ms;
 $transition-slow: 300ms;
 $transition-slower: 500ms;
+
+// 다크모드 지원
+$dark-mode-enabled: true;

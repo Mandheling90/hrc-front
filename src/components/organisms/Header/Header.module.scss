@@ -8,7 +8,19 @@
   right: 0;
   background-color: $color-primary;
   z-index: $z-index-fixed;
-  box-shadow: $shadow-md;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color $transition-base, box-shadow $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-primary-dark;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  [data-theme='dark'] & {
+    background-color: $color-primary-dark;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .container {
@@ -17,6 +29,10 @@
   margin: 0 auto;
   padding: $spacing-4 $spacing-6;
   gap: $spacing-6;
+  
+  @include respond-to(md) {
+    padding: $spacing-5 $spacing-8;
+  }
 }
 
 .logoWrapper {
@@ -79,10 +95,13 @@
     display: flex;
     gap: $spacing-2;
   }
-}
-
-@include respond-to(md) {
-  .container {
-    padding: $spacing-5 $spacing-8;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-primary-dark;
+  }
+  
+  [data-theme='dark'] & {
+    background-color: $color-primary-dark;
   }
 }

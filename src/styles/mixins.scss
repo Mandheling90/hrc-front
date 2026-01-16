@@ -93,6 +93,18 @@
   border-radius: $radius-lg;
   box-shadow: $shadow-md;
   padding: $spacing-6;
+  transition: background-color $transition-base, box-shadow $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background: $color-bg-dark-secondary;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+  
+  [data-theme='dark'] & {
+    background: $color-bg-dark-secondary;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
 }
 
 // 투명 배경 박스
@@ -101,6 +113,16 @@
   backdrop-filter: blur(10px);
   border-radius: $radius-xl;
   padding: $spacing-4;
+  transition: background $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background: rgba(30, 41, 59, 0.9);
+  }
+  
+  [data-theme='dark'] & {
+    background: rgba(30, 41, 59, 0.9);
+  }
 }
 
 // 스크롤바 스타일

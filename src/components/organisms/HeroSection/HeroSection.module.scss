@@ -9,6 +9,12 @@
   justify-content: center;
   padding: $spacing-24 $spacing-6 $spacing-12;
   overflow: hidden;
+  margin-top: 80px; // 헤더 높이만큼 여백
+  
+  @include container-query(1024px) {
+    margin-top: 70px;
+    padding: $spacing-20 $spacing-4 $spacing-8;
+  }
 }
 
 .backgroundImage {
@@ -17,13 +23,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, $color-primary 0%, lighten($color-primary, 10%) 100%);
+  background: linear-gradient(135deg, $color-primary 0%, lighten($color-primary, 15%) 100%);
   // 실제 배경 이미지 사용 시 아래 주석 해제
   // background-image: url('/images/hero-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
+  transition: background $transition-base;
   
   // 배경 이미지 placeholder
   &::before {
@@ -35,6 +42,15 @@
     bottom: 0;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23ffffff" fill-opacity="0.05" width="100" height="100"/></svg>');
     opacity: 0.3;
+  }
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(135deg, $color-primary-dark 0%, lighten($color-primary-dark, 10%) 100%);
+  }
+  
+  [data-theme='dark'] & {
+    background: linear-gradient(135deg, $color-primary-dark 0%, lighten($color-primary-dark, 10%) 100%);
   }
 }
 
@@ -78,6 +94,19 @@
   gap: $spacing-6;
   max-width: 1200px;
   margin: 0 auto;
+  
+  @include respond-to(md) {
+    gap: $spacing-8;
+  }
+  
+  @include container-query(1024px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+  }
+  
+  @include container-query(640px) {
+    gap: $spacing-4;
+  }
 }
 
 .quickLinksGroup {
@@ -89,43 +118,27 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: $spacing-4;
+  
+  @include container-query(1024px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 @include respond-to(md) {
   .title {
     font-size: $font-size-4xl;
   }
-  
-  .quickLinks {
-    gap: $spacing-8;
-  }
 }
 
 @include container-query(1024px) {
-  .heroSection {
-    padding: $spacing-20 $spacing-4 $spacing-8;
-  }
-  
   .title {
     font-size: $font-size-2xl;
-  }
-  
-  .quickLinks {
-    grid-template-columns: 1fr;
-    gap: $spacing-6;
-  }
-  
-  .quickLinksGrid {
-    grid-template-columns: 1fr;
   }
 }
 
 @include container-query(640px) {
   .title {
     font-size: $font-size-xl;
-  }
-  
-  .quickLinks {
-    gap: $spacing-4;
+    line-height: $line-height-normal;
   }
 }

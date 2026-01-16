@@ -13,6 +13,25 @@
     transform: translateY(-4px);
     box-shadow: $shadow-xl;
   }
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark-secondary;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+  }
+  
+  [data-theme='dark'] & {
+    background-color: $color-bg-dark-secondary;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+  }
 }
 
 .imageWrapper {
@@ -40,6 +59,18 @@
   @include flex-center;
   color: $color-text-secondary;
   font-size: $font-size-sm;
+  transition: background $transition-base, color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(135deg, $color-gray-700 0%, $color-gray-600 100%);
+    color: $color-text-dark-secondary;
+  }
+  
+  [data-theme='dark'] & {
+    background: linear-gradient(135deg, $color-gray-700 0%, $color-gray-600 100%);
+    color: $color-text-dark-secondary;
+  }
 }
 
 .content {
@@ -51,6 +82,16 @@
   color: $color-text-primary;
   @include text-ellipsis-multi(2);
   line-height: $line-height-normal;
+  transition: color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark;
+  }
+  
+  [data-theme='dark'] & {
+    color: $color-text-dark;
+  }
 }
 
 @include respond-to(md) {

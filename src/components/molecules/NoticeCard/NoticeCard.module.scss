@@ -13,6 +13,25 @@
     transform: translateY(-2px);
     box-shadow: $shadow-lg;
   }
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark-secondary;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    }
+  }
+  
+  [data-theme='dark'] & {
+    background-color: $color-bg-dark-secondary;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    }
+  }
 }
 
 .title {
@@ -21,6 +40,16 @@
   font-weight: $font-weight-medium;
   color: $color-text-primary;
   @include text-ellipsis;
+  transition: color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark;
+  }
+  
+  [data-theme='dark'] & {
+    color: $color-text-dark;
+  }
 }
 
 .date {
@@ -28,6 +57,16 @@
   font-size: $font-size-sm;
   color: $color-text-secondary;
   white-space: nowrap;
+  transition: color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark-secondary;
+  }
+  
+  [data-theme='dark'] & {
+    color: $color-text-dark-secondary;
+  }
 }
 
 @include respond-to(md) {

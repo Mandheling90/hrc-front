@@ -1,14 +1,36 @@
-@import '@/styles/variables.scss';
-@import '@/styles/mixins.scss';
+@import "@/styles/variables.scss";
+@import "@/styles/mixins.scss";
 
 .footer {
   background-color: $color-gray-50;
+  transition: background-color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark-secondary;
+  }
+
+  [data-theme="dark"] & {
+    background-color: $color-bg-dark-secondary;
+  }
 }
 
 .partners {
   background-color: $color-white;
   padding: $spacing-8 $spacing-6;
   border-bottom: 1px solid $color-gray-200;
+  transition: background-color $transition-base, border-color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  [data-theme="dark"] & {
+    background-color: $color-bg-dark;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
 }
 
 .partnerLogos {
@@ -52,7 +74,7 @@
   cursor: pointer;
   @include flex-center;
   transition: background $transition-base;
-  
+
   &:hover {
     background-color: $color-gray-300;
   }
@@ -84,11 +106,31 @@
   font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: $color-primary;
+  transition: color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: lighten($color-primary, 20%);
+  }
+
+  [data-theme="dark"] & {
+    color: lighten($color-primary, 20%);
+  }
 }
 
 .logoSubtext {
   font-size: $font-size-sm;
   color: $color-text-secondary;
+  transition: color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark-secondary;
+  }
+
+  [data-theme="dark"] & {
+    color: $color-text-dark-secondary;
+  }
 }
 
 .linksSection {
@@ -101,9 +143,26 @@
   color: $color-text-secondary;
   font-size: $font-size-sm;
   transition: color $transition-base;
-  
+
   &:hover {
     color: $color-primary;
+  }
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark-secondary;
+
+    &:hover {
+      color: lighten($color-primary, 20%);
+    }
+  }
+
+  [data-theme="dark"] & {
+    color: $color-text-dark-secondary;
+
+    &:hover {
+      color: lighten($color-primary, 20%);
+    }
   }
 }
 
@@ -124,7 +183,7 @@
   font-size: $font-size-sm;
   cursor: pointer;
   transition: all $transition-base;
-  
+
   &:hover {
     background-color: $color-gray-300;
   }
@@ -147,6 +206,16 @@
 .phone {
   font-size: $font-size-sm;
   color: $color-text-secondary;
+  transition: color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark-secondary;
+  }
+
+  [data-theme="dark"] & {
+    color: $color-text-dark-secondary;
+  }
 }
 
 .social {
@@ -159,7 +228,7 @@
   font-weight: $font-weight-semibold;
   color: $color-text-primary;
   transition: color $transition-base;
-  
+
   &:hover {
     color: $color-primary;
   }
@@ -168,7 +237,7 @@
 .copyright {
   text-align: center;
   margin-bottom: $spacing-8;
-  
+
   p {
     font-size: $font-size-xs;
     color: $color-text-secondary;
@@ -206,7 +275,7 @@
   .partners {
     padding: $spacing-10 $spacing-8;
   }
-  
+
   .mainFooter {
     padding: $spacing-16 $spacing-8;
   }
@@ -217,20 +286,20 @@
     grid-template-columns: 1fr;
     gap: $spacing-6;
   }
-  
+
   .linksSection {
     justify-content: flex-start;
   }
-  
+
   .actionsSection {
     align-items: flex-start;
   }
-  
+
   .footerBottom {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .certifications {
     grid-template-columns: 1fr;
   }

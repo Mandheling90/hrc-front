@@ -4,6 +4,16 @@
 .snsSection {
   padding: $spacing-16 $spacing-6;
   background-color: $color-white;
+  transition: background-color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark;
+  }
+  
+  [data-theme='dark'] & {
+    background-color: $color-bg-dark;
+  }
 }
 
 .container {
@@ -16,6 +26,16 @@
   font-weight: $font-weight-bold;
   color: $color-text-primary;
   margin-bottom: $spacing-8;
+  transition: color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark;
+  }
+  
+  [data-theme='dark'] & {
+    color: $color-text-dark;
+  }
 }
 
 .carousel {

@@ -12,11 +12,36 @@
   text-align: center;
   transition: all $transition-base;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   
   &:hover {
     background: rgba(255, 255, 255, 1);
     transform: translateY(-2px);
     box-shadow: $shadow-lg;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background: rgba(30, 41, 59, 0.9);
+    color: $color-text-dark;
+    border-color: rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      background: rgba(30, 41, 59, 1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  [data-theme='dark'] & {
+    background: rgba(30, 41, 59, 0.9);
+    color: $color-text-dark;
+    border-color: rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      background: rgba(30, 41, 59, 1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
   }
 }
 

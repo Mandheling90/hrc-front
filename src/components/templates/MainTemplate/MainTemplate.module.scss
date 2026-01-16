@@ -4,9 +4,20 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: $color-white;
+  transition: background-color $transition-base;
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark;
+  }
+  
+  [data-theme='dark'] & {
+    background-color: $color-bg-dark;
+  }
 }
 
 .main {
   flex: 1;
-  padding-top: 80px; // Header 높이만큼 여백
+  // padding-top은 HeroSection에서 처리
 }

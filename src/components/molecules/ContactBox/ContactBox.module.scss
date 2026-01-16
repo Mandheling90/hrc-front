@@ -15,6 +15,32 @@
   z-index: $z-index-fixed;
   min-width: 200px;
   box-shadow: $shadow-xl;
+  transition: all $transition-base;
+  
+  @include respond-to(md) {
+    padding: $spacing-8;
+    min-width: 240px;
+  }
+  
+  @include container-query(1200px) {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: $spacing-6 auto;
+    max-width: 300px;
+  }
+  
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: darken($color-accent, 10%);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  }
+  
+  [data-theme='dark'] & {
+    background-color: darken($color-accent, 10%);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  }
 }
 
 .iconWrapper {
@@ -51,39 +77,3 @@
   font-weight: $font-weight-semibold;
 }
 
-@include respond-to(md) {
-  .contactBox {
-    padding: $spacing-8;
-    min-width: 240px;
-  }
-  
-  .mainPhone {
-    font-size: $font-size-3xl;
-  }
-  
-  .contacts {
-    font-size: $font-size-sm;
-  }
-}
-
-@include container-query(1200px) {
-  .contactBox {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin: $spacing-6 auto;
-    max-width: 300px;
-  }
-}
-
-@include container-query(1024px) {
-  .contactBox {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin: $spacing-6 auto;
-    max-width: 300px;
-  }
-}

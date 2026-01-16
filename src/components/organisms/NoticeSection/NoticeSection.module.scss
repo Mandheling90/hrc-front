@@ -1,9 +1,19 @@
-@import '@/styles/variables.scss';
-@import '@/styles/mixins.scss';
+@import "@/styles/variables.scss";
+@import "@/styles/mixins.scss";
 
 .noticeSection {
   padding: $spacing-16 $spacing-6;
   background-color: $color-gray-50;
+  transition: background-color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background-color: $color-bg-dark-secondary;
+  }
+
+  [data-theme="dark"] & {
+    background-color: $color-bg-dark-secondary;
+  }
 }
 
 .container {
@@ -21,6 +31,16 @@
   font-size: $font-size-2xl;
   font-weight: $font-weight-bold;
   color: $color-text-primary;
+  transition: color $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    color: $color-text-dark;
+  }
+
+  [data-theme="dark"] & {
+    color: $color-text-dark;
+  }
 }
 
 .categories {
@@ -34,7 +54,7 @@
   color: $color-text-primary;
   padding: $spacing-2 $spacing-4;
   font-size: $font-size-sm;
-  
+
   &:hover {
     background-color: $color-gray-300;
   }
@@ -64,11 +84,33 @@
 
 .banner {
   @include card;
-  background: linear-gradient(135deg, $color-accent-orange 0%, lighten($color-accent-orange, 10%) 100%);
+  background: linear-gradient(
+    135deg,
+    $color-accent-orange 0%,
+    $color-accent-orange-light 100%
+  );
   padding: $spacing-6;
   @include flex-column;
   position: relative;
   min-height: 300px;
+  transition: background $transition-base;
+
+  // 다크모드 지원
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(
+      135deg,
+      darken($color-accent-orange, 10%) 0%,
+      darken($color-accent-orange-light, 10%) 100%
+    );
+  }
+
+  [data-theme="dark"] & {
+    background: linear-gradient(
+      135deg,
+      darken($color-accent-orange, 10%) 0%,
+      darken($color-accent-orange-light, 10%) 100%
+    );
+  }
 }
 
 .bannerContent {
@@ -101,7 +143,7 @@
   cursor: pointer;
   transition: all $transition-base;
   align-self: flex-start;
-  
+
   &:hover {
     transform: translateX(4px);
   }
@@ -152,7 +194,7 @@
   cursor: pointer;
   @include flex-center;
   transition: background $transition-base;
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.3);
   }
@@ -162,7 +204,7 @@
   .noticeSection {
     padding: $spacing-20 $spacing-8;
   }
-  
+
   .title {
     font-size: $font-size-3xl;
   }
@@ -172,11 +214,11 @@
   .content {
     grid-template-columns: 1fr;
   }
-  
+
   .banner {
     min-height: auto;
   }
-  
+
   .bannerImage {
     position: relative;
     right: auto;
@@ -192,11 +234,11 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .categories {
     width: 100%;
   }
-  
+
   .categoryButton {
     flex: 1;
   }

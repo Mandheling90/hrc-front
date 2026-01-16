@@ -1,5 +1,5 @@
-@import './variables.scss';
-@import './mixins.scss';
+@import "./variables.scss";
+@import "./mixins.scss";
 
 * {
   box-sizing: border-box;
@@ -14,6 +14,24 @@ body {
   font-family: $font-family-base;
   color: $color-text-primary;
   background-color: $color-white;
+  transition: background-color $transition-base, color $transition-base;
+}
+
+// 다크모드 지원
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color: $color-text-dark;
+    background-color: $color-bg-dark;
+  }
+}
+
+[data-theme="dark"] {
+  html,
+  body {
+    color: $color-text-dark;
+    background-color: $color-bg-dark;
+  }
 }
 
 body {
