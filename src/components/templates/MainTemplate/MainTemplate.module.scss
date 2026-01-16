@@ -1,23 +1,14 @@
 @import '@/styles/variables.scss';
 
-.mainTemplate {
+.wrap {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: $color-white;
-  transition: background-color $transition-base;
+  background-color: var(--color-white, #fff);
   
-  // 다크모드 지원
   @media (prefers-color-scheme: dark) {
-    background-color: $color-bg-dark;
+    background-color: var(--color-white, #0e0f10);
   }
   
   [data-theme='dark'] & {
-    background-color: $color-bg-dark;
+    background-color: var(--color-white, #0e0f10);
   }
-}
-
-.main {
-  flex: 1;
-  // padding-top은 HeroSection에서 처리
 }

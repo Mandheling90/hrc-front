@@ -1,35 +1,52 @@
-// 색상 변수 (외부 사이트 참고)
-$color-primary: #1e3a8a; // 진한 파란색 (헤더 배경)
-$color-primary-light: #3b82f6;
-$color-primary-dark: #1e40af;
-$color-accent: #dc2626; // 빨간색 (연락처 박스)
-$color-accent-orange: #f97316; // 주황색 (배너)
-$color-accent-orange-light: #fb923c;
+// 실제 CSS 변수와 일치하도록 수정
+// 색상 변수 (index.css 참고)
+$color-primary: #891a26;
+$color-primary-rgb: 137, 26, 38;
+$color-secondary: #fae3ba;
+$color-secondary-rgb: 250, 227, 186;
+$color-darken: #000000;
+$color-darken-rgb: 0, 0, 0;
+$color-white: #fff;
+$color-white-rgb: 255, 255, 255;
+$color-error: #ff0000;
+$color-error-rgb: 255, 0, 0;
+$color-point: #ec5a29;
+$color-point-rgb: 236, 90, 41;
+$color-red: #ff4141;
+$color-red-rgb: 255, 65, 65;
+$color-blue: #418be2;
+$color-blue-rgb: 65, 139, 226;
+
+// Gray scale
+$gray-100: #f8f9fa;
+$gray-100-rgb: 248, 249, 250;
+$gray-200: #e9ecef;
+$gray-200-rgb: 233, 236, 239;
+$gray-300: #dee2e6;
+$gray-300-rgb: 222, 226, 230;
+$gray-400: #ced4da;
+$gray-400-rgb: 206, 212, 218;
+$gray-500: #adb5bd;
+$gray-500-rgb: 173, 181, 189;
+$gray-600: #6c757d;
+$gray-600-rgb: 108, 117, 125;
+$gray-700: #495057;
+$gray-700-rgb: 73, 80, 87;
+$gray-800: #343a40;
+$gray-800-rgb: 52, 58, 64;
+$gray-900: #111111;
+$gray-900-rgb: 17, 17, 17;
 
 // 다크모드 색상 변수
-$color-bg-dark: #0f172a;
-$color-bg-dark-secondary: #1e293b;
-$color-text-dark: #f1f5f9;
-$color-text-dark-secondary: #cbd5e1;
-
-$color-white: #ffffff;
-$color-gray-50: #f9fafb;
-$color-gray-100: #f3f4f6;
-$color-gray-200: #e5e7eb;
-$color-gray-300: #d1d5db;
-$color-gray-400: #9ca3af;
-$color-gray-500: #6b7280;
-$color-gray-600: #4b5563;
-$color-gray-700: #374151;
-$color-gray-800: #1f2937;
-$color-gray-900: #111827;
-
-$color-text-primary: $color-gray-900;
-$color-text-secondary: $color-gray-600;
-$color-text-light: $color-gray-500;
+$color-bg-dark: #0e0f10;
+$color-bg-dark-secondary: #16181b;
+$color-text-dark: #f2f3f5;
+$color-text-dark-secondary: #d6dae1;
 
 // 타이포그래피
-$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+$font-family-base: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+$font-family-paperozi: "Paperozi", sans-serif;
+$font-family-paperlogy: "Paperlogy", sans-serif;
 $font-family-mono: 'Courier New', monospace;
 
 $font-size-xs: 0.75rem; // 12px
@@ -79,11 +96,11 @@ $shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.
 $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
 // Breakpoints (반응형)
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
+$breakpoint-sm: 500px;
+$breakpoint-md: 720px;
 $breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-$breakpoint-2xl: 1536px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1430px;
 
 // Z-index
 $z-index-dropdown: 1000;

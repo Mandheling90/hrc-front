@@ -1,0 +1,140 @@
+@import '@/styles/variables.scss';
+
+.section4 {
+  .container {
+    width: 100%;
+    max-width: 1430px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .swiper {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-right: 142px;
+    overflow: hidden;
+    
+    @media (max-width: 1430px) {
+      padding-right: 120px;
+    }
+    
+    @media (max-width: 1200px) {
+      padding-right: 110px;
+    }
+    
+    .swiperWrapper {
+      display: flex;
+      align-items: center;
+    }
+    
+    .swiperSlide {
+      width: auto;
+      flex-shrink: 0;
+      margin-right: 100px;
+      
+      @media (max-width: 1430px) {
+        margin-right: 80px;
+      }
+      
+      a {
+        height: 100px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        
+        @media (max-width: 1430px) {
+          height: 90px;
+        }
+        
+        @media (max-width: 1200px) {
+          height: 84px;
+        }
+        
+        img {
+          height: 40px;
+          
+          @media (max-width: 1430px) {
+            height: 36px;
+          }
+          
+          @media (max-width: 1200px) {
+            height: 34px;
+          }
+        }
+      }
+    }
+    
+    .swiperControl {
+      width: auto;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      flex-shrink: 0;
+      background-color: #fff;
+      margin-left: auto;
+      z-index: 1;
+      
+      @media (max-width: 1430px) {
+        height: 90px;
+        padding: 0 24px;
+      }
+      
+      .controlBtn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-left: auto;
+        
+        button {
+          width: 24px;
+          height: 24px;
+          background-color: #000;
+          border-radius: 5px;
+          position: static;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+          font-size: 0;
+          border: none;
+          cursor: pointer;
+          
+          &.swiperButtonPrev::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            display: block;
+            background-image: url(/images/icon/icon-left.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+          
+          &.swiperButtonNext::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            display: block;
+            background-image: url(/images/icon/icon-right.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+          
+          &.swiperPause::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            display: block;
+            background-image: url(/images/icon/icon-pause.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+        }
+      }
+    }
+  }
+}

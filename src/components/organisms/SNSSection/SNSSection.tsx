@@ -1,28 +1,29 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SNSCard } from '@/components/molecules';
-import { Icon } from '@/components/atoms';
+import Link from 'next/link';
 import styles from './SNSSection.module.scss';
 
 const snsPosts = [
   {
     id: 1,
-    image: '/images/sns-1.jpg',
-    title: '고려대학교 안암병원의 새로운 도...',
-    href: '/sns/1',
+    image: '/images/img-section3-1.jpg',
+    title: '[톡명의] 수술뿐만 아니라 연구로 미래를 바꾸는 의사과학자🔎 | 척추종양 명의🩺 | 톡쏘는 명의들💘',
   },
   {
     id: 2,
-    image: '/images/sns-2.jpg',
-    title: '[안암인싸] 고려대안암병원 | 산...',
-    href: '/sns/2',
+    image: '/images/img-section3-2.jpg',
+    title: '환자를 위해 20여 개의 진료과가 한 공간에 모인 이곳은?! | 암센터의 운영 시스템 및 장점 | Dr.log',
   },
   {
     id: 3,
-    image: '/images/sns-3.jpg',
+    image: '/images/img-section3-3.jpg',
     title: '고대병원 간호사 이야기 들어볼래?',
-    href: '/sns/3',
+  },
+  {
+    id: 4,
+    image: '/images/img-section3-4.jpg',
+    title: '[ENG] 절체절명의 환자를 지켜내다ㅣ생과 사의 최전선, 응급의료센터🚨ㅣKU Top Team🏥',
   },
 ];
 
@@ -38,35 +39,62 @@ export const SNSSection: React.FC = () => {
   };
 
   return (
-    <section className={styles.snsSection}>
-      <div className={styles.container}>
-        <h2 className={styles.title}>고대안암병원 SNS</h2>
-        
-        <div className={styles.carousel}>
-          <div
-            className={styles.carouselTrack}
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
-            {snsPosts.map((post) => (
-              <div key={post.id} className={styles.carouselItem}>
-                <SNSCard image={post.image} title={post.title} href={post.href} />
-              </div>
-            ))}
+    <section className={`section ${styles.section3}`}>
+      <div className={styles.verticalText}>
+        <div className={styles.track}>
+          <div className={styles.con}>
+            <span>Korea University Hospital Referral Center</span>
+          </div>
+          <div className={styles.con} aria-hidden="true">
+            <span>Korea University Hospital Referral Center</span>
           </div>
         </div>
-        
-        <div className={styles.controls}>
-          <div className={styles.pagination}>
-            {currentIndex + 1} — {snsPosts.length}
+      </div>
+      <div className="container">
+        <h3 className={styles.sectionTitle}>고대안암병원 SNS</h3>
+        <div className="flex">
+          <div className={styles.thumbSwiper}>
+            <div className={styles.swiperWrapper}>
+              {snsPosts.map((post, index) => (
+                <div
+                  key={post.id}
+                  className={`${styles.swiperSlide} ${index === currentIndex ? styles.active : ''}`}
+                  onClick={() => setCurrentIndex(index)}
+                >
+                  <div className={styles.imgBox}>
+                    <img src={post.image} alt={post.title} />
+                  </div>
+                  <p>{post.title}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className={styles.navigation}>
-            <button className={styles.navButton} onClick={handlePrev} aria-label="이전">
-              <Icon name="arrow-left" size={20} />
-            </button>
-            <button className={styles.navButton} onClick={handleNext} aria-label="다음">
-              <Icon name="arrow-right" size={20} />
-            </button>
+          <div className={styles.mainSwiper}>
+            <div className={styles.swiperWrapper}>
+              {snsPosts.map((post, index) => (
+                <div
+                  key={post.id}
+                  className={`${styles.swiperSlide} ${index === currentIndex ? styles.active : ''}`}
+                >
+                  <Link href="#">
+                    <img src={post.image} alt={post.title} />
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
+        <div className={styles.customControl}>
+          <span className={styles.current}>{currentIndex + 1}</span>
+          <div className={styles.progress}>
+            <span
+              className={styles.bar}
+              style={{ width: `${((currentIndex + 1) / snsPosts.length) * 100}%` }}
+            ></span>
+          </div>
+          <span className={styles.total}>{snsPosts.length}</span>
+          <button className={styles.prev} type="button" onClick={handlePrev}></button>
+          <button className={styles.next} type="button" onClick={handleNext}></button>
         </div>
       </div>
     </section>

@@ -1,110 +1,256 @@
 @import '@/styles/variables.scss';
-@import '@/styles/mixins.scss';
 
-.snsSection {
-  padding: $spacing-16 $spacing-6;
-  background-color: $color-white;
-  transition: background-color $transition-base;
-  
-  // 다크모드 지원
-  @media (prefers-color-scheme: dark) {
-    background-color: $color-bg-dark;
-  }
-  
-  [data-theme='dark'] & {
-    background-color: $color-bg-dark;
-  }
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.title {
-  font-size: $font-size-2xl;
-  font-weight: $font-weight-bold;
-  color: $color-text-primary;
-  margin-bottom: $spacing-8;
-  transition: color $transition-base;
-  
-  // 다크모드 지원
-  @media (prefers-color-scheme: dark) {
-    color: $color-text-dark;
-  }
-  
-  [data-theme='dark'] & {
-    color: $color-text-dark;
-  }
-}
-
-.carousel {
+.section3 {
   position: relative;
+  margin-top: 80px;
+  
+  .container {
+    width: 100%;
+    max-width: 1430px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    padding-bottom: 110px;
+    
+    @media (max-width: 1200px) {
+      padding-bottom: 100px;
+    }
+    
+    &::after {
+      content: "";
+      display: block;
+      width: 200vw;
+      height: 566px;
+      border-radius: 0 130px 40px 0;
+      background-color: #fdf5eb;
+      position: absolute;
+      bottom: 0;
+      right: -5%;
+      z-index: -1;
+    }
+    
+    .sectionTitle {
+      font-size: 33px;
+      font-weight: 700;
+      font-family: "Paperozi", sans-serif;
+      margin-bottom: 100px;
+      color: var(--color-darken, #000);
+      
+      @media (max-width: 1430px) {
+        margin-bottom: 80px;
+      }
+    }
+    
+    .flex {
+      display: flex;
+      gap: 20px;
+    }
+  }
+}
+
+.verticalText {
   overflow: hidden;
-  margin-bottom: $spacing-6;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  
+  .track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: marquee 15s linear infinite;
+  }
+  
+  .con {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    white-space: nowrap;
+    margin-right: 48px;
+  }
+  
+  span {
+    color: rgba(255, 245, 234, 0.5);
+    font-family: "Paperlogy", sans-serif;
+    font-size: 120px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 150%;
+    letter-spacing: -2.4px;
+    
+    @media (max-width: 1430px) {
+      font-size: 108px;
+    }
+  }
 }
 
-.carouselTrack {
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.thumbSwiper {
+  height: 100%;
+  max-width: 420px;
+  margin: 0;
+  
+  @media (max-width: 1430px) {
+    max-width: 380px;
+  }
+  
+  @media (max-width: 1200px) {
+    max-width: 340px;
+  }
+  
+  .swiperWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .swiperSlide {
+    cursor: pointer;
+    max-width: 200px;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    
+    &.active {
+      opacity: 1;
+    }
+    
+    .imgBox {
+      border-radius: 10px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+    
+    p {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      margin-top: 12px;
+      font-weight: 500;
+      color: var(--color-darken, #000);
+    }
+  }
+}
+
+.mainSwiper {
+  width: 900px;
+  flex-shrink: 0;
+  margin: 0;
+  margin-left: auto;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 70px;
+  overflow: hidden;
+  
+  @media (max-width: 1430px) {
+    width: 760px;
+    border-radius: 50px;
+  }
+  
+  @media (max-width: 1200px) {
+    width: 680px;
+    border-radius: 40px;
+  }
+  
+  .swiperWrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiperSlide {
+    flex-shrink: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.6s;
+    
+    &.active {
+      opacity: 1;
+    }
+    
+    a {
+      width: 100%;
+      display: block;
+      
+      img {
+        width: 100%;
+        object-fit: contain;
+        display: block;
+      }
+    }
+  }
+}
+
+.customControl {
   display: flex;
-  transition: transform $transition-slow;
-  gap: $spacing-6;
-}
-
-.carouselItem {
-  flex: 0 0 100%;
-  min-width: 0;
-  
-  @include respond-to(md) {
-    flex: 0 0 calc(50% - #{$spacing-3});
-  }
-  
-  @include respond-to(lg) {
-    flex: 0 0 calc(33.333% - #{$spacing-4});
-  }
-}
-
-.controls {
-  @include flex-between;
   align-items: center;
-}
-
-.pagination {
-  font-size: $font-size-base;
-  color: $color-text-secondary;
-  font-weight: $font-weight-medium;
-}
-
-.navigation {
-  @include flex-center;
-  gap: $spacing-2;
-}
-
-.navButton {
-  background-color: $color-gray-200;
-  border: none;
-  color: $color-text-primary;
-  padding: $spacing-3;
-  border-radius: $radius-md;
-  cursor: pointer;
-  @include flex-center;
-  transition: all $transition-base;
+  gap: 12px;
+  position: absolute;
+  left: 0;
+  bottom: 150px;
+  z-index: 1;
   
-  &:hover {
-    background-color: $color-gray-300;
-    transform: scale(1.05);
+  .current,
+  .total {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-darken, #000);
   }
   
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-@include respond-to(md) {
-  .snsSection {
-    padding: $spacing-20 $spacing-8;
+  .progress {
+    position: relative;
+    width: 100px;
+    height: 2px;
+    background: #e5e1dc;
+    overflow: hidden;
+    
+    .bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: #b87352;
+      transition: width 0.3s;
+    }
   }
   
-  .title {
-    font-size: $font-size-3xl;
+  .prev,
+  .next {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 0;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    
+    &::after {
+      content: "";
+      display: block;
+      font-size: 14px;
+      color: #000;
+    }
+  }
+  
+  .prev::after {
+    content: "◀";
+  }
+  
+  .next::after {
+    content: "▶";
   }
 }

@@ -1,107 +1,106 @@
 @import '@/styles/variables.scss';
-@import '@/styles/mixins.scss';
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: $color-primary;
-  z-index: $z-index-fixed;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: background-color $transition-base, box-shadow $transition-base;
+  width: 100%;
+  position: relative;
+  z-index: 100;
+  transition: all 0.4s;
+  background-color: transparent;
+  padding: 0;
   
-  // 다크모드 지원
-  @media (prefers-color-scheme: dark) {
-    background-color: $color-primary-dark;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  .container {
+    width: 100%;
+    max-width: 1430px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
   
-  [data-theme='dark'] & {
-    background-color: $color-primary-dark;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-}
-
-.container {
-  @include flex-between;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: $spacing-4 $spacing-6;
-  gap: $spacing-6;
-  
-  @include respond-to(md) {
-    padding: $spacing-5 $spacing-8;
-  }
-}
-
-.logoWrapper {
-  flex-shrink: 0;
-}
-
-.nav {
-  @include flex-center;
-  gap: $spacing-2;
-  flex: 1;
-  justify-content: center;
-  
-  @include container-query(1024px) {
-    display: none;
-  }
-}
-
-.actions {
-  @include flex-center;
-  gap: $spacing-4;
-  flex-shrink: 0;
-}
-
-.actionButton {
-  background: none;
-  border: none;
-  color: $color-white;
-  cursor: pointer;
-  padding: $spacing-2;
-  @include flex-center;
-  transition: opacity $transition-base;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
-.mobileMenuButton {
-  display: none;
-  background: none;
-  border: none;
-  color: $color-white;
-  cursor: pointer;
-  padding: $spacing-2;
-  @include flex-center;
-  
-  @include container-query(1024px) {
+  .flex {
     display: flex;
+    
+    &.align-center {
+      align-items: center;
+    }
   }
-}
-
-.mobileMenu {
-  display: none;
-  @include flex-column;
-  background-color: $color-primary;
-  padding: $spacing-4;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
   
-  @include container-query(1024px) {
+  h1 {
+    flex-shrink: 0;
+    margin-right: auto;
+    
+    a {
+      display: block;
+      width: 308px;
+      height: 138px;
+      background-image: url('/assets/images/logo-top.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      text-indent: -9999px;
+      overflow: hidden;
+      
+      @media (max-width: 500px) {
+        width: 150px;
+        height: 68px;
+      }
+      
+      @media (max-width: 720px) {
+        width: 200px;
+        height: 90px;
+      }
+    }
+  }
+  
+  .gnb {
     display: flex;
-    gap: $spacing-2;
+    margin-left: auto;
+    
+    @media (max-width: 1430px) {
+      display: none;
+    }
+    
+    ul {
+      align-items: center;
+      gap: 120px;
+      
+      li a {
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        transition: opacity 0.3s;
+        
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
   }
   
-  // 다크모드 지원
-  @media (prefers-color-scheme: dark) {
-    background-color: $color-primary-dark;
-  }
-  
-  [data-theme='dark'] & {
-    background-color: $color-primary-dark;
+  .util {
+    margin-left: 120px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+    @media (max-width: 1430px) {
+      margin-left: auto;
+    }
+    
+    .btnLogin,
+    .btnAllMenu {
+      width: 36px;
+      height: 36px;
+      display: block;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      
+      .icon {
+        width: 36px;
+        height: 36px;
+        display: block;
+        filter: brightness(0) invert(1);
+      }
+    }
   }
 }

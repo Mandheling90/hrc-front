@@ -1,17 +1,18 @@
 'use client';
 
 import React from 'react';
-import { Header, HeroSection, NoticeSection, SNSSection, Footer } from '@/components/organisms';
+import { Header, HeroSection, NoticeSection, SNSSection, PartnerSection, Footer } from '@/components/organisms';
 import styles from './MainTemplate.module.scss';
 
 export const MainTemplate: React.FC = () => {
   return (
-    <div className={styles.mainTemplate}>
+    <div className={styles.wrap}>
       <Header />
-      <main className={styles.main}>
+      <main id="contents">
         <HeroSection />
         <NoticeSection />
         <SNSSection />
+        <PartnerSection />
       </main>
       <Footer />
     </div>
