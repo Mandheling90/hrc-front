@@ -1,12 +1,15 @@
 'use client'
 
+import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { AgreementContent } from '@/components/molecules/AgreementContent/AgreementContent'
 import { ProgressSteps } from '@/components/molecules/ProgressSteps/ProgressSteps'
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
+import { useRouter } from 'next/navigation'
 
 export const SignupForm: React.FC = () => {
+  const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [agreements, setAgreements] = useState({
     termsOfUse: false,
@@ -38,7 +41,7 @@ export const SignupForm: React.FC = () => {
 
   const handleCancel = () => {
     // TODO: 취소 로직 구현
-
+    router.push('/login')
     console.log('Cancel signup')
   }
 
@@ -76,13 +79,24 @@ export const SignupForm: React.FC = () => {
 
           <AgreementContent
             scrollableContent={
-              <p>
-                1. 개인 정보의 수집 목적 및 이용 "병원"은 수집한 개인정보를 다음의 목적을 위해 활용합니다.이용자가
-                제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며 이용 목적이 변경될 시에는 사전
-                동의를 구할 것입니다. 온라인 안내 ① 서비스제공 진료 및 건진 예약, 예약조회 및 회원제 서비스 이용에 따른
-                본인 확인 절차에 이용 고지사항 전달, 불만처리 등을 위한 원활한 의사소통 경로의 확보, 새로운 서비스 및
-                행사정보 등의 안내 ② 회원관리 ③ 신규 서비스 개발과 개인 맞춤 서비스 제공을 위한 자료
-              </p>
+              <>
+                <p className={styles.agreementTitle}>1. 개인 정보의 수집 목적 및 이용</p>
+                <div className={styles.agreementText}>
+                  <p>
+                    "병원"은 수집한 개인정보를 다음의 목적을 위해 활용합니다.
+                    <br />
+                    이용자가 제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며 이용 목적이 변경될 시에는 사전 동의를 구할 것입니다.
+                  </p>
+                  <p>&nbsp;</p>
+                  <p>온라인 안내</p>
+                  <ul>
+                    <li>① 서비스제공</li>
+                    <li>진료 및 건진 예약, 예약조회 및 회원제 서비스 이용에 따른 본인 확인 절차에 이용 고지사항 전달, 불만처리 등을 위한 원활한 의사소통 경로의 확보, 새로운 서비스 및 행사정보 등의 안내</li>
+                    <li>② 회원관리</li>
+                    <li>③ 신규 서비스 개발과 개인 맞춤 서비스 제공을 위한 자료</li>
+                  </ul>
+                </div>
+              </>
             }
             wrapAllInScrollBox={true}
           />
@@ -100,19 +114,6 @@ export const SignupForm: React.FC = () => {
             className={styles.agreementCheckbox}
           />
           <AgreementContent
-            title='1. 개인정보의 수집 목적 및 이용'
-            description='병원은 수집한 개인정보를 다음의 목적을 위해 활용합니다. 이용자가 제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며, 이용 목적이 변경될 시에는 사전 동의를 구할 예정입니다.'
-            radioOptions={{
-              label: '온라인 안내',
-              options: [
-                {
-                  name: 'terms2',
-                  value: 'service',
-                  label: '① 서비스제공',
-                  defaultChecked: true
-                }
-              ]
-            }}
             scrollableContent={
               <p>
                 개인정보 수집 및 이용에 관한 약관 내용이 들어갑니다.
@@ -141,19 +142,6 @@ export const SignupForm: React.FC = () => {
             className={styles.agreementCheckbox}
           />
           <AgreementContent
-            title='1. 개인정보의 수집 목적 및 이용'
-            description='병원은 수집한 개인정보를 다음의 목적을 위해 활용합니다. 이용자가 제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며, 이용 목적이 변경될 시에는 사전 동의를 구할 예정입니다.'
-            radioOptions={{
-              label: '온라인 안내',
-              options: [
-                {
-                  name: 'terms3',
-                  value: 'service',
-                  label: '① 서비스제공',
-                  defaultChecked: true
-                }
-              ]
-            }}
             scrollableContent={<p>선택사항 개인정보 수집 및 이용 약관 내용입니다.</p>}
           />
         </div>
@@ -170,8 +158,7 @@ export const SignupForm: React.FC = () => {
             className={styles.agreementCheckbox}
           />
           <AgreementContent
-            description='수집하는 개인정보의 마케팅 및 광고 활용의 이용목적에 동의합니다.'
-            hasScrollBox={false}
+            scrollableContent={<p>선택사항 개인정보 수집 및 이용 약관 내용입니다.</p>}
           />
         </div>
 
@@ -182,6 +169,7 @@ export const SignupForm: React.FC = () => {
             label='서비스 전체 약관에 동의합니다.'
             className={styles.agreementCheckbox}
           />
+          
         </div>
       </div>
 
@@ -205,17 +193,18 @@ export const SignupForm: React.FC = () => {
       </div>
 
       <div className={styles.buttonGroup}>
-        <button type='button' className={styles.cancelButton} onClick={handleCancel}>
+        <Button type='button' variant='gray' size='medium' onClick={handleCancel}>
           취소
-        </button>
-        <button
+        </Button>
+        <Button
           type='button'
-          className={styles.nextButton}
+          variant='primary'
+          size='medium'
           onClick={handleNext}
           disabled={!agreements.termsOfUse || !agreements.personalInfoRequired}
         >
           다음 단계
-        </button>
+        </Button>
       </div>
     </div>
   )
