@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './Checkbox.module.scss';
+import React from 'react'
+import styles from './Checkbox.module.scss'
 
 export interface CheckboxProps {
-  id?: string;
-  name?: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  label?: string | React.ReactNode;
-  disabled?: boolean;
-  className?: string;
-  'aria-label'?: string;
+  id?: string
+  name?: string
+  checked: boolean
+  onChange: (checked: boolean) => void
+  label?: string | React.ReactNode
+  disabled?: boolean
+  className?: string
+  'aria-label'?: string
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
@@ -20,18 +20,18 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   label,
   disabled = false,
   className = '',
-  'aria-label': ariaLabel,
+  'aria-label': ariaLabel
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!disabled) {
-      onChange(e.target.checked);
+      onChange(e.target.checked)
     }
-  };
+  }
 
   return (
     <label className={`${styles.checkboxLabel} ${className}`}>
       <input
-        type="checkbox"
+        type='checkbox'
         id={id}
         name={name}
         checked={checked}
@@ -42,5 +42,5 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       />
       {label && <span>{label}</span>}
     </label>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { MainTemplate } from '@/components/templates/MainTemplate/MainTemplate';
+import { MainTemplate } from '@/components/templates/MainTemplate/MainTemplate'
 
 export default function Home() {
-  return <MainTemplate />;
+  return <MainTemplate />
 }

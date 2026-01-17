@@ -79,11 +79,11 @@ src/components/
 
 ```typescript
 // ✅ Correct
-import type { Metadata } from 'next';
-import { useState } from 'react';
-import { SomeLibrary } from 'third-party-lib';
-import { Button } from '@/components/atoms/Button';
-import type { User } from '@/types/user';
+import type { Metadata } from 'next'
+import { useState } from 'react'
+import { SomeLibrary } from 'third-party-lib'
+import { Button } from '@/components/atoms/Button'
+import type { User } from '@/types/user'
 ```
 
 ### TypeScript Guidelines
@@ -100,9 +100,9 @@ import type { User } from '@/types/user';
 ```typescript
 // ✅ Use interfaces for component props
 interface ButtonProps {
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
-  onClick?: () => void;
+  children: React.ReactNode
+  variant?: 'primary' | 'secondary'
+  onClick?: () => void
 }
 
 export function Button({ children, variant = 'primary', onClick }: ButtonProps) {
@@ -171,14 +171,14 @@ export function Button({ children }: { children: React.ReactNode }) {
 // ✅ Proper async error handling
 async function fetchData() {
   try {
-    const response = await fetch('/api/data');
+    const response = await fetch('/api/data')
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.error('Failed to fetch data:', error);
-    throw error;
+    console.error('Failed to fetch data:', error)
+    throw error
   }
 }
 ```
@@ -193,10 +193,10 @@ async function fetchData() {
 
 ```typescript
 // ✅ src/components/index.ts
-export * from './atoms';
-export * from './molecules';
-export * from './organisms';
-export * from './templates';
+export * from './atoms'
+export * from './molecules'
+export * from './organisms'
+export * from './templates'
 ```
 
 ### Naming Conventions

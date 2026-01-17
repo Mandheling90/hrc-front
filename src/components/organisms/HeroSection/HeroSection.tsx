@@ -1,45 +1,45 @@
-'use client';
+'use client'
 
-import React, { useRef, useEffect } from 'react';
-import Link from 'next/link';
-import styles from './HeroSection.module.scss';
+import React, { useRef, useEffect } from 'react'
+import Link from 'next/link'
+import styles from './HeroSection.module.scss'
 
 const mainButtons = [
   { href: '#', label: '진료의뢰 신청' },
   { href: '#', label: '진료협진 컨설팅 신청' },
   { href: '#', label: '의뢰환자 조회' },
-  { href: '#', label: '회송환자 조희' },
-];
+  { href: '#', label: '회송환자 조희' }
+]
 
 const downloadLinks = [
   { href: '#', label: '진료의뢰서' },
   { href: '#', label: '협력병병원 체결 신청서류' },
-  { href: '#', label: '진료정보회신 환자 동의서' },
-];
+  { href: '#', label: '진료정보회신 환자 동의서' }
+]
 
 const infoLinks = [
   { href: '#', icon: 'doctor', label: '의료진 검색' },
   { href: '#', icon: 'hospital', label: '진료과 안내' },
   { href: '#', icon: 'calendar', label: '외래시간표' },
-  { href: '#', icon: 'map', label: '오시는 길' },
-];
+  { href: '#', icon: 'map', label: '오시는 길' }
+]
 
 const contactInfo = [
   { label: '팩스', value: '02-920-6523' },
   { label: '콜센터(진료예약)', value: '1577-0083' },
-  { label: '응급실', value: '02-920-5490' },
-];
+  { label: '응급실', value: '02-920-5490' }
+]
 
 export const HeroSection: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.error('Video play error:', error);
-      });
+      videoRef.current.play().catch(error => {
+        console.error('Video play error:', error)
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <section className={`section ${styles.section1}`}>
@@ -50,22 +50,22 @@ export const HeroSection: React.FC = () => {
           muted
           loop
           playsInline
-          preload="auto"
+          preload='auto'
           onLoadedData={() => {
-            console.log('Video loaded successfully');
+            console.log('Video loaded successfully')
           }}
-          onError={(e) => {
-            console.error('Video load error:', e);
+          onError={e => {
+            console.error('Video load error:', e)
           }}
           onCanPlay={() => {
-            console.log('Video can play');
+            console.log('Video can play')
           }}
         >
-          <source src="/assets/video/main-visual.mp4" type="video/mp4" />
+          <source src='/assets/video/main-visual.mp4' type='video/mp4' />
           Your browser does not support the video tag.
         </video>
       </div>
-      <div className="container">
+      <div className='container'>
         <h2 className={styles.title}>
           스마트 협력으로 완성하는 차세대 의료연계
           <strong>고려대학교안암병원 진료협력센터,</strong>
@@ -115,5 +115,5 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
