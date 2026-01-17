@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
+import React, { useState } from 'react';
 import styles from './LoginForm.module.scss';
 
 export const LoginForm: React.FC = () => {
@@ -33,8 +33,7 @@ export const LoginForm: React.FC = () => {
     <div className={styles.loginForm}>
       <h2 className={styles.title}>로그인</h2>
       <p className={styles.description}>
-        <span className={styles.highlight}>진료협력센터</span> 홈페이지는 의료진 전용 홈페이지로 회원 서비스는 로그인
-        후 이용하실 수 있습니다.
+        <span className={styles.highlight}>진료협력센터</span> 홈페이지는 의료진 전용 홈페이지로 회원 서비스는 로그인 후 이용하실 수 있습니다.
       </p>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
