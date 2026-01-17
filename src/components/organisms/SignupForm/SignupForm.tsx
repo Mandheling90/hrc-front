@@ -4,6 +4,7 @@ import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { AgreementContent } from '@/components/molecules/AgreementContent/AgreementContent'
 import { ProgressSteps } from '@/components/molecules/ProgressSteps/ProgressSteps'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useRouter } from 'next/navigation'
@@ -11,6 +12,7 @@ import { useRouter } from 'next/navigation'
 export const SignupForm: React.FC = () => {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
+  const [showAlert, setShowAlert] = useState(false)
   const [agreements, setAgreements] = useState({
     termsOfUse: false,
     personalInfoRequired: false,
@@ -46,9 +48,19 @@ export const SignupForm: React.FC = () => {
   }
 
   const handleNext = () => {
-    // TODO: 다음 단계로 이동
 
+    // 필수 체크 확인
+    if (!agreements.termsOfUse || !agreements.personalInfoRequired) {
+      setShowAlert(true)
+      return
+    }
+
+    // TODO: 다음 단계로 이동
     console.log('Next step')
+  }
+
+  const handleCloseAlert = () => {
+    setShowAlert(false)
   }
 
   const steps = [
@@ -201,11 +213,17 @@ export const SignupForm: React.FC = () => {
           variant='primary'
           size='medium'
           onClick={handleNext}
-          disabled={!agreements.termsOfUse || !agreements.personalInfoRequired}
+          // disabled={!agreements.termsOfUse || !agreements.personalInfoRequired}
         >
           다음 단계
         </Button>
       </div>
+
+      <AlertModal
+        isOpen={showAlert}
+        message='필수사항을 체크해주세요.'
+        onClose={handleCloseAlert}
+      />
     </div>
   )
 }

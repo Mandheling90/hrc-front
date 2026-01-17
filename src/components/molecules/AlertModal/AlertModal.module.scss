@@ -1,0 +1,97 @@
+@import '@/styles/variables.scss';
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+  padding: $spacing-4;
+}
+
+.modal {
+  background-color: $color-white;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  box-shadow: 0px 0px 39px 0px rgba(0, 0, 0, 0.35);
+  padding: $spacing-10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3.5rem; // 56px
+  min-width: 300px;
+  max-width: 656px;
+  width: 100%;
+  position: relative;
+}
+
+.message {
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-2xl; // 24px
+  line-height: $line-height-normal; // 1.5
+  color: $color-darken;
+  letter-spacing: -0.96px;
+  text-align: left;
+  width: 100%;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.closeButton {
+  background-color: #636363;
+  color: $color-white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-xl; // 20px
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.8px;
+  cursor: pointer;
+  transition: background-color $transition-base;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: darken(#636363, 10%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus {
+    outline: 2px solid rgba(159, 24, 54, 0.5);
+    outline-offset: 2px;
+  }
+}
+
+// 반응형
+@media (max-width: $breakpoint-md) {
+  .modal {
+    padding: $spacing-6;
+    gap: $spacing-6;
+    min-width: 280px;
+    max-width: 90%;
+  }
+
+  .message {
+    font-size: $font-size-xl; // 20px
+  }
+
+  .closeButton {
+    width: 100%;
+    max-width: 100px;
+  }
+}
