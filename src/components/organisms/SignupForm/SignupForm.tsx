@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import React, { useState } from 'react';
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox';
+import { ProgressSteps } from '@/components/molecules/ProgressSteps/ProgressSteps';
+import React, { useState } from 'react';
 import styles from './SignupForm.module.scss';
 
 export const SignupForm: React.FC = () => {
@@ -55,17 +55,7 @@ export const SignupForm: React.FC = () => {
     <div className={styles.signupForm}>
       <h1 className={styles.title}>회원가입</h1>
 
-      <div className={styles.progressSteps}>
-        {steps.map((step) => (
-          <div
-            key={step.id}
-            className={`${styles.step} ${currentStep === step.id ? styles.active : ''}`}
-          >
-            <span className={styles.stepNumber}>Step.0{step.id}</span>
-            <span className={styles.stepLabel}>{step.label}</span>
-          </div>
-        ))}
-      </div>
+      <ProgressSteps steps={steps} currentStep={currentStep} />
 
       <div className={styles.agreementsSection}>
         <div className={styles.agreementItem}>

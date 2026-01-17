@@ -1,7 +1,7 @@
 'use client';
 
-import { Input } from '@/components/atoms/Input/Input';
 import { Button } from '@/components/atoms/Button/Button';
+import { Input } from '@/components/atoms/Input/Input';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './LoginForm.module.scss';
