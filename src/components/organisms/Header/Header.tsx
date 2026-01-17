@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
+import React, { useState } from 'react';
 import styles from './Header.module.scss';
 
 const navigationItems = [
@@ -19,8 +19,8 @@ export const Header: React.FC = () => {
       <div className="container">
         <div className="flex align-center">
           <h1>
-            <Link href="#" aria-label="고려대학교 진료협력센터">
-              <span className={styles.logo}>고려대학교 진료협력센터</span>
+            <Link href="#" aria-label="고려대학교 진료협력센터 홈">
+              <img src="/assets/images/logo-top.png" alt="고려대학교 진료협력센터" />
             </Link>
           </h1>
           <nav className={styles.gnb}>
