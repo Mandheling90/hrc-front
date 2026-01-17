@@ -29,7 +29,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   }
 
   const Component = label ? 'label' : 'div'
-  
+
   return (
     <Component className={`${label ? styles.checkboxLabel : ''} ${className}`}>
       <input

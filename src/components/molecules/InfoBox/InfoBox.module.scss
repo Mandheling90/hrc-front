@@ -1,0 +1,221 @@
+@import '@/styles/variables.scss';
+
+.infoBox {
+  background-color: #fdf9f4;
+  border: 1px solid #dbbf93;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+
+  p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: -0.8px;
+    line-height: 1.5;
+    margin: 0;
+
+    &:first-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px 15px;
+
+    p {
+      font-size: 18px;
+    }
+  }
+}
+
+// Warning variant
+.warning {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .header {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .infoBox {
+    background-color: #fdf9f4;
+    border: 1px solid #dbbf93;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: left;
+  }
+}
+
+// With icon layout
+.withIcon {
+  display: flex;
+  gap: 12px;
+  text-align: left;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background-color: $color-primary;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  letter-spacing: -0.96px;
+  line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.message {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #636363;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  margin: 0;
+
+  &:not(:last-child) {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+}
+
+// Guide variant
+.guide {
+  background-color: #fdf9f4;
+  border: 1px solid #dbbf93;
+  border-radius: 10px;
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+  }
+
+  &.contentCenter {
+    justify-content: center;
+  }
+}
+
+.guideInner {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+}
+
+.guideIcon {
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.guideContent {
+  flex: 1;
+}
+
+.guideTitle {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  margin: 0 0 8px 0;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.guideList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guideItem {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.bullet {
+  flex-shrink: 0;
+  width: 8px;
+  height: 2px;
+  background-color: #636363;
+  margin-top: 10px;
+
+  @media (max-width: 768px) {
+    margin-top: 8px;
+  }
+}
+
+.guideMessage {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #636363;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+}

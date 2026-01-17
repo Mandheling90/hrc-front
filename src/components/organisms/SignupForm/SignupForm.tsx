@@ -1,10 +1,10 @@
 'use client'
 
 import { Button } from '@/components/atoms/Button/Button'
-import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
-import { AgreementContent } from '@/components/molecules/AgreementContent/AgreementContent'
 import { ProgressSteps } from '@/components/molecules/ProgressSteps/ProgressSteps'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { AgreementStep } from '@/components/organisms/AgreementStep/AgreementStep'
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useRouter } from 'next/navigation'
@@ -48,15 +48,34 @@ export const SignupForm: React.FC = () => {
   }
 
   const handleNext = () => {
-
-    // 필수 체크 확인
-    if (!agreements.termsOfUse || !agreements.personalInfoRequired) {
-      setShowAlert(true)
-      return
+    if (currentStep === 1) {
+      // 필수 체크 확인
+      if (!agreements.termsOfUse || !agreements.personalInfoRequired) {
+        setShowAlert(true)
+        return
+      }
+      // 다음 단계로 이동
+      setCurrentStep(2)
+    } else if (currentStep === 2) {
+      // TODO: 본인 인증 완료 후 다음 단계로 이동
+      setCurrentStep(3)
     }
+  }
 
-    // TODO: 다음 단계로 이동
-    console.log('Next step')
+  const handlePrev = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1)
+    }
+  }
+
+  const handlePhoneVerification = () => {
+    // TODO: 휴대폰 본인 인증 로직 구현
+    console.log('Phone verification')
+  }
+
+  const handleIpinVerification = () => {
+    // TODO: 아이핀 인증 로직 구현
+    console.log('i-PIN verification')
   }
 
   const handleCloseAlert = () => {
@@ -76,154 +95,157 @@ export const SignupForm: React.FC = () => {
 
       <ProgressSteps steps={steps} currentStep={currentStep} />
 
-      <div className={styles.agreementsSection}>
-        <div className={styles.agreementItem}>
-          <Checkbox
-            checked={agreements.termsOfUse}
-            onChange={handleAgreementChange('termsOfUse')}
-            label={
-              <>
-                이용약관에 동의합니다. <span className={styles.highlightText}>(필수사항)</span>
-              </>
+      {currentStep === 1 && (
+        <AgreementStep
+          agreements={agreements}
+          onAgreementChange={handleAgreementChange}
+          onAllAgreementsChange={handleAllAgreementsChange}
+          onCancel={handleCancel}
+          onNext={handleNext}
+        />
+      )}
+
+      {currentStep === 2 && (
+        <>
+          <InfoBox
+            variant='guide'
+            title='회원을 위한 본인 인증 안내'
+            icon={
+              <svg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110' fill='none'>
+                <path
+                  d='M48.0254 71.5006L77.4999 44.0006L69.4999 34.5006L48.0254 54.5006L37 45.5006L28 54.5006L48.0254 71.5006Z'
+                  stroke='#816331'
+                  stroke-width='4.58333'
+                  stroke-miterlimit='10'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M52.7087 107.709L91.667 89.3756L103.125 18.3339L52.7087 2.29224L2.29199 18.3339L13.7503 89.3756L52.7087 107.709Z'
+                  stroke='#816331'
+                  stroke-width='4.58333'
+                  stroke-miterlimit='10'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M52.7083 96.2506L82.5 82.5006L91.6667 25.209L52.7083 11.459L13.75 25.209L22.9167 82.5006L52.7083 96.2506Z'
+                  stroke='#816331'
+                  stroke-width='4.58333'
+                  stroke-miterlimit='10'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
             }
-            className={styles.agreementCheckbox}
+            messages={[
+              '개인정보 보호법에 근거하여, 회원가입을 위해서는 본인인증이 필요합니다.',
+              '본인확인은 아이핀(i-PIN)과 휴대폰 문자인증으로 확인합니다.'
+            ]}
+            showBullets={true}
+            contentAlign='center'
+            className={styles.verificationGuideBox}
           />
 
-          <AgreementContent
-            scrollableContent={
-              <>
-                <p className={styles.agreementTitle}>1. 개인 정보의 수집 목적 및 이용</p>
-                <div className={styles.agreementText}>
+          <div className={styles.verificationCards}>
+            <div className={styles.verificationCard}>
+              <div className={styles.cardIcon}>
+                <svg width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <rect width='60' height='60' rx='30' fill='#fcebeb' />
+                  <path
+                    d='M30 15C25.5817 15 22 18.5817 22 23V37C22 41.4183 25.5817 45 30 45C34.4183 45 38 41.4183 38 37V23C38 18.5817 34.4183 15 30 15Z'
+                    stroke='#9f1836'
+                    strokeWidth='2'
+                    fill='none'
+                  />
+                  <path d='M30 20V30' stroke='#9f1836' strokeWidth='2' strokeLinecap='round' />
+                  <path d='M30 35H30.01' stroke='#9f1836' strokeWidth='2' strokeLinecap='round' />
+                </svg>
+              </div>
+              <div className={styles.cardContent}>
+                <h4 className={styles.cardTitle}>본인 인증</h4>
+                <p className={styles.cardDescription}>본인명의 휴대폰, 공동인증서</p>
+                <Button
+                  type='button'
+                  variant='primary'
+                  size='large'
+                  onClick={handlePhoneVerification}
+                  className={styles.verifyButton}
+                >
+                  인증하기
+                </Button>
+              </div>
+            </div>
+
+            <div className={styles.verificationCard}>
+              <div className={styles.cardIcon}>
+                <svg width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <rect width='60' height='60' rx='30' fill='#fcebeb' />
+                  <rect x='15' y='20' width='30' height='20' rx='2' stroke='#9f1836' strokeWidth='2' fill='none' />
+                  <path d='M15 25H45' stroke='#9f1836' strokeWidth='2' />
+                  <path d='M20 30H40' stroke='#9f1836' strokeWidth='2' />
+                  <path
+                    d='M30 35C31.1046 35 32 34.1046 32 33C32 31.8954 31.1046 31 30 31C28.8954 31 28 31.8954 28 33C28 34.1046 28.8954 35 30 35Z'
+                    fill='#9f1836'
+                  />
+                </svg>
+              </div>
+              <div className={styles.cardContent}>
+                <h4 className={styles.cardTitle}>아이핀(i-PIN) 인증</h4>
+                <p className={styles.cardDescription}>아이핀 ID / PW</p>
+                <Button
+                  type='button'
+                  variant='outline'
+                  size='large'
+                  onClick={handleIpinVerification}
+                  className={styles.verifyButton}
+                >
+                  인증하기
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.noticeSection}>
+            <div className={styles.noticeHeader}>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <path
+                  d='M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z'
+                  fill='#828282'
+                />
+              </svg>
+              <h4 className={styles.noticeTitle}>유의사항</h4>
+            </div>
+            <div className={styles.noticeList}>
+              <div className={styles.noticeItem}>
+                <span className={styles.noticeBullet}>-</span>
+                <p>본인인증 방법 선택 후 팝업창이 나타나지 않으면 브라우저의 팝업차단을 해제해 주시기 바랍니다.</p>
+              </div>
+              <div className={styles.noticeItem}>
+                <span className={styles.noticeBullet}>-</span>
+                <div className={styles.noticeText}>
                   <p>
-                    "병원"은 수집한 개인정보를 다음의 목적을 위해 활용합니다.
-                    <br />
-                    이용자가 제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며 이용 목적이 변경될 시에는 사전 동의를 구할 것입니다.
+                    아이핀(I-PIN) 인증 또는 휴대폰 인증시 장애가 있으신 경우는 나이스평가정보 실명확인 서비스 기관에
+                    문의하시기 바랍니다.
                   </p>
-                  <p>&nbsp;</p>
-                  <p>온라인 안내</p>
-                  <ul>
-                    <li>① 서비스제공</li>
-                    <li>진료 및 건진 예약, 예약조회 및 회원제 서비스 이용에 따른 본인 확인 절차에 이용 고지사항 전달, 불만처리 등을 위한 원활한 의사소통 경로의 확보, 새로운 서비스 및 행사정보 등의 안내</li>
-                    <li>② 회원관리</li>
-                    <li>③ 신규 서비스 개발과 개인 맞춤 서비스 제공을 위한 자료</li>
-                  </ul>
+                  <p>나이스평가정보 본인 인증 콜센터 : 1600-1522</p>
                 </div>
-              </>
-            }
-            wrapAllInScrollBox={true}
-          />
-        </div>
+              </div>
+            </div>
+          </div>
 
-        <div className={styles.agreementItem}>
-          <Checkbox
-            checked={agreements.personalInfoRequired}
-            onChange={handleAgreementChange('personalInfoRequired')}
-            label={
-              <>
-                개인정보 수집 및 이용 목적에 동의합니다. <span className={styles.highlightText}>(필수사항)</span>
-              </>
-            }
-            className={styles.agreementCheckbox}
-          />
-          <AgreementContent
-            scrollableContent={
-              <p>
-                개인정보 수집 및 이용에 관한 약관 내용이 들어갑니다.
-                <br />
-                <br />
-                수집하는 개인정보 항목:
-                <br />
-                - 이름, 연락처, 이메일 등 기본 정보
-                <br />
-                - 서비스 이용 기록
-                <br />- 기타 서비스 제공에 필요한 정보
-              </p>
-            }
-          />
-        </div>
+          <div className={styles.buttonGroup}>
+            <Button type='button' variant='gray' size='medium' onClick={handlePrev}>
+              이전
+            </Button>
+            <Button type='button' variant='primary' size='medium' onClick={handleNext} disabled>
+              다음 단계
+            </Button>
+          </div>
+        </>
+      )}
 
-        <div className={styles.agreementItem}>
-          <Checkbox
-            checked={agreements.personalInfoOptional1}
-            onChange={handleAgreementChange('personalInfoOptional1')}
-            label={
-              <>
-                개인정보 수집 및 이용 목적에 동의합니다. <span className={styles.highlightText}>(선택사항)</span>
-              </>
-            }
-            className={styles.agreementCheckbox}
-          />
-          <AgreementContent
-            scrollableContent={<p>선택사항 개인정보 수집 및 이용 약관 내용입니다.</p>}
-          />
-        </div>
-
-        <div className={styles.agreementItem}>
-          <Checkbox
-            checked={agreements.personalInfoOptional2}
-            onChange={handleAgreementChange('personalInfoOptional2')}
-            label={
-              <>
-                개인정보 수집 및 이용 목적에 동의합니다. <span className={styles.highlightText}>(선택사항)</span>
-              </>
-            }
-            className={styles.agreementCheckbox}
-          />
-          <AgreementContent
-            scrollableContent={<p>선택사항 개인정보 수집 및 이용 약관 내용입니다.</p>}
-          />
-        </div>
-
-        <div className={styles.agreementItem}>
-          <Checkbox
-            checked={agreements.allAgreements}
-            onChange={handleAllAgreementsChange}
-            label='서비스 전체 약관에 동의합니다.'
-            className={styles.agreementCheckbox}
-          />
-          
-        </div>
-      </div>
-
-      <div className={styles.warningBox}>
-        <div className={styles.warningIcon}>
-          <svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-            <path
-              d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'
-              fill='currentColor'
-            />
-          </svg>
-        </div>
-        <div className={styles.warningContent}>
-          <h4 className={styles.warningTitle}>비동의 시 제한사항</h4>
-          <p className={styles.warningText}>
-            귀하는 위 항목에 대하여 동의를 거부할 수 있으며 동의 후에도 언제든지 철회 가능합니다. 다만, 수집하는
-            개인정보는 원활한 서비스 제공을 위해 필요한 최소한의 기본정보로서, 동의를 거부하실 경우에는 회원에게
-            제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.
-          </p>
-        </div>
-      </div>
-
-      <div className={styles.buttonGroup}>
-        <Button type='button' variant='gray' size='medium' onClick={handleCancel}>
-          취소
-        </Button>
-        <Button
-          type='button'
-          variant='primary'
-          size='medium'
-          onClick={handleNext}
-          // disabled={!agreements.termsOfUse || !agreements.personalInfoRequired}
-        >
-          다음 단계
-        </Button>
-      </div>
-
-      <AlertModal
-        isOpen={showAlert}
-        message='필수사항을 체크해주세요.'
-        onClose={handleCloseAlert}
-      />
+      <AlertModal isOpen={showAlert} message='필수사항을 체크해주세요.' onClose={handleCloseAlert} />
     </div>
   )
 }

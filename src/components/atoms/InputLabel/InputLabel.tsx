@@ -8,12 +8,7 @@ interface InputLabelProps {
   className?: string
 }
 
-export const InputLabel: React.FC<InputLabelProps> = ({
-  htmlFor,
-  required = false,
-  children,
-  className
-}) => {
+export const InputLabel: React.FC<InputLabelProps> = ({ htmlFor, required = false, children, className }) => {
   return (
     <label htmlFor={htmlFor} className={`${styles.inputLabel} ${className || ''}`}>
       {required && <span className={styles.required}>*</span>}

@@ -197,62 +197,8 @@
   }
 }
 
-.warningBox {
-  background-color: #fef8e8;
-  border: 1px solid #f5e6a8;
-  border-radius: 4px;
-  padding: 20px;
-  display: flex;
-  gap: 12px;
+.warningSection {
   margin-bottom: 40px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 16px;
-  }
-}
-
-.warningIcon {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  background-color: $color-primary;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-.warningContent {
-  flex: 1;
-}
-
-.warningTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: #000;
-  margin-bottom: 8px;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
-}
-
-.warningText {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  margin: 0;
-
-  @media (max-width: 768px) {
-    font-size: 13px;
-  }
 }
 
 .buttonGroup {
@@ -265,3 +211,188 @@
   }
 }
 
+// Step 2: 본인 인증 스타일
+.verificationGuideBox {
+  margin-bottom: 40px;
+}
+
+.verificationCards {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.verificationCard {
+  flex: 1;
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+
+  @media (max-width: 768px) {
+    padding: 32px 24px;
+    gap: 24px;
+  }
+}
+
+.cardIcon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcebeb;
+  border-radius: 50%;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  svg {
+    width: 60px;
+    height: 60px;
+
+    @media (max-width: 768px) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 32px;
+  }
+}
+
+.cardTitle {
+  font-family: $font-family-base;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  color: #000;
+  line-height: $line-height-normal;
+  letter-spacing: -0.96px;
+  margin: 0;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.cardDescription {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+  margin: 0;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.verifyButton {
+  width: 220px;
+  height: 66px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+
+.noticeSection {
+  margin-bottom: 40px;
+}
+
+.noticeHeader {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.noticeTitle {
+  font-family: $font-family-base;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+}
+
+.noticeList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 32px;
+
+  @media (max-width: 768px) {
+    padding-left: 24px;
+  }
+}
+
+.noticeItem {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.noticeBullet {
+  font-family: $font-family-base;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  flex-shrink: 0;
+}
+
+.noticeText {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+
+  p {
+    margin: 0 0 4px 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
