@@ -8,11 +8,75 @@
   background-color: transparent;
   padding: 0;
   
+  &.loginPage {
+    background-color: #fff;
+    padding: 16px 0;
+    min-height: 80px;
+    
+    .container > .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    h1 {
+      margin-right: 0;
+      flex-shrink: 0;
+      
+      a {
+        width: 240px;
+        height: 60px;
+        
+        @media (max-width: 720px) {
+          width: 180px;
+          height: 45px;
+        }
+        
+        @media (max-width: 500px) {
+          width: 150px;
+          height: 38px;
+        }
+      }
+    }
+    
+    .gnb {
+      margin-left: 40px;
+      margin-right: auto;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      
+      ul {
+        gap: 60px;
+        
+        @media (max-width: 1600px) {
+          gap: 40px;
+        }
+        
+        li a {
+          font-size: 18px;
+          white-space: nowrap;
+        }
+      }
+    }
+    
+    .util {
+      margin-left: 40px;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+  }
+  
   .container {
     width: 100%;
     max-width: 1430px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
+    
+    @media (max-width: 768px) {
+      padding: 0 20px;
+    }
   }
   
   .flex {
@@ -75,6 +139,10 @@
     }
   }
   
+  &.loginPage .gnb ul li a {
+    color: #000;
+  }
+  
   .util {
     margin-left: 120px;
     display: flex;
@@ -101,6 +169,25 @@
         display: block;
         filter: brightness(0) invert(1);
       }
+    }
+    
+    .textLink {
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      text-decoration: none;
+      transition: opacity 0.3s;
+      padding: 4px 8px;
+      
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    
+    .separator {
+      color: #ccc;
+      margin: 0 4px;
+      font-size: 14px;
     }
   }
 }
