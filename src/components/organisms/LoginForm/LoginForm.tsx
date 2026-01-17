@@ -1,5 +1,7 @@
 'use client';
 
+import { Input } from '@/components/atoms/Input/Input';
+import { Button } from '@/components/atoms/Button/Button';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './LoginForm.module.scss';
@@ -37,26 +39,24 @@ export const LoginForm: React.FC = () => {
       </p>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <input
+          <Input
             type="text"
             id="id"
             name="id"
             placeholder="아이디"
             value={formData.id}
             onChange={handleChange}
-            className={styles.input}
             required
           />
         </div>
         <div className={styles.inputGroup}>
-          <input
+          <Input
             type={showPassword ? 'text' : 'password'}
             id="password"
             name="password"
             placeholder="비밀번호"
             value={formData.password}
             onChange={handleChange}
-            className={styles.input}
             required
           />
           <button
@@ -90,9 +90,9 @@ export const LoginForm: React.FC = () => {
             </svg>
           </button>
         </div>
-        <button type="submit" className={styles.loginButton}>
+        <Button type="submit" variant="primary" size="medium" fullWidth>
           로그인
-        </button>
+        </Button>
       </form>
       <div className={styles.links}>
         <Link href="/find-id" className={styles.link}>
