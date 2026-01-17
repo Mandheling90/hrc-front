@@ -16,11 +16,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {label}
           </label>
         )}
-        <input
-          ref={ref}
-          className={`${styles.input} ${error ? styles.error : ''}`}
-          {...props}
-        />
+        <input ref={ref} className={`${styles.input} ${error ? styles.error : ''}`} {...props} />
         {error && <span className={styles.errorMessage}>{error}</span>}
       </div>
     );

@@ -5,14 +5,16 @@ This file contains guidelines and commands for agentic coding agents working in 
 ## Project Overview
 
 This is a **진료협력센터 (Medical Cooperation Center)** project built with:
+
 - **Next.js 15** with App Router
-- **React 19** 
+- **React 19**
 - **TypeScript 5.x**
 - **Atomic Design Pattern**
 
 ## Development Commands
 
 ### Core Commands
+
 ```bash
 npm run dev          # Start development server (http://localhost:3000)
 npm run build        # Build for production
@@ -21,6 +23,7 @@ npm run lint         # Run ESLint
 ```
 
 ### Testing Commands
+
 ```bash
 # Note: No test framework is currently configured
 # When adding tests, use one of these patterns:
@@ -30,6 +33,7 @@ npm run test:single   # Run single test file (when configured)
 ```
 
 ### TypeScript Commands
+
 ```bash
 npx tsc --noEmit     # Type check without emitting files
 npx tsc              # Type check and emit declaration files
@@ -40,6 +44,7 @@ npx tsc              # Type check and emit declaration files
 ### File Structure & Organization
 
 **Atomic Design Pattern:**
+
 ```
 src/components/
 ├── atoms/           # Smallest UI elements (Button, Input, Icon)
@@ -50,6 +55,7 @@ src/components/
 ```
 
 **Directory Structure:**
+
 - `src/app/` - Next.js App Router pages and layouts
 - `src/components/` - Reusable UI components
 - `src/hooks/` - Custom React hooks
@@ -60,10 +66,12 @@ src/components/
 ### Import Conventions
 
 **Path Aliases:**
+
 - Use `@/*` for src directory imports (configured in tsconfig.json)
 - Example: `import Button from '@/components/atoms/Button'`
 
 **Import Order:**
+
 1. React/Next.js imports
 2. Third-party library imports
 3. Internal imports (using @ alias)
@@ -71,7 +79,7 @@ src/components/
 
 ```typescript
 // ✅ Correct
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 import { useState } from 'react';
 import { SomeLibrary } from 'third-party-lib';
 import { Button } from '@/components/atoms/Button';
@@ -81,12 +89,14 @@ import type { User } from '@/types/user';
 ### TypeScript Guidelines
 
 **Type Definitions:**
+
 - Use `interface` for object shapes that can be extended
 - Use `type` for unions, intersections, and computed types
 - Export types from `src/types/index.ts` when reusable
 - Use `import type` for type-only imports
 
 **Component Props:**
+
 ```typescript
 // ✅ Use interfaces for component props
 interface ButtonProps {
@@ -101,12 +111,14 @@ export function Button({ children, variant = 'primary', onClick }: ButtonProps) 
 ```
 
 **Generic Types:**
+
 - Use descriptive generic parameter names (`T`, `K`, `V` are acceptable)
 - Provide constraints where necessary
 
 ### Component Guidelines
 
 **Functional Components:**
+
 - Use function declarations for components
 - Use `export default` for page components
 - Use named exports for reusable components
@@ -125,6 +137,7 @@ export function Button({ children }: { children: React.ReactNode }) {
 ```
 
 **Component Naming:**
+
 - Use PascalCase for component names
 - Use descriptive names that reflect functionality
 - File names should match component names
@@ -132,11 +145,13 @@ export function Button({ children }: { children: React.ReactNode }) {
 ### Styling Guidelines
 
 **CSS Approach:**
+
 - Use Tailwind CSS classes (configured with Next.js)
 - Follow mobile-first responsive design
 - Use semantic class names when possible
 
 **Class Organization:**
+
 ```typescript
 // ✅ Organize classes logically
 <div className="flex flex-col items-center justify-center p-4 space-y-2">
@@ -145,11 +160,13 @@ export function Button({ children }: { children: React.ReactNode }) {
 ### Error Handling
 
 **Type Safety:**
+
 - Enable strict mode in TypeScript (already configured)
 - Use proper error boundaries in React components
 - Handle async operations with try-catch or proper error handling
 
 **API Calls:**
+
 ```typescript
 // ✅ Proper async error handling
 async function fetchData() {
@@ -169,32 +186,36 @@ async function fetchData() {
 ### Export Patterns
 
 **Index Files:**
+
 - Use barrel exports in index.ts files
 - Re-export all components from their respective directories
 - Maintain consistent export patterns
 
 ```typescript
 // ✅ src/components/index.ts
-export * from "./atoms";
-export * from "./molecules";
-export * from "./organisms";
-export * from "./templates";
+export * from './atoms';
+export * from './molecules';
+export * from './organisms';
+export * from './templates';
 ```
 
 ### Naming Conventions
 
 **Files:**
+
 - Component files: `PascalCase.tsx`
 - Hook files: `useCamelCase.ts`
 - Type files: `camelCase.ts`
 - Utility files: `camelCase.ts`
 
 **Variables:**
+
 - Use camelCase for variables and functions
 - Use PascalCase for types and interfaces
 - Use UPPER_SNAKE_CASE for constants
 
 **Functions:**
+
 - Use descriptive verb-based names for functions
 - Use `handle` prefix for event handlers
 - Use `use` prefix for custom hooks
@@ -202,16 +223,19 @@ export * from "./templates";
 ### Code Quality
 
 **ESLint:**
+
 - Run `npm run lint` before committing
 - Fix all linting errors
 - Follow Next.js ESLint configuration
 
 **TypeScript:**
+
 - All files must be properly typed
 - Avoid `any` type - use proper typing or `unknown`
 - Use type guards for runtime type checking
 
 **Comments:**
+
 - Add comments for complex logic
 - Use JSDoc for function documentation when needed
 - Keep comments concise and relevant
@@ -219,16 +243,19 @@ export * from "./templates";
 ## Next.js Specific Guidelines
 
 **App Router:**
+
 - Use App Router conventions (already configured)
 - Server components by default, client components with "use client"
 - Proper metadata handling in layout files
 
 **Routing:**
+
 - File-based routing in `src/app/`
 - Use route groups for organization when needed
 - Proper loading and error states
 
 **Performance:**
+
 - Use Next.js Image optimization
 - Implement proper caching strategies
 - Optimize bundle size with dynamic imports
@@ -272,6 +299,7 @@ export * from "./templates";
 ## Testing Strategy (Future Implementation)
 
 When adding tests, follow these patterns:
+
 - Unit tests for utility functions and hooks
 - Component tests for UI components
 - Integration tests for user flows

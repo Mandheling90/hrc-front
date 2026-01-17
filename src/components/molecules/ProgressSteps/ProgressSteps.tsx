@@ -42,17 +42,13 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({
         return isActive ? (
           <div key={step.id} className={styles.stepWrapper}>
             <div className={`${styles.step} ${styles.active}`}>
-              {isTabletOrUp && (
-                <span className={styles.stepNumber}>Step.0{step.id}</span>
-              )}
+              {isTabletOrUp && <span className={styles.stepNumber}>Step.0{step.id}</span>}
               <span className={styles.stepLabel}>{step.label}</span>
             </div>
           </div>
         ) : (
           <div key={step.id} className={styles.step}>
-            {isTabletOrUp && (
-              <span className={styles.stepNumber}>Step.0{step.id}</span>
-            )}
+            {isTabletOrUp && <span className={styles.stepNumber}>Step.0{step.id}</span>}
             <span className={styles.stepLabel}>{step.label}</span>
           </div>
         );

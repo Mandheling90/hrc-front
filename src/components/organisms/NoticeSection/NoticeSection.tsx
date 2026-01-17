@@ -18,8 +18,8 @@ const categories = [
 export const NoticeSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState(0);
 
-  const filteredNotices = notices.filter((notice) => 
-    notice.category === categories[activeCategory].id
+  const filteredNotices = notices.filter(
+    (notice) => notice.category === categories[activeCategory].id
   );
 
   return (
@@ -30,7 +30,10 @@ export const NoticeSection: React.FC = () => {
             <div className={styles.titleWrap}>
               <h3 className={styles.sectionTitle}>공지사항</h3>
               <div className={styles.tabsWrap}>
-                <div className={styles.tabs} style={{ '--active-index': activeCategory } as React.CSSProperties}>
+                <div
+                  className={styles.tabs}
+                  style={{ '--active-index': activeCategory } as React.CSSProperties}
+                >
                   {categories.map((category, index) => (
                     <button
                       key={category.id}

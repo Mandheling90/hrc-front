@@ -13,7 +13,7 @@
   color: #000;
   text-align: center;
   margin-bottom: 40px;
-  
+
   @media (max-width: 768px) {
     font-size: 36px;
     margin-bottom: 32px;
@@ -26,7 +26,7 @@
 
 .agreementItem {
   margin-bottom: 32px;
-  
+
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -36,10 +36,15 @@
   margin-bottom: 16px;
 }
 
+.highlightText {
+  color: $color-primary;
+  font-weight: 700;
+}
+
 .agreementContent {
   margin-left: 32px;
   margin-top: 16px;
-  
+
   @media (max-width: 768px) {
     margin-left: 0;
   }
@@ -50,7 +55,7 @@
   font-weight: 600;
   color: #000;
   margin-bottom: 12px;
-  
+
   @media (max-width: 768px) {
     font-size: 14px;
   }
@@ -61,7 +66,7 @@
   color: #666;
   line-height: 1.6;
   margin-bottom: 16px;
-  
+
   @media (max-width: 768px) {
     font-size: 13px;
   }
@@ -72,7 +77,7 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
@@ -83,7 +88,7 @@
 .radioLabel {
   font-size: 14px;
   color: #666;
-  
+
   @media (max-width: 768px) {
     font-size: 13px;
   }
@@ -96,14 +101,14 @@
   font-size: 14px;
   color: #666;
   cursor: pointer;
-  
+
   input[type='radio'] {
     width: 18px;
     height: 18px;
     cursor: pointer;
     accent-color: $color-primary;
   }
-  
+
   @media (max-width: 768px) {
     font-size: 13px;
   }
@@ -116,20 +121,20 @@
   max-height: 200px;
   overflow-y: auto;
   padding: 16px;
-  
+
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 3px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $color-primary;
     border-radius: 3px;
-    
+
     &:hover {
       background: darken($color-primary, 10%);
     }
@@ -140,7 +145,7 @@
   font-size: 13px;
   color: #666;
   line-height: 1.6;
-  
+
   p {
     margin: 0;
   }
@@ -154,7 +159,7 @@
   display: flex;
   gap: 12px;
   margin-bottom: 40px;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 16px;
@@ -171,7 +176,7 @@
   align-items: center;
   justify-content: center;
   color: #fff;
-  
+
   svg {
     width: 16px;
     height: 16px;
@@ -187,7 +192,7 @@
   font-weight: 600;
   color: #000;
   margin-bottom: 8px;
-  
+
   @media (max-width: 768px) {
     font-size: 14px;
   }
@@ -198,7 +203,7 @@
   color: #666;
   line-height: 1.6;
   margin: 0;
-  
+
   @media (max-width: 768px) {
     font-size: 13px;
   }
@@ -208,7 +213,7 @@
   display: flex;
   justify-content: center;
   gap: 12px;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -224,12 +229,12 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
-  
+
   &:hover {
     background-color: #f5f5f5;
     border-color: #bbb;
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
     padding: 14px;
@@ -247,17 +252,17 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  
+
   &:hover:not(:disabled) {
     background-color: darken($color-primary, 10%);
   }
-  
+
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
     opacity: 0.6;
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
     padding: 14px;

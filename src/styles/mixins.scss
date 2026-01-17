@@ -77,11 +77,11 @@
   cursor: pointer;
   transition: all $transition-base;
   text-decoration: none;
-  
+
   &:hover {
     transform: translateY(-1px);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
@@ -93,14 +93,16 @@
   border-radius: $radius-lg;
   box-shadow: $shadow-md;
   padding: $spacing-6;
-  transition: background-color $transition-base, box-shadow $transition-base;
-  
+  transition:
+    background-color $transition-base,
+    box-shadow $transition-base;
+
   // 다크모드 지원
   @media (prefers-color-scheme: dark) {
     background: $color-bg-dark-secondary;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   }
-  
+
   [data-theme='dark'] & {
     background: $color-bg-dark-secondary;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
@@ -114,12 +116,12 @@
   border-radius: $radius-xl;
   padding: $spacing-4;
   transition: background $transition-base;
-  
+
   // 다크모드 지원
   @media (prefers-color-scheme: dark) {
     background: rgba(30, 41, 59, 0.9);
   }
-  
+
   [data-theme='dark'] & {
     background: rgba(30, 41, 59, 0.9);
   }
@@ -131,16 +133,16 @@
     width: 8px;
     height: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: $color-gray-100;
     border-radius: $radius-full;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $color-gray-400;
     border-radius: $radius-full;
-    
+
     &:hover {
       background: $color-gray-500;
     }

@@ -6,7 +6,7 @@ export interface CheckboxProps {
   name?: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
-  label?: string;
+  label?: string | React.ReactNode;
   disabled?: boolean;
   className?: string;
   'aria-label'?: string;
@@ -38,7 +38,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         onChange={handleChange}
         disabled={disabled}
         className={styles.checkbox}
-        aria-label={ariaLabel || label}
+        aria-label={ariaLabel || (typeof label === 'string' ? label : undefined)}
       />
       {label && <span>{label}</span>}
     </label>

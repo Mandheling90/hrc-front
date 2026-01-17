@@ -44,12 +44,12 @@ export const HeroSection: React.FC = () => {
   return (
     <section className={`section ${styles.section1}`}>
       <div className={styles.videoWrap}>
-        <video 
+        <video
           ref={videoRef}
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
+          autoPlay
+          muted
+          loop
+          playsInline
           preload="auto"
           onLoadedData={() => {
             console.log('Video loaded successfully');
