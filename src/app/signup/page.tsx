@@ -2,17 +2,17 @@
 
 import { Header } from '@/components/organisms/Header/Header';
 import { Footer } from '@/components/organisms/Footer/Footer';
-import { LoginForm } from '@/components/organisms/LoginForm/LoginForm';
+import { SignupForm } from '@/components/organisms/SignupForm/SignupForm';
 import styles from './page.module.scss';
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className={styles.wrap}>
       <Header />
       <main className={styles.main}>
         <div className="container">
-          <div className={styles.loginContainer}>
-            <LoginForm />
+          <div className={styles.signupContainer}>
+            <SignupForm />
           </div>
         </div>
       </main>

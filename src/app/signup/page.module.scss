@@ -1,0 +1,25 @@
+@import '@/styles/variables.scss';
+
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.main {
+  flex: 1;
+  padding: 80px 0;
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+}
+
+.signupContainer {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
