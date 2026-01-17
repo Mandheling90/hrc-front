@@ -4,6 +4,7 @@ import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { AgreementContent } from '@/components/molecules/AgreementContent/AgreementContent'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { WarningIcon } from '@/components/icons/WarningIcon'
 import React from 'react'
 import styles from './AgreementStep.module.scss'
 
@@ -144,17 +145,10 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
       </div>
 
       <div className={styles.warningSection}>
-        <InfoBox
-          variant='warning'
-          title='비동의 시 제한사항'
-          icon={
-            <svg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-              <path
-                d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'
-                fill='currentColor'
-              />
-            </svg>
-          }
+          <InfoBox
+            variant='warning'
+            title='비동의 시 제한사항'
+            icon={<WarningIcon width={20} height={20} fill='currentColor' />}
           messages={[
             '귀하는 위 항목에 대하여 동의를 거부할 수 있으며, 동의 후에도 언제든지 철회 가능합니다.',
             '다만, 수집하는 개인정보는 원활한 서비스 제공을 위해 필요한 최소한의 기본정보로서, 동의를 거부하실 경우에는 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.'
