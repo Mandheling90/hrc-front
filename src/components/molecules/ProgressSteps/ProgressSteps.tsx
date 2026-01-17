@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProgressSteps.module.scss';
 
 export interface Step {
@@ -19,6 +19,21 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({
   currentStep,
   className = '',
 }) => {
+  const [isTabletOrUp, setIsTabletOrUp] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsTabletOrUp(window.innerWidth >= 769);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
   return (
     <div className={`${styles.progressSteps} ${className}`}>
       <div className={styles.progressLine}></div>
@@ -27,13 +42,17 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({
         return isActive ? (
           <div key={step.id} className={styles.stepWrapper}>
             <div className={`${styles.step} ${styles.active}`}>
-              <span className={styles.stepNumber}>Step.0{step.id}</span>
+              {isTabletOrUp && (
+                <span className={styles.stepNumber}>Step.0{step.id}</span>
+              )}
               <span className={styles.stepLabel}>{step.label}</span>
             </div>
           </div>
         ) : (
           <div key={step.id} className={styles.step}>
-            <span className={styles.stepNumber}>Step.0{step.id}</span>
+            {isTabletOrUp && (
+              <span className={styles.stepNumber}>Step.0{step.id}</span>
+            )}
             <span className={styles.stepLabel}>{step.label}</span>
           </div>
         );
