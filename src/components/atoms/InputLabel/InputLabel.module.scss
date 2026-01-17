@@ -1,0 +1,29 @@
+@import '@/styles/variables.scss';
+
+.inputLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: -0.8px;
+  line-height: 1.5;
+}
+
+.required {
+  color: $color-primary;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputLabelText {
+  // 추가 스타일이 필요하면 여기에 작성
+}
+
+@media (max-width: 768px) {
+  .inputLabel {
+    font-size: 18px;
+  }
+}

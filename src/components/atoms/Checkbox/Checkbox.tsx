@@ -28,8 +28,10 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     }
   }
 
+  const Component = label ? 'label' : 'div'
+  
   return (
-    <label className={`${styles.checkboxLabel} ${className}`}>
+    <Component className={`${label ? styles.checkboxLabel : ''} ${className}`}>
       <input
         type='checkbox'
         id={id}
@@ -41,6 +43,6 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         aria-label={ariaLabel || (typeof label === 'string' ? label : undefined)}
       />
       {label && <span>{label}</span>}
-    </label>
+    </Component>
   )
 }

@@ -17,9 +17,11 @@ export const Header: React.FC = () => {
   const pathname = usePathname()
   const isLoginPage = pathname === '/login'
   const isSignupPage = pathname === '/signup'
+  const isFindPasswordPage = pathname === '/find-password'
+  const isAuthPage = isLoginPage || isSignupPage || isFindPasswordPage
 
   return (
-    <header id='header' className={`${styles.header} ${isLoginPage || isSignupPage ? styles.loginPage : ''}`}>
+    <header id='header' className={`${styles.header} ${isAuthPage ? styles.loginPage : ''}`}>
       <div className='container'>
         <div className='flex align-center'>
           <h1>
@@ -37,7 +39,7 @@ export const Header: React.FC = () => {
             </ul>
           </nav>
           <div className={styles.util}>
-            {isLoginPage || isSignupPage ? (
+            {isAuthPage ? (
               <>
                 <Link href='/login' className={styles.textLink}>
                   로그인

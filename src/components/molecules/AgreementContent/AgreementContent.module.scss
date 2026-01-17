@@ -118,17 +118,18 @@
   padding: 16px;
 
   &::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
+    background: #e8e8e8;
+    border-radius: 40px;
   }
 
   &::-webkit-scrollbar-thumb {
     background: $color-primary;
-    border-radius: 3px;
+    border-radius: 60px;
+    height: 85.333px;
 
     &:hover {
       background: darken($color-primary, 10%);
