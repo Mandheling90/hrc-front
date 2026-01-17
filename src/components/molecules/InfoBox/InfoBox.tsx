@@ -16,6 +16,8 @@ export interface InfoBoxProps {
   showBullets?: boolean
   /** 콘텐츠 시작 위치 (guide variant용, 기본값: 'left') */
   contentAlign?: 'left' | 'center'
+  /** 모바일에서 아이콘 숨김 여부 (guide variant용, 기본값: false) */
+  hideIconOnMobile?: boolean
   /** 추가 클래스명 */
   className?: string
 }
@@ -27,6 +29,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   variant = 'info',
   showBullets = false,
   contentAlign = 'left',
+  hideIconOnMobile = false,
   className = ''
 }) => {
   const hasIcon = icon !== undefined
@@ -58,7 +61,11 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
     return (
       <div className={`${styles.guide} ${contentAlign === 'center' ? styles.contentCenter : ''} ${className}`}>
         <div className={styles.guideInner}>
-          {hasIcon && <div className={styles.guideIcon}>{icon}</div>}
+          {hasIcon && (
+            <div className={`${styles.guideIcon} ${hideIconOnMobile ? styles.hideOnMobile : ''}`}>
+              {icon}
+            </div>
+          )}
           <div className={styles.guideContent}>
             {hasTitle && <h3 className={styles.guideTitle}>{title}</h3>}
             <div className={styles.guideList}>

@@ -1,0 +1,91 @@
+@import '@/styles/variables.scss';
+
+.noticeSection {
+  margin-bottom: 40px;
+}
+
+.noticeHeader {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.noticeTitle {
+  font-family: $font-family-base;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+}
+
+.noticeList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 32px;
+  line-height: $line-height-normal;
+  color: #636363;
+
+  @media (max-width: 768px) {
+    padding-left: 24px;
+  }
+}
+
+.noticeItem {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.noticeBullet {
+  font-family: $font-family-base;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  flex-shrink: 0;
+}
+
+.noticeText {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+  margin: 0;
+
+  p {
+    margin: 0 0 4px 0;
+    font-family: $font-family-base;
+    font-size: 18px;
+    font-weight: $font-weight-normal;
+    color: #636363;
+    line-height: $line-height-normal;
+    letter-spacing: -0.72px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+
+    p {
+      font-size: 16px;
+    }
+  }
+}

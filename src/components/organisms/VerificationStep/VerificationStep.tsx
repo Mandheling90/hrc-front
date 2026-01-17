@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/atoms/Button/Button'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { NoticeList } from '@/components/molecules/NoticeList/NoticeList'
 import { ShieldIcon } from '@/components/icons/ShieldIcon'
 import { PhoneIcon } from '@/components/icons/PhoneIcon'
 import { IPinIcon } from '@/components/icons/IPinIcon'
@@ -38,6 +39,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
         ]}
         showBullets={true}
         contentAlign='center'
+        hideIconOnMobile={true}
         className={styles.verificationGuideBox}
       />
 
@@ -85,28 +87,21 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
         </div>
       </div>
 
-      <div className={styles.noticeSection}>
-        <div className={styles.noticeHeader}>
-          <InfoIcon width={24} height={24} fill='#828282' />
-          <h4 className={styles.noticeTitle}>유의사항</h4>
-        </div>
-        <div className={styles.noticeList}>
-          <div className={styles.noticeItem}>
-            <span className={styles.noticeBullet}>-</span>
-            <p>본인인증 방법 선택 후 팝업창이 나타나지 않으면 브라우저의 팝업차단을 해제해 주시기 바랍니다.</p>
-          </div>
-          <div className={styles.noticeItem}>
-            <span className={styles.noticeBullet}>-</span>
-            <div className={styles.noticeText}>
-              <p>
-                아이핀(I-PIN) 인증 또는 휴대폰 인증시 장애가 있으신 경우는 나이스평가정보 실명확인 서비스 기관에
-                문의하시기 바랍니다.
-              </p>
-              <p>나이스평가정보 본인 인증 콜센터 : 1600-1522</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <NoticeList
+        title='유의사항'
+        icon={<InfoIcon width={24} height={24} fill='#828282' />}
+        items={[
+          {
+            text: '본인인증 방법 선택 후 팝업창이 나타나지 않으면 브라우저의 팝업차단을 해제해 주시기 바랍니다.'
+          },
+          {
+            paragraphs: [
+              '아이핀(I-PIN) 인증 또는 휴대폰 인증시 장애가 있으신 경우는 나이스평가정보 실명확인 서비스 기관에 문의하시기 바랍니다.',
+              '나이스평가정보 본인 인증 콜센터 : 1600-1522'
+            ]
+          }
+        ]}
+      />
 
       <div className={styles.buttonGroup}>
         <Button type='button' variant='gray' size='medium' onClick={onPrev}>
