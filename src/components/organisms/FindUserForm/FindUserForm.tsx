@@ -134,14 +134,6 @@ export const FindUserForm: React.FC = () => {
             ]}
           />
         )}
-        {activeTab === 'findPassword' && (
-          <InfoBox
-            messages={[
-              '회원 가입 시와 동일하게 본인 인증 후 비밀번호를 찾아주세요.',
-              '휴대전화 본인 인증이나 이메일 인증으로 비밀번호를 찾을 수 있습니다.'
-            ]}
-          />
-        )}
 
         <div className={styles.authSections}>
           {/* 휴대전화 인증 */}
