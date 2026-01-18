@@ -5,13 +5,14 @@ import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { AgreementStep } from '@/components/organisms/AgreementStep/AgreementStep'
 import { VerificationStep } from '@/components/organisms/VerificationStep/VerificationStep'
 import { MemberInfoStep } from '@/components/organisms/MemberInfoStep/MemberInfoStep'
+import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useRouter } from 'next/navigation'
 
 export const SignupForm: React.FC = () => {
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(3)
+  const [currentStep, setCurrentStep] = useState(4)
   const [showAlert, setShowAlert] = useState(false)
   const [agreements, setAgreements] = useState({
     termsOfUse: false,
@@ -102,6 +103,8 @@ export const SignupForm: React.FC = () => {
         {currentStep === 2 && <VerificationStep onNext={handleNext} onPrev={handlePrev} />}
 
         {currentStep === 3 && <MemberInfoStep onNext={handleNext} onPrev={handlePrev} onCancel={handleCancel} />}
+
+        {currentStep === 4 && <CompleteStep onGoToMain={() => router.push('/')} />}
       </div>
 
       <AlertModal isOpen={showAlert} message='필수사항을 체크해주세요.' onClose={handleCloseAlert} />

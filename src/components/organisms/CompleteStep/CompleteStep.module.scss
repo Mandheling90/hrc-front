@@ -1,0 +1,162 @@
+@import '@/styles/variables.scss';
+
+.completeStep {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    gap: 32px;
+  }
+}
+
+.completeBox {
+  width: 100%;
+  max-width: 1000px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 60px 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  background-color: #fff;
+
+  @media (max-width: 768px) {
+    padding: 40px 24px;
+    gap: 24px;
+  }
+}
+
+.iconWrapper {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8EFE2;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.completeTitle {
+  font-family: $font-family-base;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  line-height: $line-height-normal;
+  letter-spacing: -0.96px;
+  text-align: center;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.completeDescription {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  color: #636363;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+  text-align: center;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.infoSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+}
+
+.infoField {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background-color: #fff;
+
+  @media (max-width: 768px) {
+    padding: 16px 20px;
+    gap: 16px;
+  }
+}
+
+.infoLabel {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  color: #000;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+  min-width: 80px;
+  flex-shrink: 0;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    min-width: 70px;
+  }
+}
+
+.infoDivider {
+  width: 1px;
+  height: 24px;
+  background-color: #ddd;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  color: #000;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.buttonWrapper {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+}
+
+.mainButton {
+  min-width: 200px;
+  height: 56px;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    min-width: auto;
+  }
+}

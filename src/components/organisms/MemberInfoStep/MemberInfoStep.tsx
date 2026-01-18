@@ -8,7 +8,7 @@ import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SearchIcon } from '@/components/icons/SearchIcon'
-import { EyeIcon } from '@/components/icons/EyeIcon'
+// import { EyeIcon } from '@/components/icons/EyeIcon'
 import React, { useState } from 'react'
 import styles from './MemberInfoStep.module.scss'
 
@@ -53,8 +53,8 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
     hospitalWebsite: ''
   })
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+  // const [showPassword, setShowPassword] = useState(false)
+  // const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

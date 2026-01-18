@@ -110,8 +110,8 @@
     align-items: flex-start;
 
     @media (max-width: 768px) {
-      flex-direction: column;
-      gap: 12px;
+      gap: 8px;
+      align-items: stretch;
     }
   }
 
@@ -127,8 +127,9 @@
     min-width: 140px;
 
     @media (max-width: 768px) {
-      width: 100%;
       min-width: auto;
+      flex-shrink: 0;
+      padding: 0 16px;
     }
   }
 }
@@ -160,7 +161,14 @@
 }
 
 .emailCheckbox {
-  margin-top: 8px;
+  margin-top: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 }
 
 .emailWarning {
@@ -182,8 +190,8 @@
   align-items: flex-start;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    align-items: stretch;
   }
 }
 
