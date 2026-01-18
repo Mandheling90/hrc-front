@@ -398,16 +398,17 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
                 value={formData.hospitalName}
                 onChange={handleInputChange}
                 className={styles.inputWithButtonInput}
+                disabled
               />
               <Button
                 type='button'
                 variant='primary'
-                size='medium'
                 onClick={handleHospitalSearch}
                 className={styles.searchButton}
+                size='small'
               >
-                <SearchIcon width={20} height={20} fill='#fff' />
                 병원 검색
+                <SearchIcon width={20} height={20} fill='#fff' />
               </Button>
             </div>
           </div>
@@ -420,13 +421,13 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
               type='text'
               id='medicalInstitutionNumber'
               name='medicalInstitutionNumber'
-              placeholder='요양기관번호를 입력해주세요'
+              placeholder='요양기관번호를 입력해주세요.'
               value={formData.medicalInstitutionNumber}
               onChange={handleInputChange}
             />
           </div>
 
-          <div className={styles.formField}>
+          <div className={styles.formFieldWithButton}>
             <InputLabel htmlFor='zipCode' required>
               병원주소
             </InputLabel>
@@ -439,17 +440,18 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
                   placeholder='우편번호'
                   value={formData.zipCode}
                   onChange={handleInputChange}
-                  className={styles.zipCodeInputField}
+                  className={styles.inputWithButtonInput}
+                  disabled
                 />
                 <Button
                   type='button'
                   variant='primary'
-                  size='medium'
+                  size='small'
                   onClick={handleZipCodeSearch}
                   className={styles.searchButton}
                 >
-                  <SearchIcon width={20} height={20} fill='#fff' />
                   우편번호 검색
+                  <SearchIcon width={20} height={20} fill='#fff' />
                 </Button>
               </div>
               <Input
@@ -459,6 +461,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
                 placeholder='주소'
                 value={formData.address}
                 onChange={handleInputChange}
+                disabled
               />
               <Input
                 type='text'
@@ -479,16 +482,14 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
               type='tel'
               id='hospitalPhone'
               name='hospitalPhone'
-              placeholder='-없이 입력해주세요'
+              placeholder='-없이 입력해주세요.'
               value={formData.hospitalPhone}
               onChange={handleInputChange}
             />
           </div>
 
           <div className={styles.formField}>
-            <InputLabel htmlFor='hospitalWebsite' required>
-              병원 홈페이지 주소
-            </InputLabel>
+            <InputLabel htmlFor='hospitalWebsite'>병원 홈페이지 주소</InputLabel>
             <Input
               type='text'
               id='hospitalWebsite'
