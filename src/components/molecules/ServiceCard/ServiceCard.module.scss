@@ -54,6 +54,11 @@
   }
 }
 
+.textWrapper {
+  flex: 1;
+  min-width: 0;
+}
+
 .title {
   font-size: $font-size-xl;
   font-weight: $font-weight-bold;
@@ -70,24 +75,74 @@
 
 @media (max-width: $breakpoint-md) {
   .card {
-    padding: $spacing-6 $spacing-4;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    padding: $spacing-4;
+    border-radius: $radius-md;
+    box-shadow: none;
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  .iconWrapper {
+    margin-bottom: 0;
+    margin-right: $spacing-4;
+    flex-shrink: 0;
   }
 
   .iconCircle {
     width: 64px;
     height: 64px;
+    background-color: #fbe3e9;
 
     svg {
       width: 32px;
       height: 32px;
+      color: #9f1836;
+
+      path,
+      rect,
+      circle {
+        fill: #9f1836;
+        stroke: #9f1836;
+      }
     }
+  }
+
+  .textWrapper {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: calc(1.5em * 2);
+    overflow: hidden;
   }
 
   .title {
     font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $gray-900;
+    margin: 0 0 $spacing-1 0;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .description {
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
+    color: $gray-600;
+    margin: 0;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

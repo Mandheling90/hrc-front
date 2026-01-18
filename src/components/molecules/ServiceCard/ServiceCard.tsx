@@ -26,8 +26,10 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className={styles.iconWrapper}>
         <div className={styles.iconCircle}>{icon}</div>
       </div>
-      <h3 className={styles.title}>{title}</h3>
-      <p className={styles.description}>{description}</p>
+      <div className={styles.textWrapper}>
+        <h3 className={styles.title}>{title}</h3>
+        <p className={styles.description}>{description}</p>
+      </div>
     </>
   )
 
