@@ -8,7 +8,7 @@ import styles from './page.module.scss'
 export default function SignupPage() {
   return (
     <div className={styles.wrap}>
-      <Header />
+      {/* <Header /> */}
       <main className={styles.main}>
         <div className='container'>
           <div className={styles.signupContainer}>
@@ -16,7 +16,7 @@ export default function SignupPage() {
           </div>
         </div>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

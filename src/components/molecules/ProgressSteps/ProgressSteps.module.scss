@@ -1,5 +1,20 @@
 @import '@/styles/variables.scss';
 
+
+.progressStepsContainer {
+  @media (max-width: 768px) {
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
+}
+
 .progressSteps {
   position: relative;
   display: flex;
@@ -8,15 +23,18 @@
   padding-bottom: 0;
 
   @media (max-width: 768px) {
+    width: fit-content;
     align-items: center;
     background-color: #7a1f2e;
     border-radius: 50px;
-    padding: 8px 12px;
+    padding: 5px 5px;
     margin-bottom: 40px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    gap: 16px;
+    margin: 0px 10px 0px 10px;
 
     &::-webkit-scrollbar {
       display: none;
@@ -76,7 +94,7 @@
   padding: 0;
   position: relative;
   z-index: 1;
-  transition: all 0.3s;
+  // transition: all 0.3s;
   white-space: nowrap;
   background: transparent;
   border: none;
@@ -87,10 +105,11 @@
 
   @media (max-width: 768px) {
     flex: none;
-    gap: 3px;
-    padding: 4px 16px;
+    gap: 0;
+    padding: 0;
     color: #ffffff;
     white-space: nowrap;
+    padding: 10px 12px;
   }
 }
 
@@ -101,7 +120,7 @@
   color: #666666;
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 16px;
     color: #ffffff;
   }
 }
@@ -113,7 +132,7 @@
   color: #666666;
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 16px;
     color: #ffffff;
   }
 }
@@ -127,7 +146,7 @@
 
   @media (max-width: 768px) {
     background-color: $color-white;
-    padding: 13px 20px;
+
   }
 
   .stepNumber {
@@ -136,7 +155,7 @@
     color: #ffffff;
 
     @media (max-width: 768px) {
-      font-size: 12px;
+      font-size: 16px;
       color: $color-primary;
     }
   }
@@ -147,7 +166,7 @@
     color: #ffffff;
 
     @media (max-width: 768px) {
-      font-size: 12px;
+      font-size: 16px;
       color: $color-primary;
     }
   }
