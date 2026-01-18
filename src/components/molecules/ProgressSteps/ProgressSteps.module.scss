@@ -13,6 +13,14 @@
     border-radius: 50px;
     padding: 8px 12px;
     margin-bottom: 40px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
@@ -80,8 +88,9 @@
   @media (max-width: 768px) {
     flex: none;
     gap: 3px;
-    padding: 4px 20px;
+    padding: 4px 16px;
     color: #ffffff;
+    white-space: nowrap;
   }
 }
 
