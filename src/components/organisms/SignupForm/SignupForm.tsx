@@ -92,7 +92,7 @@ export const SignupForm: React.FC = () => {
     <div className={styles.signupForm}>
       <h1 className={styles.title}>회원가입</h1>
 
-      <ProgressSteps steps={steps} currentStep={4} />
+      <ProgressSteps steps={steps} currentStep={currentStep} />
 
       {currentStep === 1 && (
         <AgreementStep
