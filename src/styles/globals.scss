@@ -263,9 +263,8 @@ em {
 
 .container {
   width: 100%;
-  max-width: 1430px;
+  max-width: $container-max-width;
   margin: 0 auto;
-  padding: 0 20px;
 
   &.fluid {
     width: 100%;

@@ -1,0 +1,52 @@
+@import '@/styles/variables.scss';
+
+.introBox {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-6;
+  padding: $spacing-6 $spacing-8;
+  background-color: $color-secondary;
+  border: 1px solid rgba($color-darken, 0.05);
+  border-radius: $radius-lg;
+  margin: $spacing-8 0;
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b6f47; // 갈색 아이콘 색상
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.description {
+  flex: 1;
+  font-size: $font-size-base;
+  line-height: $line-height-relaxed;
+  color: $gray-900;
+  margin: 0;
+}
+
+@media (max-width: $breakpoint-md) {
+  .introBox {
+    flex-direction: column;
+    gap: $spacing-4;
+    padding: $spacing-5 $spacing-6;
+  }
+
+  .iconWrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .description {
+    font-size: $font-size-sm;
+  }
+}

@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import styles from './Header.module.scss'
 
 const navigationItems = [
-  { href: '#', label: '진료의뢰' },
+  { href: '/referral', label: '진료의뢰' },
   { href: '#', label: '협력네트워크' },
   { href: '#', label: '공지/정보' },
   { href: '#', label: '진료협력센터 소개' }
@@ -18,10 +18,13 @@ export const Header: React.FC = () => {
   const isLoginPage = pathname === '/login'
   const isSignupPage = pathname === '/signup'
   const isFindUserPage = pathname === '/find-user'
+  const isReferralPage = pathname === '/referral'
   const isAuthPage = isLoginPage || isSignupPage || isFindUserPage
+  // 로그인 페이지와 진료의뢰 페이지는 동일한 헤더 스타일 적용
+  const isFullHeader = isAuthPage || isReferralPage
 
   return (
-    <header id='header' className={`${styles.header} ${isAuthPage ? styles.loginPage : ''}`}>
+    <header id='header' className={`${styles.header} ${isFullHeader ? styles.loginPage : ''}`}>
       <div className='container'>
         <div className='flex align-center'>
           <div className={styles.logoSection}>
@@ -42,6 +45,16 @@ export const Header: React.FC = () => {
           </nav>
           <div className={styles.util}>
             {isAuthPage ? (
+              <>
+                <Link href='/login' className={styles.textLink}>
+                  로그인
+                </Link>
+                <span className={styles.separator}>|</span>
+                <Link href='/signup' className={styles.textLink}>
+                  회원가입
+                </Link>
+              </>
+            ) : isReferralPage ? (
               <>
                 <Link href='/login' className={styles.textLink}>
                   로그인

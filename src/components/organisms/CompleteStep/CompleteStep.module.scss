@@ -14,7 +14,7 @@
 
 .completeBox {
   width: 100%;
-  max-width: 1000px;
+  max-width: $container-max-width;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 60px 20%;
@@ -155,7 +155,7 @@
 
 .buttonWrapper {
   width: 100%;
-  max-width: 1000px;
+  max-width: $container-max-width;
   display: flex;
   justify-content: center;
 }

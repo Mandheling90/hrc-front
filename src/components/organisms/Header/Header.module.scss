@@ -91,9 +91,8 @@
 
   .container {
     width: 100%;
-    max-width: 1430px;
+    max-width: $container-max-width;
     margin: 0 auto;
-    padding: 0 40px;
 
     @media (max-width: 768px) {
       padding: 0 20px;
@@ -218,6 +217,13 @@
           opacity: 0.8;
         }
       }
+    }
+  }
+
+  // 일반 페이지에서도 배경이 있는 경우 네비게이션 텍스트 색상 변경
+  &:not(.loginPage) {
+    &.hasBackground .gnb ul li a {
+      color: #000;
     }
   }
 

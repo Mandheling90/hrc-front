@@ -1,0 +1,42 @@
+@import '@/styles/variables.scss';
+
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+}
+
+.main {
+  flex: 1;
+  padding: $spacing-8 0 $spacing-12;
+
+  .container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 $spacing-5;
+  }
+}
+
+.pageTitle {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  color: $gray-900;
+  text-align: center;
+  margin: $spacing-8 0;
+}
+
+@media (max-width: $breakpoint-md) {
+  .main {
+    padding: $spacing-6 0 $spacing-10;
+
+    .container {
+      padding: 0 $spacing-4;
+    }
+  }
+
+  .pageTitle {
+    font-size: $font-size-3xl;
+    margin: $spacing-6 0;
+  }
+}
