@@ -39,7 +39,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
         ]}
         showBullets={true}
         contentAlign='center'
-        hideIconOnMobile={true}
         className={styles.verificationGuideBox}
       />
 

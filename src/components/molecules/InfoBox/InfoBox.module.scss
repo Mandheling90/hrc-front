@@ -190,7 +190,7 @@
 .guideItem {
   display: flex;
   gap: 8px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .bullet {
@@ -198,11 +198,6 @@
   width: 8px;
   height: 2px;
   background-color: #636363;
-  margin-top: 10px;
-
-  @media (max-width: 768px) {
-    margin-top: 8px;
-  }
 }
 
 .guideMessage {

@@ -94,24 +94,26 @@ export const SignupForm: React.FC = () => {
 
       <ProgressSteps steps={steps} currentStep={currentStep} />
 
-      {currentStep === 1 && (
-        <AgreementStep
-          agreements={agreements}
-          onAgreementChange={handleAgreementChange}
-          onAllAgreementsChange={handleAllAgreementsChange}
-          onCancel={handleCancel}
-          onNext={handleNext}
-        />
-      )}
+      <div className={styles.stepContent}>
+        {currentStep === 1 && (
+          <AgreementStep
+            agreements={agreements}
+            onAgreementChange={handleAgreementChange}
+            onAllAgreementsChange={handleAllAgreementsChange}
+            onCancel={handleCancel}
+            onNext={handleNext}
+          />
+        )}
 
-      {currentStep === 2 && (
-        <VerificationStep
-          onPhoneVerification={handlePhoneVerification}
-          onIpinVerification={handleIpinVerification}
-          onPrev={handlePrev}
-          onNext={handleNext}
-        />
-      )}
+        {currentStep === 2 && (
+          <VerificationStep
+            onPhoneVerification={handlePhoneVerification}
+            onIpinVerification={handleIpinVerification}
+            onPrev={handlePrev}
+            onNext={handleNext}
+          />
+        )}
+      </div>
 
       <AlertModal isOpen={showAlert} message='필수사항을 체크해주세요.' onClose={handleCloseAlert} />
     </div>
