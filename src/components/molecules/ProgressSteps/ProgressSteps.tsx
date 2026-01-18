@@ -21,7 +21,7 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsTabletOrUp(window.innerWidth >= 769)
+      setIsTabletOrUp(window.innerWidth >= 1440)
     }
 
     checkScreenSize()
