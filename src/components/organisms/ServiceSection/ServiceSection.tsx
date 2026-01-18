@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { ServiceCard, ServiceCardProps } from '@/components/molecules/ServiceCard/ServiceCard'
+import { ServiceTitleIcon } from '@/components/icons/ServiceTitleIcon'
 import styles from './ServiceSection.module.scss'
 
 export interface ServiceItem extends Omit<ServiceCardProps, 'className'> {
@@ -14,19 +15,15 @@ export interface ServiceSectionProps {
   className?: string
 }
 
-export const ServiceSection: React.FC<ServiceSectionProps> = ({
-  title,
-  services,
-  className = ''
-}) => {
+export const ServiceSection: React.FC<ServiceSectionProps> = ({ title, services, className = '' }) => {
   return (
     <section className={`${styles.section} ${className}`}>
       <div className={styles.header}>
-        <div className={styles.titleIcon}></div>
+        <ServiceTitleIcon className={styles.titleIcon} />
         <h2 className={styles.title}>{title}</h2>
       </div>
       <div className={styles.grid}>
-        {services.map((service) => (
+        {services.map(service => (
           <ServiceCard
             key={service.id}
             icon={service.icon}

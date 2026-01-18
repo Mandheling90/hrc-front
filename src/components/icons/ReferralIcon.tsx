@@ -8,33 +8,40 @@ export interface ReferralIconProps {
 }
 
 export const ReferralIcon: React.FC<ReferralIconProps> = ({
-  width = 40,
-  height = 40,
+  width = 60,
+  height = 60,
   className = '',
-  fill = 'currentColor'
+  fill = '#720021'
 }) => {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 40 40"
+      viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
       <path
-        d="M8 10H32C33.1046 10 34 10.8954 34 12V28C34 29.1046 33.1046 30 32 30H8C6.89543 30 6 29.1046 6 28V12C6 10.8954 6.89543 10 8 10Z"
-        stroke={fill}
-        strokeWidth="2"
+        d="M40.5 35.5003V53.8337H11.1667V9.83366H14.8333C14.8333 9.83366 16.0556 9.83366 16.0556 8.00033C16.0556 6.16699 14.8333 6.16699 14.8333 6.16699H11.1667C10.1942 6.16699 9.26157 6.5533 8.57394 7.24093C7.88631 7.92857 7.5 8.8612 7.5 9.83366V53.8337C7.5 54.8061 7.88631 55.7387 8.57394 56.4264C9.26157 57.114 10.1942 57.5003 11.1667 57.5003H40.5C41.4725 57.5003 42.4051 57.114 43.0927 56.4264C43.7804 55.7387 44.1667 54.8061 44.1667 53.8337V35.5003C44.1667 35.5003 44.1667 34.2781 42.3333 34.2781C40.5 34.2781 40.5 35.5003 40.5 35.5003Z"
+        fill={fill}
       />
-      <path d="M10 16H30" stroke={fill} strokeWidth="2" strokeLinecap="round" />
-      <path d="M10 20H24" stroke={fill} strokeWidth="2" strokeLinecap="round" />
       <path
-        d="M18 26L22 22L26 26"
+        d="M51.7166 16.1065L45.938 10.7433C45.4142 10.2669 44.7101 10 43.9767 10C43.2433 10 42.5392 10.2669 42.0155 10.7433L17.5 33.4963V42.5H27.1836L51.6991 19.747C52.2125 19.2609 52.5 18.6074 52.5 17.9268C52.5 17.2461 52.2125 16.5926 51.6991 16.1065H51.7166ZM25.7302 39.2496H21.0022V34.8615L37.5326 19.5032L42.2781 23.9076L25.7302 39.2496ZM44.7472 21.616L40.0017 17.2117L43.9767 13.5224L48.7222 17.9268L44.7472 21.616Z"
+        fill={fill}
+      />
+      <mask id="path-3-inside-1_2498_75122" fill="white">
+        <rect x="17.2778" y="2.5" width="17.1111" height="9.77778" rx="2.44444" />
+      </mask>
+      <rect
+        x="17.2778"
+        y="2.5"
+        width="17.1111"
+        height="9.77778"
+        rx="2.44444"
         stroke={fill}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeWidth="7.33333"
+        mask="url(#path-3-inside-1_2498_75122)"
       />
     </svg>
   )

@@ -12,10 +12,9 @@
 }
 
 .titleIcon {
-  width: 4px;
-  height: 20px;
-  background-color: $color-primary;
-  border-radius: $radius-sm;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .title {
