@@ -17,8 +17,8 @@ export const Header: React.FC = () => {
   const pathname = usePathname()
   const isLoginPage = pathname === '/login'
   const isSignupPage = pathname === '/signup'
-  const isFindPasswordPage = pathname === '/find-password'
-  const isAuthPage = isLoginPage || isSignupPage || isFindPasswordPage
+  const isFindUserPage = pathname === '/find-user'
+  const isAuthPage = isLoginPage || isSignupPage || isFindUserPage
 
   return (
     <header id='header' className={`${styles.header} ${isAuthPage ? styles.loginPage : ''}`}>

@@ -75,11 +75,11 @@ export const LoginForm: React.FC = () => {
         </Button>
       </form>
       <div className={styles.links}>
-        <Link href='/find-id' className={styles.link}>
+        <Link href='/find-user?tab=findId' className={styles.link}>
           아이디 찾기
         </Link>
         <span className={styles.separator}>|</span>
-        <Link href='/find-password' className={styles.link}>
+        <Link href='/find-user?tab=findPassword' className={styles.link}>
           비밀번호 찾기
         </Link>
         <span className={styles.separator}>|</span>
