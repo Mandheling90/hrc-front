@@ -6,11 +6,7 @@ export interface PhoneIconProps {
   className?: string
 }
 
-export const PhoneIcon: React.FC<PhoneIconProps> = ({
-  width = 60,
-  height = 60,
-  className = ''
-}) => {
+export const PhoneIcon: React.FC<PhoneIconProps> = ({ width = 60, height = 60, className = '' }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

@@ -21,12 +21,7 @@ export interface NoticeListProps {
   className?: string
 }
 
-export const NoticeList: React.FC<NoticeListProps> = ({
-  title,
-  icon,
-  items,
-  className = ''
-}) => {
+export const NoticeList: React.FC<NoticeListProps> = ({ title, icon, items, className = '' }) => {
   return (
     <div className={`${styles.noticeSection} ${className}`}>
       <div className={styles.noticeHeader}>

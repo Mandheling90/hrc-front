@@ -5,6 +5,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'outline' | 'gray'
   size?: 'small' | 'medium' | 'large'
   fullWidth?: boolean
+
   children: React.ReactNode
 
   className?: string

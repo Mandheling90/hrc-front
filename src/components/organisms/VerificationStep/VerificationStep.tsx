@@ -1,12 +1,12 @@
 'use client'
 
 import { Button } from '@/components/atoms/Button/Button'
-import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
-import { NoticeList } from '@/components/molecules/NoticeList/NoticeList'
-import { ShieldIcon } from '@/components/icons/ShieldIcon'
-import { PhoneIcon } from '@/components/icons/PhoneIcon'
 import { IPinIcon } from '@/components/icons/IPinIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
+import { PhoneIcon } from '@/components/icons/PhoneIcon'
+import { ShieldIcon } from '@/components/icons/ShieldIcon'
+import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { NoticeList } from '@/components/molecules/NoticeList/NoticeList'
 import React from 'react'
 import styles from './VerificationStep.module.scss'
 

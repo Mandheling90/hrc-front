@@ -6,11 +6,7 @@ export interface ShieldIconProps {
   className?: string
 }
 
-export const ShieldIcon: React.FC<ShieldIconProps> = ({
-  width = 110,
-  height = 110,
-  className = ''
-}) => {
+export const ShieldIcon: React.FC<ShieldIconProps> = ({ width = 110, height = 110, className = '' }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

@@ -10,7 +10,9 @@ export interface Step {
 
 export interface ProgressStepsProps {
   steps: Step[]
+
   currentStep: number
+
   className?: string
 }
 
