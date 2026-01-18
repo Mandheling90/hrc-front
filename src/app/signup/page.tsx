@@ -1,7 +1,7 @@
 'use client'
 
-import { Header } from '@/components/organisms/Header/Header'
-import { Footer } from '@/components/organisms/Footer/Footer'
+// import { Header } from '@/components/organisms/Header/Header'
+// import { Footer } from '@/components/organisms/Footer/Footer'
 import { SignupForm } from '@/components/organisms/SignupForm/SignupForm'
 import styles from './page.module.scss'
 

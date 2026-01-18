@@ -4,13 +4,14 @@ import { ProgressSteps } from '@/components/molecules/ProgressSteps/ProgressStep
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { AgreementStep } from '@/components/organisms/AgreementStep/AgreementStep'
 import { VerificationStep } from '@/components/organisms/VerificationStep/VerificationStep'
+import { MemberInfoStep } from '@/components/organisms/MemberInfoStep/MemberInfoStep'
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useRouter } from 'next/navigation'
 
 export const SignupForm: React.FC = () => {
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(3)
   const [showAlert, setShowAlert] = useState(false)
   const [agreements, setAgreements] = useState({
     termsOfUse: false,
@@ -58,6 +59,9 @@ export const SignupForm: React.FC = () => {
     } else if (currentStep === 2) {
       // TODO: 본인 인증 완료 후 다음 단계로 이동
       setCurrentStep(3)
+    } else if (currentStep === 3) {
+      // TODO: 회원정보 입력 검증 후 다음 단계로 이동
+      setCurrentStep(4)
     }
   }
 
@@ -96,6 +100,8 @@ export const SignupForm: React.FC = () => {
         )}
 
         {currentStep === 2 && <VerificationStep onNext={handleNext} onPrev={handlePrev} />}
+
+        {currentStep === 3 && <MemberInfoStep onNext={handleNext} onPrev={handlePrev} onCancel={handleCancel} />}
       </div>
 
       <AlertModal isOpen={showAlert} message='필수사항을 체크해주세요.' onClose={handleCloseAlert} />
