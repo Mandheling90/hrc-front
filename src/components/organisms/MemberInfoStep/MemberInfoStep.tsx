@@ -39,6 +39,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
     school: '',
     department: '전체',
     specialty: '',
+    licenseNumber: '',
     smsConsent: '동의',
     emailConsent: '동의',
     memberConsent: '동의',
@@ -277,7 +278,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
                 id='licenseNumber'
                 name='licenseNumber'
                 placeholder='-없이 입력해주세요.'
-                value={formData.userId}
+                value={formData.licenseNumber}
                 onChange={handleInputChange}
                 className={styles.inputWithButtonInput}
               />

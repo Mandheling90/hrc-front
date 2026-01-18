@@ -2,12 +2,14 @@
 
 .checkboxLabel {
   display: flex;
-  align-items: flex-start;
-  font-size: 18px;
+  align-items: center;
+  font-size: 15px;
   font-weight: 600;
-  color: #000;
+  color: #636363;
   cursor: pointer;
-  gap: 12px;
+  gap: 8px;
+  letter-spacing: -0.6px;
+  line-height: 1.5;
 
   span {
     flex: 1;
@@ -15,7 +17,7 @@
   }
 
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -33,7 +35,6 @@
   border: 1.5px solid #8c8c8c;
   border-radius: 4px;
   flex-shrink: 0;
-  margin-top: 2px;
 
   &:checked {
     background-color: $color-primary;
