@@ -67,16 +67,6 @@ export const SignupForm: React.FC = () => {
     }
   }
 
-  const handlePhoneVerification = () => {
-    // TODO: 휴대폰 본인 인증 로직 구현
-    console.log('Phone verification')
-  }
-
-  const handleIpinVerification = () => {
-    // TODO: 아이핀 인증 로직 구현
-    console.log('i-PIN verification')
-  }
-
   const handleCloseAlert = () => {
     setShowAlert(false)
   }
@@ -105,14 +95,7 @@ export const SignupForm: React.FC = () => {
           />
         )}
 
-        {currentStep === 2 && (
-          <VerificationStep
-            onPhoneVerification={handlePhoneVerification}
-            onIpinVerification={handleIpinVerification}
-            onPrev={handlePrev}
-            onNext={handleNext}
-          />
-        )}
+        {currentStep === 2 && <VerificationStep onNext={handleNext} onPrev={handlePrev} />}
       </div>
 
       <AlertModal isOpen={showAlert} message='필수사항을 체크해주세요.' onClose={handleCloseAlert} />

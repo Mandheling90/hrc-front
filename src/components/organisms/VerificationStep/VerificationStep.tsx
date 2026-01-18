@@ -11,22 +11,13 @@ import React from 'react'
 import styles from './VerificationStep.module.scss'
 
 export interface VerificationStepProps {
-  /** 휴대폰 인증 핸들러 */
-  onPhoneVerification: () => void
-  /** 아이핀 인증 핸들러 */
-  onIpinVerification: () => void
-  /** 이전 단계 핸들러 */
-  onPrev: () => void
   /** 다음 단계 핸들러 */
   onNext: () => void
+  /** 이전 단계 핸들러 */
+  onPrev: () => void
 }
 
-export const VerificationStep: React.FC<VerificationStepProps> = ({
-  onPhoneVerification,
-  onIpinVerification,
-  onPrev,
-  onNext
-}) => {
+export const VerificationStep: React.FC<VerificationStepProps> = ({ onNext }) => {
   return (
     <>
       <InfoBox
@@ -56,7 +47,9 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
               type='button'
               variant='primary'
               size='large'
-              onClick={onPhoneVerification}
+              onClick={() => {
+                onNext()
+              }}
               className={styles.verifyButton}
             >
               인증하기
@@ -77,7 +70,9 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
               type='button'
               variant='outline'
               size='large'
-              onClick={onIpinVerification}
+              onClick={() => {
+                onNext()
+              }}
               className={styles.verifyButton}
             >
               인증하기
@@ -101,15 +96,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
           }
         ]}
       />
-
-      <div className={styles.buttonGroup}>
-        <Button type='button' variant='gray' size='medium' onClick={onPrev}>
-          이전
-        </Button>
-        <Button type='button' variant='primary' size='medium' onClick={onNext} disabled>
-          다음 단계
-        </Button>
-      </div>
     </>
   )
 }
