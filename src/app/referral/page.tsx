@@ -3,7 +3,7 @@
 import React from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
-import { SystemIntroBox } from '@/components/molecules/SystemIntroBox/SystemIntroBox'
+import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
 import { SystemIcon } from '@/components/icons/SystemIcon'
 import { ReferralIcon } from '@/components/icons/ReferralIcon'
@@ -11,6 +11,7 @@ import { PatientIcon } from '@/components/icons/PatientIcon'
 import { ConsultingIcon } from '@/components/icons/ConsultingIcon'
 import { NetworkIcon } from '@/components/icons/NetworkIcon'
 import styles from './page.module.scss'
+import { ShieldIcon } from '@/components/icons/ShieldIcon'
 
 export default function ReferralPage() {
   const services = [
@@ -51,9 +52,16 @@ export default function ReferralPage() {
         <div className='container'>
           {/* <Breadcrumbs items={breadcrumbItems} /> */}
           <h1 className={styles.pageTitle}>진료의뢰시스템 소개</h1>
-          <SystemIntroBox
-            icon={<SystemIcon />}
-            description='진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로, 의뢰하신 환자의 진료정보를 확인할 수 있는 시스템입니다.'
+
+          <InfoBox
+            variant='guide'
+            icon={<SystemIcon width={48} height={48} fill='#8b6f47' />}
+            messages={[
+              '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,',
+              '의뢰하신 환자의 진료정보를 확인할 수 있는 시스템입니다.'
+            ]}
+            showBullets={true}
+            contentAlign='center'
           />
           <ServiceSection title='이용가능한 서비스' services={services} />
         </div>

@@ -9,11 +9,7 @@ export interface SystemIntroBoxProps {
   className?: string
 }
 
-export const SystemIntroBox: React.FC<SystemIntroBoxProps> = ({
-  icon,
-  description,
-  className = ''
-}) => {
+export const SystemIntroBox: React.FC<SystemIntroBoxProps> = ({ icon, description, className = '' }) => {
   return (
     <div className={`${styles.introBox} ${className}`}>
       {icon && <div className={styles.iconWrapper}>{icon}</div>}
