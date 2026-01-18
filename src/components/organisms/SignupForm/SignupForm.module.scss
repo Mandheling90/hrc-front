@@ -1,5 +1,12 @@
 @import '@/styles/variables.scss';
 
+
+.stepContent{
+
+  @media (min-width: 360px) {
+    margin-top: 120px;
+  }
+}
 .signupForm {
   width: 100%;
   max-width: 1400px;

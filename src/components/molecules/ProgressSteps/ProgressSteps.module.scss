@@ -2,7 +2,7 @@
 
 
 .progressStepsContainer {
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     width: 100%;
     overflow: auto;
     position: absolute;
@@ -22,7 +22,7 @@
   margin-bottom: 60px;
   padding-bottom: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     width: fit-content;
     align-items: center;
     background-color: #7a1f2e;
@@ -35,7 +35,7 @@
     -ms-overflow-style: none;
     gap: 16px;
     margin: 0px 10px 0px 10px;
-
+    // min-width: 768px;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -51,7 +51,7 @@
   background-color: #e0e0e0;
   z-index: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     display: none;
   }
 }
@@ -75,7 +75,7 @@
     z-index: 1;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     position: static;
     flex: none;
 
@@ -103,7 +103,7 @@
   flex: 1;
   padding: 25px 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     flex: none;
     gap: 0;
     padding: 0;
@@ -119,7 +119,7 @@
   line-height: 1.2;
   color: #666666;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     font-size: 16px;
     color: #ffffff;
   }
@@ -131,7 +131,7 @@
   line-height: 1.2;
   color: #666666;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     font-size: 16px;
     color: #ffffff;
   }
@@ -144,7 +144,7 @@
   position: relative;
   z-index: 2;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     background-color: $color-white;
 
   }
@@ -154,7 +154,7 @@
     font-weight: 500;
     color: #ffffff;
 
-    @media (max-width: 768px) {
+    @media (max-width: 360px) {
       font-size: 16px;
       color: $color-primary;
     }
@@ -165,7 +165,7 @@
     font-weight: 600;
     color: #ffffff;
 
-    @media (max-width: 768px) {
+    @media (max-width: 360px) {
       font-size: 16px;
       color: $color-primary;
     }
