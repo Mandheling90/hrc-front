@@ -16,14 +16,16 @@ export interface ServiceSectionProps {
 }
 
 export const ServiceSection: React.FC<ServiceSectionProps> = ({ title, services, className = '' }) => {
+  const isThreeItems = services.length === 3
+
   return (
     <section className={`${styles.section} ${className}`}>
       <div className={styles.header}>
         <ServiceTitleIcon className={styles.titleIcon} />
         <h2 className={styles.title}>{title}</h2>
       </div>
-      <div className={styles.grid}>
-        {services.map(service => (
+      <div className={`${styles.grid} ${isThreeItems ? styles.gridThreeItems : ''}`}>
+        {services.map((service, index) => (
           <ServiceCard
             key={service.id}
             icon={service.icon}
@@ -31,6 +33,7 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({ title, services,
             description={service.description}
             href={service.href}
             onClick={service.onClick}
+            className={isThreeItems && index === 0 ? styles.firstItemWide : ''}
           />
         ))}
       </div>

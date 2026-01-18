@@ -53,4 +53,12 @@
     grid-template-columns: 1fr;
     gap: $spacing-4;
   }
+
+  .gridThreeItems {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .firstItemWide {
+    grid-column: span 2;
+  }
 }

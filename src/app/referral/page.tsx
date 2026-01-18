@@ -8,10 +8,9 @@ import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSec
 import { SystemIcon } from '@/components/icons/SystemIcon'
 import { ReferralIcon } from '@/components/icons/ReferralIcon'
 import { PatientIcon } from '@/components/icons/PatientIcon'
-import { ConsultingIcon } from '@/components/icons/ConsultingIcon'
 import { NetworkIcon } from '@/components/icons/NetworkIcon'
 import styles from './page.module.scss'
-import { ShieldIcon } from '@/components/icons/ShieldIcon'
+import { ConsultingIcon } from '@/components/icons/ConsultingIcon'
 
 export default function ReferralPage() {
   const services = [
