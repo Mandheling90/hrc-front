@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 
 export const SignupForm: React.FC = () => {
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(4)
+  const [currentStep, setCurrentStep] = useState(1)
   const [showAlert, setShowAlert] = useState(false)
   const [agreements, setAgreements] = useState({
     termsOfUse: false,

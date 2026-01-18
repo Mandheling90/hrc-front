@@ -24,11 +24,13 @@ export const Header: React.FC = () => {
     <header id='header' className={`${styles.header} ${isAuthPage ? styles.loginPage : ''}`}>
       <div className='container'>
         <div className='flex align-center'>
-          <h1>
-            <Link href='#' aria-label='고려대학교 진료협력센터 홈'>
-              <img src='/assets/images/logo-top.png' alt='고려대학교 진료협력센터' />
-            </Link>
-          </h1>
+          <div className={styles.logoSection}>
+            <h1>
+              <Link href='#' aria-label='고려대학교 진료협력센터 홈'>
+                고려대학교 진료협력센터
+              </Link>
+            </h1>
+          </div>
           <nav className={styles.gnb}>
             <ul className='flex'>
               {navigationItems.map((item, index) => (

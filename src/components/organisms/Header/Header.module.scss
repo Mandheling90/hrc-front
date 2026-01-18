@@ -68,6 +68,27 @@
     }
   }
 
+  @media  (max-width: 1024px) {
+    background-color: #fff;
+    padding: 16px 0;
+
+    .container > .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .gnb {
+      display: none !important;
+    }
+
+    .util {
+      margin-left: auto;
+      gap: 20px;
+    }
+  }
+
   .container {
     width: 100%;
     max-width: 1430px;
@@ -87,9 +108,63 @@
     }
   }
 
+  .logoSection {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      gap: 12px;
+    }
+  }
+
+  .titleSection {
+    display: none;
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  .mainTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: $color-primary;
+    line-height: 1.4;
+    margin: 0;
+    white-space: nowrap;
+
+    @media (min-width: 768px) and (max-width: 900px) {
+      font-size: 18px;
+    }
+  }
+
+  .subTitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: $color-primary;
+    line-height: 1.4;
+    margin: 0;
+    white-space: nowrap;
+    opacity: 0.8;
+
+    @media (min-width: 768px) and (max-width: 900px) {
+      font-size: 11px;
+    }
+  }
+
   h1 {
     flex-shrink: 0;
-    margin-right: auto;
+    margin-right: 0;
+    margin: 0;
+    padding: 0;
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      margin-right: 0;
+    }
 
     a {
       display: block;
@@ -98,8 +173,15 @@
       background-image: url('/assets/images/logo-top.png');
       background-size: contain;
       background-repeat: no-repeat;
+      background-position: center;
       text-indent: -9999px;
       overflow: hidden;
+      position: relative;
+
+      @media (min-width: 768px) and (max-width: 1024px) {
+        width: 120px;
+        height: 54px;
+      }
 
       @media (max-width: 500px) {
         width: 150px;
@@ -153,6 +235,11 @@
       margin-left: auto;
     }
 
+    @media (min-width: 768px) and (max-width: 1024px) {
+      margin-left: auto;
+      gap: 20px;
+    }
+
     .btnLogin,
     .btnAllMenu {
       width: 36px;
@@ -168,6 +255,12 @@
         height: 36px;
         display: block;
         filter: brightness(0) invert(1);
+      }
+
+      @media (min-width: 768px) and (max-width: 1024px) {
+        .icon {
+          filter: brightness(0);
+        }
       }
     }
 

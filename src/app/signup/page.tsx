@@ -1,14 +1,14 @@
 'use client'
 
-// import { Header } from '@/components/organisms/Header/Header'
-// import { Footer } from '@/components/organisms/Footer/Footer'
+import { Header } from '@/components/organisms/Header/Header'
+import { Footer } from '@/components/organisms/Footer/Footer'
 import { SignupForm } from '@/components/organisms/SignupForm/SignupForm'
 import styles from './page.module.scss'
 
 export default function SignupPage() {
   return (
     <div className={styles.wrap}>
-      {/* <Header /> */}
+      <Header />
       <main className={styles.main}>
         <div className='container'>
           <div className={styles.signupContainer}>
@@ -16,7 +16,7 @@ export default function SignupPage() {
           </div>
         </div>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }
