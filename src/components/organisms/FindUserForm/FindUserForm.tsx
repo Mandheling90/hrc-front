@@ -4,7 +4,6 @@ import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
-import Link from 'next/link'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 import styles from './FindUserForm.module.scss'
@@ -179,21 +178,6 @@ export const FindUserForm: React.FC = () => {
               </form>
             ) : (
               <form onSubmit={handleFindPasswordByPhone} className={styles.authForm}>
-                <div className={styles.inputField}>
-                  <InputLabel htmlFor='password-phone-id' required>
-                    아이디
-                  </InputLabel>
-                  <Input
-                    type='text'
-                    id='password-phone-id'
-                    name='id'
-                    placeholder='아이디를 입력하세요'
-                    value={passwordPhoneFormData.id}
-                    onChange={handlePasswordPhoneFormChange}
-                    required
-                    className={`${styles.input} ${styles.active}`}
-                  />
-                </div>
                 <div className={styles.inputField}>
                   <InputLabel htmlFor='password-phone-name' required>
                     이름

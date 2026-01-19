@@ -1,6 +1,5 @@
 @import '@/styles/variables.scss';
 
-
 .progressStepsContainer {
   @media (max-width: 768px) {
     width: 100%;
@@ -146,7 +145,6 @@
 
   @media (max-width: 768px) {
     background-color: $color-white;
-
   }
 
   .stepNumber {

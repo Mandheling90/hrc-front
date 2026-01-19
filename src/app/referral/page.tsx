@@ -19,7 +19,7 @@ export default function ReferralPage() {
       icon: <ReferralIcon />,
       title: '진료의뢰',
       description: '진료정보교류와 심평원 중계포털을 이용한 전자의뢰가 가능합니다.',
-      href: '#'
+      href: '/referral/request'
     },
     {
       id: 'patient-query',
@@ -28,6 +28,7 @@ export default function ReferralPage() {
       description: '의뢰해주신 환자의 진료정보 조회가 가능합니다.',
       href: '#'
     },
+
     {
       id: 'consulting',
       icon: <ConsultingIcon />,
@@ -35,6 +36,7 @@ export default function ReferralPage() {
       description: '고려대학교 안암병원 자문의를 통해 온라인으로 의료상담이 가능합니다.',
       href: '#'
     },
+
     {
       id: 'network',
       icon: <NetworkIcon />,
