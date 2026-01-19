@@ -148,3 +148,165 @@
     }
   }
 }
+
+// ========================================
+// 페이지 레이아웃 믹스인
+// ========================================
+
+// 페이지 전체 래퍼
+@mixin page-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+}
+
+// 메인 콘텐츠 영역
+// $padding-top, $padding-bottom: 데스크탑 기준 패딩
+// $container-width: 컨테이너 최대 너비 (기본값: $container-max-width)
+@mixin page-main($padding-top: $spacing-16, $padding-bottom: $spacing-20, $container-width: $container-max-width) {
+  flex: 1;
+  padding: $padding-top 0 $padding-bottom;
+
+  .container {
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: 0 50px;
+  }
+
+  // 태블릿 (720px 이하)
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-8 0 $spacing-12;
+
+    .container {
+      padding: 0 24px;
+    }
+  }
+
+  // 모바일 (500px 이하)
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-6 0 $spacing-10;
+
+    .container {
+      padding: 0 $spacing-4;
+    }
+  }
+}
+
+// 간단한 메인 영역 (로그인, 회원가입 등 폼 페이지용)
+@mixin page-main-simple($container-width: 600px) {
+  flex: 1;
+  padding: 80px 0;
+
+  .container {
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 40px 0;
+
+    .container {
+      padding: 0 $spacing-4;
+    }
+  }
+}
+
+// ========================================
+// 페이지 타이틀 믹스인
+// ========================================
+
+// 페이지 타이틀 (대형 - 48px)
+@mixin page-title-large {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  text-align: center;
+  margin: 0 0 $spacing-16;
+  line-height: 1.5;
+  letter-spacing: -1.92px;
+
+  // 태블릿
+  @media (max-width: $breakpoint-md) {
+    font-size: 32px;
+    margin: 0 0 $spacing-10;
+    letter-spacing: -1.28px;
+  }
+
+  // 모바일
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-2xl; // 24px
+    margin: 0 0 $spacing-6;
+    letter-spacing: -0.96px;
+  }
+}
+
+// 페이지 타이틀 (중형 - 36px)
+@mixin page-title-medium {
+  font-size: $font-size-4xl; // 36px
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  text-align: center;
+  margin: 0 0 $spacing-10;
+  line-height: 1.5;
+  letter-spacing: -1.44px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 28px;
+    margin: 0 0 $spacing-8;
+    letter-spacing: -1.12px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-xl; // 20px
+    margin: 0 0 $spacing-5;
+    letter-spacing: -0.8px;
+  }
+}
+
+// ========================================
+// 섹션 타이틀 믹스인
+// ========================================
+
+// 섹션 타이틀 (32px)
+@mixin section-title {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: -1.28px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-2xl; // 24px
+    letter-spacing: -0.96px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-xl; // 20px
+    letter-spacing: -0.8px;
+  }
+}
+
+// ========================================
+// 반응형 max-width 미디어 쿼리 믹스인
+// ========================================
+
+@mixin mobile {
+  @media (max-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}

@@ -1,29 +1,16 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: $color-white;
+  @include page-wrap;
 }
 
 .main {
-  flex: 1;
-  padding: $spacing-8 0 $spacing-12;
-
-  .container {
-    max-width: $container-max-width;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
+  @include page-main;
 }
 
 .pageTitle {
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
-  color: $gray-900;
-  text-align: center;
-  margin: $spacing-8 0;
+  @include page-title-large;
 }
 
 .introBox {
@@ -31,181 +18,221 @@
 }
 
 .requestMethods {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
   margin-top: $spacing-10;
 }
 
 .requestCard {
   display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: $color-white;
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  text-align: left;
+}
+
+// 모바일 환경에서 첫 번째 requestCard의 padding을 30px로 설정
+@media (max-width: calc(#{$breakpoint-md} - 1px)) {
+  .requestMethods > .requestCard:first-child {
+    padding: 30px;
+  }
+}
+
+.phoneCard {
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.leftSection {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $spacing-8 $spacing-6;
-  background-color: $color-white;
-  border: 1px solid $gray-300;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-sm;
-  text-align: center;
-  transition: all $transition-base;
+  gap: 8px;
+  flex-shrink: 0;
+}
 
-  &:hover {
-    border-color: $color-primary;
-    box-shadow: $shadow-md;
-    transform: translateY(-2px);
-  }
+.rightSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.electronicCards {
+  display: flex;
+  gap: 8px;
+}
+
+.electronicCard {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
 }
 
 .iconWrapper {
-  margin-bottom: $spacing-5;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.iconOuterCircle {
-  width: 100px;
-  height: 100px;
-  border-radius: $radius-full;
-  background-color: $gray-100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0;
 }
 
 .iconCircle {
-  width: 80px;
-  height: 80px;
-  border-radius: $radius-full;
-  background-color: rgba(159, 24, 54, 0.15);
+  width: 60px;
+  height: 60px;
+  border-radius: 42px;
+  background-color: #fcebeb;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  svg {
-    path {
-      // stroke: #720021 !important;
-      // fill: #720021 !important;
-    }
-  }
 }
 
 .textWrapper {
   flex: 1;
   min-width: 0;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
 }
 
 .title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
+  font-size: $font-size-2xl; // 24px
+  font-weight: $font-weight-semibold; // 600
   color: $gray-900;
-  margin: 0 0 $spacing-4 0;
+  margin: 0;
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.96px;
 }
 
 .details {
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
-  margin-top: $spacing-3;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-normal; // 400
+  color: #8c8c8c;
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.8px;
 }
 
 .detailItem {
+  margin: 0;
+}
+
+.detailRow {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: $spacing-2;
+}
+
+.detailText {
   margin: 0;
-  font-size: $font-size-sm;
-  color: $gray-700;
-}
-
-.label {
-  font-weight: $font-weight-medium;
-  color: $gray-600;
-}
-
-.value {
-  font-weight: $font-weight-normal;
-  color: $gray-900;
 }
 
 .description {
-  font-size: $font-size-sm;
-  line-height: $line-height-relaxed;
-  color: $gray-600;
-  margin: $spacing-2 0 0 0;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-normal; // 400
+  line-height: $line-height-normal; // 1.5
+  color: #8c8c8c;
+  margin: 0;
+  letter-spacing: -0.8px;
 }
 
-@media (max-width: $breakpoint-md) {
-  .main {
-    padding: $spacing-6 0 $spacing-10;
-
-    .container {
-      padding: 0 $spacing-4;
-    }
-  }
-
-  .pageTitle {
-    font-size: $font-size-3xl;
-    margin: $spacing-6 0;
-  }
-
+@media (min-width: $breakpoint-md) {
   .requestMethods {
-    grid-template-columns: 1fr;
-    gap: $spacing-4;
-    margin-top: $spacing-8;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-6;
   }
 
   .requestCard {
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: left;
-    padding: $spacing-5;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: $spacing-8 $spacing-6;
+    border: 1px solid $gray-300;
+    box-shadow: $shadow-sm;
+    transition: all $transition-base;
 
     &:hover {
-      transform: none;
-      box-shadow: $shadow-sm;
+      border-color: $color-primary;
+      box-shadow: $shadow-md;
+      transform: translateY(-2px);
     }
+  }
+
+  .phoneCard {
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+  }
+
+  .leftSection {
+    align-items: center;
+  }
+
+  .rightSection {
+    width: 100%;
+    text-align: center;
+  }
+
+  .electronicCards {
+    display: contents;
+  }
+
+  .electronicCard {
+    flex-direction: column;
+    gap: $spacing-2;
   }
 
   .iconWrapper {
-    margin-bottom: 0;
-    margin-right: $spacing-4;
-    flex-shrink: 0;
-  }
-
-  .iconOuterCircle {
-    width: 80px;
-    height: 80px;
+    margin-bottom: $spacing-5;
   }
 
   .iconCircle {
-    width: 64px;
-    height: 64px;
-
-    svg {
-      width: 32px;
-      height: 32px;
-    }
+    width: 80px;
+    height: 80px;
+    background-color: rgba(159, 24, 54, 0.15);
   }
 
   .textWrapper {
-    flex: 1;
+    width: 100%;
   }
 
   .title {
-    font-size: $font-size-lg;
-    margin: 0 0 $spacing-3 0;
+    font-size: $font-size-2xl; // 24px
+    font-weight: $font-weight-semibold; // 600
+    margin: 0 0 $spacing-4 0;
+    letter-spacing: -0.96px;
   }
 
   .details {
-    gap: $spacing-1;
-    margin-top: $spacing-2;
+    font-size: $font-size-xl; // 20px
+    font-weight: $font-weight-normal; // 400
+    color: #8c8c8c;
+    margin-top: $spacing-3;
+    letter-spacing: -0.8px;
   }
 
   .detailItem {
-    justify-content: flex-start;
-    font-size: $font-size-xs;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-2;
+  }
+
+  .detailRow {
+    justify-content: center;
+  }
+
+  .description {
+    font-size: $font-size-xl; // 20px
+    font-weight: $font-weight-normal; // 400
+    color: #8c8c8c;
+    margin: $spacing-2 0 0 0;
+    letter-spacing: -0.8px;
   }
 }

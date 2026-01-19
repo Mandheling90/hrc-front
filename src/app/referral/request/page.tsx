@@ -39,58 +39,53 @@ export default function ReferralRequestPage() {
           />
 
           <div className={styles.requestMethods}>
-            <div className={styles.requestCard}>
-              <div className={styles.iconWrapper}>
-                <div className={styles.iconOuterCircle}>
+            <div className={`${styles.requestCard} ${styles.phoneCard}`}>
+              <div className={styles.leftSection}>
+                <div className={styles.iconWrapper}>
                   <div className={styles.iconCircle}>
-                    <PhoneRequestIcon width={40} height={40} stroke='#720021' />
+                    <PhoneRequestIcon width={36} height={36} stroke='#720021' />
                   </div>
                 </div>
-              </div>
-              <div className={styles.textWrapper}>
                 <h3 className={styles.title}>전화의뢰</h3>
+              </div>
+              <div className={styles.rightSection}>
                 <div className={styles.details}>
-                  <p className={styles.detailItem}>
-                    <span className={styles.label}>T.</span>
-                    <span className={styles.value}>02-920-5892~4</span>
-                  </p>
-                  <p className={styles.detailItem}>
-                    <span className={styles.label}>평일</span>
-                    <span className={styles.value}>08:30~17:30</span>
-                  </p>
-                  <p className={styles.detailItem}>
-                    <span className={styles.label}>토요일</span>
-                    <span className={styles.value}>09:00~12:30</span>
-                  </p>
+                  <p className={styles.detailItem}>T. 02-920-5892~4</p>
+                  <div className={styles.detailRow}>
+                    <span className={styles.detailText}>평일</span>
+                    <span className={styles.detailText}>08:30~17:30</span>
+                  </div>
+                  <div className={styles.detailRow}>
+                    <span className={styles.detailText}>토요일</span>
+                    <span className={styles.detailText}>09:00~12:30</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className={styles.requestCard}>
-              <div className={styles.iconWrapper}>
-                <div className={styles.iconOuterCircle}>
+            <div className={styles.electronicCards}>
+              <div className={`${styles.requestCard} ${styles.electronicCard}`}>
+                <div className={styles.iconWrapper}>
                   <div className={styles.iconCircle}>
-                    <DocumentReferralIcon width={40} height={40} fill='#720021' stroke='#720021' />
+                    <DocumentReferralIcon width={36} height={36} fill='#720021' stroke='#720021' />
                   </div>
                 </div>
+                <div className={styles.textWrapper}>
+                  <h3 className={styles.title}>전자의뢰</h3>
+                  <p className={styles.description}>진료정보교류</p>
+                </div>
               </div>
-              <div className={styles.textWrapper}>
-                <h3 className={styles.title}>전자의뢰</h3>
-                <p className={styles.description}>진료정보교류</p>
-              </div>
-            </div>
 
-            <div className={styles.requestCard}>
-              <div className={styles.iconWrapper}>
-                <div className={styles.iconOuterCircle}>
+              <div className={`${styles.requestCard} ${styles.electronicCard}`}>
+                <div className={styles.iconWrapper}>
                   <div className={styles.iconCircle}>
-                    <HospitalPortalIcon width={40} height={40} stroke='#720021' />
+                    <HospitalPortalIcon width={36} height={36} stroke='#720021' />
                   </div>
                 </div>
-              </div>
-              <div className={styles.textWrapper}>
-                <h3 className={styles.title}>전자의뢰</h3>
-                <p className={styles.description}>심평원 중계포털</p>
+                <div className={styles.textWrapper}>
+                  <h3 className={styles.title}>전자의뢰</h3>
+                  <p className={styles.description}>심평원 중계포털</p>
+                </div>
               </div>
             </div>
           </div>

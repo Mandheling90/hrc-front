@@ -261,19 +261,77 @@ em {
   }
 }
 
+// ========================================
+// 컨테이너 클래스
+// ========================================
 .container {
   width: 100%;
   max-width: $container-max-width;
-  padding: 0 20px;
+  padding: 0 50px;
   margin: 0 auto;
 
   &.fluid {
     width: 100%;
     max-width: 100%;
   }
+
+  // 좁은 컨테이너 (폼 페이지용)
+  &.narrow {
+    max-width: 600px;
+    padding: 0 20px;
+  }
+
+  // 태블릿
+  @media (max-width: $breakpoint-md) {
+    padding: 0 24px;
+
+    &.narrow {
+      padding: 0 20px;
+    }
+  }
+
+  // 모바일
+  @media (max-width: $breakpoint-sm) {
+    padding: 0 $spacing-4;
+
+    &.narrow {
+      padding: 0 $spacing-4;
+    }
+  }
+}
+
+// ========================================
+// 페이지 레이아웃 클래스
+// ========================================
+.page-wrap {
+  @include page-wrap;
+}
+
+.page-main {
+  @include page-main;
+}
+
+.page-main-simple {
+  @include page-main-simple;
+}
+
+// ========================================
+// 페이지 타이틀 클래스
+// ========================================
+.page-title {
+  @include page-title-large;
+}
+
+.page-title-medium {
+  @include page-title-medium;
 }
 
 .section-title {
+  @include section-title;
+}
+
+// 레거시 섹션 타이틀 (기존 호환성)
+.section-title-legacy {
   font-size: 33px;
   font-weight: 700;
   font-family: $font-family-paperozi;

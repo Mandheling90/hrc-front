@@ -1,26 +1,16 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
+  @include page-wrap;
 }
 
 .main {
-  flex: 1;
-  padding: 80px 0;
-
-  .container {
-    max-width: $container-max-width;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
+  @include page-main-simple($container-max-width);
 }
 
 .signupContainer {
   width: 100%;
   max-width: $container-max-width;
   margin: 0 auto;
-  padding: 0 20px;
 }
