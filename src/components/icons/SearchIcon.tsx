@@ -29,13 +29,7 @@ export const SearchIcon: React.FC<SearchIconProps> = ({
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path
-        d='M19 19L14.65 14.65'
-        stroke={fill}
-        strokeWidth='2'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <path d='M19 19L14.65 14.65' stroke={fill} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   )
 }

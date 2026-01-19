@@ -1,0 +1,211 @@
+@import '@/styles/variables.scss';
+
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+}
+
+.main {
+  flex: 1;
+  padding: $spacing-8 0 $spacing-12;
+
+  .container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+}
+
+.pageTitle {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  color: $gray-900;
+  text-align: center;
+  margin: $spacing-8 0;
+}
+
+.introBox {
+  margin: $spacing-8 0 $spacing-10;
+}
+
+.requestMethods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-6;
+  margin-top: $spacing-10;
+}
+
+.requestCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-8 $spacing-6;
+  background-color: $color-white;
+  border: 1px solid $gray-300;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  text-align: center;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+}
+
+.iconWrapper {
+  margin-bottom: $spacing-5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconOuterCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: $radius-full;
+  background-color: $gray-100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconCircle {
+  width: 80px;
+  height: 80px;
+  border-radius: $radius-full;
+  background-color: rgba(159, 24, 54, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    path {
+      // stroke: #720021 !important;
+      // fill: #720021 !important;
+    }
+  }
+}
+
+.textWrapper {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $gray-900;
+  margin: 0 0 $spacing-4 0;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-top: $spacing-3;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
+.label {
+  font-weight: $font-weight-medium;
+  color: $gray-600;
+}
+
+.value {
+  font-weight: $font-weight-normal;
+  color: $gray-900;
+}
+
+.description {
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  color: $gray-600;
+  margin: $spacing-2 0 0 0;
+}
+
+@media (max-width: $breakpoint-md) {
+  .main {
+    padding: $spacing-6 0 $spacing-10;
+
+    .container {
+      padding: 0 $spacing-4;
+    }
+  }
+
+  .pageTitle {
+    font-size: $font-size-3xl;
+    margin: $spacing-6 0;
+  }
+
+  .requestMethods {
+    grid-template-columns: 1fr;
+    gap: $spacing-4;
+    margin-top: $spacing-8;
+  }
+
+  .requestCard {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    padding: $spacing-5;
+
+    &:hover {
+      transform: none;
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  .iconWrapper {
+    margin-bottom: 0;
+    margin-right: $spacing-4;
+    flex-shrink: 0;
+  }
+
+  .iconOuterCircle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .iconCircle {
+    width: 64px;
+    height: 64px;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .textWrapper {
+    flex: 1;
+  }
+
+  .title {
+    font-size: $font-size-lg;
+    margin: 0 0 $spacing-3 0;
+  }
+
+  .details {
+    gap: $spacing-1;
+    margin-top: $spacing-2;
+  }
+
+  .detailItem {
+    justify-content: flex-start;
+    font-size: $font-size-xs;
+  }
+}

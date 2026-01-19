@@ -8,6 +8,7 @@ export interface BreadcrumbItem {
   label: string
   href?: string
   icon?: React.ReactNode
+  iconAfter?: boolean
 }
 
 export interface BreadcrumbsProps {
@@ -26,7 +27,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' 
                 ›
               </span>
             )}
-            {item.icon && <span className={styles.icon}>{item.icon}</span>}
+            {item.icon && !item.iconAfter && <span className={styles.icon}>{item.icon}</span>}
             {item.label &&
               (item.href ? (
                 <Link href={item.href} className={styles.link}>
@@ -35,6 +36,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' 
               ) : (
                 <span className={styles.current}>{item.label}</span>
               ))}
+            {item.icon && item.iconAfter && <span className={styles.icon}>{item.icon}</span>}
           </li>
         ))}
       </ol>
