@@ -3,6 +3,7 @@
 import Link from 'next/link'
 // import { usePathname } from 'next/navigation'
 import React, { useState } from 'react'
+import { useHospital } from '@/hooks'
 import styles from './Header.module.scss'
 
 const navigationItems = [
@@ -14,6 +15,8 @@ const navigationItems = [
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { hospital } = useHospital()
+
   // const pathname = usePathname()
   // const isLoginPage = pathname === '/login'
   // const isSignupPage = pathname === '/signup'
@@ -29,8 +32,8 @@ export const Header: React.FC = () => {
         <div className='flex align-center'>
           <div className={styles.logoSection}>
             <h1>
-              <Link href='#' aria-label='고려대학교 진료협력센터 홈'>
-                고려대학교 진료협력센터
+              <Link href='/' aria-label={`${hospital.name.full} 홈`}>
+                {hospital.name.full}
               </Link>
             </h1>
           </div>

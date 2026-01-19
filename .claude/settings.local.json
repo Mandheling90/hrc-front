@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.figma.com)",
+      "Bash(cmd /c npx -v)",
+      "Bash(npx -v)",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_screenshot"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "figma"
+  ]
+}

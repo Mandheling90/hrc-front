@@ -1,4 +1,4 @@
 // Custom React Hooks
-// 예: useAuth, useLocalStorage, useDebounce 등
 
-export {}
+// Hospital Hook - 병원별 설정 접근
+export { useHospital } from '@/contexts/HospitalContext'
