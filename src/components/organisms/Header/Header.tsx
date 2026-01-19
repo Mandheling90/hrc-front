@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+// import { usePathname } from 'next/navigation'
 import React, { useState } from 'react'
 import styles from './Header.module.scss'
 
@@ -14,14 +14,14 @@ const navigationItems = [
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
-  const isLoginPage = pathname === '/login'
-  const isSignupPage = pathname === '/signup'
-  const isFindUserPage = pathname === '/find-user'
-  const isReferralPage = pathname === '/referral'
-  const isAuthPage = isLoginPage || isSignupPage || isFindUserPage
+  // const pathname = usePathname()
+  // const isLoginPage = pathname === '/login'
+  // const isSignupPage = pathname === '/signup'
+  // const isFindUserPage = pathname === '/find-user'
+  // const isReferralPage = pathname === '/referral'
+  const isAuthPage = true
   // 로그인 페이지와 진료의뢰 페이지는 동일한 헤더 스타일 적용
-  const isFullHeader = isAuthPage || isReferralPage
+  const isFullHeader = isAuthPage
 
   return (
     <header id='header' className={`${styles.header} ${isFullHeader ? styles.loginPage : ''}`}>
@@ -45,16 +45,6 @@ export const Header: React.FC = () => {
           </nav>
           <div className={styles.util}>
             {isAuthPage ? (
-              <>
-                <Link href='/login' className={styles.textLink}>
-                  로그인
-                </Link>
-                <span className={styles.separator}>|</span>
-                <Link href='/signup' className={styles.textLink}>
-                  회원가입
-                </Link>
-              </>
-            ) : isReferralPage ? (
               <>
                 <Link href='/login' className={styles.textLink}>
                   로그인
