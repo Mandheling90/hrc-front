@@ -180,21 +180,6 @@ export const FindUserForm: React.FC = () => {
             ) : (
               <form onSubmit={handleFindPasswordByPhone} className={styles.authForm}>
                 <div className={styles.inputField}>
-                  <InputLabel htmlFor='password-phone-id' required>
-                    아이디
-                  </InputLabel>
-                  <Input
-                    type='text'
-                    id='password-phone-id'
-                    name='id'
-                    placeholder='아이디를 입력하세요'
-                    value={passwordPhoneFormData.id}
-                    onChange={handlePasswordPhoneFormChange}
-                    required
-                    className={`${styles.input} ${styles.active}`}
-                  />
-                </div>
-                <div className={styles.inputField}>
                   <InputLabel htmlFor='password-phone-name' required>
                     이름
                   </InputLabel>
