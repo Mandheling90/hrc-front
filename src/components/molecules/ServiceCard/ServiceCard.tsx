@@ -7,7 +7,7 @@ import styles from './ServiceCard.module.scss'
 export interface ServiceCardProps {
   icon: React.ReactNode
   title: string
-  description: string
+  description: string | string[]
   href?: string
   onClick?: () => void
   className?: string
@@ -16,6 +16,8 @@ export interface ServiceCardProps {
   mobileVertical?: boolean
   /** 모바일에서 title을 아이콘 아래에 배치 */
   mobileTitleBelowIcon?: boolean
+  /** 모바일에서 span 값 (2일 때 스타일 적용) */
+  mobileSpan?: number
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -27,8 +29,26 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   className = '',
   style,
   mobileVertical = false,
-  mobileTitleBelowIcon = false
+  mobileTitleBelowIcon = false,
+  mobileSpan
 }) => {
+  // description이 배열인 경우 줄바꿈 처리
+  const renderDescription = () => {
+    if (Array.isArray(description)) {
+      return (
+        <p className={styles.description}>
+          {description.map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index < description.length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </p>
+      )
+    }
+    return <p className={styles.description}>{description}</p>
+  }
+
   const content = (
     <>
       <div className={styles.iconWrapper}>
@@ -37,12 +57,12 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
       <div className={styles.textWrapper}>
         {!mobileTitleBelowIcon && <h3 className={styles.title}>{title}</h3>}
-        <p className={styles.description}>{description}</p>
+        {renderDescription()}
       </div>
     </>
   )
 
-  const cardClassName = `${styles.card} ${mobileVertical ? styles.mobileVertical : ''} ${mobileTitleBelowIcon ? styles.mobileTitleBelowIcon : ''} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${className}`
+  const cardClassName = `${styles.card} ${mobileVertical ? styles.mobileVertical : ''} ${mobileTitleBelowIcon ? styles.mobileTitleBelowIcon : ''} ${mobileSpan === 2 ? styles.mobileSpanTwo : ''} ${mobileSpan === undefined ? styles.mobileSpanUnset : ''} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${className}`
 
   if (href) {
     return (

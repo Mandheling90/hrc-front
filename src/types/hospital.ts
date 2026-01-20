@@ -61,7 +61,7 @@ export interface ServiceItem {
   id: string
   icon: string // 아이콘 컴포넌트 이름
   title: string
-  description: string
+  description: string | string[]
   href: string
   tabletSpan?: number // 태블릿에서 차지할 칸 수 (기본값: 1)
   mobileSpan?: number // 모바일에서 차지할 칸 수 (기본값: 1, 2로 설정 시 2열로 표시)

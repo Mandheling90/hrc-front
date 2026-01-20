@@ -158,6 +158,21 @@
     }
   }
 
+  // mobileSpan이 미설정(undefined)인 경우 분홍색 원 아이콘 적용
+  .card.mobileSpanUnset {
+    .iconCircle {
+      width: 64px !important;
+      height: 64px !important;
+      border-radius: 50% !important;
+      background-color: #fcebeb !important;
+
+      svg {
+        width: 40px !important;
+        height: 40px !important;
+      }
+    }
+  }
+
   .textWrapper {
     flex: 1;
     min-width: 0;
@@ -234,6 +249,35 @@
       line-height: 1.4;
       letter-spacing: -0.64px;
       text-align: center;
+    }
+  }
+
+  // mobileSpan이 2일 때 높이 증가 및 분홍색 원 아이콘 적용
+  .card.mobileSpanTwo {
+    min-height: 120px;
+    padding: 30px $spacing-4 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2rem;
+
+    // 가운데 정렬을 위해 텍스트 영역이 너무 넓게 늘어나지 않도록 조정
+    .textWrapper {
+      flex: 0 0 auto;
+    }
+
+    .iconCircle {
+      width: 64px !important;
+      height: 64px !important;
+      border-radius: 50% !important;
+      background-color: #fcebeb !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+
+      svg {
+        width: 40px !important;
+        height: 40px !important;
+      }
     }
   }
 }

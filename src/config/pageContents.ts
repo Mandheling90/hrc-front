@@ -59,22 +59,25 @@ const anamContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: '02-920-5892~4 \n 08:30~17:30 \n 09:00~12:30',
-        href: '#'
+        description: ['T. 02-920-5892~4', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        href: '#',
+        mobileSpan: 2
       },
       {
         id: 'electronic-request',
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
         description: '진료정보교류',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       },
       {
         id: 'hospital-portal-request',
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
         description: '심평원 중계포털',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       }
     ]
   }
@@ -108,6 +111,13 @@ const guroContent: HospitalPageContent = {
         title: '협력네트워크',
         description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
         href: '#'
+      },
+      {
+        id: 'network',
+        icon: 'NetworkIcon',
+        title: '협력네트워크',
+        description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
+        href: '#'
       }
     ]
   },
@@ -131,29 +141,33 @@ const guroContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: '02-2626-1681 \n 08:30~17:30 \n 09:00~12:30',
-        href: '#'
+        description: ['T. 02-2626-1681', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        href: '#',
+        mobileSpan: 2
       },
       {
         id: 'electronic-request',
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
         description: '진료정보교류',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       },
       {
         id: 'hospital-portal-request',
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
         description: '심평원 중계포털',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       },
       {
         id: 'sns-request',
         icon: 'SNSTalkIcon',
         title: 'SNS 의뢰',
         description: '고대구로병원 카카오톡 채널',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       }
     ]
   }
@@ -210,22 +224,25 @@ const ansanContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: '031-412-5103 \n 08:30~17:30 \n 09:00~12:30',
-        href: '#'
+        description: ['T. 031-412-5103', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        href: '#',
+        mobileSpan: 2
       },
       {
         id: 'electronic-request',
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
         description: '진료정보교류',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       },
       {
         id: 'hospital-portal-request',
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
         description: '심평원 중계포털',
-        href: '#'
+        href: '#',
+        mobileSpan: 1
       }
     ]
   }
