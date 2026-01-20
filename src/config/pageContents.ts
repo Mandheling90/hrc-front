@@ -38,6 +38,17 @@ const anamContent: HospitalPageContent = {
         href: '#'
       }
     ]
+  },
+  referralRequest: {
+    intro: [
+      '고려대학교안암병원 진료협력센터는 지역병원에서 의뢰된 환자에게 최적의 의료서비스를 제공하는 3차 의료기관으로서의 기능을 수행하고 있습니다.',
+      '다양한 진료의뢰시스템을 통해 지역병원 및 지역주민에게 진료의뢰 편의성을 제공하며, 신속한 의료서비스를 제공받으실 수 있도록 최선을 다하고 있습니다.'
+    ],
+    phone: '02-920-5892~4',
+    operatingHours: {
+      weekday: '08:30~17:30',
+      saturday: '09:00~12:30'
+    }
   }
 }
 
@@ -69,6 +80,54 @@ const guroContent: HospitalPageContent = {
         title: '협력네트워크',
         description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
         href: '#'
+      }
+    ]
+  },
+  referralRequest: {
+    intro: [
+      '고려대학교 구로병원 진료협력센터는 지역병원에서 의뢰된 환자에게 최적의 의료서비스를 제공하는 3차 의료기관으로서의 기능을 수행하고 있습니다.',
+      '다양한 진료의뢰시스템을 통해 지역병원 및 지역주민에게 진료의뢰 편의성을 제공하며, 신속한 의료서비스를 제공받으실 수 있도록 최선을 다하고 있습니다.'
+    ],
+    phone: '02-2626-1681',
+    operatingHours: {
+      weekday: '08:30~17:30',
+      saturday: '09:00~12:30'
+    },
+    breadcrumbs: [
+      { label: '', href: '/', icon: 'HomeIcon' },
+      { label: '진료협력센터', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료의뢰', icon: 'ChevronDownIcon', iconAfter: true }
+    ],
+    cards: [
+      {
+        type: 'phone',
+        icon: 'PhoneRequestIcon',
+        title: '전화의뢰',
+        phone: '02-2626-1681',
+        operatingHours: {
+          weekday: '08:30~17:30'
+        }
+      },
+      {
+        type: 'electronic',
+        icon: 'DocumentReferralIcon',
+        title: '전자의뢰',
+        description: '진료정보교류'
+      },
+      {
+        type: 'electronic',
+        icon: 'HospitalPortalIcon',
+        title: '전자의뢰',
+        description: '심평원 중계포털'
+      },
+      {
+        type: 'sns',
+        icon: 'SNSTalkIcon',
+        title: 'SNS 의뢰',
+        channel: '고대구로병원 카카오톡 채널',
+        operatingHours: {
+          weekday: '08:30~17:30'
+        }
       }
     ]
   }
@@ -104,6 +163,17 @@ const ansanContent: HospitalPageContent = {
         href: '#'
       }
     ]
+  },
+  referralRequest: {
+    intro: [
+      '고려대학교 안산병원 진료협력센터는 지역병원에서 의뢰된 환자에게 최적의 의료서비스를 제공하는 3차 의료기관으로서의 기능을 수행하고 있습니다.',
+      '다양한 진료의뢰시스템을 통해 지역병원 및 지역주민에게 진료의뢰 편의성을 제공하며, 신속한 의료서비스를 제공받으실 수 있도록 최선을 다하고 있습니다.'
+    ],
+    phone: '031-412-5103',
+    operatingHours: {
+      weekday: '08:30~17:30',
+      saturday: '09:00~12:30'
+    }
   }
 }
 

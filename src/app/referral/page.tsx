@@ -34,7 +34,7 @@ const mapServiceItems = (items: ServiceItem[]) => {
 }
 
 export default function ReferralPage() {
-  const { pageContent, hospital } = useHospital()
+  const { pageContent } = useHospital()
 
   // 병원별 서비스 목록
   const services = useMemo(() => {

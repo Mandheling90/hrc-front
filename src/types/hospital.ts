@@ -65,12 +65,50 @@ export interface ServiceItem {
   href: string
 }
 
+// Breadcrumb 아이템 타입
+export interface BreadcrumbItemConfig {
+  label: string
+  href?: string
+  icon?: string // 아이콘 이름 ('HomeIcon', 'ChevronDownIcon' 등)
+  iconAfter?: boolean
+}
+
+// 진료의뢰 카드 타입
+export type RequestCardType = 'phone' | 'electronic' | 'sns'
+
+// 진료의뢰 카드 정보
+export interface RequestCard {
+  type: RequestCardType
+  icon: string // 아이콘 컴포넌트 이름
+  title: string
+  description?: string // 전자카드의 경우 설명
+  phone?: string // 전화번호 (phone, sns 타입)
+  channel?: string // SNS 채널명 (sns 타입)
+  operatingHours?: {
+    weekday: string // 평일 운영시간
+    saturday?: string // 토요일 운영시간
+  }
+}
+
+// 진료협력센터 의뢰 페이지 정보
+export interface ReferralRequestInfo {
+  intro: string[] // InfoBox 메시지
+  phone: string // 전화번호
+  operatingHours: {
+    weekday: string // 평일 운영시간
+    saturday: string // 토요일 운영시간
+  }
+  breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정 (병원별로 다를 수 있음)
+  cards?: RequestCard[] // 커스텀 카드 배열 (구로병원 등)
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
     intro: string[] // InfoBox 메시지
     services: ServiceItem[]
   }
+  referralRequest?: ReferralRequestInfo // 진료협력센터 의뢰 페이지 정보
 }
 
 // 병원 컨텍스트 타입
