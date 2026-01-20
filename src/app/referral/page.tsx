@@ -29,7 +29,10 @@ const mapServiceItems = (items: ServiceItem[]) => {
     icon: iconMap[item.icon] || <ReferralIcon />,
     title: item.title,
     description: item.description.replace(/\\n/g, '\n'),
-    href: item.href
+    href: item.href,
+    tabletSpan: item.tabletSpan,
+    mobileSpan: item.mobileSpan,
+    mobileTitleBelowIcon: item.mobileTitleBelowIcon
   }))
 }
 

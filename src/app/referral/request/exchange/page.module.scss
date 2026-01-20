@@ -1,0 +1,296 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+  margin-bottom: $spacing-8;
+}
+
+// 페이지 소개 섹션 (InfoBox 사용)
+.introBox {
+  margin-bottom: $spacing-12;
+}
+
+// 섹션 공통 스타일
+.section {
+  margin-bottom: $spacing-12;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// 진료의뢰 절차
+.procedureInfo {
+  margin-bottom: $spacing-8;
+  padding: $spacing-6;
+  background-color: $gray-100;
+  border-radius: 8px;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    padding: $spacing-4;
+  }
+}
+
+.procedureText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-700;
+  line-height: $line-height-relaxed;
+  margin: 0 0 $spacing-2 0;
+  letter-spacing: -0.72px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-base;
+  }
+}
+
+// 플로우차트
+.flowchart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-4;
+  margin-top: $spacing-8;
+  padding: $spacing-8;
+  background-color: $gray-100;
+  border-radius: 10px;
+  position: relative;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    padding: $spacing-4;
+    gap: $spacing-2;
+  }
+}
+
+.flowStep {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.flowGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-3;
+  width: 100%;
+  max-width: 600px;
+}
+
+.flowBox {
+  padding: $spacing-4 $spacing-6;
+  border-radius: 8px;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  min-width: 200px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-base;
+    padding: $spacing-3 $spacing-4;
+    min-width: 150px;
+  }
+}
+
+.whiteBox {
+  background-color: $color-white;
+  border: 1px solid $gray-300;
+  color: $gray-900;
+}
+
+.redBox {
+  background-color: $color-primary;
+  border: 1px solid $color-primary;
+  color: $color-white;
+}
+
+.parallelBoxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-3;
+  width: 100%;
+  max-width: 500px;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.flowArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $spacing-2 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 20px;
+    border-left: 2px dashed $color-primary;
+  }
+}
+
+// 점선 화살표 (진료정보 교류동의에서 온라인 전송으로)
+.flowGroup {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 2px;
+    border-top: 2px dashed $color-primary;
+    display: none;
+
+    @media (min-width: $breakpoint-md) {
+      display: block;
+    }
+  }
+}
+
+// 이용 신청 방법
+.applicationMethod {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+  margin-top: $spacing-6;
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.methodSteps {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.methodStep {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  background-color: $gray-100;
+  border-radius: 8px;
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: $color-primary;
+  color: $color-white;
+  border-radius: 50%;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  flex-shrink: 0;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    width: 28px;
+    height: 28px;
+    font-size: $font-size-base;
+  }
+}
+
+.stepText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-900;
+  line-height: $line-height-relaxed;
+  margin: 0;
+  letter-spacing: -0.72px;
+  flex: 1;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-base;
+  }
+}
+
+.mychartLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: $spacing-4;
+
+  @media (min-width: $breakpoint-md) {
+    margin-top: 0;
+    margin-left: $spacing-6;
+  }
+}
+
+.mychartButton {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-6;
+  background-color: $color-white;
+  border: 2px solid $color-primary;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all $transition-base;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-white;
+
+    svg {
+      fill: $color-white;
+    }
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-base;
+  }
+}
+
+.mychartLogo {
+  font-weight: $font-weight-bold;
+}
+
+// 문의 섹션
+.contactText {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  color: $gray-900;
+  line-height: $line-height-normal;
+  margin: $spacing-4 0 0 0;
+  letter-spacing: -0.8px;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-lg;
+  }
+}

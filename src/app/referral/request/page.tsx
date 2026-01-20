@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
 import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
 import { DocumentReferralIcon } from '@/components/icons/DocumentReferralIcon'
 import { HospitalPortalIcon } from '@/components/icons/HospitalPortalIcon'
@@ -13,7 +14,7 @@ import { SNSTalkIcon } from '@/components/icons/SNSTalkIcon'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import { useHospital } from '@/hooks'
-import { RequestCard } from '@/types/hospital'
+import { RequestCard, ServiceItem } from '@/types/hospital'
 import styles from './page.module.scss'
 
 export default function ReferralRequestPage() {
@@ -28,17 +29,41 @@ export default function ReferralRequestPage() {
     ChevronDownIcon: <ChevronDownIcon width={12} height={12} />
   }
 
-  // 카드 아이콘 매핑
+  // 카드 아이콘 매핑 (전화의뢰/SNS용)
   const cardIconMap: Record<string, React.ReactNode> = {
     PhoneRequestIcon: <PhoneRequestIcon width={36} height={36} stroke='#720021' />,
-    DocumentReferralIcon: <DocumentReferralIcon width={36} height={36} fill='#720021' stroke='#720021' />,
-    HospitalPortalIcon: <HospitalPortalIcon width={36} height={36} stroke='#720021' />,
-    ReferralIcon: <ReferralIcon width={36} height={36} fill='#720021' />,
     SNSTalkIcon: <SNSTalkIcon width={36} height={36} fill='#720021' stroke='#720021' />
   }
 
-  // 카드 렌더링 함수
-  const renderCard = (card: RequestCard, index: number) => {
+  // 전자카드 아이콘 매핑 (ServiceCard용)
+  const electronicCardIconMap: Record<string, React.ReactNode> = {
+    DocumentReferralIcon: <DocumentReferralIcon width={60} height={60} fill='#720021' stroke='#720021' />,
+    HospitalPortalIcon: <HospitalPortalIcon width={60} height={60} stroke='#720021' />,
+    ReferralIcon: <ReferralIcon width={60} height={60} fill='#720021' />
+  }
+
+  // 전자카드를 ServiceSection용 형식으로 변환
+  const electronicCards = useMemo(() => {
+    if (!requestInfo?.cards) return []
+
+    return requestInfo.cards
+      .filter(card => card.type === 'electronic')
+      .map((card, index) => {
+        const isExchangeCard = card.description === '진료정보교류'
+        return {
+          id: `electronic-${index}`,
+          icon: electronicCardIconMap[card.icon] || (
+            <DocumentReferralIcon width={60} height={60} fill='#720021' stroke='#720021' />
+          ),
+          title: card.title,
+          description: card.description || '',
+          href: isExchangeCard ? '/referral/request/exchange' : undefined
+        }
+      })
+  }, [requestInfo?.cards])
+
+  // 전화의뢰/SNS 카드 렌더링 함수
+  const renderPhoneOrSNSCard = (card: RequestCard, index: number) => {
     if (card.type === 'phone') {
       return (
         <div key={index} className={`${styles.requestCard} ${styles.phoneCard}`}>
@@ -99,36 +124,37 @@ export default function ReferralRequestPage() {
           </div>
         </div>
       )
-    } else {
-      return (
-        <div key={index} className={`${styles.requestCard} ${styles.electronicCard}`}>
-          <div className={styles.iconWrapper}>
-            <div className={styles.iconCircle}>{cardIconMap[card.icon]}</div>
-          </div>
-          <div className={styles.textWrapper}>
-            <h3 className={styles.title}>{card.title}</h3>
-            {card.description && <p className={styles.description}>{card.description}</p>}
-          </div>
-        </div>
-      )
     }
+    return null
   }
 
   // Breadcrumb 설정 (병원별로 다를 수 있음)
-  const defaultBreadcrumbs = [
-    { label: '', href: '/', icon: <HomeIcon /> },
-    { label: '진료의뢰', href: '/referral', icon: <ChevronDownIcon width={12} height={12} />, iconAfter: true },
-    { label: '진료협력센터 의뢰', icon: <ChevronDownIcon width={12} height={12} />, iconAfter: true }
-  ]
+  const breadcrumbItems =
+    requestInfo?.breadcrumbs?.map(item => ({
+      label: item.label,
+      href: item.href,
+      icon: item.icon ? iconMap[item.icon] : undefined,
+      iconAfter: item.iconAfter
+    })) || []
 
-  const breadcrumbItems = requestInfo?.breadcrumbs
-    ? requestInfo.breadcrumbs.map(item => ({
-        label: item.label,
-        href: item.href,
-        icon: item.icon ? iconMap[item.icon] : undefined,
-        iconAfter: item.iconAfter
-      }))
-    : defaultBreadcrumbs
+  // ServiceItem을 ServiceSection에서 사용하는 형식으로 변환
+  const mapServiceItems = (items: ServiceItem[]) => {
+    return items.map(item => ({
+      id: item.id,
+      icon: iconMap[item.icon] || <ReferralIcon />,
+      title: item.title,
+      description: item.description.replace(/\\n/g, '\n'),
+      href: item.href,
+      tabletSpan: item.tabletSpan,
+      mobileSpan: item.mobileSpan,
+      mobileTitleBelowIcon: item.mobileTitleBelowIcon
+    }))
+  }
+
+  // 병원별 서비스 목록
+  const services = useMemo(() => {
+    return mapServiceItems(pageContent.referralRequest?.services || [])
+  }, [pageContent.referralRequest?.services])
 
   return (
     <div className={styles.wrap}>
@@ -146,72 +172,22 @@ export default function ReferralRequestPage() {
             className={styles.introBox}
           />
 
+          <ServiceSection title='이용가능한 서비스' services={services} />
+
           <div className={styles.requestMethods}>
-            {requestInfo?.cards ? (
-              // 구로병원처럼 커스텀 카드가 있는 경우
-              requestInfo.cards.map((card, index) => {
-                if (card.type === 'phone' || card.type === 'sns') {
-                  return renderCard(card, index)
-                } else {
-                  return (
-                    <div key={index} className={styles.electronicCards}>
-                      {renderCard(card, index)}
-                    </div>
-                  )
-                }
-              })
-            ) : (
-              // 기본 카드 구조 (안암병원, 안산병원)
+            {requestInfo?.cards && (
               <>
-                <div className={`${styles.requestCard} ${styles.phoneCard}`}>
-                  <div className={styles.leftSection}>
-                    <div className={styles.iconWrapper}>
-                      <div className={styles.iconCircle}>
-                        <PhoneRequestIcon width={36} height={36} stroke='#720021' />
-                      </div>
-                    </div>
-                    <h3 className={styles.title}>전화의뢰</h3>
-                  </div>
-                  <div className={styles.rightSection}>
-                    <div className={styles.details}>
-                      <p className={styles.detailItem}>T. {requestInfo?.phone || ''}</p>
-                      <div className={styles.detailRow}>
-                        <span className={styles.detailText}>평일</span>
-                        <span className={styles.detailText}>{requestInfo?.operatingHours?.weekday || ''}</span>
-                      </div>
-                      <div className={styles.detailRow}>
-                        <span className={styles.detailText}>토요일</span>
-                        <span className={styles.detailText}>{requestInfo?.operatingHours?.saturday || ''}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {/* 전화의뢰/SNS 카드 */}
+                {requestInfo.cards
+                  .filter(card => card.type === 'phone' || card.type === 'sns')
+                  .map((card, index) => (
+                    <div key={`phone-sns-${index}`}>{renderPhoneOrSNSCard(card, index)}</div>
+                  ))}
 
-                <div className={styles.electronicCards}>
-                  <div className={`${styles.requestCard} ${styles.electronicCard}`}>
-                    <div className={styles.iconWrapper}>
-                      <div className={styles.iconCircle}>
-                        <DocumentReferralIcon width={36} height={36} fill='#720021' stroke='#720021' />
-                      </div>
-                    </div>
-                    <div className={styles.textWrapper}>
-                      <h3 className={styles.title}>전자의뢰</h3>
-                      <p className={styles.description}>진료정보교류</p>
-                    </div>
-                  </div>
-
-                  <div className={`${styles.requestCard} ${styles.electronicCard}`}>
-                    <div className={styles.iconWrapper}>
-                      <div className={styles.iconCircle}>
-                        <HospitalPortalIcon width={36} height={36} stroke='#720021' />
-                      </div>
-                    </div>
-                    <div className={styles.textWrapper}>
-                      <h3 className={styles.title}>전자의뢰</h3>
-                      <p className={styles.description}>심평원 중계포털</p>
-                    </div>
-                  </div>
-                </div>
+                {/* 전자카드는 ServiceSection으로 처리 */}
+                {electronicCards.length > 0 && (
+                  <ServiceSection title='' services={electronicCards} className={styles.electronicCardsSection} />
+                )}
               </>
             )}
           </div>

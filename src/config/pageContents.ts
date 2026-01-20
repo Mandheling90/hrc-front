@@ -48,7 +48,35 @@ const anamContent: HospitalPageContent = {
     operatingHours: {
       weekday: '08:30~17:30',
       saturday: '09:00~12:30'
-    }
+    },
+    breadcrumbs: [
+      { label: '', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료협력센터 의뢰', icon: 'ChevronDownIcon', iconAfter: true }
+    ],
+    services: [
+      {
+        id: 'phone-request',
+        icon: 'PhoneRequestIcon',
+        title: '전화의뢰',
+        description: '02-920-5892~4 \n 08:30~17:30 \n 09:00~12:30',
+        href: '#'
+      },
+      {
+        id: 'electronic-request',
+        icon: 'DocumentReferralIcon',
+        title: '전자의뢰',
+        description: '진료정보교류',
+        href: '#'
+      },
+      {
+        id: 'hospital-portal-request',
+        icon: 'HospitalPortalIcon',
+        title: '전자의뢰',
+        description: '심평원 중계포털',
+        href: '#'
+      }
+    ]
   }
 }
 
@@ -98,36 +126,34 @@ const guroContent: HospitalPageContent = {
       { label: '진료협력센터', icon: 'ChevronDownIcon', iconAfter: true },
       { label: '진료의뢰', icon: 'ChevronDownIcon', iconAfter: true }
     ],
-    cards: [
+    services: [
       {
-        type: 'phone',
+        id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        phone: '02-2626-1681',
-        operatingHours: {
-          weekday: '08:30~17:30'
-        }
+        description: '02-2626-1681 \n 08:30~17:30 \n 09:00~12:30',
+        href: '#'
       },
       {
-        type: 'electronic',
+        id: 'electronic-request',
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
-        description: '진료정보교류'
+        description: '진료정보교류',
+        href: '#'
       },
       {
-        type: 'electronic',
+        id: 'hospital-portal-request',
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
-        description: '심평원 중계포털'
+        description: '심평원 중계포털',
+        href: '#'
       },
       {
-        type: 'sns',
+        id: 'sns-request',
         icon: 'SNSTalkIcon',
         title: 'SNS 의뢰',
-        channel: '고대구로병원 카카오톡 채널',
-        operatingHours: {
-          weekday: '08:30~17:30'
-        }
+        description: '고대구로병원 카카오톡 채널',
+        href: '#'
       }
     ]
   }
@@ -173,7 +199,35 @@ const ansanContent: HospitalPageContent = {
     operatingHours: {
       weekday: '08:30~17:30',
       saturday: '09:00~12:30'
-    }
+    },
+    breadcrumbs: [
+      { label: '', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료협력센터 의뢰', icon: 'ChevronDownIcon', iconAfter: true }
+    ],
+    services: [
+      {
+        id: 'phone-request',
+        icon: 'PhoneRequestIcon',
+        title: '전화의뢰',
+        description: '031-412-5103 \n 08:30~17:30 \n 09:00~12:30',
+        href: '#'
+      },
+      {
+        id: 'electronic-request',
+        icon: 'DocumentReferralIcon',
+        title: '전자의뢰',
+        description: '진료정보교류',
+        href: '#'
+      },
+      {
+        id: 'hospital-portal-request',
+        icon: 'HospitalPortalIcon',
+        title: '전자의뢰',
+        description: '심평원 중계포털',
+        href: '#'
+      }
+    ]
   }
 }
 

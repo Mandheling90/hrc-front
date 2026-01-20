@@ -186,4 +186,54 @@
     letter-spacing: -0.56px;
     text-align: left;
   }
+
+  // mobileSpan이 1일 때 수직 레이아웃 유지 (데스크톱/태블릿처럼)
+  // NOTE: 카드 자체(.card)에만 적용되도록 스코프를 강하게 잡음
+  .card.mobileVertical {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 20px !important;
+    padding: 24px 20px !important;
+
+    .iconCircle {
+      width: 80px !important;
+      height: 80px !important;
+      border-radius: 70px !important;
+      background-color: #fcebeb !important;
+
+      svg {
+        width: 48px !important;
+        height: 48px !important;
+      }
+    }
+
+    .textWrapper {
+      align-items: center !important;
+      text-align: center !important;
+    }
+
+    .description {
+      text-align: center !important;
+    }
+  }
+
+  // 모바일에서 title을 아이콘 아래에 배치 (가로형 카드에서만 타이틀 위치 변경)
+  .card.mobileTitleBelowIcon {
+    .iconWrapper {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .titleBelowIcon {
+      font-size: $font-size-base; // 16px
+      font-weight: $font-weight-semibold;
+      color: $gray-900;
+      margin: 0;
+      line-height: 1.4;
+      letter-spacing: -0.64px;
+      text-align: center;
+    }
+  }
 }

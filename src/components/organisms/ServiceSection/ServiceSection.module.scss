@@ -13,30 +13,6 @@
   }
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  margin-bottom: $spacing-6;
-
-  @include tablet {
-    margin-bottom: $spacing-5;
-  }
-
-  @include mobile {
-    margin-bottom: $spacing-4;
-  }
-}
-
-.titleIcon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.title {
-  @include section-title;
-}
 
 .grid {
   display: grid;
@@ -68,12 +44,63 @@
   }
 }
 
-.firstItemWide {
+// 태블릿에서 1줄로 유지하는 옵션
+.keepSingleRowOnTablet {
+  // 모바일에서는 항상 1열로 표시 (옵션 영향 없음)
+  // 단, twoColumnsOnMobile이 함께 사용되면 2열로 표시
+  @include mobile {
+    grid-template-columns: 1fr !important;
+    
+    &.gridThreeItems {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  // 태블릿에서만 1줄로 유지 (모바일 제외: 501px ~ 720px)
+  @media (min-width: calc(#{$breakpoint-sm} + 1px)) and (max-width: $breakpoint-md) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    
+    // 3개 아이템인 경우에도 1줄로 유지
+    &.gridThreeItems {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.tabletSpan {
   @include tablet {
-    grid-column: span 2;
+    grid-column: span var(--tablet-span, 2);
   }
 
   @include mobile {
     grid-column: span 1;
+  }
+}
+
+// 모바일에서 2열 그리드로 표시 (하나라도 mobileSpan이 1인 카드가 있으면)
+.mobileTwoColumns {
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: $spacing-2;
+    
+    &.gridThreeItems {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    // keepSingleRowOnTablet와 함께 사용될 때도 2열로 표시
+    &.keepSingleRowOnTablet {
+      grid-template-columns: repeat(2, 1fr) !important;
+      
+      &.gridThreeItems {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+  }
+}
+
+// 모바일에서 차지할 칸 수 옵션 (ServiceCard별로 설정)
+.mobileSpan {
+  @include mobile {
+    grid-column: span var(--mobile-span, 1);
   }
 }

@@ -1,0 +1,27 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  margin-bottom: $spacing-6;
+
+  @include tablet {
+    margin-bottom: $spacing-5;
+  }
+
+  @include mobile {
+    margin-bottom: $spacing-4;
+  }
+}
+
+.titleIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.title {
+  @include section-title;
+}

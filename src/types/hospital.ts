@@ -63,6 +63,9 @@ export interface ServiceItem {
   title: string
   description: string
   href: string
+  tabletSpan?: number // 태블릿에서 차지할 칸 수 (기본값: 1)
+  mobileSpan?: number // 모바일에서 차지할 칸 수 (기본값: 1, 2로 설정 시 2열로 표시)
+  mobileTitleBelowIcon?: boolean // 모바일에서 title을 아이콘 아래에 배치
 }
 
 // Breadcrumb 아이템 타입
@@ -99,7 +102,7 @@ export interface ReferralRequestInfo {
     saturday: string // 토요일 운영시간
   }
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정 (병원별로 다를 수 있음)
-  cards?: RequestCard[] // 커스텀 카드 배열 (구로병원 등)
+  services?: ServiceItem[] // 커스텀 카드 배열 (구로병원 등)
 }
 
 // 페이지 콘텐츠 타입
