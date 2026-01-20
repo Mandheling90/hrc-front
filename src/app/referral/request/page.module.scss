@@ -44,17 +44,17 @@
   .requestMethods > .requestCard:first-child {
     padding: 30px;
   }
-  
+
   // 모바일에서 카드 내부 콘텐츠가 줄바꿈되도록 추가 스타일
   .phoneCard {
     flex-wrap: wrap; // 필요시 줄바꿈
   }
-  
+
   .rightSection {
     min-width: 200px; // 최소 너비 보장
     max-width: 100%; // 최대 너비 제한
   }
-  
+
   .detailItem {
     hyphens: auto; // 하이픈 자동 삽입 (영문)
   }
@@ -180,13 +180,13 @@
     width: 100%; // 전체 너비 보장
     box-sizing: border-box; // 패딩 포함 계산
   }
-  
+
   // 4개 카드인 경우 (구로병원)
   .requestMethods:has(> :nth-child(4)) {
     grid-template-columns: repeat(4, minmax(0, 1fr)); // minmax(0, 1fr)로 오버플로우 방지
     min-width: 0; // 그리드 오버플로우 방지
   }
-  
+
   // 3개 카드인 경우 (안암병원, 안산병원)
   .requestMethods:has(> :nth-child(3)):not(:has(> :nth-child(4))) {
     grid-template-columns: repeat(3, minmax(0, 1fr)); // minmax(0, 1fr)로 오버플로우 방지

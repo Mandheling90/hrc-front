@@ -16,10 +16,10 @@ import styles from './page.module.scss'
 
 // 아이콘 이름을 React 컴포넌트로 매핑
 const iconMap: Record<string, React.ReactNode> = {
-  ReferralIcon: <ReferralIcon />,
-  PatientIcon: <PatientIcon />,
-  ConsultingIcon: <ConsultingIcon />,
-  NetworkIcon: <NetworkIcon />
+  ReferralIcon: <ReferralIcon width={60} height={60} fill='#720021' />,
+  PatientIcon: <PatientIcon width={49} height={54} fill='#720021' stroke='#720021' />,
+  ConsultingIcon: <ConsultingIcon width={60} height={60} fill='#720021' stroke='#720021' />,
+  NetworkIcon: <NetworkIcon width={60} height={60} fill='#720021' stroke='#720021' />
 }
 
 // ServiceItem을 ServiceSection에서 사용하는 형식으로 변환

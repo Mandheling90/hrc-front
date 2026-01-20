@@ -132,25 +132,29 @@
     margin-bottom: 0;
     margin-right: 0;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .iconCircle {
-    width: auto;
-    height: auto;
+    width: 48px;
+    height: 48px;
     border-radius: 0;
     background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 
     svg {
       width: 32px;
       height: 32px;
-      color: #9f1836;
+      color: $color-primary;
+      flex-shrink: 0;
 
-      path,
-      rect,
-      circle {
-        fill: #9f1836;
-        stroke: #9f1836;
-      }
+      // 아이콘 컴포넌트의 prop으로 전달된 색상을 우선하도록 !important 제거
+      // fill과 stroke는 아이콘 컴포넌트에서 prop으로 관리
     }
   }
 
