@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { FindUserForm } from '@/components/organisms/FindUserForm/FindUserForm'
@@ -12,7 +13,9 @@ export default function FindUserPage() {
       <main className={styles.main}>
         <div className='container'>
           <div className={styles.findUserContainer}>
-            <FindUserForm />
+            <Suspense fallback={<div>로딩 중...</div>}>
+              <FindUserForm />
+            </Suspense>
           </div>
         </div>
       </main>

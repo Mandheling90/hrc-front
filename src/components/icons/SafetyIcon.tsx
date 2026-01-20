@@ -14,7 +14,14 @@ export const SafetyIcon: React.FC<SafetyIconProps> = ({
   fill = '#9f1836'
 }) => {
   return (
-    <svg width={width} height={height} viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
+    <svg
+      width={width}
+      height={height}
+      viewBox='0 0 60 60'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      className={className}
+    >
       <path
         d='M30 5C16.2 5 5 16.2 5 30C5 43.8 16.2 55 30 55C43.8 55 55 43.8 55 30C55 16.2 43.8 5 30 5ZM30 50C18.5 50 10 41.5 10 30C10 18.5 18.5 10 30 10C41.5 10 50 18.5 50 30C50 41.5 41.5 50 30 50Z'
         fill={fill}

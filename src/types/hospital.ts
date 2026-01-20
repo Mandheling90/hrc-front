@@ -103,6 +103,7 @@ export interface ReferralRequestInfo {
   }
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정 (병원별로 다를 수 있음)
   services?: ServiceItem[] // 커스텀 카드 배열 (구로병원 등)
+  cards?: RequestCard[] // 진료의뢰 카드 배열 (전화/전자/SNS)
 }
 
 // 페이지 콘텐츠 타입

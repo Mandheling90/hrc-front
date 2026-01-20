@@ -15,11 +15,11 @@ export const Footer: React.FC = () => {
     { id: 'ansan', label: '안산병원 진료협력센터', href: '#' }
   ].filter(item => item.id !== hospital.id)
 
-  const footerLinks = [
+  const footerLinks: Array<{ href: string; label: string; primary?: boolean }> = [
     { href: '#', label: '개인정보처리방침', primary: true },
     { href: '#', label: '이용약관' },
     { href: '#', label: '사이트맵' },
-    ...otherHospitalLinks
+    ...otherHospitalLinks.map(item => ({ href: item.href, label: item.label }))
   ]
 
   const currentYear = new Date().getFullYear()
