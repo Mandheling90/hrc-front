@@ -68,7 +68,7 @@ const anamContent: HospitalPageContent = {
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
         description: '진료정보교류',
-        href: '#',
+        href: '/referral/request/exchange',
         mobileSpan: 1
       },
       {
@@ -143,7 +143,7 @@ const guroContent: HospitalPageContent = {
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
         description: '진료정보교류',
-        href: '#',
+        href: '/referral/request/exchange',
         mobileSpan: 1
       },
       {
@@ -226,7 +226,7 @@ const ansanContent: HospitalPageContent = {
         icon: 'DocumentReferralIcon',
         title: '전자의뢰',
         description: '진료정보교류',
-        href: '#',
+        href: '/referral/request/exchange',
         mobileSpan: 1
       },
       {
