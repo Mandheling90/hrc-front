@@ -111,13 +111,6 @@ const guroContent: HospitalPageContent = {
         title: '협력네트워크',
         description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
         href: '#'
-      },
-      {
-        id: 'network',
-        icon: 'NetworkIcon',
-        title: '협력네트워크',
-        description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
-        href: '#'
       }
     ]
   },
@@ -192,7 +185,7 @@ const ansanContent: HospitalPageContent = {
         id: 'patient-query',
         icon: 'PatientIcon',
         title: '의뢰 환자 조회',
-        description: '의뢰해주신 환자의\n진료정보 조회가 가능합니다.',
+        description: '의뢰해주신 환자의 진료정보 조회가 가능합니다.',
         href: '#'
       },
       {
