@@ -13,11 +13,7 @@ export interface SectionTitleProps {
   showIcon?: boolean
 }
 
-export const SectionTitle: React.FC<SectionTitleProps> = ({
-  title,
-  className = '',
-  showIcon = true
-}) => {
+export const SectionTitle: React.FC<SectionTitleProps> = ({ title, className = '', showIcon = true }) => {
   // title이 빈 문자열이면 렌더링하지 않음
   if (!title) {
     return null
