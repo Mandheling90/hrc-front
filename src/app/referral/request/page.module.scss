@@ -33,6 +33,10 @@
   border: 1px solid #8c8c8c;
   border-radius: 10px;
   text-align: left;
+  min-width: 0; // flex/grid 아이템 오버플로우 방지
+  box-sizing: border-box; // 패딩 포함 계산
+  width: 100%; // 그리드 내에서 전체 너비 사용
+  max-width: 100%; // 최대 너비 제한
 }
 
 // 모바일 환경에서 첫 번째 requestCard의 padding을 30px로 설정
@@ -170,19 +174,23 @@
 @media (min-width: $breakpoint-md) {
   .requestMethods {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: $spacing-6;
     max-width: 100%;
+    width: 100%; // 전체 너비 보장
+    box-sizing: border-box; // 패딩 포함 계산
   }
   
   // 4개 카드인 경우 (구로병원)
   .requestMethods:has(> :nth-child(4)) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr)); // minmax(0, 1fr)로 오버플로우 방지
+    min-width: 0; // 그리드 오버플로우 방지
   }
   
   // 3개 카드인 경우 (안암병원, 안산병원)
   .requestMethods:has(> :nth-child(3)):not(:has(> :nth-child(4))) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr)); // minmax(0, 1fr)로 오버플로우 방지
+    min-width: 0; // 그리드 오버플로우 방지
   }
 
   .requestCard {
@@ -205,15 +213,19 @@
     flex-direction: column;
     gap: 0;
     align-items: center;
+    min-width: 0; // 그리드 아이템 오버플로우 방지
+    width: 100%; // 전체 너비 사용
   }
 
   .leftSection {
     align-items: center;
+    min-width: 0; // 오버플로우 방지
   }
 
   .rightSection {
     width: 100%;
     text-align: center;
+    min-width: 0; // 오버플로우 방지
   }
 
   .electronicCards {
@@ -223,10 +235,13 @@
   .electronicCard {
     flex-direction: column;
     gap: $spacing-2;
+    min-width: 0; // 그리드 아이템 오버플로우 방지
+    width: 100%; // 전체 너비 사용
   }
 
   .iconWrapper {
     margin-bottom: $spacing-5;
+    min-width: 0; // 오버플로우 방지
   }
 
   .iconCircle {
@@ -237,6 +252,7 @@
 
   .textWrapper {
     width: 100%;
+    min-width: 0; // 오버플로우 방지
   }
 
   .title {
@@ -244,6 +260,8 @@
     font-weight: $font-weight-semibold; // 600
     margin: 0 0 $spacing-4 0;
     letter-spacing: -0.96px;
+    word-wrap: break-word; // 긴 텍스트 줄바꿈
+    overflow-wrap: break-word; // 모던 브라우저 지원
   }
 
   .details {
@@ -252,6 +270,7 @@
     color: #8c8c8c;
     margin-top: $spacing-3;
     letter-spacing: -0.8px;
+    min-width: 0; // 오버플로우 방지
   }
 
   .detailItem {
