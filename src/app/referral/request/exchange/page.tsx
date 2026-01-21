@@ -73,8 +73,20 @@ export default function ExchangePage() {
           {/* 페이지 소개 섹션 */}
           <InfoBox variant='info' messages={exchangeInfo?.intro || []} className={styles.introBox} />
 
-          {/* 진료정보교류 사업 목적 섹션 */}
-          <ServiceSection title='진료정보교류 사업 목적' services={services} horizontalLayout />
+          {/* 진료정보교류 사업 목적 섹션 또는 진료정보교류 진료의뢰 설명 */}
+          {exchangeInfo?.services && exchangeInfo.services.length > 0 ? (
+            <ServiceSection title='진료정보교류 사업 목적' services={services} horizontalLayout />
+          ) : (
+            exchangeInfo?.referralDescription &&
+            exchangeInfo.referralDescription.length > 0 && (
+              <section className={styles.section}>
+                <SectionTitle title='진료정보교류 진료의뢰' />
+                <div className={styles.procedureListWrapper}>
+                  <ProcedureList items={exchangeInfo.referralDescription} />
+                </div>
+              </section>
+            )
+          )}
 
           {/* 진료정보교류 진료의뢰 절차 섹션 */}
           <section className={styles.section}>
@@ -120,14 +132,18 @@ export default function ExchangePage() {
             <section className={styles.section}>
               <SectionTitle title='문의' />
 
-              <ProcedureList
-                items={[
-                  {
-                    text: exchangeInfo.contact
-                  }
-                ]}
-                className={styles.methodSteps}
-              />
+              {Array.isArray(exchangeInfo.contact) ? (
+                <ProcedureList items={exchangeInfo.contact.map(text => ({ text }))} className={styles.methodSteps} />
+              ) : (
+                <ProcedureList
+                  items={[
+                    {
+                      text: exchangeInfo.contact
+                    }
+                  ]}
+                  className={styles.methodSteps}
+                />
+              )}
             </section>
           )}
         </div>

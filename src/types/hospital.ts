@@ -116,10 +116,11 @@ export interface ProcedureListItem {
 export interface ReferralExchangeInfo {
   intro: string[] // InfoBox 메시지
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
-  services: ServiceItem[] // 진료정보교류 사업 목적 서비스 목록
+  services?: ServiceItem[] // 진료정보교류 사업 목적 서비스 목록 (없으면 ProcedureList 사용)
+  referralDescription?: ProcedureListItem[] // 진료정보교류 진료의뢰 설명 (services가 없을 때 사용)
   procedureSteps?: ProcedureListItem[] // 진료정보교류 진료의뢰 절차
   applicationSteps?: ProcedureListItem[] // 진료정보교류사업 이용 신청 방법
-  contact?: string // 문의 연락처
+  contact?: string | string[] // 문의 연락처 (문자열 또는 문자열 배열)
 }
 
 // 페이지 콘텐츠 타입
