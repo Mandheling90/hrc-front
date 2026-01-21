@@ -22,10 +22,7 @@ export const ProcedureList: React.FC<ProcedureListProps> = ({ items, className =
     <div className={`${styles.procedureInfo} ${className}`}>
       <ul className={styles.procedureList}>
         {items.map((item, index) => (
-          <li
-            key={index}
-            className={item.highlighted ? styles.procedureItemHighlighted : styles.procedureItem}
-          >
+          <li key={index} className={item.highlighted ? styles.procedureItemHighlighted : styles.procedureItem}>
             {item.text}
           </li>
         ))}

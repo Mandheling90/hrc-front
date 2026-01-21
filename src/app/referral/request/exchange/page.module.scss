@@ -32,119 +32,20 @@
   margin-left: 32px;
 }
 
-// 플로우차트
-.flowchart {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $spacing-4;
+// 플로우차트 이미지
+.flowchartImage {
   margin-top: $spacing-8;
-  padding: $spacing-8;
-  background-color: $gray-100;
-  border-radius: 10px;
-  position: relative;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    padding: $spacing-4;
-    gap: $spacing-2;
-  }
-}
-
-.flowStep {
-  width: 100%;
   display: flex;
   justify-content: center;
-}
-
-.flowGroup {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: $spacing-3;
   width: 100%;
-  max-width: 600px;
 }
 
-.flowBox {
-  padding: $spacing-4 $spacing-6;
-  border-radius: 8px;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
-  text-align: center;
-  min-width: 200px;
+.flowchartImg {
   width: 100%;
-  max-width: 500px;
-  box-sizing: border-box;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    font-size: $font-size-base;
-    padding: $spacing-3 $spacing-4;
-    min-width: 150px;
-  }
-}
-
-.whiteBox {
-  background-color: $color-white;
-  border: 1px solid $gray-300;
-  color: $gray-900;
-}
-
-.redBox {
-  background-color: $color-primary;
-  border: 1px solid $color-primary;
-  color: $color-white;
-}
-
-.parallelBoxes {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-3;
-  width: 100%;
-  max-width: 500px;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.flowArrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: $spacing-2 0;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: -20px;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 20px;
-    border-left: 2px dashed $color-primary;
-  }
-}
-
-// 점선 화살표 (진료정보 교류동의에서 온라인 전송으로)
-.flowGroup {
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 2px;
-    border-top: 2px dashed $color-primary;
-    display: none;
-
-    @media (min-width: $breakpoint-md) {
-      display: block;
-    }
-  }
+  height: auto;
+  max-width: 1200px;
+  object-fit: contain;
 }
 
 // 이용 신청 방법

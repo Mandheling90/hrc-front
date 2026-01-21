@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
+import Image from 'next/image'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -94,75 +95,15 @@ export default function ExchangePage() {
                 ]}
               />
             </div>
-            <div className={styles.flowchart}>
-              {/* 1,2차 의료기관에서 상급 의료기관으로 의뢰 */}
-              <div className={styles.flowStep}>
-                <div className={styles.flowGroup}>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>1,2차 의료기관</div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>환자내원</div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>치료 후 의뢰결정</div>
-                  <div className={`${styles.flowBox} ${styles.redBox}`}>진료정보 교류동의</div>
-                  <div className={styles.parallelBoxes}>
-                    <div className={`${styles.flowBox} ${styles.redBox}`}>진료의뢰서 작성</div>
-                    <div className={`${styles.flowBox} ${styles.redBox}`}>필요시 영상정보, 검사 결과지 등 첨부</div>
-                  </div>
-                  <div className={`${styles.flowBox} ${styles.redBox}`}>온라인 전송</div>
-                </div>
-              </div>
-
-              {/* 화살표 */}
-              <div className={styles.flowArrow}>
-                <svg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M20 5L20 35M20 35L10 25M20 35L30 25'
-                    stroke='#9f1836'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </div>
-
-              {/* 상급 의료기관 처리 및 회송 */}
-              <div className={styles.flowStep}>
-                <div className={styles.flowGroup}>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>상급 의료기관</div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>환자내원</div>
-                  <div className={styles.parallelBoxes}>
-                    <div className={`${styles.flowBox} ${styles.whiteBox}`}>의뢰서 접수</div>
-                    <div className={`${styles.flowBox} ${styles.whiteBox}`}>진료 예약</div>
-                  </div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>진료(치료) 및 회송 결정</div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>진료회송서 작성</div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>온라인 전송</div>
-                </div>
-              </div>
-
-              {/* 화살표 */}
-              <div className={styles.flowArrow}>
-                <svg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M20 5L20 35M20 35L10 25M20 35L30 25'
-                    stroke='#9f1836'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </div>
-
-              {/* 1,2차 의료기관에서의 외래 진료 */}
-              <div className={styles.flowStep}>
-                <div className={styles.flowGroup}>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>1,2차 의료기관</div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>환자내원</div>
-                  <div className={styles.parallelBoxes}>
-                    <div className={`${styles.flowBox} ${styles.whiteBox}`}>회송서 접수</div>
-                    <div className={`${styles.flowBox} ${styles.whiteBox}`}>진료예약</div>
-                  </div>
-                  <div className={`${styles.flowBox} ${styles.whiteBox}`}>외래 진료(치료)</div>
-                </div>
-              </div>
+            <div className={styles.flowchartImage}>
+              <Image
+                src='/images/service/flowchart-referral-process.png'
+                alt='진료정보교류 진료의뢰 절차 플로우차트'
+                width={1200}
+                height={800}
+                className={styles.flowchartImg}
+                priority
+              />
             </div>
           </section>
 
