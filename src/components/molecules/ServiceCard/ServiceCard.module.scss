@@ -105,14 +105,25 @@
     box-shadow: $shadow-md !important;
   }
 
-  @include tablet {
-    padding: 24px !important;
-    gap: $spacing-4 !important;
-    min-width: 0; // 그리드가 크기를 제어하도록 설정
+  // 태블릿 범위(720px ~ 1024px)에서는 horizontalLayout이 없는 것처럼 기본 카드 스타일 적용
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: $breakpoint-lg) {
+    // horizontalLayout의 모든 스타일을 기본 카드 스타일로 초기화
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 24px 20px !important;
+    gap: 20px !important;
+
+    .iconWrapper {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
 
     .iconCircle {
       width: 80px !important;
       height: 80px !important;
+      border-radius: 70px !important;
+      background-color: #fcebeb !important;
 
       svg {
         width: 48px !important;
@@ -121,23 +132,30 @@
     }
 
     .textWrapper {
-      min-width: 0; // 그리드가 텍스트 영역 크기를 제어하도록 설정
+      align-items: center !important;
+      text-align: center !important;
     }
 
     .title {
+      text-align: center !important;
       font-size: $font-size-xl !important; // 20px
     }
 
     .description {
+      text-align: center !important;
       font-size: $font-size-base !important; // 16px
       letter-spacing: -0.64px;
     }
   }
 
-  @include tablet {
+  // 모바일에서는 가로 레이아웃 유지
+  @include mobile {
+    flex-direction: row !important;
+    align-items: center !important;
+    text-align: left !important;
     padding: $spacing-4 !important;
     gap: $spacing-4 !important;
-    min-width: auto; // 모바일에서는 최소 너비 제약 없음
+    min-width: auto;
 
     .iconCircle {
       width: 64px !important;
@@ -152,16 +170,20 @@
     }
 
     .textWrapper {
-      min-width: 0; // 모바일에서는 최소 너비 제약 없음
+      min-width: 0;
       overflow: visible;
+      align-items: flex-start !important;
+      text-align: left !important;
     }
 
     .title {
+      text-align: left !important;
       font-size: $font-size-lg !important; // 18px
       letter-spacing: -0.72px;
     }
 
     .description {
+      text-align: left !important;
       font-size: $font-size-sm !important; // 14px
       letter-spacing: -0.56px;
     }
