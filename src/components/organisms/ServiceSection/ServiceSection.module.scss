@@ -17,7 +17,7 @@
 .grid {
   display: grid;
   // 카드 최소 너비 280px 기준으로 자동 조정, 가로 스크롤 방지
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: $spacing-6;
 
   // 태블릿
@@ -34,7 +34,7 @@
 
 .gridThreeItems {
   // 카드 최소 너비 280px 기준으로 자동 조정, 가로 스크롤 방지
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
   @include mobile {
     grid-template-columns: 1fr;
