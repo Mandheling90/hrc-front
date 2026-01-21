@@ -9,13 +9,9 @@ import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
 import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
-import { ContinuityIcon } from '@/components/icons/ContinuityIcon'
-import { SafetyIcon } from '@/components/icons/SafetyIcon'
-import { QualityIcon } from '@/components/icons/QualityIcon'
-import { HomeIcon } from '@/components/icons/HomeIcon'
-import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import { FluentArrowCircleUpRight } from '@/components/icons/FluentArrowCircleUpRight'
 import { useHospital } from '@/hooks'
+import { mapServiceItems, mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
 
 export default function ExchangePage() {
@@ -24,43 +20,15 @@ export default function ExchangePage() {
   // pageContent에서 exchange 페이지 정보 가져오기
   const exchangeInfo = pageContent.referralExchange
 
-  // 아이콘 매핑
-  const iconMap = useMemo<Record<string, React.ReactNode>>(
-    () => ({
-      HomeIcon: <HomeIcon />,
-      ChevronDownIcon: <ChevronDownIcon width={12} height={12} />,
-      ContinuityIcon: <ContinuityIcon width={60} height={60} stroke='#9f1836' />,
-      SafetyIcon: <SafetyIcon width={60} height={60} stroke='#9f1836' />,
-      QualityIcon: <QualityIcon width={60} height={60} stroke='#9f1836' />
-    }),
-    []
-  )
-
-  // Breadcrumb 설정 (병원별로 다를 수 있음)
+  // Breadcrumb 설정
   const breadcrumbItems = useMemo(() => {
-    return (
-      exchangeInfo?.breadcrumbs?.map(item => ({
-        label: item.label,
-        href: item.href,
-        icon: item.icon ? iconMap[item.icon] : undefined,
-        iconAfter: item.iconAfter
-      })) || []
-    )
-  }, [exchangeInfo?.breadcrumbs, iconMap])
+    return mapBreadcrumbItems(exchangeInfo?.breadcrumbs)
+  }, [exchangeInfo?.breadcrumbs])
 
   // 병원별 서비스 목록
   const services = useMemo(() => {
-    return (exchangeInfo?.services || []).map(item => ({
-      id: item.id,
-      icon: iconMap[item.icon] || null,
-      title: item.title,
-      description: item.description,
-      href: item.href,
-      tabletSpan: item.tabletSpan,
-      mobileSpan: item.mobileSpan,
-      mobileTitleBelowIcon: item.mobileTitleBelowIcon
-    }))
-  }, [exchangeInfo?.services, iconMap])
+    return mapServiceItems(exchangeInfo?.services)
+  }, [exchangeInfo?.services])
 
   return (
     <div className={styles.wrap}>

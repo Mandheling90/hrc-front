@@ -1,0 +1,277 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+$spacing-14: 3.5rem; // 56px
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+  margin-bottom: $spacing-10;
+}
+
+// 페이지 소개 섹션
+.introBox {
+  margin-bottom: $spacing-10;
+}
+
+// 섹션 공통 스타일
+.section {
+  margin-bottom: $spacing-14;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.procedureListWrapper {
+  margin-left: 32px;
+  margin-top: $spacing-2;
+}
+
+// STEP 카드 스타일
+.stepCard {
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: $spacing-6;
+  overflow: hidden;
+
+  &:first-of-type {
+    margin-top: $spacing-6;
+  }
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.stepBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  background-color: $color-primary;
+  color: $color-white;
+  border-radius: 5px;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  white-space: nowrap;
+}
+
+.stepTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+}
+
+.linkText {
+  color: $color-primary;
+}
+
+.stepDivider {
+  width: 100%;
+  height: 1px;
+  background-color: #bbb;
+  margin: $spacing-6 0;
+}
+
+.stepContent {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1042px;
+
+  @media (min-width: $breakpoint-lg) {
+    flex: 1;
+  }
+}
+
+.stepImage {
+  width: 100%;
+  height: auto;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+// 하이라이트 박스 (이미지 위 강조 영역)
+.highlightBox {
+  position: absolute;
+  border: 4px solid #c09c63;
+  pointer-events: none;
+}
+
+// STEP 01 하이라이트 위치
+.highlight1 {
+  left: 10.5%;
+  top: 14.5%;
+  width: 12%;
+  height: 16.8%;
+}
+
+.highlight2 {
+  left: 63.6%;
+  top: 0;
+  width: 10.2%;
+  height: 9.7%;
+}
+
+// STEP 02 하이라이트 위치
+.highlight3 {
+  left: 0;
+  top: 33.5%;
+  width: 14.6%;
+  height: 5.5%;
+}
+
+.highlight4 {
+  left: 90.6%;
+  top: 24.2%;
+  width: 6.8%;
+  height: 5.5%;
+}
+
+// 숫자 뱃지 (대형 - 이미지 위)
+.numberBadgeLarge {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #c09c63;
+  color: $color-white;
+  border-radius: 50%;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+}
+
+// 설명 영역
+.stepDescription {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+  width: 276px;
+  flex-shrink: 0;
+
+  @media (max-width: $breakpoint-lg) {
+    width: 100%;
+  }
+}
+
+.descriptionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+// 숫자 뱃지 (소형 - 설명 영역)
+.numberBadgeSmall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  width: 16px;
+  height: 16px;
+  background-color: #c09c63;
+  color: $color-white;
+  border-radius: 8px;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.descriptionItem p {
+  margin: 0;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: #636363;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+}
+
+// 반응형 스타일
+@media (max-width: $breakpoint-md) {
+  .stepCard {
+    padding: $spacing-5;
+  }
+
+  .stepHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-3;
+  }
+
+  .stepBadge {
+    font-size: $font-size-lg;
+    padding: 6px 16px;
+  }
+
+  .stepTitle {
+    font-size: $font-size-xl;
+  }
+
+  .stepContent {
+    flex-direction: column;
+    gap: $spacing-5;
+  }
+
+  .stepDescription {
+    width: 100%;
+  }
+
+  .numberBadgeLarge {
+    width: 28px;
+    height: 28px;
+    left: -32px;
+    font-size: $font-size-lg;
+  }
+
+  .procedureListWrapper {
+    margin-left: $spacing-4;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .highlightBox {
+    border-width: 2px;
+  }
+
+  .numberBadgeLarge {
+    width: 24px;
+    height: 24px;
+    left: -28px;
+    font-size: $font-size-base;
+  }
+}

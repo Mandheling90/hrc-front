@@ -123,6 +123,45 @@ export interface ReferralExchangeInfo {
   contact?: string | string[] // 문의 연락처 (문자열 또는 문자열 배열)
 }
 
+// 심평원 중계시스템 스텝 이미지 하이라이트 설정
+export interface HiraStepHighlight {
+  className: string // 하이라이트 박스 클래스명 (highlight1, highlight2 등)
+  number: number // 표시할 번호
+}
+
+// 심평원 중계시스템 스텝 설명 아이템
+export interface HiraStepDescriptionItem {
+  number: number // 번호
+  text: string // 설명 텍스트
+}
+
+// 심평원 중계시스템 스텝 정보
+export interface HiraStep {
+  stepNumber: string // STEP. 01, STEP. 02 등
+  title: string // 스텝 제목
+  linkText?: string // 제목 내 링크 텍스트 (있는 경우)
+  image: {
+    src: string
+    alt: string
+    width: number
+    height: number
+  }
+  highlights: HiraStepHighlight[] // 이미지 위 하이라이트 박스들
+  descriptions: HiraStepDescriptionItem[] // 스텝 설명 목록
+}
+
+// 심평원 중계시스템 의뢰 페이지 정보
+export interface ReferralHiraInfo {
+  pageTitle: string // 페이지 제목
+  intro: string[] // InfoBox 메시지
+  breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
+  businessPurpose?: ProcedureListItem[] // 사업 목적 (리스트 형태)
+  businessPurposeServices?: ServiceItem[] // 사업 목적 (서비스 카드 형태, 안산병원 등)
+  target?: ProcedureListItem[] // 대상 (구로병원 등)
+  steps: HiraStep[] // 진료의뢰 절차 스텝들
+  contact?: string | string[] // 문의 연락처
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -131,6 +170,7 @@ export interface HospitalPageContent {
   }
   referralRequest?: ReferralRequestInfo // 진료협력센터 의뢰 페이지 정보
   referralExchange?: ReferralExchangeInfo // 진료정보교류 의뢰 페이지 정보
+  referralHira?: ReferralHiraInfo // 심평원 중계시스템 의뢰 페이지 정보
 }
 
 // 병원 컨텍스트 타입

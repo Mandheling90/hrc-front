@@ -72,16 +72,23 @@
     gap: 8px;
     width: 100%; // 부모 너비에 맞춤
     overflow: visible; // 텍스트가 잘리지 않도록 visible로 변경
+
+    // 데스크톱에서 너비 자동 조정
+    @include desktop {
+      flex: 0 1 auto !important;
+      width: auto !important;
+      max-width: none !important;
+    }
   }
 
   .title {
     text-align: left !important;
-    font-size: $font-size-2xl !important; // 24px
-    font-weight: $font-weight-semibold !important; // 600
-    color: $gray-900 !important;
+    font-size: $font-size-xl !important; // 20px
+    font-weight: $font-weight-normal !important; // 400
+    color: #636363 !important;
     margin: 0;
     line-height: 1.5;
-    letter-spacing: -0.96px;
+    letter-spacing: -0.8px;
     width: 100%;
     word-break: keep-all; // 한글 단어 단위로 줄바꿈
     overflow-wrap: break-word; // 긴 단어 줄바꿈
@@ -103,6 +110,11 @@
   &:hover {
     transform: none !important;
     box-shadow: $shadow-md !important;
+  }
+
+  // 데스크톱(1024px 이상)에서 카드 내부 컨텐츠 중앙 정렬
+  @include desktop {
+    justify-content: center !important;
   }
 
   // 태블릿 범위(720px ~ 1024px)에서는 horizontalLayout이 없는 것처럼 기본 카드 스타일 적용

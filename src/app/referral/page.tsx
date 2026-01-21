@@ -6,35 +6,9 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
 import { SystemIcon } from '@/components/icons/SystemIcon'
-import { ReferralIcon } from '@/components/icons/ReferralIcon'
-import { PatientIcon } from '@/components/icons/PatientIcon'
-import { NetworkIcon } from '@/components/icons/NetworkIcon'
-import { ConsultingIcon } from '@/components/icons/ConsultingIcon'
 import { useHospital } from '@/hooks'
-import { ServiceItem } from '@/types/hospital'
+import { mapServiceItems } from '@/utils'
 import styles from './page.module.scss'
-
-// 아이콘 이름을 React 컴포넌트로 매핑
-const iconMap: Record<string, React.ReactNode> = {
-  ReferralIcon: <ReferralIcon width={60} height={60} fill='#720021' />,
-  PatientIcon: <PatientIcon width={49} height={54} fill='#720021' stroke='#720021' />,
-  ConsultingIcon: <ConsultingIcon width={60} height={60} fill='#720021' stroke='#720021' />,
-  NetworkIcon: <NetworkIcon width={60} height={60} fill='#720021' stroke='#720021' />
-}
-
-// ServiceItem을 ServiceSection에서 사용하는 형식으로 변환
-const mapServiceItems = (items: ServiceItem[]) => {
-  return items.map(item => ({
-    id: item.id,
-    icon: iconMap[item.icon] || <ReferralIcon />,
-    title: item.title,
-    description: item.description,
-    href: item.href,
-    tabletSpan: item.tabletSpan,
-    mobileSpan: item.mobileSpan,
-    mobileTitleBelowIcon: item.mobileTitleBelowIcon
-  }))
-}
 
 export default function ReferralPage() {
   const { pageContent } = useHospital()

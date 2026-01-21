@@ -1,4 +1,4 @@
-import { HospitalId, HospitalPageContent } from '@/types/hospital'
+import { HospitalId, HospitalPageContent, ReferralHiraInfo } from '@/types/hospital'
 import { getCurrentHospitalId } from './hospitals'
 
 // 안암병원 페이지 콘텐츠
@@ -76,7 +76,7 @@ const anamContent: HospitalPageContent = {
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
         description: '심평원 중계포털',
-        href: '#',
+        href: '/referral/request/hira',
         mobileSpan: 1
       }
     ]
@@ -127,6 +127,63 @@ const anamContent: HospitalPageContent = {
       },
       {
         text: '승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)'
+      }
+    ],
+    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
+  },
+  referralHira: {
+    pageTitle: '심평원중계시스템 의뢰',
+    intro: [
+      '2020.11.1부터 [협력기관간 진료의뢰-회송 시범사업 지침] 개정으로 별도 신청없이 심평원 중계시스템을 통해 고려대학교 안암병원으로',
+      '의사의 판단에 따라 적절한 요양급여를 위해 상급종합병원으로 진료가 필요하고, 개인정보 제공에 동의한 환자를 진료의뢰 하실 수 있습니다.'
+    ],
+    breadcrumbs: [
+      { label: '홈', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral/request', iconAfter: true },
+      { label: '심평원중계시스템 의뢰', href: '/referral/request/hira', iconAfter: true }
+    ],
+    businessPurpose: [
+      { text: '단계적 의뢰 강화에 따른 의료전달체계 확립' },
+      { text: '내실있는 진료정보 교류 촉진 및 지역 내 의뢰 활성화 지원' }
+    ],
+    steps: [
+      {
+        stepNumber: 'STEP. 01',
+        title: '심평원 중계시스템 접속 (https://ef.hira.or.kr)',
+        linkText: 'https://ef.hira.or.kr',
+        image: {
+          src: '/images/service/hira-step1.png',
+          alt: '심평원 중계시스템 접속 화면',
+          width: 1042,
+          height: 525
+        },
+        highlights: [
+          { className: 'highlight1', number: 1 },
+          { className: 'highlight2', number: 2 }
+        ],
+        descriptions: [
+          { number: 1, text: '요양기관 공인인증서 로그인' },
+          { number: 2, text: '진료의뢰·회송 메뉴 선택' }
+        ]
+      },
+      {
+        stepNumber: 'STEP. 02',
+        title: '의뢰서 작성',
+        image: {
+          src: '/images/service/hira-step2.png',
+          alt: '의뢰서 작성 화면',
+          width: 1042,
+          height: 471
+        },
+        highlights: [
+          { className: 'highlight3', number: 3 },
+          { className: 'highlight4', number: 4 }
+        ],
+        descriptions: [
+          { number: 3, text: '의뢰서 작성' },
+          { number: 4, text: '필수 입력 항목 입력 후 전송' },
+          { number: 5, text: '진료협력센터에서 환자에게 전화하여 예약진행' }
+        ]
       }
     ],
     contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
@@ -201,7 +258,7 @@ const guroContent: HospitalPageContent = {
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
         description: '심평원 중계포털',
-        href: '#',
+        href: '/referral/request/hira',
         mobileSpan: 1
       },
       {
@@ -247,6 +304,68 @@ const guroContent: HospitalPageContent = {
       }
     ],
     contact: ['고려대학교 구로병원 진료협력센터 : 02-2626-1681', '한국보건의료정보원(진료정보교류센터) : 1666-7598']
+  },
+  referralHira: {
+    pageTitle: '심평원중계시스템 의뢰',
+    intro: [
+      '2020.11.1부터 [협력기관간 진료의뢰-회송 시범사업 지침] 개정으로 별도 신청없이 심평원 중계시스템을 통해 고려대학교구로병원으로',
+      '의사의 판단에 따라 적절한 요양급여를 위해 상급종합병원으로 진료가 필요하고, 개인정보 제공에 동의한 환자를 진료의뢰 하실 수 있습니다.'
+    ],
+    breadcrumbs: [
+      { label: '홈', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰/조회', href: '/referral/request', iconAfter: true },
+      { label: '심평원중계시스템 의뢰', href: '/referral/request/hira', iconAfter: true }
+    ],
+    businessPurpose: [
+      { text: '단계적 의뢰 강화에 따른 의료전달체계 확립' },
+      { text: '내실있는 진료정보 교류 촉진 및 지역 내 의뢰 활성화 지원' }
+    ],
+    target: [
+      {
+        text: '의사의 판단에 따라 적절한 요양급여를 위해 상급종합병원으로 진료의뢰가 필요한 환자로 개인정보 제공에 동의한 환자'
+      }
+    ],
+    steps: [
+      {
+        stepNumber: 'STEP. 01',
+        title: '심평원 중계시스템 접속 (https://ef.hira.or.kr)',
+        linkText: 'https://ef.hira.or.kr',
+        image: {
+          src: '/images/service/hira-step1.png',
+          alt: '심평원 중계시스템 접속 화면',
+          width: 1042,
+          height: 525
+        },
+        highlights: [
+          { className: 'highlight1', number: 1 },
+          { className: 'highlight2', number: 2 }
+        ],
+        descriptions: [
+          { number: 1, text: '요양기관 공인인증서 로그인' },
+          { number: 2, text: '진료의뢰·회송 메뉴 선택' }
+        ]
+      },
+      {
+        stepNumber: 'STEP. 02',
+        title: '의뢰서 작성',
+        image: {
+          src: '/images/service/hira-step2.png',
+          alt: '의뢰서 작성 화면',
+          width: 1042,
+          height: 471
+        },
+        highlights: [
+          { className: 'highlight3', number: 3 },
+          { className: 'highlight4', number: 4 }
+        ],
+        descriptions: [
+          { number: 3, text: '의뢰서 작성' },
+          { number: 4, text: '필수 입력 항목 입력 후 전송' },
+          { number: 5, text: '진료협력센터에서 환자에게 전화하여 예약진행' }
+        ]
+      }
+    ],
+    contact: '고려대학교 구로병원 진료협력센터 : 02-2626-1681'
   }
 }
 
@@ -318,7 +437,7 @@ const ansanContent: HospitalPageContent = {
         icon: 'HospitalPortalIcon',
         title: '전자의뢰',
         description: '심평원 중계포털',
-        href: '#',
+        href: '/referral/request/hira',
         mobileSpan: 1
       }
     ]
@@ -378,6 +497,73 @@ const ansanContent: HospitalPageContent = {
       }
     ],
     contact: '고려대학교 안산병원 진료협력센터 : 031-412-5103'
+  },
+  referralHira: {
+    pageTitle: '심평원중계시스템 의뢰',
+    intro: [
+      '2020.11.1부터 [협력기관간 진료의뢰-회송 시범사업 지침] 개정으로 별도 신청없이 심평원 중계시스템을 통해 고려대학교 안산병원으로',
+      '의사의 판단에 따라 적절한 요양급여를 위해 상급종합병원으로 진료가 필요하고, 개인정보 제공에 동의한 환자를 진료의뢰 하실 수 있습니다.'
+    ],
+    breadcrumbs: [
+      { label: '홈', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral/request', iconAfter: true },
+      { label: '심평원중계시스템 의뢰', href: '/referral/request/hira', iconAfter: true }
+    ],
+    businessPurposeServices: [
+      {
+        id: 'delivery-system',
+        icon: 'ChartStepperIcon',
+        title: '단계적 의뢰 강화에 따른 의료전달체계 확립',
+        description: ''
+      },
+      {
+        id: 'referral-activation',
+        icon: 'DoctorIcon',
+        title: '내실있는 진료정보 교류 촉진 및 지역 내 의뢰 활성화 지원',
+        description: ''
+      }
+    ],
+    steps: [
+      {
+        stepNumber: 'STEP. 01',
+        title: '심평원 중계시스템 접속 (https://ef.hira.or.kr)',
+        linkText: 'https://ef.hira.or.kr',
+        image: {
+          src: '/images/service/hira-step1.png',
+          alt: '심평원 중계시스템 접속 화면',
+          width: 1042,
+          height: 525
+        },
+        highlights: [
+          { className: 'highlight1', number: 1 },
+          { className: 'highlight2', number: 2 }
+        ],
+        descriptions: [
+          { number: 1, text: '요양기관 공인인증서 로그인' },
+          { number: 2, text: '진료의뢰·회송 메뉴 선택' }
+        ]
+      },
+      {
+        stepNumber: 'STEP. 02',
+        title: '의뢰서 작성',
+        image: {
+          src: '/images/service/hira-step2.png',
+          alt: '의뢰서 작성 화면',
+          width: 1042,
+          height: 471
+        },
+        highlights: [
+          { className: 'highlight3', number: 3 },
+          { className: 'highlight4', number: 4 }
+        ],
+        descriptions: [
+          { number: 3, text: '의뢰서 작성' },
+          { number: 4, text: '필수 입력 항목 입력 후 전송' },
+          { number: 5, text: '진료협력센터에서 환자에게 전화하여 예약진행' }
+        ]
+      }
+    ],
+    contact: ['고려대학교 안산병원 진료협력센터 : 031-412-5103', 'HIRA 건강보험심사평가원 : 1644-2000']
   }
 }
 
