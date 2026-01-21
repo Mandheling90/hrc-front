@@ -1,0 +1,74 @@
+@import '@/styles/variables.scss';
+
+.procedureInfo {
+  margin-bottom: $spacing-8;
+  padding: 0;
+}
+
+.procedureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.procedureItemHighlighted {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-700;
+  line-height: $line-height-relaxed;
+  letter-spacing: -0.72px;
+  padding-left: $spacing-6;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(1em * #{$line-height-relaxed} / 2);
+    width: 6px;
+    height: 6px;
+    background-color: $color-primary;
+    transform: translateY(-50%);
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-base;
+    padding-left: $spacing-5;
+
+    &::before {
+      top: calc(1em * #{$line-height-relaxed} / 2);
+    }
+  }
+}
+
+.procedureItem {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-700;
+  line-height: $line-height-relaxed;
+  letter-spacing: -0.72px;
+  padding-left: $spacing-6;
+  position: relative;
+
+  &::before {
+    content: '-';
+    position: absolute;
+    left: 0;
+    top: calc(1em * #{$line-height-relaxed} / 2);
+    transform: translateY(-50%);
+    color: $gray-700;
+    font-weight: $font-weight-normal;
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-base;
+    padding-left: $spacing-5;
+
+    &::before {
+      top: calc(1em * #{$line-height-relaxed} / 2);
+    }
+  }
+}

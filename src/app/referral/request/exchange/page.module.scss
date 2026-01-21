@@ -28,33 +28,8 @@
   }
 }
 
-// 진료의뢰 절차
-.procedureInfo {
-  margin-bottom: $spacing-8;
-  padding: $spacing-6;
-  background-color: $gray-100;
-  border-radius: 8px;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    padding: $spacing-4;
-  }
-}
-
-.procedureText {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-normal;
-  color: $gray-700;
-  line-height: $line-height-relaxed;
-  margin: 0 0 $spacing-2 0;
-  letter-spacing: -0.72px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    font-size: $font-size-base;
-  }
+.procedureListWrapper {
+  margin-left: 32px;
 }
 
 // 플로우차트

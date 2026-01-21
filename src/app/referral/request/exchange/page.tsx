@@ -6,6 +6,7 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
 import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
 import { ContinuityIcon } from '@/components/icons/ContinuityIcon'
 import { SafetyIcon } from '@/components/icons/SafetyIcon'
@@ -77,10 +78,21 @@ export default function ExchangePage() {
           {/* 진료정보교류 진료의뢰 절차 섹션 */}
           <section className={styles.section}>
             <SectionTitle title='진료정보교류 진료의뢰 절차' />
-            <div className={styles.procedureInfo}>
-              <p className={styles.procedureText}>진료정보교류에 대한 개인정보제공 동의 필요(최초 1회)</p>
-              <p className={styles.procedureText}>포털(마이차트, mychart.kr)에서 본인인증을 통한 동의</p>
-              <p className={styles.procedureText}>의료기관 방문을 통한 동의 (전자 또는 서면)</p>
+            <div className={styles.procedureListWrapper}>
+              <ProcedureList
+                items={[
+                  {
+                    text: '진료정보교류에 대한 개인정보제공 동의 필요(최초 1회)',
+                    highlighted: true
+                  },
+                  {
+                    text: '포털(마이차트, mychart.kr)에서 본인인증을 통한 동의'
+                  },
+                  {
+                    text: '의료기관 방문을 통한 동의 (전자 또는 서면)'
+                  }
+                ]}
+              />
             </div>
             <div className={styles.flowchart}>
               {/* 1,2차 의료기관에서 상급 의료기관으로 의뢰 */}
