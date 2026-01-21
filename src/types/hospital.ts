@@ -106,11 +106,19 @@ export interface ReferralRequestInfo {
   cards?: RequestCard[] // 진료의뢰 카드 배열 (전화/전자/SNS)
 }
 
+// ProcedureList 아이템 타입
+export interface ProcedureListItem {
+  text: string
+  highlighted?: boolean
+}
+
 // 진료정보교류 의뢰 페이지 정보
 export interface ReferralExchangeInfo {
   intro: string[] // InfoBox 메시지
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
   services: ServiceItem[] // 진료정보교류 사업 목적 서비스 목록
+  procedureSteps?: ProcedureListItem[] // 진료정보교류 진료의뢰 절차
+  applicationSteps?: ProcedureListItem[] // 진료정보교류사업 이용 신청 방법
   contact?: string // 문의 연락처
 }
 

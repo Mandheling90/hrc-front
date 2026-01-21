@@ -112,6 +112,29 @@ const anamContent: HospitalPageContent = {
         description: ''
       }
     ],
+    procedureSteps: [
+      {
+        text: '진료정보교류에 대한 개인정보제공 동의 필요(최초 1회)',
+        highlighted: true
+      },
+      {
+        text: '포털(마이차트, mychart.kr)에서 본인인증을 통한 동의'
+      },
+      {
+        text: '의료기관 방문을 통한 동의 (전자 또는 서면)'
+      }
+    ],
+    applicationSteps: [
+      {
+        text: '보건복지부 마이차트 회원가입(http://mychart.kr)'
+      },
+      {
+        text: '이용신청서 작성'
+      },
+      {
+        text: '승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)'
+      }
+    ],
     contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
   }
 }
@@ -228,6 +251,29 @@ const guroContent: HospitalPageContent = {
         description: ''
       }
     ],
+    procedureSteps: [
+      {
+        text: '진료정보교류에 대한 개인정보제공 동의 필요(최초 1회)',
+        highlighted: true
+      },
+      {
+        text: '포털(마이차트, mychart.kr)에서 본인인증을 통한 동의'
+      },
+      {
+        text: '의료기관 방문을 통한 동의 (전자 또는 서면)'
+      }
+    ],
+    applicationSteps: [
+      {
+        text: '보건복지부 마이차트 회원가입(http://mychart.kr)'
+      },
+      {
+        text: '이용신청서 작성'
+      },
+      {
+        text: '승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)'
+      }
+    ],
     contact: '고려대학교 구로병원 진료협력센터 : 02-2626-1681'
   }
 }
@@ -334,6 +380,29 @@ const ansanContent: HospitalPageContent = {
         icon: 'QualityIcon',
         title: '의료서비스 질 향상',
         description: ''
+      }
+    ],
+    procedureSteps: [
+      {
+        text: '진료정보교류에 대한 개인정보제공 동의 필요(최초 1회)',
+        highlighted: true
+      },
+      {
+        text: '포털(마이차트, mychart.kr)에서 본인인증을 통한 동의'
+      },
+      {
+        text: '의료기관 방문을 통한 동의 (전자 또는 서면)'
+      }
+    ],
+    applicationSteps: [
+      {
+        text: '보건복지부 마이차트 회원가입(http://mychart.kr)'
+      },
+      {
+        text: '이용신청서 작성'
+      },
+      {
+        text: '승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)'
       }
     ],
     contact: '고려대학교 안산병원 진료협력센터 : 031-412-5103'

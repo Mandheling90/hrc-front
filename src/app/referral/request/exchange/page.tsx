@@ -80,20 +80,7 @@ export default function ExchangePage() {
           <section className={styles.section}>
             <SectionTitle title='진료정보교류 진료의뢰 절차' />
             <div className={styles.procedureListWrapper}>
-              <ProcedureList
-                items={[
-                  {
-                    text: '진료정보교류에 대한 개인정보제공 동의 필요(최초 1회)',
-                    highlighted: true
-                  },
-                  {
-                    text: '포털(마이차트, mychart.kr)에서 본인인증을 통한 동의'
-                  },
-                  {
-                    text: '의료기관 방문을 통한 동의 (전자 또는 서면)'
-                  }
-                ]}
-              />
+              <ProcedureList items={exchangeInfo?.procedureSteps || []} />
             </div>
             <div className={styles.flowchartImage}>
               <Image
@@ -111,20 +98,7 @@ export default function ExchangePage() {
           <section className={styles.section}>
             <SectionTitle title='진료정보교류사업 이용 신청 방법' />
             <div className={styles.applicationMethod}>
-              <ProcedureList
-                items={[
-                  {
-                    text: '보건복지부 마이차트 회원가입(http://mychart.kr)'
-                  },
-                  {
-                    text: '이용신청서 작성'
-                  },
-                  {
-                    text: '승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)'
-                  }
-                ]}
-                className={styles.methodSteps}
-              />
+              <ProcedureList items={exchangeInfo?.applicationSteps || []} className={styles.methodSteps} />
               <div className={styles.mychartLink}>
                 <a href='http://mychart.kr' target='_blank' rel='noopener noreferrer' className={styles.mychartButton}>
                   <Image
@@ -145,7 +119,15 @@ export default function ExchangePage() {
           {exchangeInfo?.contact && (
             <section className={styles.section}>
               <SectionTitle title='문의' />
-              <p className={styles.contactText}>{exchangeInfo.contact}</p>
+
+              <ProcedureList
+                items={[
+                  {
+                    text: exchangeInfo.contact
+                  }
+                ]}
+                className={styles.methodSteps}
+              />
             </section>
           )}
         </div>
