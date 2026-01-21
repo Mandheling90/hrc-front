@@ -183,8 +183,8 @@
     }
   }
 
-  // 모바일 (500px 이하)
-  @media (max-width: $breakpoint-sm) {
+  // 모바일 (720px 이하)
+  @media (max-width: $breakpoint-md) {
     padding: $spacing-6 0 $spacing-10;
 
     .container {
@@ -204,7 +204,7 @@
     padding: 0 20px;
   }
 
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: $breakpoint-md) {
     padding: 40px 0;
 
     .container {
@@ -235,7 +235,7 @@
   }
 
   // 모바일
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: $breakpoint-md) {
     font-size: $font-size-2xl; // 24px
     margin: 0 0 $spacing-6;
     letter-spacing: -0.96px;
@@ -258,7 +258,7 @@
     letter-spacing: -1.12px;
   }
 
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: $breakpoint-md) {
     font-size: $font-size-xl; // 20px
     margin: 0 0 $spacing-5;
     letter-spacing: -0.8px;
@@ -283,7 +283,7 @@
     letter-spacing: -0.96px;
   }
 
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: $breakpoint-md) {
     font-size: $font-size-xl; // 20px
     letter-spacing: -0.8px;
   }

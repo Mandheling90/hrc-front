@@ -9,7 +9,7 @@
     margin-top: -90px;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: $breakpoint-md) {
     margin-top: -68px;
   }
 
@@ -29,7 +29,7 @@
       padding-top: 90px;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: $breakpoint-md) {
       padding-top: 68px;
     }
   }

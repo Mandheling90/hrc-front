@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -13,20 +13,52 @@ import { QualityIcon } from '@/components/icons/QualityIcon'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
+import { useHospital } from '@/hooks'
 import styles from './page.module.scss'
 
 export default function ExchangePage() {
-  const breadcrumbItems = [
-    { label: '', href: '/', icon: <HomeIcon /> },
-    { label: '진료의뢰', href: '/referral', icon: <ChevronDownIcon width={12} height={12} />, iconAfter: true },
-    {
-      label: '진료협력센터 의뢰',
-      href: '/referral/request',
-      icon: <ChevronDownIcon width={12} height={12} />,
-      iconAfter: true
-    },
-    { label: '진료정보교류 의뢰', icon: <ChevronDownIcon width={12} height={12} />, iconAfter: true }
-  ]
+  const { pageContent } = useHospital()
+
+  // pageContent에서 exchange 페이지 정보 가져오기
+  const exchangeInfo = pageContent.referralExchange
+
+  // 아이콘 매핑
+  const iconMap = useMemo<Record<string, React.ReactNode>>(
+    () => ({
+      HomeIcon: <HomeIcon />,
+      ChevronDownIcon: <ChevronDownIcon width={12} height={12} />,
+      ContinuityIcon: <ContinuityIcon width={60} height={60} stroke='#9f1836' />,
+      SafetyIcon: <SafetyIcon width={60} height={60} stroke='#9f1836' />,
+      QualityIcon: <QualityIcon width={60} height={60} stroke='#9f1836' />
+    }),
+    []
+  )
+
+  // Breadcrumb 설정 (병원별로 다를 수 있음)
+  const breadcrumbItems = useMemo(() => {
+    return (
+      exchangeInfo?.breadcrumbs?.map(item => ({
+        label: item.label,
+        href: item.href,
+        icon: item.icon ? iconMap[item.icon] : undefined,
+        iconAfter: item.iconAfter
+      })) || []
+    )
+  }, [exchangeInfo?.breadcrumbs, iconMap])
+
+  // 병원별 서비스 목록
+  const services = useMemo(() => {
+    return (exchangeInfo?.services || []).map(item => ({
+      id: item.id,
+      icon: iconMap[item.icon] || null,
+      title: item.title,
+      description: item.description,
+      href: item.href,
+      tabletSpan: item.tabletSpan,
+      mobileSpan: item.mobileSpan,
+      mobileTitleBelowIcon: item.mobileTitleBelowIcon
+    }))
+  }, [exchangeInfo?.services, iconMap])
 
   return (
     <div className={styles.wrap}>
@@ -37,39 +69,10 @@ export default function ExchangePage() {
           <h1 className={styles.pageTitle}>진료정보교류 의뢰</h1>
 
           {/* 페이지 소개 섹션 */}
-          <InfoBox
-            variant='info'
-            messages={[
-              '의료기관간 진료기록을 진료에 참조할 수 있도록 전자적으로 진료정보를 공유하는 서비스로 1·2차 병의원에서 3차병원으로,',
-              '또는 1차의원에서 다른 1·2차 병의원으로 환자의 진단 및 치료, 검사를 위해 전자적으로 진료의뢰를 할 수 있습니다.'
-            ]}
-            className={styles.introBox}
-          />
+          <InfoBox variant='info' messages={exchangeInfo?.intro || []} className={styles.introBox} />
 
           {/* 진료정보교류 사업 목적 섹션 */}
-          <ServiceSection
-            title='진료정보교류 사업 목적'
-            services={[
-              {
-                id: 'continuity',
-                icon: <ContinuityIcon width={60} height={60} fill='#9f1836' />,
-                title: '진료의 연속성 보장',
-                description: ''
-              },
-              {
-                id: 'safety',
-                icon: <SafetyIcon width={60} height={60} fill='#9f1836' />,
-                title: '환자 안전 강화',
-                description: ''
-              },
-              {
-                id: 'quality',
-                icon: <QualityIcon width={60} height={60} fill='#9f1836' />,
-                title: '의료서비스 질 향상',
-                description: ''
-              }
-            ]}
-          />
+          <ServiceSection title='진료정보교류 사업 목적' services={services} horizontalLayout />
 
           {/* 진료정보교류 진료의뢰 절차 섹션 */}
           <section className={styles.section}>
@@ -179,10 +182,12 @@ export default function ExchangePage() {
           </section>
 
           {/* 문의 섹션 */}
-          <section className={styles.section}>
-            <SectionTitle title='문의' />
-            <p className={styles.contactText}>고려대학교 안암병원 진료협력센터 : 02-920-5892</p>
-          </section>
+          {exchangeInfo?.contact && (
+            <section className={styles.section}>
+              <SectionTitle title='문의' />
+              <p className={styles.contactText}>{exchangeInfo.contact}</p>
+            </section>
+          )}
         </div>
       </main>
       <Footer />

@@ -16,15 +16,22 @@ export interface ServiceSectionProps {
   title?: string
   services: ServiceItem[]
   className?: string
+  /** 항상 가로 레이아웃으로 표시 (모든 화면 크기에서 아이콘과 텍스트가 나란히 배치) */
+  horizontalLayout?: boolean
 }
 
-export const ServiceSection: React.FC<ServiceSectionProps> = ({ title, services, className = '' }) => {
+export const ServiceSection: React.FC<ServiceSectionProps> = ({
+  title,
+  services,
+  className = '',
+  horizontalLayout = false
+}) => {
   const isThreeItems = services.length === 3
   // 모바일에서 2열로 표시할지 여부 (하나라도 mobileSpan이 명시적으로 설정되어 있으면 2열 그리드)
   const hasMobileTwoColumns = services.some(service => service.mobileSpan !== undefined)
 
   return (
-    <section className={`${styles.section} ${className}`}>
+    <section className={`${styles.section} ${className} ${horizontalLayout ? styles.horizontalLayout : ''}`}>
       {title && <SectionTitle title={title} />}
       <div
         className={`${styles.grid} ${isThreeItems ? styles.gridThreeItems : ''} ${
@@ -37,7 +44,8 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({ title, services,
           const tabletSpanClass = tabletSpan > 1 ? styles.tabletSpan : ''
           const mobileSpanClass = service.mobileSpan !== undefined && mobileSpan > 1 ? styles.mobileSpan : ''
           // mobileSpan이 "명시적으로 1"인 경우에만 모바일에서도 수직 레이아웃 유지
-          const isMobileVertical = service.mobileSpan === 1
+          // 단, horizontalLayout이 true이면 항상 가로 레이아웃 유지
+          const isMobileVertical = !horizontalLayout && service.mobileSpan === 1
           // 모바일에서 title을 아이콘 아래에 배치
           const isMobileTitleBelowIcon = service.mobileTitleBelowIcon || false
           // mobileSpan이 미설정(undefined)인 경우를 감지
@@ -55,6 +63,7 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({ title, services,
               mobileVertical={isMobileVertical}
               mobileTitleBelowIcon={isMobileTitleBelowIcon}
               mobileSpan={isMobileSpanUnset ? undefined : mobileSpan}
+              horizontalLayout={horizontalLayout}
               style={
                 tabletSpan > 1 || (service.mobileSpan !== undefined && mobileSpan > 1)
                   ? ({

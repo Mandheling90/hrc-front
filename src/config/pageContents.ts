@@ -80,6 +80,39 @@ const anamContent: HospitalPageContent = {
         mobileSpan: 1
       }
     ]
+  },
+  referralExchange: {
+    intro: [
+      '의료기관간 진료기록을 진료에 참조할 수 있도록 전자적으로 진료정보를 공유하는 서비스로 1·2차 병의원에서 3차병원으로,',
+      '또는 1차의원에서 다른 1·2차 병의원으로 환자의 진단 및 치료, 검사를 위해 전자적으로 진료의뢰를 할 수 있습니다.'
+    ],
+    breadcrumbs: [
+      { label: '', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료협력센터 의뢰', href: '/referral/request', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료정보교류 의뢰', icon: 'ChevronDownIcon', iconAfter: true }
+    ],
+    services: [
+      {
+        id: 'continuity',
+        icon: 'ContinuityIcon',
+        title: '진료의 연속성 보장',
+        description: ''
+      },
+      {
+        id: 'safety',
+        icon: 'SafetyIcon',
+        title: '환자 안전 강화',
+        description: ''
+      },
+      {
+        id: 'quality',
+        icon: 'QualityIcon',
+        title: '의료서비스 질 향상',
+        description: ''
+      }
+    ],
+    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
   }
 }
 
@@ -163,6 +196,39 @@ const guroContent: HospitalPageContent = {
         mobileSpan: 1
       }
     ]
+  },
+  referralExchange: {
+    intro: [
+      '의료기관간 진료기록을 진료에 참조할 수 있도록 전자적으로 진료정보를 공유하는 서비스로 1·2차 병의원에서 3차병원으로,',
+      '또는 1차의원에서 다른 1·2차 병의원으로 환자의 진단 및 치료, 검사를 위해 전자적으로 진료의뢰를 할 수 있습니다.'
+    ],
+    breadcrumbs: [
+      { label: '', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료협력센터 의뢰', href: '/referral/request', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료정보교류 의뢰', icon: 'ChevronDownIcon', iconAfter: true }
+    ],
+    services: [
+      {
+        id: 'continuity',
+        icon: 'ContinuityIcon',
+        title: '진료의 연속성 보장',
+        description: ''
+      },
+      {
+        id: 'safety',
+        icon: 'SafetyIcon',
+        title: '환자 안전 강화',
+        description: ''
+      },
+      {
+        id: 'quality',
+        icon: 'QualityIcon',
+        title: '의료서비스 질 향상',
+        description: ''
+      }
+    ],
+    contact: '고려대학교 구로병원 진료협력센터 : 02-2626-1681'
   }
 }
 
@@ -238,6 +304,39 @@ const ansanContent: HospitalPageContent = {
         mobileSpan: 1
       }
     ]
+  },
+  referralExchange: {
+    intro: [
+      '의료기관간 진료기록을 진료에 참조할 수 있도록 전자적으로 진료정보를 공유하는 서비스로 1·2차 병의원에서 3차병원으로,',
+      '또는 1차의원에서 다른 1·2차 병의원으로 환자의 진단 및 치료, 검사를 위해 전자적으로 진료의뢰를 할 수 있습니다.'
+    ],
+    breadcrumbs: [
+      { label: '', href: '/', icon: 'HomeIcon' },
+      { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료협력센터 의뢰', href: '/referral/request', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: '진료정보교류 의뢰', icon: 'ChevronDownIcon', iconAfter: true }
+    ],
+    services: [
+      {
+        id: 'continuity',
+        icon: 'ContinuityIcon',
+        title: '진료의 연속성 보장',
+        description: ''
+      },
+      {
+        id: 'safety',
+        icon: 'SafetyIcon',
+        title: '환자 안전 강화',
+        description: ''
+      },
+      {
+        id: 'quality',
+        icon: 'QualityIcon',
+        title: '의료서비스 질 향상',
+        description: ''
+      }
+    ],
+    contact: '고려대학교 안산병원 진료협력센터 : 031-412-5103'
   }
 }
 

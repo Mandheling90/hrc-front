@@ -33,7 +33,7 @@
           height: 45px;
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: $breakpoint-md) {
           width: 150px;
           height: 38px;
         }
@@ -183,7 +183,7 @@
         height: 54px;
       }
 
-      @media (max-width: 500px) {
+      @media (max-width: $breakpoint-md) {
         width: 150px;
         height: 68px;
       }
