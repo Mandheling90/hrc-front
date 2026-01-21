@@ -14,7 +14,7 @@ import { SafetyIcon } from '@/components/icons/SafetyIcon'
 import { QualityIcon } from '@/components/icons/QualityIcon'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
-import { LinkIcon } from '@/components/icons/LinkIcon'
+import { FluentArrowCircleUpRight } from '@/components/icons/FluentArrowCircleUpRight'
 import { useHospital } from '@/hooks'
 import styles from './page.module.scss'
 
@@ -111,24 +111,31 @@ export default function ExchangePage() {
           <section className={styles.section}>
             <SectionTitle title='진료정보교류사업 이용 신청 방법' />
             <div className={styles.applicationMethod}>
-              <div className={styles.methodSteps}>
-                <div className={styles.methodStep}>
-                  <span className={styles.stepNumber}>1</span>
-                  <p className={styles.stepText}>보건복지부 마이차트 회원가입(http://mychart.kr)</p>
-                </div>
-                <div className={styles.methodStep}>
-                  <span className={styles.stepNumber}>2</span>
-                  <p className={styles.stepText}>이용신청서 작성</p>
-                </div>
-                <div className={styles.methodStep}>
-                  <span className={styles.stepNumber}>3</span>
-                  <p className={styles.stepText}>승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)</p>
-                </div>
-              </div>
+              <ProcedureList
+                items={[
+                  {
+                    text: '보건복지부 마이차트 회원가입(http://mychart.kr)'
+                  },
+                  {
+                    text: '이용신청서 작성'
+                  },
+                  {
+                    text: '승인 (거점의료기관 승인 → 한국보건의료정보원 최종 승인!)'
+                  }
+                ]}
+                className={styles.methodSteps}
+              />
               <div className={styles.mychartLink}>
                 <a href='http://mychart.kr' target='_blank' rel='noopener noreferrer' className={styles.mychartButton}>
-                  <span className={styles.mychartLogo}>마이차트</span>
-                  <LinkIcon width={20} height={20} fill='#9f1836' />
+                  <Image
+                    src='/images/service/myChartTitle.png'
+                    alt='보건복지부 마이차트'
+                    width={200}
+                    height={60}
+                    className={styles.mychartImage}
+                    priority
+                  />
+                  <FluentArrowCircleUpRight className={styles.arrowIcon} />
                 </a>
               </div>
             </div>
