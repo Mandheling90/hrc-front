@@ -16,7 +16,7 @@
     line-height: 1.5;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     font-size: 14px;
   }
 }

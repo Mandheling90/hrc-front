@@ -14,15 +14,15 @@
     display: flex;
     gap: 50px;
 
-    @media (max-width: 1430px) {
+    @media (max-width: $breakpoint-2xl) {
       gap: 36px;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: $breakpoint-xl) {
       gap: 28px;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: $breakpoint-lg) {
       flex-direction: column;
     }
   }
@@ -36,7 +36,7 @@
     list-style: none;
     padding: 0;
 
-    @media (max-width: 1430px) {
+    @media (max-width: $breakpoint-2xl) {
       margin-top: 32px;
     }
 
@@ -57,7 +57,7 @@
         text-decoration: none;
         transition: all 0.3s;
 
-        @media (max-width: 1430px) {
+        @media (max-width: $breakpoint-2xl) {
           height: 84px;
           gap: 32px;
           padding: 0 36px;
@@ -77,7 +77,7 @@
           -webkit-line-clamp: 1;
           color: var(--color-darken, #000);
 
-          @media (max-width: 1430px) {
+          @media (max-width: $breakpoint-2xl) {
             font-size: 20px;
             width: calc(100% - 140px);
           }
@@ -94,7 +94,7 @@
           color: var(--gray-500, #adb5bd);
           font-style: normal;
 
-          @media (max-width: 1430px) {
+          @media (max-width: $breakpoint-2xl) {
             width: 140px;
             font-size: 20px;
             padding-left: 32px;
@@ -222,12 +222,12 @@
   overflow: hidden;
   flex-shrink: 0;
 
-  @media (max-width: 1430px) {
+  @media (max-width: $breakpoint-2xl) {
     width: 520px;
     height: 381.5px;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     width: 60%;
     height: 100%;
     margin: 0 auto;
@@ -269,7 +269,7 @@
     align-items: center;
     padding: 0 30px;
 
-    @media (max-width: 1430px) {
+    @media (max-width: $breakpoint-2xl) {
       height: 44px;
       padding: 0 24px;
     }
@@ -282,7 +282,7 @@
     width: auto;
     position: static;
 
-    @media (max-width: 1430px) {
+    @media (max-width: $breakpoint-2xl) {
       font-size: 16px;
     }
 
@@ -290,7 +290,7 @@
       font-size: 20px;
       color: #fff;
 
-      @media (max-width: 1430px) {
+        @media (max-width: $breakpoint-2xl) {
         font-size: 18px;
       }
     }

@@ -1,7 +1,7 @@
 @import '@/styles/variables.scss';
 
 .progressStepsContainer {
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     width: 100%;
     overflow: auto;
     position: absolute;
@@ -21,7 +21,7 @@
   margin-bottom: 60px;
   padding-bottom: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     width: fit-content;
     align-items: center;
     background-color: #7a1f2e;
@@ -50,7 +50,7 @@
   background-color: #e0e0e0;
   z-index: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     display: none;
   }
 }
@@ -74,7 +74,7 @@
     z-index: 1;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     position: static;
     flex: none;
 
@@ -102,7 +102,7 @@
   flex: 1;
   padding: 25px 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     flex: none;
     gap: 0;
     padding: 0;
@@ -118,7 +118,7 @@
   line-height: 1.2;
   color: #666666;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     font-size: 16px;
     color: #ffffff;
   }
@@ -130,7 +130,7 @@
   line-height: 1.2;
   color: #666666;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     font-size: 16px;
     color: #ffffff;
   }
@@ -143,7 +143,7 @@
   position: relative;
   z-index: 2;
 
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-md) {
     background-color: $color-white;
   }
 
@@ -152,7 +152,7 @@
     font-weight: 500;
     color: #ffffff;
 
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-md) {
       font-size: 16px;
       color: $color-primary;
     }
@@ -163,7 +163,7 @@
     font-weight: 600;
     color: #ffffff;
 
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-md) {
       font-size: 16px;
       color: $color-primary;
     }

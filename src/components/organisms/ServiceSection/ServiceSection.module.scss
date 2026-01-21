@@ -95,7 +95,7 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
       // 화면이 좁을 때를 대비한 더 작은 최소 너비
-      @media (max-width: 1200px) {
+      @media (max-width: $breakpoint-xl) {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       }
 
