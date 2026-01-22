@@ -68,7 +68,20 @@
 }
 
 // 태블릿에서 3-2 레이아웃 (위에 3개, 아래에 2개) - legacy 호환
+// 데스크톱에서 5개 카드일 때 한 줄로 배치
 .tabletThreeTwoLayout {
+  // 데스크톱: 5개 카드를 한 줄로 배치
+  @media (min-width: calc(#{$breakpoint-lg} + 1px)) {
+    grid-template-columns: repeat(5, 1fr);
+    gap: $spacing-6;
+
+    // 모든 카드가 동일한 너비를 가지도록
+    > * {
+      grid-column: span 1;
+    }
+  }
+
+  // 태블릿: 3-2 레이아웃
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: $breakpoint-lg) {
     grid-template-columns: repeat(6, 1fr);
     gap: $spacing-4;
