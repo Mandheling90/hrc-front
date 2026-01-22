@@ -1,0 +1,146 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+  text-align: center;
+  margin-bottom: $spacing-8;
+}
+
+.introBox {
+  margin: $spacing-8 0 $spacing-10;
+}
+
+.section {
+  margin-bottom: $spacing-12;
+
+  @include tablet {
+    margin-bottom: $spacing-10;
+  }
+}
+
+.targetSection {
+  margin-bottom: $spacing-6;
+
+  @include tablet {
+    margin-bottom: $spacing-8;
+  }
+}
+
+.targetItem {
+  margin-bottom: $spacing-4;
+}
+
+.targetLabel {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  margin-bottom: $spacing-3;
+}
+
+.applicationMethodSection {
+  margin-bottom: $spacing-6;
+
+  @include tablet {
+    margin-bottom: $spacing-8;
+  }
+}
+
+.contactSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  margin: $spacing-6 0;
+
+  @include tablet {
+    flex-direction: row;
+    gap: $spacing-6;
+  }
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  padding: $spacing-5;
+  background-color: $color-white;
+  border: 1px solid $gray-300;
+  border-radius: 8px;
+  flex: 1;
+
+  @include tablet {
+    padding: $spacing-6;
+  }
+}
+
+.contactIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contactInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  flex: 1;
+}
+
+.contactLabel {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $gray-900;
+}
+
+.contactValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $gray-900;
+}
+
+.downloadLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-base;
+  color: $color-primary;
+  text-decoration: none;
+  margin: $spacing-4 0;
+  transition: color $transition-base;
+
+  &:hover {
+    color: darken($color-primary, 10%);
+    text-decoration: underline;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  margin-top: $spacing-8;
+
+  @include tablet {
+    flex-direction: row;
+    gap: $spacing-4;
+    justify-content: center;
+  }
+}
+
+.applicationButton {
+  flex: 1;
+
+  @include tablet {
+    flex: 0;
+    min-width: 200px;
+  }
+}

@@ -8,7 +8,7 @@ import styles from './Header.module.scss'
 
 const navigationItems = [
   { href: '/referral', label: '진료의뢰' },
-  { href: '#', label: '협력네트워크' },
+  { href: '/referral/network', label: '협력네트워크' },
   { href: '#', label: '공지/정보' },
   { href: '#', label: '진료협력센터 소개' }
 ]

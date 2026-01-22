@@ -162,6 +162,35 @@ export interface ReferralHiraInfo {
   contact?: string | string[] // 문의 연락처
 }
 
+// 협력네트워크 절차 단계 정보
+export interface NetworkProcessStep {
+  stepNumber: string // "01", "02" 등
+  title: string // 단계 제목
+  icon: string // 아이콘 컴포넌트 이름
+}
+
+// 협력네트워크 페이지 정보
+export interface NetworkInfo {
+  intro: string[] // InfoBox 메시지
+  breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
+  benefits?: ProcedureListItem[] // 협력병·의원 혜택안내
+  target?: {
+    hospital?: ProcedureListItem[] // 협력병원 대상
+    clinic?: ProcedureListItem[] // 협력의원 대상
+  }
+  applicationMethod?: ProcedureListItem[] // 신청방법
+  processSteps?: NetworkProcessStep[] // 체결 절차 단계
+  contact?: {
+    phone?: string // 전화번호
+    fax?: string // 팩스번호
+  }
+  downloadLink?: string // 신청서 다운로드 링크
+  applicationLinks?: {
+    hospital?: string // 협력병원 온라인 신청 링크
+    clinic?: string // 협력의원 온라인 신청 링크
+  }
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -171,6 +200,7 @@ export interface HospitalPageContent {
   referralRequest?: ReferralRequestInfo // 진료협력센터 의뢰 페이지 정보
   referralExchange?: ReferralExchangeInfo // 진료정보교류 의뢰 페이지 정보
   referralHira?: ReferralHiraInfo // 심평원 중계시스템 의뢰 페이지 정보
+  network?: NetworkInfo // 협력네트워크 페이지 정보
 }
 
 // 병원 컨텍스트 타입
