@@ -1,9 +1,14 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
-import styles from './ServiceCard.module.scss'
+import { VerticalServiceCard } from './VerticalServiceCard'
+import { HorizontalServiceCard } from './HorizontalServiceCard'
+import { StepBadgeCard } from './StepBadgeCard'
 
+/**
+ * @deprecated 새로운 코드에서는 VerticalServiceCard, HorizontalServiceCard, StepBadgeCard를 직접 사용하세요.
+ * 이 컴포넌트는 기존 호환성을 위해 유지됩니다.
+ */
 export interface ServiceCardProps {
   icon: React.ReactNode
   title: string
@@ -12,18 +17,22 @@ export interface ServiceCardProps {
   onClick?: () => void
   className?: string
   style?: React.CSSProperties
-  /** 모바일에서 수직 레이아웃 유지 (mobileSpan이 1일 때) */
+  /** @deprecated mobileVertical 대신 VerticalServiceCard를 사용하세요 */
   mobileVertical?: boolean
-  /** 모바일에서 title을 아이콘 아래에 배치 */
+  /** @deprecated mobileTitleBelowIcon 대신 적절한 카드 컴포넌트를 사용하세요 */
   mobileTitleBelowIcon?: boolean
-  /** 모바일에서 span 값 (2일 때 스타일 적용) */
+  /** @deprecated mobileSpan은 ServiceSection에서 레이아웃으로 처리하세요 */
   mobileSpan?: number
-  /** 항상 가로 레이아웃으로 표시 (모든 화면 크기에서 아이콘과 텍스트가 나란히 배치) */
+  /** @deprecated horizontalLayout 대신 HorizontalServiceCard를 사용하세요 */
   horizontalLayout?: boolean
-  /** 스텝 배지 텍스트 (설정 시 상단에 배지로 표시, Figma 디자인에 맞춤) */
+  /** @deprecated stepBadge 대신 StepBadgeCard를 사용하세요 */
   stepBadge?: string | string[]
 }
 
+/**
+ * @deprecated 새로운 코드에서는 VerticalServiceCard, HorizontalServiceCard, StepBadgeCard를 직접 사용하세요.
+ * 이 컴포넌트는 기존 호환성을 위해 유지됩니다.
+ */
 export const ServiceCard: React.FC<ServiceCardProps> = ({
   icon,
   title,
@@ -33,73 +42,30 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   className = '',
   style,
   mobileVertical = false,
-  mobileTitleBelowIcon = false,
-  mobileSpan,
   horizontalLayout = false,
   stepBadge
 }) => {
-  // description이 배열인 경우 줄바꿈 처리
-  const renderDescription = () => {
-    if (Array.isArray(description)) {
-      return (
-        <p className={styles.description}>
-          {description.map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              {index < description.length - 1 && <br />}
-            </React.Fragment>
-          ))}
-        </p>
-      )
-    }
-    return <p className={styles.description}>{description}</p>
+  const commonProps = {
+    icon,
+    title,
+    description,
+    href,
+    onClick,
+    className,
+    style
   }
 
-  // stepBadge 렌더링
-  const renderStepBadge = () => {
-    if (!stepBadge) return null
+  // stepBadge가 있으면 StepBadgeCard 사용
+  if (stepBadge) {
     const badgeText = Array.isArray(stepBadge) ? stepBadge.join(' ') : stepBadge
-    return <div className={styles.stepBadge}>{badgeText}</div>
+    return <StepBadgeCard {...commonProps} badgeText={badgeText} />
   }
 
-  // stepBadge가 있을 때는 항상 제목을 아이콘 아래에 배치
-  const shouldShowTitleBelowIcon = stepBadge || mobileTitleBelowIcon
-
-  const content = (
-    <>
-      {stepBadge && renderStepBadge()}
-      <div className={styles.iconWrapper}>
-        <div className={styles.iconCircle}>{icon}</div>
-        {shouldShowTitleBelowIcon && <h3 className={styles.titleBelowIcon}>{title}</h3>}
-      </div>
-      {!shouldShowTitleBelowIcon && (
-        <div className={styles.textWrapper}>
-          <h3 className={styles.title}>{title}</h3>
-          {renderDescription()}
-        </div>
-      )}
-    </>
-  )
-
-  const cardClassName = `${styles.card} ${mobileVertical ? styles.mobileVertical : ''} ${mobileTitleBelowIcon ? styles.mobileTitleBelowIcon : ''} ${mobileSpan === 2 ? styles.mobileSpanTwo : ''} ${mobileSpan === undefined ? styles.mobileSpanUnset : ''} ${horizontalLayout ? styles.horizontalLayout : ''} ${stepBadge ? styles.stepBadgeCard : ''} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${className}`
-
-  if (href) {
-    return (
-      <Link href={href} className={cardClassName} style={style}>
-        {content}
-      </Link>
-    )
+  // horizontalLayout이면 HorizontalServiceCard 사용
+  if (horizontalLayout) {
+    return <HorizontalServiceCard {...commonProps} />
   }
 
-  return (
-    <div
-      className={cardClassName}
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      style={style}
-    >
-      {content}
-    </div>
-  )
+  // mobileVertical이거나 기본값은 VerticalServiceCard 사용
+  return <VerticalServiceCard {...commonProps} size={mobileVertical ? 'small' : 'default'} />
 }

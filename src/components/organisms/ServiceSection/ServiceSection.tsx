@@ -1,94 +1,125 @@
 'use client'
 
 import React from 'react'
-import { ServiceCard, ServiceCardProps } from '@/components/molecules/ServiceCard/ServiceCard'
+import {
+  VerticalServiceCard,
+  HorizontalServiceCard,
+  StepBadgeCard,
+  CardLayoutType
+} from '@/components/molecules/ServiceCard'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import styles from './ServiceSection.module.scss'
 
-export interface ServiceItem extends Omit<ServiceCardProps, 'className'> {
+/** 기존 호환성을 위한 ServiceItem 타입 */
+export interface ServiceItem {
   id: string
-  tabletSpan?: number // 태블릿에서 차지할 칸 수 (기본값: 1)
-  mobileSpan?: number // 모바일에서 차지할 칸 수 (기본값: 1, 2로 설정 시 2열로 표시)
-  mobileTitleBelowIcon?: boolean // 모바일에서 title을 아이콘 아래에 배치
+  icon: React.ReactNode
+  title: string
+  description: string | string[]
+  href?: string
+  onClick?: () => void
+  className?: string
+  style?: React.CSSProperties
+  /** @deprecated 새 API에서는 layoutType을 사용하세요 */
+  tabletSpan?: number
+  /** @deprecated 새 API에서는 layoutType을 사용하세요 */
+  mobileSpan?: number
+  /** @deprecated 새 API에서는 layoutType을 사용하세요 */
+  mobileTitleBelowIcon?: boolean
+  /** 카드 레이아웃 타입 (새 API) */
+  layoutType?: CardLayoutType
+  /** 배지 텍스트 (step-badge 타입일 때) */
+  badgeText?: string
 }
 
 export interface ServiceSectionProps {
   title?: string
   services: ServiceItem[]
   className?: string
-  /** 항상 가로 레이아웃으로 표시 (모든 화면 크기에서 아이콘과 텍스트가 나란히 배치) */
+  /** 기본 카드 레이아웃 타입 (개별 카드에서 override 가능) */
+  defaultLayoutType?: CardLayoutType
+  /** 그리드 열 수 설정 */
+  columns?: 2 | 3 | 4 | 'auto'
+  /** @deprecated 새 API에서는 defaultLayoutType='horizontal'을 사용하세요 */
   horizontalLayout?: boolean
-  /** 스텝 배지 사용 여부 (true일 때 description을 상단 배지로 표시) */
+  /** @deprecated 새 API에서는 defaultLayoutType='step-badge'를 사용하세요 */
   useStepBadge?: boolean
-  /** 태블릿에서 3-2 레이아웃 사용 (위에 3개, 아래에 2개 카드 배치) */
+  /** @deprecated 이 prop은 더 이상 지원되지 않습니다 */
   tabletThreeTwoLayout?: boolean
 }
 
+/**
+ * 서비스 섹션 컴포넌트
+ * 레이아웃만 담당하고, 카드 렌더링은 타입에 따라 적절한 컴포넌트 사용
+ */
 export const ServiceSection: React.FC<ServiceSectionProps> = ({
   title,
   services,
   className = '',
+  defaultLayoutType = 'vertical',
+  columns = 'auto',
+  // Legacy props (deprecated)
   horizontalLayout = false,
   useStepBadge = false,
   tabletThreeTwoLayout = false
 }) => {
-  const isThreeItems = services.length === 3
+  // Legacy props를 새 API로 변환
+  const resolvedDefaultLayoutType: CardLayoutType = useStepBadge
+    ? 'step-badge'
+    : horizontalLayout
+      ? 'horizontal'
+      : defaultLayoutType
+
+  const renderCard = (service: ServiceItem) => {
+    const layoutType = service.layoutType || resolvedDefaultLayoutType
+
+    const commonProps = {
+      icon: service.icon,
+      title: service.title,
+      description: service.description,
+      href: service.href,
+      onClick: service.onClick,
+      className: service.className,
+      style: service.style
+    }
+
+    // mobileSpan에 따른 wrapper 클래스
+    const mobileSpanClass =
+      service.mobileSpan === 2 ? styles.mobileSpanTwo : service.mobileSpan === 1 ? styles.mobileSpanOne : ''
+
+    switch (layoutType) {
+      case 'horizontal':
+        return (
+          <div key={service.id} className={mobileSpanClass}>
+            <HorizontalServiceCard {...commonProps} />
+          </div>
+        )
+      case 'step-badge': {
+        // step-badge일 때 badgeText가 없으면 description을 배지로 사용 (legacy 호환)
+        const badgeText = service.badgeText || (typeof service.description === 'string' ? service.description : '')
+        return (
+          <div key={service.id} className={mobileSpanClass}>
+            <StepBadgeCard {...commonProps} badgeText={badgeText} />
+          </div>
+        )
+      }
+      case 'vertical':
+      default:
+        return (
+          <div key={service.id} className={mobileSpanClass}>
+            <VerticalServiceCard {...commonProps} mobileSpan={service.mobileSpan} />
+          </div>
+        )
+    }
+  }
+
   const isFiveItems = services.length === 5
-  // 모바일에서 2열로 표시할지 여부 (하나라도 mobileSpan이 명시적으로 설정되어 있으면 2열 그리드)
-  const hasMobileTwoColumns = services.some(service => service.mobileSpan !== undefined)
+  const gridClassName = `${styles.grid} ${columns !== 'auto' ? styles[`columns${columns}`] : ''} ${tabletThreeTwoLayout && isFiveItems ? styles.tabletThreeTwoLayout : ''}`
 
   return (
-    <section className={`${styles.section} ${className} ${horizontalLayout ? styles.horizontalLayout : ''}`}>
+    <section className={`${styles.section} ${className}`}>
       {title && <SectionTitle title={title} />}
-      <div
-        className={`${styles.grid} ${isThreeItems ? styles.gridThreeItems : ''} ${
-          hasMobileTwoColumns ? styles.mobileTwoColumns : ''
-        } ${tabletThreeTwoLayout && isFiveItems ? styles.tabletThreeTwoLayout : ''}`}
-      >
-        {services.map((service, index) => {
-          const tabletSpan = service.tabletSpan || 1
-          const mobileSpan = service.mobileSpan ?? 1
-          const tabletSpanClass = tabletSpan > 1 ? styles.tabletSpan : ''
-          const mobileSpanClass = service.mobileSpan !== undefined && mobileSpan > 1 ? styles.mobileSpan : ''
-          // mobileSpan이 "명시적으로 1"인 경우에만 모바일에서도 수직 레이아웃 유지
-          // 단, horizontalLayout이 true이면 항상 가로 레이아웃 유지
-          const isMobileVertical = !horizontalLayout && service.mobileSpan === 1
-          // 모바일에서 title을 아이콘 아래에 배치
-          const isMobileTitleBelowIcon = service.mobileTitleBelowIcon || false
-          // mobileSpan이 미설정(undefined)인 경우를 감지
-          const isMobileSpanUnset = service.mobileSpan === undefined
-
-          // 태블릿 3-2 레이아웃: 4번째, 5번째 아이템에 특별한 클래스 추가
-          const isSecondRowItem = tabletThreeTwoLayout && isFiveItems && index >= 3
-          const secondRowClass = isSecondRowItem ? styles.secondRowItem : ''
-
-          return (
-            <ServiceCard
-              key={service.id}
-              icon={service.icon}
-              title={service.title}
-              description={service.description}
-              href={service.href}
-              onClick={service.onClick}
-              className={`${tabletSpanClass} ${mobileSpanClass} ${secondRowClass}`}
-              mobileVertical={isMobileVertical}
-              mobileTitleBelowIcon={isMobileTitleBelowIcon}
-              mobileSpan={isMobileSpanUnset ? undefined : mobileSpan}
-              horizontalLayout={horizontalLayout}
-              stepBadge={useStepBadge ? service.description : undefined}
-              style={
-                tabletSpan > 1 || (service.mobileSpan !== undefined && mobileSpan > 1)
-                  ? ({
-                      '--tablet-span': tabletSpan > 1 ? String(tabletSpan) : undefined,
-                      '--mobile-span':
-                        service.mobileSpan !== undefined && mobileSpan > 1 ? String(mobileSpan) : undefined
-                    } as React.CSSProperties)
-                  : undefined
-              }
-            />
-          )
-        })}
-      </div>
+      <div className={gridClassName}>{services.map(renderCard)}</div>
     </section>
   )
 }
