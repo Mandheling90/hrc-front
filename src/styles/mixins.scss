@@ -153,12 +153,30 @@
 // 페이지 레이아웃 믹스인
 // ========================================
 
+// 헤더 높이 변수
+$header-height-desktop: 100px;
+$header-height-tablet: 64px;
+$header-height-mobile: 56px;
+
+// 헤더 브레이크포인트
+$header-bp-tablet: 1429px;
+$header-bp-mobile: 768px;
+
 // 페이지 전체 래퍼
 @mixin page-wrap {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: $color-white;
+  padding-top: $header-height-desktop;
+
+  @media (max-width: $header-bp-tablet) {
+    padding-top: $header-height-tablet;
+  }
+
+  @media (max-width: $header-bp-mobile) {
+    padding-top: $header-height-mobile;
+  }
 }
 
 // 메인 콘텐츠 영역
