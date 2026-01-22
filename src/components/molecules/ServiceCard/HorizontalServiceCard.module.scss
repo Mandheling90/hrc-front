@@ -5,14 +5,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: $spacing-6;
-  padding: 30px;
+  justify-content: center;
+  gap: 56px;
+  padding: 30px 50px;
   background-color: $color-white;
   border: 1px solid #8c8c8c;
   border-radius: 10px;
   box-shadow: $shadow-sm;
   transition: all $transition-base;
-  text-align: left;
+  text-align: center;
   text-decoration: none;
   color: inherit;
   min-width: 0;
@@ -63,25 +64,26 @@
 }
 
 .textWrapper {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  width: 100%;
+  width: auto;
   overflow: visible;
 }
 
 .title {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-normal;
-  color: #636363;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
   margin: 0;
   line-height: 1.5;
-  letter-spacing: -0.8px;
-  width: 100%;
+  letter-spacing: -0.96px;
+  width: auto;
+  text-align: center;
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -93,7 +95,8 @@
   color: #8c8c8c;
   margin: 0;
   letter-spacing: -0.72px;
-  width: 100%;
+  width: auto;
+  text-align: center;
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -102,6 +105,11 @@
 .small {
   padding: $spacing-4;
   gap: $spacing-4;
+  justify-content: center;
+
+  .textWrapper {
+    align-items: center;
+  }
 
   .iconCircle {
     width: 64px;
@@ -116,11 +124,13 @@
   .title {
     font-size: $font-size-lg;
     letter-spacing: -0.72px;
+    text-align: center;
   }
 
   .description {
     font-size: $font-size-sm;
     letter-spacing: -0.56px;
+    text-align: center;
   }
 }
 
@@ -130,10 +140,15 @@
   gap: $spacing-4;
   box-shadow: none;
   border-radius: $radius-md;
+  justify-content: center;
 
   &:hover {
     transform: none;
     box-shadow: none;
+  }
+
+  .textWrapper {
+    align-items: center;
   }
 
   .iconCircle {
@@ -153,11 +168,13 @@
     font-weight: $font-weight-semibold;
     color: $gray-900;
     letter-spacing: -0.72px;
+    text-align: center;
   }
 
   .description {
     font-size: $font-size-sm;
     letter-spacing: -0.56px;
+    text-align: center;
   }
 }
 
@@ -166,6 +183,11 @@
   .card {
     padding: $spacing-4;
     gap: $spacing-4;
+    justify-content: center;
+  }
+
+  .textWrapper {
+    align-items: center;
   }
 
   .iconCircle {
@@ -181,10 +203,12 @@
   .title {
     font-size: $font-size-lg;
     letter-spacing: -0.72px;
+    text-align: center;
   }
 
   .description {
     font-size: $font-size-sm;
     letter-spacing: -0.56px;
+    text-align: center;
   }
 }
