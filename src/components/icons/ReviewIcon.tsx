@@ -23,13 +23,7 @@ export const ReviewIcon: React.FC<ReviewIconProps> = ({
       className={className}
     >
       <circle cx='30' cy='30' r='20' stroke={stroke} strokeWidth='3' />
-      <path
-        d='M30 20V30L35 35'
-        stroke={stroke}
-        strokeWidth='3'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <path d='M30 20V30L35 35' stroke={stroke} strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' />
       <circle cx='20' cy='20' r='3' fill={stroke} />
       <circle cx='40' cy='20' r='3' fill={stroke} />
     </svg>

@@ -29,13 +29,7 @@ export const ApprovalIcon: React.FC<ApprovalIconProps> = ({
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path
-        d='M30 20V29L35 34'
-        stroke={stroke}
-        strokeWidth='3'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <path d='M30 20V29L35 34' stroke={stroke} strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' />
       <path
         d='M20 15L22 17L24 15M36 15L38 17L40 15'
         stroke={stroke}

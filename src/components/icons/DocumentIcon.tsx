@@ -29,13 +29,7 @@ export const DocumentIcon: React.FC<DocumentIconProps> = ({
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path
-        d='M30 7.5V22.5H45'
-        stroke={stroke}
-        strokeWidth='3'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <path d='M30 7.5V22.5H45' stroke={stroke} strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' />
       <path
         d='M22.5 37.5H37.5M22.5 45H37.5'
         stroke={stroke}

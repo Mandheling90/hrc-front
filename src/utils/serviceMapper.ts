@@ -65,7 +65,7 @@ export function mapBreadcrumbItems(
   return items.map(item => ({
     label: item.label,
     href: item.href,
-    icon: item.icon ? (iconMap[item.icon] || getNavIcon(item.icon)) : undefined,
+    icon: item.icon ? iconMap[item.icon] || getNavIcon(item.icon) : undefined,
     iconAfter: item.iconAfter
   }))
 }

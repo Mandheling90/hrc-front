@@ -36,13 +36,7 @@ export const CertificateIcon: React.FC<CertificateIconProps> = ({
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path
-        d='M40 35L42 37L46 33'
-        stroke={stroke}
-        strokeWidth='2.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <path d='M40 35L42 37L46 33' stroke={stroke} strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   )
 }
