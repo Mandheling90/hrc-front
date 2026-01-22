@@ -6,13 +6,13 @@
 
 | 항목        | 버전/기술                           |
 | ----------- | ----------------------------------- |
-| Framework   | Next.js 15.0.0 (App Router)         |
-| React       | 19.0.0                              |
+| Framework   | Next.js 15.5.9 (App Router)         |
+| React       | 19.2.3                              |
 | 언어        | TypeScript (strict mode)            |
 | 스타일링    | SCSS + CSS Modules                  |
 | 상태 관리   | React Context API (HospitalContext) |
 | 코드 스타일 | EditorConfig + ESLint + Prettier    |
-| 렌더링      | CSR (Client-Side Rendering)         |
+| 렌더링      | SSR (Server-Side Rendering)         |
 | 디자인 패턴 | Atomic Design Pattern               |
 | 반응형      | 미디어쿼리 (반응형 + 적응형)        |
 | 테마        | 라이트/다크모드 지원                |
@@ -30,7 +30,8 @@ src/
 │   ├── find-user/       # 아이디/비밀번호 찾기
 │   ├── referral/        # 진료의뢰 페이지
 │   │   └── request/     # 진료협력센터 의뢰
-│   │       └── exchange/ # 진료정보교류 의뢰
+│   │       ├── exchange/ # 진료정보교류 의뢰
+│   │       └── hira/     # 심평원중계시스템 의뢰
 │   └── style-guide/     # 스타일 가이드 페이지
 │
 ├── components/          # Atomic Design 패턴
@@ -62,16 +63,18 @@ src/
 
 ## 페이지 구성
 
-| 경로                         | 설명                 | 주요 컴포넌트                                          |
-| ---------------------------- | -------------------- | ------------------------------------------------------ |
-| `/`                          | 홈페이지             | HeroSection, NoticeSection, SNSSection, PartnerSection |
-| `/login`                     | 로그인               | LoginForm                                              |
-| `/signup`                    | 회원가입 (4단계)     | SignupForm, ProgressSteps                              |
-| `/find-user`                 | 아이디/비밀번호 찾기 | FindUserForm, FindPasswordForm                         |
-| `/referral`                  | 진료의뢰             | ServiceCard                                            |
-| `/referral/request`          | 진료협력센터 의뢰    | ServiceSection, InfoBox, Breadcrumbs                   |
-| `/referral/request/exchange` | 진료정보교류 의뢰    | SectionTitle, ServiceSection, InfoBox                  |
-| `/style-guide`               | 스타일 가이드        | 모든 UI 컴포넌트 및 디자인 토큰                        |
+| 경로                         | 설명                  | 주요 컴포넌트                                          |
+| ---------------------------- | --------------------- | ------------------------------------------------------ |
+| `/`                          | 홈페이지              | HeroSection, NoticeSection, SNSSection, PartnerSection |
+| `/login`                     | 로그인                | LoginForm                                              |
+| `/signup`                    | 회원가입 (4단계)      | SignupForm, ProgressSteps                              |
+| `/find-user`                 | 아이디/비밀번호 찾기  | FindUserForm, FindPasswordForm                         |
+| `/referral`                  | 진료의뢰시스템 소개   | ServiceCard                                            |
+| `/referral/request`          | 진료협력센터 의뢰     | ServiceSection, InfoBox, Breadcrumbs                   |
+| `/referral/request/exchange` | 진료정보교류 의뢰     | SectionTitle, ServiceSection, InfoBox                  |
+| `/referral/request/hira`     | 심평원중계시스템 의뢰 | SectionTitle, ServiceSection, ProcedureList            |
+| `/referral/network`          | 협력네트워크 소개     | ServiceSection                                         |
+| `/style-guide`               | 스타일 가이드         | 모든 UI 컴포넌트 및 디자인 토큰                        |
 
 ## 스타일 가이드
 
@@ -98,7 +101,7 @@ npm run dev
 | **Transitions**   | 애니메이션 속도 ($transition-fast ~ $transition-slower)                    |
 | **Atoms**         | Button, Input, Checkbox, Radio, Select 컴포넌트                            |
 | **Molecules**     | ServiceCard, AlertModal, InfoBox, ProgressSteps, Breadcrumbs, SectionTitle |
-| **Icons**         | 24개 아이콘 컴포넌트                                                       |
+| **Icons**         | 27개 아이콘 컴포넌트                                                       |
 
 ### 다크모드 지원
 
@@ -115,21 +118,28 @@ npm run dev
 - Radio
 - Select
 
-### Molecules (9개)
+### Molecules (10개)
 
 - ServiceCard, AlertModal, ProgressSteps, AgreementContent
 - Breadcrumbs, InfoBox, NoticeList, SystemIntroBox
 - SectionTitle (섹션 제목 컴포넌트)
+- ProcedureList (절차/단계 목록 컴포넌트)
 
 ### Organisms (15개)
 
-- Header, Footer
+- **Header** - 반응형 GNB 메가 드롭다운 메뉴
+  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴, 이용안내 + 5개 메뉴 컬럼
+  - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴
+  - 모바일 (~768px): 우측 사이드 패널 메뉴
+  - 현재 페이지 하이라이트 기능
+  - 미개발 페이지 비활성화(회색) 표시
+- Footer
 - LoginForm, SignupForm
 - FindPasswordForm, FindUserForm
 - AgreementStep, VerificationStep, MemberInfoStep, CompleteStep
 - HeroSection, NoticeSection, PartnerSection, ServiceSection, SNSSection
 
-### Icons (24개)
+### Icons (27개)
 
 - CheckIcon, ChevronDownIcon, ConsultingIcon, EyeIcon, HomeIcon
 - InfoIcon, IPinIcon, LinkIcon, NetworkIcon, PatientIcon
@@ -143,6 +153,10 @@ npm run dev
   - ContinuityIcon (진료의 연속성)
   - SafetyIcon (환자 안전)
   - QualityIcon (의료서비스 질 향상)
+- **기타 아이콘**:
+  - ChartStepperIcon (진행 단계)
+  - DoctorIcon (의사)
+  - FluentArrowCircleUpRight (외부 링크)
 
 ## 스타일 시스템
 
@@ -161,6 +175,7 @@ npm run dev
 ### 반응형 브레이크포인트
 
 ```scss
+// 전역 브레이크포인트 (variables.scss)
 $breakpoints: (
   sm: 500px,
   md: 720px,
@@ -168,6 +183,11 @@ $breakpoints: (
   xl: 1200px,
   2xl: 1430px
 );
+
+// Header 전용 브레이크포인트
+$bp-mobile: 768px; // 모바일: ~768px
+$bp-tablet: 1429px; // 태블릿: 769px ~ 1429px
+// 데스크톱: 1430px~
 ```
 
 ## 병원별 환경 설정
@@ -245,7 +265,7 @@ npm run format:check # Prettier 검사
 ### 완성된 부분
 
 - UI 컴포넌트 구조 (Atomic Design)
-- 6개 주요 페이지 (홈, 로그인, 회원가입, 진료의뢰, 진료협력센터 의뢰, 진료정보교류 의뢰)
+- 10개 주요 페이지 (홈, 로그인, 회원가입, 아이디/비밀번호 찾기, 진료의뢰 소개, 진료협력센터 의뢰, 진료정보교류 의뢰, 심평원중계시스템 의뢰, 협력네트워크 소개, 스타일가이드)
 - 반응형 디자인 (모바일, 태블릿, 데스크톱)
 - 다크모드 CSS 변수 준비
 - 접근성 지원 (ARIA labels, semantic HTML)
@@ -254,13 +274,30 @@ npm run format:check # Prettier 검사
 - HospitalContext 및 useHospital 훅
 - 병원별 페이지 콘텐츠 관리
 - 진료의뢰 전용 아이콘 컴포넌트 (7개)
+- **Header 컴포넌트 (반응형 GNB)**
+  - 데스크톱 (1430px+): 메가 드롭다운 메뉴 (호버 트리거), 이용안내 영역 + 5개 메뉴 컬럼
+  - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴
+  - 모바일 (~768px): 우측 사이드 패널 메뉴
+  - 현재 페이지 하이라이트 표시
+  - 미개발 페이지 비활성화(회색) 표시
+  - 메뉴 구조: 진료의뢰, 협력네트워크, 공지/정보, 진료협력센터 소개, 마이페이지(로그인 시)
 
 ### 진행 중인 부분
 
 - 회원가입 프로세스 (4단계)
-- ProgressSteps 컴포넌트 반응 형
+- ProgressSteps 컴포넌트 반응형
 
-### 미포함 항목(엔드단)
+### 미개발 페이지
+
+| 카테고리          | 페이지                                                          |
+| ----------------- | --------------------------------------------------------------- |
+| 진료의뢰          | 진료과 안내                                                     |
+| 협력네트워크      | 협력병원 신청, 협력병의원 현황, 교수직통 핫라인, e-Consult 신청 |
+| 공지/정보         | 공지사항, 병원소식, 교육/행사                                   |
+| 진료협력센터 소개 | 센터 소개, 센터장 인사말, 조직도/연락처, 오시는 길              |
+| 마이페이지        | 회원정보 수정, 협력병원 정보수정, 의뢰환자 조회, e-Consult 조회 |
+
+### 미포함 항목(백엔드 연동)
 
 - API 통신 로직
 - 백엔드 연동
