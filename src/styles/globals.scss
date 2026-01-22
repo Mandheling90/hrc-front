@@ -1,6 +1,12 @@
 @import './variables.scss';
 @import './mixins.scss';
 
+// Pretendard 폰트 CDN
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+// Paperlogy 폰트 CDN
+@import url('https://cdn.jsdelivr.net/gh/AnyfontsProject/Paperlogy/dist/Paperlogy.css');
+
 // CSS 변수 정의
 :root {
   /* gray */
