@@ -18,15 +18,22 @@ export interface ServiceSectionProps {
   className?: string
   /** 항상 가로 레이아웃으로 표시 (모든 화면 크기에서 아이콘과 텍스트가 나란히 배치) */
   horizontalLayout?: boolean
+  /** 스텝 배지 사용 여부 (true일 때 description을 상단 배지로 표시) */
+  useStepBadge?: boolean
+  /** 태블릿에서 3-2 레이아웃 사용 (위에 3개, 아래에 2개 카드 배치) */
+  tabletThreeTwoLayout?: boolean
 }
 
 export const ServiceSection: React.FC<ServiceSectionProps> = ({
   title,
   services,
   className = '',
-  horizontalLayout = false
+  horizontalLayout = false,
+  useStepBadge = false,
+  tabletThreeTwoLayout = false
 }) => {
   const isThreeItems = services.length === 3
+  const isFiveItems = services.length === 5
   // 모바일에서 2열로 표시할지 여부 (하나라도 mobileSpan이 명시적으로 설정되어 있으면 2열 그리드)
   const hasMobileTwoColumns = services.some(service => service.mobileSpan !== undefined)
 
@@ -36,9 +43,9 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
       <div
         className={`${styles.grid} ${isThreeItems ? styles.gridThreeItems : ''} ${
           hasMobileTwoColumns ? styles.mobileTwoColumns : ''
-        }`}
+        } ${tabletThreeTwoLayout && isFiveItems ? styles.tabletThreeTwoLayout : ''}`}
       >
-        {services.map(service => {
+        {services.map((service, index) => {
           const tabletSpan = service.tabletSpan || 1
           const mobileSpan = service.mobileSpan ?? 1
           const tabletSpanClass = tabletSpan > 1 ? styles.tabletSpan : ''
@@ -51,6 +58,10 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
           // mobileSpan이 미설정(undefined)인 경우를 감지
           const isMobileSpanUnset = service.mobileSpan === undefined
 
+          // 태블릿 3-2 레이아웃: 4번째, 5번째 아이템에 특별한 클래스 추가
+          const isSecondRowItem = tabletThreeTwoLayout && isFiveItems && index >= 3
+          const secondRowClass = isSecondRowItem ? styles.secondRowItem : ''
+
           return (
             <ServiceCard
               key={service.id}
@@ -59,11 +70,12 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
               description={service.description}
               href={service.href}
               onClick={service.onClick}
-              className={`${tabletSpanClass} ${mobileSpanClass}`}
+              className={`${tabletSpanClass} ${mobileSpanClass} ${secondRowClass}`}
               mobileVertical={isMobileVertical}
               mobileTitleBelowIcon={isMobileTitleBelowIcon}
               mobileSpan={isMobileSpanUnset ? undefined : mobileSpan}
               horizontalLayout={horizontalLayout}
+              stepBadge={useStepBadge ? service.description : undefined}
               style={
                 tabletSpan > 1 || (service.mobileSpan !== undefined && mobileSpan > 1)
                   ? ({

@@ -13,25 +13,24 @@ export interface ProcedureListItem {
 export interface ProcedureListProps {
   /** 리스트 항목 배열 */
   items: ProcedureListItem[]
-  /** 라벨 (예: "• 대상", "• 신청방법") */
+  /** 라벨 (예: "대상", "신청방법" - • 기호는 자동으로 추가됨) */
   label?: string
   /** 추가 클래스명 */
   className?: string
 }
 
 export const ProcedureList: React.FC<ProcedureListProps> = ({ items, label, className = '' }) => {
-  // label에서 • 기호를 분리하여 빨간색 모서리 깎인 사각형으로 표시
+  // label이 있으면 항상 빨간색 모서리 깎인 사각형 bullet을 표시
   const renderLabel = () => {
     if (!label) return null
-    if (label.startsWith('•')) {
-      return (
-        <div className={styles.label}>
-          <span className={styles.bullet}></span>
-          {label.slice(1).trim()}
-        </div>
-      )
-    }
-    return <div className={styles.label}>{label}</div>
+    // • 기호가 있으면 제거하고, 없으면 그대로 사용
+    const labelText = label.startsWith('•') ? label.slice(1).trim() : label.trim()
+    return (
+      <div className={styles.label}>
+        <span className={styles.bullet}></span>
+        {labelText}
+      </div>
+    )
   }
 
   return (

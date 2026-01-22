@@ -18,11 +18,119 @@
   min-width: 0; // flex/grid 아이템이 부모보다 작아질 수 있도록
   width: 100%; // 그리드 아이템이 전체 공간을 차지
   box-sizing: border-box; // padding 포함한 너비 계산
+  position: relative; // stepBadge 위치 지정을 위해
 
   &:hover {
     border-color: $color-primary;
     box-shadow: $shadow-md;
     transform: translateY(-2px);
+  }
+}
+
+// 스텝 배지 스타일 (Figma 디자인에 맞춤)
+.stepBadge {
+  position: relative; // absolute에서 relative로 변경
+  margin: 0 auto; // 중앙 정렬
+  margin-bottom: 10px; // 하단 여백
+  background-color: $color-primary; // #9F1836
+  color: $color-white;
+  padding: 8px 20px;
+  border-radius: 10px; // 알약 모양
+  font-size: $font-size-base; // 16px
+  font-weight: $font-weight-bold; // 700
+  white-space: nowrap;
+  z-index: 2;
+  letter-spacing: -0.64px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 그림자 효과
+  width: fit-content; // 내용에 맞는 너비
+}
+
+// 스텝 배지가 있는 카드 스타일 (Figma 디자인에 맞춤)
+.stepBadgeCard {
+  border: 1px solid #8c8c8c !important; // 회색 테두리 유지
+  padding-top: 20px; // 배지를 위한 여유 공간 (줄임)
+  gap: 20px; // 아이콘과 제목 사이 간격
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  &:hover {
+    border-color: #8c8c8c !important; // hover 시에도 회색 유지
+    transform: none !important; // hover 효과 제거
+    box-shadow: $shadow-sm !important; // 기본 그림자 유지
+  }
+
+  .iconWrapper {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; // 아이콘과 제목 사이 간격
+  }
+
+  .iconCircle {
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50% !important;
+    background-color: #fcebeb !important; // 연한 분홍색 배경
+    border: none !important; // 테두리 없음
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    svg {
+      width: 60px !important;
+      height: 60px !important;
+    }
+  }
+
+  .titleBelowIcon {
+    font-size: $font-size-2xl; // 24px
+    font-weight: $font-weight-semibold; // 600
+    color: $gray-900;
+    margin: 0;
+    line-height: 1.5;
+    letter-spacing: -0.96px;
+    text-align: center;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .textWrapper {
+    display: none; // 스텝 배지 모드에서는 textWrapper 숨김
+  }
+
+  // 태블릿/모바일에서도 스텝 배지 스타일 유지
+  @media (max-width: $breakpoint-md) {
+    padding-top: 20px !important;
+    flex-direction: column !important; // 스텝 배지가 있을 때는 세로 레이아웃 유지
+    align-items: center !important;
+    text-align: center !important;
+    gap: 20px !important;
+    padding: 20px 20px 30px 20px !important; // 상단 여유 공간 조정
+    border: 1px solid #8c8c8c !important; // 회색 테두리 유지
+
+    .stepBadge {
+      margin-top: -10px;
+      margin-bottom: 10px;
+      font-size: $font-size-sm; // 14px
+      padding: 6px 16px;
+    }
+
+    .iconCircle {
+      width: 80px !important;
+      height: 80px !important;
+
+      svg {
+        width: 48px !important;
+        height: 48px !important;
+      }
+    }
+
+    .titleBelowIcon {
+      font-size: $font-size-xl; // 20px
+      letter-spacing: -0.8px;
+    }
   }
 }
 

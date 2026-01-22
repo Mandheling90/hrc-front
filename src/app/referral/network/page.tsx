@@ -7,7 +7,7 @@ import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
-import { ProcessSteps } from '@/components/molecules/ProcessSteps/ProcessSteps'
+import { ServiceSection, ServiceItem } from '@/components/organisms/ServiceSection/ServiceSection'
 import { Button } from '@/components/atoms/Button/Button'
 import { PhoneIcon } from '@/components/icons/PhoneIcon'
 import { FaxIcon } from '@/components/icons/FaxIcon'
@@ -44,14 +44,17 @@ export default function NetworkPage() {
     return iconMap[iconName] || null
   }
 
-  // 절차 단계 데이터 변환
+  // 절차 단계 데이터를 ServiceSection 형식으로 변환
   const processSteps = useMemo(() => {
     if (!networkInfo?.processSteps) return []
-    return networkInfo.processSteps.map(step => ({
-      stepNumber: step.stepNumber,
-      title: step.title,
-      icon: getStepIcon(step.icon)
-    }))
+    return networkInfo.processSteps.map(
+      (step, index): ServiceItem => ({
+        id: `step-${index + 1}`,
+        icon: getStepIcon(step.icon),
+        title: step.title,
+        description: `STEP.${step.stepNumber}`
+      })
+    )
   }, [networkInfo?.processSteps])
 
   if (!networkInfo) {
@@ -91,7 +94,7 @@ export default function NetworkPage() {
               <div className={styles.targetSection}>
                 {networkInfo.target.hospital && networkInfo.target.hospital.length > 0 && (
                   <div className={styles.targetItem}>
-                    <ProcedureList label='• 대상' items={networkInfo.target.hospital} />
+                    <ProcedureList label='대상' items={networkInfo.target.hospital} />
                   </div>
                 )}
                 {networkInfo.target.clinic && networkInfo.target.clinic.length > 0 && (
@@ -105,12 +108,14 @@ export default function NetworkPage() {
             {/* 신청방법 */}
             {networkInfo.applicationMethod && networkInfo.applicationMethod.length > 0 && (
               <div className={styles.applicationMethodSection}>
-                <ProcedureList label='• 신청방법' items={networkInfo.applicationMethod} />
+                <ProcedureList label='신청방법' items={networkInfo.applicationMethod} />
               </div>
             )}
 
             {/* 체결절차 */}
-            {processSteps.length > 0 && <ProcessSteps steps={processSteps} />}
+            {processSteps.length > 0 && (
+              <ServiceSection services={processSteps} useStepBadge={true} tabletThreeTwoLayout={true} />
+            )}
           </section>
 
           {/* 협력체결 방법 문의 */}
