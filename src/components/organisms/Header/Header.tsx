@@ -47,7 +47,7 @@ const commonMenuItems: MenuItem[] = [
       { href: '/referral/request', label: '진료협력센터 의뢰' },
       { href: '/referral/request/exchange', label: '진료정보교류 의뢰' },
       { href: '/referral/request/hira', label: '심평원중계시스템 의뢰' },
-      { href: '/referral/department', label: '진료과 안내', disabled: true }
+      { href: '/referral/department', label: '진료과 안내' }
     ]
   },
   {

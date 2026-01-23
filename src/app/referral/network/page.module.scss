@@ -57,8 +57,10 @@
 .contactSection {
   display: flex;
   flex-direction: row;
+  align-items: stretch;
   gap: $spacing-6;
   margin: $spacing-6 0;
+  width: 100%;
 
   @include tablet {
     flex-direction: column;
@@ -69,14 +71,17 @@
 .contactCard {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $spacing-4;
   padding: $spacing-5;
   background-color: $color-white;
   border: 1px solid $gray-300;
-  border-radius: 8px;
-  flex: 1;
+  border-radius: $radius-md;
+  flex: 1 1 0;
+  min-width: 0;
 
   @include tablet {
+    flex: 1 1 auto;
     padding: $spacing-6;
   }
 }
@@ -87,17 +92,22 @@
   justify-content: center;
   flex-shrink: 0;
   width: 60px;
+  min-width: 60px;
   height: 60px;
+  border-radius: 50%;
+  background-color: rgba(159, 24, 54, 0.1);
 
   @include tablet {
     width: 48px;
+    min-width: 48px;
     height: 48px;
-    border-radius: 50%;
-    background-color: rgba(159, 24, 54, 0.1);
   }
 }
 
 .contactIconSvg {
+  width: 24px;
+  height: 24px;
+
   @include tablet {
     width: 24px !important;
     height: 24px !important;
@@ -108,7 +118,6 @@
   display: flex;
   align-items: center;
   gap: $spacing-2;
-  flex: 1;
 }
 
 .contactLabel {

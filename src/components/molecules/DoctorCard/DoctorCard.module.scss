@@ -1,0 +1,145 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.doctorCard {
+  background-color: $color-white;
+  border: 1px solid $gray-300;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+  margin-bottom: $spacing-6;
+
+  @include tablet {
+    padding: $spacing-8;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.cardContent {
+  display: flex;
+  gap: $spacing-6;
+
+  @include tablet {
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+}
+
+.imageSection {
+  flex-shrink: 0;
+}
+
+.imageWrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: $gray-100;
+
+  @include tablet {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholderImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: $gray-100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include tablet {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+}
+
+.infoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.header {
+  margin-bottom: $spacing-2;
+}
+
+.name {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $gray-900;
+  margin: 0;
+
+  @include tablet {
+    font-size: $font-size-lg;
+    text-align: center;
+  }
+}
+
+.specialties {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+  margin-bottom: $spacing-2;
+}
+
+.specialtiesLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $gray-600;
+}
+
+.specialtiesText {
+  font-size: $font-size-base;
+  color: $gray-700;
+  line-height: $line-height-relaxed;
+}
+
+.scheduleSection {
+  margin: $spacing-4 0;
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-3;
+  margin-top: $spacing-4;
+
+  @include tablet {
+    flex-direction: column;
+  }
+}
+
+.eConsultButton {
+  background-color: $color-point !important;
+  border-color: $color-point !important;
+  color: $color-white !important;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-point, 10%) !important;
+    border-color: darken($color-point, 10%) !important;
+  }
+}
+
+.doctorInfoButton {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  border-color: $gray-400;
+  color: $gray-700;
+
+  &:hover:not(:disabled) {
+    border-color: $gray-600;
+    background-color: $gray-50;
+  }
+}

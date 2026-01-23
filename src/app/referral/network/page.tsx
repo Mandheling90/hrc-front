@@ -126,7 +126,7 @@ export default function NetworkPage() {
             <div className={styles.contactSection}>
               <div className={styles.contactCard}>
                 <div className={styles.contactIcon}>
-                  <PhoneRequestIcon width={60} height={60} className={styles.contactIconSvg} />
+                  <PhoneRequestIcon width={60} height={60} stroke='#9F1836' className={styles.contactIconSvg} />
                 </div>
                 <div className={styles.contactInfo}>
                   <span className={styles.contactLabel}>전화 :</span>
@@ -135,7 +135,7 @@ export default function NetworkPage() {
               </div>
               <div className={styles.contactCard}>
                 <div className={styles.contactIcon}>
-                  <FaxIcon width={60} height={60} className={styles.contactIconSvg} />
+                  <FaxIcon width={60} height={60} stroke='#9F1836' className={styles.contactIconSvg} />
                 </div>
                 <div className={styles.contactInfo}>
                   <span className={styles.contactLabel}>팩스 :</span>

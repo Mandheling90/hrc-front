@@ -1,0 +1,129 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.sidebar {
+  background-color: $color-white;
+  border: 1px solid $gray-300;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+  height: fit-content;
+  position: sticky;
+  top: $spacing-8;
+
+  @include tablet {
+    position: static;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.header {
+  margin-bottom: $spacing-4;
+  padding-bottom: $spacing-4;
+  border-bottom: 1px solid $gray-300;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $gray-900;
+  margin: 0;
+  line-height: $line-height-tight;
+}
+
+.allButton {
+  width: 100%;
+  padding: $spacing-3 $spacing-4;
+  margin-bottom: $spacing-4;
+  background-color: $gray-100;
+  border: 1px solid $gray-300;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $gray-700;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover:not(.active) {
+    background-color: $gray-200;
+    border-color: $gray-400;
+  }
+
+  &.active {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: $color-white;
+  }
+}
+
+.departmentList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  max-height: 600px;
+  overflow-y: auto;
+
+  @include tablet {
+    max-height: none;
+  }
+}
+
+.initialGroup {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.initialLabel {
+  flex-shrink: 0;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $gray-100;
+  border-radius: $radius-sm;
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
+  color: $gray-700;
+  padding: $spacing-2 0;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  min-height: 100px;
+
+  @include tablet {
+    width: 30px;
+    min-height: 60px;
+    font-size: $font-size-sm;
+  }
+}
+
+.departments {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+}
+
+.departmentButton {
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  text-align: left;
+  background-color: $gray-100;
+  border: 1px solid $gray-300;
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $gray-700;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover:not(.active) {
+    background-color: $gray-200;
+    border-color: $gray-400;
+  }
+
+  &.active {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: $color-white;
+    font-weight: $font-weight-semibold;
+  }
+}

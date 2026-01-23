@@ -1,0 +1,57 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.weekSelector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+  margin: $spacing-6 0;
+  padding: $spacing-4;
+
+  @include tablet {
+    margin: $spacing-8 0;
+  }
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid $gray-300;
+  border-radius: $radius-md;
+  background-color: $color-white;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover:not(:disabled) {
+    background-color: $gray-50;
+    border-color: $gray-400;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $gray-100;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.dateRange {
+  min-width: 200px;
+  text-align: center;
+}
+
+.dateText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $gray-900;
+
+  @include tablet {
+    font-size: $font-size-xl;
+  }
+}
