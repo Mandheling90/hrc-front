@@ -12,6 +12,7 @@ import { SectionContainer } from '@/components/molecules/SectionContainer/Sectio
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
 import styles from './page.module.scss'
+import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 
 // 한글 초성 추출 함수
 function getInitial(char: string): string {
@@ -254,11 +255,11 @@ export default function DepartmentPage() {
                 selectedDepartmentId={selectedDepartmentId}
                 onDepartmentSelect={handleDepartmentSelect}
                 onAllSelect={handleAllSelect}
-                height={800}
+                height={600}
               />
             </aside>
 
-            <div ref={mainContentRef} className={styles.mainContent} style={{ height: '800px' }}>
+            <div ref={mainContentRef} className={styles.mainContent} style={{ height: '600px' }}>
               <ScheduleTitle title='진료 일정표 확인' />
               <SectionContainer
                 header={
@@ -279,7 +280,7 @@ export default function DepartmentPage() {
                       department={doctor.department}
                       imageUrl={doctor.imageUrl}
                       specialties={doctor.specialties}
-                      schedule={doctor.schedule}
+                      schedule={doctor.schedule as ScheduleSlot[]}
                       hasEConsulting={doctor.hasEConsulting}
                       onEConsultingClick={() => handleEConsultingClick(doctor.id)}
                       onDoctorInfoClick={() => handleDoctorInfoClick(doctor.id)}
