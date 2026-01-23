@@ -129,18 +129,25 @@
 }
 
 .specialtiesLabel {
-  font-size: $font-size-sm;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
-  color: #a38b6b;
+  color: $color-primary;
   text-decoration: underline;
-  text-decoration-color: #a38b6b;
+  text-decoration-color: $color-primary;
   text-underline-offset: 4px;
 }
 
 .specialtiesText {
   font-size: $font-size-base;
+  font-weight: $font-weight-normal;
   color: $gray-700;
   line-height: $line-height-relaxed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
 }
 
 .scheduleSection {
