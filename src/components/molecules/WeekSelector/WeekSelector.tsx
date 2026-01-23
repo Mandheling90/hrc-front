@@ -29,26 +29,16 @@ export const WeekSelector: React.FC<WeekSelectorProps> = ({
 
   return (
     <div className={`${styles.weekSelector} ${className}`}>
-      <button
-        type='button'
-        className={styles.navButton}
-        onClick={onPreviousWeek}
-        aria-label='이전 주'
-      >
-        <ChevronLeftIcon width={20} height={20} stroke='#666' />
+      <button type='button' className={styles.navButton} onClick={onPreviousWeek} aria-label='이전 주'>
+        <ChevronLeftIcon width={20} height={20} stroke='#111111' />
       </button>
       <div className={styles.dateRange}>
         <span className={styles.dateText}>
           {formatDate(startDate)} ~ {formatDate(endDate)}
         </span>
       </div>
-      <button
-        type='button'
-        className={styles.navButton}
-        onClick={onNextWeek}
-        aria-label='다음 주'
-      >
-        <ChevronRightIcon width={20} height={20} stroke='#666' />
+      <button type='button' className={styles.navButton} onClick={onNextWeek} aria-label='다음 주'>
+        <ChevronRightIcon width={20} height={20} stroke='#111111' />
       </button>
     </div>
   )

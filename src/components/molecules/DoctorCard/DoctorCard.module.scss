@@ -114,6 +114,7 @@
   display: flex;
   gap: $spacing-3;
   margin-top: $spacing-4;
+  align-items: flex-start;
 
   @include tablet {
     flex-direction: column;
@@ -124,10 +125,17 @@
   background-color: $color-point !important;
   border-color: $color-point !important;
   color: $color-white !important;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
 
   &:hover:not(:disabled) {
     background-color: darken($color-point, 10%) !important;
     border-color: darken($color-point, 10%) !important;
+  }
+
+  svg {
+    flex-shrink: 0;
   }
 }
 

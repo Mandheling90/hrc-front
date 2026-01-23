@@ -7,7 +7,8 @@ import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { DepartmentSidebar, Department } from '@/components/organisms/DepartmentSidebar/DepartmentSidebar'
 import { WeekSelector } from '@/components/molecules/WeekSelector/WeekSelector'
 import { DoctorCard } from '@/components/molecules/DoctorCard/DoctorCard'
-import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import { ScheduleTitle } from '@/components/molecules/ScheduleTitle/ScheduleTitle'
+import { SectionContainer } from '@/components/molecules/SectionContainer/SectionContainer'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
 import { useHospital } from '@/hooks'
@@ -209,15 +210,17 @@ export default function DepartmentPage() {
             </aside>
 
             <div className={styles.mainContent}>
-              <SectionTitle title='진료 일정표 확인' />
-              <WeekSelector
-                startDate={weekDates.startDate}
-                endDate={weekDates.endDate}
-                onPreviousWeek={handlePreviousWeek}
-                onNextWeek={handleNextWeek}
-              />
-
-              <div className={styles.doctorsList}>
+              <ScheduleTitle title='진료 일정표 확인' />
+              <SectionContainer
+                header={
+                  <WeekSelector
+                    startDate={weekDates.startDate}
+                    endDate={weekDates.endDate}
+                    onPreviousWeek={handlePreviousWeek}
+                    onNextWeek={handleNextWeek}
+                  />
+                }
+              >
                 {doctors.length > 0 ? (
                   doctors.map(doctor => (
                     <DoctorCard
@@ -236,7 +239,7 @@ export default function DepartmentPage() {
                     <p>선택한 진료과의 의료진 정보가 없습니다.</p>
                   </div>
                 )}
-              </div>
+              </SectionContainer>
             </div>
           </div>
         </div>

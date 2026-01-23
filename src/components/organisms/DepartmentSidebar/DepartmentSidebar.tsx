@@ -71,7 +71,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
             <button
               type='button'
               className={`${styles.initialButton} ${styles.allButton} ${!selectedDepartmentId ? styles.active : ''}`}
-              onClick={() => {}}
+              onClick={onAllSelect}
             >
               ALL
             </button>
@@ -81,7 +81,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
               key={initial}
               type='button'
               className={styles.initialButton}
-              onClick={() => {}}
+              onClick={() => scrollToInitial(initial)}
               aria-label={`${initial}로 이동`}
             >
               {initial}
@@ -111,7 +111,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
                       key={dept.id}
                       type='button'
                       className={`${styles.departmentButton} ${selectedDepartmentId === dept.id ? styles.active : ''}`}
-                      onClick={() => {}}
+                      onClick={() => onDepartmentSelect(dept.id)}
                     >
                       {dept.name}
                     </button>

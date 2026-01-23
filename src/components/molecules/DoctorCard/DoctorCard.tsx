@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Button } from '@/components/atoms/Button/Button'
 import { ScheduleTable, ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 import { DoctorIcon } from '@/components/icons/DoctorIcon'
+import { FluentArrowCircleUpRight } from '@/components/icons/FluentArrowCircleUpRight'
 import styles from './DoctorCard.module.scss'
 
 export interface DoctorCardProps {
@@ -76,7 +77,8 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
                 className={styles.eConsultButton}
                 onClick={onEConsultingClick}
               >
-                e-Consulting 신청
+                <FluentArrowCircleUpRight width={16} height={16} />
+                <span>e-Consulting 신청</span>
               </Button>
             )}
             <Button
