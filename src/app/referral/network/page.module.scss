@@ -107,19 +107,14 @@
   color: $gray-900;
 }
 
-.downloadLink {
+.downloadButton {
   display: inline-flex;
   align-items: center;
   gap: $spacing-2;
-  font-size: $font-size-base;
-  color: $color-primary;
-  text-decoration: none;
   margin: $spacing-4 0;
-  transition: color $transition-base;
 
-  &:hover {
-    color: darken($color-primary, 10%);
-    text-decoration: underline;
+  span {
+    font-weight: 700;
   }
 }
 

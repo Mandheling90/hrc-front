@@ -5,6 +5,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'outline' | 'gray'
   size?: 'small' | 'medium' | 'large'
   fullWidth?: boolean
+  pill?: boolean
 
   children: React.ReactNode
 
@@ -12,8 +13,15 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'medium', fullWidth = false, className = '', children, ...props }, ref) => {
-    const buttonClasses = [styles.button, styles[variant], styles[size], fullWidth ? styles.fullWidth : '', className]
+  ({ variant = 'primary', size = 'medium', fullWidth = false, pill = false, className = '', children, ...props }, ref) => {
+    const buttonClasses = [
+      styles.button,
+      styles[variant],
+      styles[size],
+      fullWidth ? styles.fullWidth : '',
+      pill ? styles.pill : '',
+      className
+    ]
       .filter(Boolean)
       .join(' ')
 

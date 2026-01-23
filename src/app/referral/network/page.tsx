@@ -144,10 +144,18 @@ export default function NetworkPage() {
             </div>
 
             {networkInfo.downloadLink && (
-              <a href={networkInfo.downloadLink} className={styles.downloadLink}>
-                <DownloadIcon width={16} height={16} stroke='#9F1836' />
+              <Button
+                variant='outline'
+                size='small'
+                pill
+                className={styles.downloadButton}
+                onClick={() => {
+                  window.location.href = networkInfo.downloadLink || '#'
+                }}
+              >
                 <span>협력병의원 신청서 다운로드</span>
-              </a>
+                <DownloadIcon width={16} height={16} stroke='#000' />
+              </Button>
             )}
 
             <div className={styles.buttonGroup}>
