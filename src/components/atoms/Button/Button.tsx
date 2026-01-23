@@ -13,7 +13,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'medium', fullWidth = false, pill = false, className = '', children, ...props }, ref) => {
+  (
+    { variant = 'primary', size = 'medium', fullWidth = false, pill = false, className = '', children, ...props },
+    ref
+  ) => {
     const buttonClasses = [
       styles.button,
       styles[variant],

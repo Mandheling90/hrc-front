@@ -7,32 +7,22 @@ export interface FaxIconProps {
   stroke?: string
 }
 
-export const FaxIcon: React.FC<FaxIconProps> = ({ width = 60, height = 60, className = '', stroke = '#9F1836' }) => {
+export const FaxIcon: React.FC<FaxIconProps> = ({ width = 60, height = 60, className = '', stroke = '#720021' }) => {
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
       width={width}
       height={height}
       viewBox='0 0 60 60'
       fill='none'
+      xmlns='http://www.w3.org/2000/svg'
       className={className}
     >
       <path
-        d='M15 15H45C46.6569 15 48 16.3431 48 18V42C48 43.6569 46.6569 45 45 45H15C13.3431 45 12 43.6569 12 42V18C12 16.3431 13.3431 15 15 15Z'
-        stroke={stroke}
-        strokeWidth='3'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        d='M57.1809 27.3813L49.6875 20.7205V10.4734L41.0891 1.875H17.8125V16.875H9.375C8.62936 16.8759 7.91453 17.1725 7.38729 17.6998C6.86005 18.227 6.56343 18.9419 6.5625 19.6875V55.3125C6.56343 56.0581 6.86005 56.773 7.38729 57.3002C7.91453 57.8275 8.62936 58.1241 9.375 58.125H58.125V29.4836C58.1249 29.0864 58.0407 28.6937 57.878 28.3314C57.7152 27.9691 57.4777 27.6453 57.1809 27.3813ZM17.8125 54.375H10.3125V20.625H17.8125V54.375ZM38.4375 5.625H39.5359L45.9375 12.0266V13.125H38.4375V5.625ZM21.5625 5.625H34.6875V16.875H45.9375V25.3125H21.5625V5.625ZM54.375 54.375H21.5625V29.0625H49.6875V25.7378L54.375 29.9046V54.375Z'
+        fill={stroke}
       />
       <path
-        d='M18 22H42M18 28H42M18 34H30'
-        stroke={stroke}
-        strokeWidth='2.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
-      <path
-        d='M36 38C37.1046 38 38 37.1046 38 36C38 34.8954 37.1046 34 36 34C34.8954 34 34 34.8954 34 36C34 37.1046 34.8954 38 36 38Z'
+        d='M27.1875 40.3125H30.9375V44.0625H27.1875V40.3125ZM34.6875 40.3125H38.4375V44.0625H34.6875V40.3125ZM27.1875 47.8125H30.9375V51.5625H27.1875V47.8125ZM34.6875 47.8125H38.4375V51.5625H34.6875V47.8125ZM42.1875 40.3125H45.9375V44.0625H42.1875V40.3125ZM42.1875 47.8125H45.9375V51.5625H42.1875V47.8125ZM27.1875 32.8125H45.9375V36.5625H27.1875V32.8125Z'
         fill={stroke}
       />
     </svg>

@@ -20,6 +20,7 @@ import { CertificateIcon } from '@/components/icons/CertificateIcon'
 import { useHospital } from '@/hooks'
 import { mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
+import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
 
 export default function NetworkPage() {
   const { pageContent, hospital } = useHospital()
@@ -125,7 +126,7 @@ export default function NetworkPage() {
             <div className={styles.contactSection}>
               <div className={styles.contactCard}>
                 <div className={styles.contactIcon}>
-                  <PhoneIcon width={60} height={60} />
+                  <PhoneRequestIcon width={60} height={60} className={styles.contactIconSvg} />
                 </div>
                 <div className={styles.contactInfo}>
                   <span className={styles.contactLabel}>전화 :</span>
@@ -134,7 +135,7 @@ export default function NetworkPage() {
               </div>
               <div className={styles.contactCard}>
                 <div className={styles.contactIcon}>
-                  <FaxIcon width={60} height={60} />
+                  <FaxIcon width={60} height={60} className={styles.contactIconSvg} />
                 </div>
                 <div className={styles.contactInfo}>
                   <span className={styles.contactLabel}>팩스 :</span>
@@ -162,8 +163,8 @@ export default function NetworkPage() {
               {networkInfo.applicationLinks?.hospital && (
                 <Button
                   variant='outline'
-                  size='large'
-                  className={styles.applicationButton}
+                  size='medium'
+                  className={`${styles.applicationButton} ${styles.hospitalButton}`}
                   onClick={() => {
                     window.location.href = networkInfo.applicationLinks?.hospital || '#'
                   }}
@@ -174,7 +175,7 @@ export default function NetworkPage() {
               {networkInfo.applicationLinks?.clinic && (
                 <Button
                   variant='primary'
-                  size='large'
+                  size='medium'
                   className={styles.applicationButton}
                   onClick={() => {
                     window.location.href = networkInfo.applicationLinks?.clinic || '#'
