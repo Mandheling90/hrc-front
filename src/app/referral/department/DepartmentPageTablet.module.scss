@@ -1,0 +1,458 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+
+  .container {
+    padding: 0 50px;
+
+    @include tablet {
+      padding: 0 24px;
+    }
+  }
+}
+
+.pageTitle {
+  @include page-title-large;
+  text-align: center;
+  margin-bottom: $spacing-8;
+
+  @include tablet {
+    margin-bottom: $spacing-6;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+  margin-top: $spacing-8;
+
+  @include tablet {
+    gap: $spacing-4;
+    margin-top: $spacing-6;
+  }
+}
+
+// 진료과 선택 영역
+.departmentSection {
+  display: flex;
+  flex-direction: column;
+//   gap: $spacing-4;
+  width: 100%;
+}
+
+.departmentHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  padding: $spacing-5 $spacing-12;
+  background-color: $gray-100;
+  border: 1px solid $gray-500;
+  border-radius: 10px 10px 0 0;
+  font-family: Pretendard, sans-serif;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-xl; // 20px
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  justify-content: center;
+
+  @include tablet {
+    padding: $spacing-4 $spacing-6;
+    font-size: $font-size-lg; // 18px
+    gap: $spacing-3;
+  }
+}
+
+.departmentLabel {
+  color: $gray-900;
+}
+
+.departmentSeparator {
+  color: $gray-900;
+}
+
+.departmentName {
+  color: $color-primary;
+}
+
+.initialButtons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+  padding: $spacing-5;
+  background-color: $gray-200;
+  border: 1px solid $gray-500;
+  border-top: none;
+  border-bottom: 1px solid $gray-500;
+
+  @include tablet {
+    gap: $spacing-3;
+    padding: $spacing-4;
+  }
+}
+
+.initialButton {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  padding: 0;
+  border-radius: $radius-full;
+  border: none;
+  background-color: $color-white;
+  color: $gray-900;
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all $transition-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include tablet {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: $font-size-base;
+  }
+
+  &:hover:not(:disabled):not(.active) {
+    background-color: $gray-200;
+  }
+
+  &.active {
+    border: 1px solid $color-primary;
+    color: $gray-900;
+  }
+
+  &.disabled {
+    background-color: $gray-500;
+    color: $gray-600;
+    cursor: not-allowed;
+  }
+}
+
+.departmentButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+  padding: $spacing-5;
+  background-color: $gray-200;
+  border: 1px solid $gray-500;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+
+  @include tablet {
+    gap: $spacing-3;
+    padding: $spacing-4;
+  }
+}
+
+.initialGroup {
+  display: contents;
+}
+
+.departmentButton {
+  padding: $spacing-2 $spacing-6;
+  border-radius: $radius-full;
+  border: none;
+  background-color: rgba(254, 248, 248, 1); // #fef8f8
+  color: $gray-900;
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  cursor: pointer;
+  transition: all $transition-base;
+  white-space: nowrap;
+
+  @include tablet {
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-base;
+  }
+
+  &:hover:not(.active) {
+    background-color: rgba(254, 248, 248, 0.8);
+  }
+
+  &.active {
+    background-color: rgba(254, 248, 248, 1);
+    border: 1px solid $color-primary;
+    color: $color-primary;
+  }
+}
+
+// 의료진 일정 영역
+.doctorsSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  width: 100%;
+  border: 1px solid $gray-500;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.weekSelectorWrapper {
+  border-bottom: 1px solid $gray-400;
+  padding: 30px $spacing-12;
+  flex-shrink: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include tablet {
+    padding: $spacing-4 $spacing-6;
+    height: auto;
+    min-height: 80px;
+  }
+}
+
+.doctorsList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-right: 3px;
+  padding-bottom: $spacing-4;
+  overflow-y: auto;
+}
+
+.doctorCard {
+  display: flex;
+  gap: $spacing-4;
+  padding: $spacing-5;
+  border-bottom: 1px solid $gray-500;
+  align-items: flex-end;
+
+  @include tablet {
+    flex-direction: column;
+    padding: $spacing-4;
+    align-items: stretch;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.doctorInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  min-width: 0;
+}
+
+.doctorHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  flex-wrap: wrap;
+}
+
+.doctorName {
+  font-size: 32px; // Figma: size-32
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: -1.28px;
+
+  @include tablet {
+    font-size: $font-size-xl;
+  }
+}
+
+.doctorDepartment {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-normal;
+  color: $gray-900;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+
+  @include tablet {
+    font-size: $font-size-base;
+  }
+}
+
+.specialties {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.specialtiesLabel {
+  font-size: $font-size-lg; // 20px
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+
+  @include tablet {
+    font-size: $font-size-base;
+  }
+}
+
+.specialtiesText {
+  font-size: 18px; // Figma: size-18
+  font-weight: $font-weight-normal;
+  color: $gray-600;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+
+  @include tablet {
+    font-size: $font-size-sm;
+  }
+}
+
+.scheduleTable {
+  margin-top: $spacing-4;
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.doctorActions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  align-items: stretch;
+  flex-shrink: 0;
+  width: 189px;
+
+  @include tablet {
+    width: 100%;
+    flex-direction: row;
+  }
+}
+
+.eConsultButton {
+  background-color: #c09c63;
+  border: none;
+  border-radius: 5px;
+  color: $color-white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: $spacing-2;
+  height: 125px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color $transition-base;
+
+  @include tablet {
+    height: auto;
+    min-height: 100px;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: darken(#c09c63, 10%);
+  }
+
+  &:active:not(:disabled) {
+    background-color: darken(#c09c63, 15%);
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+  }
+
+  span {
+    font-size: $font-size-base; // 16px
+    font-weight: $font-weight-semibold;
+    white-space: nowrap;
+    line-height: 1.5;
+    letter-spacing: -0.64px;
+
+    @include tablet {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.doctorInfoButton {
+  background-color: $color-white;
+  border: 2px solid $gray-400;
+  border-radius: 5px;
+  color: $gray-500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: $spacing-2;
+  height: 125px;
+  width: 100%;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  @include tablet {
+    height: auto;
+    min-height: 100px;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $gray-500;
+    background-color: $gray-50;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $gray-100;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+  }
+
+  span {
+    font-size: $font-size-base; // 16px
+    font-weight: $font-weight-semibold;
+    white-space: nowrap;
+    line-height: 1.5;
+    letter-spacing: -0.64px;
+
+    @include tablet {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.emptyState {
+  padding: $spacing-12;
+  text-align: center;
+  color: $gray-600;
+  font-size: $font-size-lg;
+//   background-color: $gray-50;
+//   border-radius: $radius-lg;
+//   border: 1px solid $gray-200;
+}

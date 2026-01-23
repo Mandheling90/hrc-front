@@ -11,6 +11,7 @@ import { ScheduleTitle } from '@/components/molecules/ScheduleTitle/ScheduleTitl
 import { SectionContainer } from '@/components/molecules/SectionContainer/SectionContainer'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
+import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 
@@ -52,6 +53,9 @@ export default function DepartmentPage() {
   const mainContentRef = useRef<HTMLDivElement>(null)
   const sidebarHeightRef = useRef<number | null>(null)
   const [sidebarHeight, setSidebarHeight] = useState<number | undefined>(undefined)
+
+  // 태블릿/모바일 여부 확인
+  const [isTablet, setIsTablet] = useState(false)
 
   // 샘플 진료과 데이터 (실제로는 pageContent에서 가져와야 함)
   const departments: Department[] = useMemo(() => {
@@ -206,8 +210,49 @@ export default function DepartmentPage() {
     console.log('의료진 소개:', doctorId)
   }
 
-  // mainContent 높이를 측정하여 sidebar 높이에 동기화
+  // 태블릿/모바일용 데이터 변환
+  const tabletDepartments: TabletDepartment[] = useMemo(
+    () =>
+      departments.map(dept => ({
+        id: dept.id,
+        name: dept.name,
+        initial: dept.initial
+      })),
+    [departments]
+  )
+
+  const tabletDoctors: Doctor[] = useMemo(
+    () =>
+      doctors.map(doctor => ({
+        id: doctor.id,
+        name: doctor.name,
+        department: doctor.department,
+        imageUrl: doctor.imageUrl,
+        specialties: doctor.specialties,
+        schedule: doctor.schedule as ScheduleSlot[],
+        hasEConsulting: doctor.hasEConsulting
+      })),
+    [doctors]
+  )
+
+  // 태블릿/모바일 여부 확인 useEffect
   useEffect(() => {
+    const checkIsTablet = () => {
+      setIsTablet(window.innerWidth <= 1429)
+    }
+
+    checkIsTablet()
+    window.addEventListener('resize', checkIsTablet)
+
+    return () => {
+      window.removeEventListener('resize', checkIsTablet)
+    }
+  }, [])
+
+  // mainContent 높이를 측정하여 sidebar 높이에 동기화 (데스크탑 전용)
+  useEffect(() => {
+    if (isTablet) return
+
     const updateSidebarHeight = () => {
       if (!mainContentRef.current) return
 
@@ -239,7 +284,26 @@ export default function DepartmentPage() {
       resizeObserver.disconnect()
       window.removeEventListener('resize', updateSidebarHeight)
     }
-  }, [doctors, currentWeek]) // doctors나 currentWeek이 변경될 때도 높이 재계산
+  }, [doctors, currentWeek, isTablet]) // doctors나 currentWeek이 변경될 때도 높이 재계산
+
+  // 태블릿/모바일일 때 태블릿 컴포넌트 렌더링
+  if (isTablet) {
+    return (
+      <DepartmentPageTablet
+        departments={tabletDepartments}
+        doctors={tabletDoctors}
+        selectedDepartmentId={selectedDepartmentId}
+        onDepartmentSelect={handleDepartmentSelect}
+        onAllSelect={handleAllSelect}
+        currentWeek={currentWeek}
+        weekDates={weekDates}
+        onPreviousWeek={handlePreviousWeek}
+        onNextWeek={handleNextWeek}
+        onEConsultingClick={handleEConsultingClick}
+        onDoctorInfoClick={handleDoctorInfoClick}
+      />
+    )
+  }
 
   return (
     <div className={styles.wrap}>

@@ -33,16 +33,17 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
   const groupRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const listRef = useRef<HTMLDivElement>(null)
 
-  // 초성별로 그룹화 (진료과가 있는 초성만)
+  // 초성별로 그룹화 (모든 초성에 대해)
   const groupedDepartments = React.useMemo(() => {
     const groups: Record<string, Department[]> = {}
     INITIALS.forEach(initial => {
       const depts = departments.filter(dept => dept.initial === initial)
-      if (depts.length > 0) groups[initial] = depts
+      groups[initial] = depts
     })
     return groups
   }, [departments])
 
+  // 진료과가 있는 초성만 필터링 (진료과 목록 표시용)
   const initialsWithDepts = React.useMemo(
     () => INITIALS.filter(i => (groupedDepartments[i]?.length ?? 0) > 0),
     [groupedDepartments]
@@ -86,17 +87,24 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
               ALL
             </button>
           )}
-          {initialsWithDepts.map(initial => (
-            <button
-              key={initial}
-              type='button'
-              className={styles.initialButton}
-              onClick={() => scrollToInitial(initial)}
-              aria-label={`${initial}로 이동`}
-            >
-              {initial}
-            </button>
-          ))}
+          {INITIALS.map(initial => {
+            const hasDepts = (groupedDepartments[initial]?.length ?? 0) > 0
+            const hasActiveDept = groupedDepartments[initial]?.some(dept => dept.id === selectedDepartmentId)
+            return (
+              <button
+                key={initial}
+                type='button'
+                className={`${styles.initialButton} ${hasActiveDept ? styles.active : ''} ${
+                  !hasDepts ? styles.disabled : ''
+                }`}
+                onClick={() => scrollToInitial(initial)}
+                disabled={!hasDepts}
+                aria-label={`${initial}로 이동`}
+              >
+                {initial}
+              </button>
+            )
+          })}
         </aside>
 
         <div className={styles.divider} aria-hidden='true' />

@@ -28,13 +28,7 @@ export const ReviewIcon: React.FC<ReviewIconProps> = ({
         strokeWidth='3.75'
         strokeLinejoin='round'
       />
-      <path
-        d='M10 52.5H50'
-        stroke={stroke}
-        strokeWidth='3.75'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <path d='M10 52.5H50' stroke={stroke} strokeWidth='3.75' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   )
 }

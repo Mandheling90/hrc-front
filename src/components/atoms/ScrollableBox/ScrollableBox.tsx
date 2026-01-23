@@ -18,22 +18,14 @@ export interface ScrollableBoxProps extends React.HTMLAttributes<HTMLDivElement>
 
 export const ScrollableBox = React.forwardRef<HTMLDivElement, ScrollableBoxProps>(
   (
-    {
-      children,
-      maxHeight,
-      padding = '16px',
-      hasBorder = true,
-      hasBackground = true,
-      className,
-      style,
-      ...rest
-    },
+    { children, maxHeight, padding = '16px', hasBorder = true, hasBackground = true, className, style, ...rest },
     ref
   ) => {
     const customStyle: React.CSSProperties = {
-      ...(maxHeight !== undefined && maxHeight !== null && {
-        maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight
-      }),
+      ...(maxHeight !== undefined &&
+        maxHeight !== null && {
+          maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight
+        }),
       ...(padding !== null && {
         padding: typeof padding === 'number' ? `${padding}px` : padding
       }),
