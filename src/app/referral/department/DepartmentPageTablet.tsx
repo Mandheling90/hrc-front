@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useRef, useCallback } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { WeekSelector } from '@/components/molecules/WeekSelector/WeekSelector'
@@ -75,23 +75,14 @@ export const DepartmentPageTablet: React.FC<DepartmentPageTabletProps> = ({
     [groupedDepartments]
   )
 
-  const selectedDepartment = departments.find(dept => dept.id === selectedDepartmentId)
-
-  const scrollToInitial = useCallback((initial: string | null) => {
-    if (initial === null) {
-      listRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
-      return
+  // 첫 번째 진료과 자동 선택
+  useEffect(() => {
+    if (!selectedDepartmentId && departments.length > 0) {
+      onDepartmentSelect(departments[0].id)
     }
-    const el = groupRefs.current[initial]
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [])
+  }, [selectedDepartmentId, departments, onDepartmentSelect])
 
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}.${month}.${day}`
-  }
+  const selectedDepartment = departments.find(dept => dept.id === selectedDepartmentId)
 
   return (
     <div className={styles.wrap}>
@@ -128,7 +119,11 @@ export const DepartmentPageTablet: React.FC<DepartmentPageTabletProps> = ({
                       className={`${styles.initialButton} ${hasActiveDept ? styles.active : ''} ${
                         !hasDepts ? styles.disabled : ''
                       }`}
-                      onClick={() => scrollToInitial(initial)}
+                      onClick={() => {
+                        if (hasDepts && groupedDepartments[initial]?.[0]) {
+                          onDepartmentSelect(groupedDepartments[initial][0].id)
+                        }
+                      }}
                       disabled={!hasDepts}
                     >
                       {initial}

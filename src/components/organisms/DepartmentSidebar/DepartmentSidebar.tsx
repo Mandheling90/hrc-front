@@ -51,15 +51,6 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
 
   const selectedDepartment = departments.find(dept => dept.id === selectedDepartmentId)
 
-  const scrollToInitial = useCallback((initial: string | null) => {
-    if (initial === null) {
-      listRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-    const el = groupRefs.current[initial]
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [])
-
   const sidebarStyle = React.useMemo(() => {
     if (height === undefined) return {}
     return {
@@ -82,7 +73,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
             <button
               type='button'
               className={`${styles.initialButton} ${styles.allButton} ${!selectedDepartmentId ? styles.active : ''}`}
-              onClick={onAllSelect}
+              onClick={() => {}}
             >
               ALL
             </button>
@@ -97,7 +88,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
                 className={`${styles.initialButton} ${hasActiveDept ? styles.active : ''} ${
                   !hasDepts ? styles.disabled : ''
                 }`}
-                onClick={() => scrollToInitial(initial)}
+                onClick={() => {}}
                 disabled={!hasDepts}
                 aria-label={`${initial}로 이동`}
               >
@@ -135,7 +126,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
                       key={dept.id}
                       type='button'
                       className={`${styles.departmentButton} ${selectedDepartmentId === dept.id ? styles.active : ''}`}
-                      onClick={() => onDepartmentSelect(dept.id)}
+                      onClick={() => {}}
                     >
                       {dept.name}
                     </button>

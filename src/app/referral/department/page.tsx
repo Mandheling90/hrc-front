@@ -317,8 +317,8 @@ export default function DepartmentPage() {
               <DepartmentSidebar
                 departments={departments}
                 selectedDepartmentId={selectedDepartmentId}
-                onDepartmentSelect={handleDepartmentSelect}
-                onAllSelect={handleAllSelect}
+                onDepartmentSelect={() => {}}
+                onAllSelect={() => {}}
                 height={600}
               />
             </aside>
