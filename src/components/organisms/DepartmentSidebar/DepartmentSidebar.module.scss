@@ -1,14 +1,20 @@
 @import '@/styles/variables.scss';
 @import '@/styles/mixins.scss';
 
+// Figma Secondary/Normal – 초성 바 배경
+$initial-bar-bg: #e6cfad;
+$initial-nav-bg: #f9f9f9;
+$scrollbar-track: #e8e8e8;
+
 .sidebar {
   background-color: $color-white;
   border: 1px solid $gray-300;
   border-radius: $radius-lg;
-  padding: $spacing-6;
+  padding: 0;
   height: fit-content;
   position: sticky;
   top: $spacing-8;
+  overflow: hidden;
 
   @include tablet {
     position: static;
@@ -17,113 +23,162 @@
 }
 
 .header {
-  margin-bottom: $spacing-4;
-  padding-bottom: $spacing-4;
+  padding: $spacing-4 $spacing-6;
   border-bottom: 1px solid $gray-300;
 }
 
 .title {
   font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   color: $gray-900;
   margin: 0;
-  line-height: $line-height-tight;
+  line-height: $line-height-normal;
+  text-align: center;
+
+  @include tablet {
+    font-size: $font-size-base;
+  }
 }
 
-.allButton {
-  width: 100%;
-  padding: $spacing-3 $spacing-4;
-  margin-bottom: $spacing-4;
-  background-color: $gray-100;
-  border: 1px solid $gray-300;
-  border-radius: $radius-md;
-  font-size: $font-size-base;
+.titleHighlight {
+  color: $color-primary;
+}
+
+.body {
+  display: flex;
+  min-height: 200px;
+}
+
+.initialNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-3;
+  flex-shrink: 0;
+  background-color: $color-white;
+}
+
+.initialButton {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: $radius-full;
+  border: 1px solid transparent;
+  background-color: $initial-nav-bg;
+  color: $gray-900;
+  font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
-  color: $gray-700;
   cursor: pointer;
-  transition: all $transition-base;
+  transition: background-color $transition-base, border-color $transition-base, color $transition-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover:not(.active) {
     background-color: $gray-200;
-    border-color: $gray-400;
   }
 
   &.active {
-    background-color: $color-primary;
     border-color: $color-primary;
-    color: $color-white;
+    color: $color-primary;
+    background-color: $color-white;
   }
 }
 
+.allButton {
+  &:not(.active) {
+    border-color: $color-primary;
+  }
+
+  &.active {
+    border-color: $color-primary;
+    color: $color-primary;
+    background-color: $color-white;
+  }
+}
+
+.divider {
+  width: 1px;
+  flex-shrink: 0;
+  background-color: $gray-300;
+}
+
 .departmentList {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
-  max-height: 600px;
   overflow-y: auto;
+  max-height: 480px;
+  padding-right: $spacing-1;
 
   @include tablet {
-    max-height: none;
+    max-height: 360px;
+  }
+
+  // Figma 스크롤바: 밝은 회색 트랙, primary 썸
+  scrollbar-width: thin;
+  scrollbar-color: $color-primary $scrollbar-track;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $scrollbar-track;
+    border-radius: $radius-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: $radius-full;
   }
 }
 
 .initialGroup {
   display: flex;
-  gap: $spacing-2;
+  flex-direction: column;
+  gap: 0;
 }
 
-.initialLabel {
-  flex-shrink: 0;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $gray-100;
-  border-radius: $radius-sm;
+.initialBar {
+  width: 100%;
+  padding: $spacing-2 $spacing-4;
+  background-color: $initial-bar-bg;
   font-size: $font-size-base;
-  font-weight: $font-weight-bold;
-  color: $gray-700;
-  padding: $spacing-2 0;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  min-height: 100px;
-
-  @include tablet {
-    width: 30px;
-    min-height: 60px;
-    font-size: $font-size-sm;
-  }
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .departments {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: $spacing-1;
+  gap: 0;
 }
 
 .departmentButton {
   width: 100%;
-  padding: $spacing-2 $spacing-3;
+  padding: $spacing-2 $spacing-4 $spacing-2 $spacing-6;
   text-align: left;
-  background-color: $gray-100;
-  border: 1px solid $gray-300;
-  border-radius: $radius-sm;
-  font-size: $font-size-sm;
+  background-color: $color-white;
+  border: none;
+  border-radius: 0;
+  font-size: $font-size-base;
   font-weight: $font-weight-medium;
-  color: $gray-700;
+  color: $gray-900;
   cursor: pointer;
-  transition: all $transition-base;
+  transition: color $transition-base;
 
   &:hover:not(.active) {
-    background-color: $gray-200;
-    border-color: $gray-400;
+    color: $gray-700;
   }
 
   &.active {
-    background-color: $color-primary;
-    border-color: $color-primary;
-    color: $color-white;
+    color: $color-primary;
     font-weight: $font-weight-semibold;
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useCallback } from 'react'
 import styles from './DepartmentSidebar.module.scss'
 
 export interface Department {
@@ -27,63 +27,100 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
   onAllSelect,
   className = ''
 }) => {
-  // 초성별로 그룹화
+  const groupRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const listRef = useRef<HTMLDivElement>(null)
+
+  // 초성별로 그룹화 (진료과가 있는 초성만)
   const groupedDepartments = React.useMemo(() => {
     const groups: Record<string, Department[]> = {}
-    
     INITIALS.forEach(initial => {
-      groups[initial] = departments.filter(dept => dept.initial === initial)
+      const depts = departments.filter(dept => dept.initial === initial)
+      if (depts.length > 0) groups[initial] = depts
     })
-
     return groups
   }, [departments])
 
-  // 선택된 진료과 이름 찾기
+  const initialsWithDepts = React.useMemo(
+    () => INITIALS.filter(i => (groupedDepartments[i]?.length ?? 0) > 0),
+    [groupedDepartments]
+  )
+
   const selectedDepartment = departments.find(dept => dept.id === selectedDepartmentId)
+
+  const scrollToInitial = useCallback((initial: string | null) => {
+    if (initial === null) {
+      listRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    const el = groupRefs.current[initial]
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [])
 
   return (
     <div className={`${styles.sidebar} ${className}`}>
-      <div className={styles.header}>
+      <header className={styles.header}>
         <h2 className={styles.title}>
-          진료과 목록 : {selectedDepartment ? selectedDepartment.name : '전체'}
+          진료과 목록 :{' '}
+          <span className={styles.titleHighlight}>{selectedDepartment ? selectedDepartment.name : '전체'}</span>
         </h2>
-      </div>
+      </header>
 
-      {onAllSelect && (
-        <button
-          type='button'
-          className={`${styles.allButton} ${!selectedDepartmentId ? styles.active : ''}`}
-          onClick={onAllSelect}
-        >
-          ALL
-        </button>
-      )}
+      <div className={styles.body}>
+        <aside className={styles.initialNav}>
+          {onAllSelect && (
+            <button
+              type='button'
+              className={`${styles.initialButton} ${styles.allButton} ${!selectedDepartmentId ? styles.active : ''}`}
+              onClick={() => {}}
+            >
+              ALL
+            </button>
+          )}
+          {initialsWithDepts.map(initial => (
+            <button
+              key={initial}
+              type='button'
+              className={styles.initialButton}
+              onClick={() => {}}
+              aria-label={`${initial}로 이동`}
+            >
+              {initial}
+            </button>
+          ))}
+        </aside>
 
-      <div className={styles.departmentList}>
-        {INITIALS.map(initial => {
-          const depts = groupedDepartments[initial]
-          if (depts.length === 0) return null
+        <div className={styles.divider} aria-hidden='true' />
 
-          return (
-            <div key={initial} className={styles.initialGroup}>
-              <div className={styles.initialLabel}>{initial}</div>
-              <div className={styles.departments}>
-                {depts.map(dept => (
-                  <button
-                    key={dept.id}
-                    type='button'
-                    className={`${styles.departmentButton} ${
-                      selectedDepartmentId === dept.id ? styles.active : ''
-                    }`}
-                    onClick={() => onDepartmentSelect(dept.id)}
-                  >
-                    {dept.name}
-                  </button>
-                ))}
+        <div ref={listRef} className={styles.departmentList}>
+          {initialsWithDepts.map(initial => {
+            const depts = groupedDepartments[initial]
+            if (!depts?.length) return null
+
+            return (
+              <div
+                key={initial}
+                ref={el => {
+                  groupRefs.current[initial] = el
+                }}
+                className={styles.initialGroup}
+              >
+                <div className={styles.initialBar}>{initial}</div>
+                <div className={styles.departments}>
+                  {depts.map(dept => (
+                    <button
+                      key={dept.id}
+                      type='button'
+                      className={`${styles.departmentButton} ${selectedDepartmentId === dept.id ? styles.active : ''}`}
+                      onClick={() => {}}
+                    >
+                      {dept.name}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </div>
   )
