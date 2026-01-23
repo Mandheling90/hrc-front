@@ -98,6 +98,7 @@ export default function DepartmentPage() {
           id: '1',
           name: '김양현',
           department: '가정의학과',
+          imageUrl: '/images/service/referral/1000007064.png',
           specialties: ['비만클리닉', '노인병클리닉', '건강증진클리닉', '금연클리닉', '지역사회의학'],
           schedule: [
             { day: '월', period: '오전', available: true },
@@ -227,6 +228,7 @@ export default function DepartmentPage() {
                       key={doctor.id}
                       name={doctor.name}
                       department={doctor.department}
+                      imageUrl={doctor.imageUrl}
                       specialties={doctor.specialties}
                       schedule={doctor.schedule}
                       hasEConsulting={doctor.hasEConsulting}

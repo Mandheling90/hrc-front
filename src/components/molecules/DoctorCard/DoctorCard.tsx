@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { Button } from '@/components/atoms/Button/Button'
 import { ScheduleTable, ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 import { DoctorIcon } from '@/components/icons/DoctorIcon'
-import { FluentArrowCircleUpRight } from '@/components/icons/FluentArrowCircleUpRight'
+import { EConsultingIcon } from '@/components/icons/EConsultingIcon'
+import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
 import styles from './DoctorCard.module.scss'
 
 export interface DoctorCardProps {
@@ -40,8 +41,8 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
               <Image
                 src={imageUrl}
                 alt={`${name} ${department}`}
-                width={120}
-                height={120}
+                width={200}
+                height={200}
                 className={styles.image}
                 unoptimized
               />
@@ -54,42 +55,33 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
         </div>
 
         <div className={styles.infoSection}>
-          <div className={styles.header}>
-            <h3 className={styles.name}>
-              {name} {department}
-            </h3>
-          </div>
+          <div className={styles.infoContent}>
+            <div className={styles.header}>
+              <h3 className={styles.name}>{name}</h3>
+              <span className={styles.department}>{department}</span>
+            </div>
 
-          <div className={styles.specialties}>
-            <span className={styles.specialtiesLabel}>전문분야</span>
-            <span className={styles.specialtiesText}>{specialties.join(', ')}</span>
-          </div>
+            <div className={styles.specialties}>
+              <span className={styles.specialtiesLabel}>전문분야</span>
+              <span className={styles.specialtiesText}>{specialties.join(', ')}</span>
+            </div>
 
-          <div className={styles.scheduleSection}>
-            <ScheduleTable schedule={schedule} />
+            <div className={styles.scheduleSection}>
+              <ScheduleTable schedule={schedule} />
+            </div>
           </div>
 
           <div className={styles.actions}>
             {hasEConsulting && (
-              <Button
-                variant='primary'
-                size='small'
-                className={styles.eConsultButton}
-                onClick={onEConsultingClick}
-              >
-                <FluentArrowCircleUpRight width={16} height={16} />
+              <button type='button' className={styles.eConsultButton} onClick={onEConsultingClick}>
+                <EConsultingIcon width={24} height={24} fill='white' />
                 <span>e-Consulting 신청</span>
-              </Button>
+              </button>
             )}
-            <Button
-              variant='outline'
-              size='small'
-              className={styles.doctorInfoButton}
-              onClick={onDoctorInfoClick}
-            >
-              <DoctorIcon width={16} height={16} stroke='#000' />
+            <button type='button' className={styles.doctorInfoButton} onClick={onDoctorInfoClick}>
+              <DoctorInfoIcon width={24} height={24} stroke='#111111' />
               <span>의료진 소개</span>
-            </Button>
+            </button>
           </div>
         </div>
       </div>

@@ -17,9 +17,10 @@
   padding: $spacing-2 $spacing-1;
   text-align: center;
   font-weight: $font-weight-medium;
-  color: $gray-700;
+  color: $gray-900;
   background-color: $gray-100;
   border: 1px solid $gray-300;
+  border-bottom: 2px solid #a38b6b;
   font-size: $font-size-xs;
 
   @include tablet {
@@ -65,7 +66,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: $color-primary;
+  background-color: #a38b6b;
   vertical-align: middle;
 
   @include tablet {
