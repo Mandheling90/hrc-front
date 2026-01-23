@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -11,7 +11,6 @@ import { ScheduleTitle } from '@/components/molecules/ScheduleTitle/ScheduleTitl
 import { SectionContainer } from '@/components/molecules/SectionContainer/SectionContainer'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
-import { useHospital } from '@/hooks'
 import styles from './page.module.scss'
 
 // 한글 초성 추출 함수
@@ -41,14 +40,17 @@ function getWeekDates(date: Date): { startDate: Date; endDate: Date } {
 }
 
 export default function DepartmentPage() {
-  const { pageContent } = useHospital()
-
   // 현재 주간 날짜 상태
   const [currentWeek, setCurrentWeek] = useState(new Date())
   const weekDates = useMemo(() => getWeekDates(currentWeek), [currentWeek])
 
   // 선택된 진료과 상태
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<string | undefined>('family-medicine')
+
+  // 높이 동기화를 위한 refs
+  const mainContentRef = useRef<HTMLDivElement>(null)
+  const sidebarHeightRef = useRef<number | null>(null)
+  const [sidebarHeight, setSidebarHeight] = useState<number | undefined>(undefined)
 
   // 샘플 진료과 데이터 (실제로는 pageContent에서 가져와야 함)
   const departments: Department[] = useMemo(() => {
@@ -203,12 +205,46 @@ export default function DepartmentPage() {
     console.log('의료진 소개:', doctorId)
   }
 
+  // mainContent 높이를 측정하여 sidebar 높이에 동기화
+  useEffect(() => {
+    const updateSidebarHeight = () => {
+      if (!mainContentRef.current) return
+
+      const mainContentHeight = mainContentRef.current.offsetHeight
+
+      // 높이가 변경된 경우에만 업데이트 (불필요한 리렌더링 방지)
+      if (sidebarHeightRef.current !== mainContentHeight) {
+        sidebarHeightRef.current = mainContentHeight
+        setSidebarHeight(mainContentHeight)
+      }
+    }
+
+    // 초기 높이 설정
+    updateSidebarHeight()
+
+    // ResizeObserver로 동적 높이 변경 감지
+    const resizeObserver = new ResizeObserver(() => {
+      updateSidebarHeight()
+    })
+
+    if (mainContentRef.current) {
+      resizeObserver.observe(mainContentRef.current)
+    }
+
+    // window resize 이벤트도 감지
+    window.addEventListener('resize', updateSidebarHeight)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', updateSidebarHeight)
+    }
+  }, [doctors, currentWeek]) // doctors나 currentWeek이 변경될 때도 높이 재계산
+
   return (
     <div className={styles.wrap}>
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>진료과 안내</h1>
 
           <div className={styles.content}>
@@ -218,10 +254,11 @@ export default function DepartmentPage() {
                 selectedDepartmentId={selectedDepartmentId}
                 onDepartmentSelect={handleDepartmentSelect}
                 onAllSelect={handleAllSelect}
+                height={800}
               />
             </aside>
 
-            <div className={styles.mainContent}>
+            <div ref={mainContentRef} className={styles.mainContent} style={{ height: '800px' }}>
               <ScheduleTitle title='진료 일정표 확인' />
               <SectionContainer
                 header={
@@ -232,6 +269,7 @@ export default function DepartmentPage() {
                     onNextWeek={handleNextWeek}
                   />
                 }
+                scrollable
               >
                 {doctors.length > 0 ? (
                   doctors.map(doctor => (

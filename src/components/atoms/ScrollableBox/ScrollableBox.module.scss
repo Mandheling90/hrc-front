@@ -1,0 +1,36 @@
+@import '@/styles/variables.scss';
+
+.scrollableBox {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  overflow-y: auto;
+
+  &.noBorder {
+    border: none;
+    border-radius: 0;
+  }
+
+  &.noBackground {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #e8e8e8;
+    border-radius: 40px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 60px;
+    height: 85.333px;
+
+    &:hover {
+      background: darken($color-primary, 10%);
+    }
+  }
+}

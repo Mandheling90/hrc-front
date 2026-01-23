@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, useCallback } from 'react'
+import { ScrollableBox } from '@/components/atoms/ScrollableBox/ScrollableBox'
 import styles from './DepartmentSidebar.module.scss'
 
 export interface Department {
@@ -15,6 +16,7 @@ export interface DepartmentSidebarProps {
   onDepartmentSelect: (departmentId: string) => void
   onAllSelect?: () => void
   className?: string
+  height?: number | string
 }
 
 // 한글 초성 배열
@@ -25,7 +27,8 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
   selectedDepartmentId,
   onDepartmentSelect,
   onAllSelect,
-  className = ''
+  className = '',
+  height
 }) => {
   const groupRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const listRef = useRef<HTMLDivElement>(null)
@@ -56,8 +59,15 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
+  const sidebarStyle = React.useMemo(() => {
+    if (height === undefined) return {}
+    return {
+      height: typeof height === 'number' ? `${height}px` : height
+    }
+  }, [height])
+
   return (
-    <div className={`${styles.sidebar} ${className}`}>
+    <div className={`${styles.sidebar} ${className}`} style={sidebarStyle}>
       <header className={styles.header}>
         <h2 className={styles.title}>
           진료과 목록 :{' '}
@@ -91,7 +101,13 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
 
         <div className={styles.divider} aria-hidden='true' />
 
-        <div ref={listRef} className={styles.departmentList}>
+        <ScrollableBox
+          ref={listRef}
+          className={styles.departmentList}
+          padding={null}
+          hasBorder={false}
+          hasBackground={false}
+        >
           {initialsWithDepts.map(initial => {
             const depts = groupedDepartments[initial]
             if (!depts?.length) return null
@@ -120,7 +136,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
               </div>
             )
           })}
-        </div>
+        </ScrollableBox>
       </div>
     </div>
   )

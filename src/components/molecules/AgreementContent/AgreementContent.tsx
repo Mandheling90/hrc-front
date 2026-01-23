@@ -1,4 +1,5 @@
 import React from 'react'
+import { ScrollableBox } from '@/components/atoms/ScrollableBox/ScrollableBox'
 import styles from './AgreementContent.module.scss'
 
 export interface RadioOption {
@@ -51,7 +52,7 @@ export const AgreementContent: React.FC<AgreementContentProps> = ({
     if (shouldWrapInScrollBox && hasScrollableContent) {
       // 모든 내용을 scrollableBox 안에 포함
       return (
-        <div className={styles.scrollableBox}>
+        <ScrollableBox maxHeight="200px">
           <div className={styles.scrollableContent}>
             {title && <h3 className={styles.subTitle}>{title}</h3>}
             {description && <p className={styles.contentText}>{description}</p>}
@@ -73,7 +74,7 @@ export const AgreementContent: React.FC<AgreementContentProps> = ({
             )}
             {scrollableContent}
           </div>
-        </div>
+        </ScrollableBox>
       )
     }
 
@@ -105,9 +106,9 @@ export const AgreementContent: React.FC<AgreementContentProps> = ({
         )}
 
         {hasScrollableContent && (
-          <div className={styles.scrollableBox}>
+          <ScrollableBox maxHeight="200px">
             <div className={styles.scrollableContent}>{scrollableContent}</div>
-          </div>
+          </ScrollableBox>
         )}
       </>
     )

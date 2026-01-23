@@ -11,7 +11,9 @@ $scrollbar-track: #e8e8e8;
   border: 1px solid $gray-300;
   border-radius: $radius-lg;
   padding: 0;
-  height: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   position: sticky;
   top: $spacing-8;
   overflow: hidden;
@@ -19,6 +21,7 @@ $scrollbar-track: #e8e8e8;
   @include tablet {
     position: static;
     margin-bottom: $spacing-8;
+    height: fit-content;
   }
 }
 
@@ -46,7 +49,8 @@ $scrollbar-track: #e8e8e8;
 
 .body {
   display: flex;
-  min-height: 200px;
+  flex: 1;
+  min-height: 0;
 }
 
 .initialNav {
@@ -110,30 +114,11 @@ $scrollbar-track: #e8e8e8;
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  max-height: 480px;
+  min-height: 0;
   padding-right: $spacing-1;
 
   @include tablet {
     max-height: 360px;
-  }
-
-  // Figma 스크롤바: 밝은 회색 트랙, primary 썸
-  scrollbar-width: thin;
-  scrollbar-color: $color-primary $scrollbar-track;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $scrollbar-track;
-    border-radius: $radius-full;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $color-primary;
-    border-radius: $radius-full;
   }
 }
 

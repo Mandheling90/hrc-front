@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { ScrollableBox } from '@/components/atoms/ScrollableBox/ScrollableBox'
 import styles from './SectionContainer.module.scss'
 
 export interface SectionContainerProps {
@@ -12,13 +13,16 @@ export interface SectionContainerProps {
   className?: string
   /** 컨테이너 클래스명 */
   containerClassName?: string
+  /** 스크롤 가능 여부 */
+  scrollable?: boolean
 }
 
 export const SectionContainer: React.FC<SectionContainerProps> = ({
   header,
   children,
   className = '',
-  containerClassName = ''
+  containerClassName = '',
+  scrollable = false
 }) => {
   // children을 배열로 변환 (단일 요소도 배열로 처리)
   const childrenArray = React.Children.toArray(children).filter(Boolean)
@@ -32,14 +36,30 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({
         </>
       )}
 
-      <div className={`${styles.content} ${className}`}>
-        {childrenArray.map((child, index) => (
-          <React.Fragment key={index}>
-            {child}
-            {index < childrenArray.length - 1 && <div className={styles.itemDivider} />}
-          </React.Fragment>
-        ))}
-      </div>
+      {scrollable ? (
+        <ScrollableBox
+          className={`${styles.content} ${styles.scrollable} ${className}`}
+          padding={null}
+          hasBorder={false}
+          hasBackground={false}
+        >
+          {childrenArray.map((child, index) => (
+            <React.Fragment key={index}>
+              {child}
+              {index < childrenArray.length - 1 && <div className={styles.itemDivider} />}
+            </React.Fragment>
+          ))}
+        </ScrollableBox>
+      ) : (
+        <div className={`${styles.content} ${className}`}>
+          {childrenArray.map((child, index) => (
+            <React.Fragment key={index}>
+              {child}
+              {index < childrenArray.length - 1 && <div className={styles.itemDivider} />}
+            </React.Fragment>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

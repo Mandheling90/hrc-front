@@ -24,6 +24,7 @@
   grid-template-columns: 300px 1fr;
   gap: $spacing-8;
   margin-top: $spacing-8;
+  align-items: stretch;
 
   @include tablet {
     grid-template-columns: 1fr;
@@ -41,7 +42,8 @@
 .mainContent {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
+  gap: $spacing-3;
+  min-height: 100%;
 }
 
 .doctorsList {
