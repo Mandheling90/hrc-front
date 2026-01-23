@@ -4,24 +4,34 @@
 .scheduleTable {
   width: 100%;
   overflow-x: auto;
+  position: relative;
+}
+
+.topBorder {
+  width: 100%;
+  height: 2px;
+  background-color: $color-primary;
+  margin-bottom: 0;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: $font-size-sm;
+  font-size: 18px;
   min-width: 300px;
 }
 
 .headerCell {
-  padding: $spacing-2 $spacing-1;
+  padding: 5px;
   text-align: center;
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-semibold;
   color: $gray-900;
-  background-color: $gray-100;
-  border: 1px solid $gray-300;
-  border-bottom: 2px solid #a38b6b;
-  font-size: $font-size-xs;
+  background-color: #f9f9f9;
+  border: 1px solid #d9d9d9;
+  border-top: none;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
 
   @include tablet {
     padding: $spacing-3 $spacing-2;
@@ -30,14 +40,16 @@
 }
 
 .periodCell {
-  padding: $spacing-2 $spacing-1;
+  padding: 11px;
   text-align: center;
-  font-weight: $font-weight-medium;
-  color: $gray-700;
-  background-color: $gray-100;
-  border: 1px solid $gray-300;
-  font-size: $font-size-xs;
-  width: 50px;
+  font-weight: $font-weight-normal;
+  color: #636363;
+  background-color: $color-white;
+  border: 1px solid #d9d9d9;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  width: auto;
 
   @include tablet {
     padding: $spacing-3 $spacing-2;
@@ -47,12 +59,14 @@
 }
 
 .slotCell {
-  padding: $spacing-2 $spacing-1;
+  padding: 8px;
   text-align: center;
-  border: 1px solid $gray-300;
+  border: 1px solid #d9d9d9;
+  border-left: 1px solid #d9d9d9;
   min-width: 30px;
-  height: 40px;
+  height: 49px;
   vertical-align: middle;
+  background-color: $color-white;
 
   @include tablet {
     padding: $spacing-3 $spacing-2;
@@ -63,10 +77,10 @@
 
 .dot {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  background-color: #a38b6b;
+  background-color: $color-primary;
   vertical-align: middle;
 
   @include tablet {

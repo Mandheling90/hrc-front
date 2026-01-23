@@ -99,7 +99,18 @@ export default function DepartmentPage() {
           name: '김양현',
           department: '가정의학과',
           imageUrl: '/images/service/referral/1000007064.png',
-          specialties: ['비만클리닉', '노인병클리닉', '건강증진클리닉', '금연클리닉', '지역사회의학'],
+          specialties: [
+            '비만클리닉',
+            '노인병클리닉',
+            '건강증진클리닉',
+            '금연클리닉',
+            '지역사회의학',
+            '비만클리닉',
+            '노인병클리닉',
+            '건강증진클리닉',
+            '금연클리닉',
+            '지역사회의학'
+          ],
           schedule: [
             { day: '월', period: '오전', available: true },
             { day: '화', period: '오전', available: true },

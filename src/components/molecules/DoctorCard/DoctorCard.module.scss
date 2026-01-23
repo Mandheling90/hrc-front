@@ -3,7 +3,7 @@
 
 .doctorCard {
   background-color: $color-white;
-  border: none;
+  border-bottom: 1px solid #8c8c8c;
   border-radius: 0;
   padding: 0;
   margin-bottom: 0;
@@ -11,36 +11,42 @@
 
 .cardContent {
   display: flex;
-  gap: 0;
+  gap: 40px;
+  align-items: flex-end;
+  padding: 20px;
   min-height: 200px;
+
+  @include tablet {
+    flex-direction: column;
+    gap: $spacing-6;
+    align-items: stretch;
+  }
 }
 
 .imageSection {
   flex-shrink: 0;
-  width: 200px;
-  min-height: 200px;
+  width: 188px;
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
 
   @include tablet {
     width: 100%;
-    min-height: auto;
+    height: 200px;
+    align-self: auto;
   }
 }
 
 .imageWrapper {
   width: 100%;
   height: 100%;
-  min-height: 200px;
   border-radius: 0;
   overflow: hidden;
-  background-color: $gray-100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: $color-white;
+  position: relative;
+  border: 1px solid #8c8c8c;
 
   @include tablet {
-    width: 100%;
-    height: 200px;
-    min-height: 200px;
     border-radius: $radius-lg $radius-lg 0 0;
   }
 }
@@ -54,12 +60,13 @@
 .placeholderImage {
   width: 100%;
   height: 100%;
-  min-height: 200px;
   border-radius: 0;
-  background-color: $gray-100;
+  background-color: $color-white;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #8c8c8c;
+  position: relative;
 
   @include tablet {
     border-radius: $radius-lg $radius-lg 0 0;
@@ -70,8 +77,8 @@
   flex: 1;
   display: flex;
   flex-direction: row;
-  gap: $spacing-6;
-  padding: $spacing-6;
+  gap: 40px;
+  padding: 0;
 
   @include tablet {
     flex-direction: column;
@@ -83,14 +90,19 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: 24px;
+  width: 462px;
+
+  @include tablet {
+    width: 100%;
+  }
 }
 
 .header {
-  margin-bottom: $spacing-2;
+  margin-bottom: 0;
   display: flex;
-  align-items: baseline;
-  gap: $spacing-3; // 12px
+  align-items: center;
+  gap: 16px;
   flex-wrap: wrap;
 
   @include tablet {
@@ -99,11 +111,12 @@
 }
 
 .name {
-  font-size: $font-size-2xl; // 24px
-  font-weight: $font-weight-bold;
+  font-size: 32px; // 32px
+  font-weight: $font-weight-semibold;
   color: $gray-900;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
+  letter-spacing: -1.28px;
 
   @include tablet {
     font-size: $font-size-xl; // 20px
@@ -111,10 +124,11 @@
 }
 
 .department {
-  font-size: $font-size-base; // 16px
+  font-size: 20px; // 20px
   font-weight: $font-weight-normal;
-  color: $gray-700;
-  line-height: 1.4;
+  color: $gray-900;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
 
   @include tablet {
     font-size: $font-size-sm; // 14px
@@ -124,42 +138,45 @@
 .specialties {
   display: flex;
   flex-direction: column;
-  gap: $spacing-1;
-  margin-bottom: $spacing-2;
+  gap: 0;
+  margin-bottom: 0;
 }
 
 .specialtiesLabel {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
+  font-size: 20px; // 20px
+  font-weight: $font-weight-semibold;
   color: $color-primary;
-  text-decoration: underline;
-  text-decoration-color: $color-primary;
-  text-underline-offset: 4px;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  margin-bottom: 0;
 }
 
 .specialtiesText {
-  font-size: $font-size-base;
+  font-size: 18px; // 18px
   font-weight: $font-weight-normal;
-  color: $gray-700;
-  line-height: $line-height-relaxed;
+  color: #636363;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   word-break: break-word;
 }
 
 .scheduleSection {
-  margin: $spacing-4 0;
+  margin: 0;
 }
 
 .actions {
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
+  gap: 24px;
   align-items: stretch;
   flex-shrink: 0;
+  width: 189px;
+  justify-content: flex-end;
 
   @include tablet {
     flex-direction: row;
@@ -168,51 +185,58 @@
 }
 
 .eConsultButton {
-  background-color: #a38b6b;
+  background-color: #c09c63;
   border: none;
-  border-radius: $radius-md;
+  border-radius: 5px;
   color: $color-white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: $spacing-2;
-  padding: $spacing-4 $spacing-3;
-  min-width: 100px;
+  gap: 0;
+  padding: 10px;
+  height: 125px;
+  width: 100%;
   cursor: pointer;
   transition: background-color $transition-base;
 
   &:hover:not(:disabled) {
-    background-color: darken(#a38b6b, 10%);
+    background-color: darken(#c09c63, 10%);
   }
 
   &:active:not(:disabled) {
-    background-color: darken(#a38b6b, 15%);
-  }
-
-  span {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    white-space: nowrap;
+    background-color: darken(#c09c63, 15%);
   }
 
   svg {
     flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: $font-weight-semibold;
+    white-space: nowrap;
+    line-height: 1.5;
+    letter-spacing: -0.72px;
   }
 }
 
 .doctorInfoButton {
   background-color: $color-white;
-  border: 1px solid $gray-300;
-  border-radius: $radius-md;
-  color: $gray-900;
+  border: 2px solid #e8e8e8;
+  border-radius: 5px;
+  color: #8c8c8c;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: $spacing-2;
-  padding: $spacing-4 $spacing-3;
-  min-width: 100px;
+  gap: 0;
+  padding: 10px;
+  height: 125px;
+  width: 100%;
   cursor: pointer;
   transition: all $transition-base;
 
@@ -225,13 +249,18 @@
     background-color: $gray-100;
   }
 
-  span {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    white-space: nowrap;
-  }
-
   svg {
     flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: $font-weight-semibold;
+    white-space: nowrap;
+    line-height: 1.5;
+    letter-spacing: -0.72px;
   }
 }

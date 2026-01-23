@@ -20,6 +20,7 @@ export const ScheduleTable: React.FC<ScheduleTableProps> = ({ schedule, classNam
 
   return (
     <div className={`${styles.scheduleTable} ${className}`}>
+      <div className={styles.topBorder} />
       <table className={styles.table}>
         <thead>
           <tr>

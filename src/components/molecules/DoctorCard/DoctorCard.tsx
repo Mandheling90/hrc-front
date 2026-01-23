@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { Button } from '@/components/atoms/Button/Button'
 import { ScheduleTable, ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 import { DoctorIcon } from '@/components/icons/DoctorIcon'
 import { EConsultingIcon } from '@/components/icons/EConsultingIcon'
@@ -74,12 +73,12 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
           <div className={styles.actions}>
             {hasEConsulting && (
               <button type='button' className={styles.eConsultButton} onClick={onEConsultingClick}>
-                <EConsultingIcon width={24} height={24} fill='white' />
+                <EConsultingIcon width={48} height={48} fill='white' />
                 <span>e-Consulting 신청</span>
               </button>
             )}
             <button type='button' className={styles.doctorInfoButton} onClick={onDoctorInfoClick}>
-              <DoctorInfoIcon width={24} height={24} stroke='#111111' />
+              <DoctorInfoIcon width={48} height={48} stroke='#8c8c8c' />
               <span>의료진 소개</span>
             </button>
           </div>
