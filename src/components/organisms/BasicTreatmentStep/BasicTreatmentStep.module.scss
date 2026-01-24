@@ -1,0 +1,75 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+@import '@/components/organisms/StepFormCommon.module.scss';
+
+// formSection, formHeader, formHeaderLeft, formTitle, formSubtitle, stepIndicator, stepNumber, stepSeparator, stepTotal, formDivider, formContent은 공통 스타일 사용
+
+// 카테고리 섹션
+.categorySection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}
+
+// 카테고리 제목
+.categoryTitle {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  color: #000000;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+// 체크박스 그룹 (그리드 레이아웃으로 2열 배치)
+.checkboxGroup {
+  display: grid;
+  grid-template-columns: repeat(2, 267px);
+  gap: $spacing-4; // 16px
+  align-items: flex-start;
+}
+
+// 기타 항목 섹션
+.otherItemsSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // 8px
+  width: 100%;
+  margin-top: $spacing-6; // 24px (formContent의 gap과 일치)
+}
+
+.otherItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}
+
+.otherItemsButton {
+  display: flex;
+  justify-content: flex-end;
+
+  .addButton {
+    gap: $spacing-1;
+  }
+
+  .addButtonText {
+    font-size: $font-size-lg; // 18px
+  }
+}
+
+// 반응형 스타일
+@include tablet {
+  .checkboxGroup {
+    // 테블릿에서 전체 너비를 차지하도록 변경
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include mobile {
+  .checkboxGroup {
+    // 모바일에서 1열로 변경
+    grid-template-columns: 1fr;
+  }
+}

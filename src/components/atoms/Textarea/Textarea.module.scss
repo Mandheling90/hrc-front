@@ -1,0 +1,79 @@
+@import '@/styles/variables.scss';
+
+.textareaWrapper {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 8px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 13px;
+  }
+}
+
+.textarea {
+  width: 100%;
+  min-height: 218px;
+  padding: 20px;
+  font-size: $font-size-lg; // 18px
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  border: 1px solid #8c8c8c;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  transition: border-color 0.3s;
+  font-family: $font-family-base;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  &::placeholder {
+    color: #8c8c8c;
+  }
+
+  &.error {
+    border-color: $color-error;
+
+    &:focus {
+      border-color: $color-error;
+    }
+  }
+
+  &:disabled {
+    background-color: #e8e8e8;
+    border-color: #8c8c8c;
+    color: #636363;
+    cursor: not-allowed;
+    opacity: 1;
+
+    &::placeholder {
+      color: #636363;
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    min-height: 180px;
+    font-size: 16px;
+    padding: 16px;
+  }
+}
+
+.errorMessage {
+  display: block;
+  font-size: 13px;
+  color: $color-error;
+  margin-top: 4px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 12px;
+  }
+}
