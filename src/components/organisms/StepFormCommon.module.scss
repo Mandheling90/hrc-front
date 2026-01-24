@@ -103,6 +103,61 @@
   gap: $spacing-4;
 }
 
+// 2열 그리드 레이아웃 Mixin (공통)
+@mixin gridTwoColumns {
+  display: grid;
+  grid-template-columns: repeat(2, 267px);
+  gap: $spacing-4; // 16px
+  align-items: flex-start;
+}
+
+// 카테고리 섹션 Mixin (공통)
+@mixin categorySection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}
+
+// 카테고리 제목 Mixin (공통)
+@mixin categoryTitle {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  color: #000000;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+// 기타 항목 섹션 Mixin (공통)
+@mixin otherItemsSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // 8px
+  width: 100%;
+  margin-top: $spacing-6; // 24px
+}
+
+@mixin otherItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}
+
+@mixin otherItemsButton {
+  display: flex;
+  justify-content: flex-end;
+
+  .addButton {
+    gap: $spacing-1;
+  }
+
+  .addButtonText {
+    font-size: $font-size-lg; // 18px
+  }
+}
+
 // 공통 반응형 스타일
 @include tablet {
   .formSection {
@@ -118,6 +173,8 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  // 2열 그리드 레이아웃 태블릿 반응형은 각 스텝에서 @include로 처리
 }
 
 @include mobile {
@@ -140,4 +197,6 @@
   .checkboxInputGroup {
     gap: $spacing-3;
   }
+
+  // 2열 그리드 레이아웃 모바일 반응형은 각 스텝에서 @include로 처리
 }

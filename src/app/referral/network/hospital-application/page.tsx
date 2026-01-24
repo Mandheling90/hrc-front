@@ -101,8 +101,8 @@ export default function HospitalApplicationPage() {
               <Button variant='outline' size='large' onClick={handlePrevious} disabled={currentStep === 1}>
                 이전 단계
               </Button>
-              <Button variant='primary' size='large' onClick={handleNext} disabled={currentStep === totalSteps}>
-                {currentStep === totalSteps ? '완료' : '다음 단계'}
+              <Button variant='primary' size='large' onClick={handleNext}>
+                {currentStep === totalSteps ? '협력병원 신청' : '다음 단계'}
               </Button>
             </div>
           </div>
