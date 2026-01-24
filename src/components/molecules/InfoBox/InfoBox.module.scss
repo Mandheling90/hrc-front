@@ -151,11 +151,12 @@
   gap: 40px;
   align-items: center;
 
+  //???
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
     gap: 24px;
     width: 100%;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -200,9 +201,9 @@
   flex-direction: column;
   gap: 8px;
 
-  @media (max-width: $breakpoint-md) {
-    align-items: center;
-  }
+  // @media (max-width: $breakpoint-md) {
+  //   align-items: center;
+  // }
 }
 
 .guideItem {
@@ -217,9 +218,9 @@
   height: 2px;
   background-color: #636363;
 
-  @media (max-width: $breakpoint-md) {
-    display: none;
-  }
+  // @media (max-width: $breakpoint-md) {
+  //   display: none;
+  // }
 }
 
 .guideMessage {
