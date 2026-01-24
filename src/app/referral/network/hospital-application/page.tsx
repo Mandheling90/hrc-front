@@ -236,7 +236,6 @@ export default function HospitalApplicationPage() {
                   buttonText='우편번호 검색'
                   onButtonClick={() => {}}
                   buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
-                  buttonClassName={styles.searchButton}
                 >
                   <Input
                     type='text'
