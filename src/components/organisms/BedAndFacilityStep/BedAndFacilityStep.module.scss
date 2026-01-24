@@ -16,71 +16,62 @@
 .formField {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: $spacing-3;
 }
 
 // 가동 병상 수 입력 필드 (단위 포함)
-.inputWithUnit {
+// FormField의 rightElement로 사용되는 단위 텍스트 스타일
+.unit {
   display: flex;
   align-items: center;
-  gap: $spacing-6;
-  width: 100%;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  white-space: nowrap;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  height: 100%;
+}
 
-  :global(.inputWrapper) {
-    flex: 1;
-    max-width: 474px;
-  }
+// FormField의 inputWithButton 스타일 커스터마이징 (가동 병상 수 필드용)
+.operatingBedsField {
+  :global(.formFieldWithButton) {
+    :global(.inputWithButton) {
+      gap: $spacing-6 !important; // 24px
+      align-items: center !important; // 수직 중앙 정렬
 
-  .unit {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
-    color: $gray-900;
-    white-space: nowrap;
+      :global(.inputWithButtonInput) {
+        max-width: 474px;
+        flex: 0 1 auto;
+        display: flex !important;
+        align-items: center !important; // Input wrapper도 중앙 정렬
+
+        :global(.inputWrapper) {
+          height: 100%;
+          display: flex;
+          align-items: center;
+        }
+
+        :global(.input) {
+          height: 43px;
+        }
+      }
+
+      :global(.rightElement) {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 43px !important; // Input 높이와 동일하게 설정
+      }
+    }
   }
 }
 
-// 체크박스 + 입력 필드 행
+// 체크박스 + 입력 필드 그룹
 .checkboxInputGroup {
   display: flex;
   flex-direction: column;
   gap: $spacing-4;
-}
-
-.checkboxInputRow {
-  display: flex;
-  align-items: center;
-  gap: $spacing-6;
-  height: 46px;
-
-  :global(.checkboxLabel) {
-    flex-shrink: 0;
-    white-space: nowrap;
-    margin: 0;
-    padding: 3px 0;
-  }
-
-  :global(.inputWrapper) {
-    flex: 1;
-    min-width: 0;
-    margin: 0;
-
-    :global(.input) {
-      height: 43px;
-      padding: 8px 15px;
-      border: 1px solid #8c8c8c;
-      border-radius: 5px;
-      font-size: $font-size-lg;
-      line-height: 1.5;
-      letter-spacing: -0.72px;
-
-      &:disabled {
-        background-color: #e8e8e8;
-        border-color: #8c8c8c;
-        color: #636363;
-        cursor: not-allowed;
-      }
-    }
-  }
 }
 
 // 체크박스 그룹 (정신과병동, 재활치료실)
@@ -93,27 +84,25 @@
 
 // 반응형 (공통 스타일은 StepFormCommon에서 가져옴)
 @include tablet {
+  // FormField의 inputWithButton 반응형 스타일
+  .operatingBedsField {
+    :global(.formFieldWithButton) {
+      :global(.inputWithButton) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spacing-2;
 
-  .inputWithUnit {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $spacing-2;
+        :global(.inputWithButtonInput) {
+          max-width: 100%;
+        }
 
-    .unit {
-      align-self: flex-end;
+        :global(.rightElement) {
+          align-self: flex-end;
+        }
+      }
     }
   }
 
-  .checkboxInputRow {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-    gap: $spacing-2;
-
-    .checkboxInput {
-      width: 100%;
-    }
-  }
 
   .checkboxGroup {
     flex-direction: column;

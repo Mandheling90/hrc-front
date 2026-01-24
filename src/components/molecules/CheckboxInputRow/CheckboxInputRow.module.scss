@@ -1,0 +1,73 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.checkboxInputRow {
+  display: grid;
+  grid-template-columns: 1.5fr 8.5fr;
+  gap: $spacing-6;
+  align-items: center;
+  height: 46px;
+
+  :global(.checkboxLabel) {
+    white-space: nowrap;
+    margin: 0;
+    padding: 3px 0;
+    font-size: $font-size-xl; // 20px
+    font-weight: $font-weight-normal; // 400 (regular)
+    letter-spacing: -0.8px;
+    line-height: 1.5;
+  }
+
+  :global(.inputWrapper) {
+    min-width: 0;
+    margin: 0;
+
+    :global(.input) {
+      height: 43px;
+      padding: 8px 15px;
+      border: 1px solid #8c8c8c;
+      border-radius: 5px;
+      font-size: $font-size-lg; // 18px
+      line-height: 1.5;
+      letter-spacing: -0.72px;
+      color: #000000;
+
+      &::placeholder {
+        color: #8c8c8c;
+      }
+
+      &:disabled {
+        background-color: #e8e8e8;
+        border-color: #8c8c8c;
+        color: #636363;
+        cursor: not-allowed;
+
+        &::placeholder {
+          color: #636363;
+        }
+      }
+    }
+  }
+}
+
+// 반응형
+@include tablet {
+    .checkboxInputRow {
+      // 데스크탑과 동일하게 1.5:8.5 비율 유지 (1줄)
+      grid-template-columns: 1.5fr 8.5fr;
+      align-items: center;
+      height: 46px;
+      gap: $spacing-6;
+    }
+  }
+
+// 반응형
+@include mobile {
+  .checkboxInputRow {
+    // 데스크탑과 동일하게 1.5:8.5 비율 유지 (1줄)
+    grid-template-columns: 2fr 8fr;
+    align-items: center;
+    height: 46px;
+    gap: $spacing-6;
+  }
+}

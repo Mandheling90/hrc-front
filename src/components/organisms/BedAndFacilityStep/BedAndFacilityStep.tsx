@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
-import { Input } from '@/components/atoms/Input/Input'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { Radio } from '@/components/atoms/Radio/Radio'
+import { CheckboxInputRow } from '@/components/molecules/CheckboxInputRow/CheckboxInputRow'
 import styles from './BedAndFacilityStep.module.scss'
 
 export const BedAndFacilityStep: React.FC = () => {
@@ -53,31 +53,28 @@ export const BedAndFacilityStep: React.FC = () => {
             <h3 className={styles.formTitle}>병상 운영 현황</h3>
             <p className={styles.formSubtitle}>숫자만 입력 가능</p>
           </div>
-        <div className={styles.stepIndicator}>
-          <span className={styles.stepNumber}>4</span>
-          <span className={styles.stepSeparator}>/</span>
-          <span className={styles.stepTotal}>8</span>
-        </div>
+          <div className={styles.stepIndicator}>
+            <span className={styles.stepNumber}>4</span>
+            <span className={styles.stepSeparator}>/</span>
+            <span className={styles.stepTotal}>8</span>
+          </div>
         </div>
         <div className={styles.formDivider}></div>
 
         <div className={styles.formContent}>
           {/* 가동 병상 수 */}
-          <div className={styles.formField}>
-            <InputLabel htmlFor='operatingBeds' required>
-              가동 병상 수
-            </InputLabel>
-            <div className={styles.inputWithUnit}>
-              <Input
-                type='text'
-                id='operatingBeds'
-                name='operatingBeds'
-                placeholder='가동 병상 수를 입력해주세요.'
-                value={operatingBeds}
-                onChange={e => handleNumberChange(e.target.value, setOperatingBeds)}
-              />
-              <span className={styles.unit}>병상</span>
-            </div>
+          <div className={styles.operatingBedsField}>
+            <FormField
+              label='가동 병상 수'
+              required
+              id='operatingBeds'
+              name='operatingBeds'
+              type='text'
+              placeholder='가동 병상 수를 입력해주세요.'
+              value={operatingBeds}
+              onChange={e => handleNumberChange(e.target.value, setOperatingBeds)}
+              rightElement={<span className={styles.unit}>병상</span>}
+            />
           </div>
 
           {/* 병실 운영 현황 */}
@@ -87,64 +84,49 @@ export const BedAndFacilityStep: React.FC = () => {
             </InputLabel>
             <div className={styles.checkboxInputGroup}>
               {/* 상급병실 */}
-              <div className={styles.checkboxInputRow}>
-                <Checkbox
-                  id='premiumRoom'
-                  name='premiumRoom'
-                  checked={premiumRoomChecked}
-                  onChange={setPremiumRoomChecked}
-                  label='상급병실'
-                />
-                <Input
-                  type='text'
-                  id='premiumRoomCount'
-                  name='premiumRoomCount'
-                  placeholder='병실 수를 입력해주세요.'
-                  value={premiumRoomCount}
-                  onChange={e => handleNumberChange(e.target.value, setPremiumRoomCount)}
-                  disabled={!premiumRoomChecked}
-                />
-              </div>
+              <CheckboxInputRow
+                checkboxId='premiumRoom'
+                checkboxName='premiumRoom'
+                checked={premiumRoomChecked}
+                onCheckboxChange={setPremiumRoomChecked}
+                checkboxLabel='상급병실'
+                inputId='premiumRoomCount'
+                inputName='premiumRoomCount'
+                placeholder='병실 수를 입력해주세요.'
+                value={premiumRoomCount}
+                onInputChange={e => handleNumberChange(e.target.value, setPremiumRoomCount)}
+                disabled={!premiumRoomChecked}
+              />
 
               {/* 다인실 */}
-              <div className={styles.checkboxInputRow}>
-                <Checkbox
-                  id='multiPersonRoom'
-                  name='multiPersonRoom'
-                  checked={multiPersonRoomChecked}
-                  onChange={setMultiPersonRoomChecked}
-                  label='다인실'
-                />
-                <Input
-                  type='text'
-                  id='multiPersonRoomCount'
-                  name='multiPersonRoomCount'
-                  placeholder='병실 수를 입력해주세요.'
-                  value={multiPersonRoomCount}
-                  onChange={e => handleNumberChange(e.target.value, setMultiPersonRoomCount)}
-                  disabled={!multiPersonRoomChecked}
-                />
-              </div>
+              <CheckboxInputRow
+                checkboxId='multiPersonRoom'
+                checkboxName='multiPersonRoom'
+                checked={multiPersonRoomChecked}
+                onCheckboxChange={setMultiPersonRoomChecked}
+                checkboxLabel='다인실'
+                inputId='multiPersonRoomCount'
+                inputName='multiPersonRoomCount'
+                placeholder='병실 수를 입력해주세요.'
+                value={multiPersonRoomCount}
+                onInputChange={e => handleNumberChange(e.target.value, setMultiPersonRoomCount)}
+                disabled={!multiPersonRoomChecked}
+              />
 
               {/* 격리병실 */}
-              <div className={styles.checkboxInputRow}>
-                <Checkbox
-                  id='isolationRoom'
-                  name='isolationRoom'
-                  checked={isolationRoomChecked}
-                  onChange={setIsolationRoomChecked}
-                  label='격리병실'
-                />
-                <Input
-                  type='text'
-                  id='isolationRoomCount'
-                  name='isolationRoomCount'
-                  placeholder='Input Text'
-                  value={isolationRoomCount}
-                  onChange={e => handleNumberChange(e.target.value, setIsolationRoomCount)}
-                  disabled={!isolationRoomChecked}
-                />
-              </div>
+              <CheckboxInputRow
+                checkboxId='isolationRoom'
+                checkboxName='isolationRoom'
+                checked={isolationRoomChecked}
+                onCheckboxChange={setIsolationRoomChecked}
+                checkboxLabel='격리병실'
+                inputId='isolationRoomCount'
+                inputName='isolationRoomCount'
+                placeholder='병실 수를 입력해주세요.'
+                value={isolationRoomCount}
+                onInputChange={e => handleNumberChange(e.target.value, setIsolationRoomCount)}
+                disabled={!isolationRoomChecked}
+              />
             </div>
           </div>
         </div>
@@ -161,40 +143,37 @@ export const BedAndFacilityStep: React.FC = () => {
         <div className={styles.formDivider}></div>
 
         <div className={styles.formContent}>
-          {/* 중환자실 */}
-          <div className={styles.checkboxInputRow}>
-            <Checkbox id='icu' name='icu' checked={icuChecked} onChange={setIcuChecked} label='중환자실' />
-            <Input
-              type='text'
-              id='icuCount'
-              name='icuCount'
+          <div className={styles.checkboxInputGroup}>
+            {/* 중환자실 */}
+            <CheckboxInputRow
+              checkboxId='icu'
+              checkboxName='icu'
+              checked={icuChecked}
+              onCheckboxChange={setIcuChecked}
+              checkboxLabel='중환자실'
+              inputId='icuCount'
+              inputName='icuCount'
               placeholder='병실 수를 입력해주세요.'
               value={icuCount}
-              onChange={e => handleNumberChange(e.target.value, setIcuCount)}
+              onInputChange={e => handleNumberChange(e.target.value, setIcuCount)}
               disabled={!icuChecked}
             />
-          </div>
 
-          {/* 응급실 */}
-          <div className={styles.checkboxInputRow}>
-            <Checkbox
-              id='emergencyRoom'
-              name='emergencyRoom'
+            {/* 응급실 */}
+            <CheckboxInputRow
+              checkboxId='emergencyRoom'
+              checkboxName='emergencyRoom'
               checked={emergencyRoomChecked}
-              onChange={setEmergencyRoomChecked}
-              label='응급실'
-            />
-            <Input
-              type='text'
-              id='emergencyRoomCount'
-              name='emergencyRoomCount'
-              placeholder='Input Text'
+              onCheckboxChange={setEmergencyRoomChecked}
+              checkboxLabel='응급실'
+              inputId='emergencyRoomCount'
+              inputName='emergencyRoomCount'
+              placeholder='병실 수를 입력해주세요.'
               value={emergencyRoomCount}
-              onChange={e => handleNumberChange(e.target.value, setEmergencyRoomCount)}
+              onInputChange={e => handleNumberChange(e.target.value, setEmergencyRoomCount)}
               disabled={!emergencyRoomChecked}
             />
           </div>
-
           {/* 인공신장실 */}
           <div className={styles.formField}>
             <InputLabel htmlFor='dialysisRoom' required>

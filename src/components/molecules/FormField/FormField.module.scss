@@ -10,11 +10,11 @@
   .inputWithButton {
     display: flex;
     gap: 10px;
-    align-items: flex-start;
+    align-items: center;
 
     @media (max-width: $breakpoint-md) {
       gap: 8px;
-      align-items: stretch;
+      align-items: center;
     }
   }
 
