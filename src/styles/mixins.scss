@@ -312,19 +312,19 @@ $header-bp-mobile: 768px;
 // ========================================
 
 @mixin mobile {
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: 768px) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (max-width: $breakpoint-md) {
+  @media (max-width: 1429px) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: 1430px) {
     @content;
   }
 }

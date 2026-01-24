@@ -16,11 +16,11 @@ export const StaffInfoStep: React.FC = () => {
             <h3 className={styles.formTitle}>실무자 정보</h3>
             <p className={styles.formSubtitle}>필수 입력 항목을 모두 입력해주세요.</p>
           </div>
-          <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>3</span>
-            <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
-          </div>
+        <div className={styles.stepIndicator}>
+          <span className={styles.stepNumber}>3</span>
+          <span className={styles.stepSeparator}>/</span>
+          <span className={styles.stepTotal}>8</span>
+        </div>
         </div>
         <div className={styles.formDivider}></div>
 

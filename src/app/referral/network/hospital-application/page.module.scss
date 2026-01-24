@@ -126,9 +126,9 @@
 }
 
 .formDivider {
-  height: 1px;
+  height: 2px;
   background-color: $gray-400;
-  margin: $spacing-8 0;
+  margin-bottom: $spacing-8;
 }
 
 .formContent {
@@ -288,15 +288,8 @@
     max-width: 100%;
   }
 
-  .formActions {
-    flex-direction: column;
-    height: auto;
-    gap: $spacing-4;
-
-    > button {
-      width: 100%;
-    }
-  }
+  // 태블릿에서도 데스크탑과 동일한 스타일 유지
+  // .formActions는 태블릿에서도 데스크탑 스타일 그대로 사용
 }
 
 @include mobile {
@@ -334,5 +327,16 @@
   .helperText {
     font-size: $font-size-base; // 16px
     gap: 6px;
+  }
+
+  .formActions {
+    flex-direction: column;
+    height: auto;
+    gap: $spacing-4;
+
+    > button {
+      width: 100%;
+      height: 50px;
+    }
   }
 }

@@ -1,0 +1,95 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+// 공통 폼 섹션 스타일
+.formSection {
+  width: 100%;
+  max-width: 650px;
+  background-color: $color-white;
+  border: 1px solid $gray-500;
+  border-radius: $radius-xl;
+  padding: $spacing-10;
+}
+
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-2;
+}
+
+.formHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.formTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  line-height: $line-height-normal;
+  letter-spacing: -0.02em;
+}
+
+.formSubtitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-600;
+  line-height: $line-height-normal;
+  letter-spacing: -0.01em;
+}
+
+.stepIndicator {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  line-height: 0;
+  letter-spacing: -0.02em;
+}
+
+.stepNumber {
+  color: $color-primary;
+}
+
+.stepSeparator,
+.stepTotal {
+  color: $gray-900;
+}
+
+.formDivider {
+  height: 2px;
+  background-color: $gray-400;
+  margin-bottom: $spacing-8;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+// 공통 반응형 스타일
+@include tablet {
+  .formSection {
+    max-width: 100%;
+    padding: $spacing-6;
+  }
+
+  // 태블릿에서도 데스크탑과 동일한 스타일 유지
+  // .formHeader는 데스크탑 스타일 그대로 사용 (justify-content: space-between)
+  // .stepIndicator는 데스크탑 스타일 그대로 사용 (오른쪽 정렬)
+}
+
+@include mobile {
+  .formSection {
+    padding: $spacing-4;
+  }
+
+  .formContent {
+    gap: $spacing-4;
+  }
+}

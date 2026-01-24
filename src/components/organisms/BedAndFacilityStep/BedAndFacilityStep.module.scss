@@ -1,0 +1,136 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+@import '@/components/organisms/StepFormCommon.module.scss';
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-6;
+  width: 100%;
+}
+
+// BedAndFacilityStep만의 특별한 스타일
+// formHeader는 공통 스타일의 align-items: center 사용 (중앙 정렬)
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+// 가동 병상 수 입력 필드 (단위 포함)
+.inputWithUnit {
+  display: flex;
+  align-items: center;
+  gap: $spacing-6;
+  width: 100%;
+
+  :global(.inputWrapper) {
+    flex: 1;
+    max-width: 474px;
+  }
+
+  .unit {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $gray-900;
+    white-space: nowrap;
+  }
+}
+
+// 체크박스 + 입력 필드 행
+.checkboxInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.checkboxInputRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-6;
+  height: 46px;
+
+  :global(.checkboxLabel) {
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin: 0;
+    padding: 3px 0;
+  }
+
+  :global(.inputWrapper) {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+
+    :global(.input) {
+      height: 43px;
+      padding: 8px 15px;
+      border: 1px solid #8c8c8c;
+      border-radius: 5px;
+      font-size: $font-size-lg;
+      line-height: 1.5;
+      letter-spacing: -0.72px;
+
+      &:disabled {
+        background-color: #e8e8e8;
+        border-color: #8c8c8c;
+        color: #636363;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// 체크박스 그룹 (정신과병동, 재활치료실)
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+  align-items: center;
+}
+
+// 반응형 (공통 스타일은 StepFormCommon에서 가져옴)
+@include tablet {
+
+  .inputWithUnit {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+
+    .unit {
+      align-self: flex-end;
+    }
+  }
+
+  .checkboxInputRow {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    gap: $spacing-2;
+
+    .checkboxInput {
+      width: 100%;
+    }
+  }
+
+  .checkboxGroup {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@include mobile {
+  .stepContainer {
+    gap: $spacing-4;
+  }
+
+  .checkboxInputGroup {
+    gap: $spacing-3;
+  }
+
+  .checkboxGroup {
+    gap: $spacing-3;
+  }
+}

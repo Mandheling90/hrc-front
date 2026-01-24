@@ -11,6 +11,7 @@ import { LoadIcon } from '@/components/icons/LoadIcon'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
 import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
+import { BedAndFacilityStep } from '@/components/organisms/BedAndFacilityStep/BedAndFacilityStep'
 import styles from './page.module.scss'
 
 export default function HospitalApplicationPage() {
@@ -75,6 +76,9 @@ export default function HospitalApplicationPage() {
 
             {/* 3단계: 실무자 정보 */}
             {currentStep === 3 && <StaffInfoStep />}
+
+            {/* 4단계: 병상 및 시설 운영 현황 */}
+            {currentStep === 4 && <BedAndFacilityStep />}
 
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
