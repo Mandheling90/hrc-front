@@ -1,9 +1,9 @@
 @import '@/styles/variables.scss';
 @import '@/styles/mixins.scss';
 
-.checkboxInputRow {
+.labelInputRow {
   display: grid;
-  grid-template-columns: 1.5fr 8.5fr;
+  grid-template-columns: auto 1fr; // 왼쪽은 내용에 맞게, 오른쪽은 나머지 공간
   gap: $spacing-6;
   align-items: center;
   height: 46px;
@@ -16,6 +16,28 @@
     font-weight: $font-weight-normal; // 400 (regular)
     letter-spacing: -0.8px;
     line-height: 1.5;
+  }
+
+  // 텍스트 라벨 스타일
+  &.textLabelRow {
+    .textLabel {
+      font-size: $font-size-xl; // 20px
+      font-weight: $font-weight-semibold; // 600
+      color: #000000;
+      line-height: 1.5;
+      letter-spacing: -0.8px;
+      text-align: center;
+      white-space: nowrap;
+      margin: 0;
+      padding: 0;
+    }
+
+    // 텍스트 라벨 왼쪽 정렬
+    &.textLabelLeft {
+      .textLabel {
+        text-align: left;
+      }
+    }
   }
 
   :global(.inputWrapper) {
@@ -48,24 +70,33 @@
       }
     }
   }
+
+  // 텍스트 라벨일 때 인풋 패딩 조정
+  &.textLabelRow {
+    :global(.inputWrapper) {
+      :global(.input) {
+        padding: 8px 10px;
+      }
+    }
+  }
 }
 
 // 반응형
 @include tablet {
-    .checkboxInputRow {
-      // 데스크탑과 동일하게 1.5:8.5 비율 유지 (1줄)
-      grid-template-columns: 1.5fr 8.5fr;
-      align-items: center;
-      height: 46px;
-      gap: $spacing-6;
-    }
+  .labelInputRow {
+    // 태블릿에서도 동일하게 auto 1fr 유지 (1줄)
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    height: 46px;
+    gap: $spacing-6;
   }
+}
 
 // 반응형
 @include mobile {
-  .checkboxInputRow {
-    // 데스크탑과 동일하게 1.5:8.5 비율 유지 (1줄)
-    grid-template-columns: 2fr 8fr;
+  .labelInputRow {
+    // 모바일에서도 동일하게 auto 1fr 유지 (1줄)
+    grid-template-columns: auto 1fr;
     align-items: center;
     height: 46px;
     gap: $spacing-6;

@@ -1,6 +1,15 @@
 @import '@/styles/variables.scss';
 @import '@/styles/mixins.scss';
 
+// 공통 Step 컨테이너
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-6;
+  width: 100%;
+}
+
 // 공통 폼 섹션 스타일
 .formSection {
   width: 100%;
@@ -72,6 +81,28 @@
   gap: $spacing-6;
 }
 
+// 공통 폼 필드 스타일 (기본 gap, 각 Step에서 필요시 오버라이드 가능)
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+// 체크박스 그룹 (공통)
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+  align-items: center;
+}
+
+// 체크박스 + 입력 필드 그룹 (공통)
+.checkboxInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
 // 공통 반응형 스타일
 @include tablet {
   .formSection {
@@ -82,14 +113,31 @@
   // 태블릿에서도 데스크탑과 동일한 스타일 유지
   // .formHeader는 데스크탑 스타일 그대로 사용 (justify-content: space-between)
   // .stepIndicator는 데스크탑 스타일 그대로 사용 (오른쪽 정렬)
+
+  .checkboxGroup {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @include mobile {
+  .stepContainer {
+    gap: $spacing-4;
+  }
+
   .formSection {
     padding: $spacing-4;
   }
 
   .formContent {
     gap: $spacing-4;
+  }
+
+  .checkboxGroup {
+    gap: $spacing-3;
+  }
+
+  .checkboxInputGroup {
+    gap: $spacing-3;
   }
 }

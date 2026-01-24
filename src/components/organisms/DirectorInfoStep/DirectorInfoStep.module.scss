@@ -5,9 +5,8 @@
 // DirectorInfoStep만의 특별한 스타일
 // formHeader는 공통 스타일의 align-items: center 사용 (중앙 정렬)
 
+// formField의 gap을 $spacing-2로 오버라이드
 .formField {
-  display: flex;
-  flex-direction: column;
   gap: $spacing-2;
 }
 

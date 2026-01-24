@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
-import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { Radio } from '@/components/atoms/Radio/Radio'
-import { CheckboxInputRow } from '@/components/molecules/CheckboxInputRow/CheckboxInputRow'
+import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/LabelInputRowGroup'
+import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGroup'
 import styles from './BedAndFacilityStep.module.scss'
 
 export const BedAndFacilityStep: React.FC = () => {
@@ -82,52 +82,53 @@ export const BedAndFacilityStep: React.FC = () => {
             <InputLabel htmlFor='roomOperation' required>
               병실 운영 현황
             </InputLabel>
-            <div className={styles.checkboxInputGroup}>
-              {/* 상급병실 */}
-              <CheckboxInputRow
-                checkboxId='premiumRoom'
-                checkboxName='premiumRoom'
-                checked={premiumRoomChecked}
-                onCheckboxChange={setPremiumRoomChecked}
-                checkboxLabel='상급병실'
-                inputId='premiumRoomCount'
-                inputName='premiumRoomCount'
-                placeholder='병실 수를 입력해주세요.'
-                value={premiumRoomCount}
-                onInputChange={e => handleNumberChange(e.target.value, setPremiumRoomCount)}
-                disabled={!premiumRoomChecked}
-              />
-
-              {/* 다인실 */}
-              <CheckboxInputRow
-                checkboxId='multiPersonRoom'
-                checkboxName='multiPersonRoom'
-                checked={multiPersonRoomChecked}
-                onCheckboxChange={setMultiPersonRoomChecked}
-                checkboxLabel='다인실'
-                inputId='multiPersonRoomCount'
-                inputName='multiPersonRoomCount'
-                placeholder='병실 수를 입력해주세요.'
-                value={multiPersonRoomCount}
-                onInputChange={e => handleNumberChange(e.target.value, setMultiPersonRoomCount)}
-                disabled={!multiPersonRoomChecked}
-              />
-
-              {/* 격리병실 */}
-              <CheckboxInputRow
-                checkboxId='isolationRoom'
-                checkboxName='isolationRoom'
-                checked={isolationRoomChecked}
-                onCheckboxChange={setIsolationRoomChecked}
-                checkboxLabel='격리병실'
-                inputId='isolationRoomCount'
-                inputName='isolationRoomCount'
-                placeholder='병실 수를 입력해주세요.'
-                value={isolationRoomCount}
-                onInputChange={e => handleNumberChange(e.target.value, setIsolationRoomCount)}
-                disabled={!isolationRoomChecked}
-              />
-            </div>
+            <LabelInputRowGroup
+              options={[
+                {
+                  labelType: 'checkbox',
+                  checkboxId: 'premiumRoom',
+                  checkboxName: 'premiumRoom',
+                  checked: premiumRoomChecked,
+                  onCheckboxChange: setPremiumRoomChecked,
+                  checkboxLabel: '상급병실',
+                  inputId: 'premiumRoomCount',
+                  inputName: 'premiumRoomCount',
+                  placeholder: '병실 수를 입력해주세요.',
+                  value: premiumRoomCount,
+                  onInputChange: e => handleNumberChange(e.target.value, setPremiumRoomCount),
+                  disabled: !premiumRoomChecked
+                },
+                {
+                  labelType: 'checkbox',
+                  checkboxId: 'multiPersonRoom',
+                  checkboxName: 'multiPersonRoom',
+                  checked: multiPersonRoomChecked,
+                  onCheckboxChange: setMultiPersonRoomChecked,
+                  checkboxLabel: '다인실',
+                  inputId: 'multiPersonRoomCount',
+                  inputName: 'multiPersonRoomCount',
+                  placeholder: '병실 수를 입력해주세요.',
+                  value: multiPersonRoomCount,
+                  onInputChange: e => handleNumberChange(e.target.value, setMultiPersonRoomCount),
+                  disabled: !multiPersonRoomChecked
+                },
+                {
+                  labelType: 'checkbox',
+                  checkboxId: 'isolationRoom',
+                  checkboxName: 'isolationRoom',
+                  checked: isolationRoomChecked,
+                  onCheckboxChange: setIsolationRoomChecked,
+                  checkboxLabel: '격리병실',
+                  inputId: 'isolationRoomCount',
+                  inputName: 'isolationRoomCount',
+                  placeholder: '병실 수를 입력해주세요.',
+                  value: isolationRoomCount,
+                  onInputChange: e => handleNumberChange(e.target.value, setIsolationRoomCount),
+                  disabled: !isolationRoomChecked
+                }
+              ]}
+              labelMinWidth='85px'
+            />
           </div>
         </div>
       </div>
@@ -143,37 +144,39 @@ export const BedAndFacilityStep: React.FC = () => {
         <div className={styles.formDivider}></div>
 
         <div className={styles.formContent}>
-          <div className={styles.checkboxInputGroup}>
-            {/* 중환자실 */}
-            <CheckboxInputRow
-              checkboxId='icu'
-              checkboxName='icu'
-              checked={icuChecked}
-              onCheckboxChange={setIcuChecked}
-              checkboxLabel='중환자실'
-              inputId='icuCount'
-              inputName='icuCount'
-              placeholder='병실 수를 입력해주세요.'
-              value={icuCount}
-              onInputChange={e => handleNumberChange(e.target.value, setIcuCount)}
-              disabled={!icuChecked}
-            />
-
-            {/* 응급실 */}
-            <CheckboxInputRow
-              checkboxId='emergencyRoom'
-              checkboxName='emergencyRoom'
-              checked={emergencyRoomChecked}
-              onCheckboxChange={setEmergencyRoomChecked}
-              checkboxLabel='응급실'
-              inputId='emergencyRoomCount'
-              inputName='emergencyRoomCount'
-              placeholder='병실 수를 입력해주세요.'
-              value={emergencyRoomCount}
-              onInputChange={e => handleNumberChange(e.target.value, setEmergencyRoomCount)}
-              disabled={!emergencyRoomChecked}
-            />
-          </div>
+          <LabelInputRowGroup
+            options={[
+              {
+                labelType: 'checkbox',
+                checkboxId: 'icu',
+                checkboxName: 'icu',
+                checked: icuChecked,
+                onCheckboxChange: setIcuChecked,
+                checkboxLabel: '중환자실',
+                inputId: 'icuCount',
+                inputName: 'icuCount',
+                placeholder: '병실 수를 입력해주세요.',
+                value: icuCount,
+                onInputChange: e => handleNumberChange(e.target.value, setIcuCount),
+                disabled: !icuChecked
+              },
+              {
+                labelType: 'checkbox',
+                checkboxId: 'emergencyRoom',
+                checkboxName: 'emergencyRoom',
+                checked: emergencyRoomChecked,
+                onCheckboxChange: setEmergencyRoomChecked,
+                checkboxLabel: '응급실',
+                inputId: 'emergencyRoomCount',
+                inputName: 'emergencyRoomCount',
+                placeholder: '병실 수를 입력해주세요.',
+                value: emergencyRoomCount,
+                onInputChange: e => handleNumberChange(e.target.value, setEmergencyRoomCount),
+                disabled: !emergencyRoomChecked
+              }
+            ]}
+            labelMinWidth='85px'
+          />
           {/* 인공신장실 */}
           <div className={styles.formField}>
             <InputLabel htmlFor='dialysisRoom' required>
@@ -225,64 +228,70 @@ export const BedAndFacilityStep: React.FC = () => {
           {/* 정신과병동 */}
           <div className={styles.formField}>
             <InputLabel htmlFor='psychiatricWard'>정신과병동</InputLabel>
-            <div className={styles.checkboxGroup}>
-              <Checkbox
-                id='psychiatricGeneral'
-                name='psychiatricGeneral'
-                checked={psychiatricWard.general}
-                onChange={checked => setPsychiatricWard(prev => ({ ...prev, general: checked }))}
-                label='일반병동'
-              />
-              <Checkbox
-                id='psychiatricClosed'
-                name='psychiatricClosed'
-                checked={psychiatricWard.closed}
-                onChange={checked => setPsychiatricWard(prev => ({ ...prev, closed: checked }))}
-                label='폐쇄병동'
-              />
-            </div>
+            <CheckboxGroup
+              options={[
+                {
+                  id: 'psychiatricGeneral',
+                  name: 'psychiatricGeneral',
+                  checked: psychiatricWard.general,
+                  onChange: checked => setPsychiatricWard(prev => ({ ...prev, general: checked })),
+                  label: '일반병동'
+                },
+                {
+                  id: 'psychiatricClosed',
+                  name: 'psychiatricClosed',
+                  checked: psychiatricWard.closed,
+                  onChange: checked => setPsychiatricWard(prev => ({ ...prev, closed: checked })),
+                  label: '폐쇄병동'
+                }
+              ]}
+              minWidth='100px'
+            />
           </div>
 
           {/* 재활치료실 */}
           <div className={styles.formField}>
             <InputLabel htmlFor='rehabilitationTherapy'>재활치료실</InputLabel>
-            <div className={styles.checkboxGroup}>
-              <Checkbox
-                id='rehabPhysical'
-                name='rehabPhysical'
-                checked={rehabilitationTherapy.physical}
-                onChange={checked => setRehabilitationTherapy(prev => ({ ...prev, physical: checked }))}
-                label='물리치료'
-              />
-              <Checkbox
-                id='rehabOccupational'
-                name='rehabOccupational'
-                checked={rehabilitationTherapy.occupational}
-                onChange={checked => setRehabilitationTherapy(prev => ({ ...prev, occupational: checked }))}
-                label='작업치료'
-              />
-              <Checkbox
-                id='rehabSpeech'
-                name='rehabSpeech'
-                checked={rehabilitationTherapy.speech}
-                onChange={checked => setRehabilitationTherapy(prev => ({ ...prev, speech: checked }))}
-                label='언어재활'
-              />
-              <Checkbox
-                id='rehabSwallowing'
-                name='rehabSwallowing'
-                checked={rehabilitationTherapy.swallowing}
-                onChange={checked => setRehabilitationTherapy(prev => ({ ...prev, swallowing: checked }))}
-                label='연하재활'
-              />
-              <Checkbox
-                id='rehabIsolation'
-                name='rehabIsolation'
-                checked={rehabilitationTherapy.isolation}
-                onChange={checked => setRehabilitationTherapy(prev => ({ ...prev, isolation: checked }))}
-                label='격리재활'
-              />
-            </div>
+            <CheckboxGroup
+              minWidth='100px'
+              options={[
+                {
+                  id: 'rehabPhysical',
+                  name: 'rehabPhysical',
+                  checked: rehabilitationTherapy.physical,
+                  onChange: checked => setRehabilitationTherapy(prev => ({ ...prev, physical: checked })),
+                  label: '물리치료'
+                },
+                {
+                  id: 'rehabOccupational',
+                  name: 'rehabOccupational',
+                  checked: rehabilitationTherapy.occupational,
+                  onChange: checked => setRehabilitationTherapy(prev => ({ ...prev, occupational: checked })),
+                  label: '작업치료'
+                },
+                {
+                  id: 'rehabSpeech',
+                  name: 'rehabSpeech',
+                  checked: rehabilitationTherapy.speech,
+                  onChange: checked => setRehabilitationTherapy(prev => ({ ...prev, speech: checked })),
+                  label: '언어재활'
+                },
+                {
+                  id: 'rehabSwallowing',
+                  name: 'rehabSwallowing',
+                  checked: rehabilitationTherapy.swallowing,
+                  onChange: checked => setRehabilitationTherapy(prev => ({ ...prev, swallowing: checked })),
+                  label: '연하재활'
+                },
+                {
+                  id: 'rehabIsolation',
+                  name: 'rehabIsolation',
+                  checked: rehabilitationTherapy.isolation,
+                  onChange: checked => setRehabilitationTherapy(prev => ({ ...prev, isolation: checked })),
+                  label: '격리재활'
+                }
+              ]}
+            />
           </div>
         </div>
       </div>

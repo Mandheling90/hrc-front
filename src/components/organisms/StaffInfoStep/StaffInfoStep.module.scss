@@ -2,15 +2,8 @@
 @import '@/styles/mixins.scss';
 @import '@/components/organisms/StepFormCommon.module.scss';
 
-.stepContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $spacing-6;
-  width: 100%;
-}
-
 // StaffInfoStep만의 특별한 스타일
+// stepContainer는 공통 스타일 사용
 // formHeader는 공통 스타일의 align-items: center 사용 (중앙 정렬)
 
 // 의료기관 유형 라디오 버튼 레이아웃
@@ -65,10 +58,6 @@
 }
 
 @include mobile {
-  .stepContainer {
-    gap: $spacing-4;
-  }
-
   .radioGroupContainer {
     gap: $spacing-4;
   }

@@ -1,0 +1,25 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+  align-items: center;
+}
+
+// 태블릿/모바일에서도 한 줄로 유지
+.keepSingleRow {
+  @include tablet {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+
+  @include mobile {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: $spacing-3 !important; // 모바일에서는 간격을 조금 줄임
+  }
+}

@@ -10,6 +10,8 @@ export interface CheckboxProps {
   disabled?: boolean
   className?: string
   'aria-label'?: string
+  /** 체크박스 라벨의 최소 너비 (px 또는 rem 단위) */
+  minWidth?: string
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
@@ -20,7 +22,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   label,
   disabled = false,
   className = '',
-  'aria-label': ariaLabel
+  'aria-label': ariaLabel,
+  minWidth
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!disabled) {
@@ -30,8 +33,10 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
   const Component = label ? 'label' : 'div'
 
+  const labelStyle = minWidth ? { minWidth } : undefined
+
   return (
-    <Component className={`${label ? styles.checkboxLabel : ''} ${className}`}>
+    <Component className={`${label ? styles.checkboxLabel : ''} ${className}`} style={labelStyle}>
       <input
         type='checkbox'
         id={id}
