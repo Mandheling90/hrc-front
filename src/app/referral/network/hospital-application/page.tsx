@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
@@ -11,12 +10,13 @@ import { SaveIcon } from '@/components/icons/SaveIcon'
 import { LoadIcon } from '@/components/icons/LoadIcon'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
 import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
-import { HospitalFormData, DirectorFormData } from '@/types/hospital-application'
+import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
 import styles from './page.module.scss'
 
 export default function HospitalApplicationPage() {
-  // 현재 단계 상태 (1: 병원 정보, 2: 병원장 정보)
+  // 현재 단계 상태 (1: 병원 정보, 2: 병원장 정보, 3: 실무자 정보)
   const [currentStep, setCurrentStep] = useState(1)
+  const totalSteps = 8
 
   // 안내 메시지
   const guideMessages = useMemo(() => {
@@ -29,12 +29,16 @@ export default function HospitalApplicationPage() {
 
   // 다음 단계 핸들러
   const handleNext = () => {
-    setCurrentStep(currentStep + 1)
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1)
+    }
   }
 
   // 이전 단계 핸들러
   const handlePrevious = () => {
-    setCurrentStep(currentStep - 1)
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1)
+    }
   }
 
   return (
@@ -69,13 +73,16 @@ export default function HospitalApplicationPage() {
             {/* 2단계: 병원장 정보 */}
             {currentStep === 2 && <DirectorInfoStep />}
 
+            {/* 3단계: 실무자 정보 */}
+            {currentStep === 3 && <StaffInfoStep />}
+
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
-              <Button variant='outline' size='large' onClick={handlePrevious}>
+              <Button variant='outline' size='large' onClick={handlePrevious} disabled={currentStep === 1}>
                 이전 단계
               </Button>
-              <Button variant='primary' size='large' onClick={handleNext}>
-                다음 단계
+              <Button variant='primary' size='large' onClick={handleNext} disabled={currentStep === totalSteps}>
+                {currentStep === totalSteps ? '완료' : '다음 단계'}
               </Button>
             </div>
           </div>

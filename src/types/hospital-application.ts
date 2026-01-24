@@ -51,3 +51,25 @@ export const DEPARTMENT_OPTIONS: DepartmentOption[] = [
   { value: '진단검사의학과', label: '진단검사의학과' },
   { value: '응급의학과', label: '응급의학과' }
 ]
+
+export interface StaffFormData {
+  staffName: string
+  department: string
+  position: string
+  contactNumber: string
+  mobilePhone: string
+}
+
+export type MedicalInstitutionType =
+  | '상급종합병원'
+  | '종합병원'
+  | '병원'
+  | '전문병원'
+  | '요양병원'
+  | '한방병원'
+
+export interface PersonnelFormData {
+  totalEmployees: string
+  specialists: string
+  nurses: string
+}
