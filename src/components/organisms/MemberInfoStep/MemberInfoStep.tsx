@@ -7,6 +7,7 @@ import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { FormField } from '@/components/molecules/FormField/FormField'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 // import { EyeIcon } from '@/components/icons/EyeIcon'
 import React, { useState } from 'react'
@@ -141,35 +142,29 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
         <p className={styles.sectionSubtitle}>필수 입력 항목에 정보를 모두 입력해주세요.</p>
 
         <div className={styles.formGrid}>
-          <div className={styles.formField}>
-            <InputLabel htmlFor='name' required>
-              이름
-            </InputLabel>
-            <Input
-              type='text'
-              id='name'
-              name='name'
-              placeholder='홍길동'
-              value={'홍길동'}
-              onChange={handleInputChange}
-              disabled
-            />
-          </div>
+          <FormField
+            label='이름'
+            required
+            id='name'
+            name='name'
+            type='text'
+            placeholder='홍길동'
+            value={'홍길동'}
+            onChange={handleInputChange}
+            disabled
+          />
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='birthDate' required>
-              생년월일
-            </InputLabel>
-            <Input
-              type='text'
-              id='birthDate'
-              name='birthDate'
-              placeholder='YYYY-MM-DD'
-              value={'1990-01-01'}
-              onChange={handleInputChange}
-              disabled
-            />
-          </div>
+          <FormField
+            label='생년월일'
+            required
+            id='birthDate'
+            name='birthDate'
+            type='text'
+            placeholder='YYYY-MM-DD'
+            value={'1990-01-01'}
+            onChange={handleInputChange}
+            disabled
+          />
 
           <div className={styles.formField}>
             <InputLabel htmlFor='memberType' required>
@@ -187,126 +182,91 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
             />
           </div>
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='phone' required>
-              휴대전화
-            </InputLabel>
-            <Input
-              type='tel'
-              id='phone'
-              name='phone'
-              placeholder='010-0000-0000'
-              value={formData.phone}
-              onChange={handleInputChange}
-              disabled
-            />
-          </div>
+          <FormField
+            label='휴대전화'
+            required
+            id='phone'
+            name='phone'
+            type='tel'
+            placeholder='010-0000-0000'
+            value={formData.phone}
+            onChange={handleInputChange}
+            disabled
+          />
 
-          <div className={`${styles.formField} ${styles.formFieldWithButton}`}>
-            <InputLabel htmlFor='userId' required>
-              회원 ID
-            </InputLabel>
-            <div className={styles.inputWithButton}>
-              <Input
-                type='text'
-                id='userId'
-                name='userId'
-                placeholder='이름을 입력해주세요.'
-                value={formData.userId}
-                onChange={handleInputChange}
-                className={styles.inputWithButtonInput}
+          <FormField
+            label='회원 ID'
+            required
+            id='userId'
+            name='userId'
+            type='text'
+            placeholder='이름을 입력해주세요.'
+            value={formData.userId}
+            onChange={handleInputChange}
+            buttonText='병원찾기'
+            onButtonClick={handleIdDuplicateCheck}
+          />
+
+          <FormField
+            label='비밀번호'
+            required
+            id='password'
+            name='password'
+            type='password'
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+
+          <FormField
+            label='비밀번호 확인'
+            required
+            id='passwordConfirm'
+            name='passwordConfirm'
+            type='password'
+            value={formData.passwordConfirm}
+            onChange={handleInputChange}
+          />
+
+          <FormField
+            label='이메일'
+            required
+            id='email'
+            name='email'
+            type='text'
+            placeholder='이메일을 입력해주세요.'
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+
+          <FormField
+            label='의사면허번호'
+            required
+            id='licenseNumber'
+            name='licenseNumber'
+            type='text'
+            placeholder='-없이 입력해주세요.'
+            value={formData.licenseNumber}
+            onChange={handleInputChange}
+            rightElement={
+              <Checkbox
+                checked={formData.emailDomainEditable}
+                onChange={handleCheckboxChange('emailDomainEditable')}
+                label='원장여부'
               />
-              <Button type='button' variant='primary' size='small' onClick={handleIdDuplicateCheck}>
-                병원찾기
-              </Button>
-            </div>
-          </div>
+            }
+            helperText='※ 원장여부 체크 시에만 협력병원 정보수정이 가능합니다.'
+          />
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='password' required>
-              비밀번호
-            </InputLabel>
-            <div className={styles.passwordInput}>
-              <Input
-                type={'password'}
-                id='password'
-                name='password'
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='passwordConfirm' required>
-              비밀번호 확인
-            </InputLabel>
-            <div className={styles.passwordInput}>
-              <Input
-                type={'password'}
-                id='passwordConfirm'
-                name='passwordConfirm'
-                value={formData.passwordConfirm}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='email' required>
-              이메일
-            </InputLabel>
-            <div className={styles.emailInput}>
-              <Input
-                type='text'
-                id='email'
-                name='email'
-                placeholder='이메일을 입력해주세요.'
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className={`${styles.formField} ${styles.formFieldWithButton}`}>
-            <InputLabel htmlFor='userId' required>
-              의사면허번호
-            </InputLabel>
-            <div className={styles.inputWithButton}>
-              <Input
-                type='text'
-                id='licenseNumber'
-                name='licenseNumber'
-                placeholder='-없이 입력해주세요.'
-                value={formData.licenseNumber}
-                onChange={handleInputChange}
-                className={styles.inputWithButtonInput}
-              />
-
-              <div className={styles.emailCheckbox}>
-                <Checkbox
-                  checked={formData.emailDomainEditable}
-                  onChange={handleCheckboxChange('emailDomainEditable')}
-                  label='원장여부'
-                />
-              </div>
-            </div>
-            <p className={styles.emailWarning}>※ 원장여부 체크 시에만 협력병원 정보수정이 가능합니다.</p>
-          </div>
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='school' required>
-              출신학교
-            </InputLabel>
-            <Input
-              type='text'
-              id='school'
-              name='school'
-              placeholder='예) https://refer.kumc.or.kr'
-              value={formData.school}
-              onChange={handleInputChange}
-            />
-          </div>
+          <FormField
+            label='출신학교'
+            required
+            id='school'
+            name='school'
+            type='text'
+            placeholder='예) https://refer.kumc.or.kr'
+            value={formData.school}
+            onChange={handleInputChange}
+          />
 
           <div className={styles.formField}>
             <InputLabel htmlFor='department' required>
@@ -321,17 +281,15 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
             />
           </div>
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='specialty'>세부 전공</InputLabel>
-            <Input
-              type='text'
-              id='specialty'
-              name='specialty'
-              placeholder='세부 전공을 입력해주세요'
-              value={formData.specialty}
-              onChange={handleInputChange}
-            />
-          </div>
+          <FormField
+            label='세부 전공'
+            id='specialty'
+            name='specialty'
+            type='text'
+            placeholder='세부 전공을 입력해주세요'
+            value={formData.specialty}
+            onChange={handleInputChange}
+          />
 
           <div className={styles.formField}>
             <InputLabel htmlFor='smsConsent' required>
@@ -386,47 +344,32 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
         <p className={styles.sectionSubtitle}>필수 입력 항목에 정보를 모두 입력해주세요.</p>
 
         <div className={styles.formGrid}>
-          <div className={`${styles.formField} ${styles.formFieldWithButton}`}>
-            <InputLabel htmlFor='hospitalName' required>
-              병원명
-            </InputLabel>
-            <div className={styles.inputWithButton}>
-              <Input
-                type='text'
-                id='hospitalName'
-                name='hospitalName'
-                placeholder='고려대학교안암병원'
-                value={formData.hospitalName}
-                onChange={handleInputChange}
-                className={styles.inputWithButtonInput}
-                disabled
-              />
-              <Button
-                type='button'
-                variant='primary'
-                onClick={handleHospitalSearch}
-                className={styles.searchButton}
-                size='small'
-              >
-                병원 검색
-                <SearchIcon width={20} height={20} fill='#fff' />
-              </Button>
-            </div>
-          </div>
+          <FormField
+            label='병원명'
+            required
+            id='hospitalName'
+            name='hospitalName'
+            type='text'
+            placeholder='고려대학교안암병원'
+            value={formData.hospitalName}
+            onChange={handleInputChange}
+            disabled
+            buttonText='병원 검색'
+            onButtonClick={handleHospitalSearch}
+            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
+            buttonClassName={styles.searchButton}
+          />
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='medicalInstitutionNumber' required>
-              요양기관번호
-            </InputLabel>
-            <Input
-              type='text'
-              id='medicalInstitutionNumber'
-              name='medicalInstitutionNumber'
-              placeholder='요양기관번호를 입력해주세요.'
-              value={formData.medicalInstitutionNumber}
-              onChange={handleInputChange}
-            />
-          </div>
+          <FormField
+            label='요양기관번호'
+            required
+            id='medicalInstitutionNumber'
+            name='medicalInstitutionNumber'
+            type='text'
+            placeholder='요양기관번호를 입력해주세요.'
+            value={formData.medicalInstitutionNumber}
+            onChange={handleInputChange}
+          />
 
           <div className={styles.formFieldWithButton}>
             <InputLabel htmlFor='zipCode' required>
@@ -475,31 +418,26 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
             </div>
           </div>
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='hospitalPhone' required>
-              대표 전화
-            </InputLabel>
-            <Input
-              type='tel'
-              id='hospitalPhone'
-              name='hospitalPhone'
-              placeholder='-없이 입력해주세요.'
-              value={formData.hospitalPhone}
-              onChange={handleInputChange}
-            />
-          </div>
+          <FormField
+            label='대표 전화'
+            required
+            id='hospitalPhone'
+            name='hospitalPhone'
+            type='tel'
+            placeholder='-없이 입력해주세요.'
+            value={formData.hospitalPhone}
+            onChange={handleInputChange}
+          />
 
-          <div className={styles.formField}>
-            <InputLabel htmlFor='hospitalWebsite'>병원 홈페이지 주소</InputLabel>
-            <Input
-              type='text'
-              id='hospitalWebsite'
-              name='hospitalWebsite'
-              placeholder='예) https://refer.kumc.or.kr'
-              value={formData.hospitalWebsite}
-              onChange={handleInputChange}
-            />
-          </div>
+          <FormField
+            label='병원 홈페이지 주소'
+            id='hospitalWebsite'
+            name='hospitalWebsite'
+            type='text'
+            placeholder='예) https://refer.kumc.or.kr'
+            value={formData.hospitalWebsite}
+            onChange={handleInputChange}
+          />
         </div>
       </div>
 

@@ -16,6 +16,8 @@ export interface InfoBoxProps {
   showBullets?: boolean
   /** 콘텐츠 시작 위치 (guide variant용, 기본값: 'left') */
   contentAlign?: 'left' | 'center'
+  /** 마지막 메시지 강조 표시 (guide variant용) */
+  highlightLast?: boolean
   /** 추가 클래스명 */
   className?: string
 }
@@ -27,6 +29,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   variant = 'info',
   showBullets = false,
   contentAlign = 'left',
+  highlightLast = false,
   className = ''
 }) => {
   const hasIcon = icon !== undefined
@@ -62,12 +65,18 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           <div className={styles.guideContent}>
             {hasTitle && <h3 className={styles.guideTitle}>{title}</h3>}
             <div className={styles.guideList}>
-              {messages.map((message, index) => (
-                <div key={index} className={styles.guideItem}>
-                  {showBullets && <span className={styles.bullet}></span>}
-                  <p className={styles.guideMessage}>{message}</p>
-                </div>
-              ))}
+              {messages.map((message, index) => {
+                const isLast = index === messages.length - 1
+                const shouldHighlight = highlightLast && isLast
+                return (
+                  <div key={index} className={styles.guideItem}>
+                    {showBullets && <span className={styles.bullet}></span>}
+                    <p className={`${styles.guideMessage} ${shouldHighlight ? styles.guideMessageHighlight : ''}`}>
+                      {message}
+                    </p>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

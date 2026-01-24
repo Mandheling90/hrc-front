@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -9,7 +10,6 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
 import { ServiceSection, ServiceItem } from '@/components/organisms/ServiceSection/ServiceSection'
 import { Button } from '@/components/atoms/Button/Button'
-import { PhoneIcon } from '@/components/icons/PhoneIcon'
 import { FaxIcon } from '@/components/icons/FaxIcon'
 import { DownloadIcon } from '@/components/icons/DownloadIcon'
 import { DocumentIcon } from '@/components/icons/DocumentIcon'
@@ -23,7 +23,8 @@ import styles from './page.module.scss'
 import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
 
 export default function NetworkPage() {
-  const { pageContent, hospital } = useHospital()
+  const router = useRouter()
+  const { pageContent } = useHospital()
 
   // pageContent에서 network 페이지 정보 가져오기
   const networkInfo = pageContent.network
@@ -160,25 +161,24 @@ export default function NetworkPage() {
             )}
 
             <div className={styles.buttonGroup}>
-              {networkInfo.applicationLinks?.hospital && (
-                <Button
-                  variant='outline'
-                  size='medium'
-                  className={`${styles.applicationButton} ${styles.hospitalButton}`}
-                  onClick={() => {
-                    window.location.href = networkInfo.applicationLinks?.hospital || '#'
-                  }}
-                >
-                  협력병원 온라인 신청
-                </Button>
-              )}
+              <Button
+                variant='outline'
+                size='medium'
+                className={`${styles.applicationButton} ${styles.hospitalButton}`}
+                onClick={() => {
+                  router.push('/referral/network/hospital-application')
+                }}
+              >
+                협력병원 온라인 신청
+              </Button>
               {networkInfo.applicationLinks?.clinic && (
                 <Button
                   variant='primary'
                   size='medium'
                   className={styles.applicationButton}
                   onClick={() => {
-                    window.location.href = networkInfo.applicationLinks?.clinic || '#'
+                    // TODO: 협력의원 신청 페이지 경로로 변경
+                    router.push(networkInfo.applicationLinks?.clinic || '#')
                   }}
                 >
                   협력의원 온라인 신청

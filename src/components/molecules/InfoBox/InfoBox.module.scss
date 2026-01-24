@@ -241,3 +241,17 @@
     letter-spacing: -0.64px;
   }
 }
+
+.guideMessageHighlight {
+  font-weight: 600;
+  color: #9f1836;
+  letter-spacing: -0.8px;
+
+  @media (max-width: $breakpoint-md) {
+    letter-spacing: -0.72px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    letter-spacing: -0.64px;
+  }
+}
