@@ -190,7 +190,7 @@ export const MedicalDepartmentStep: React.FC = () => {
                 value={departments[dept.key].count}
                 onInputChange={e => handleNumberChange(e.target.value, dept.key)}
                 disabled={!departments[dept.key].checked}
-                labelMinWidth='140px'
+                labelMinWidth='150px'
               />
             ))}
           </div>
@@ -208,42 +208,42 @@ export const MedicalDepartmentStep: React.FC = () => {
         <div className={styles.formDivider}></div>
 
         <div className={styles.formContent}>
-          <div className={styles.equipmentGroup}>
-            {equipmentList.map(eq => (
+          <div className={styles.departmentGroup}>
+            {equipmentList.map(dept => (
               <Checkbox
-                key={eq.key}
-                id={eq.key}
-                name={eq.key}
-                checked={equipment[eq.key]}
-                onChange={checked => setEquipment(prev => ({ ...prev, [eq.key]: checked }))}
-                label={eq.label}
+                key={dept.key}
+                id={dept.key}
+                name={dept.key}
+                checked={equipment[dept.key]}
+                onChange={checked => setEquipment(prev => ({ ...prev, [dept.key]: checked }))}
+                label={dept.label}
               />
             ))}
           </div>
 
-          {/* 기타 장비 */}
-          <div className={styles.otherEquipmentSection}>
-            <div className={styles.otherEquipmentList}>
-              {otherEquipment.map((value, index) => (
-                <LabelInputRow
-                  key={index}
-                  labelType='text'
-                  textLabel='기타장비'
-                  textLabelAlign='left'
-                  labelMinWidth='100px'
-                  inputId={`otherEquipment${index}`}
-                  inputName={`otherEquipment${index}`}
-                  inputType='text'
-                  placeholder=''
-                  value={value}
-                  onInputChange={e => handleOtherEquipmentChange(index, e.target.value)}
-                />
-              ))}
+          <div className={styles.otherEquipmentList}>
+            {otherEquipment.map((value, index) => (
+              <LabelInputRow
+                key={index}
+                labelType='text'
+                textLabel='기타장비'
+                textLabelAlign='left'
+                labelMinWidth='60px'
+                inputId={`otherEquipment${index}`}
+                inputName={`otherEquipment${index}`}
+                inputType='text'
+                placeholder=''
+                value={value}
+                onInputChange={e => handleOtherEquipmentChange(index, e.target.value)}
+              />
+            ))}
+
+            <div className={styles.otherEquipmentButton}>
+              <Button variant='primary' size='small' onClick={handleAddOtherEquipment} className={styles.addButton}>
+                기타항목 추가
+                <PlusIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
+              </Button>
             </div>
-            <Button variant='primary' size='small' onClick={handleAddOtherEquipment} className={styles.addButton}>
-              Button
-              <PlusIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
-            </Button>
           </div>
         </div>
       </div>
