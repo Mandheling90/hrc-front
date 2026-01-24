@@ -23,6 +23,8 @@ export interface FormFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   /** Input의 disabled 여부 */
   disabled?: boolean
+  /** 에러 메시지 */
+  error?: string
   /** 우측 버튼 텍스트 (없으면 버튼 미표시) */
   buttonText?: string
   /** 우측 버튼 onClick 핸들러 */
@@ -37,6 +39,8 @@ export interface FormFieldProps {
   helperText?: string
   /** 우측 영역에 표시할 커스텀 컴포넌트 (버튼 대신 사용) */
   rightElement?: React.ReactNode
+  /** 추가 컨텐츠 (Input 아래에 표시) */
+  children?: React.ReactNode
 }
 
 export const FormField: React.FC<FormFieldProps> = ({
@@ -49,13 +53,15 @@ export const FormField: React.FC<FormFieldProps> = ({
   value,
   onChange,
   disabled = false,
+  error,
   buttonText,
   onButtonClick,
   buttonIcon,
   inputClassName,
   buttonClassName,
   helperText,
-  rightElement
+  rightElement,
+  children
 }) => {
   const hasRightElement = buttonText || rightElement
 
@@ -74,12 +80,19 @@ export const FormField: React.FC<FormFieldProps> = ({
             value={value}
             onChange={onChange}
             disabled={disabled}
+            error={error}
             className={`${styles.inputWithButtonInput} ${inputClassName || ''}`}
           />
           {rightElement ? (
             <div className={styles.rightElement}>{rightElement}</div>
           ) : buttonText ? (
-            <Button type='button' variant='primary' size='small' onClick={onButtonClick} className={buttonClassName}>
+            <Button
+              type='button'
+              variant='primary'
+              size='small'
+              onClick={onButtonClick}
+              className={`${styles.formFieldButton} ${buttonClassName || ''}`}
+            >
               {buttonText}
               {buttonIcon}
             </Button>
@@ -94,9 +107,11 @@ export const FormField: React.FC<FormFieldProps> = ({
           value={value}
           onChange={onChange}
           disabled={disabled}
+          error={error}
           className={inputClassName}
         />
       )}
+      {children && <div className={styles.additionalContent}>{children}</div>}
       {helperText && <p className={styles.helperText}>{helperText}</p>}
     </div>
   )

@@ -1,0 +1,28 @@
+@import '@/styles/variables.scss';
+
+.addressField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addressInput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.zipCodeInput {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+
+  @media (max-width: $breakpoint-md) {
+    gap: 8px;
+    align-items: stretch;
+  }
+}
+
+.inputWithButtonInput {
+  flex: 1;
+}

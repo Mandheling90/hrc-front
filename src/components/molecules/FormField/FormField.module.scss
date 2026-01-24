@@ -32,6 +32,27 @@
       margin-top: 0;
     }
   }
+
+  .formFieldButton {
+    gap: 16px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    min-width: 140px;
+
+    @media (max-width: $breakpoint-md) {
+      min-width: auto;
+      flex-shrink: 0;
+      padding: 0 16px;
+    }
+  }
+}
+
+.additionalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .helperText {

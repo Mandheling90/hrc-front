@@ -39,29 +39,30 @@
 // 저장/불러오기 버튼
 .actionButtons {
   display: flex;
-  gap: $spacing-2;
+  gap: 8px;
   justify-content: flex-end;
   width: 100%;
   max-width: 650px;
   margin-top: -$spacing-6;
   margin-bottom: $spacing-4;
-}
 
-.saveButton,
-.loadButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 37px;
-  min-width: 168px;
-  padding: 5px 10px;
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: -0.72px;
+  button {
+    width: 175px;
+    height: 37px;
+    padding: 5px 10px;
+    font-size: $font-size-lg; // 18px
+    font-weight: $font-weight-normal; // 400
+    letter-spacing: -0.72px;
+    line-height: 1.5;
+    border-radius: 150px; // pill 형태
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-  svg {
-    flex-shrink: 0;
+    svg {
+      flex-shrink: 0;
+    }
   }
 }
 
@@ -157,21 +158,14 @@
 .searchButton {
   display: flex;
   align-items: center;
-  gap: $spacing-4;
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 8px 15px;
-  height: 43px;
-  border-radius: 5px;
+  gap: 16px;
+  white-space: nowrap;
+  min-width: 140px;
 
-  span {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-semibold;
-    white-space: nowrap;
-  }
-
-  svg {
+  @media (max-width: $breakpoint-md) {
+    min-width: auto;
     flex-shrink: 0;
+    padding: 0 16px;
   }
 }
 
@@ -191,8 +185,22 @@
   justify-content: center;
   width: 100%;
   max-width: 650px;
-  height: 66px;
   align-items: center;
+  height: 66px;
+
+  button {
+    width: 260px;
+    height: 66px;
+    padding: 15px 30px;
+    font-size: $font-size-2xl; // 24px
+    font-weight: $font-weight-semibold; // 600
+    letter-spacing: -0.96px;
+    line-height: 1.5;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 // 반응형

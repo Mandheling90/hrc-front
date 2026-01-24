@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
-import { Input } from '@/components/atoms/Input/Input'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { FormField } from '@/components/molecules/FormField/FormField'
+import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 // import { EyeIcon } from '@/components/icons/EyeIcon'
 import React, { useState } from 'react'
@@ -371,52 +371,39 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
             onChange={handleInputChange}
           />
 
-          <div className={styles.formFieldWithButton}>
-            <InputLabel htmlFor='zipCode' required>
-              병원주소
-            </InputLabel>
-            <div className={styles.addressInput}>
-              <div className={styles.zipCodeInput}>
-                <Input
-                  type='text'
-                  id='zipCode'
-                  name='zipCode'
-                  placeholder='우편번호'
-                  value={formData.zipCode}
-                  onChange={handleInputChange}
-                  className={styles.inputWithButtonInput}
-                  disabled
-                />
-                <Button
-                  type='button'
-                  variant='primary'
-                  size='small'
-                  onClick={handleZipCodeSearch}
-                  className={styles.searchButton}
-                >
-                  우편번호 검색
-                  <SearchIcon width={20} height={20} fill='#fff' />
-                </Button>
-              </div>
-              <Input
-                type='text'
-                id='address'
-                name='address'
-                placeholder='주소'
-                value={formData.address}
-                onChange={handleInputChange}
-                disabled
-              />
-              <Input
-                type='text'
-                id='detailAddress'
-                name='detailAddress'
-                placeholder='상세주소를 입력해 주세요.'
-                value={formData.detailAddress}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
+          <FormField
+            label='병원주소'
+            required
+            id='zipCode'
+            name='zipCode'
+            type='text'
+            placeholder='우편번호'
+            value={formData.zipCode}
+            onChange={handleInputChange}
+            disabled
+            buttonText='우편번호 검색'
+            onButtonClick={handleZipCodeSearch}
+            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
+            buttonClassName={styles.searchButton}
+          >
+            <Input
+              type='text'
+              id='address'
+              name='address'
+              placeholder='주소'
+              value={formData.address}
+              onChange={handleInputChange}
+              disabled
+            />
+            <Input
+              type='text'
+              id='detailAddress'
+              name='detailAddress'
+              placeholder='상세주소를 입력해 주세요.'
+              value={formData.detailAddress}
+              onChange={handleInputChange}
+            />
+          </FormField>
 
           <FormField
             label='대표 전화'

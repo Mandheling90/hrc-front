@@ -7,9 +7,11 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Input } from '@/components/atoms/Input/Input'
-import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Button } from '@/components/atoms/Button/Button'
+import { FormField } from '@/components/molecules/FormField/FormField'
 import { SearchIcon } from '@/components/icons/SearchIcon'
+import { SaveIcon } from '@/components/icons/SaveIcon'
+import { LoadIcon } from '@/components/icons/LoadIcon'
 import styles from './page.module.scss'
 
 interface HospitalFormData {
@@ -53,9 +55,7 @@ export default function HospitalApplicationPage() {
   }, [])
 
   // 입력 필드 변경 핸들러
-  const handleInputChange = (field: keyof HospitalFormData) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (field: keyof HospitalFormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setFormData(prev => ({ ...prev, [field]: value }))
     // 에러 초기화
@@ -171,10 +171,12 @@ export default function HospitalApplicationPage() {
             {/* 저장/불러오기 버튼 */}
             <div className={styles.actionButtons}>
               <Button variant='primary' size='small' pill onClick={handleSave}>
-                저장
+                임시저장
+                <LoadIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
               </Button>
               <Button variant='outline' size='small' pill onClick={handleLoad}>
-                불러오기
+                임시저장 불러오기
+                <SaveIcon width={16} height={16} stroke='#000' strokeWidth={1.25} />
               </Button>
             </div>
 
@@ -195,141 +197,112 @@ export default function HospitalApplicationPage() {
 
               <div className={styles.formContent}>
                 {/* 병원명 */}
-                <div className={styles.formField}>
-                  <InputLabel htmlFor='hospitalName' required>
-                    병원명
-                  </InputLabel>
-                  <div className={styles.inputWithButton}>
-                    <Input
-                      id='hospitalName'
-                      type='text'
-                      placeholder='Input Text'
-                      value={formData.hospitalName}
-                      onChange={handleInputChange('hospitalName')}
-                      error={errors.hospitalName}
-                      className={styles.hospitalNameInput}
-                    />
-                    <Button
-                      variant='primary'
-                      size='small'
-                      onClick={handleHospitalSearch}
-                      className={styles.searchButton}
-                    >
-                      <span>검색</span>
-                      <SearchIcon width={22} height={22} fill='#fff' />
-                    </Button>
-                  </div>
-                </div>
+                <FormField
+                  label='병원명'
+                  required
+                  id='hospitalName'
+                  name='hospitalName'
+                  type='text'
+                  placeholder=''
+                  value={formData.hospitalName}
+                  onChange={handleInputChange('hospitalName')}
+                  error={errors.hospitalName}
+                />
 
                 {/* 요양기관번호 */}
-                <div className={styles.formField}>
-                  <InputLabel htmlFor='medicalInstitutionNumber' required>
-                    요양기관번호
-                  </InputLabel>
-                  <Input
-                    id='medicalInstitutionNumber'
-                    type='text'
-                    placeholder=' '
-                    value={formData.medicalInstitutionNumber}
-                    onChange={handleInputChange('medicalInstitutionNumber')}
-                    error={errors.medicalInstitutionNumber}
-                  />
-                </div>
+                <FormField
+                  label='요양기관번호'
+                  required
+                  id='medicalInstitutionNumber'
+                  name='medicalInstitutionNumber'
+                  type='text'
+                  placeholder=' '
+                  value={formData.medicalInstitutionNumber}
+                  onChange={handleInputChange('medicalInstitutionNumber')}
+                  error={errors.medicalInstitutionNumber}
+                />
 
                 {/* 병원주소 */}
-                <div className={styles.formField}>
-                  <InputLabel htmlFor='postalCode' required>
-                    병원주소
-                  </InputLabel>
-                  <div className={styles.inputWithButton}>
-                    <Input
-                      id='postalCode'
-                      type='text'
-                      placeholder='Input Text'
-                      value={formData.postalCode}
-                      onChange={handleInputChange('postalCode')}
-                      error={errors.postalCode}
-                      className={styles.postalCodeInput}
-                    />
-                    <Button
-                      variant='primary'
-                      size='small'
-                      onClick={handlePostalCodeSearch}
-                      className={styles.searchButton}
-                    >
-                      <span>우편번호 검색</span>
-                      <SearchIcon width={22} height={22} fill='#fff' />
-                    </Button>
-                  </div>
+                <FormField
+                  label='병원주소'
+                  required
+                  id='zipCode'
+                  name='zipCode'
+                  type='text'
+                  placeholder='우편번호'
+                  value={formData.postalCode}
+                  onChange={() => {}}
+                  disabled
+                  buttonText='우편번호 검색'
+                  onButtonClick={() => {}}
+                  buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
+                  buttonClassName={styles.searchButton}
+                >
                   <Input
                     type='text'
-                    placeholder=' '
+                    id='address'
+                    name='address'
+                    placeholder='주소'
                     value={formData.address}
-                    onChange={handleInputChange('address')}
-                    error={errors.postalCode}
-                    className={styles.addressInput}
+                    onChange={() => {}}
                     disabled
                   />
                   <Input
                     type='text'
-                    placeholder='상세주소를 입력해주세요.'
+                    id='detailAddress'
+                    name='detailAddress'
+                    placeholder='상세주소를 입력해 주세요.'
                     value={formData.detailAddress}
-                    onChange={handleInputChange('detailAddress')}
-                    className={styles.detailAddressInput}
+                    onChange={() => {}}
                   />
-                </div>
+                </FormField>
 
                 {/* 병원전화번호 */}
-                <div className={styles.formField}>
-                  <InputLabel htmlFor='phoneNumber' required>
-                    병원전화번호
-                  </InputLabel>
-                  <Input
-                    id='phoneNumber'
-                    type='tel'
-                    placeholder=' '
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange('phoneNumber')}
-                    error={errors.phoneNumber}
-                  />
-                </div>
+                <FormField
+                  label='병원전화번호'
+                  required
+                  id='phoneNumber'
+                  name='phoneNumber'
+                  type='tel'
+                  placeholder=' '
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange('phoneNumber')}
+                  error={errors.phoneNumber}
+                />
 
                 {/* 팩스번호 */}
-                <div className={styles.formField}>
-                  <InputLabel htmlFor='faxNumber' required>
-                    팩스번호
-                  </InputLabel>
-                  <Input
-                    id='faxNumber'
-                    type='tel'
-                    placeholder=' '
-                    value={formData.faxNumber}
-                    onChange={handleInputChange('faxNumber')}
-                    error={errors.faxNumber}
-                  />
-                </div>
+                <FormField
+                  label='팩스번호'
+                  required
+                  id='faxNumber'
+                  name='faxNumber'
+                  type='tel'
+                  placeholder=' '
+                  value={formData.faxNumber}
+                  onChange={handleInputChange('faxNumber')}
+                  error={errors.faxNumber}
+                />
 
                 {/* 병원 홈페이지 주소 */}
-                <div className={styles.formField}>
-                  <InputLabel htmlFor='website'>병원 홈페이지 주소</InputLabel>
-                  <Input
-                    id='website'
-                    type='url'
-                    placeholder='ex) https://refer.kumc.or.kr/'
-                    value={formData.website}
-                    onChange={handleInputChange('website')}
-                  />
-                </div>
+                <FormField
+                  label='병원 홈페이지 주소'
+                  id='website'
+                  name='website'
+                  type='url'
+                  placeholder='ex) https://refer.kumc.or.kr/'
+                  value={formData.website}
+                  onChange={handleInputChange('website')}
+                />
               </div>
             </div>
 
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
               <Button variant='outline' size='large' onClick={handlePrevious}>
-                이전
+                이전 단계
               </Button>
               <Button variant='primary' size='large' onClick={handleNext}>
-                다음
+                다음 단계
               </Button>
             </div>
           </div>
