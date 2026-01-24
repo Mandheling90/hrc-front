@@ -144,6 +144,42 @@
   gap: $spacing-2;
 }
 
+// 달력 아이콘이 있는 입력 필드
+.inputWithIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  :global(.input) {
+    padding-right: 40px;
+  }
+
+  .calendarIcon {
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+}
+
+// 안내 텍스트 (차량번호 등)
+.helperText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: $font-size-lg; // 18px
+  color: $gray-600;
+  letter-spacing: -0.72px;
+  line-height: 1.5;
+  margin-top: 4px;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
 // 입력 필드와 버튼이 함께 있는 경우
 .inputWithButton {
   display: flex;
@@ -284,5 +320,20 @@
 
   .formContent {
     gap: $spacing-4;
+  }
+
+  .inputWithIcon {
+    :global(.input) {
+      padding-right: 40px;
+    }
+
+    .calendarIcon {
+      right: 8px;
+    }
+  }
+
+  .helperText {
+    font-size: $font-size-base; // 16px
+    gap: 6px;
   }
 }

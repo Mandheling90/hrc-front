@@ -1,0 +1,156 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.formSection {
+  width: 100%;
+  max-width: 650px;
+  background-color: $color-white;
+  border: 1px solid $gray-500;
+  border-radius: $radius-xl;
+  padding: $spacing-10;
+}
+
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-2;
+}
+
+.formHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.formTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  line-height: $line-height-normal;
+  letter-spacing: -0.02em;
+}
+
+.formSubtitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-600;
+  line-height: $line-height-normal;
+  letter-spacing: -0.01em;
+}
+
+.stepIndicator {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  line-height: 0;
+  letter-spacing: -0.02em;
+}
+
+.stepNumber {
+  color: $color-primary;
+}
+
+.stepSeparator,
+.stepTotal {
+  color: $gray-900;
+}
+
+.formDivider {
+  height: 1px;
+  background-color: $gray-400;
+  margin: $spacing-8 0;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+// 달력 아이콘이 있는 입력 필드
+.inputWithIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  :global(.input) {
+    padding-right: 40px;
+  }
+
+  .calendarIcon {
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+}
+
+// 안내 텍스트 (차량번호 등)
+.helperText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: $font-size-lg; // 18px
+  color: $gray-600;
+  letter-spacing: -0.72px;
+  line-height: 1.5;
+  margin-top: 4px;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// 반응형
+@include tablet {
+  .formSection {
+    max-width: 100%;
+    padding: $spacing-6;
+  }
+
+  .formHeader {
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+
+  .stepIndicator {
+    align-self: flex-start;
+  }
+}
+
+@include mobile {
+  .formSection {
+    padding: $spacing-4;
+  }
+
+  .formContent {
+    gap: $spacing-4;
+  }
+
+  .inputWithIcon {
+    :global(.input) {
+      padding-right: 40px;
+    }
+
+    .calendarIcon {
+      right: 8px;
+    }
+  }
+
+  .helperText {
+    font-size: $font-size-base; // 16px
+    gap: 6px;
+  }
+}
