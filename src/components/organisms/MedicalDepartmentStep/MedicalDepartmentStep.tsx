@@ -190,7 +190,7 @@ export const MedicalDepartmentStep: React.FC = () => {
                 value={departments[dept.key].count}
                 onInputChange={e => handleNumberChange(e.target.value, dept.key)}
                 disabled={!departments[dept.key].checked}
-                labelMinWidth='150px'
+                labelMinWidth='165px'
               />
             ))}
           </div>
@@ -240,8 +240,8 @@ export const MedicalDepartmentStep: React.FC = () => {
 
             <div className={styles.otherEquipmentButton}>
               <Button variant='primary' size='small' onClick={handleAddOtherEquipment} className={styles.addButton}>
-                기타항목 추가
-                <PlusIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
+                <span className={styles.addButtonText}>기타항목 추가</span>
+                <PlusIcon width={20} height={20} stroke='#fff' strokeWidth={1.25} />
               </Button>
             </div>
           </div>
