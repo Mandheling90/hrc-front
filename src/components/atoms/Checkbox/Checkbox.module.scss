@@ -3,17 +3,23 @@
 .checkboxLabel {
   display: flex;
   align-items: center;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: $font-size-lg; // 20px
+  font-weight: $font-weight-normal; // 400 (regular)
   color: #636363;
   cursor: pointer;
   gap: 8px;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.8px;
   line-height: 1.5;
 
   span {
     flex: 1;
     line-height: 1.5;
+    font-size: $font-size-xl; // 20px
+    font-weight: $font-weight-normal; // 400 (regular)
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-lg; // 18px
+    }
   }
 
   // 체크된 상태일 때 라벨 색상 변경
@@ -27,7 +33,7 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    font-size: 14px;
+    font-size: $font-size-lg; // 18px
   }
 }
 

@@ -127,7 +127,7 @@ export const BedAndFacilityStep: React.FC = () => {
                   disabled: !isolationRoomChecked
                 }
               ]}
-              labelMinWidth='85px'
+              labelMinWidth='100px'
             />
           </div>
         </div>
@@ -175,7 +175,7 @@ export const BedAndFacilityStep: React.FC = () => {
                 disabled: !emergencyRoomChecked
               }
             ]}
-            labelMinWidth='85px'
+            labelMinWidth='100px'
           />
           {/* 인공신장실 */}
           <div className={styles.formField}>

@@ -1,0 +1,38 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+@import '@/components/organisms/StepFormCommon.module.scss';
+
+// formSection, formHeader, formHeaderLeft, formTitle, formSubtitle, stepIndicator, stepNumber, stepSeparator, stepTotal, formDivider, formContent은 공통 스타일 사용
+
+// 진료과 그룹 (그리드 레이아웃으로 2열 배치)
+.departmentGroup {
+  display: grid;
+  grid-template-columns: repeat(2, 267px);
+  gap: $spacing-4; // 16px
+  align-items: flex-start;
+}
+
+// 장비 그룹 (flex-wrap으로 배치)
+.equipmentGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-4; // 16px
+  align-items: center;
+}
+
+// 기타 장비 섹션
+.otherEquipmentSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // 8px
+  align-items: flex-end;
+  width: 100%;
+  margin-top: $spacing-4; // 16px
+}
+
+.otherEquipmentList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}

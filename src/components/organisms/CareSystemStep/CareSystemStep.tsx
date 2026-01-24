@@ -153,7 +153,7 @@ export const CareSystemStep: React.FC = () => {
                   textLabel: '1인실',
                   inputId: 'singleRoom',
                   inputName: 'singleRoom',
-                  placeholder: 'Input Text',
+                  placeholder: '',
                   value: singleRoom,
                   onInputChange: e => handleNumberChange(e.target.value, setSingleRoom),
                   disabled: isolationWardOperation === '무'
@@ -162,7 +162,7 @@ export const CareSystemStep: React.FC = () => {
                   textLabel: '2인실',
                   inputId: 'doubleRoom',
                   inputName: 'doubleRoom',
-                  placeholder: 'Input Text',
+                  placeholder: '',
                   value: doubleRoom,
                   onInputChange: e => handleNumberChange(e.target.value, setDoubleRoom),
                   disabled: isolationWardOperation === '무'
@@ -171,7 +171,7 @@ export const CareSystemStep: React.FC = () => {
                   textLabel: '3인실',
                   inputId: 'tripleRoom',
                   inputName: 'tripleRoom',
-                  placeholder: 'Input Text',
+                  placeholder: '',
                   value: tripleRoom,
                   onInputChange: e => handleNumberChange(e.target.value, setTripleRoom),
                   disabled: isolationWardOperation === '무'
@@ -229,7 +229,7 @@ export const CareSystemStep: React.FC = () => {
               checkboxLabel='기타'
               inputId='isolationTypeOtherInput'
               inputName='isolationTypeOtherInput'
-              placeholder='Input Text'
+              placeholder=''
               value={isolationTypeOther}
               onInputChange={e => setIsolationTypeOther(e.target.value)}
               disabled={!isolationType.other}

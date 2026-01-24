@@ -13,6 +13,7 @@ import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/Direct
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
 import { BedAndFacilityStep } from '@/components/organisms/BedAndFacilityStep/BedAndFacilityStep'
 import { CareSystemStep } from '@/components/organisms/CareSystemStep/CareSystemStep'
+import { MedicalDepartmentStep } from '@/components/organisms/MedicalDepartmentStep/MedicalDepartmentStep'
 import styles from './page.module.scss'
 
 export default function HospitalApplicationPage() {
@@ -83,6 +84,9 @@ export default function HospitalApplicationPage() {
 
             {/* 5단계: 간병 시스템 */}
             {currentStep === 5 && <CareSystemStep />}
+
+            {/* 6단계: 진료과 운영 현황 및 주요 보유 장비 */}
+            {currentStep === 6 && <MedicalDepartmentStep />}
 
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
