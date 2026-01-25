@@ -1,0 +1,143 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+@import '@/components/organisms/StepFormCommon.module.scss';
+
+// 실무자명 입력 필드
+.staffNameInput {
+  flex: 0 0 287px;
+}
+
+// 검색 버튼
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1 0 0;
+  padding: 0 15px;
+  height: 43px;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  letter-spacing: -0.8px;
+  white-space: nowrap;
+  border-radius: 5px;
+
+  svg {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.buttonText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  letter-spacing: -0.8px;
+  line-height: 1.5;
+}
+
+// 서브 섹션
+.subSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}
+
+.subSectionTitle {
+  font-size: $font-size-2xl; // 24px
+  font-weight: $font-weight-semibold; // 600
+  color: #000000;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  margin: 0;
+}
+
+// 숫자 입력 그룹
+.numberInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4; // 16px
+  width: 100%;
+}
+
+.numberInputRow {
+  display: flex;
+  gap: $spacing-6; // 24px
+  align-items: center;
+  width: 100%;
+
+  :global(.inputLabel) {
+    font-size: $font-size-xl; // 20px
+    font-weight: $font-weight-semibold; // 600
+    letter-spacing: -0.8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  :global(.input) {
+    flex: 1 0 0;
+  }
+}
+
+// 장비 텍스트 영역
+.equipmentTextarea {
+  width: 100%;
+
+  :global(.textarea) {
+    min-height: 139px;
+  }
+}
+
+// 반응형
+@include tablet {
+  .staffNameInput {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .numberInputRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+
+    :global(.inputLabel) {
+      width: 100%;
+    }
+
+    :global(.input) {
+      width: 100%;
+    }
+  }
+}
+
+@include mobile {
+  .staffNameInput {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .numberInputRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+
+    :global(.inputLabel) {
+      width: 100%;
+    }
+
+    :global(.input) {
+      width: 100%;
+    }
+  }
+}

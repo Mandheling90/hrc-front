@@ -8,7 +8,14 @@ import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/La
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGroup'
 import styles from './BedAndFacilityStep.module.scss'
 
-export const BedAndFacilityStep: React.FC = () => {
+export interface BedAndFacilityStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const BedAndFacilityStep: React.FC<BedAndFacilityStepProps> = ({ currentStep = 4, totalSteps = 8 }) => {
   // 병상 운영 현황 상태
   const [operatingBeds, setOperatingBeds] = useState('')
   const [premiumRoomChecked, setPremiumRoomChecked] = useState(true)
@@ -54,9 +61,9 @@ export const BedAndFacilityStep: React.FC = () => {
             <p className={styles.formSubtitle}>숫자만 입력 가능</p>
           </div>
           <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>4</span>
+            <span className={styles.stepNumber}>{currentStep}</span>
             <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
+            <span className={styles.stepTotal}>{totalSteps}</span>
           </div>
         </div>
         <div className={styles.formDivider}></div>

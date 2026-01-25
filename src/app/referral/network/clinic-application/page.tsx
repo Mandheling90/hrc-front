@@ -9,27 +9,23 @@ import { Button } from '@/components/atoms/Button/Button'
 import { SaveIcon } from '@/components/icons/SaveIcon'
 import { LoadIcon } from '@/components/icons/LoadIcon'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
-import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
-import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
-import { BedAndFacilityStep } from '@/components/organisms/BedAndFacilityStep/BedAndFacilityStep'
-import { CareSystemStep } from '@/components/organisms/CareSystemStep/CareSystemStep'
-import { MedicalDepartmentStep } from '@/components/organisms/MedicalDepartmentStep/MedicalDepartmentStep'
-import { BasicTreatmentStep } from '@/components/organisms/BasicTreatmentStep/BasicTreatmentStep'
-import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import { LoadSaveModal } from '@/components/molecules/LoadSaveModal/LoadSaveModal'
+import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
+import { ClinicStaffInfoStep } from '@/components/organisms/ClinicStaffInfoStep/ClinicStaffInfoStep'
+import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import styles from './page.module.scss'
 
-export default function HospitalApplicationPage() {
-  // 현재 단계 상태 (1: 병원 정보, 2: 병원장 정보, 3: 실무자 정보)
+export default function ClinicApplicationPage() {
+  // 현재 단계 상태
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 8
+  const totalSteps = 4
   // 임시저장 불러오기 모달 상태
   const [isLoadModalOpen, setIsLoadModalOpen] = useState(false)
 
   // 안내 메시지
   const guideMessages = useMemo(() => {
     return [
-      '협력병원 신청을 위해서는 아래 항목을 작성해 주시기 바랍니다.',
+      '협력의원 신청을 위해서는 아래 항목을 작성해 주시기 바랍니다.',
       '접수된 내역을 확인 후에 담당자가 전화를 드리며, 등록절차를 진행합니다.',
       '*은 필수 입력항목입니다.'
     ]
@@ -54,12 +50,12 @@ export default function HospitalApplicationPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <h1 className={styles.pageTitle}>협력병원 신청</h1>
+          <h1 className={styles.pageTitle}>협력의원 신청</h1>
 
           <div className={styles.content}>
-            {/* 협력병원 신청 안내 */}
+            {/* 협력의원 신청 안내 */}
             <div className={styles.guideSection}>
-              <SectionTitle title='협력병원 신청 안내' className={styles.sectionTitle} />
+              <SectionTitle title='협력의원 신청 안내' className={styles.sectionTitle} />
               <InfoBox variant='guide' messages={guideMessages} showBullets={true} highlightLast={true} />
             </div>
 
@@ -76,36 +72,24 @@ export default function HospitalApplicationPage() {
             </div>
 
             {/* 1단계: 병원 정보 */}
-            {currentStep === 1 && <HospitalInfoStep currentStep={1} totalSteps={8} />}
+            {currentStep === 1 && <HospitalInfoStep currentStep={1} totalSteps={4} />}
 
             {/* 2단계: 병원장 정보 */}
-            {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={8} />}
+            {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={4} />}
 
             {/* 3단계: 실무자 정보 */}
-            {currentStep === 3 && <StaffInfoStep currentStep={3} totalSteps={8} />}
+            {currentStep === 3 && <ClinicStaffInfoStep currentStep={3} totalSteps={4} />}
 
-            {/* 4단계: 병상 및 시설 운영 현황 */}
-            {currentStep === 4 && <BedAndFacilityStep currentStep={4} totalSteps={8} />}
-
-            {/* 5단계: 간병 시스템 */}
-            {currentStep === 5 && <CareSystemStep currentStep={5} totalSteps={8} />}
-
-            {/* 6단계: 진료과 운영 현황 및 주요 보유 장비 */}
-            {currentStep === 6 && <MedicalDepartmentStep currentStep={6} totalSteps={8} />}
-
-            {/* 7단계: 기본 처치 가능 항목 */}
-            {currentStep === 7 && <BasicTreatmentStep currentStep={7} totalSteps={8} />}
-
-            {/* 8단계: 병원특성 및 기타사항, 첨부파일 */}
-            {currentStep === 8 && <HospitalCharacteristicsStep currentStep={8} totalSteps={8} />}
+            {/* 4단계: 병원특성 및 기타사항, 첨부파일 */}
+            {currentStep === 4 && <HospitalCharacteristicsStep currentStep={4} totalSteps={4} />}
 
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
               <Button variant='outline' size='large' onClick={handlePrevious} disabled={currentStep === 1}>
-                이전 단계
+                이전
               </Button>
               <Button variant='primary' size='large' onClick={handleNext}>
-                {currentStep === totalSteps ? '협력병원 신청' : '다음 단계'}
+                {currentStep === totalSteps ? '협력의원 신청' : '다음 단계'}
               </Button>
             </div>
           </div>

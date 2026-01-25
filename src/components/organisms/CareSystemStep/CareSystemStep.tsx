@@ -8,7 +8,14 @@ import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/La
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGroup'
 import styles from './CareSystemStep.module.scss'
 
-export const CareSystemStep: React.FC = () => {
+export interface CareSystemStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5, totalSteps = 8 }) => {
   // 간병 시스템 상태
   const [integratedNursingCare, setIntegratedNursingCare] = useState('유')
   const [guardianNursingCare, setGuardianNursingCare] = useState('유')
@@ -60,9 +67,9 @@ export const CareSystemStep: React.FC = () => {
             <p className={styles.formSubtitle}>해당 항목에 체크해주시기 바랍니다. (숫자만 입력 가능)</p>
           </div>
           <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>5</span>
+            <span className={styles.stepNumber}>{currentStep}</span>
             <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
+            <span className={styles.stepTotal}>{totalSteps}</span>
           </div>
         </div>
         <div className={styles.formDivider}></div>

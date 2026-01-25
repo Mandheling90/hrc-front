@@ -1,0 +1,215 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+  padding: $spacing-4;
+}
+
+.modal {
+  background-color: $color-white;
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  box-shadow: 0px 0px 39px 0px rgba(0, 0, 0, 0.35);
+  padding: $spacing-10; // 40px
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-10; // 40px
+  min-width: 500px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+}
+
+// 헤더
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $spacing-5; // 20px
+  border-bottom: 2px solid #bbb;
+}
+
+.title {
+  font-size: $font-size-3xl; // 32px
+  font-weight: $font-weight-semibold; // 600
+  color: #000000;
+  line-height: 1.5;
+  letter-spacing: -1.28px;
+  margin: 0;
+}
+
+.closeButton {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: 2px solid rgba(159, 24, 54, 0.5);
+    outline-offset: 2px;
+  }
+}
+
+// 본문
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 56px; // Figma 디자인 기준
+  align-items: center;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6; // 24px
+  width: 100%;
+
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // 8px
+  width: 100%;
+}
+
+.inputWithButton {
+  display: flex;
+  gap: $spacing-2; // 8px
+  align-items: flex-start;
+}
+
+
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1 0 0;
+  padding: 0 15px;
+  height: 43px;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  letter-spacing: -0.8px;
+  white-space: nowrap;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.buttonText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  letter-spacing: -0.8px;
+  line-height: 1.5;
+}
+
+.loadButton {
+  padding: 10px 67px;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  letter-spacing: -0.8px;
+  line-height: 1.5;
+  border-radius: 5px;
+  min-width: auto;
+}
+
+// 반응형
+@include tablet {
+  .modal {
+    padding: $spacing-6;
+    gap: $spacing-8;
+    min-width: 400px;
+    max-width: 90%;
+  }
+
+  .content {
+    gap: $spacing-8;
+  }
+
+  .formFields {
+    max-width: 100%;
+  }
+
+  .input {
+    flex: 1 1 auto;
+  }
+
+  .inputWithButton {
+    flex-direction: column;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@include mobile {
+  .modal {
+    padding: $spacing-5; // 20px
+    gap: $spacing-6; // 24px
+    min-width: 320px;
+    max-width: 95%;
+    width: 320px;
+  }
+
+  .title {
+    font-size: $font-size-2xl; // 24px
+    letter-spacing: -0.96px;
+  }
+
+  .content {
+    gap: 56px; // Figma 디자인 기준
+  }
+
+  .formFields {
+    gap: $spacing-4; // 16px
+  }
+
+  .input {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .inputWithButton {
+    flex-direction: column;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .loadButton {
+    width: 100%;
+    padding: 10px 20px;
+  }
+}

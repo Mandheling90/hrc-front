@@ -1,0 +1,96 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+@import '@/components/organisms/StepFormCommon.module.scss';
+
+// formSection, formHeader, formHeaderLeft, formTitle, formSubtitle, stepIndicator, stepNumber, stepSeparator, stepTotal, formDivider, formContent은 공통 스타일 사용
+
+// 폼 필드
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // 8px
+}
+
+// 병원명 입력 필드
+.hospitalNameInput {
+  flex: 0 0 287px;
+}
+
+// 우편번호 입력 필드
+.postalCodeInput {
+  flex: 0 0 287px;
+}
+
+// 검색 버튼
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  white-space: nowrap;
+  min-width: auto;
+  flex: 1 0 0;
+  padding: 0 15px;
+  height: 43px;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  letter-spacing: -0.8px;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  // 병원명 검색 버튼 (아이콘만)
+  &.iconOnly {
+    padding: 0;
+    min-width: 43px;
+    width: 43px;
+    gap: 0;
+  }
+}
+
+// 주소 입력 필드 (비활성화)
+.addressInput {
+  background-color: #e8e8e8;
+  border-color: #8c8c8c;
+}
+
+// 상세주소 입력 필드
+.detailAddressInput {
+  max-width: 287px;
+}
+
+// 반응형 스타일
+@include tablet {
+  .hospitalNameInput,
+  .postalCodeInput {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .detailAddressInput {
+    max-width: 100%;
+  }
+}
+
+@include mobile {
+  .hospitalNameInput,
+  .postalCodeInput {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .detailAddressInput {
+    max-width: 100%;
+  }
+}

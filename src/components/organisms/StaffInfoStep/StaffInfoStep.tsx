@@ -6,7 +6,14 @@ import { Radio } from '@/components/atoms/Radio/Radio'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './StaffInfoStep.module.scss'
 
-export const StaffInfoStep: React.FC = () => {
+export interface StaffInfoStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, totalSteps = 8 }) => {
   return (
     <div className={styles.stepContainer}>
       {/* 실무자 정보 섹션 */}
@@ -17,9 +24,9 @@ export const StaffInfoStep: React.FC = () => {
             <p className={styles.formSubtitle}>필수 입력 항목을 모두 입력해주세요.</p>
           </div>
           <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>3</span>
+            <span className={styles.stepNumber}>{currentStep}</span>
             <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
+            <span className={styles.stepTotal}>{totalSteps}</span>
           </div>
         </div>
         <div className={styles.formDivider}></div>

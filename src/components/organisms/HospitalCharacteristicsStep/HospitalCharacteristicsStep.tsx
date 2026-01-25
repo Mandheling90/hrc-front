@@ -6,7 +6,17 @@ import { Button } from '@/components/atoms/Button/Button'
 import { FileUploadIcon } from '@/components/icons/FileUploadIcon'
 import styles from './HospitalCharacteristicsStep.module.scss'
 
-export const HospitalCharacteristicsStep: React.FC = () => {
+export interface HospitalCharacteristicsStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepProps> = ({
+  currentStep = 8,
+  totalSteps = 8
+}) => {
   // 병원 특성 및 기타사항 상태
   const [hospitalCharacteristics, setHospitalCharacteristics] = useState<string>('')
 
@@ -112,9 +122,9 @@ export const HospitalCharacteristicsStep: React.FC = () => {
             <h3 className={styles.formTitle}>병원특성 및 기타사항</h3>
           </div>
           <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>8</span>
+            <span className={styles.stepNumber}>{currentStep}</span>
             <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
+            <span className={styles.stepTotal}>{totalSteps}</span>
           </div>
         </div>
         <div className={styles.formDivider}></div>

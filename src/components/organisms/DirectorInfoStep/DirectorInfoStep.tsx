@@ -11,7 +11,14 @@ import { InfoIcon } from '@/components/icons/InfoIcon'
 import { DirectorFormData, DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import styles from './DirectorInfoStep.module.scss'
 
-export const DirectorInfoStep: React.FC = () => {
+export interface DirectorInfoStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep = 2, totalSteps = 8 }) => {
   return (
     <div className={styles.formSection}>
       <div className={styles.formHeader}>
@@ -20,9 +27,9 @@ export const DirectorInfoStep: React.FC = () => {
           <p className={styles.formSubtitle}>필수 입력 항목을 모두 입력해주세요.</p>
         </div>
         <div className={styles.stepIndicator}>
-          <span className={styles.stepNumber}>2</span>
+          <span className={styles.stepNumber}>{currentStep}</span>
           <span className={styles.stepSeparator}>/</span>
-          <span className={styles.stepTotal}>8</span>
+          <span className={styles.stepTotal}>{totalSteps}</span>
         </div>
       </div>
       <div className={styles.formDivider}></div>

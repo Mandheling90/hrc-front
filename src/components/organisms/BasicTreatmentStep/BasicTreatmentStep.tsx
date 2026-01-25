@@ -7,7 +7,14 @@ import { Button } from '@/components/atoms/Button/Button'
 import { PlusIcon } from '@/components/icons/PlusIcon'
 import styles from './BasicTreatmentStep.module.scss'
 
-export const BasicTreatmentStep: React.FC = () => {
+export interface BasicTreatmentStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const BasicTreatmentStep: React.FC<BasicTreatmentStepProps> = ({ currentStep = 7, totalSteps = 8 }) => {
   // 관리 항목 상태
   const [management, setManagement] = useState<Record<string, boolean>>({
     tracheostomyCare: true,
@@ -118,9 +125,9 @@ export const BasicTreatmentStep: React.FC = () => {
             <p className={styles.formSubtitle}>해당 항목에 체크해주시기 바랍니다.</p>
           </div>
           <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>7</span>
+            <span className={styles.stepNumber}>{currentStep}</span>
             <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
+            <span className={styles.stepTotal}>{totalSteps}</span>
           </div>
         </div>
         <div className={styles.formDivider}></div>
@@ -216,7 +223,7 @@ export const BasicTreatmentStep: React.FC = () => {
             <div className={styles.otherItemsButton}>
               <Button variant='primary' size='small' onClick={handleAddOtherItem} className={styles.addButton}>
                 <span className={styles.addButtonText}>기타항목 추가</span>
-                <PlusIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
+                <PlusIcon width={20} height={20} stroke='#fff' strokeWidth={1.25} />
               </Button>
             </div>
           </div>

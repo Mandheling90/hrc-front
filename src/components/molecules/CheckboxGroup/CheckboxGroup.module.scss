@@ -8,17 +8,19 @@
   align-items: center;
 }
 
-// 태블릿/모바일에서도 한 줄로 유지
+// 데스크톱/태블릿/모바일에서도 한 줄로 유지
 .keepSingleRow {
+  flex-wrap: nowrap !important;
+
   @include tablet {
     flex-direction: row !important;
-    flex-wrap: wrap !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
   }
 
   @include mobile {
     flex-direction: row !important;
-    flex-wrap: wrap !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     gap: $spacing-3 !important; // 모바일에서는 간격을 조금 줄임
   }

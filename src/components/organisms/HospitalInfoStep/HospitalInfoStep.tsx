@@ -6,7 +6,14 @@ import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './HospitalInfoStep.module.scss'
 
-export const HospitalInfoStep: React.FC = () => {
+export interface HospitalInfoStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep = 1, totalSteps = 8 }) => {
   return (
     <div className={styles.formSection}>
       <div className={styles.formHeader}>
@@ -15,9 +22,9 @@ export const HospitalInfoStep: React.FC = () => {
           <p className={styles.formSubtitle}>필수 입력 항목을 모두 입력해주세요.</p>
         </div>
         <div className={styles.stepIndicator}>
-          <span className={styles.stepNumber}>1</span>
+          <span className={styles.stepNumber}>{currentStep}</span>
           <span className={styles.stepSeparator}>/</span>
-          <span className={styles.stepTotal}>8</span>
+          <span className={styles.stepTotal}>{totalSteps}</span>
         </div>
       </div>
       <div className={styles.formDivider}></div>

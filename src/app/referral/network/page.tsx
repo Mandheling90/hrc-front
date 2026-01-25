@@ -178,7 +178,7 @@ export default function NetworkPage() {
                   className={styles.applicationButton}
                   onClick={() => {
                     // TODO: 협력의원 신청 페이지 경로로 변경
-                    router.push(networkInfo.applicationLinks?.clinic || '#')
+                    router.push('/referral/network/clinic-application')
                   }}
                 >
                   협력의원 온라인 신청

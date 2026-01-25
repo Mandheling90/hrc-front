@@ -7,7 +7,14 @@ import { Button } from '@/components/atoms/Button/Button'
 import { PlusIcon } from '@/components/icons/PlusIcon'
 import styles from './MedicalDepartmentStep.module.scss'
 
-export const MedicalDepartmentStep: React.FC = () => {
+export interface MedicalDepartmentStepProps {
+  /** 현재 스텝 번호 */
+  currentStep?: number
+  /** 전체 스텝 수 */
+  totalSteps?: number
+}
+
+export const MedicalDepartmentStep: React.FC<MedicalDepartmentStepProps> = ({ currentStep = 6, totalSteps = 8 }) => {
   // 진료과 운영 현황 상태
   const [departments, setDepartments] = useState<Record<string, { checked: boolean; count: string }>>({
     familyMedicine: { checked: true, count: '' },
@@ -166,9 +173,9 @@ export const MedicalDepartmentStep: React.FC = () => {
             <p className={styles.formSubtitle}>해당 항목에 체크해주시기 바랍니다. (숫자만 입력 가능)</p>
           </div>
           <div className={styles.stepIndicator}>
-            <span className={styles.stepNumber}>6</span>
+            <span className={styles.stepNumber}>{currentStep}</span>
             <span className={styles.stepSeparator}>/</span>
-            <span className={styles.stepTotal}>8</span>
+            <span className={styles.stepTotal}>{totalSteps}</span>
           </div>
         </div>
         <div className={styles.formDivider}></div>
@@ -221,23 +228,24 @@ export const MedicalDepartmentStep: React.FC = () => {
             ))}
           </div>
 
-          <div className={styles.otherEquipmentList}>
-            {otherEquipment.map((value, index) => (
-              <LabelInputRow
-                key={index}
-                labelType='text'
-                textLabel='기타장비'
-                textLabelAlign='left'
-                labelMinWidth='60px'
-                inputId={`otherEquipment${index}`}
-                inputName={`otherEquipment${index}`}
-                inputType='text'
-                placeholder=''
-                value={value}
-                onInputChange={e => handleOtherEquipmentChange(index, e.target.value)}
-              />
-            ))}
-
+          <div className={styles.otherEquipmentSection}>
+            <div className={styles.otherEquipmentList}>
+              {otherEquipment.map((value, index) => (
+                <LabelInputRow
+                  key={index}
+                  labelType='text'
+                  textLabel='기타장비'
+                  textLabelAlign='left'
+                  labelMinWidth='60px'
+                  inputId={`otherEquipment${index}`}
+                  inputName={`otherEquipment${index}`}
+                  inputType='text'
+                  placeholder=''
+                  value={value}
+                  onInputChange={e => handleOtherEquipmentChange(index, e.target.value)}
+                />
+              ))}
+            </div>
             <div className={styles.otherEquipmentButton}>
               <Button variant='primary' size='small' onClick={handleAddOtherEquipment} className={styles.addButton}>
                 <span className={styles.addButtonText}>기타항목 추가</span>
