@@ -38,7 +38,6 @@ export default function HiraReferralPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>{hiraInfo.pageTitle}</h1>
 
           {/* 페이지 소개 섹션 */}

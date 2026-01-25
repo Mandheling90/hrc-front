@@ -31,7 +31,6 @@ export default function ReferralRequestPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>진료협력센터 의뢰</h1>
 
           <InfoBox

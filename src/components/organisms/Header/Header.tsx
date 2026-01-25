@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useHospital } from '@/hooks'
+import { HomeIcon } from '@/components/icons/HomeIcon'
+import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import styles from './Header.module.scss'
 
 // 전화 아이콘
@@ -100,12 +102,62 @@ export const Header: React.FC = () => {
 
   // 임시 로그인 상태
   const isLoggedIn = false
-  const menuItems = isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
+  const menuItems = useMemo(() => {
+    return isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
+  }, [isLoggedIn])
 
   // 현재 경로가 메뉴 href와 정확히 일치하는지 확인
   const isCurrentPage = (href: string) => {
     return pathname === href
   }
+
+  // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기 제외)
+  const shouldShowBreadcrumbs = useMemo(() => {
+    const excludedPaths = ['/', '/login', '/signup', '/find-user']
+    return !excludedPaths.includes(pathname)
+  }, [pathname])
+
+  // pathname 기반으로 Breadcrumbs 아이템 자동 생성
+  const breadcrumbItems = useMemo(() => {
+    if (!shouldShowBreadcrumbs) return []
+
+    const items: Array<{ label: string; href?: string; hasDropdown?: boolean }> = []
+
+    // 홈 아이콘
+    items.push({ label: '', href: '/' })
+
+    // pathname을 분할하여 각 경로에 대한 Breadcrumb 생성
+    const pathSegments = pathname.split('/').filter(Boolean)
+
+    pathSegments.forEach((segment, index) => {
+      const currentPath = '/' + pathSegments.slice(0, index + 1).join('/')
+
+      // 메뉴에서 해당 경로 찾기
+      let foundLabel = segment
+      let hasDropdown = false
+
+      // 모든 메뉴 아이템을 순회하며 경로 매칭
+      for (const menu of menuItems) {
+        for (const subItem of menu.subItems) {
+          if (subItem.href === currentPath) {
+            foundLabel = subItem.label
+            hasDropdown = true // 서브메뉴가 있는 경우
+            break
+          }
+        }
+        if (foundLabel !== segment) break
+      }
+
+      // 마지막 항목은 href 없음 (현재 페이지)
+      if (index === pathSegments.length - 1) {
+        items.push({ label: foundLabel, hasDropdown })
+      } else {
+        items.push({ label: foundLabel, href: currentPath, hasDropdown })
+      }
+    })
+
+    return items
+  }, [pathname, shouldShowBreadcrumbs, menuItems])
 
   // 모바일 메뉴 열기
   const openMobileMenu = () => {
@@ -274,6 +326,47 @@ export const Header: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Breadcrumbs 영역 */}
+        {shouldShowBreadcrumbs && (
+          <div className={styles.breadcrumbsSection}>
+            <div className={styles.container}>
+              <nav className={styles.breadcrumbsNav} aria-label='Breadcrumb'>
+                {breadcrumbItems.map((item, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && (
+                      <span className={styles.breadcrumbSeparator} aria-hidden='true'>
+                        |
+                      </span>
+                    )}
+                    <div className={styles.breadcrumbItem}>
+                      {index === 0 ? (
+                        <Link href={item.href || '/'} className={styles.breadcrumbHomeIcon}>
+                          <HomeIcon width={20} height={20} fill='var(--gray-11)' />
+                        </Link>
+                      ) : (
+                        <>
+                          {item.href ? (
+                            <Link href={item.href} className={styles.breadcrumbLink}>
+                              {item.label}
+                            </Link>
+                          ) : (
+                            <span className={styles.breadcrumbCurrent}>{item.label}</span>
+                          )}
+                          {item.hasDropdown && (
+                            <span className={styles.breadcrumbDropdownIcon}>
+                              <ChevronDownIcon width={14} height={14} fill='var(--gray-8)' />
+                            </span>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </React.Fragment>
+                ))}
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* 모바일 오버레이 */}

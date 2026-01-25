@@ -23,7 +23,6 @@ export default function ReferralPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          {/* <Breadcrumbs items={breadcrumbItems} /> */}
           <h1 className={styles.pageTitle}>진료의뢰시스템 소개</h1>
 
           <InfoBox

@@ -35,7 +35,6 @@ export default function ExchangePage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>진료정보교류 의뢰</h1>
 
           {/* 페이지 소개 섹션 */}

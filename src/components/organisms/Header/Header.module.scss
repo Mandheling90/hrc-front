@@ -33,6 +33,106 @@ $header-height-mobile: 56px;
   border-bottom: 1px solid $gray-4;
 }
 
+// ========================================
+// Breadcrumbs 영역
+// ========================================
+.breadcrumbsSection {
+  background: #fff;
+  border-bottom: 1px solid $gray-8; // #bbb
+  border-radius: 0 0 20px 20px; // 하단만 둥근 모서리
+  height: 71px;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbsNav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 245px; // 헤더와 동일한 패딩
+
+  @media (max-width: $bp-tablet) {
+    padding: 0 24px;
+  }
+
+  @media (max-width: $bp-mobile) {
+    padding: 0 20px;
+  }
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.breadcrumbHomeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: $gray-11;
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.breadcrumbLink {
+  font-size: 16px; // size-18 (16px)
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.64px;
+  color: $gray-11;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.breadcrumbCurrent {
+  font-size: 16px; // size-18 (16px)
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.64px;
+  color: $gray-11;
+}
+
+.breadcrumbDropdownIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  color: $gray-8; // #bbb
+}
+
+.breadcrumbSeparator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 14px;
+  color: $gray-8; // #bbb
+  font-size: 0;
+  line-height: 0;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 14px;
+    background-color: $gray-8; // #bbb
+    transform: rotate(90deg);
+  }
+}
+
 .container {
   width: 100%;
   margin: 0 auto;

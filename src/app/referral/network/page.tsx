@@ -68,7 +68,6 @@ export default function NetworkPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>협력네트워크 소개 & 신청</h1>
 
           <InfoBox
