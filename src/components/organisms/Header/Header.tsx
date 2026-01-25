@@ -59,7 +59,7 @@ const commonMenuItems: MenuItem[] = [
       { href: '/referral/network/hospital-application', label: '협력병원 신청' },
       { href: '/referral/network/status', label: '협력병의원 현황' },
       { href: '/referral/network/hotline', label: '교수직통 핫라인' },
-      { href: '/network/e-consult', label: 'e-Consult 신청', disabled: true }
+      { href: '/referral/network/e-consult', label: 'e-Consult 신청' }
     ]
   },
   {

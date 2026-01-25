@@ -1,0 +1,80 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.consentSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.consentHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.required {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px;
+  color: $color-primary;
+}
+
+.consentContent {
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  font-size: 20px;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-12;
+
+  p {
+    margin: 0;
+  }
+}
+
+.consentSubList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.consentSubItems {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  padding-left: $spacing-8;
+}
+
+.consentSubItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.bullet {
+  width: 8px;
+  height: 2px;
+  background-color: $color-primary;
+  flex-shrink: 0;
+}
+
+.link {
+  font-size: 20px;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $color-primary;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
