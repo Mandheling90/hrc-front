@@ -4,6 +4,8 @@ import React, { useState, useRef } from 'react'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { Button } from '@/components/atoms/Button/Button'
 import { FileUploadIcon } from '@/components/icons/FileUploadIcon'
+import { FileRemoveIcon } from '@/components/icons/FileRemoveIcon'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import styles from './HospitalCharacteristicsStep.module.scss'
 
 export interface HospitalCharacteristicsStepProps {
@@ -24,6 +26,12 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
   const [files, setFiles] = useState<File[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // AlertModal 상태
+  const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
+    isOpen: false,
+    message: ''
+  })
+
   // 텍스트 영역 변경 핸들러
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setHospitalCharacteristics(e.target.value)
@@ -36,11 +44,17 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
       // 파일 검증
       const validFiles = selectedFiles.filter(file => {
         if (!validateFileType(file)) {
-          alert(`${file.name}: JPG, PNG, PDF 파일만 업로드 가능합니다.`)
+          setAlertModal({
+            isOpen: true,
+            message: `${file.name}: JPG, PNG, PDF 파일만 업로드 가능합니다.`
+          })
           return false
         }
         if (!validateFileSize(file)) {
-          alert(`${file.name}: 파일 크기는 5MB를 초과할 수 없습니다.`)
+          setAlertModal({
+            isOpen: true,
+            message: `${file.name}: 파일 크기는 5MB를 초과할 수 없습니다.`
+          })
           return false
         }
         return true
@@ -49,18 +63,16 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
       const newFiles = [...files, ...validFiles].slice(0, 2)
       setFiles(newFiles)
       if (newFiles.length >= 2 && validFiles.length > 0) {
-        alert('최대 2개까지만 업로드할 수 있습니다.')
+        setAlertModal({
+          isOpen: true,
+          message: '첨부 파일 업로드 개수 초과입니다. (최대 2개)'
+        })
       }
     }
     // 같은 파일을 다시 선택할 수 있도록 리셋
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
-  }
-
-  // 파일 삭제 핸들러
-  const handleFileRemove = (index: number) => {
-    setFiles(prev => prev.filter((_, i) => i !== index))
   }
 
   // 드래그 앤 드롭 핸들러
@@ -78,11 +90,17 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
       // 파일 검증
       const validFiles = droppedFiles.filter(file => {
         if (!validateFileType(file)) {
-          alert(`${file.name}: JPG, PNG, PDF 파일만 업로드 가능합니다.`)
+          setAlertModal({
+            isOpen: true,
+            message: `${file.name}: JPG, PNG, PDF 파일만 업로드 가능합니다.`
+          })
           return false
         }
         if (!validateFileSize(file)) {
-          alert(`${file.name}: 파일 크기는 5MB를 초과할 수 없습니다.`)
+          setAlertModal({
+            isOpen: true,
+            message: `${file.name}: 파일 크기는 5MB를 초과할 수 없습니다.`
+          })
           return false
         }
         return true
@@ -91,7 +109,10 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
       const newFiles = [...files, ...validFiles].slice(0, 2)
       setFiles(newFiles)
       if (newFiles.length >= 2 && validFiles.length > 0) {
-        alert('최대 2개까지만 업로드할 수 있습니다.')
+        setAlertModal({
+          isOpen: true,
+          message: '첨부 파일 업로드 개수 초과입니다. (최대 2개)'
+        })
       }
     }
   }
@@ -105,6 +126,15 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
   const validateFileSize = (file: File): boolean => {
     const maxSize = 5 * 1024 * 1024 // 5MB
     return file.size <= maxSize
+  }
+
+  // 파일 크기 포맷팅
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes'
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]
   }
 
   // 파일 형식 검증 (JPG, PNG, PDF)
@@ -173,11 +203,35 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
 
           {/* 파일 업로드 영역 */}
           <div className={styles.fileUploadArea} onDragOver={handleDragOver} onDrop={handleDrop}>
-            <p className={styles.uploadText}>첨부할 파일을 끌어다 놓거나, 파일 선택 버튼을 직접 선택해주세요.</p>
-            <Button variant='primary' size='small' onClick={handleFileButtonClick} className={styles.fileSelectButton}>
-              <FileUploadIcon width={20} height={20} fill='#fff' />
-              <span className={styles.fileSelectButtonText}>파일 선택</span>
-            </Button>
+            {/* 업로드된 파일 목록 */}
+            {files.length > 0 && (
+              <>
+                <div className={styles.fileList}>
+                  {files.map((file, index) => (
+                    <div key={index} className={styles.fileItem}>
+                      <FileRemoveIcon width={22} height={22} stroke='#636363' />
+                      <span className={styles.fileName}>{file.name}</span>
+                      <span className={styles.fileSize}>{formatFileSize(file.size)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.fileDivider}></div>
+              </>
+            )}
+
+            {/* 파일 선택 영역 */}
+            <div className={styles.fileSelectArea}>
+              <p className={styles.uploadText}>첨부할 파일을 끌어다 놓거나, 파일 선택 버튼을 직접 선택해주세요.</p>
+              <Button
+                variant='primary'
+                size='small'
+                onClick={handleFileButtonClick}
+                className={styles.fileSelectButton}
+              >
+                <FileUploadIcon width={20} height={20} fill='#fff' />
+                <span className={styles.fileSelectButtonText}>파일 선택</span>
+              </Button>
+            </div>
             <input
               ref={fileInputRef}
               type='file'
@@ -187,22 +241,17 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
               className={styles.hiddenInput}
             />
           </div>
-
-          {/* 업로드된 파일 목록 */}
-          {files.length > 0 && (
-            <div className={styles.fileList}>
-              {files.map((file, index) => (
-                <div key={index} className={styles.fileItem}>
-                  <span className={styles.fileName}>{file.name}</span>
-                  <button type='button' onClick={() => handleFileRemove(index)} className={styles.removeButton}>
-                    삭제
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
+
+      {/* AlertModal */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        message={alertModal.message}
+        closeButtonText='닫기'
+        onClose={() => setAlertModal({ isOpen: false, message: '' })}
+        closeOnBackdropClick={true}
+      />
     </div>
   )
 }
