@@ -21,7 +21,8 @@
   position: relative;
 
   &:hover:not(:disabled) {
-    background-color: $gray-2;
+    background-color: #fdf9f4; // 노란색 배경 (Figma: secondary/bg/bg--2)
+    border: 0.5px solid #c09c63; // 갈색 테두리 (Figma: secondary/accent)
   }
 
   &:disabled {
@@ -60,8 +61,10 @@
   cursor: pointer;
   transition: all $transition-base;
 
-  &:hover {
-    background-color: $gray-2;
+  &:hover:not(.active) {
+    background-color: #fdf9f4; // 노란색 배경 (Figma: secondary/bg/bg--2)
+    border: 0.5px solid #c09c63; // 갈색 테두리 (Figma: secondary/accent)
+    color: #816331; // 갈색 텍스트 (Figma: secondary/deep/deep---hover)
   }
 
   &.active {

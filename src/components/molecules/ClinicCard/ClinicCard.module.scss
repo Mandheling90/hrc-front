@@ -1,12 +1,26 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .card {
   display: flex;
   flex-direction: column;
   gap: $spacing-8;
   padding: $spacing-8;
+  min-height: 214px;
   background-color: $color-white;
   border-bottom: 1px solid $gray-10;
+  box-sizing: border-box;
+
+  &:first-child {
+    border-top-left-radius: $radius-md;
+    border-top-right-radius: $radius-md;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $radius-md;
+    border-bottom-right-radius: $radius-md;
+    border-bottom: none;
+  }
 
   &.highlighted {
     background-color: $color-primary;
@@ -17,24 +31,34 @@
 
 .header {
   display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  width: 100%;
+
+  @include mobile {
+    gap: $spacing-4;
+  }
+}
+
+.headerTop {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.titleGroup {
-  display: flex;
-  align-items: center;
-  gap: $spacing-4;
-}
-
 .name {
-  font-size: $font-size-3xl;
+  font-size: 32px; // 데스크톱/태블릿: size-32
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   letter-spacing: -1.28px;
   color: inherit;
   margin: 0;
+
+  @include mobile {
+    font-size: 24px; // 모바일: size-32 (24px)
+    letter-spacing: -0.96px;
+  }
 }
 
 .badge {
@@ -70,8 +94,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 54px; // 데스크톱/태블릿
+  height: 54px; // 데스크톱/태블릿
   padding: $spacing-4;
   border-radius: $radius-full;
   border: 1.5px solid;
@@ -79,17 +103,25 @@
   transition: all $transition-base;
   background-color: transparent;
 
+  @include mobile {
+    width: 35px; // 모바일: 약 35px (p-[9.722px] * 2 + 15.556px)
+    height: 35px; // 모바일
+    padding: 9.722px; // 모바일
+  }
+
   &:hover {
     opacity: 0.8;
   }
 
   &.iconButtonNormal {
     border-color: $color-primary;
+    background-color: transparent;
     color: $color-primary;
   }
 
   &.iconButtonHighlighted {
     border-color: $color-white;
+    background-color: transparent;
     color: $color-white;
   }
 
@@ -103,6 +135,17 @@
     border-color: $color-white;
     background-color: $color-white;
     color: $color-primary;
+  }
+}
+
+.mapIcon,
+.homeIcon {
+  width: 24px; // 데스크톱/태블릿
+  height: 24px; // 데스크톱/태블릿
+
+  @include mobile {
+    width: 16px; // 모바일: 15.556px
+    height: 16px; // 모바일: 15.556px
   }
 }
 
@@ -124,25 +167,39 @@
 }
 
 .label {
-  font-size: $font-size-xl;
+  font-size: $font-size-xl; // 데스크톱/태블릿: size-20 (20px)
   font-weight: $font-weight-normal;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
   color: inherit;
   min-width: 49px;
+
+  @include mobile {
+    font-size: 18px; // 모바일: size-20 (18px)
+    letter-spacing: -0.72px;
+  }
 }
 
 .separator {
-  font-size: $font-size-xl;
+  font-size: $font-size-xl; // 데스크톱/태블릿: size-20 (20px)
   color: inherit;
+
+  @include mobile {
+    font-size: 18px; // 모바일: size-20 (18px)
+  }
 }
 
 .value {
-  font-size: $font-size-xl;
+  font-size: $font-size-xl; // 데스크톱/태블릿: size-20 (20px)
   font-weight: $font-weight-normal;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
   color: inherit;
+
+  @include mobile {
+    font-size: 18px; // 모바일: size-20 (18px)
+    letter-spacing: -0.72px;
+  }
 
   .card:not(.highlighted) & {
     color: $gray-11;
@@ -168,6 +225,9 @@
 
 .infoGroup {
   display: flex;
-  gap: $spacing-10;
+  flex-direction: row;
+  column-gap: $spacing-10; // 가로 간격 (한 줄일 때)
+  row-gap: $spacing-2; // 세로 간격 (줄바꿈될 때)
   flex-wrap: wrap;
+  width: 100%;
 }

@@ -8,8 +8,8 @@ import styles from './ClinicCard.module.scss'
 export interface ClinicCardProps {
   /** 병의원 이름 */
   name: string
-  /** 공지 여부 */
-  hasNotice?: boolean
+  /** 병원/의원 구분 */
+  type: 'hospital' | 'clinic'
   /** 주소 */
   address: string
   /** 전화번호 */
@@ -28,7 +28,7 @@ export interface ClinicCardProps {
 
 export const ClinicCard: React.FC<ClinicCardProps> = ({
   name,
-  hasNotice = false,
+  type,
   address,
   phone,
   fax,
@@ -40,50 +40,48 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
   return (
     <div className={`${styles.card} ${highlighted ? styles.highlighted : ''} ${className}`}>
       <div className={styles.header}>
-        <div className={styles.titleGroup}>
-          <h3 className={styles.name}>{name}</h3>
-          {hasNotice && (
-            <span className={`${styles.badge} ${highlighted ? styles.badgeHighlighted : styles.badgeNormal}`}>
-              공지
-            </span>
-          )}
+        <div className={styles.headerTop}>
+          <span className={`${styles.badge} ${highlighted ? styles.badgeHighlighted : styles.badgeNormal}`}>
+            {type === 'hospital' ? '병원' : '의원'}
+          </span>
+          <div className={styles.buttonGroup}>
+            <button
+              type='button'
+              className={`${styles.iconButton} ${highlighted ? styles.iconButtonHighlighted : styles.iconButtonNormal}`}
+              onClick={onMapClick}
+              aria-label='지도 보기'
+            >
+              <MapIcon width={24} height={24} fill={highlighted ? '#fff' : '#9f1836'} className={styles.mapIcon} />
+            </button>
+            <button
+              type='button'
+              className={`${styles.iconButton} ${highlighted ? styles.iconButtonHomeHighlighted : styles.iconButtonHomeNormal}`}
+              onClick={onHomeClick}
+              aria-label='홈페이지 보기'
+            >
+              <HomeIcon width={24} height={24} fill={highlighted ? '#9f1836' : '#fff'} className={styles.homeIcon} />
+            </button>
+          </div>
         </div>
-        <div className={styles.buttonGroup}>
-          <button
-            type='button'
-            className={`${styles.iconButton} ${highlighted ? styles.iconButtonHighlighted : styles.iconButtonNormal}`}
-            onClick={onMapClick}
-            aria-label='지도 보기'
-          >
-            <MapIcon width={24} height={24} stroke={highlighted ? '#fff' : '#9f1836'} />
-          </button>
-          <button
-            type='button'
-            className={`${styles.iconButton} ${highlighted ? styles.iconButtonHomeHighlighted : styles.iconButtonHomeNormal}`}
-            onClick={onHomeClick}
-            aria-label='홈페이지 보기'
-          >
-            <HomeIcon width={24} height={24} fill={highlighted ? '#fff' : '#9f1836'} />
-          </button>
-        </div>
+        <h3 className={styles.name}>{name}</h3>
       </div>
 
       <div className={styles.content}>
         <div className={styles.infoRow}>
           <span className={styles.label}>주소</span>
-          <span className={styles.separator}>:</span>
+          <span className={styles.separator}>|</span>
           <span className={`${styles.value} ${styles.addressValue}`}>{address}</span>
         </div>
         <div className={styles.infoGroup}>
           <div className={styles.infoRow}>
             <span className={styles.label}>전화번호</span>
-            <span className={styles.separator}>:</span>
+            <span className={styles.separator}>|</span>
             <span className={`${styles.value} ${styles.phoneValue}`}>{phone}</span>
           </div>
           <div className={styles.infoRow}>
             <span className={styles.label}>팩스번호</span>
-            <span className={styles.separator}>:</span>
-            <span className={styles.value}>{fax}</span>
+            <span className={styles.separator}>|</span>
+            <span className={`${styles.value} ${styles.phoneValue}`}>{fax}</span>
           </div>
         </div>
       </div>

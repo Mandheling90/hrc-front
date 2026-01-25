@@ -9,14 +9,14 @@ import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
 import { ClinicCard } from '@/components/molecules/ClinicCard/ClinicCard'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
-import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './page.module.scss'
+import { InfoIcon } from '@/components/icons/InfoIcon'
 
 // 임시 데이터 타입
 interface ClinicData {
   id: string
   name: string
-  hasNotice: boolean
+  type: 'hospital' | 'clinic'
   address: string
   phone: string
   fax: string
@@ -27,15 +27,15 @@ const mockClinics: ClinicData[] = [
   {
     id: '1',
     name: '서울송도병원',
-    hasNotice: true,
+    type: 'hospital',
     address: '서울특별시 영등포구 경인로 767(문래동3가)',
     phone: '02-6950-4114',
     fax: '02-6950-4118'
   },
   {
     id: '2',
-    name: '서울송도병원',
-    hasNotice: true,
+    name: '서울송도의원',
+    type: 'clinic',
     address: '서울특별시 중구 다산로 78(신당동)',
     phone: '02-2231-0900',
     fax: '02-2231-0931'
@@ -43,7 +43,7 @@ const mockClinics: ClinicData[] = [
   {
     id: '3',
     name: '서울숭인병원',
-    hasNotice: true,
+    type: 'hospital',
     address: '서울특별시 종로구 종로 386',
     phone: '02-737-7582',
     fax: '02-737-7541'
@@ -51,10 +51,42 @@ const mockClinics: ClinicData[] = [
   {
     id: '4',
     name: '서울스마트요양병원',
-    hasNotice: true,
+    type: 'hospital',
     address: '서울특별시 양천구 중앙로 181(신정동) 복합메디컬타운 8F',
     phone: '02-2135-7601',
     fax: '02-2135-7622'
+  },
+  {
+    id: '5',
+    name: '서울강남의원',
+    type: 'clinic',
+    address: '서울특별시 강남구 테헤란로 123',
+    phone: '02-1234-5678',
+    fax: '02-1234-5679'
+  },
+  {
+    id: '6',
+    name: '서울강북병원',
+    type: 'hospital',
+    address: '서울특별시 강북구 도봉로 456',
+    phone: '02-2345-6789',
+    fax: '02-2345-6790'
+  },
+  {
+    id: '7',
+    name: '서울서초의원',
+    type: 'clinic',
+    address: '서울특별시 서초구 서초대로 789',
+    phone: '02-3456-7890',
+    fax: '02-3456-7891'
+  },
+  {
+    id: '8',
+    name: '서울마포병원',
+    type: 'hospital',
+    address: '서울특별시 마포구 홍대입구로 321',
+    phone: '02-4567-8901',
+    fax: '02-4567-8902'
   }
 ]
 
@@ -197,49 +229,52 @@ export default function ClinicStatusPage() {
                 </div>
               </div>
             </div>
-
-            {/* 위치 기반 검색 안내 */}
-            <div className={styles.locationInfo}>
-              <SearchIcon width={24} height={24} fill='var(--gray-11)' />
-              <p>현재 내 위치에서 가장 가까운 병의원이 검색됩니다.</p>
-            </div>
           </div>
 
           {/* 지도 및 병의원 리스트 */}
           <div className={styles.contentSection}>
-            {/* 지도 영역 */}
-            <div className={styles.mapContainer}>
-              <div className={styles.mapPlaceholder}>
-                <p>지도 영역</p>
-                <p className={styles.mapNote}>지도 API 연동 필요</p>
-              </div>
-              {/* 태블릿용 지도 하단 이미지 */}
-              <div className={styles.mapBottomImage} />
+            {/* 위치 기반 검색 안내 */}
+            <div className={styles.locationInfo}>
+              <InfoIcon width={24} height={24} fill='var(--gray-11)' />
+              <p>현재 내 위치에서 가장 가까운 병의원이 검색됩니다.</p>
             </div>
 
-            {/* 병의원 리스트 */}
-            <div className={styles.clinicList}>
-              {paginatedClinics.length > 0 ? (
-                <>
-                  {paginatedClinics.map((clinic, index) => (
-                    <ClinicCard
-                      key={clinic.id}
-                      name={clinic.name}
-                      hasNotice={clinic.hasNotice}
-                      address={clinic.address}
-                      phone={clinic.phone}
-                      fax={clinic.fax}
-                      highlighted={index === 0}
-                      onMapClick={() => handleMapClick(clinic.id)}
-                      onHomeClick={() => handleHomeClick(clinic.id)}
-                    />
-                  ))}
-                </>
-              ) : (
-                <div className={styles.emptyState}>
-                  <p>검색 결과가 없습니다.</p>
+            {/* 지도와 카드 영역 */}
+            <div className={styles.mapAndListContainer}>
+              {/* 지도 영역 */}
+              <div className={styles.mapContainer}>
+                <div className={styles.mapPlaceholder}>
+                  <p>지도 영역</p>
+                  <p className={styles.mapNote}>지도 API 연동 필요</p>
                 </div>
-              )}
+              </div>
+
+              {/* 병의원 리스트 */}
+              <div className={styles.clinicListWrapper}>
+                <div className={styles.clinicList}>
+                  {paginatedClinics.length > 0 ? (
+                    <>
+                      {paginatedClinics.map((clinic, index) => (
+                        <ClinicCard
+                          key={clinic.id}
+                          name={clinic.name}
+                          type={clinic.type}
+                          address={clinic.address}
+                          phone={clinic.phone}
+                          fax={clinic.fax}
+                          highlighted={index === 0}
+                          onMapClick={() => handleMapClick(clinic.id)}
+                          onHomeClick={() => handleHomeClick(clinic.id)}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    <div className={styles.emptyState}>
+                      <p>검색 결과가 없습니다.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
