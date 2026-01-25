@@ -157,41 +157,44 @@ export default function ClinicStatusPage() {
           {/* 필터 섹션 */}
           <div className={styles.filterSection}>
             <div className={styles.filterRow}>
-              <Select
-                options={regionOptions}
-                value={selectedRegion}
-                onChange={value => {
-                  setSelectedRegion(value)
-                  setCurrentPage(1)
-                }}
-                width='230px'
-              />
-              <Select
-                options={hospitalTypeOptions}
-                value={selectedHospitalType}
-                onChange={value => {
-                  setSelectedHospitalType(value)
-                  setCurrentPage(1)
-                }}
-                width='230px'
-              />
-              <div className={styles.searchWrapper}>
-                <Input
-                  type='text'
-                  placeholder='병원명, 전화번호를 입력해주세요.'
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      handleSearch()
-                    }
+              <div className={styles.selectGroup}>
+                <Select
+                  options={regionOptions}
+                  value={selectedRegion}
+                  onChange={value => {
+                    setSelectedRegion(value)
+                    setCurrentPage(1)
                   }}
-                  width='500px'
-                  className={styles.searchInput}
+                  className={styles.regionSelect}
                 />
-                <Button variant='primary' size='small' onClick={handleSearch} className={styles.searchButton}>
-                  검색
-                </Button>
+                <Select
+                  options={hospitalTypeOptions}
+                  value={selectedHospitalType}
+                  onChange={value => {
+                    setSelectedHospitalType(value)
+                    setCurrentPage(1)
+                  }}
+                  className={styles.hospitalTypeSelect}
+                />
+              </div>
+              <div className={styles.searchGroup}>
+                <div className={styles.searchWrapper}>
+                  <Input
+                    type='text'
+                    placeholder='병원명, 전화번호를 입력해주세요.'
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        handleSearch()
+                      }
+                    }}
+                    className={styles.searchInput}
+                  />
+                  <Button variant='primary' size='small' onClick={handleSearch} className={styles.searchButton}>
+                    검색
+                  </Button>
+                </div>
               </div>
             </div>
 
@@ -210,6 +213,8 @@ export default function ClinicStatusPage() {
                 <p>지도 영역</p>
                 <p className={styles.mapNote}>지도 API 연동 필요</p>
               </div>
+              {/* 태블릿용 지도 하단 이미지 */}
+              <div className={styles.mapBottomImage} />
             </div>
 
             {/* 병의원 리스트 */}
