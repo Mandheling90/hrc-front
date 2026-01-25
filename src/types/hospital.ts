@@ -191,6 +191,30 @@ export interface NetworkInfo {
   }
 }
 
+// 개인정보 수집 약관 정보
+export interface SignupAgreementInfo {
+  hospitalName: string // 병원명 (예: "고려대학교 안암병원", "고려대학교 구로병원", "고려대학교안산병원")
+  intro: string // 소개 문구
+  purpose: {
+    title: string // "1. 개인 정보의 수집 목적 및 이용"
+    items: string[] // 목적 항목들
+  }
+  items: {
+    title: string // "2. 수집하려는 개인정보의 항목"
+    required: string // 필수 항목 설명
+    autoCollected: string // 자동 수집 정보 설명
+  }
+  retention: {
+    title: string // "3. 개인정보의 보유 이용기간"
+    period: string // 보유 기간 설명
+    dormant: string // 휴면계정 설명
+  }
+  refusal: {
+    title: string // "4. 동의를 거부할 권리 / 동의거부에 따른 안내"
+    description: string // 거부 권리 설명
+  }
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -201,6 +225,7 @@ export interface HospitalPageContent {
   referralExchange?: ReferralExchangeInfo // 진료정보교류 의뢰 페이지 정보
   referralHira?: ReferralHiraInfo // 심평원 중계시스템 의뢰 페이지 정보
   network?: NetworkInfo // 협력네트워크 페이지 정보
+  signupAgreement?: SignupAgreementInfo // 회원가입 개인정보 수집 약관 정보
 }
 
 // 병원 컨텍스트 타입

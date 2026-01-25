@@ -48,6 +48,40 @@
   }
 }
 
+.mobileStack {
+  &.formFieldWithButton {
+    .inputWithButton {
+      @media (max-width: $breakpoint-md) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+    }
+
+    .inputWithButtonInput {
+      @media (max-width: $breakpoint-md) {
+        width: 100%;
+        font-size: 18px;
+      }
+    }
+
+    .formFieldButton {
+      @media (max-width: $breakpoint-md) {
+        width: 100%;
+        justify-content: center;
+        font-size: 18px;
+      }
+    }
+
+    .rightElement {
+      @media (max-width: $breakpoint-md) {
+        width: 100%;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
 .additionalContent {
   display: flex;
   flex-direction: column;

@@ -20,6 +20,7 @@
   align-items: flex-end;
   margin-bottom: 60px;
   padding-bottom: 0;
+  gap: 10px;
 
   @media (max-width: $breakpoint-md) {
     width: fit-content;
@@ -32,7 +33,7 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    gap: 16px;
+    gap: 24px;
     margin: 0px 10px 0px 10px;
     // min-width: 768px;
     &::-webkit-scrollbar {
@@ -62,6 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 
   &::before {
     content: '';
@@ -89,7 +91,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 10px;
   padding: 0;
   position: relative;
   z-index: 1;
@@ -100,7 +102,7 @@
   box-shadow: none;
   margin-bottom: 0;
   flex: 1;
-  padding: 25px 24px;
+  padding: 25px 0px;
 
   @media (max-width: $breakpoint-md) {
     flex: none;
@@ -113,7 +115,7 @@
 }
 
 .stepNumber {
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 1.2;
   color: $gray-10;
@@ -125,7 +127,7 @@
 }
 
 .stepLabel {
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.2;
   color: $gray-10;
@@ -142,13 +144,14 @@
   box-shadow: 0 12px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   z-index: 2;
+  gap: 10px;
 
   @media (max-width: $breakpoint-md) {
     background-color: $color-white;
   }
 
   .stepNumber {
-    font-size: 14px;
+    font-size: 24px;
     font-weight: 500;
     color: #ffffff;
 
@@ -159,7 +162,7 @@
   }
 
   .stepLabel {
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 600;
     color: #ffffff;
 

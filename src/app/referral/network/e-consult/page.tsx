@@ -10,9 +10,11 @@ import { Radio } from '@/components/atoms/Radio/Radio'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { PrivacyConsentContent } from '@/components/molecules/PrivacyConsentContent/PrivacyConsentContent'
 import { FormField } from '@/components/molecules/FormField/FormField'
+import { DoctorSearchModal } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './page.module.scss'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import type { Doctor } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 
 export default function EConsultPage() {
   // 폼 상태
@@ -25,6 +27,7 @@ export default function EConsultPage() {
   const [title, setTitle] = useState('소아청소년과 김철수 선생님 자문을 요청드립니다.')
   const [content, setContent] = useState('')
   const [contentByteCount, setContentByteCount] = useState(0)
+  const [isDoctorSearchModalOpen, setIsDoctorSearchModalOpen] = useState(false)
 
   // 텍스트 영역 바이트 계산
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -37,8 +40,15 @@ export default function EConsultPage() {
 
   // 자문의 검색 핸들러
   const handleSearchDoctor = () => {
-    // TODO: 자문의 검색 기능 구현
-    console.log('자문의 검색')
+    setIsDoctorSearchModalOpen(true)
+  }
+
+  // 자문의 선택 확인 핸들러
+  const handleDoctorConfirm = (selectedDoctors: Doctor[]) => {
+    if (selectedDoctors.length > 0) {
+      const doctorNames = selectedDoctors.map(doctor => `${doctor.department} ${doctor.name}`).join(', ')
+      setConsultingDoctor(doctorNames)
+    }
   }
 
   // 폼 제출 핸들러
@@ -188,6 +198,7 @@ export default function EConsultPage() {
                   onButtonClick={handleSearchDoctor}
                   buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
                   error=''
+                  mobileStack
                 />
               </div>
             </div>
@@ -248,6 +259,14 @@ export default function EConsultPage() {
         </div>
       </main>
       <Footer />
+
+      {/* 자문의 검색 모달 */}
+      <DoctorSearchModal
+        isOpen={isDoctorSearchModalOpen}
+        onClose={() => setIsDoctorSearchModalOpen(false)}
+        onConfirm={handleDoctorConfirm}
+        closeOnBackdropClick={true}
+      />
     </div>
   )
 }

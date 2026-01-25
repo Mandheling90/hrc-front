@@ -7,6 +7,11 @@
   padding: 40px 20px;
   text-align: center;
 
+  &.contentLeft {
+    text-align: left;
+    padding: 30px; // Figma 디자인에 맞게 30px로 변경
+  }
+
   p {
     font-size: 20px;
     font-weight: 400;
@@ -22,6 +27,10 @@
 
   @media (max-width: $breakpoint-md) {
     padding: 30px 15px;
+
+    &.contentLeft {
+      padding: 30px;
+    }
 
     p {
       font-size: 18px;
@@ -39,14 +48,23 @@
     display: flex;
     gap: 8px;
     align-items: center;
+
+    .title {
+      font-size: 32px; // Figma 디자인에 맞게 32px로 수정
+      font-weight: 600; // Semibold
+      letter-spacing: -1.28px; // Figma 디자인에 맞게 추가
+    }
   }
 
   .infoBox {
     background-color: #fdf9f4;
     border: 1px solid #dbbf93;
     border-radius: 10px;
-    padding: 30px;
+    padding: 30px; // Figma 디자인에 맞게 30px로 유지
     text-align: left;
+    height: 116px; // Figma 디자인에 맞게 높이 116px로 수정
+    display: flex;
+    align-items: center;
   }
 }
 

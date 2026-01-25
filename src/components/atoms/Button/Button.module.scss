@@ -26,6 +26,7 @@
   background-color: $color-primary;
   color: #fff;
   font-weight: 600;
+  letter-spacing: -0.96px; // Figma 디자인에 맞게 추가
 
   &:hover:not(:disabled) {
     background-color: darken($color-primary, 10%);
@@ -48,7 +49,7 @@
 .outline {
   background-color: #fff;
   color: #000;
-  border: 2px solid $gray-4;
+  border: 2px solid $gray-4; // Figma 디자인에 맞게 2px로 유지
   font-weight: 600;
 
   &:hover:not(:disabled) {
@@ -95,9 +96,11 @@
 }
 
 .large {
-  height: 66px;
-  padding: 0 32px;
-  font-size: 20px;
+  height: 66px; // Figma 디자인에 맞게 66px로 유지
+  padding: 15px 30px; // Figma 디자인에 맞게 수정
+  font-size: 24px; // Figma 디자인에 맞게 24px로 수정
+  font-weight: 600; // Semibold
+  letter-spacing: -0.96px; // Figma 디자인에 맞게 추가
 
   @media (max-width: $breakpoint-md) {
     height: 50px;

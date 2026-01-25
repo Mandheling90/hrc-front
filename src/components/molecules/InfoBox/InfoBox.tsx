@@ -85,7 +85,11 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   }
 
   return (
-    <div className={`${styles.infoBox} ${hasIcon ? styles.withIcon : ''} ${className}`}>
+    <div
+      className={`${styles.infoBox} ${hasIcon ? styles.withIcon : ''} ${
+        contentAlign === 'left' ? styles.contentLeft : ''
+      } ${className}`}
+    >
       {hasIcon && <div className={styles.icon}>{icon}</div>}
       <div className={styles.content}>
         {hasTitle && <h4 className={styles.title}>{title}</h4>}

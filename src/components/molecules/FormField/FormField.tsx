@@ -41,6 +41,8 @@ export interface FormFieldProps {
   rightElement?: React.ReactNode
   /** 추가 컨텐츠 (Input 아래에 표시) */
   children?: React.ReactNode
+  /** 모바일에서 Input과 Button을 2줄로 배치 (기본값: false) */
+  mobileStack?: boolean
 }
 
 export const FormField: React.FC<FormFieldProps> = ({
@@ -61,12 +63,13 @@ export const FormField: React.FC<FormFieldProps> = ({
   buttonClassName,
   helperText,
   rightElement,
-  children
+  children,
+  mobileStack = false
 }) => {
   const hasRightElement = buttonText || rightElement
 
   return (
-    <div className={`${styles.formField} ${hasRightElement ? styles.formFieldWithButton : ''}`}>
+    <div className={`${styles.formField} ${hasRightElement ? styles.formFieldWithButton : ''} ${mobileStack ? styles.mobileStack : ''}`}>
       <InputLabel htmlFor={id} required={required}>
         {label}
       </InputLabel>
