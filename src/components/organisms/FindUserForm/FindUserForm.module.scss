@@ -30,7 +30,7 @@
 
 .tabs {
   display: flex;
-  background-color: #f9f9f9;
+  background-color: $gray-2;
   border-radius: 10px 10px 0 0;
   height: 56px;
   overflow: hidden;
@@ -39,10 +39,10 @@
 .tab {
   flex: 1;
   height: 56px;
-  background-color: #f9f9f9;
+  background-color: $gray-2;
   border: none;
   border-bottom: 1px solid $color-primary;
-  color: #636363;
+  color: $gray-11;
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.8px;
@@ -107,8 +107,8 @@
   }
 
   &.inactive {
-    background-color: #f9f9f9;
-    border-color: #d9d9d9;
+    background-color: $gray-2;
+    border-color: $gray-6;
   }
 
   @media (max-width: $breakpoint-lg) {

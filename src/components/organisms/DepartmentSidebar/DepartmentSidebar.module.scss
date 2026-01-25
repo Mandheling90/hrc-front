@@ -3,12 +3,12 @@
 
 // Figma Secondary/Normal – 초성 바 배경
 $initial-bar-bg: #e6cfad;
-$initial-nav-bg: #f9f9f9;
-$scrollbar-track: #e8e8e8;
+$initial-nav-bg: $gray-2;
+$scrollbar-track: $gray-4;
 
 .sidebar {
   background-color: $color-white;
-  border: 1px solid $gray-300;
+  border: 1px solid $gray-4;
   border-radius: $radius-lg;
   padding: 0;
   height: 100%;
@@ -27,13 +27,13 @@ $scrollbar-track: #e8e8e8;
 
 .header {
   padding: $spacing-4 $spacing-6;
-  border-bottom: 1px solid $gray-300;
+  border-bottom: 1px solid $gray-4;
 }
 
 .title {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   margin: 0;
   line-height: $line-height-normal;
   text-align: center;
@@ -72,7 +72,7 @@ $scrollbar-track: #e8e8e8;
   border-radius: $radius-full;
   border: 1px solid transparent;
   background-color: $initial-nav-bg;
-  color: $gray-900;
+  color: $gray-12;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   cursor: pointer;
@@ -82,7 +82,7 @@ $scrollbar-track: #e8e8e8;
   justify-content: center;
 
   &:hover:not(.active):not(:disabled) {
-    background-color: $gray-200;
+    background-color: $gray-3;
   }
 
   &.active {
@@ -93,8 +93,8 @@ $scrollbar-track: #e8e8e8;
 
   &.disabled,
   &:disabled {
-    background-color: $gray-500;
-    color: $gray-600;
+    background-color: $gray-8;
+    color: $gray-10;
     cursor: not-allowed;
     opacity: 0.6;
   }
@@ -115,7 +115,7 @@ $scrollbar-track: #e8e8e8;
 .divider {
   width: 1px;
   flex-shrink: 0;
-  background-color: $gray-300;
+  background-color: $gray-4;
 }
 
 .departmentList {
@@ -142,7 +142,7 @@ $scrollbar-track: #e8e8e8;
   background-color: $initial-bar-bg;
   font-size: $font-size-base;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   text-align: center;
   flex-shrink: 0;
 }
@@ -162,12 +162,12 @@ $scrollbar-track: #e8e8e8;
   border-radius: 0;
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
-  color: $gray-900;
+  color: $gray-12;
   cursor: pointer;
   transition: color $transition-base;
 
   &:hover:not(.active) {
-    color: $gray-700;
+    color: $gray-11;
   }
 
   &.active {

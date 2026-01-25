@@ -239,7 +239,7 @@ $header-bp-mobile: 768px;
 @mixin page-title-large {
   font-size: 48px;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   text-align: center;
   margin: 0 0 $spacing-16;
   line-height: 1.5;
@@ -264,7 +264,7 @@ $header-bp-mobile: 768px;
 @mixin page-title-medium {
   font-size: $font-size-4xl; // 36px
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   text-align: center;
   margin: 0 0 $spacing-10;
   line-height: 1.5;
@@ -291,7 +291,7 @@ $header-bp-mobile: 768px;
 @mixin section-title {
   font-size: 32px;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   margin: 0;
   line-height: 1.5;
   letter-spacing: -1.28px;

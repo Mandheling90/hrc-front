@@ -21,7 +21,7 @@
   position: relative;
 
   &:hover:not(:disabled) {
-    background-color: $gray-100;
+    background-color: $gray-2;
   }
 
   &:disabled {
@@ -56,12 +56,12 @@
   border-radius: $radius-md;
   font-size: $font-size-2xl;
   font-weight: $font-weight-normal;
-  color: $gray-600;
+  color: $gray-10;
   cursor: pointer;
   transition: all $transition-base;
 
   &:hover {
-    background-color: $gray-100;
+    background-color: $gray-2;
   }
 
   &.active {
@@ -77,6 +77,6 @@
   justify-content: center;
   min-width: 32px;
   height: 32px;
-  color: $gray-600;
+  color: $gray-10;
   font-size: $font-size-2xl;
 }

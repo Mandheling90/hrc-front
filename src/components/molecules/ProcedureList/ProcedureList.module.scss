@@ -9,7 +9,7 @@
   align-items: center;
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   margin-bottom: $spacing-3;
 }
 
@@ -35,7 +35,7 @@
 .procedureItemHighlighted {
   font-size: $font-size-lg;
   font-weight: $font-weight-normal;
-  color: $gray-700;
+  color: $gray-11;
   line-height: $line-height-relaxed;
   letter-spacing: -0.72px;
   padding-left: $spacing-6;
@@ -65,7 +65,7 @@
 .procedureItem {
   font-size: $font-size-lg;
   font-weight: $font-weight-normal;
-  color: $gray-700;
+  color: $gray-11;
   line-height: $line-height-relaxed;
   letter-spacing: -0.72px;
   padding-left: $spacing-6;
@@ -77,7 +77,7 @@
     left: 0;
     top: calc(1em * #{$line-height-relaxed} / 2);
     transform: translateY(-50%);
-    color: $gray-700;
+    color: $gray-11;
     font-weight: $font-weight-normal;
   }
 

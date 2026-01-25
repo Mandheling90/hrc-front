@@ -197,7 +197,7 @@ export default function ClinicStatusPage() {
 
             {/* 위치 기반 검색 안내 */}
             <div className={styles.locationInfo}>
-              <SearchIcon width={24} height={24} fill='#636363' />
+              <SearchIcon width={24} height={24} fill='var(--gray-11)' />
               <p>현재 내 위치에서 가장 가까운 병의원이 검색됩니다.</p>
             </div>
           </div>

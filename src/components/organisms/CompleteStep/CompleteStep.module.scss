@@ -65,7 +65,7 @@
   font-family: $font-family-base;
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal;
-  color: #636363;
+  color: $gray-11;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
   text-align: center;
@@ -176,7 +176,7 @@
   font-size: $font-size-2xl; // 24px
   font-weight: $font-weight-semibold;
   border-width: 2px;
-  border-color: #e8e8e8;
+  border-color: $gray-4;
 
   @media (max-width: $breakpoint-md) {
     width: 100%;

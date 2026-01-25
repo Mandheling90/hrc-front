@@ -25,9 +25,9 @@
   padding: 5px;
   text-align: center;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
-  background-color: #f9f9f9;
-  border: 1px solid #d9d9d9;
+  color: $gray-12;
+  background-color: $gray-2;
+  border: 1px solid $gray-6;
   border-top: none;
   font-size: 18px;
   line-height: 1.5;
@@ -43,9 +43,9 @@
   padding: 11px;
   text-align: center;
   font-weight: $font-weight-normal;
-  color: #636363;
+  color: $gray-11;
   background-color: $color-white;
-  border: 1px solid #d9d9d9;
+  border: 1px solid $gray-6;
   font-size: 18px;
   line-height: 1.5;
   letter-spacing: -0.72px;
@@ -61,8 +61,8 @@
 .slotCell {
   padding: 8px;
   text-align: center;
-  border: 1px solid #d9d9d9;
-  border-left: 1px solid #d9d9d9;
+  border: 1px solid $gray-6;
+  border-left: 1px solid $gray-6;
   min-width: 30px;
   height: 49px;
   vertical-align: middle;

@@ -5,7 +5,7 @@
   align-items: center;
   font-size: $font-size-lg; // 20px
   font-weight: $font-weight-normal; // 400 (regular)
-  color: #636363;
+  color: $gray-11;
   cursor: pointer;
   gap: 8px;
   letter-spacing: -0.8px;
@@ -29,7 +29,7 @@
 
   // 체크 안된 상태일 때 라벨 색상
   input:not(:checked) ~ span {
-    color: #636363;
+    color: $gray-11;
   }
 
   @media (max-width: $breakpoint-md) {

@@ -12,7 +12,7 @@ export const CalendarIcon: React.FC<CalendarIconProps> = ({
   width = 24,
   height = 24,
   className = '',
-  stroke = '#636363',
+  stroke = 'var(--gray-11)',
   strokeWidth = 1
 }) => {
   return (

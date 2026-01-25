@@ -42,7 +42,7 @@
 .targetLabel {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-900;
+  color: $gray-12;
   margin-bottom: $spacing-3;
 }
 
@@ -75,7 +75,7 @@
   gap: $spacing-4;
   padding: $spacing-5;
   background-color: $color-white;
-  border: 1px solid $gray-300;
+  border: 1px solid $gray-4;
   border-radius: $radius-md;
   flex: 1 1 0;
   min-width: 0;
@@ -123,13 +123,13 @@
 .contactLabel {
   font-size: $font-size-lg;
   font-weight: $font-weight-medium;
-  color: $gray-900;
+  color: $gray-12;
 }
 
 .contactValue {
   font-size: $font-size-lg;
   font-weight: $font-weight-medium;
-  color: $gray-900;
+  color: $gray-12;
 }
 
 .downloadButton {

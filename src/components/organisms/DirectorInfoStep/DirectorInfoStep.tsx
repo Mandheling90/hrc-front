@@ -63,7 +63,7 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
               onChange={() => {}}
               error=''
             />
-            <CalendarIcon width={24} height={24} stroke='#636363' className={styles.calendarIcon} />
+            <CalendarIcon width={24} height={24} stroke='var(--gray-11)' className={styles.calendarIcon} />
           </div>
         </div>
 
@@ -121,7 +121,7 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
             onChange={() => {}}
           />
           <div className={styles.helperText}>
-            <InfoIcon width={24} height={24} fill='#636363' />
+            <InfoIcon width={24} height={24} fill='var(--gray-11)' />
             <span>무료 주차등록 희망시, 하단 차량등록증 첨부 필요.</span>
           </div>
         </div>
@@ -167,7 +167,7 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
               onChange={() => {}}
               error=''
             />
-            <CalendarIcon width={24} height={24} stroke='#636363' className={styles.calendarIcon} />
+            <CalendarIcon width={24} height={24} stroke='var(--gray-11)' className={styles.calendarIcon} />
           </div>
         </div>
 

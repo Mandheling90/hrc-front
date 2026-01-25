@@ -237,7 +237,7 @@ $header-height-mobile: 56px;
   left: 0;
   width: 100%;
   background: #fff;
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid $gray-3;
   opacity: 0; // 1
   visibility: hidden; // visible
   transform: translateY(-10px);
@@ -274,7 +274,7 @@ $header-height-mobile: 56px;
   display: flex;
   flex-direction: column;
   align-items: flex-end; // 우측 정렬
-  background-color: #f9f9f9;
+  background-color: $gray-2;
   background-image: url('/assets/images/building-bg.png');
   background-repeat: no-repeat;
   background-position: right bottom;
@@ -323,7 +323,7 @@ $header-height-mobile: 56px;
   height: 30px;
   padding: 0 10px;
   background: #fff;
-  border: 1px solid #cecfcf;
+  border: 1px solid $gray-7;
   border-radius: 10px;
 
   svg {
@@ -541,7 +541,7 @@ span.disabled {
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid $gray-3;
 }
 
 .mobileLogo {
@@ -587,7 +587,7 @@ span.disabled {
       padding: 16px 14px;
       font-size: 14px;
       font-weight: 600;
-      color: $gray-700;
+      color: $gray-11;
       text-align: left;
       background: none;
       border: none;
@@ -618,9 +618,9 @@ span.disabled {
     display: block;
     padding: 11px 14px;
     font-size: 13px;
-    color: $gray-700;
+    color: $gray-11;
     text-decoration: none;
-    border: 1px solid $gray-300;
+    border: 1px solid $gray-4;
     border-radius: 6px;
     transition: all 0.2s;
   }
@@ -648,7 +648,7 @@ span.disabled {
 
 .mobileFooter {
   padding: 14px 16px;
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid $gray-3;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -660,7 +660,7 @@ span.disabled {
   align-items: center;
   gap: 8px;
   padding: 14px 16px;
-  background: $gray-100;
+  background: $gray-2;
   border-radius: 8px;
   font-size: 14px;
 
@@ -668,11 +668,11 @@ span.disabled {
     display: flex;
     align-items: center;
     gap: 6px;
-    color: $gray-600;
+    color: $gray-10;
     font-size: 13px;
 
     svg {
-      color: $gray-500;
+      color: $gray-8;
     }
   }
 
@@ -724,7 +724,7 @@ span.disabled {
   align-items: center;
   justify-content: space-between;
   padding: 18px 40px;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid $gray-3;
 
   @media (max-width: 900px) {
     padding: 16px 24px;
@@ -792,9 +792,9 @@ span.disabled {
     justify-content: center;
     padding: 10px 22px;
     font-size: 14px;
-    color: $gray-700;
+    color: $gray-11;
     text-decoration: none;
-    border: 1px solid $gray-300;
+    border: 1px solid $gray-4;
     border-radius: 22px;
     transition: all 0.2s;
     white-space: nowrap;
@@ -824,7 +824,7 @@ span.disabled {
 
 .tabletFooter {
   padding: 18px 40px;
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid $gray-3;
   display: flex;
   gap: 12px;
 
@@ -842,7 +842,7 @@ span.disabled {
   gap: 10px;
   padding: 14px 24px;
   background: #fff;
-  border: 1px solid $gray-300;
+  border: 1px solid $gray-4;
   border-radius: 30px;
   font-size: 14px;
 
@@ -850,10 +850,10 @@ span.disabled {
     display: flex;
     align-items: center;
     gap: 6px;
-    color: $gray-600;
+    color: $gray-10;
 
     svg {
-      color: $gray-500;
+      color: $gray-8;
     }
   }
 

@@ -87,7 +87,7 @@
   .titleBelowIcon {
     font-size: $font-size-2xl; // 24px
     font-weight: $font-weight-semibold; // 600
-    color: $gray-900;
+    color: $gray-12;
     margin: 0;
     line-height: 1.5;
     letter-spacing: -0.96px;
@@ -193,7 +193,7 @@
     text-align: left !important;
     font-size: $font-size-xl !important; // 20px
     font-weight: $font-weight-normal !important; // 400
-    color: #636363 !important;
+    color: $gray-11 !important;
     margin: 0;
     line-height: 1.5;
     letter-spacing: -0.8px;
@@ -355,7 +355,7 @@
 .title {
   font-size: $font-size-2xl; // 24px
   font-weight: $font-weight-semibold; // 600
-  color: $gray-900;
+  color: $gray-12;
   margin: 0;
   line-height: 1.5;
   letter-spacing: -0.96px;
@@ -477,7 +477,7 @@
   .title {
     font-size: $font-size-lg; // 18px
     font-weight: $font-weight-semibold;
-    color: $gray-900;
+    color: $gray-12;
     margin: 0;
     line-height: 1.5;
     letter-spacing: -0.72px;
@@ -535,7 +535,7 @@
     .titleBelowIcon {
       font-size: $font-size-base; // 16px
       font-weight: $font-weight-semibold;
-      color: $gray-900;
+      color: $gray-12;
       margin: 0;
       line-height: 1.4;
       letter-spacing: -0.64px;

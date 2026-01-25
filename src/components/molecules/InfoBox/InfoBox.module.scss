@@ -10,7 +10,7 @@
   p {
     font-size: 20px;
     font-weight: 400;
-    color: #636363;
+    color: $gray-11;
     letter-spacing: -0.8px;
     line-height: 1.5;
     margin: 0;
@@ -60,7 +60,7 @@
 
   .content {
     .message {
-      color: #636363;
+      color: $gray-11;
     }
   }
 
@@ -99,7 +99,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #636363;
+  color: $gray-11;
   margin: 0;
   letter-spacing: -0.96px;
   line-height: 1.5;
@@ -113,7 +113,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 400;
-  color: #636363;
+  color: $gray-11;
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0;
@@ -186,7 +186,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #636363;
+  color: $gray-11;
   line-height: 1.5;
   letter-spacing: -0.96px;
   margin: 0 0 8px 0;
@@ -216,7 +216,7 @@
   flex-shrink: 0;
   width: 8px;
   height: 2px;
-  background-color: #636363;
+  background-color: $gray-11;
 
   // @media (max-width: $breakpoint-md) {
   //   display: none;
@@ -227,7 +227,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 400;
-  color: #636363;
+  color: $gray-11;
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0;

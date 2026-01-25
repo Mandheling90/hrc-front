@@ -209,7 +209,7 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
                 <div className={styles.fileList}>
                   {files.map((file, index) => (
                     <div key={index} className={styles.fileItem}>
-                      <FileRemoveIcon width={22} height={22} stroke='#636363' />
+                      <FileRemoveIcon width={22} height={22} stroke='var(--gray-11)' />
                       <span className={styles.fileName}>{file.name}</span>
                       <span className={styles.fileSize}>{formatFileSize(file.size)}</span>
                     </div>

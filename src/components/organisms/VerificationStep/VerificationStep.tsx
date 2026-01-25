@@ -83,7 +83,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onNext }) =>
 
       <NoticeList
         title='유의사항'
-        icon={<InfoIcon width={24} height={24} fill='#828282' />}
+        icon={<InfoIcon width={24} height={24} fill='var(--gray-10)' />}
         items={[
           {
             text: '본인인증 방법 선택 후 팝업창이 나타나지 않으면 브라우저의 팝업차단을 해제해 주시기 바랍니다.'

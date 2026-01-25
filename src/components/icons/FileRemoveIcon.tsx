@@ -12,7 +12,7 @@ export const FileRemoveIcon: React.FC<FileRemoveIconProps> = ({
   width = 22,
   height = 22,
   className = '',
-  stroke = '#636363',
+  stroke = 'var(--gray-11)',
   strokeWidth = 1.33333
 }) => {
   return (

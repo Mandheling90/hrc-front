@@ -48,12 +48,12 @@
 .outline {
   background-color: #fff;
   color: #000;
-  border: 2px solid #e8e8e8;
+  border: 2px solid $gray-4;
   font-weight: 600;
 
   &:hover:not(:disabled) {
     background-color: #f5f5f5;
-    border-color: #d9d9d9;
+    border-color: $gray-6;
   }
 }
 

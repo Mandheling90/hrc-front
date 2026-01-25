@@ -3,7 +3,7 @@
 .breadcrumbs {
   padding: $spacing-4 0;
   font-size: $font-size-sm;
-  color: $gray-600;
+  color: $gray-10;
 }
 
 .list {
@@ -27,7 +27,7 @@
 }
 
 .separator {
-  color: $gray-500;
+  color: $gray-8;
   margin: 0 $spacing-2;
   user-select: none;
 }
@@ -36,12 +36,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: $gray-600;
+  color: $gray-10;
   flex-shrink: 0;
 }
 
 .link {
-  color: $gray-600;
+  color: $gray-10;
   text-decoration: none;
   transition: color $transition-base;
 
@@ -51,6 +51,6 @@
 }
 
 .current {
-  color: $gray-700;
+  color: $gray-11;
   font-weight: $font-weight-medium;
 }
