@@ -52,7 +52,7 @@
   font-weight: 600;
 
   &:hover:not(:disabled) {
-    background-color: #f5f5f5;
+    background-color: $gray-2;
     border-color: $gray-6;
   }
 }
@@ -64,7 +64,7 @@
   font-weight: 600;
 
   &:hover:not(:disabled) {
-    background-color: #f5f5f5;
+    background-color: $gray-2;
     border-color: #bbb;
   }
 }

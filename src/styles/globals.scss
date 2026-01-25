@@ -121,11 +121,11 @@ html {
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-    background-color: #f6f6f6;
+    background-color: $gray-2;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #5a5a5a;
+    background-color: $gray-11;
     border-radius: 4px;
   }
 }

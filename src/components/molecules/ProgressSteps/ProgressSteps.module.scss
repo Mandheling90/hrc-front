@@ -47,7 +47,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background-color: #e0e0e0;
+  background-color: $gray-4;
   z-index: 0;
 
   @media (max-width: $breakpoint-md) {
@@ -116,7 +116,7 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
-  color: #666666;
+  color: $gray-10;
 
   @media (max-width: $breakpoint-md) {
     font-size: 16px;
@@ -128,7 +128,7 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.2;
-  color: #666666;
+  color: $gray-10;
 
   @media (max-width: $breakpoint-md) {
     font-size: 16px;

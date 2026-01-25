@@ -30,7 +30,7 @@ $header-height-mobile: 56px;
 
 .headerTop {
   background: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid $gray-4;
 }
 
 .container {
@@ -641,7 +641,7 @@ span.disabled {
   // 비활성 링크 (미개발 페이지)
   span.disabled {
     color: #999;
-    border-color: #e5e5e5;
+    border-color: $gray-4;
     cursor: default;
   }
 }
@@ -817,7 +817,7 @@ span.disabled {
   // 비활성 링크 (미개발 페이지)
   span.disabled {
     color: #999;
-    border-color: #e5e5e5;
+    border-color: $gray-4;
     cursor: default;
   }
 }
