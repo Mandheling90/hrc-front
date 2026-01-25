@@ -9,7 +9,35 @@
 
 // CSS 변수 정의
 :root {
-  /* gray */
+  /* gray scale (Gray 1-12) */
+  --gray-1: #{$gray-1};
+  --gray-1-rgb: #{$gray-1-rgb};
+  --gray-2: #{$gray-2};
+  --gray-2-rgb: #{$gray-2-rgb};
+  --gray-3: #{$gray-3};
+  --gray-3-rgb: #{$gray-3-rgb};
+  --gray-4: #{$gray-4};
+  --gray-4-rgb: #{$gray-4-rgb};
+  --gray-5: #{$gray-5};
+  --gray-5-rgb: #{$gray-5-rgb};
+  --gray-6: #{$gray-6};
+  --gray-6-rgb: #{$gray-6-rgb};
+  --gray-7: #{$gray-7};
+  --gray-7-rgb: #{$gray-7-rgb};
+  --gray-8: #{$gray-8};
+  --gray-8-rgb: #{$gray-8-rgb};
+  --gray-9: #{$gray-9};
+  --gray-9-rgb: #{$gray-9-rgb};
+  --gray-10: #{$gray-10};
+  --gray-10-rgb: #{$gray-10-rgb};
+  --gray-11: #{$gray-11};
+  --gray-11-rgb: #{$gray-11-rgb};
+  --gray-12: #{$gray-12};
+  --gray-12-rgb: #{$gray-12-rgb};
+
+  /* legacy gray (for backward compatibility) */
+  --gray-50: #{$gray-50};
+  --gray-50-rgb: #{$gray-50-rgb};
   --gray-100: #{$gray-100};
   --gray-100-rgb: #{$gray-100-rgb};
   --gray-200: #{$gray-200};

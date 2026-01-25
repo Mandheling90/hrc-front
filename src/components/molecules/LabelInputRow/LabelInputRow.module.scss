@@ -47,7 +47,7 @@
     :global(.input) {
       height: 43px;
       padding: 8px 15px;
-      border: 1px solid #8c8c8c;
+      border: 1px solid $gray-9;
       border-radius: 5px;
       font-size: $font-size-lg; // 18px
       line-height: 1.5;
@@ -55,12 +55,12 @@
       color: #000000;
 
       &::placeholder {
-        color: #8c8c8c;
+        color: $gray-9;
       }
 
       &:disabled {
         background-color: #e8e8e8;
-        border-color: #8c8c8c;
+        border-color: $gray-9;
         color: #636363;
         cursor: not-allowed;
 

@@ -8,7 +8,7 @@
   gap: 20px;
   padding: 20px 30px 30px 30px;
   background-color: $color-white;
-  border: 1px solid #8c8c8c;
+  border: 1px solid $gray-9;
   border-radius: 10px;
   box-shadow: $shadow-sm;
   text-align: center;
@@ -20,7 +20,7 @@
 
   // hover 효과 제거 (스텝 카드는 정적)
   &:hover {
-    border-color: #8c8c8c;
+    border-color: $gray-9;
     box-shadow: $shadow-sm;
   }
 }

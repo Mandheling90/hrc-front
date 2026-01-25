@@ -68,15 +68,18 @@ const systemColors = [
 ]
 
 const grayScale = [
-  { name: 'Gray 100', hex: '#f8f9fa', scssVar: '$gray-100' },
-  { name: 'Gray 200', hex: '#e9ecef', scssVar: '$gray-200' },
-  { name: 'Gray 300', hex: '#dee2e6', scssVar: '$gray-300' },
-  { name: 'Gray 400', hex: '#ced4da', scssVar: '$gray-400' },
-  { name: 'Gray 500', hex: '#adb5bd', scssVar: '$gray-500' },
-  { name: 'Gray 600', hex: '#6c757d', scssVar: '$gray-600' },
-  { name: 'Gray 700', hex: '#495057', scssVar: '$gray-700' },
-  { name: 'Gray 800', hex: '#343a40', scssVar: '$gray-800' },
-  { name: 'Gray 900', hex: '#111111', scssVar: '$gray-900' }
+  { name: 'Gray 1', hex: '#fdfdfd', scssVar: '$gray-1' },
+  { name: 'Gray 2', hex: '#f9f9f9', scssVar: '$gray-2' },
+  { name: 'Gray 3', hex: '#f0f0f0', scssVar: '$gray-3' },
+  { name: 'Gray 4', hex: '#e8e8e8', scssVar: '$gray-4' },
+  { name: 'Gray 5', hex: '#e1e1e1', scssVar: '$gray-5' },
+  { name: 'Gray 6', hex: '#d9d9d9', scssVar: '$gray-6' },
+  { name: 'Gray 7', hex: '#cecfcf', scssVar: '$gray-7' },
+  { name: 'Gray 8', hex: '#bbbbbb', scssVar: '$gray-8' },
+  { name: 'Gray 9', hex: '#8c8c8c', scssVar: '$gray-9' },
+  { name: 'Gray 10', hex: '#828282', scssVar: '$gray-10' },
+  { name: 'Gray 11', hex: '#636363', scssVar: '$gray-11' },
+  { name: 'Gray 12', hex: '#202020', scssVar: '$gray-12' }
 ]
 
 const darkModeColors = [
@@ -608,7 +611,7 @@ export default function StyleGuidePage() {
         <div className={styles.selectGroup}>
           <div className={styles.componentItem}>
             <span className={styles.componentLabel}>기본</span>
-            <Select options={selectOptions} value={selectValue} onChange={e => setSelectValue(e.target.value)} />
+            <Select options={selectOptions} value={selectValue} onChange={value => setSelectValue(value)} />
           </div>
           <div className={styles.componentItem}>
             <span className={styles.componentLabel}>라벨 포함</span>
@@ -616,7 +619,7 @@ export default function StyleGuidePage() {
               label='옵션 선택'
               options={selectOptions}
               value={selectValue}
-              onChange={e => setSelectValue(e.target.value)}
+              onChange={value => setSelectValue(value)}
             />
           </div>
           <div className={styles.componentItem}>

@@ -1,0 +1,175 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+  padding-bottom: $spacing-20;
+}
+
+.pageTitle {
+  @include page-title-large;
+  text-align: center;
+  margin-bottom: $spacing-20;
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -1.92px;
+  color: $gray-900;
+}
+
+.filterSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-10;
+  margin-bottom: $spacing-20;
+
+}
+
+.filterRow {
+  display: flex;
+  gap: $spacing-2;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include tablet {
+    flex-direction: column;
+  }
+}
+
+.searchWrapper {
+  display: flex;
+  gap: $spacing-2;
+  flex-shrink: 0;
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.searchInput {
+  width: 287px;
+  flex-shrink: 0;
+
+  :global(.input) {
+    height: 43px;
+    padding: 8px 10px;
+    font-size: $font-size-lg;
+    border: 1px solid $gray-600;
+    border-radius: $radius-md;
+    color: $gray-600;
+
+    &::placeholder {
+      color: $gray-600;
+    }
+  }
+}
+
+
+
+.searchButton {
+  padding: 0px 30px;
+  height: 43px;
+
+  @include tablet {
+    min-width: 100px;
+  }
+}
+
+.locationInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  justify-content: flex-end;
+  width: 100%;
+
+  p {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-normal;
+    letter-spacing: -0.72px;
+    color: $gray-700;
+    margin: 0;
+  }
+
+  @include tablet {
+    justify-content: flex-start;
+  }
+}
+
+.contentSection {
+  display: flex;
+  gap: $spacing-6;
+  margin-bottom: $spacing-10;
+
+  @include tablet {
+    flex-direction: column;
+  }
+}
+
+.mapContainer {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.mapPlaceholder {
+  width: 100%;
+  height: 100%;
+  min-height: 881px;
+  background-color: $gray-200;
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $gray-600;
+  font-size: $font-size-lg;
+  position: relative;
+  overflow: hidden;
+
+  p {
+    margin: 0;
+  }
+
+  .mapNote {
+    font-size: $font-size-sm;
+    margin-top: $spacing-2;
+    color: $gray-500;
+  }
+
+  @include tablet {
+    min-height: 400px;
+  }
+}
+
+.clinicList {
+  display: flex;
+  flex-direction: column;
+  width: 495px;
+  flex-shrink: 0;
+  background-color: $color-white;
+  border: 1px solid $gray-600;
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.emptyState {
+  padding: $spacing-20;
+  text-align: center;
+  color: $gray-600;
+  font-size: $font-size-lg;
+}
+
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-10;
+}

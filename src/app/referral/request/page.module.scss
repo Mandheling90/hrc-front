@@ -30,7 +30,7 @@
   justify-content: center; // 카드 내부 콘텐츠 수평 중앙 정렬
   padding: 20px;
   background-color: $color-white;
-  border: 1px solid #8c8c8c;
+  border: 1px solid $gray-9;
   border-radius: 10px;
   text-align: left;
   min-width: 0; // flex/grid 아이템 오버플로우 방지
@@ -139,7 +139,7 @@
   gap: $spacing-2;
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal; // 400
-  color: #8c8c8c;
+  color: $gray-9;
   line-height: $line-height-normal; // 1.5
   letter-spacing: -0.8px;
   width: 100%; // 전체 너비 사용
@@ -166,7 +166,7 @@
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal; // 400
   line-height: $line-height-normal; // 1.5
-  color: #8c8c8c;
+  color: $gray-9;
   margin: 0;
   letter-spacing: -0.8px;
 }
@@ -267,7 +267,7 @@
   .details {
     font-size: $font-size-xl; // 20px
     font-weight: $font-weight-normal; // 400
-    color: #8c8c8c;
+    color: $gray-9;
     margin-top: $spacing-3;
     letter-spacing: -0.8px;
     min-width: 0; // 오버플로우 방지
@@ -287,7 +287,7 @@
   .description {
     font-size: $font-size-xl; // 20px
     font-weight: $font-weight-normal; // 400
-    color: #8c8c8c;
+    color: $gray-9;
     margin: $spacing-2 0 0 0;
     letter-spacing: -0.8px;
   }

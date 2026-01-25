@@ -9,7 +9,7 @@
   gap: 56px;
   padding: 30px 50px;
   background-color: $color-white;
-  border: 1px solid #8c8c8c;
+  border: 1px solid $gray-9;
   border-radius: 10px;
   box-shadow: $shadow-sm;
   transition: all $transition-base;
@@ -92,7 +92,7 @@
   font-size: $font-size-lg;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: #8c8c8c;
+  color: $gray-9;
   margin: 0;
   letter-spacing: -0.72px;
   width: auto;

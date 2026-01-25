@@ -1,0 +1,82 @@
+@import '@/styles/variables.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  justify-content: center;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: $color-white;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  transition: all $transition-base;
+  position: relative;
+
+  &:hover:not(:disabled) {
+    background-color: $gray-100;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.doubleArrowContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.doubleArrow {
+  position: absolute;
+  left: 4px;
+}
+
+.pageButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 $spacing-2;
+  border: none;
+  background-color: $color-white;
+  border-radius: $radius-md;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-normal;
+  color: $gray-600;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background-color: $gray-100;
+  }
+
+  &.active {
+    background-color: $color-primary;
+    color: $color-white;
+    font-weight: $font-weight-normal;
+  }
+}
+
+.ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: $gray-600;
+  font-size: $font-size-2xl;
+}

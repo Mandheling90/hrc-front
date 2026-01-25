@@ -78,7 +78,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
               </button>
             )}
             <button type='button' className={styles.doctorInfoButton} onClick={onDoctorInfoClick}>
-              <DoctorInfoIcon width={48} height={48} stroke='#8c8c8c' />
+              <DoctorInfoIcon width={48} height={48} stroke='var(--gray-9)' />
               <span>의료진 소개</span>
             </button>
           </div>

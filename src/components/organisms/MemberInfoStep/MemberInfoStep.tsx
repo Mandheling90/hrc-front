@@ -65,8 +65,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
     }))
   }
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target
+  const handleSelectChange = (name: string) => (value: string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -277,7 +276,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
               name='department'
               options={departmentOptions}
               value={formData.department}
-              onChange={handleSelectChange}
+              onChange={handleSelectChange('department')}
             />
           </div>
 

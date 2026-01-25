@@ -1,0 +1,180 @@
+'use client'
+
+import React from 'react'
+import { ChevronLeftIcon } from '@/components/icons/ChevronLeftIcon'
+import { ChevronRightIcon } from '@/components/icons/ChevronRightIcon'
+import styles from './Pagination.module.scss'
+
+export interface PaginationProps {
+  /** 현재 페이지 */
+  currentPage: number
+  /** 전체 페이지 수 */
+  totalPages: number
+  /** 페이지 변경 핸들러 */
+  onPageChange: (page: number) => void
+  /** 표시할 최대 페이지 번호 수 (기본값: 5) */
+  maxVisiblePages?: number
+  /** className */
+  className?: string
+}
+
+export const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  maxVisiblePages = 5,
+  className = ''
+}) => {
+  // 페이지 번호 배열 생성
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = []
+    const halfVisible = Math.floor(maxVisiblePages / 2)
+
+    if (totalPages <= maxVisiblePages) {
+      // 전체 페이지가 표시 가능한 수보다 적으면 모두 표시
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i)
+      }
+    } else {
+      // 시작 부분
+      if (currentPage <= halfVisible + 1) {
+        for (let i = 1; i <= maxVisiblePages - 2; i++) {
+          pages.push(i)
+        }
+        pages.push('ellipsis')
+        pages.push(totalPages)
+      }
+      // 끝 부분
+      else if (currentPage >= totalPages - halfVisible) {
+        pages.push(1)
+        pages.push('ellipsis')
+        for (let i = totalPages - (maxVisiblePages - 3); i <= totalPages; i++) {
+          pages.push(i)
+        }
+      }
+      // 중간 부분
+      else {
+        pages.push(1)
+        pages.push('ellipsis')
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i)
+        }
+        pages.push('ellipsis')
+        pages.push(totalPages)
+      }
+    }
+
+    return pages
+  }
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1)
+    }
+  }
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1)
+    }
+  }
+
+  const handleFirst = () => {
+    if (currentPage > 1) {
+      onPageChange(1)
+    }
+  }
+
+  const handleLast = () => {
+    if (currentPage < totalPages) {
+      onPageChange(totalPages)
+    }
+  }
+
+  const pageNumbers = getPageNumbers()
+
+  if (totalPages <= 1) {
+    return null
+  }
+
+  return (
+    <div className={`${styles.pagination} ${className}`}>
+      {/* 첫 페이지로 이동 */}
+      <button
+        type='button'
+        className={styles.navButton}
+        onClick={handleFirst}
+        disabled={currentPage === 1}
+        aria-label='첫 페이지로 이동'
+      >
+        <div className={styles.doubleArrowContainer}>
+          <ChevronLeftIcon width={24} height={24} stroke='var(--gray-9)' />
+          <ChevronLeftIcon width={24} height={24} stroke='var(--gray-9)' className={styles.doubleArrow} />
+        </div>
+      </button>
+
+      {/* 이전 페이지 */}
+      <button
+        type='button'
+        className={styles.navButton}
+        onClick={handlePrevious}
+        disabled={currentPage === 1}
+        aria-label='이전 페이지'
+      >
+        <ChevronLeftIcon width={24} height={24} stroke='var(--gray-9)' />
+      </button>
+
+      {/* 페이지 번호 */}
+      {pageNumbers.map((page, index) => {
+        if (page === 'ellipsis') {
+          return (
+            <span key={`ellipsis-${index}`} className={styles.ellipsis}>
+              ...
+            </span>
+          )
+        }
+
+        const pageNum = page as number
+        const isActive = pageNum === currentPage
+
+        return (
+          <button
+            key={pageNum}
+            type='button'
+            className={`${styles.pageButton} ${isActive ? styles.active : ''}`}
+            onClick={() => onPageChange(pageNum)}
+            aria-label={`${pageNum}페이지로 이동`}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {pageNum}
+          </button>
+        )
+      })}
+
+      {/* 다음 페이지 */}
+      <button
+        type='button'
+        className={styles.navButton}
+        onClick={handleNext}
+        disabled={currentPage === totalPages}
+        aria-label='다음 페이지'
+      >
+        <ChevronRightIcon width={24} height={24} stroke='var(--gray-9)' />
+      </button>
+
+      {/* 마지막 페이지로 이동 */}
+      <button
+        type='button'
+        className={styles.navButton}
+        onClick={handleLast}
+        disabled={currentPage === totalPages}
+        aria-label='마지막 페이지로 이동'
+      >
+        <div className={styles.doubleArrowContainer}>
+          <ChevronRightIcon width={24} height={24} stroke='var(--gray-9)' />
+          <ChevronRightIcon width={24} height={24} stroke='var(--gray-9)' className={styles.doubleArrow} />
+        </div>
+      </button>
+    </div>
+  )
+}

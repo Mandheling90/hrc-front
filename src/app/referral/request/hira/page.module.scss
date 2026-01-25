@@ -37,7 +37,7 @@ $spacing-14: 3.5rem; // 56px
 
 // STEP 카드 스타일
 .stepCard {
-  border: 1px solid #8c8c8c;
+  border: 1px solid $gray-9;
   border-radius: 10px;
   padding: 30px;
   margin-top: $spacing-6;
