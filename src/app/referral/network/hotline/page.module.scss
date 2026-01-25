@@ -1,0 +1,166 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  font-size: 48px; // size-48
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -1.92px;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 $spacing-20;
+  padding: 0;
+
+  @include tablet {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-16;
+  }
+
+  @include mobile {
+    font-size: 36px; // 모바일: size-48 (36px)
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.hotlineList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  max-width: 1430px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  background-color: $gray-2;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 15px 20px;
+  gap: $spacing-2;
+
+  @include mobile {
+    display: none; // 모바일에서 숨김
+  }
+}
+
+.headerCell {
+  flex: 1;
+  font-size: $font-size-2xl; // size-24
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -0.96px;
+  color: $gray-12;
+  text-align: center;
+}
+
+.separator {
+  width: 1px;
+  height: 18px;
+  background-color: $gray-9;
+  flex-shrink: 0;
+}
+
+.tableBody {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  @include mobile {
+    display: none; // 모바일에서 숨김
+  }
+}
+
+.tableRow {
+  display: flex;
+  align-items: center;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 15px 20px;
+  gap: $spacing-2;
+}
+
+.dataCell {
+  flex: 1;
+  font-size: $font-size-2xl; // size-24
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  letter-spacing: -0.96px;
+  color: $gray-11;
+  text-align: center;
+}
+
+// 모바일 카드 리스트
+.mobileCardList {
+  display: none; // 데스크톱/태블릿에서 숨김
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    width: 100%;
+  }
+}
+
+.mobileCard {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 15px;
+  width: 100%;
+}
+
+.mobileCardDepartment {
+  font-size: 20px; // size-24 (20px)
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+}
+
+.mobileCardInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.mobileCardName {
+  font-size: 20px; // size-24 (20px)
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+  text-align: right;
+}
+
+.mobileCardSeparator {
+  width: 1px;
+  height: 18px;
+  background-color: $gray-8; // #bbb
+  flex-shrink: 0;
+  color: transparent; // 구분선만 표시
+}
+
+.mobileCardHotline {
+  font-size: 20px; // size-24 (20px)
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+  text-align: right;
+}

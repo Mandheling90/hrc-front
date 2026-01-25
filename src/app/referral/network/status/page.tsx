@@ -183,7 +183,6 @@ export default function ClinicStatusPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>협력병의원 현황</h1>
 
           {/* 필터 섹션 */}
