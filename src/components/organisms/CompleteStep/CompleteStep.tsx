@@ -11,6 +11,12 @@ export interface CompleteStepProps {
   userId?: string
   /** 사용자 이메일 */
   email?: string
+  /** 완료 제목 */
+  title?: string
+  /** 완료 설명 */
+  description?: string
+  /** 버튼 텍스트 */
+  buttonText?: string
   /** 메인으로 이동 핸들러 */
   onGoToMain?: () => void
 }
@@ -18,6 +24,9 @@ export interface CompleteStepProps {
 export const CompleteStep: React.FC<CompleteStepProps> = ({
   userId = 'test******',
   email = 'lee*******@naver.com',
+  title = '고려대학교 안암병원 진료협력센터 회원가입 신청이 완료되었습니다.',
+  description = '담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 회원가입이 최종 완료됩니다. 승인 결과는 등록하신 이메일로 안내드릴 예정입니다.',
+  buttonText = '메인으로 이동',
   onGoToMain
 }) => {
   const router = useRouter()
@@ -37,11 +46,12 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({
         <div className={styles.iconWrapper}>
           <CheckIcon width={60} height={60} stroke='#816331' strokeWidth={4} />
         </div>
-        <h2 className={styles.completeTitle}>고려대학교 안암병원 진료협력센터 회원가입 신청이 완료되었습니다.</h2>
-        <p className={styles.completeDescription}>
-          담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 회원가입이 최종 완료됩니다. 승인 결과는 등록하신 이메일로
-          안내드릴 예정입니다.
-        </p>
+        <h2 className={styles.completeTitle}>{title}</h2>
+        <div className={styles.completeDescription}>
+          {description.split('\n').map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
+        </div>
       </div>
 
       {/* 사용자 정보 표시 */}
@@ -61,7 +71,7 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({
       {/* 메인으로 이동 버튼 */}
       <div className={styles.buttonWrapper}>
         <Button type='button' variant='outline' size='large' onClick={handleGoToMain} className={styles.mainButton}>
-          메인으로 이동
+          {buttonText}
         </Button>
       </div>
     </div>

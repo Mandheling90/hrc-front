@@ -32,9 +32,12 @@
     flex-direction: column;
   }
 
-  @include tablet {
-    grid-template-columns: 1fr;
-    gap: $spacing-3;
+  // tabletThreeTwoLayout이 아닐 때만 태블릿에서 1열로 변경
+  &:not(.tabletThreeTwoLayout) {
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: $spacing-3;
+    }
   }
 }
 
@@ -72,42 +75,43 @@
 .tabletThreeTwoLayout {
   // 데스크톱: 5개 카드를 한 줄로 배치
   @media (min-width: calc(#{$breakpoint-lg} + 1px)) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr) !important;
     gap: $spacing-6;
 
     // 모든 카드가 동일한 너비를 가지도록
     > * {
-      grid-column: span 1;
+      grid-column: span 1 !important;
     }
   }
 
   // 태블릿: 3-2 레이아웃
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: $breakpoint-lg) {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, 1fr) !important;
     gap: $spacing-4;
 
     // 첫 번째 행: 1, 2, 3번째 아이템 (각각 2칸씩 차지)
     > :nth-child(1) {
-      grid-column: 1 / span 2;
+      grid-column: 1 / span 2 !important;
     }
     > :nth-child(2) {
-      grid-column: 3 / span 2;
+      grid-column: 3 / span 2 !important;
     }
     > :nth-child(3) {
-      grid-column: 5 / span 2;
+      grid-column: 5 / span 2 !important;
     }
 
     // 두 번째 행: 4, 5번째 아이템을 중앙에 배치 (각각 2칸씩 차지)
     > :nth-child(4) {
-      grid-column: 2 / span 2;
+      grid-column: 2 / span 2 !important;
     }
     > :nth-child(5) {
-      grid-column: 4 / span 2;
+      grid-column: 4 / span 2 !important;
     }
   }
 
-  @include tablet {
-    grid-template-columns: 1fr;
+  // 모바일: 1열 레이아웃
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr !important;
     gap: $spacing-3;
 
     > :nth-child(1),
@@ -115,7 +119,7 @@
     > :nth-child(3),
     > :nth-child(4),
     > :nth-child(5) {
-      grid-column: 1;
+      grid-column: 1 !important;
     }
   }
 }
