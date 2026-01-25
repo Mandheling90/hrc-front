@@ -2,7 +2,7 @@
 @import '@/styles/mixins.scss';
 
 .wrap {
-  @include page-wrap;
+  @include page-wrap-no-breadcrumbs;
 }
 
 .main {

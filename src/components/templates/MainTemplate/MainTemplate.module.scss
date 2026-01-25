@@ -1,7 +1,8 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .wrap {
-  min-height: 100vh;
+  @include page-wrap-no-breadcrumbs;
   background-color: var(--color-white, #fff);
 
   @media (prefers-color-scheme: dark) {

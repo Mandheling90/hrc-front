@@ -158,12 +158,36 @@ $header-height-desktop: 100px;
 $header-height-tablet: 64px;
 $header-height-mobile: 56px;
 
+// Breadcrumbs 높이 변수
+$breadcrumbs-height-desktop: 71px;
+$breadcrumbs-height-tablet: 71px;
+$breadcrumbs-height-mobile: 50px;
+
 // 헤더 브레이크포인트
 $header-bp-tablet: 1429px;
 $header-bp-mobile: 768px;
 
 // 페이지 전체 래퍼
+// Breadcrumbs가 표시되는 페이지를 위해 헤더 + Breadcrumbs 높이를 고려
 @mixin page-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+  // 헤더 + Breadcrumbs 높이 (Breadcrumbs는 조건부로 표시되지만, 공간은 항상 확보)
+  padding-top: $header-height-desktop + $breadcrumbs-height-desktop;
+
+  @media (max-width: $header-bp-tablet) {
+    padding-top: $header-height-tablet + $breadcrumbs-height-tablet;
+  }
+
+  @media (max-width: $header-bp-mobile) {
+    padding-top: $header-height-mobile + $breadcrumbs-height-mobile;
+  }
+}
+
+// Breadcrumbs가 없는 페이지용 래퍼 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기)
+@mixin page-wrap-no-breadcrumbs {
   min-height: 100vh;
   display: flex;
   flex-direction: column;

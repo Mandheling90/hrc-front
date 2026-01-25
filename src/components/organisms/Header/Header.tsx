@@ -331,6 +331,7 @@ export const Header: React.FC = () => {
         {shouldShowBreadcrumbs && (
           <div className={styles.breadcrumbsSection}>
             <div className={styles.container}>
+              {/* 데스크톱/태블릿: 전체 Breadcrumbs */}
               <nav className={styles.breadcrumbsNav} aria-label='Breadcrumb'>
                 {breadcrumbItems.map((item, index) => (
                   <React.Fragment key={index}>
@@ -364,6 +365,18 @@ export const Header: React.FC = () => {
                   </React.Fragment>
                 ))}
               </nav>
+
+              {/* 모바일: 현재 페이지만 표시 */}
+              <div className={styles.breadcrumbsMobile}>
+                <div className={styles.breadcrumbsMobileInner}>
+                  <span className={styles.breadcrumbMobileText}>
+                    {breadcrumbItems.length > 0 ? breadcrumbItems[breadcrumbItems.length - 1]?.label || '' : ''}
+                  </span>
+                  <div className={styles.breadcrumbMobileIcon}>
+                    <ChevronDownIcon width={20} height={20} fill='var(--gray-11)' />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
