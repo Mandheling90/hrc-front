@@ -7,7 +7,7 @@ import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { StatusBadge } from '@/components/atoms/StatusBadge/StatusBadge'
 import { Select } from '@/components/atoms/Select/Select'
-import { FormField } from '@/components/molecules/FormField/FormField'
+import { Input } from '@/components/atoms/Input/Input'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
@@ -225,42 +225,42 @@ export default function EConsultListPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <Breadcrumbs items={breadcrumbItems} />
           <h1 className={styles.pageTitle}>자문의 e-Consult 조회</h1>
 
-          {/* 안내 메시지 */}
-          <div className={styles.infoMessage}>
-            <InfoIcon width={20} height={20} />
-            <span>신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.</span>
-          </div>
+          {/* 안내 메시지 및 검색 필터 영역 */}
+          <div className={styles.infoAndSearchSection}>
+            {/* 안내 메시지 */}
+            <div className={styles.infoMessage}>
+              <InfoIcon width={24} height={24} />
+              <span>신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.</span>
+            </div>
 
-          {/* 검색 및 필터 영역 */}
-          <div className={styles.searchSection}>
-            <Select
-              options={statusOptions}
-              value={selectedStatus}
-              onChange={setSelectedStatus}
-              width={200}
-              className={styles.statusSelect}
-            />
-            <div className={styles.searchField}>
-              <FormField
-                label=''
-                id='search'
-                name='search'
-                type='text'
-                placeholder='제목, 신청자, 의료기관명을 입력해주세요.'
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') handleSearch()
-                }}
-                buttonText='검색'
-                onButtonClick={handleSearch}
-                buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
-                error=''
-                mobileStack
+            {/* 검색 및 필터 영역 */}
+            <div className={styles.searchSection}>
+              <Select
+                options={statusOptions}
+                value={selectedStatus}
+                onChange={setSelectedStatus}
+                width={180}
+                className={styles.statusSelect}
               />
+              <div className={styles.searchField}>
+                <Input
+                  id='search'
+                  name='search'
+                  type='text'
+                  placeholder='제목, 신청자, 의료기관명을 입력해주세요.'
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') handleSearch()
+                  }}
+                  className={styles.searchInput}
+                />
+                <button type='button' onClick={handleSearch} className={styles.searchButton} aria-label='검색'>
+                  <SearchIcon width={24} height={24} />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -272,20 +272,19 @@ export default function EConsultListPage() {
               getRowKey={item => item.id}
               onRowClick={handleRowClick}
               className={styles.table}
+              isHighlighted={(item, index) => index === 0}
             />
           </div>
 
           {/* 페이지네이션 */}
-          {totalPages > 1 && (
-            <div className={styles.paginationWrapper}>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-                maxVisiblePages={5}
-              />
-            </div>
-          )}
+          <div className={styles.paginationWrapper}>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              maxVisiblePages={5}
+            />
+          </div>
         </div>
       </main>
       <Footer />

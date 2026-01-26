@@ -85,6 +85,12 @@
   margin: 0;
   text-align: center;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 24px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.96px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
   }
@@ -100,6 +106,12 @@
   margin: 0;
   text-align: center;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 18px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 16px;
+    letter-spacing: -0.72px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 16px;
   }
@@ -112,6 +124,7 @@
   @media (max-width: $breakpoint-md) {
     width: 100%;
     max-width: 220px;
+    height: 50px;
   }
 }
 

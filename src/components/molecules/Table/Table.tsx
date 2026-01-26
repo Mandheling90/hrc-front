@@ -41,9 +41,11 @@ export interface TableProps<T = any> {
   defaultTextOverflow?: 'wrap' | 'ellipsis' | 'scroll'
   /** 헤더를 포함한 전체 영역에 스크롤 적용 여부 (기본값: false, 본문만 스크롤) */
   scrollWithHeader?: boolean
+  /** 행이 하이라이트되어야 하는지 확인하는 함수 */
+  isHighlighted?: (item: T, index: number) => boolean
 }
 
-export const Table = <T,>({
+export function Table<T>({
   columns,
   data,
   getRowKey,
@@ -52,8 +54,9 @@ export const Table = <T,>({
   renderMobileCard,
   className = '',
   defaultTextOverflow = 'wrap',
-  scrollWithHeader = false
-}: TableProps<T>) => {
+  scrollWithHeader = false,
+  isHighlighted
+}: TableProps<T>) {
   // 기본 셀 렌더링
   const renderCell = (column: TableColumn<T>, item: T, index: number) => {
     if (column.renderCell) {
@@ -79,13 +82,18 @@ export const Table = <T,>({
           <div className={styles.tableHeader}>
             {columns.map((column, index) => {
               const textOverflow = column.textOverflow || defaultTextOverflow
+              const isFlexGrow = column.width === '1fr'
               return (
                 <React.Fragment key={column.id}>
                   <div
                     className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
                       textOverflow === 'ellipsis' ? styles.ellipsis : ''
-                    } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
-                    style={{ width: column.width, textAlign: column.align || 'center' }}
+                    } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''}`}
+                    style={
+                      isFlexGrow
+                        ? { flex: '1 1 0', textAlign: column.align || 'center' }
+                        : { width: column.width, textAlign: column.align || 'center' }
+                    }
                   >
                     {column.label}
                   </div>
@@ -97,30 +105,39 @@ export const Table = <T,>({
 
           {/* 데스크톱/태블릿: 테이블 본문 */}
           <div className={`${styles.tableBody} ${styles.noScroll}`}>
-            {data.map((item, rowIndex) => (
-              <div
-                key={getRowKey(item, rowIndex)}
-                className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''}`}
-                onClick={() => onRowClick?.(item, rowIndex)}
-              >
-                {columns.map((column, colIndex) => {
-                  const textOverflow = column.textOverflow || defaultTextOverflow
-                  return (
-                    <React.Fragment key={column.id}>
-                      <div
-                        className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
-                          textOverflow === 'ellipsis' ? styles.ellipsis : ''
-                        } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
-                        style={{ width: column.width, textAlign: column.align || 'center' }}
-                      >
-                        {renderCell(column, item, rowIndex)}
-                      </div>
-                      {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
-                    </React.Fragment>
-                  )
-                })}
-              </div>
-            ))}
+            {data.map((item, rowIndex) => {
+              const highlighted = isHighlighted ? isHighlighted(item, rowIndex) : false
+              return (
+                <div
+                  key={getRowKey(item, rowIndex)}
+                  className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''} ${highlighted ? styles.highlighted : ''}`}
+                  onClick={() => onRowClick?.(item, rowIndex)}
+                >
+                  {columns.map((column, colIndex) => {
+                    const textOverflow = column.textOverflow || defaultTextOverflow
+                    const isFlexGrow = column.width === '1fr'
+                    return (
+                      <React.Fragment key={column.id}>
+                        <div
+                          className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                            textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                          } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''} ${styles[`cell-${column.id}`] || ''}`}
+                          style={
+                            isFlexGrow
+                              ? { flex: '1 1 0', textAlign: column.align || 'center' }
+                              : { width: column.width, textAlign: column.align || 'center' }
+                          }
+                          data-column-id={column.id}
+                        >
+                          {renderCell(column, item, rowIndex)}
+                        </div>
+                        {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
+                      </React.Fragment>
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
         </div>
       ) : (
@@ -130,13 +147,18 @@ export const Table = <T,>({
           <div className={styles.tableHeader}>
             {columns.map((column, index) => {
               const textOverflow = column.textOverflow || defaultTextOverflow
+              const isFlexGrow = column.width === '1fr'
               return (
                 <React.Fragment key={column.id}>
                   <div
                     className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
                       textOverflow === 'ellipsis' ? styles.ellipsis : ''
-                    } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
-                    style={{ width: column.width, textAlign: column.align || 'center' }}
+                    } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''}`}
+                    style={
+                      isFlexGrow
+                        ? { flex: '1 1 0', textAlign: column.align || 'center' }
+                        : { width: column.width, textAlign: column.align || 'center' }
+                    }
                   >
                     {column.label}
                   </div>
@@ -151,30 +173,39 @@ export const Table = <T,>({
             className={`${styles.tableBody} ${hasHorizontalScroll ? styles.horizontalScroll : ''}`}
             style={scrollableHeight && scrollableHeight !== '100%' ? { maxHeight: scrollableHeight } : undefined}
           >
-            {data.map((item, rowIndex) => (
-              <div
-                key={getRowKey(item, rowIndex)}
-                className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''}`}
-                onClick={() => onRowClick?.(item, rowIndex)}
-              >
-                {columns.map((column, colIndex) => {
-                  const textOverflow = column.textOverflow || defaultTextOverflow
-                  return (
-                    <React.Fragment key={column.id}>
-                      <div
-                        className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
-                          textOverflow === 'ellipsis' ? styles.ellipsis : ''
-                        } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
-                        style={{ width: column.width, textAlign: column.align || 'center' }}
-                      >
-                        {renderCell(column, item, rowIndex)}
-                      </div>
-                      {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
-                    </React.Fragment>
-                  )
-                })}
-              </div>
-            ))}
+            {data.map((item, rowIndex) => {
+              const highlighted = isHighlighted ? isHighlighted(item, rowIndex) : false
+              return (
+                <div
+                  key={getRowKey(item, rowIndex)}
+                  className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''} ${highlighted ? styles.highlighted : ''}`}
+                  onClick={() => onRowClick?.(item, rowIndex)}
+                >
+                  {columns.map((column, colIndex) => {
+                    const textOverflow = column.textOverflow || defaultTextOverflow
+                    const isFlexGrow = column.width === '1fr'
+                    return (
+                      <React.Fragment key={column.id}>
+                        <div
+                          className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                            textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                          } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''} ${styles[`cell-${column.id}`] || ''}`}
+                          style={
+                            isFlexGrow
+                              ? { flex: '1 1 0', textAlign: column.align || 'center' }
+                              : { width: column.width, textAlign: column.align || 'center' }
+                          }
+                          data-column-id={column.id}
+                        >
+                          {renderCell(column, item, rowIndex)}
+                        </div>
+                        {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
+                      </React.Fragment>
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
         </>
       )}

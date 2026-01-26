@@ -23,21 +23,25 @@
 
 .sectionTitle {
   font-family: $font-family-base;
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 600;
   color: $color-primary;
   margin: 0 0 10px 0;
   letter-spacing: -0.88px;
   line-height: 1.5;
 
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 24px;
+  }
+
   @media (max-width: $breakpoint-md) {
-    font-size: 18px;
+    font-size: 24px;
   }
 }
 
 .sectionSubtitle {
   font-family: $font-family-base;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 400;
   color: $gray-11;
   margin: 0 0 0 0;
@@ -46,8 +50,12 @@
   letter-spacing: -0.6px;
   line-height: 1.5;
 
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 16px;
+  }
+
   @media (max-width: $breakpoint-md) {
-    font-size: 13px;
+    font-size: 16px;
     padding-bottom: 18px;
   }
 }

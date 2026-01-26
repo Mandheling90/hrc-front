@@ -1,0 +1,52 @@
+@import '@/styles/variables.scss';
+
+.sectionHeader {
+  margin-bottom: 0;
+}
+
+.title {
+  font-family: $font-family-base;
+  font-size: 32px;
+  font-weight: 600;
+  color: $color-primary;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.88px;
+  line-height: 1.5;
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+}
+
+.subtitle {
+  font-family: $font-family-base;
+  font-size: 18px;
+  font-weight: 400;
+  color: $gray-11;
+  margin: 0 0 0 0;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #ddd;
+  letter-spacing: -0.6px;
+  line-height: 1.5;
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    font-size: 16px;
+    padding-bottom: 18px;
+    letter-spacing: -0.64px;
+  }
+}

@@ -6,6 +6,7 @@ import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
@@ -137,8 +138,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
 
       {/* 회원 정보 섹션 */}
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>회원 정보</h2>
-        <p className={styles.sectionSubtitle}>필수 입력 항목에 정보를 모두 입력해주세요.</p>
+        <SectionHeader title='회원 정보' subtitle='필수 입력 항목에 정보를 모두 입력해주세요.' />
 
         <div className={styles.formGrid}>
           <FormField
@@ -339,8 +339,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
 
       {/* 병원 정보 섹션 */}
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>병원 정보</h2>
-        <p className={styles.sectionSubtitle}>필수 입력 항목에 정보를 모두 입력해주세요.</p>
+        <SectionHeader title='병원 정보' subtitle='필수 입력 항목에 정보를 모두 입력해주세요.' />
 
         <div className={styles.formGrid}>
           <FormField

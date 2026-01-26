@@ -4,18 +4,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: $font-size-base;
+  padding: 5px 20px;
+  border-radius: 5px;
+  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
-  letter-spacing: -0.32px;
+  letter-spacing: -0.72px;
   white-space: nowrap;
 }
 
 .waiting {
-  background-color: $gray-3;
-  color: $gray-11;
+  background-color: #fdf9f4;
+  color: #816331;
 }
 
 .expired {

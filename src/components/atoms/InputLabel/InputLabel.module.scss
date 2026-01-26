@@ -9,6 +9,16 @@
   color: #000;
   letter-spacing: -0.6px;
   line-height: 1.5;
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+  }
 }
 
 .required {
@@ -20,10 +30,4 @@
 
 .inputLabelText {
   // 추가 스타일이 필요하면 여기에 작성
-}
-
-@media (max-width: $breakpoint-md) {
-  .inputLabel {
-    font-size: 18px;
-  }
 }

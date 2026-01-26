@@ -216,7 +216,6 @@
   padding-top: $spacing-4;
 
   @include tablet {
-    width: 544px;
     max-width: 100%;
     gap: 24px;
   }
