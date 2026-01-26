@@ -18,6 +18,8 @@ export interface InfoBoxProps {
   contentAlign?: 'left' | 'center'
   /** 마지막 메시지 강조 표시 (guide variant용) */
   highlightLast?: boolean
+  /** 텍스트 색상 (기본값: 'default', 'black'로 설정 시 검정색) */
+  textColor?: 'default' | 'black'
   /** 추가 클래스명 */
   className?: string
 }
@@ -30,6 +32,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   showBullets = false,
   contentAlign = 'left',
   highlightLast = false,
+  textColor = 'default',
   className = ''
 }) => {
   const hasIcon = icon !== undefined
@@ -41,13 +44,15 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
         {(hasTitle || hasIcon) && (
           <div className={styles.header}>
             {hasIcon && <div className={styles.icon}>{icon}</div>}
-            {hasTitle && <h4 className={styles.title}>{title}</h4>}
+            {hasTitle && (
+              <h4 className={`${styles.title} ${textColor === 'black' ? styles.textBlack : ''}`}>{title}</h4>
+            )}
           </div>
         )}
         <div className={styles.infoBox}>
           <div className={styles.content}>
             {messages.map((message, index) => (
-              <p key={index} className={styles.message}>
+              <p key={index} className={`${styles.message} ${textColor === 'black' ? styles.textBlack : ''}`}>
                 {message}
               </p>
             ))}
@@ -63,7 +68,9 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
         <div className={styles.guideInner}>
           {hasIcon && <div className={styles.guideIcon}>{icon}</div>}
           <div className={styles.guideContent}>
-            {hasTitle && <h3 className={styles.guideTitle}>{title}</h3>}
+            {hasTitle && (
+              <h3 className={`${styles.guideTitle} ${textColor === 'black' ? styles.textBlack : ''}`}>{title}</h3>
+            )}
             <div className={styles.guideList}>
               {messages.map((message, index) => {
                 const isLast = index === messages.length - 1
@@ -71,7 +78,11 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
                 return (
                   <div key={index} className={styles.guideItem}>
                     {showBullets && <span className={styles.bullet}></span>}
-                    <p className={`${styles.guideMessage} ${shouldHighlight ? styles.guideMessageHighlight : ''}`}>
+                    <p
+                      className={`${styles.guideMessage} ${shouldHighlight ? styles.guideMessageHighlight : ''} ${
+                        textColor === 'black' && !shouldHighlight ? styles.textBlack : ''
+                      }`}
+                    >
                       {message}
                     </p>
                   </div>
@@ -92,9 +103,9 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
     >
       {hasIcon && <div className={styles.icon}>{icon}</div>}
       <div className={styles.content}>
-        {hasTitle && <h4 className={styles.title}>{title}</h4>}
+        {hasTitle && <h4 className={`${styles.title} ${textColor === 'black' ? styles.textBlack : ''}`}>{title}</h4>}
         {messages.map((message, index) => (
-          <p key={index} className={styles.message}>
+          <p key={index} className={`${styles.message} ${textColor === 'black' ? styles.textBlack : ''}`}>
             {message}
           </p>
         ))}

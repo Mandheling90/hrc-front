@@ -127,10 +127,12 @@ export const FindUserForm: React.FC = () => {
         </div>
         {activeTab === 'findId' && (
           <InfoBox
+            contentAlign='center'
             messages={[
               '회원 가입 시와 동일하게 본인 인증 후 아이디를 찾아주세요.',
               '휴대전화 본인 인증이나 아이핀 인증으로 아이디를 찾을 수 있습니다.'
             ]}
+            textColor='black'
           />
         )}
 
@@ -258,21 +260,6 @@ export const FindUserForm: React.FC = () => {
               </form>
             ) : (
               <form onSubmit={handleFindPasswordByEmail} className={styles.authForm}>
-                <div className={styles.inputField}>
-                  <InputLabel htmlFor='password-email-id' required>
-                    아이디
-                  </InputLabel>
-                  <Input
-                    type='text'
-                    id='password-email-id'
-                    name='id'
-                    placeholder='아이디를 입력하세요'
-                    value={passwordEmailFormData.id}
-                    onChange={handlePasswordEmailFormChange}
-                    required
-                    className={styles.input}
-                  />
-                </div>
                 <div className={styles.inputField}>
                   <InputLabel htmlFor='password-email-name' required>
                     이름
