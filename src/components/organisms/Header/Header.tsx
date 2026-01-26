@@ -55,11 +55,11 @@ const commonMenuItems: MenuItem[] = [
   {
     label: '협력네트워크',
     subItems: [
-      { href: '/referral/network', label: '협력네트워크 소개&신청' },
-      { href: '/referral/network/hospital-application', label: '협력병원 신청' },
-      { href: '/referral/network/status', label: '협력병의원 현황' },
-      { href: '/referral/network/hotline', label: '교수직통 핫라인' },
-      { href: '/referral/network/e-consult', label: 'e-Consult 신청' }
+      { href: '/network', label: '협력네트워크 소개&신청' },
+      { href: '/network/hospital-application', label: '협력병원 신청' },
+      { href: '/network/status', label: '협력병의원 현황' },
+      { href: '/network/hotline', label: '교수직통 핫라인' },
+      { href: '/network/e-consult', label: 'e-Consult 신청' }
     ]
   },
   {
@@ -111,9 +111,9 @@ export const Header: React.FC = () => {
     return pathname === href
   }
 
-  // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기 제외)
+  // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기, 자문의 로그인 제외)
   const shouldShowBreadcrumbs = useMemo(() => {
-    const excludedPaths = ['/', '/login', '/signup', '/find-user']
+    const excludedPaths = ['/', '/login', '/signup', '/find-user', '/network/e-consult/login']
     return !excludedPaths.includes(pathname)
   }, [pathname])
 
@@ -129,8 +129,14 @@ export const Header: React.FC = () => {
     // pathname을 분할하여 각 경로에 대한 Breadcrumb 생성
     const pathSegments = pathname.split('/').filter(Boolean)
 
-    pathSegments.forEach((segment, index) => {
-      const currentPath = '/' + pathSegments.slice(0, index + 1).join('/')
+    // network로 시작하는 경로는 referral을 건너뛰고 network부터 시작
+    const networkIndex = pathSegments.indexOf('network')
+    const startIndex = networkIndex >= 0 ? networkIndex : 0
+    const relevantSegments = pathSegments.slice(startIndex)
+
+    relevantSegments.forEach((segment, index) => {
+      const actualIndex = startIndex + index
+      const currentPath = '/' + pathSegments.slice(0, actualIndex + 1).join('/')
 
       // 메뉴에서 해당 경로 찾기
       let foundLabel = segment
@@ -149,7 +155,7 @@ export const Header: React.FC = () => {
       }
 
       // 마지막 항목은 href 없음 (현재 페이지)
-      if (index === pathSegments.length - 1) {
+      if (index === relevantSegments.length - 1) {
         items.push({ label: foundLabel, hasDropdown })
       } else {
         items.push({ label: foundLabel, href: currentPath, hasDropdown })

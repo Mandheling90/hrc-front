@@ -35,7 +35,7 @@ const anamContent: HospitalPageContent = {
         icon: 'NetworkIcon',
         title: '협력네트워크',
         description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
-        href: '/referral/network'
+        href: '/network'
       }
     ]
   },
@@ -196,7 +196,7 @@ const anamContent: HospitalPageContent = {
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
       { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
-      { label: '협력네트워크', href: '/referral/network', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: 'network', href: '/network', icon: 'ChevronDownIcon', iconAfter: true },
       { label: '협력네트워크 소개 & 신청', icon: 'ChevronDownIcon', iconAfter: true }
     ],
     benefits: [
@@ -298,7 +298,7 @@ const guroContent: HospitalPageContent = {
         icon: 'NetworkIcon',
         title: '협력네트워크',
         description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
-        href: '/referral/network'
+        href: '/network'
       }
     ]
   },
@@ -456,7 +456,7 @@ const guroContent: HospitalPageContent = {
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
       { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
-      { label: '협력네트워크', href: '/referral/network', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: 'network', href: '/network', icon: 'ChevronDownIcon', iconAfter: true },
       { label: '협력네트워크 소개 & 신청', icon: 'ChevronDownIcon', iconAfter: true }
     ],
     benefits: [
@@ -558,7 +558,7 @@ const ansanContent: HospitalPageContent = {
         icon: 'NetworkIcon',
         title: '협력네트워크',
         description: '온라인으로 협력병의원\n체결신청이 가능합니다.',
-        href: '/referral/network'
+        href: '/network'
       }
     ]
   },
@@ -735,7 +735,7 @@ const ansanContent: HospitalPageContent = {
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
       { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
-      { label: '협력네트워크', href: '/referral/network', icon: 'ChevronDownIcon', iconAfter: true },
+      { label: 'network', href: '/network', icon: 'ChevronDownIcon', iconAfter: true },
       { label: '협력네트워크 소개 & 신청', icon: 'ChevronDownIcon', iconAfter: true }
     ],
     benefits: [

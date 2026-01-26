@@ -1,0 +1,135 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+  text-align: center;
+  margin-bottom: $spacing-10;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-10;
+  padding-bottom: $spacing-10;
+}
+
+// 협력의원 신청 안내 섹션
+.guideSection {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.sectionTitle {
+  margin-bottom: 0;
+}
+
+// 저장/불러오기 버튼
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 650px;
+  margin-bottom: $spacing-4;
+
+  // actionButtons 내부의 button만 스타일 적용 (formActions와 분리)
+  > button {
+    width: 175px;
+    height: 37px;
+    padding: 5px 10px;
+    font-size: $font-size-lg; // 18px
+    font-weight: $font-weight-normal; // 400
+    letter-spacing: -0.72px;
+    line-height: 1.5;
+    border-radius: 150px; // pill 형태
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+}
+
+// 폼 액션 버튼
+.formActions {
+  display: flex;
+  gap: $spacing-6;
+  justify-content: center;
+  width: 100%;
+  max-width: 650px;
+  align-items: center;
+  height: 66px;
+
+  // formActions 내부의 button만 스타일 적용 (actionButtons와 분리)
+  > button {
+    width: 260px;
+    height: 66px;
+    padding: 15px 30px;
+    font-size: $font-size-2xl; // 24px
+    font-weight: $font-weight-semibold; // 600
+    letter-spacing: -0.96px;
+    line-height: 1.5;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// 반응형
+@include tablet {
+  .content {
+    gap: $spacing-8;
+    padding-bottom: $spacing-8;
+  }
+
+  .guideSection {
+    max-width: 100%;
+  }
+
+  .actionButtons {
+    max-width: 100%;
+  }
+
+  .formActions {
+    max-width: 100%;
+  }
+}
+
+@include mobile {
+  .pageTitle {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-8;
+  }
+
+  .sectionTitle {
+    font-size: $font-size-xl;
+  }
+
+  .formActions {
+    flex-direction: column;
+    height: auto;
+    gap: $spacing-4;
+
+    > button {
+      width: 100%;
+      height: 50px;
+    }
+  }
+}

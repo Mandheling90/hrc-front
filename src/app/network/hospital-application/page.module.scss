@@ -1,0 +1,342 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+  text-align: center;
+  margin-bottom: $spacing-10;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-10;
+  padding-bottom: $spacing-10;
+}
+
+// 협력병원 신청 안내 섹션
+.guideSection {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.sectionTitle {
+  margin-bottom: 0;
+}
+
+// 저장/불러오기 버튼
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 650px;
+  margin-bottom: $spacing-4;
+
+  // actionButtons 내부의 button만 스타일 적용 (formActions와 분리)
+  > button {
+    width: 175px;
+    height: 37px;
+    padding: 5px 10px;
+    font-size: $font-size-lg; // 18px
+    font-weight: $font-weight-normal; // 400
+    letter-spacing: -0.72px;
+    line-height: 1.5;
+    border-radius: 150px; // pill 형태
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+}
+
+// 폼 섹션
+.formSection {
+  width: 100%;
+  max-width: 650px;
+  background-color: $color-white;
+  border: 1px solid $gray-8;
+  border-radius: $radius-xl;
+  padding: $spacing-10;
+}
+
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-2;
+}
+
+.formHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.formTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  line-height: $line-height-normal;
+  letter-spacing: -0.02em;
+}
+
+.formSubtitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-10;
+  line-height: $line-height-normal;
+  letter-spacing: -0.01em;
+}
+
+.stepIndicator {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  line-height: 0;
+  letter-spacing: -0.02em;
+}
+
+.stepNumber {
+  color: $color-primary;
+}
+
+.stepSeparator,
+.stepTotal {
+  color: $gray-12;
+}
+
+.formDivider {
+  height: 2px;
+  background-color: $gray-7;
+  margin-bottom: $spacing-8;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+// 달력 아이콘이 있는 입력 필드
+.inputWithIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  :global(.input) {
+    padding-right: 40px;
+  }
+
+  .calendarIcon {
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+}
+
+// 안내 텍스트 (차량번호 등)
+.helperText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: $font-size-lg; // 18px
+  color: $gray-10;
+  letter-spacing: -0.72px;
+  line-height: 1.5;
+  margin-top: 4px;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// 입력 필드와 버튼이 함께 있는 경우
+.inputWithButton {
+  display: flex;
+  gap: $spacing-2;
+  align-items: flex-start;
+}
+
+.hospitalNameInput,
+.postalCodeInput {
+  flex: 0 0 287px;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+  min-width: 140px;
+
+  @media (max-width: $breakpoint-md) {
+    min-width: auto;
+    flex-shrink: 0;
+    padding: 0 16px;
+  }
+}
+
+.addressInput {
+  background-color: $gray-3;
+  border-color: $gray-8;
+}
+
+.detailAddressInput {
+  max-width: 287px;
+}
+
+// 폼 액션 버튼
+.formActions {
+  display: flex;
+  gap: $spacing-6;
+  justify-content: center;
+  width: 100%;
+  max-width: 650px;
+  align-items: center;
+  height: 66px;
+
+  // formActions 내부의 button만 스타일 적용 (actionButtons와 분리)
+  > button {
+    width: 260px;
+    height: 66px;
+    padding: 15px 30px;
+    font-size: $font-size-2xl; // 24px
+    font-weight: $font-weight-semibold; // 600
+    letter-spacing: -0.96px;
+    line-height: 1.5;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// 반응형
+@include tablet {
+  .content {
+    gap: $spacing-8;
+    padding-bottom: $spacing-8;
+  }
+
+  .guideSection {
+    max-width: 100%;
+  }
+
+  .actionButtons {
+    max-width: 100%;
+  }
+
+  .formSection {
+    max-width: 100%;
+    padding: $spacing-6;
+  }
+
+  .formHeader {
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+
+  .stepIndicator {
+    align-self: flex-start;
+  }
+
+  .inputWithButton {
+    flex-direction: column;
+  }
+
+  .hospitalNameInput,
+  .postalCodeInput {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .detailAddressInput {
+    max-width: 100%;
+  }
+
+  // 태블릿에서도 데스크탑과 동일한 스타일 유지
+  // .formActions는 태블릿에서도 데스크탑 스타일 그대로 사용
+}
+
+@include mobile {
+  .pageTitle {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-8;
+  }
+
+  .sectionTitle {
+    font-size: $font-size-xl;
+  }
+
+  .formTitle {
+    font-size: $font-size-xl;
+  }
+
+  .formSection {
+    padding: $spacing-4;
+  }
+
+  .formContent {
+    gap: $spacing-4;
+  }
+
+  .inputWithIcon {
+    :global(.input) {
+      padding-right: 40px;
+    }
+
+    .calendarIcon {
+      right: 8px;
+    }
+  }
+
+  .helperText {
+    font-size: $font-size-base; // 16px
+    gap: 6px;
+  }
+
+  .formActions {
+    flex-direction: column;
+    height: auto;
+    gap: $spacing-4;
+
+    > button {
+      width: 100%;
+      height: 50px;
+    }
+  }
+}

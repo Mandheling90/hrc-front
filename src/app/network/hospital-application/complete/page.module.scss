@@ -1,0 +1,45 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  padding: $spacing-10 0;
+}
+
+.pageTitle {
+  font-size: $font-size-5xl; // 48px
+  font-weight: $font-weight-semibold; // 600
+  color: #000000;
+  line-height: 1.5;
+  letter-spacing: -1.92px;
+  text-align: center;
+  margin: 0 0 $spacing-10; // 80px
+}
+
+@include tablet {
+  .main {
+    padding: $spacing-8 0;
+  }
+
+  .pageTitle {
+    font-size: $font-size-4xl; // 36px
+    margin-bottom: $spacing-8;
+  }
+}
+
+@include mobile {
+  .main {
+    padding: $spacing-6 0;
+  }
+
+  .pageTitle {
+    font-size: $font-size-3xl; // 30px
+    margin-bottom: $spacing-6;
+  }
+}

@@ -1,0 +1,16 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap-no-breadcrumbs;
+}
+
+.main {
+  @include page-main-simple(600px);
+}
+
+.loginContainer {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
