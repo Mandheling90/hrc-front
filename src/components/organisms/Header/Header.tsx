@@ -111,9 +111,9 @@ export const Header: React.FC = () => {
     return pathname === href
   }
 
-  // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기, 자문의 로그인 제외)
+  // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기, 비밀번호 재설정, 자문의 로그인 제외)
   const shouldShowBreadcrumbs = useMemo(() => {
-    const excludedPaths = ['/', '/login', '/signup', '/find-user', '/network/e-consult/login']
+    const excludedPaths = ['/', '/login', '/signup', '/find-user', '/reset-password', '/network/e-consult/login']
     return !excludedPaths.includes(pathname)
   }, [pathname])
 
