@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import styles from './DoctorSearchModal.module.scss'
+import { FormField } from '../FormField/FormField'
+import { SearchIcon } from '@/components/icons/SearchIcon'
 
 export interface Doctor {
   /** 진료과 */
@@ -143,8 +144,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
         <div className={styles.header}>
           <div className={styles.headerLeft}>
             <h2 className={styles.title}>자문의 검색</h2>
-            <div className={styles.noticeBadge}>
-              <span>공지</span>
+            <div className={styles.eConsultingBadge}>
+              <span>e-Consulting</span>
             </div>
           </div>
           <button type='button' onClick={onClose} className={styles.closeButton} aria-label='닫기'>
@@ -169,16 +170,23 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
           {/* 검색 영역 */}
           <div className={styles.searchWrapper}>
-            <Input
+            <FormField
+              label=''
               id='doctor-search'
+              name='doctor-search'
+              type='text'
+              placeholder='의료진명을 입력해주세요'
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder='Input Text'
-              className={styles.searchInput}
+              onKeyDown={e => {
+                if (e.key === 'Enter') handleSearch()
+              }}
+              buttonText='의료진 검색'
+              onButtonClick={handleSearch}
+              buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
+              error=''
+              mobileStack
             />
-            <Button type='button' variant='primary' onClick={handleSearch} className={styles.searchButton}>
-              의료진 검색
-            </Button>
           </div>
 
           {/* 리스트 영역 */}
@@ -223,7 +231,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
         {/* 확인 버튼 */}
         <div className={styles.buttonSection}>
           <Button type='button' variant='primary' onClick={handleConfirm} className={styles.confirmButton}>
-            확인
+            신청하기
           </Button>
         </div>
       </div>

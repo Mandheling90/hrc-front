@@ -21,6 +21,8 @@ export interface FormFieldProps {
   value: string
   /** Input의 onChange 핸들러 */
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  /** Input의 onKeyDown 핸들러 */
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   /** Input의 disabled 여부 */
   disabled?: boolean
   /** 에러 메시지 */
@@ -54,6 +56,7 @@ export const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   value,
   onChange,
+  onKeyDown,
   disabled = false,
   error,
   buttonText,
@@ -82,6 +85,7 @@ export const FormField: React.FC<FormFieldProps> = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            onKeyDown={onKeyDown}
             disabled={disabled}
             error={error}
             className={`${styles.inputWithButtonInput} ${inputClassName || ''}`}
@@ -109,6 +113,7 @@ export const FormField: React.FC<FormFieldProps> = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           disabled={disabled}
           error={error}
           className={inputClassName}
