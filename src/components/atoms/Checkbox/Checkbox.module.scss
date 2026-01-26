@@ -17,6 +17,12 @@
     font-size: $font-size-xl; // 20px
     font-weight: $font-weight-normal; // 400 (regular)
 
+    // 테블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      font-size: 18px;
+      letter-spacing: -0.72px;
+    }
+
     @media (max-width: $breakpoint-md) {
       font-size: $font-size-lg; // 18px
     }
@@ -34,9 +40,22 @@
 
   // 항상 진한 색상 유지 옵션
   &.alwaysDark {
-    span {
-      color: $gray-12 !important;
+    // 체크/미체크 상태와 관계없이 항상 진한 색상 유지
+    input:checked ~ span,
+    input:not(:checked) ~ span {
+      color: $gray-12;
     }
+
+    // highlightText는 빨간색 유지 (더 구체적인 선택자로 우선순위 높임)
+    span :global(.highlightText) {
+      color: $color-primary !important;
+    }
+  }
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
 
   @media (max-width: $breakpoint-md) {

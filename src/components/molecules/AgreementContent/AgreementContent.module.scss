@@ -34,6 +34,12 @@
   letter-spacing: -0.8px;
   margin-bottom: 16px;
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
   @media (max-width: 768px) {
     font-size: 18px;
   }
@@ -104,6 +110,12 @@
     margin: 0;
   }
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
   @media (max-width: 768px) {
     font-size: 18px;
   }
@@ -125,6 +137,12 @@
   // 직접 자식 p 태그에만 margin: 0 적용 (클래스가 있는 요소는 제외)
   > p:not([class]) {
     margin: 0;
+  }
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
   }
 
   @media (max-width: 768px) {

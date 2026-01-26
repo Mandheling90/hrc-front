@@ -744,7 +744,11 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
           <Checkbox
             checked={agreements.allAgreements}
             onChange={onAllAgreementsChange}
-            label='서비스 전체 약관에 동의합니다.'
+            label={
+              <>
+                <span className={styles.allAgreementsText}>서비스 전체 약관에 동의합니다.</span>
+              </>
+            }
             className={`${styles.agreementCheckbox} ${styles.allAgreementsCheckbox}`}
             alwaysDark
           />

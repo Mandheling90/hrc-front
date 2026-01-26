@@ -27,14 +27,26 @@
   :global(span) {
     font-size: 24px; // Figma 디자인에 맞게 24px로 수정
     letter-spacing: -0.96px; // Figma 디자인에 맞게 추가
+
+    // 테블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      font-size: 24px;
+      letter-spacing: -0.96px;
+    }
   }
 }
 
 .highlightText {
-  color: $color-primary;
-  font-weight: 600; // Semibold
+  color: $color-primary !important; // alwaysDark와 충돌 방지를 위해 !important 추가
+  font-weight: 600 !important; // Semibold
   font-size: 20px; // Figma 디자인에 맞게 20px로 수정
   letter-spacing: -0.8px; // Figma 디자인에 맞게 추가
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
 }
 
 .optionalText {
@@ -42,6 +54,12 @@
   font-weight: 600; // Semibold
   font-size: 18px; // Figma 디자인에 맞게 18px로 수정
   letter-spacing: -0.72px; // Figma 디자인에 맞게 추가
+
+  // 테블릿 (769px ~ 1429px) - 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
 }
 
 .agreementTitle {
@@ -52,6 +70,12 @@
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0 0 16px 0;
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
 
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
@@ -85,6 +109,12 @@
     }
   }
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
   }
@@ -98,6 +128,12 @@
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0 0 0 0; // 소개 문구 아래 여백 (Figma 디자인에 맞게 16px)
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
 
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
@@ -124,6 +160,12 @@
   letter-spacing: -0.8px;
   margin: 0; // agreementSection의 gap으로 여백 처리
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
   }
@@ -148,6 +190,16 @@
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding-left: 32px;
+
+    p {
+      font-size: 20px;
+      letter-spacing: -0.8px;
     }
   }
 
@@ -194,7 +246,7 @@
 
     > button {
       width: 100%;
-      height: 66px;
+      height: 50px;
     }
   }
 }
@@ -202,12 +254,18 @@
 // 이용약관 스타일
 .termsMainTitle {
   font-family: 'Pretendard', sans-serif;
-  font-size: 20px; // Figma 디자인에 맞게 24px
+  font-size: 20px; // Figma 디자인에 맞게 20px
   font-weight: 600; // Semibold
-  color: $gray-11; // #8c8c8c
+  color: $gray-11; // #636363
   line-height: 1.5;
-  letter-spacing: -0.96px;
+  letter-spacing: -0.8px;
   margin: 0 0 0 0; // Figma 디자인에 맞게 여백 추가
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
 
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
@@ -242,6 +300,16 @@
     }
   }
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding-left: 32px;
+
+    p {
+      font-size: 20px;
+      letter-spacing: -0.8px;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     padding-left: 24px;
 
@@ -260,10 +328,31 @@
   letter-spacing: -0.8px;
   margin: 0 0 0 0; // 조항 제목과 내용 사이 여백은 다음 p 태그의 margin으로 처리
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
   }
 }
 .allAgreementsItem {
   margin-top: 56px;
+}
+
+
+.allAgreementsText{
+  font-size: 24px !important;
+  font-weight: 600 !important;
+
+   // 테블릿 (769px ~ 1429px)
+   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px !important;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 20px !important;
+  }
 }

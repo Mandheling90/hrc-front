@@ -29,6 +29,18 @@
 .title {
   @include section-title;
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+
   &.small {
     font-size: 20px;
     letter-spacing: -0.8px;
