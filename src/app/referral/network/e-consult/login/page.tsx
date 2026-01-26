@@ -5,7 +5,7 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { LoginForm } from '@/components/organisms/LoginForm/LoginForm'
 import styles from './page.module.scss'
 
-export default function LoginPage() {
+export default function ConsultantLoginPage() {
   return (
     <div className={styles.wrap}>
       <Header />
@@ -13,11 +13,11 @@ export default function LoginPage() {
         <div className='container'>
           <div className={styles.loginContainer}>
             <LoginForm
-              usernameLabel='아이디'
-              usernameName='id'
-              description='진료협력센터 홈페이지는 의료진 전용 홈페이지로 회원 서비스는 로그인 후 이용하실 수 있습니다.'
-              highlightText='진료협력센터'
-              showLinks={true}
+              usernameLabel='사번'
+              usernameName='employeeNumber'
+              description='e-Consult 조회 서비스는 로그인 후 이용하실 수 있습니다.'
+              highlightText='e-Consult'
+              showLinks={false}
             />
           </div>
         </div>
