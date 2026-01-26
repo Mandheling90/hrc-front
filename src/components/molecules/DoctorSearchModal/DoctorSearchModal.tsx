@@ -7,6 +7,7 @@ import { CloseIcon } from '@/components/icons/CloseIcon'
 import styles from './DoctorSearchModal.module.scss'
 import { FormField } from '../FormField/FormField'
 import { SearchIcon } from '@/components/icons/SearchIcon'
+import { Table, TableColumn } from '../Table/Table'
 
 export interface Doctor {
   /** 진료과 */
@@ -124,8 +125,12 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     console.log('검색:', searchQuery)
   }
 
-  const handleDoctorToggle = (index: number) => {
-    setDoctors(prev => prev.map((doctor, i) => (i === index ? { ...doctor, selected: !doctor.selected } : doctor)))
+  const handleDoctorToggle = (doctor: Doctor) => {
+    setDoctors(prev =>
+      prev.map(d =>
+        d.name === doctor.name && d.department === doctor.department ? { ...d, selected: !d.selected } : d
+      )
+    )
   }
 
   const handleConfirm = () => {
@@ -136,6 +141,44 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
   const filteredDoctors =
     selectedCategory === '전체' ? doctors : doctors.filter(doctor => doctor.department === selectedCategory)
+
+  // Table 컬럼 정의
+  const columns: TableColumn<Doctor>[] = [
+    {
+      id: 'department',
+      label: '진료과',
+      width: '280px',
+      field: 'department',
+      align: 'center'
+    },
+    {
+      id: 'name',
+      label: '자문의',
+      width: '130px',
+      field: 'name',
+      align: 'center'
+    },
+    {
+      id: 'email',
+      label: '이메일',
+      width: '1fr',
+      field: 'email',
+      align: 'center'
+    },
+    {
+      id: 'selected',
+      label: '선택',
+      width: '160px',
+      align: 'center',
+      renderCell: doctor => (
+        <Checkbox
+          checked={doctor.selected}
+          onChange={() => handleDoctorToggle(doctor)}
+          aria-label={`${doctor.name} 선택`}
+        />
+      )
+    }
+  ]
 
   return (
     <div className={styles.backdrop} onClick={handleBackdropClick}>
@@ -171,7 +214,6 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           {/* 검색 영역 */}
           <div className={styles.searchWrapper}>
             <FormField
-              label=''
               id='doctor-search'
               name='doctor-search'
               type='text'
@@ -191,40 +233,15 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
           {/* 리스트 영역 */}
           <div className={styles.listContainer}>
-            <div className={styles.listContent}>
-              {/* 헤더 */}
-              <div className={styles.listHeader}>
-                <div className={styles.headerCell}>진료과</div>
-                <div className={styles.headerSeparator}></div>
-                <div className={styles.headerCell}>자문의</div>
-                <div className={styles.headerSeparator}></div>
-                <div className={styles.headerCell}>이메일</div>
-                <div className={styles.headerSeparator}></div>
-                <div className={styles.headerCell}>선택</div>
-              </div>
-
-              {/* 리스트 아이템 */}
-              <div className={styles.listItems}>
-                {filteredDoctors.map((doctor, index) => (
-                  <div key={index} className={styles.listItem}>
-                    <div className={styles.itemCell}>{doctor.department}</div>
-                    <div className={styles.itemSeparator}></div>
-                    <div className={styles.itemCell}>{doctor.name}</div>
-                    <div className={styles.itemSeparator}></div>
-                    <div className={styles.itemCell}>{doctor.email}</div>
-                    <div className={styles.itemSeparator}></div>
-                    <div className={styles.itemCell}>
-                      <Checkbox
-                        checked={doctor.selected}
-                        onChange={() => handleDoctorToggle(index)}
-                        aria-label={`${doctor.name} 선택`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className={styles.scrollbar}></div>
+            <Table
+              columns={columns}
+              data={filteredDoctors}
+              getRowKey={(doctor, index) => `${doctor.name}-${index}`}
+              className={styles.table}
+              scrollableHeight='100%'
+              defaultTextOverflow='ellipsis'
+              scrollWithHeader
+            />
           </div>
         </div>
 

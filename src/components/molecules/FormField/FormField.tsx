@@ -6,7 +6,7 @@ import styles from './FormField.module.scss'
 
 export interface FormFieldProps {
   /** 라벨 텍스트 */
-  label: string
+  label?: string
   /** 필수 여부 */
   required?: boolean
   /** Input의 id */
@@ -72,10 +72,14 @@ export const FormField: React.FC<FormFieldProps> = ({
   const hasRightElement = buttonText || rightElement
 
   return (
-    <div className={`${styles.formField} ${hasRightElement ? styles.formFieldWithButton : ''} ${mobileStack ? styles.mobileStack : ''}`}>
-      <InputLabel htmlFor={id} required={required}>
-        {label}
-      </InputLabel>
+    <div
+      className={`${styles.formField} ${hasRightElement ? styles.formFieldWithButton : ''} ${mobileStack ? styles.mobileStack : ''}`}
+    >
+      {label && (
+        <InputLabel htmlFor={id} required={required}>
+          {label}
+        </InputLabel>
+      )}
       {hasRightElement ? (
         <div className={styles.inputWithButton}>
           <Input

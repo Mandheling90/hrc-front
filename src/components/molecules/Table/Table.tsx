@@ -18,6 +18,8 @@ export interface TableColumn<T = any> {
   align?: 'left' | 'center' | 'right'
   /** 모바일에서 숨김 여부 */
   hideOnMobile?: boolean
+  /** 텍스트 오버플로우 처리 방식 */
+  textOverflow?: 'wrap' | 'ellipsis' | 'scroll'
 }
 
 export interface TableProps<T = any> {
@@ -35,6 +37,10 @@ export interface TableProps<T = any> {
   renderMobileCard?: (item: T, index: number) => React.ReactNode
   /** 추가 클래스명 */
   className?: string
+  /** 기본 텍스트 오버플로우 처리 방식 (컬럼별 설정이 없을 때 사용) */
+  defaultTextOverflow?: 'wrap' | 'ellipsis' | 'scroll'
+  /** 헤더를 포함한 전체 영역에 스크롤 적용 여부 (기본값: false, 본문만 스크롤) */
+  scrollWithHeader?: boolean
 }
 
 export const Table = <T,>({
@@ -44,7 +50,9 @@ export const Table = <T,>({
   onRowClick,
   scrollableHeight,
   renderMobileCard,
-  className = ''
+  className = '',
+  defaultTextOverflow = 'wrap',
+  scrollWithHeader = false
 }: TableProps<T>) => {
   // 기본 셀 렌더링
   const renderCell = (column: TableColumn<T>, item: T, index: number) => {
@@ -57,45 +65,119 @@ export const Table = <T,>({
     return null
   }
 
+  const hasHorizontalScroll = columns.some(col => (col.textOverflow || defaultTextOverflow) === 'scroll')
+
   return (
     <div className={`${styles.tableWrapper} ${className}`}>
-      {/* 데스크톱/태블릿: 테이블 헤더 */}
-      <div className={styles.tableHeader}>
-        {columns.map((column, index) => (
-          <React.Fragment key={column.id}>
-            <div
-              className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''}`}
-              style={{ width: column.width, textAlign: column.align || 'center' }}
-            >
-              {column.label}
-            </div>
-            {index < columns.length - 1 && <div className={styles.separator}></div>}
-          </React.Fragment>
-        ))}
-      </div>
+      {scrollWithHeader ? (
+        /* 헤더를 포함한 전체 영역 스크롤 */
+        <div
+          className={`${styles.tableContainer} ${hasHorizontalScroll ? styles.horizontalScroll : ''}`}
+          style={scrollableHeight ? { maxHeight: scrollableHeight === '100%' ? '100%' : scrollableHeight } : undefined}
+        >
+          {/* 데스크톱/태블릿: 테이블 헤더 */}
+          <div className={styles.tableHeader}>
+            {columns.map((column, index) => {
+              const textOverflow = column.textOverflow || defaultTextOverflow
+              return (
+                <React.Fragment key={column.id}>
+                  <div
+                    className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                      textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                    } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
+                    style={{ width: column.width, textAlign: column.align || 'center' }}
+                  >
+                    {column.label}
+                  </div>
+                  {index < columns.length - 1 && <div className={styles.separator}></div>}
+                </React.Fragment>
+              )
+            })}
+          </div>
 
-      {/* 데스크톱/태블릿: 테이블 본문 */}
-      <div className={styles.tableBody} style={{ maxHeight: scrollableHeight }}>
-        {data.map((item, rowIndex) => (
-          <div
-            key={getRowKey(item, rowIndex)}
-            className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''}`}
-            onClick={() => onRowClick?.(item, rowIndex)}
-          >
-            {columns.map((column, colIndex) => (
-              <React.Fragment key={column.id}>
-                <div
-                  className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''}`}
-                  style={{ width: column.width, textAlign: column.align || 'center' }}
-                >
-                  {renderCell(column, item, rowIndex)}
-                </div>
-                {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
-              </React.Fragment>
+          {/* 데스크톱/태블릿: 테이블 본문 */}
+          <div className={`${styles.tableBody} ${styles.noScroll}`}>
+            {data.map((item, rowIndex) => (
+              <div
+                key={getRowKey(item, rowIndex)}
+                className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''}`}
+                onClick={() => onRowClick?.(item, rowIndex)}
+              >
+                {columns.map((column, colIndex) => {
+                  const textOverflow = column.textOverflow || defaultTextOverflow
+                  return (
+                    <React.Fragment key={column.id}>
+                      <div
+                        className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                          textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                        } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
+                        style={{ width: column.width, textAlign: column.align || 'center' }}
+                      >
+                        {renderCell(column, item, rowIndex)}
+                      </div>
+                      {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
+                    </React.Fragment>
+                  )
+                })}
+              </div>
             ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        /* 기본: 본문만 스크롤 */
+        <>
+          {/* 데스크톱/태블릿: 테이블 헤더 */}
+          <div className={styles.tableHeader}>
+            {columns.map((column, index) => {
+              const textOverflow = column.textOverflow || defaultTextOverflow
+              return (
+                <React.Fragment key={column.id}>
+                  <div
+                    className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                      textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                    } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
+                    style={{ width: column.width, textAlign: column.align || 'center' }}
+                  >
+                    {column.label}
+                  </div>
+                  {index < columns.length - 1 && <div className={styles.separator}></div>}
+                </React.Fragment>
+              )
+            })}
+          </div>
+
+          {/* 데스크톱/태블릿: 테이블 본문 */}
+          <div
+            className={`${styles.tableBody} ${hasHorizontalScroll ? styles.horizontalScroll : ''}`}
+            style={scrollableHeight && scrollableHeight !== '100%' ? { maxHeight: scrollableHeight } : undefined}
+          >
+            {data.map((item, rowIndex) => (
+              <div
+                key={getRowKey(item, rowIndex)}
+                className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''}`}
+                onClick={() => onRowClick?.(item, rowIndex)}
+              >
+                {columns.map((column, colIndex) => {
+                  const textOverflow = column.textOverflow || defaultTextOverflow
+                  return (
+                    <React.Fragment key={column.id}>
+                      <div
+                        className={`${styles.dataCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                          textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                        } ${textOverflow === 'scroll' ? styles.scroll : ''}`}
+                        style={{ width: column.width, textAlign: column.align || 'center' }}
+                      >
+                        {renderCell(column, item, rowIndex)}
+                      </div>
+                      {colIndex < columns.length - 1 && <div className={styles.separator}></div>}
+                    </React.Fragment>
+                  )
+                })}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* 모바일: 카드 형태 */}
       {renderMobileCard && (
