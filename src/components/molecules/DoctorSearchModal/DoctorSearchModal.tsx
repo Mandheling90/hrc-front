@@ -211,37 +211,39 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
             ))}
           </div>
 
-          {/* 검색 영역 */}
-          <div className={styles.searchWrapper}>
-            <FormField
-              id='doctor-search'
-              name='doctor-search'
-              type='text'
-              placeholder='의료진명을 입력해주세요'
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') handleSearch()
-              }}
-              buttonText='의료진 검색'
-              onButtonClick={handleSearch}
-              buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
-              error=''
-              mobileStack
-            />
-          </div>
+          <div className={styles.searchContainer}>
+            {/* 검색 영역 */}
+            <div className={styles.searchWrapper}>
+              <FormField
+                id='doctor-search'
+                name='doctor-search'
+                type='text'
+                placeholder='의료진명을 입력해주세요'
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') handleSearch()
+                }}
+                buttonText='의료진 검색'
+                onButtonClick={handleSearch}
+                buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
+                error=''
+                mobileStack
+              />
+            </div>
 
-          {/* 리스트 영역 */}
-          <div className={styles.listContainer}>
-            <Table
-              columns={columns}
-              data={filteredDoctors}
-              getRowKey={(doctor, index) => `${doctor.name}-${index}`}
-              className={styles.table}
-              scrollableHeight='100%'
-              defaultTextOverflow='ellipsis'
-              scrollWithHeader
-            />
+            {/* 리스트 영역 */}
+            <div className={styles.listContainer}>
+              <Table
+                columns={columns}
+                data={filteredDoctors}
+                getRowKey={(doctor, index) => `${doctor.name}-${index}`}
+                className={styles.table}
+                scrollableHeight='100%'
+                defaultTextOverflow='ellipsis'
+                scrollWithHeader
+              />
+            </div>
           </div>
         </div>
 
