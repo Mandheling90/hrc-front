@@ -12,6 +12,8 @@ export interface CardRow {
   rightContent: React.ReactNode
   /** 강조 표시 여부 (회색 배경 적용) */
   highlighted?: boolean
+  /** 모바일에서 두 줄로 표시 여부 (라벨 위, 값 아래) */
+  twoLine?: boolean
 }
 
 export interface CardListProps {
@@ -34,7 +36,10 @@ export const CardList: React.FC<CardListProps> = ({ cards, getCardKey, scrollabl
       {cards.map((cardRows, cardIndex) => (
         <div key={getCardKey(cardRows, cardIndex)} className={styles.card}>
           {cardRows.map((row, rowIndex) => (
-            <div key={row.id} className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''}`}>
+            <div
+              key={row.id}
+              className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''}`}
+            >
               <div className={styles.cardLeft}>{row.leftContent}</div>
               <div className={styles.cardRight}>{row.rightContent}</div>
             </div>

@@ -59,6 +59,24 @@
       margin: 0 -12px;
     }
   }
+
+  // 두 줄로 표시 (호출하는 쪽에서 화면 크기별로 제어)
+  &.twoLine {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .cardLeft {
+      width: 100%;
+    }
+
+    .cardRight {
+      width: 100%;
+      text-align: left;
+      padding-left: 0px;
+      justify-content: flex-start;
+    }
+  }
 }
 
 .cardLeft {

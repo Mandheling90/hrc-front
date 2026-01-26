@@ -71,7 +71,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('전체')
   const [searchQuery, setSearchQuery] = useState('')
   const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors)
-  const [isTablet, setIsTablet] = useState(false)
+  const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 768 : false))
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -114,6 +115,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   useEffect(() => {
     const checkIsTablet = () => {
       setIsTablet(window.innerWidth <= 1429)
+      setIsMobile(window.innerWidth <= 768)
     }
 
     checkIsTablet()
@@ -269,17 +271,20 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                     {
                       id: 'department',
                       leftContent: <span>진료과</span>,
-                      rightContent: <span>{doctor.department}</span>
+                      rightContent: <span>{doctor.department}</span>,
+                      twoLine: isMobile
                     },
                     {
                       id: 'name',
                       leftContent: <span>자문의</span>,
-                      rightContent: <span>{doctor.name}</span>
+                      rightContent: <span>{doctor.name}</span>,
+                      twoLine: isMobile
                     },
                     {
                       id: 'email',
                       leftContent: <span>이메일</span>,
-                      rightContent: <span>{doctor.email}</span>
+                      rightContent: <span>{doctor.email}</span>,
+                      twoLine: isMobile
                     }
                   ])}
                   getCardKey={(card, index) => `${filteredDoctors[index].name}-${index}`}
