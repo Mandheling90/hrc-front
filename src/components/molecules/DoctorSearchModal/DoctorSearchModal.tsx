@@ -8,6 +8,7 @@ import styles from './DoctorSearchModal.module.scss'
 import { FormField } from '../FormField/FormField'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { Table, TableColumn } from '../Table/Table'
+import { CardList, CardRow } from '../CardList/CardList'
 
 export interface Doctor {
   /** 진료과 */
@@ -70,6 +71,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('전체')
   const [searchQuery, setSearchQuery] = useState('')
   const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors)
+  const [isTablet, setIsTablet] = useState(false)
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -107,6 +109,20 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       setSelectedCategory('전체')
     }
   }, [isOpen])
+
+  // 태블릿 여부 확인
+  useEffect(() => {
+    const checkIsTablet = () => {
+      setIsTablet(window.innerWidth <= 1429)
+    }
+
+    checkIsTablet()
+    window.addEventListener('resize', checkIsTablet)
+
+    return () => {
+      window.removeEventListener('resize', checkIsTablet)
+    }
+  }, [])
 
   if (!isOpen) return null
 
@@ -234,15 +250,54 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
             {/* 리스트 영역 */}
             <div className={styles.listContainer}>
-              <Table
-                columns={columns}
-                data={filteredDoctors}
-                getRowKey={(doctor, index) => `${doctor.name}-${index}`}
-                className={styles.table}
-                scrollableHeight='100%'
-                defaultTextOverflow='ellipsis'
-                scrollWithHeader
-              />
+              {isTablet ? (
+                /* 태블릿: 카드형 리스트 */
+                <CardList
+                  cards={filteredDoctors.map(doctor => [
+                    {
+                      id: 'selected',
+                      leftContent: <span>선택</span>,
+                      rightContent: (
+                        <Checkbox
+                          checked={doctor.selected}
+                          onChange={() => handleDoctorToggle(doctor)}
+                          aria-label={`${doctor.name} 선택`}
+                        />
+                      ),
+                      highlighted: true
+                    },
+                    {
+                      id: 'department',
+                      leftContent: <span>진료과</span>,
+                      rightContent: <span>{doctor.department}</span>
+                    },
+                    {
+                      id: 'name',
+                      leftContent: <span>자문의</span>,
+                      rightContent: <span>{doctor.name}</span>
+                    },
+                    {
+                      id: 'email',
+                      leftContent: <span>이메일</span>,
+                      rightContent: <span>{doctor.email}</span>
+                    }
+                  ])}
+                  getCardKey={(card, index) => `${filteredDoctors[index].name}-${index}`}
+                  scrollableHeight='100%'
+                  className={styles.cardList}
+                />
+              ) : (
+                /* 데스크톱: 테이블 */
+                <Table
+                  columns={columns}
+                  data={filteredDoctors}
+                  getRowKey={(doctor, index) => `${doctor.name}-${index}`}
+                  className={styles.table}
+                  scrollableHeight='100%'
+                  defaultTextOverflow='ellipsis'
+                  scrollWithHeader
+                />
+              )}
             </div>
           </div>
         </div>
