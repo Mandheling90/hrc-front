@@ -25,23 +25,44 @@ export interface CardListProps {
   scrollableHeight?: string
   /** 추가 클래스명 */
   className?: string
+  /** 그리드 레이아웃 열 수 (지정 시 그리드 레이아웃 사용, 기본값: undefined - 세로 나열) */
+  columns?: number
+  /** 카드 클릭 핸들러 */
+  onCardClick?: (cardIndex: number) => void
 }
 
-export const CardList: React.FC<CardListProps> = ({ cards, getCardKey, scrollableHeight, className = '' }) => {
+export const CardList: React.FC<CardListProps> = ({
+  cards,
+  getCardKey,
+  scrollableHeight,
+  className = '',
+  columns,
+  onCardClick
+}) => {
   return (
     <div
-      className={`${styles.cardList} ${className}`}
-      style={scrollableHeight ? { maxHeight: scrollableHeight } : undefined}
+      className={`${styles.cardList} ${columns ? styles.grid : ''} ${className}`}
+      style={
+        scrollableHeight
+          ? { maxHeight: scrollableHeight }
+          : columns
+            ? { gridTemplateColumns: `repeat(${columns}, 1fr)` }
+            : undefined
+      }
     >
       {cards.map((cardRows, cardIndex) => (
-        <div key={getCardKey(cardRows, cardIndex)} className={styles.card}>
+        <div
+          key={getCardKey(cardRows, cardIndex)}
+          className={`${styles.card} ${onCardClick ? styles.clickable : ''}`}
+          onClick={() => onCardClick?.(cardIndex)}
+        >
           {cardRows.map((row, rowIndex) => (
             <div
               key={row.id}
-              className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''}`}
+              className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''} ${!row.rightContent ? styles.singleContent : ''}`}
             >
               <div className={styles.cardLeft}>{row.leftContent}</div>
-              <div className={styles.cardRight}>{row.rightContent}</div>
+              {row.rightContent && <div className={styles.cardRight}>{row.rightContent}</div>}
             </div>
           ))}
         </div>

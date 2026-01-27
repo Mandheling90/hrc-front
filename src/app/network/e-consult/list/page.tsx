@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -9,6 +9,7 @@ import { StatusBadge } from '@/components/atoms/StatusBadge/StatusBadge'
 import { Select } from '@/components/atoms/Select/Select'
 import { Input } from '@/components/atoms/Input/Input'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
+import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import styles from './page.module.scss'
@@ -112,7 +113,22 @@ export default function EConsultListPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
   const itemsPerPage = 5
+
+  // 태블릿 여부 확인
+  useEffect(() => {
+    const checkIsTablet = () => {
+      setIsTablet(window.innerWidth <= 1429)
+    }
+
+    checkIsTablet()
+    window.addEventListener('resize', checkIsTablet)
+
+    return () => {
+      window.removeEventListener('resize', checkIsTablet)
+    }
+  }, [])
 
   // Breadcrumb 설정
   const breadcrumbItems = useMemo(() => {
@@ -264,16 +280,61 @@ export default function EConsultListPage() {
             </div>
           </div>
 
-          {/* 테이블 */}
+          {/* 테이블 또는 카드 리스트 */}
           <div className={styles.tableSection}>
-            <Table
-              columns={columns}
-              data={paginatedData}
-              getRowKey={item => item.id}
-              onRowClick={handleRowClick}
-              className={styles.table}
-              isHighlighted={(item, index) => index === 0}
-            />
+            {isTablet ? (
+              /* 태블릿: 카드형 그리드 리스트 */
+              <CardList
+                cards={paginatedData.map(item => {
+                  const statusLabels = {
+                    waiting: '답변 대기',
+                    expired: '기간 만료',
+                    completed: '답변 완료'
+                  }
+                  return [
+                    {
+                      id: 'number',
+                      leftContent: <span className={styles.cardNumber}>{item.number}</span>,
+                      rightContent: null
+                    },
+                    {
+                      id: 'title',
+                      leftContent: <span className={styles.cardTitle}>{item.title}</span>,
+                      rightContent: null
+                    },
+                    {
+                      id: 'hospitalName',
+                      leftContent: <span className={styles.cardInfo}>{item.hospitalName}</span>,
+                      rightContent: null
+                    },
+                    {
+                      id: 'applicant',
+                      leftContent: <span className={styles.cardInfo}>{item.applicant}</span>,
+                      rightContent: null
+                    },
+                    {
+                      id: 'statusAndDate',
+                      leftContent: <StatusBadge variant={item.status}>{statusLabels[item.status]}</StatusBadge>,
+                      rightContent: <span className={styles.cardDate}>{item.registeredDate}</span>
+                    }
+                  ]
+                })}
+                getCardKey={(card, index) => paginatedData[index].id}
+                columns={2}
+                className={styles.eConsultCardList}
+                onCardClick={cardIndex => handleRowClick(paginatedData[cardIndex])}
+              />
+            ) : (
+              /* 데스크톱: 테이블 */
+              <Table
+                columns={columns}
+                data={paginatedData}
+                getRowKey={item => item.id}
+                onRowClick={handleRowClick}
+                className={styles.table}
+                isHighlighted={(item, index) => index === 0}
+              />
+            )}
           </div>
 
           {/* 페이지네이션 */}

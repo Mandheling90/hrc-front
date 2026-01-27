@@ -180,6 +180,111 @@
   }
 }
 
+// e-Consult 카드 리스트 (태블릿용)
+.eConsultCardList {
+  max-width: 1430px;
+  margin: 0 auto;
+}
+
+.cardNumber {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.72px;
+}
+
+.cardTitle {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.8px;
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.cardInfo {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.72px;
+}
+
+.cardDate {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.72px;
+}
+
+// e-Consult 카드 내부 스타일 커스터마이징
+.eConsultCardList {
+  :global(.card) {
+    position: relative;
+    padding: 20px;
+    min-height: 200px;
+    justify-content: flex-start;
+
+    @include mobile {
+      padding: 16px;
+    }
+  }
+
+  // 번호 행 스타일
+  :global(.cardRow:first-child) {
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  // 제목 행 스타일
+  :global(.cardRow:nth-child(2)) {
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  // 상태/날짜 행 스타일 (하단 정렬)
+  :global(.cardRow:last-child) {
+    margin-top: auto;
+    align-items: flex-end;
+    padding-top: 12px;
+  }
+
+  // 카드 번호 스타일
+  .cardNumber {
+    font-size: $font-size-lg; // 18px
+    font-weight: $font-weight-semibold;
+    color: $gray-12;
+    letter-spacing: -0.72px;
+  }
+
+  // 카드 제목 스타일
+  .cardTitle {
+    font-size: $font-size-xl; // 20px
+    font-weight: $font-weight-semibold;
+    color: $gray-12;
+    letter-spacing: -0.8px;
+    line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  // 카드 정보 (의료기관명, 신청자) 스타일
+  .cardInfo {
+    font-size: $font-size-lg; // 18px
+    font-weight: $font-weight-normal;
+    color: $gray-11;
+    letter-spacing: -0.72px;
+  }
+
+  // 카드 날짜 스타일
+  .cardDate {
+    font-size: $font-size-lg; // 18px
+    font-weight: $font-weight-normal;
+    color: $gray-11;
+    letter-spacing: -0.72px;
+  }
+}
+
 .paginationWrapper {
   display: flex;
   justify-content: center;
