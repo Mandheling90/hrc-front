@@ -112,7 +112,7 @@ export default function EConsultListPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const itemsPerPage = 10
+  const itemsPerPage = 5
 
   // Breadcrumb 설정
   const breadcrumbItems = useMemo(() => {
@@ -277,14 +277,16 @@ export default function EConsultListPage() {
           </div>
 
           {/* 페이지네이션 */}
-          <div className={styles.paginationWrapper}>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              maxVisiblePages={5}
-            />
-          </div>
+          {totalPages > 0 && (
+            <div className={styles.paginationWrapper}>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                maxVisiblePages={5}
+              />
+            </div>
+          )}
         </div>
       </main>
       <Footer />
