@@ -67,7 +67,7 @@ const commonMenuItems: MenuItem[] = [
     subItems: [
       { href: '/notice/list', label: '공지사항' },
       { href: '/notice/news', label: '병원소식', disabled: true },
-      { href: '/notice/event', label: '교육/행사', disabled: true }
+      { href: '/notice/event', label: '교육/행사' }
     ]
   },
   {
