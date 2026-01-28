@@ -162,6 +162,20 @@
   &.contentCenter {
     justify-content: center;
   }
+
+  &.centerText {
+    justify-content: center;
+
+    .guideInner {
+      text-align: center;
+      align-items: center;
+
+      @media (max-width: $breakpoint-md) {
+        text-align: center;
+        align-items: center;
+      }
+    }
+  }
 }
 
 .guideInner {
@@ -174,7 +188,6 @@
     flex-direction: column;
     gap: 24px;
     width: 100%;
-    text-align: left;
   }
 }
 
@@ -205,8 +218,9 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #000;
-  line-height: 1.5;
+  color: var(--Color-Primary-Deep-deep, #8c0028);
+  text-align: center;
+  line-height: 150%; /* 36px */
   letter-spacing: -0.96px;
   margin: 0 0 8px 0;
 

@@ -7,7 +7,7 @@ export interface InfoBoxProps {
   /** 표시할 메시지 배열 */
   messages: string[]
   /** 제목 (선택적) */
-  title?: string
+  title?: React.ReactNode
   /** 아이콘 (선택적) */
   icon?: React.ReactNode
   /** 박스 스타일 변형 (기본값: 'info') */
@@ -64,7 +64,11 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
 
   if (variant === 'guide') {
     return (
-      <div className={`${styles.guide} ${contentAlign === 'center' ? styles.contentCenter : ''} ${className}`}>
+      <div
+        className={`${styles.guide} ${contentAlign === 'center' ? styles.contentCenter : ''} ${
+          contentAlign === 'center' && !hasIcon ? styles.centerText : ''
+        } ${className}`}
+      >
         <div className={styles.guideInner}>
           {hasIcon && <div className={styles.guideIcon}>{icon}</div>}
           <div className={styles.guideContent}>
