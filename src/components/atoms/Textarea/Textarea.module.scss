@@ -30,6 +30,26 @@
   transition: border-color 0.3s;
   font-family: $font-family-base;
   resize: vertical;
+  overflow-y: auto;
+
+  // 커스텀 스크롤바
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $gray-4;
+    border-radius: 40px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 60px;
+
+    &:hover {
+      background: darken($color-primary, 10%);
+    }
+  }
 
   &:focus {
     outline: none;
@@ -64,6 +84,20 @@
     min-height: 180px;
     font-size: 16px;
     padding: 16px;
+  }
+}
+
+// 상세 페이지 등에서 컨테이너가 테두리를 그릴 때 사용
+.borderless {
+  border: none !important;
+}
+
+// 포커스 하이라이트(보더 컬러 변경) 제거
+.disableFocusHighlight {
+  &:focus {
+    outline: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
   }
 }
 

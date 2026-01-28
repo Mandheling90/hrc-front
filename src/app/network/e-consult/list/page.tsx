@@ -221,8 +221,8 @@ export default function EConsultListPage() {
   }
 
   const handleRowClick = (item: EConsultData) => {
-    // TODO: 상세 페이지로 이동
-    console.log('Row clicked:', item)
+    // 상세 페이지로 이동
+    window.location.href = `/network/e-consult/list/${item.id}`
   }
 
   return (

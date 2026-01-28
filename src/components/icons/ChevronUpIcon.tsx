@@ -1,28 +1,30 @@
 import React from 'react'
 
-export interface ChevronDownIconProps {
+export interface ChevronUpIconProps {
   width?: number | string
   height?: number | string
   className?: string
+  stroke?: string
   fill?: string
 }
 
-export const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
+export const ChevronUpIcon: React.FC<ChevronUpIconProps> = ({
   width = 24,
   height = 24,
   className = '',
-  fill = '#636363'
+  stroke = '#636363',
+  fill = 'none'
 }) => {
   return (
     <svg
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       xmlns='http://www.w3.org/2000/svg'
       className={className}
     >
-      <path d='M20 8L12 16L4 8' stroke={fill} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+      <path d='M20 16L12 8L4 16' stroke={stroke} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   )
 }
