@@ -6,10 +6,8 @@ import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
-import { Select } from '@/components/atoms/Select/Select'
-import { Input } from '@/components/atoms/Input/Input'
+import { SearchFilterWithInfo } from '@/components/molecules/SearchFilterWithInfo/SearchFilterWithInfo'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
-import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './page.module.scss'
 
 // 공지사항 데이터 타입
@@ -245,32 +243,17 @@ export default function NoticeListPage() {
           <h1 className={styles.pageTitle}>공지사항</h1>
 
           {/* 검색 및 필터 영역 */}
-          <div className={styles.searchSection}>
-            <Select
-              options={categoryOptions}
-              value={selectedCategory}
-              onChange={setSelectedCategory}
-              width={120}
-              className={styles.categorySelect}
-            />
-            <div className={styles.searchField}>
-              <Input
-                id='search'
-                name='search'
-                type='text'
-                placeholder='검색어를 입력해주세요.'
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') handleSearch()
-                }}
-                className={styles.searchInput}
-              />
-              <button type='button' onClick={handleSearch} className={styles.searchButton} aria-label='검색'>
-                <SearchIcon width={24} height={24} />
-              </button>
-            </div>
-          </div>
+          <SearchFilterWithInfo
+            selectOptions={categoryOptions}
+            selectValue={selectedCategory}
+            onSelectChange={setSelectedCategory}
+            selectWidth={120}
+            searchPlaceholder='검색어를 입력해주세요.'
+            searchValue={searchQuery}
+            onSearchValueChange={setSearchQuery}
+            onSearch={handleSearch}
+            searchFieldWidth={400}
+          />
 
           {/* 데스크톱/태블릿: 테이블, 모바일: 카드 */}
           <div className={styles.tableSection}>

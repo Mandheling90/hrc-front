@@ -1,0 +1,167 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.infoAndSearchSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-4;
+  margin-bottom: $spacing-2;
+
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-3;
+    margin-bottom: $spacing-8;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-3;
+    margin-bottom: $spacing-8;
+  }
+}
+
+// 안내 메시지가 없을 때 검색 영역만 오른쪽 정렬할 때 사용
+.onlySearch {
+  justify-content: flex-end;
+}
+
+.searchSection {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  flex-shrink: 0;
+
+  // 데스크톱에서 오른쪽에 배치
+  order: 2;
+
+  @include tablet {
+    width: 100%;
+    order: 1; // 태블릿에서는 위로
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-3;
+    width: 100%;
+    order: 1; // 모바일에서도 위로
+  }
+}
+
+.statusSelect {
+  flex-shrink: 0;
+
+  @include mobile {
+    width: 100% !important;
+  }
+}
+
+.searchField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: $color-white;
+  padding: 10px 16px 10px 0px;
+  gap: $spacing-4;
+  border-bottom: 1px solid $gray-10;
+  flex: 1;
+
+  @include tablet {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  border: 0px;
+
+  input {
+    border: 0px;
+  }
+
+  :global(.inputWrapper) {
+    width: 100%;
+    margin: 0;
+  }
+
+  :global(.input) {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    height: auto;
+    font-size: $font-size-xl;
+    color: $gray-12;
+    letter-spacing: -0.8px;
+    background-color: transparent;
+    line-height: $line-height-normal;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+
+    &::placeholder {
+      color: $gray-9;
+    }
+  }
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: $gray-11;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+.infoMessage {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-lg;
+  color: $gray-11;
+  letter-spacing: -0.72px;
+  flex-shrink: 0;
+  width: auto; // 데스크톱에서는 자동 너비
+
+  // 데스크톱에서 왼쪽에 배치
+  order: 1;
+
+  @include tablet {
+    width: 100%;
+    order: 2; // 태블릿에서는 아래로
+    justify-content: flex-end; // 태블릿에서 오른쪽 정렬
+  }
+
+  @include mobile {
+    font-size: $font-size-base;
+    gap: $spacing-2;
+    width: 100%;
+    order: 2; // 모바일에서도 아래로
+  }
+}

@@ -5,12 +5,9 @@ import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { StatusBadge } from '@/components/atoms/StatusBadge/StatusBadge'
-import { Select } from '@/components/atoms/Select/Select'
-import { Input } from '@/components/atoms/Input/Input'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { CardList } from '@/components/molecules/CardList/CardList'
-import { SearchIcon } from '@/components/icons/SearchIcon'
-import { InfoIcon } from '@/components/icons/InfoIcon'
+import { SearchFilterWithInfo } from '@/components/molecules/SearchFilterWithInfo/SearchFilterWithInfo'
 import styles from './page.module.scss'
 
 // e-Consult 데이터 타입
@@ -233,41 +230,18 @@ export default function EConsultListPage() {
           <h1 className={styles.pageTitle}>자문의 e-Consult 조회</h1>
 
           {/* 안내 메시지 및 검색 필터 영역 */}
-          <div className={styles.infoAndSearchSection}>
-            {/* 검색 및 필터 영역 */}
-            <div className={styles.searchSection}>
-              <Select
-                options={statusOptions}
-                value={selectedStatus}
-                onChange={setSelectedStatus}
-                width={180}
-                className={styles.statusSelect}
-              />
-              <div className={styles.searchField}>
-                <Input
-                  id='search'
-                  name='search'
-                  type='text'
-                  placeholder='제목, 신청자, 의료기관명을 입력해주세요.'
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') handleSearch()
-                  }}
-                  className={styles.searchInput}
-                />
-                <button type='button' onClick={handleSearch} className={styles.searchButton} aria-label='검색'>
-                  <SearchIcon width={24} height={24} />
-                </button>
-              </div>
-            </div>
-
-            {/* 안내 메시지 */}
-            <div className={styles.infoMessage}>
-              <InfoIcon width={24} height={24} />
-              <span>신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.</span>
-            </div>
-          </div>
+          <SearchFilterWithInfo
+            selectOptions={statusOptions}
+            selectValue={selectedStatus}
+            onSelectChange={setSelectedStatus}
+            selectWidth={180}
+            searchPlaceholder='제목, 신청자, 의료기관명을 입력해주세요.'
+            searchValue={searchQuery}
+            onSearchValueChange={setSearchQuery}
+            onSearch={handleSearch}
+            searchFieldWidth={400}
+            infoMessage='신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.'
+          />
 
           {/* 테이블 또는 카드 리스트 */}
           <div className={styles.tableSection}>
