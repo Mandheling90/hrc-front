@@ -1,0 +1,229 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -1.92px;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 $spacing-20;
+  padding: 0;
+
+  @include tablet {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-16;
+  }
+
+  @include mobile {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-8;
+  }
+}
+
+// 검색 및 필터 영역
+.searchSection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-4;
+  margin-bottom: $spacing-8;
+  max-width: 676px;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: $spacing-3;
+    margin-bottom: $spacing-6;
+  }
+}
+
+.categorySelect {
+  flex-shrink: 0;
+
+  @include mobile {
+    width: 100% !important;
+  }
+}
+
+.searchField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  height: 48px;
+  background-color: $color-white;
+  padding: 10px 16px 10px 0px;
+  gap: $spacing-4;
+  border-bottom: 1px solid $gray-10;
+  flex: 1;
+
+  @include tablet {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  border: 0px;
+
+  input {
+    border: 0px;
+  }
+
+  :global(.inputWrapper) {
+    width: 100%;
+    margin: 0;
+  }
+
+  :global(.input) {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    height: auto;
+    font-size: $font-size-xl;
+    color: $gray-12;
+    letter-spacing: -0.8px;
+    background-color: transparent;
+    line-height: $line-height-normal;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+
+    &::placeholder {
+      color: $gray-9;
+    }
+  }
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: $gray-11;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+.tableSection {
+  margin-bottom: $spacing-10;
+
+  @include mobile {
+    margin-bottom: $spacing-8;
+  }
+}
+
+.table {
+  max-width: 1430px;
+  margin: 0 auto;
+}
+
+// 공지 배지 스타일
+.noticeBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  background-color: $color-primary;
+  color: $color-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  border-radius: 4px;
+  letter-spacing: -0.56px;
+}
+
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-10;
+
+  @include mobile {
+    margin-top: $spacing-8;
+  }
+}
+
+// 모바일 카드 스타일
+.cardList {
+  @include mobile {
+    display: block;
+
+    // 모바일에서 카드 간 간격 확대
+    :global(.card) {
+      margin-bottom: $spacing-4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.noticeCard {
+  background-color: #f8efe2 !important;
+}
+
+.cardTitleWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.cardTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.72px;
+  line-height: $line-height-normal;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
+}
+
+.cardDate {
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.56px;
+  text-align: right;
+}
+
+.cardActionButton {
+  margin-top: $spacing-1;
+  margin-left: auto;
+}
