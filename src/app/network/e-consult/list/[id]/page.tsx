@@ -9,6 +9,7 @@ import { Button } from '@/components/atoms/Button/Button'
 import { ChevronUpIcon } from '@/components/icons/ChevronUpIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import styles from './page.module.scss'
+import { PrevNextNavigation } from '@/components/molecules/PrevNextNavigation/PrevNextNavigation'
 
 // e-Consult 상세 데이터 타입
 interface EConsultDetailData {
@@ -219,35 +220,10 @@ export default function EConsultDetailPage() {
           )}
 
           {/* 이전글/다음글 네비게이션 */}
-          <div className={styles.navigationSection}>
-            <div className={styles.navItem}>
-              <div className={styles.navHeader}>
-                <ChevronUpIcon width={24} height={24} stroke='#636363' className={styles.navIcon} />
-                <span className={styles.navLabel}>이전 글</span>
-                {mockPrevPost ? (
-                  <button type='button' onClick={handlePrevPostClick} className={styles.navLink}>
-                    {mockPrevPost.title}
-                  </button>
-                ) : (
-                  <span className={styles.navEmpty}>이전 글이 없습니다.</span>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.navItem}>
-              <div className={styles.navHeader}>
-                <ChevronDownIcon width={24} height={24} fill='#636363' className={styles.navIcon} />
-                <span className={styles.navLabel}>다음 글</span>
-                {mockNextPost ? (
-                  <button type='button' onClick={handleNextPostClick} className={styles.navLink}>
-                    {mockNextPost.title}
-                  </button>
-                ) : (
-                  <span className={styles.navEmpty}>다음 글이 없습니다.</span>
-                )}
-              </div>
-            </div>
-          </div>
+          <PrevNextNavigation
+            prev={mockPrevPost ? { title: mockPrevPost.title, onClick: handlePrevPostClick } : null}
+            next={mockNextPost ? { title: mockNextPost.title, onClick: handleNextPostClick } : null}
+          />
 
           {/* 목록 버튼 */}
           <div className={styles.backButtonSection}>

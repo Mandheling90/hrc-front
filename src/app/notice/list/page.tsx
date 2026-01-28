@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useMemo, useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
-import { Button } from '@/components/atoms/Button/Button'
 import { Select } from '@/components/atoms/Select/Select'
 import { Input } from '@/components/atoms/Input/Input'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
@@ -103,6 +103,7 @@ const categoryOptions = [
 ]
 
 export default function NoticeListPage() {
+  const router = useRouter()
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -183,8 +184,7 @@ export default function NoticeListPage() {
   }
 
   const handleRowClick = (item: NoticeData) => {
-    // TODO: 상세 페이지로 이동
-    console.log('Row clicked:', item)
+    router.push(`/notice/list/${item.id}`)
   }
 
   const handleCardClick = (cardIndex: number) => {
