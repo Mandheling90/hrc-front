@@ -29,6 +29,8 @@ export interface CardListProps {
   columns?: number
   /** 카드 클릭 핸들러 */
   onCardClick?: (cardIndex: number) => void
+  /** 각 카드의 클래스명을 반환하는 함수 */
+  getCardClassName?: (card: CardRow[], index: number) => string
 }
 
 export const CardList: React.FC<CardListProps> = ({
@@ -37,7 +39,8 @@ export const CardList: React.FC<CardListProps> = ({
   scrollableHeight,
   className = '',
   columns,
-  onCardClick
+  onCardClick,
+  getCardClassName
 }) => {
   return (
     <div
@@ -53,10 +56,10 @@ export const CardList: React.FC<CardListProps> = ({
       {cards.map((cardRows, cardIndex) => (
         <div
           key={getCardKey(cardRows, cardIndex)}
-          className={`${styles.card} ${onCardClick ? styles.clickable : ''}`}
+          className={`${styles.card} card ${onCardClick ? styles.clickable : ''} ${getCardClassName ? getCardClassName(cardRows, cardIndex) : ''}`}
           onClick={() => onCardClick?.(cardIndex)}
         >
-          {cardRows.map((row, rowIndex) => (
+          {cardRows.map(row => (
             <div
               key={row.id}
               className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''} ${!row.rightContent ? styles.singleContent : ''}`}

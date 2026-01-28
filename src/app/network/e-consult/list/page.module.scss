@@ -39,6 +39,13 @@
   gap: $spacing-4;
   margin-bottom: $spacing-2;
 
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-3;
+    margin-bottom: $spacing-8;
+  }
+
   @include mobile {
     flex-direction: column;
     align-items: stretch;
@@ -55,10 +62,22 @@
   color: $gray-11;
   letter-spacing: -0.72px;
   flex-shrink: 0;
+  width: auto; // 데스크톱에서는 자동 너비
+
+  // 데스크톱에서 왼쪽에 배치
+  order: 1;
+
+  @include tablet {
+    width: 100%;
+    order: 2; // 태블릿에서는 아래로
+    justify-content: flex-end; // 태블릿에서 오른쪽 정렬
+  }
 
   @include mobile {
     font-size: $font-size-base;
     gap: $spacing-2;
+    width: 100%;
+    order: 2; // 모바일에서도 아래로
   }
 }
 
@@ -68,11 +87,20 @@
   gap: $spacing-4;
   flex-shrink: 0;
 
+  // 데스크톱에서 오른쪽에 배치
+  order: 2;
+
+  @include tablet {
+    width: 100%;
+    order: 1; // 태블릿에서는 위로
+  }
+
   @include mobile {
     flex-direction: column;
     align-items: stretch;
     gap: $spacing-3;
     width: 100%;
+    order: 1; // 모바일에서도 위로
   }
 }
 
@@ -94,6 +122,13 @@
   padding: 10px 16px 10px 0px;
   gap: $spacing-4;
   border-bottom: 1px solid $gray-10;
+  flex: 1;
+
+  @include tablet {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
 
   @include mobile {
     width: 100%;
@@ -219,6 +254,7 @@
 
 // e-Consult 카드 내부 스타일 커스터마이징
 .eConsultCardList {
+  // 모든 카드에 공통 스타일
   :global(.card) {
     position: relative;
     padding: 20px;
@@ -228,6 +264,19 @@
     @include mobile {
       padding: 16px;
     }
+  }
+
+  // 상태별 카드 배경색 (전역 클래스 card와 상태 클래스를 함께 사용)
+  :global(.card.cardStatusWaiting) {
+    background-color: #fdf8ee !important;
+  }
+
+  :global(.card.cardStatusExpired) {
+    background-color: #f5f5f5 !important;
+  }
+
+  :global(.card.cardStatusCompleted) {
+    background-color: #fdf9f8 !important;
   }
 
   // 번호 행 스타일

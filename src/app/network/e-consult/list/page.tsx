@@ -3,13 +3,12 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
-import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { StatusBadge } from '@/components/atoms/StatusBadge/StatusBadge'
 import { Select } from '@/components/atoms/Select/Select'
 import { Input } from '@/components/atoms/Input/Input'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
-import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
+import { CardList } from '@/components/molecules/CardList/CardList'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import styles from './page.module.scss'
@@ -130,16 +129,6 @@ export default function EConsultListPage() {
     }
   }, [])
 
-  // Breadcrumb 설정
-  const breadcrumbItems = useMemo(() => {
-    return [
-      { label: '', href: '/', icon: null },
-      { label: 'network', href: '/network', icon: null },
-      { label: 'e-consult', href: '/network/e-consult', icon: null },
-      { label: '자문의 e-Consult 조회', href: '/network/e-consult/list', icon: null }
-    ]
-  }, [])
-
   // 필터링 및 검색
   const filteredData = useMemo(() => {
     let filtered = mockEConsults
@@ -245,12 +234,6 @@ export default function EConsultListPage() {
 
           {/* 안내 메시지 및 검색 필터 영역 */}
           <div className={styles.infoAndSearchSection}>
-            {/* 안내 메시지 */}
-            <div className={styles.infoMessage}>
-              <InfoIcon width={24} height={24} />
-              <span>신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.</span>
-            </div>
-
             {/* 검색 및 필터 영역 */}
             <div className={styles.searchSection}>
               <Select
@@ -277,6 +260,12 @@ export default function EConsultListPage() {
                   <SearchIcon width={24} height={24} />
                 </button>
               </div>
+            </div>
+
+            {/* 안내 메시지 */}
+            <div className={styles.infoMessage}>
+              <InfoIcon width={24} height={24} />
+              <span>신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.</span>
             </div>
           </div>
 
@@ -320,6 +309,12 @@ export default function EConsultListPage() {
                   ]
                 })}
                 getCardKey={(card, index) => paginatedData[index].id}
+                getCardClassName={(card, index) => {
+                  const status = paginatedData[index].status
+                  const statusClass = `cardStatus${status.charAt(0).toUpperCase() + status.slice(1)}`
+                  // 전역 클래스 이름으로 반환 (CSS 모듈이 아닌)
+                  return statusClass
+                }}
                 columns={2}
                 className={styles.eConsultCardList}
                 onCardClick={cardIndex => handleRowClick(paginatedData[cardIndex])}

@@ -14,16 +14,18 @@
 }
 
 .waiting {
-  background-color: #fdf9f4;
-  color: #816331;
+  background-color: #fdf8ee !important;
+  color: #202020;
+  border: 1px solid #e8e8e8;
 }
 
 .expired {
-  background-color: #ffe5e5;
-  color: #d32f2f;
+  background-color: #e0e0e0 !important;
+  color: #202020;
+  border: 1px solid #d9d9d9;
 }
 
 .completed {
-  background-color: $color-primary;
+  background-color: #a92f4a !important;
   color: $color-white;
 }
