@@ -1,0 +1,248 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.infoCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $spacing-6;
+  margin-top: $spacing-4;
+
+  // 3개 카드일 때 태블릿에서 3열로 표시
+  &.threeCards {
+    @include tablet {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: $spacing-4;
+    }
+  }
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션
+  &.tabletStyle {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $spacing-4;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.infoCard {
+  border: 1px solid $gray-4;
+  border-radius: 12px;
+  padding: 30px 50px;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  background-color: $color-white;
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션
+  .tabletStyle & {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 32px;
+    gap: $spacing-4;
+  }
+
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 32px;
+    gap: $spacing-4;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    padding: $spacing-4;
+    gap: $spacing-4;
+  }
+}
+
+.infoHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  flex-shrink: 0;
+
+  @include tablet {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  @include mobile {
+    width: 100%;
+    margin-bottom: $spacing-3;
+  }
+}
+
+.infoIconCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #fff0f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션
+  .tabletStyle & {
+    width: 60px;
+    height: 60px;
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  @include tablet {
+    width: 60px;
+    height: 60px;
+  }
+
+  @include mobile {
+    width: 72px;
+    height: 72px;
+  }
+
+  svg {
+    width: 60px;
+    height: 60px;
+
+    @include tablet {
+      width: 36px;
+      height: 36px;
+    }
+
+    @include mobile {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+.infoContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+
+  @include tablet {
+    width: 100%;
+    gap: $spacing-2;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.infoTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  margin: 0;
+  line-height: $line-height-normal;
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션
+  .tabletStyle & {
+    font-size: $font-size-base;
+  }
+
+  @include tablet {
+    font-size: $font-size-base;
+  }
+}
+
+.infoRowGroup {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  flex-wrap: wrap;
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션
+  .tabletStyle & {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-2;
+    width: 100%;
+  }
+
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-2;
+    width: 100%;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+  }
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  font-size: $font-size-base;
+  white-space: nowrap;
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션
+  .tabletStyle & {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2;
+    width: 100%;
+    font-size: $font-size-sm;
+  }
+
+  @include tablet {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2;
+    width: 100%;
+    font-size: $font-size-sm;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-1;
+    width: 100%;
+  }
+}
+
+.infoLabel {
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+}
+
+.infoValue {
+  color: #666666;
+  font-weight: $font-weight-normal;
+}
+
+.infoDivider {
+  color: $gray-9;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  flex-shrink: 0;
+  padding: 0 $spacing-1;
+
+  // 데스크탑에서도 태블릿 스타일 적용 옵션 (구분자 숨김)
+  .tabletStyle & {
+    display: none;
+  }
+
+  @include tablet {
+    display: none;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}

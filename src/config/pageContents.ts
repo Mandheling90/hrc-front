@@ -268,6 +268,78 @@ const anamContent: HospitalPageContent = {
       description:
         '고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해 거부할 경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.'
     }
+  },
+  aboutIntro: {
+    introBox: {
+      title: 'KRC (Korea University Anam Hospital Referral Center)',
+      messages: [
+        '고려대학교안암병원 진료협력센터(KRC)는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, 의료전달 체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
+        '지역사회와의 상생을 기반으로 최적의 의료서비스를 제공하기 위해 협력 병·의원 원장님들과 긴밀하고 활발한 협력네트워크를 만들어 나가도록 하겠습니다.'
+      ]
+    },
+    mainTasks: [
+      { text: '가능한 신속 정확한 진료가 이루어질 수 있도록 도와드리고 있습니다.' },
+      {
+        text: '개인정보공개 동의한 환자에 한하여, 의뢰한 환자의 진료결과, 진행사항에 대해 회신서를 제공하고 있습니다.'
+      },
+      {
+        text: '급성기 치료 종료 후 지속적 치료가 필요한 경우 환자 및 보호자 상담을 통해 1,2차 의료기관으로 회송하고 있습니다.'
+      },
+      { text: '상호협력이 우수한 병·의원을 대상으로 협력병·의원 협약 체결을 진행하고 있습니다.' }
+    ],
+    operationInfo: {
+      cards: [
+        {
+          icon: 'OperationTimeIcon',
+          title: '운영시간',
+          rows: [
+            { label: '평일', value: '08:30 ~ 17:30' },
+            { label: '토요일', value: '09:00 ~ 12:30' }
+          ]
+        },
+        {
+          icon: 'OperationPhoneFaxIcon',
+          title: '전용 전화 및 팩스',
+          rows: [
+            { label: 'Tel', value: '02-920-5892' },
+            { label: 'Fax', value: '02-920-6523' }
+          ]
+        }
+      ],
+      note: '일요일, 공휴일 휴무입니다.'
+    },
+    procedureFlow: {
+      steps: [
+        {
+          chip: '진료의뢰',
+          items: [{ text: '진료의뢰서 작성' }],
+          stepIcon: 'FlowStep01Icon'
+        },
+        {
+          chip: '진료예약',
+          items: [{ text: '전화의뢰' }, { text: '전자의뢰(심평원중계포털, 진료정보교류시스템)' }],
+          stepIcon: 'FlowStep02Icon'
+        },
+        {
+          chip: '환자진료',
+          items: [{ text: '신속, 정확한 진료' }],
+          stepIcon: 'FlowStep03Icon'
+        },
+        {
+          chip: '진료결과 회신',
+          items: [{ text: '우편발송' }, { text: '인터넷 결과 조회 : KRC 홈페이지(https://refer.kumc.or.kr)' }],
+          stepIcon: 'FlowStep04Icon'
+        },
+        {
+          chip: '회송(되의뢰)',
+          items: [
+            { text: '급성기 치료 종료 후 의뢰주신 병원으로 되의뢰' },
+            { text: '환자(보호자)와 충분한 상담 후 지속적 치료가 가능한 의료기관으로 회송' }
+          ],
+          stepIcon: 'FlowStep05Icon'
+        }
+      ]
+    }
   }
 }
 
@@ -527,6 +599,74 @@ const guroContent: HospitalPageContent = {
       title: '4. 동의를 거부할 권리 / 동의거부에 따른 안내',
       description:
         '고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해 거부할 경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.'
+    }
+  },
+  aboutIntro: {
+    introBox: {
+      title: 'KRC(Korea University Guro Hospital Referral Center)',
+      messages: [
+        '고려대학교 구로병원 진료협력센터는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, 의료전달체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
+        '지역사회와의 상생을 기반으로 협력 병의원 원장님들과 긴밀하고 활발한 협력네트워크를 구축하여, 환자분께 편리하고 친절한 고려대학교 병원의 최적의 의료서비스를 받으실 수 있도록 운영하고 있습니다.'
+      ]
+    },
+    mainTasks: [
+      { text: '가능한 신속 정확한 진료가 이루어질 수 있도록 도와드리고 있습니다.' },
+      {
+        text: '개인정보공개 동의한 환자에 한하여, 의뢰한 환자의 진료결과, 진행사항에 대해 회신서를 제공하고 있습니다.'
+      },
+      {
+        text: '급성기 치료 종료후 지속적 치료가 필요한 경우 환자 및 보호자 상담을 통해 1,2차 의료기관으로 회송하고 있습니다.'
+      },
+      { text: '상호협력이 우수한 병·의원을 대상으로 협력병·의원 협약 체결을 진행하고 있습니다.' }
+    ],
+    operationInfo: {
+      cards: [
+        {
+          icon: 'OperationTimeIcon',
+          title: '운영시간',
+          rows: [{ label: '평일', value: '08:30 - 17:30' }]
+        },
+        {
+          icon: 'OperationPhoneFaxIcon',
+          title: '전용 전화 및 팩스',
+          rows: [
+            { label: 'Tel', value: '02-2626-1681' },
+            { label: 'Fax', value: '02-2626-1691' }
+          ]
+        }
+      ]
+    },
+    procedureFlow: {
+      steps: [
+        {
+          chip: '진료의뢰',
+          items: [{ text: '진료의뢰서 작성' }],
+          stepIcon: 'FlowStep01Icon'
+        },
+        {
+          chip: '진료예약',
+          items: [{ text: '전화의뢰' }, { text: '전자의뢰(심평원중계포털, 진료정보교류시스템)' }],
+          stepIcon: 'FlowStep02Icon'
+        },
+        {
+          chip: '환자진료',
+          items: [{ text: '신속, 정확한진료' }],
+          stepIcon: 'FlowStep03Icon'
+        },
+        {
+          chip: '진료결과 회신',
+          items: [{ text: '우편발송' }, { text: 'E-mail 발송' }, { text: '진료협력센터 홈페이지 확인' }],
+          stepIcon: 'FlowStep04Icon'
+        },
+        {
+          chip: '회송(되의뢰)',
+          items: [
+            { text: '급성기 치료 종료 후 의뢰주신 병원으로 되의뢰' },
+            { text: '환자(보호자)와 충분한 상담 후 지속적 치료가 가능한 의료기관으로 회송' }
+          ],
+          stepIcon: 'FlowStep05Icon'
+        }
+      ]
     }
   }
 }
@@ -806,6 +946,79 @@ const ansanContent: HospitalPageContent = {
       title: '4. 동의를 거부할 권리 / 동의거부에 따른 안내',
       description:
         '고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해 거부할 경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.'
+    }
+  },
+  aboutIntro: {
+    introBox: {
+      title: 'KRC(Korea University Ansan Hospital Referral Center)',
+      messages: [
+        '고려대학교안산병원 진료협력센터(KRC)는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, 의료전달 체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
+        '지역사회와의 상생을 기반으로 최적의 의료서비스를 제공하기 위해 협력 병·의원 원장님들과 긴밀하고 활발한 협력네트워크를 만들어 나가도록 하겠습니다.'
+      ]
+    },
+    mainTasks: [
+      { text: '가능한 신속 정확한 진료가 이루어질 수 있도록 도와드리고 있습니다.' },
+      {
+        text: '개인정보공개 동의한 환자에 한하여, 의뢰한 환자의 진료결과, 진행사항에 대해 회신서를 제공하고 있습니다.'
+      },
+      {
+        text: '급성기 치료 종료 후 지속적 치료가 필요한 경우 환자 및 보호자 상담을 통해 1,2차 의료기관으로 회송하고 있습니다.'
+      },
+      { text: '상호협력이 우수한 병·의원을 대상으로 협력병·의원 협약 체결을 진행하고 있습니다.' }
+    ],
+    operationInfo: {
+      cards: [
+        {
+          icon: 'OperationTimeIcon',
+          title: '운영시간',
+          rows: [{ label: '평일', value: '08:30 - 17:30' }]
+        },
+        {
+          icon: 'OperationPhoneFaxIcon',
+          title: '전용 전화 및 팩스',
+          rows: [
+            { label: 'Tel', value: '031-412-5103' },
+            { label: 'Fax', value: '031-412-4266' }
+          ]
+        },
+        {
+          icon: 'EmergencyNightIcon',
+          title: '응급 및 야간',
+          rows: [{ label: 'Tel', value: '010-4768-5119' }]
+        }
+      ]
+    },
+    procedureFlow: {
+      steps: [
+        {
+          chip: '진료의뢰',
+          items: [{ text: '진료의뢰서 작성' }],
+          stepIcon: 'FlowStep01Icon'
+        },
+        {
+          chip: '진료예약',
+          items: [{ text: '전화의뢰' }, { text: '전자의뢰(심평원중계포털, 진료정보교류시스템)' }],
+          stepIcon: 'FlowStep02Icon'
+        },
+        {
+          chip: '환자진료',
+          items: [{ text: '신속, 정확한 진료' }],
+          stepIcon: 'FlowStep03Icon'
+        },
+        {
+          chip: '진료결과 회신',
+          items: [{ text: '우편발송' }, { text: '인터넷 결과 조회 : KRC 홈페이지(https://refer.kumc.or.kr)' }],
+          stepIcon: 'FlowStep04Icon'
+        },
+        {
+          chip: '회송(되의뢰)',
+          items: [
+            { text: '급성기 치료 종료 후 의뢰주신 병원으로 되의뢰' },
+            { text: '환자(보호자)와 충분한 상담 후 지속적 치료가 가능한 의료기관으로 회송' }
+          ],
+          stepIcon: 'FlowStep05Icon'
+        }
+      ]
     }
   }
 }

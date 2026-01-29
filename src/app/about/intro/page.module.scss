@@ -99,8 +99,34 @@
   gap: 50px;
   align-items: center;
 
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 32px;
+    gap: $spacing-4;
+  }
+
   @include mobile {
+    flex-direction: column;
+    align-items: stretch;
     padding: $spacing-4;
+    gap: $spacing-4;
+  }
+}
+
+.infoHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+
+  @include tablet {
+    width: 100%;
+    margin-bottom: $spacing-4;
+  }
+
+  @include mobile {
+    width: 100%;
+    margin-bottom: $spacing-3;
   }
 }
 
@@ -114,20 +140,54 @@
   justify-content: center;
   flex-shrink: 0;
 
+  @include tablet {
+    width: 80px;
+    height: 80px;
+  }
+
   @include mobile {
     width: 72px;
     height: 72px;
   }
 }
 
-.infoTexts {
+.infoTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  margin: 0;
+
+  @include tablet {
+    flex: 1;
+  }
+
+  @include mobile {
+    flex: 1;
+  }
+}
+
+.infoContent {
   flex: 1;
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .infoRowGroup {
   display: flex;
   align-items: center;
   gap: $spacing-4;
+
+  @include tablet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+  }
 
   @include mobile {
     flex-direction: column;
@@ -136,12 +196,6 @@
   }
 }
 
-.infoTitle {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  margin-bottom: $spacing-4;
-}
 
 .infoRow {
   display: flex;
@@ -157,6 +211,12 @@
     color: $gray-12;
   }
 
+  @include tablet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-1;
+  }
+
   @include mobile {
     flex-direction: column;
     gap: $spacing-1;
@@ -167,6 +227,10 @@
   width: 1px;
   height: 12px;
   background-color: $gray-9;
+
+  @include tablet {
+    display: none;
+  }
 
   @include mobile {
     display: none;
@@ -198,9 +262,11 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 
-  // 테블릿에서도 가로 레이아웃 유지
+  // 테블릿에서 세로 레이아웃으로 변경
   @include tablet {
+    flex-direction: column;
     gap: $spacing-2;
+    overflow-x: visible;
   }
 
   @include mobile {
@@ -224,7 +290,9 @@
   }
 
   @include tablet {
-    height: 340px;
+    width: auto;
+    height: auto;
+    transform: rotate(90deg);
   }
 
   @include mobile {
@@ -248,8 +316,9 @@
   min-width: 0; // flex item이 overflow 방지
 
   @include tablet {
-    min-width: 200px; // 테블릿에서 최소 너비 설정
-    flex-shrink: 0; // 테블릿에서 카드가 축소되지 않도록
+    min-height: auto;
+    min-width: auto;
+    flex-shrink: 0;
   }
 
   @include mobile {
@@ -283,6 +352,15 @@
 
   svg {
     display: block;
+  }
+
+  @include tablet {
+    left: auto;
+    right: 0;
+  }
+
+  @include mobile {
+    display: none;
   }
 }
 

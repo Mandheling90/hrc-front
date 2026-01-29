@@ -1,0 +1,105 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.flowRow {
+  display: flex;
+  align-items: stretch;
+  gap: $spacing-3;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  // 테블릿에서 세로 레이아웃으로 변경
+  @include tablet {
+    flex-direction: column;
+    gap: $spacing-2;
+    overflow-x: visible;
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.flowArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 340px;
+  color: $color-primary;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke: $color-primary;
+  }
+
+  @include tablet {
+    width: auto;
+    height: auto;
+    transform: rotate(90deg);
+  }
+
+  @include mobile {
+    width: auto;
+    height: auto;
+    transform: rotate(90deg);
+  }
+}
+
+.flowCard {
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  position: relative;
+  min-height: 340px;
+  flex: 1 0 0;
+  max-width: 100%;
+  min-width: 0; // flex item이 overflow 방지
+
+  @include tablet {
+    min-height: auto;
+    min-width: auto;
+    flex-shrink: 0;
+  }
+
+  @include mobile {
+    min-height: auto;
+    min-width: auto;
+  }
+}
+
+.flowChip {
+  align-self: flex-start;
+  padding: 4px 20px;
+  border-radius: 50px;
+  background-color: $color-primary;
+  color: $color-white;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+}
+
+.flowStepNumber {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 1;
+
+  svg {
+    display: block;
+  }
+
+  @include tablet {
+    left: auto;
+    right: 0;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}

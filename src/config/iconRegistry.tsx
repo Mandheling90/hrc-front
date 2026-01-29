@@ -14,6 +14,14 @@ import { SafetyIcon } from '@/components/icons/SafetyIcon'
 import { QualityIcon } from '@/components/icons/QualityIcon'
 import { ChartStepperIcon } from '@/components/icons/ChartStepperIcon'
 import { DoctorIcon } from '@/components/icons/DoctorIcon'
+import { OperationTimeIcon } from '@/components/icons/OperationTimeIcon'
+import { OperationPhoneFaxIcon } from '@/components/icons/OperationPhoneFaxIcon'
+import { EmergencyNightIcon } from '@/components/icons/EmergencyNightIcon'
+import { FlowStep01Icon } from '@/components/icons/FlowStep01Icon'
+import { FlowStep02Icon } from '@/components/icons/FlowStep02Icon'
+import { FlowStep03Icon } from '@/components/icons/FlowStep03Icon'
+import { FlowStep04Icon } from '@/components/icons/FlowStep04Icon'
+import { FlowStep05Icon } from '@/components/icons/FlowStep05Icon'
 
 // Navigation Icons
 import { HomeIcon } from '@/components/icons/HomeIcon'
@@ -44,7 +52,17 @@ export const serviceIconRegistry: Record<string, React.ReactNode> = {
 
   // Hira page icons (안산병원 등)
   ChartStepperIcon: <ChartStepperIcon width={60} height={60} stroke={SECONDARY_COLOR} />,
-  DoctorIcon: <DoctorIcon width={60} height={60} stroke={SECONDARY_COLOR} />
+  DoctorIcon: <DoctorIcon width={60} height={60} stroke={SECONDARY_COLOR} />,
+
+  // About Intro page icons
+  OperationTimeIcon: <OperationTimeIcon width={60} height={60} stroke='#8e2b3e' />,
+  OperationPhoneFaxIcon: <OperationPhoneFaxIcon width={60} height={60} stroke='#8e2b3e' />,
+  EmergencyNightIcon: <EmergencyNightIcon width={60} height={60} stroke='#8e2b3e' />,
+  FlowStep01Icon: <FlowStep01Icon />,
+  FlowStep02Icon: <FlowStep02Icon />,
+  FlowStep03Icon: <FlowStep03Icon />,
+  FlowStep04Icon: <FlowStep04Icon />,
+  FlowStep05Icon: <FlowStep05Icon />
 }
 
 // 네비게이션 아이콘 레지스트리 (Breadcrumb 등에서 사용)

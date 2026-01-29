@@ -215,6 +215,39 @@ export interface SignupAgreementInfo {
   }
 }
 
+// 운영 안내 카드 정보
+export interface OperationInfoCardData {
+  icon: string // 아이콘 컴포넌트 이름
+  title: string // 카드 제목
+  rows: {
+    label: string // 라벨 (예: "평일", "Tel")
+    value: string // 값 (예: "08:30 ~ 17:30", "02-920-5892")
+  }[]
+}
+
+// 진료의뢰 절차 단계 정보
+export interface ProcedureFlowStep {
+  chip: string // 단계 제목 (예: "진료의뢰")
+  items: ProcedureListItem[] // 단계 설명 항목들
+  stepIcon: string // 아이콘 컴포넌트 이름
+}
+
+// 진료협력센터 소개 페이지 정보
+export interface AboutIntroInfo {
+  introBox: {
+    title: string // InfoBox 제목 (예: "KRC (Korea University Anam Hospital Referral Center)")
+    messages: string[] // InfoBox 메시지 배열
+  }
+  mainTasks: ProcedureListItem[] // 주요업무 항목들
+  operationInfo: {
+    cards: OperationInfoCardData[] // 운영 안내 카드들
+    note?: string // 안내 메시지 (예: "일요일, 공휴일 휴무입니다.")
+  }
+  procedureFlow: {
+    steps: ProcedureFlowStep[] // 진료의뢰 절차 단계들
+  }
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -226,6 +259,7 @@ export interface HospitalPageContent {
   referralHira?: ReferralHiraInfo // 심평원 중계시스템 의뢰 페이지 정보
   network?: NetworkInfo // 협력네트워크 페이지 정보
   signupAgreement?: SignupAgreementInfo // 회원가입 개인정보 수집 약관 정보
+  aboutIntro?: AboutIntroInfo // 진료협력센터 소개 페이지 정보
 }
 
 // 병원 컨텍스트 타입
