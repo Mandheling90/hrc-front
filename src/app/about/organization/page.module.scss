@@ -1,0 +1,208 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -1.92px;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 $spacing-20;
+
+  @include tablet {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-16;
+  }
+
+  @include mobile {
+    font-size: 32px;
+    letter-spacing: -1.28px;
+    margin-bottom: $spacing-12;
+  }
+}
+
+// 조직도 컨테이너
+.orgChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-8 0;
+  position: relative;
+}
+
+// 조직 노드
+.orgNode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  // 상위 노드가 있을 때 상단 연결선
+  &.hasParent::before {
+    content: '';
+    position: absolute;
+    top: -$spacing-8;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: $spacing-8;
+    background-color: $gray-8;
+    z-index: 1;
+
+    @include mobile {
+      top: -$spacing-6;
+      height: $spacing-6;
+    }
+  }
+}
+
+// 조직 박스
+.orgBox {
+  border: 2px solid $color-primary;
+  border-radius: 8px;
+  background-color: $color-white;
+  padding: $spacing-6 $spacing-8;
+  min-width: 200px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: $shadow-sm;
+
+  @include tablet {
+    padding: $spacing-5 $spacing-6;
+    min-width: 180px;
+  }
+
+  @include mobile {
+    padding: $spacing-4 $spacing-5;
+    min-width: 160px;
+  }
+}
+
+.orgTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  margin-bottom: $spacing-2;
+
+  @include tablet {
+    font-size: $font-size-lg;
+  }
+
+  @include mobile {
+    font-size: $font-size-base;
+  }
+}
+
+.orgPhone {
+  font-size: $font-size-base;
+  color: $gray-11;
+  margin-top: $spacing-1;
+
+  @include tablet {
+    font-size: $font-size-sm;
+  }
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
+
+// 하위 조직 컨테이너
+.childrenContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $spacing-8;
+  width: 100%;
+
+  // 부모에서 하위로 내려가는 연결선
+  &::before {
+    content: '';
+    position: absolute;
+    top: -$spacing-8;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: $spacing-8;
+    background-color: $gray-8;
+    z-index: 1;
+  }
+
+  @include mobile {
+    margin-top: $spacing-6;
+
+    &::before {
+      top: -$spacing-6;
+      height: $spacing-6;
+    }
+  }
+}
+
+.childrenContainer.branching {
+  .childrenWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: $spacing-6;
+    width: 100%;
+    position: relative;
+
+    @include tablet {
+      flex-wrap: wrap;
+      gap: $spacing-4;
+    }
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-4;
+    }
+  }
+
+  // 브랜칭 수평 연결선 (상단)
+  &::after {
+    content: '';
+    position: absolute;
+    top: -$spacing-8;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $gray-8;
+    z-index: 1;
+
+    @include mobile {
+      display: none;
+    }
+  }
+}
+
+.childrenWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  // 브랜칭이 아닐 때 (단일 자식)
+  &:not(.branching) {
+    .orgNode::before {
+      display: block;
+    }
+  }
+}

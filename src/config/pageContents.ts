@@ -360,6 +360,44 @@ const anamContent: HospitalPageContent = {
       name: '최혁순',
       title: '고려대학교안암병원 진료협력센터장'
     }
+  },
+  aboutOrganization: {
+    nodes: [
+      {
+        title: '진료협력센터장',
+        children: [
+          {
+            title: '진료협력부센터장',
+            children: [
+              {
+                title: '진료협력센터 팀장',
+                phone: '02-920-5891',
+                children: [
+                  {
+                    title: '진료협력센터 부팀장',
+                    phone: '02-920-6355',
+                    children: [
+                      {
+                        title: '진료의뢰',
+                        phone: '02-920-5892'
+                      },
+                      {
+                        title: '입원회송',
+                        phone: '02-920-5964'
+                      },
+                      {
+                        title: '외래회송',
+                        phone: '02-920-6153'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
 
@@ -708,6 +746,44 @@ const guroContent: HospitalPageContent = {
       name: '윤영훈',
       title: '고려대학교 구로병원 진료협력센터장'
     }
+  },
+  aboutOrganization: {
+    nodes: [
+      {
+        title: '진료협력센터장',
+        children: [
+          {
+            title: '진료협력부센터장',
+            children: [
+              {
+                title: '진료협력센터 팀장',
+                phone: '02-2626-1681',
+                children: [
+                  {
+                    title: '진료협력센터 부팀장',
+                    phone: '02-2626-1681',
+                    children: [
+                      {
+                        title: '진료의뢰',
+                        phone: '02-2626-1681'
+                      },
+                      {
+                        title: '입원회송',
+                        phone: '02-2626-1681'
+                      },
+                      {
+                        title: '외래회송',
+                        phone: '02-2626-1681'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
 
@@ -1085,6 +1161,44 @@ const ansanContent: HospitalPageContent = {
       name: '홍광대',
       title: '고려대학교 안산병원 진료협력센터장'
     }
+  },
+  aboutOrganization: {
+    nodes: [
+      {
+        title: '진료협력센터장',
+        children: [
+          {
+            title: '진료협력부센터장',
+            children: [
+              {
+                title: '진료협력센터 팀장',
+                phone: '031-412-5103',
+                children: [
+                  {
+                    title: '진료협력센터 부팀장',
+                    phone: '031-412-5103',
+                    children: [
+                      {
+                        title: '진료의뢰',
+                        phone: '031-412-5103'
+                      },
+                      {
+                        title: '입원회송',
+                        phone: '031-412-5103'
+                      },
+                      {
+                        title: '외래회송',
+                        phone: '031-412-5103'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
 

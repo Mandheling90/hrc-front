@@ -271,6 +271,18 @@ export interface AboutGreetingInfo {
   }
 }
 
+// 조직도 조직 정보
+export interface OrganizationNode {
+  title: string // 직책/부서명
+  phone?: string // 전화번호 (선택)
+  children?: OrganizationNode[] // 하위 조직
+}
+
+// 조직도 페이지 정보
+export interface AboutOrganizationInfo {
+  nodes: OrganizationNode[] // 조직도 계층 구조
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -284,6 +296,7 @@ export interface HospitalPageContent {
   signupAgreement?: SignupAgreementInfo // 회원가입 개인정보 수집 약관 정보
   aboutIntro?: AboutIntroInfo // 진료협력센터 소개 페이지 정보
   aboutGreeting?: AboutGreetingInfo // 센터장 인사말 페이지 정보
+  aboutOrganization?: AboutOrganizationInfo // 조직도 페이지 정보
 }
 
 // 병원 컨텍스트 타입
