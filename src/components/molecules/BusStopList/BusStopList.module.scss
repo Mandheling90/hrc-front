@@ -1,0 +1,67 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+// 버스 정보
+.busStop {
+  margin-bottom: $spacing-6;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.busDirections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-4;
+
+  @include tablet {
+    gap: $spacing-3;
+  }
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-2;
+  }
+}
+
+// 방면이 1개일 때는 1열로 표시
+.busDirectionsSingle {
+  grid-template-columns: 1fr !important;
+}
+
+.busDirection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  border: 1px solid $gray-9;
+  border-radius: 8px;
+  background-color: $color-white;
+
+  @include mobile {
+    padding: $spacing-3;
+  }
+}
+
+.busDirectionLabel {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  color: $gray-12;
+  margin-bottom: 0;
+  line-height: $line-height-normal;
+
+  @include tablet {
+    font-size: $font-size-lg; // 18px
+  }
+
+  @include mobile {
+    font-size: $font-size-base; // 16px
+  }
+}
+
+.busRoutes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+}

@@ -1,0 +1,218 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+// 주소 정보 및 검색 영역 래퍼
+.addressInfoWrapper {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: $spacing-6;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  @include tablet {
+    flex-direction: row; // 테블릿에서도 가로 레이아웃 유지
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: 0; // 모바일에서 간격 제거
+  }
+}
+
+// 주소 정보 (왼쪽)
+.addressInfo {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  padding: 0 $spacing-8;
+  background-color: $color-primary;
+  flex: 1;
+
+  @include tablet {
+    align-items: flex-start; // 테블릿에서는 상단 정렬
+    padding: $spacing-5 $spacing-6;
+    gap: $spacing-5; // 20px
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-3;
+    padding: $spacing-4;
+  }
+}
+
+.addressLabel {
+  font-size: $font-size-2xl; // 24px
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  white-space: nowrap;
+  line-height: $line-height-normal;
+  letter-spacing: -0.04em; // -4px equivalent
+
+  @include tablet {
+    font-size: $font-size-xl; // 20px
+  }
+
+  @include mobile {
+    font-size: $font-size-lg; // 18px
+    margin-bottom: $spacing-3;
+  }
+}
+
+.addressTabGroup {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+  flex: 1;
+
+  @include tablet {
+    flex-direction: column; // 테블릿에서 세로 배치
+    align-items: flex-start;
+    gap: $spacing-3; // 12px
+  }
+
+  @include mobile {
+    width: 100%;
+    flex-direction: column;
+    gap: $spacing-3;
+    align-items: stretch;
+  }
+}
+
+.addressTab {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+
+  @include tablet {
+    align-items: center; // 테블릿에서도 가로 정렬 유지
+    gap: $spacing-3; // 12px
+  }
+
+  @include mobile {
+    flex-direction: row; // 모바일에서도 가로 배치
+    align-items: center;
+    gap: $spacing-3;
+    width: 100%;
+  }
+}
+
+.addressTabLabel {
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  padding: 5px 10px;
+  border: 1px solid $color-white;
+  font-size: 18px;
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold; // 600
+  color: $color-white;
+  white-space: nowrap;
+  line-height: $line-height-normal;
+
+  @include tablet {
+    font-size: $font-size-base; // 16px
+    padding: $spacing-1 $spacing-3;
+    width: auto;
+  }
+
+  @include mobile {
+    font-size: $font-size-sm; // 14px
+    padding: $spacing-1 $spacing-3;
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: auto;
+  }
+}
+
+.addressTabText {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-normal;
+  color: $color-white;
+  line-height: $line-height-normal;
+
+  @include tablet {
+    font-size: $font-size-base; // 16px
+  }
+
+  @include mobile {
+    font-size: $font-size-sm; // 14px
+    flex: 1;
+  }
+}
+
+// 검색 버튼 (오른쪽)
+.searchButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  padding: 20px 60px;
+  background-color: $gray-11; // #636363
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-base;
+  overflow: hidden;
+
+  &:hover {
+    background-color: darken($gray-11, 5%);
+  }
+
+  &:active {
+    background-color: darken($gray-11, 10%);
+  }
+
+  @include tablet {
+    padding: $spacing-5 $spacing-6;
+    align-self: stretch; // 높이를 주소 섹션과 맞춤
+    gap: $spacing-2; // 8px
+  }
+
+  @include mobile {
+    width: 100%;
+    padding: 10px 30px;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 0; // 모바일에서 간격 제거
+    border-top: 1px solid rgba(255, 255, 255, 0.2); // 주소 섹션과 구분선
+  }
+}
+
+.searchButtonText {
+  font-size: 24px;
+  font-family: $font-family-base;
+  font-weight: $font-weight-semibold; // 600
+  color: $color-white;
+  line-height: $line-height-normal;
+  letter-spacing: -0.96px;
+
+  @include tablet {
+    font-size: $font-size-xl; // 20px
+  }
+
+  @include mobile {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+}
+
+// 검색 버튼 내 아이콘 컨테이너
+.searchButtonIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-shrink: 0;
+
+  @include mobile {
+    width: 24px;
+    height: 24px;
+  }
+}

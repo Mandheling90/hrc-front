@@ -1,0 +1,131 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+// 지도 서비스 링크
+.mapLinks {
+  display: flex;
+  gap: $spacing-4;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: $spacing-5;
+
+  @include tablet {
+    gap: $spacing-3; // 12px - 버튼 사이 간격
+  }
+
+  @include mobile {
+    flex-direction: column;
+    flex-wrap: nowrap; // 모바일에서 줄바꿈 방지
+    gap: $spacing-3; // 12px - 버튼 사이 간격
+    margin: $spacing-4; // 모바일에서 마진 조정
+    width: calc(100% - #{$spacing-4 * 2}); // 양쪽 마진 고려
+  }
+}
+
+.mapLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4; // 로고와 텍스트 사이 간격 증가
+  padding: $spacing-5 $spacing-6; // 수직/수평 패딩 증가
+  border: 1px solid $gray-9; // 테두리 색상 조정 (#8c8c8c)
+  border-radius: $radius-full; // 완전히 둥근 모서리 (pill shape)
+  background-color: $color-white;
+  text-decoration: none;
+  color: $gray-12;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  transition: all $transition-base;
+  flex: 1;
+  min-width: 0;
+  height: 64px; // 고정 높이
+  box-sizing: border-box; // 패딩 포함 계산
+
+  &:hover {
+    border-color: $color-primary;
+    background-color: $gray-1;
+  }
+
+  @include tablet {
+    flex-direction: column; // 테블릿에서 세로 배치
+    gap: $spacing-2; // 8px - 로고와 텍스트 사이 간격
+    padding: $spacing-4 $spacing-8; // 16px 32px - 수직/수평 패딩
+    height: auto;
+    min-height: 72px; // 최소 높이 조정
+  }
+
+  @include mobile {
+    width: 100% !important; // 강제로 100% 너비
+    flex: 0 0 auto !important; // flex 속성 완전히 제거
+    flex-shrink: 0; // 축소 방지
+    flex-direction: row; // 모바일에서 가로 배치 유지
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-3; // 12px - 로고와 텍스트 사이 간격
+    padding: $spacing-4 $spacing-5; // 16px 20px
+    height: 56px; // 고정 높이
+    min-height: 56px;
+    max-height: 56px; // 최대 높이도 고정
+    position: relative; // 겹침 방지
+    margin: 0; // 마진 제거
+  }
+}
+
+.mapLinkLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 24px; // 로고 높이 고정
+
+  @include tablet {
+    height: 24px; // 테블릿에서 로고 높이
+  }
+
+  @include mobile {
+    height: 20px; // 모바일에서 로고 높이 조정
+  }
+}
+
+.mapLinkLogoImage {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: 24px;
+  object-fit: contain;
+
+  @include tablet {
+    max-height: 24px;
+  }
+
+  @include mobile {
+    max-height: 20px;
+  }
+}
+
+.mapLinkText {
+  color: $gray-12;
+  font-weight: $font-weight-semibold; // 600 (Semibold)
+  font-size: $font-size-2xl; // 24px
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.04em; // -4px
+  white-space: nowrap;
+
+  @include tablet {
+    color: $color-darken; // black
+    font-size: 20px; // 20px
+    font-family: $font-family-base; // Pretendard
+    font-weight: $font-weight-semibold; // 600
+    line-height: 30px; // 30px
+    word-wrap: break-word;
+  }
+
+  @include mobile {
+    color: $color-darken; // black
+    font-size: 20px; // 20px
+    font-family: $font-family-base; // Pretendard
+    font-weight: $font-weight-semibold; // 600
+    line-height: 30px; // 30px
+    word-wrap: break-word;
+  }
+}

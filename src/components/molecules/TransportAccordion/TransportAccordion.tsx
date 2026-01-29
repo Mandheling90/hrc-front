@@ -32,17 +32,11 @@ export const TransportAccordion: React.FC<TransportAccordionProps> = ({
     setIsExpanded(prev => !prev)
   }
 
-  const contentClass =
-    contentBackground === 'white' ? styles.transportContentWhite : styles.transportContent
+  const contentClass = contentBackground === 'white' ? styles.transportContentWhite : styles.transportContent
 
   return (
     <section className={`${styles.transportSection} ${className}`}>
-      <button
-        type='button'
-        className={styles.transportHeader}
-        onClick={toggleExpanded}
-        aria-expanded={isExpanded}
-      >
+      <button type='button' className={styles.transportHeader} onClick={toggleExpanded} aria-expanded={isExpanded}>
         <div className={styles.transportHeaderLeft}>
           <ServiceTitleIcon className={styles.transportIcon} />
           <h2 className={styles.transportTitle}>{title}</h2>

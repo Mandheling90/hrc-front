@@ -495,7 +495,7 @@ const anamContent: HospitalPageContent = {
         { type: 'bus', label: '6011' },
         { type: 'destination', label: '인천국제공항 T1' },
         { type: 'bus', label: '성북 04' },
-        { type: 'subway', label: '4호선 성신여대역' },
+        { type: 'destination', label: '4호선 성신여대역' },
         { type: 'destination', label: '고대병원하차' }
       ]
     }
