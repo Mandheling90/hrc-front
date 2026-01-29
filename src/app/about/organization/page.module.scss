@@ -36,6 +36,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -43,166 +44,58 @@
   position: relative;
 }
 
-// 조직 노드
-.orgNode {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+// 조직도 이미지
+.orgImageDesktop,
+.orgImageTablet,
+.orgImageMobile {
   width: 100%;
-
-  // 상위 노드가 있을 때 상단 연결선
-  &.hasParent::before {
-    content: '';
-    position: absolute;
-    top: -$spacing-8;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: $spacing-8;
-    background-color: $gray-8;
-    z-index: 1;
-
-    @include mobile {
-      top: -$spacing-6;
-      height: $spacing-6;
-    }
-  }
+  height: auto;
+  object-fit: contain;
 }
 
-// 조직 박스
-.orgBox {
-  border: 2px solid $color-primary;
-  border-radius: 8px;
-  background-color: $color-white;
-  padding: $spacing-6 $spacing-8;
-  min-width: 200px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  box-shadow: $shadow-sm;
+// 데스크톱 이미지 (기본)
+.orgImageDesktop {
+  display: block;
 
   @include tablet {
-    padding: $spacing-5 $spacing-6;
-    min-width: 180px;
+    display: none;
   }
 
   @include mobile {
-    padding: $spacing-4 $spacing-5;
-    min-width: 160px;
+    display: none;
   }
 }
 
-.orgTitle {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  margin-bottom: $spacing-2;
+// 태블릿 이미지
+.orgImageTablet {
+  display: none;
 
   @include tablet {
-    font-size: $font-size-lg;
+    display: block;
+    max-width: 660px;
+    max-height: 680px;
   }
 
   @include mobile {
-    font-size: $font-size-base;
+    display: none;
   }
 }
 
-.orgPhone {
-  font-size: $font-size-base;
-  color: $gray-11;
-  margin-top: $spacing-1;
-
+// 구로병원 태블릿 이미지 (더 큰 크기)
+.orgImageTabletGuro {
   @include tablet {
-    font-size: $font-size-sm;
+    max-width: 1400px;
+    max-height: 1420px;
   }
+}
+
+// 모바일 이미지
+.orgImageMobile {
+  display: none;
 
   @include mobile {
-    font-size: $font-size-sm;
-  }
-}
-
-// 하위 조직 컨테이너
-.childrenContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: $spacing-8;
-  width: 100%;
-
-  // 부모에서 하위로 내려가는 연결선
-  &::before {
-    content: '';
-    position: absolute;
-    top: -$spacing-8;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: $spacing-8;
-    background-color: $gray-8;
-    z-index: 1;
-  }
-
-  @include mobile {
-    margin-top: $spacing-6;
-
-    &::before {
-      top: -$spacing-6;
-      height: $spacing-6;
-    }
-  }
-}
-
-.childrenContainer.branching {
-  .childrenWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: $spacing-6;
-    width: 100%;
-    position: relative;
-
-    @include tablet {
-      flex-wrap: wrap;
-      gap: $spacing-4;
-    }
-
-    @include mobile {
-      flex-direction: column;
-      align-items: center;
-      gap: $spacing-4;
-    }
-  }
-
-  // 브랜칭 수평 연결선 (상단)
-  &::after {
-    content: '';
-    position: absolute;
-    top: -$spacing-8;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: $gray-8;
-    z-index: 1;
-
-    @include mobile {
-      display: none;
-    }
-  }
-}
-
-.childrenWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-
-  // 브랜칭이 아닐 때 (단일 자식)
-  &:not(.branching) {
-    .orgNode::before {
-      display: block;
-    }
+    display: block;
+    max-width: 320px;
+    max-height: 930px;
   }
 }
