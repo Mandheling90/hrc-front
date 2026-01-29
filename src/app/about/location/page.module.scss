@@ -1,0 +1,766 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -1.92px;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 $spacing-20;
+
+  @include tablet {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-16;
+  }
+
+  @include mobile {
+    font-size: 32px;
+    letter-spacing: -1.28px;
+    margin-bottom: $spacing-12;
+  }
+}
+
+// 지도 섹션
+.mapSection {
+  margin-bottom: $spacing-16;
+  border: 1px solid $gray-5; // 1px solid light gray border
+  border-radius: $radius-lg;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 500px;
+  background-color: $gray-3;
+  border: 1px solid $gray-5; // 1px solid light gray border
+  border-radius: $radius-lg; // 8px - 약간 둥근 모서리
+  margin-bottom: $spacing-6;
+  position: relative;
+  overflow: hidden;
+
+  @include tablet {
+    height: 400px;
+  }
+
+  @include mobile {
+    height: 300px;
+  }
+}
+
+.mapPlaceholder {
+  @include flex-center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  color: $gray-11;
+  font-size: $font-size-lg;
+
+  .mapNote {
+    font-size: $font-size-sm;
+    color: $gray-9;
+    margin-top: $spacing-2;
+  }
+}
+
+// 주소 정보 및 검색 영역 래퍼
+.addressInfoWrapper {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: $spacing-6;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  @include tablet {
+    flex-direction: row; // 테블릿에서도 가로 레이아웃 유지
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: 0; // 모바일에서 간격 제거
+  }
+}
+
+// 주소 정보 (왼쪽)
+.addressInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+  padding: $spacing-6 $spacing-8;
+  background-color: $color-primary;
+  flex: 1;
+
+  @include tablet {
+    align-items: flex-start; // 테블릿에서는 상단 정렬
+    padding: $spacing-5 $spacing-6;
+    gap: $spacing-5; // 20px
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-3;
+    padding: $spacing-4;
+  }
+}
+
+.addressLabel {
+  font-size: $font-size-2xl; // 24px
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  white-space: nowrap;
+  line-height: $line-height-normal;
+  letter-spacing: -0.04em; // -4px equivalent
+
+  @include tablet {
+    font-size: $font-size-xl; // 20px
+  }
+
+  @include mobile {
+    font-size: $font-size-lg; // 18px
+    margin-bottom: $spacing-3;
+  }
+}
+
+.addressTabGroup {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+  flex: 1;
+
+  @include tablet {
+    flex-direction: column; // 테블릿에서 세로 배치
+    align-items: flex-start;
+    gap: $spacing-3; // 12px
+  }
+
+  @include mobile {
+    width: 100%;
+    flex-direction: column;
+    gap: $spacing-3;
+    align-items: stretch;
+  }
+}
+
+.addressTab {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+
+  @include tablet {
+    align-items: center; // 테블릿에서도 가로 정렬 유지
+    gap: $spacing-3; // 12px
+  }
+
+  @include mobile {
+    flex-direction: row; // 모바일에서도 가로 배치
+    align-items: center;
+    gap: $spacing-3;
+    width: 100%;
+  }
+}
+
+.addressTabLabel {
+  padding: $spacing-2 $spacing-4;
+  border: 1px solid $color-white;
+  border-radius: $radius-md;
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  white-space: nowrap;
+  line-height: $line-height-normal;
+  letter-spacing: -0.04em; // -4px equivalent
+
+  @include tablet {
+    font-size: $font-size-base; // 16px
+    padding: $spacing-1 $spacing-3;
+  }
+
+  @include mobile {
+    font-size: $font-size-sm; // 14px
+    padding: $spacing-1 $spacing-3;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+.addressTabText {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-normal;
+  color: $color-white;
+  line-height: $line-height-normal;
+
+  @include tablet {
+    font-size: $font-size-base; // 16px
+  }
+
+  @include mobile {
+    font-size: $font-size-sm; // 14px
+    flex: 1;
+  }
+}
+
+// 검색 버튼 (오른쪽)
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-3;
+  padding: $spacing-6 $spacing-8;
+  background-color: $gray-11;
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-base;
+  white-space: nowrap;
+  min-width: 180px;
+
+  &:hover {
+    background-color: darken($gray-11, 5%);
+  }
+
+  &:active {
+    background-color: darken($gray-11, 10%);
+  }
+
+  @include tablet {
+    width: auto; // 테블릿에서도 고정 너비 유지
+    min-width: 200px;
+    padding: $spacing-5 $spacing-6;
+    align-self: stretch; // 높이를 주소 섹션과 맞춤
+    gap: $spacing-2; // 8px
+  }
+
+  @include mobile {
+    width: 100%;
+    padding: $spacing-4;
+    min-width: auto;
+    gap: $spacing-2;
+    margin-top: 0; // 모바일에서 간격 제거
+    border-top: 1px solid rgba(255, 255, 255, 0.2); // 주소 섹션과 구분선
+  }
+}
+
+.searchButtonText {
+  font-size: $font-size-2xl; // 24px
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  line-height: $line-height-normal;
+  letter-spacing: -0.04em; // -4px equivalent
+
+  @include tablet {
+    font-size: $font-size-xl; // 20px
+  }
+
+  @include mobile {
+    font-size: $font-size-lg; // 18px
+  }
+}
+
+// 지도 서비스 링크
+.mapLinks {
+  display: flex;
+  gap: $spacing-4;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @include tablet {
+    gap: $spacing-3; // 12px - 버튼 사이 간격
+  }
+
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-3;
+  }
+}
+
+.mapLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4; // 로고와 텍스트 사이 간격 증가
+  padding: $spacing-5 $spacing-6; // 수직/수평 패딩 증가
+  border: 1px solid $gray-9; // 테두리 색상 조정 (#8c8c8c)
+  border-radius: $radius-full; // 완전히 둥근 모서리 (pill shape)
+  background-color: $color-white;
+  text-decoration: none;
+  color: $gray-12;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  transition: all $transition-base;
+  flex: 1;
+  min-width: 0;
+  height: 64px; // 고정 높이
+
+  &:hover {
+    border-color: $color-primary;
+    background-color: $gray-1;
+  }
+
+  @include tablet {
+    flex-direction: column; // 테블릿에서 세로 배치
+    gap: $spacing-2; // 8px - 로고와 텍스트 사이 간격
+    padding: $spacing-4 $spacing-8; // 16px 32px - 수직/수평 패딩
+    height: auto;
+    min-height: 72px; // 최소 높이 조정
+  }
+
+  @include mobile {
+    width: 100%;
+    flex: none;
+    flex-direction: row; // 모바일에서 가로 배치 유지
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-3; // 12px - 로고와 텍스트 사이 간격
+    padding: $spacing-4 $spacing-5; // 16px 20px
+    height: auto;
+    min-height: 56px;
+  }
+}
+
+.mapLinkLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 24px; // 로고 높이 고정
+
+  @include tablet {
+    height: 24px; // 테블릿에서 로고 높이
+  }
+
+  @include mobile {
+    height: 20px; // 모바일에서 로고 높이 조정
+  }
+}
+
+.mapLinkLogoImage {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: 24px;
+  object-fit: contain;
+
+  @include tablet {
+    max-height: 24px;
+  }
+
+  @include mobile {
+    max-height: 20px;
+  }
+}
+
+.mapLinkText {
+  color: $gray-12;
+  font-weight: $font-weight-semibold; // 600 (Semibold)
+  font-size: $font-size-2xl; // 24px
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.04em; // -4px
+  white-space: nowrap;
+
+  @include tablet {
+    color: $color-darken; // black
+    font-size: 20px; // 20px
+    font-family: $font-family-base; // Pretendard
+    font-weight: $font-weight-semibold; // 600
+    line-height: 30px; // 30px
+    word-wrap: break-word;
+  }
+
+  @include mobile {
+    color: $color-darken; // black
+    font-size: 20px; // 20px
+    font-family: $font-family-base; // Pretendard
+    font-weight: $font-weight-semibold; // 600
+    line-height: 30px; // 30px
+    word-wrap: break-word;
+  }
+}
+
+// 교통수단 섹션
+.transportSection {
+  margin-bottom: $spacing-8;
+  border: 1px solid $gray-6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.transportHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-5 $spacing-6;
+  background-color: $color-white;
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background-color: $gray-1;
+  }
+
+  @include mobile {
+    padding: $spacing-4 $spacing-5;
+  }
+}
+
+.transportHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2; // SectionTitle과 동일한 간격 (8px)
+}
+
+.transportIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.transportTitle {
+  @include section-title; // SectionTitle과 동일한 스타일 믹스인 사용
+  margin: 0;
+}
+
+.transportContent {
+  padding: $spacing-6;
+  background-color: $gray-1;
+  border-top: 1px solid $gray-6;
+
+  @include mobile {
+    padding: $spacing-4;
+  }
+}
+
+// 버스 섹션의 transportContent는 흰색 배경
+.busContent {
+  padding: $spacing-6;
+  background-color: $color-white;
+  border-top: 1px solid $gray-6;
+
+  @include mobile {
+    padding: $spacing-4;
+  }
+}
+
+// 지하철 정보
+.subwayInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  margin-bottom: $spacing-6;
+  flex-wrap: wrap;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+  }
+}
+
+.subwayLine {
+  display: inline-block;
+  padding: $spacing-1 $spacing-4;
+  background-color: #f97316;
+  color: $color-white;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+.subwayDescription {
+  font-size: $font-size-base;
+  color: $gray-12;
+  line-height: $line-height-relaxed;
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
+
+.subwayMapContainer {
+  width: 100%;
+  background-color: $color-white;
+  border: 1px solid $gray-4;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.subwayMapImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 400px;
+  background-color: $color-white;
+
+  @include tablet {
+    min-height: 350px;
+  }
+
+  @include mobile {
+    min-height: 250px;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.subwayMapImg {
+  object-fit: contain;
+  object-position: center;
+  background-color: $color-white;
+}
+
+.subwayMapFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4;
+  background-color: transparent;
+  width: 100%;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+    padding: $spacing-3;
+  }
+}
+
+.subwaySearchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  background-color: $color-primary;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background-color: darken($color-primary, 5%);
+  }
+
+  &:active {
+    background-color: darken($color-primary, 10%);
+  }
+
+  @include mobile {
+    width: 100%;
+    padding: $spacing-2 $spacing-4;
+  }
+}
+
+.subwaySearchButtonText {
+  color: $color-white;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
+
+.subwayMapSource {
+  font-size: $font-size-xs;
+  color: $gray-9;
+  margin: 0;
+  white-space: nowrap;
+
+  @include mobile {
+    font-size: $font-size-xs;
+    align-self: flex-end;
+  }
+}
+
+// 버스 정보
+.busStop {
+  margin-bottom: $spacing-6;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.busStopName {
+  position: relative;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  margin: 0 0 $spacing-4;
+  padding-left: $spacing-5;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: $color-primary;
+    border-radius: 0;
+  }
+
+  @include mobile {
+    font-size: $font-size-base;
+    margin-bottom: $spacing-3;
+    padding-left: $spacing-4;
+  }
+}
+
+.busDirections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-4;
+
+  @include tablet {
+    gap: $spacing-3;
+  }
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-2;
+  }
+}
+
+// 방면이 1개일 때는 1열로 표시
+.busDirectionsSingle {
+  grid-template-columns: 1fr !important;
+}
+
+.busDirection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  border: 1px solid $gray-4;
+  border-radius: 8px;
+  background-color: $color-white;
+
+  @include mobile {
+    padding: $spacing-3;
+  }
+}
+
+.busDirectionLabel {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold; // 600
+  color: $gray-12;
+  margin-bottom: 0;
+  line-height: $line-height-normal;
+
+  @include tablet {
+    font-size: $font-size-lg; // 18px
+  }
+
+  @include mobile {
+    font-size: $font-size-base; // 16px
+  }
+}
+
+.busRoutes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+}
+
+.busRoute {
+  display: inline-block;
+  padding: $spacing-2 $spacing-4;
+  border-radius: 50px; // pill shape
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  white-space: nowrap;
+
+  @include mobile {
+    font-size: $font-size-sm;
+    padding: $spacing-1 $spacing-3;
+  }
+}
+
+.busRouteBlue {
+  background-color: #1877f2;
+}
+
+.busRouteGreen {
+  background-color: #67bb32;
+}
+
+.busRouteRed {
+  background-color: #ea4335;
+}
+
+.busRouteYellow {
+  background-color: #fbbc04;
+  color: $gray-12;
+}
+
+// 인천공항 정보
+.airportRoute {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: $spacing-2;
+
+  @include mobile {
+    flex-wrap: wrap;
+    gap: $spacing-2;
+  }
+}
+
+.airportStep {
+  display: inline-block;
+  padding: $spacing-2 $spacing-4;
+  border-radius: 50px; // pill shape
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+
+  @include mobile {
+    font-size: $font-size-sm;
+    padding: $spacing-1 $spacing-3;
+  }
+}
+
+.airportBus {
+  background-color: #1877f2; // 파란색 버스 번호
+  color: $color-white;
+}
+
+.airportSubway {
+  background-color: #67bb32; // 초록색 버스/지하철 번호
+  color: $color-white;
+}
+
+.airportDestination {
+  background-color: transparent;
+  color: $gray-12;
+  padding: 0;
+  border-radius: 0;
+  font-weight: $font-weight-normal;
+}
+
+.airportArrow {
+  color: $gray-12;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  margin: 0 $spacing-1;
+
+  @include mobile {
+    display: inline;
+  }
+}

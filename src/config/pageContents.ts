@@ -398,6 +398,107 @@ const anamContent: HospitalPageContent = {
         ]
       }
     ]
+  },
+  aboutLocation: {
+    address: {
+      jibun: '안암동5가 126-1',
+      road: '서울 성북구 고려대로 73 고대병원'
+    },
+    mapLinks: {
+      naver: 'https://map.naver.com/v5/entry/place/11583195',
+      daum: 'https://map.daum.net/link/map/고려대학교안암병원,37.5865,127.0297',
+      google: 'https://maps.google.com/?q=고려대학교안암병원'
+    },
+    subway: {
+      line: '6호선',
+      station: '안암역(안암병원)',
+      exit: '1번 출구',
+      walkTime: '3분 소요',
+      description: '6호선 안암역(안암병원) 1번 출구 도보(3분 소요)'
+    },
+    bus: [
+      {
+        name: '고려대이공대 고대병원 하차',
+        directions: [
+          {
+            label: '고려대이공대 고대병원 방면',
+            routes: [
+              { number: '273', type: 'blue' },
+              { number: '2115', type: 'blue' },
+              { number: '1111', type: 'blue' },
+              { number: '성북 04', type: 'green' }
+            ]
+          },
+          {
+            label: '안암역 방면',
+            routes: [
+              { number: '273', type: 'blue' },
+              { number: '2115', type: 'blue' },
+              { number: '1111', type: 'blue' },
+              { number: '성북 04', type: 'green' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '고대병원 하차',
+        directions: [
+          {
+            label: '고려대이공대 고대병원 방면',
+            routes: [{ number: '성북 04', type: 'green' }]
+          },
+          {
+            label: '안암역 방면',
+            routes: [{ number: '성북 04', type: 'green' }]
+          }
+        ]
+      },
+      {
+        name: '안암오거리 하차',
+        directions: [
+          {
+            label: '대중교통 방면',
+            routes: [
+              { number: '101', type: 'blue' },
+              { number: '111', type: 'blue' },
+              { number: 'N51', type: 'blue' },
+              { number: '144', type: 'blue' },
+              { number: '173', type: 'blue' }
+            ]
+          },
+          {
+            label: '무신병원 방면',
+            routes: [
+              { number: '101', type: 'blue' },
+              { number: '111', type: 'blue' },
+              { number: 'N51', type: 'blue' },
+              { number: '133', type: 'blue' },
+              { number: '173', type: 'blue' },
+              { number: '1017', type: 'blue' },
+              { number: '7211', type: 'blue' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '벽산아파트 하차',
+        directions: [
+          {
+            label: '',
+            routes: [{ number: '1222', type: 'green' }]
+          }
+        ]
+      }
+    ],
+    airport: {
+      steps: [
+        { type: 'bus', label: '8011' },
+        { type: 'destination', label: '인천국제공항 T1' },
+        { type: 'bus', label: '성북 04' },
+        { type: 'subway', label: '4호선 성신여대역' },
+        { type: 'destination', label: '고대병원하차' }
+      ]
+    }
   }
 }
 
@@ -784,6 +885,26 @@ const guroContent: HospitalPageContent = {
         ]
       }
     ]
+  },
+  aboutLocation: {
+    address: {
+      jibun: '구로동',
+      road: '서울시 구로구 구로동로 148 (구로동)'
+    },
+    mapLinks: {
+      naver: 'https://map.naver.com/v5/entry/place/11710215',
+      daum: 'https://map.daum.net/link/map/고려대학교구로병원,37.4928,126.8856',
+      google: 'https://maps.google.com/?q=고려대학교구로병원'
+    },
+    subway: {
+      line: '1호선',
+      station: '구로역',
+      exit: '',
+      walkTime: '',
+      description: '1호선 구로역'
+    },
+    bus: [],
+    airport: undefined
   }
 }
 
@@ -1199,6 +1320,26 @@ const ansanContent: HospitalPageContent = {
         ]
       }
     ]
+  },
+  aboutLocation: {
+    address: {
+      jibun: '고잔동',
+      road: '경기도 안산시 단원구 적금로 123 (고잔동)'
+    },
+    mapLinks: {
+      naver: 'https://map.naver.com/v5/entry/place/11664050',
+      daum: 'https://map.daum.net/link/map/고려대학교안산병원,37.3167,126.8306',
+      google: 'https://maps.google.com/?q=고려대학교안산병원'
+    },
+    subway: {
+      line: '4호선',
+      station: '고잔역',
+      exit: '',
+      walkTime: '',
+      description: '4호선 고잔역'
+    },
+    bus: [],
+    airport: undefined
   }
 }
 

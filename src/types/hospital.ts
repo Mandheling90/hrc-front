@@ -283,6 +283,54 @@ export interface AboutOrganizationInfo {
   nodes: OrganizationNode[] // 조직도 계층 구조
 }
 
+// 버스 노선 정보
+export interface BusRoute {
+  number: string // 버스 번호
+  type: 'blue' | 'green' | 'red' | 'yellow' // 버스 타입
+}
+
+// 버스 정류장 정보
+export interface BusStop {
+  name: string // 정류장명
+  directions: {
+    label: string // 방면 라벨
+    routes: BusRoute[] // 버스 노선 배열
+  }[]
+}
+
+// 지하철 정보
+export interface SubwayInfo {
+  line: string // 지하철 노선 (예: "6호선")
+  station: string // 역명
+  exit?: string // 출구 번호
+  walkTime?: string // 도보 시간
+  description: string // 설명
+}
+
+// 인천공항 경로 정보
+export interface AirportRoute {
+  steps: {
+    type: 'bus' | 'subway' | 'destination' // 경로 타입
+    label: string // 라벨 (버스 번호, 역명 등)
+  }[]
+}
+
+// 오시는 길 페이지 정보
+export interface AboutLocationInfo {
+  address: {
+    jibun: string // 지번 주소
+    road: string // 도로명 주소
+  }
+  mapLinks: {
+    naver?: string // 네이버 지도 링크
+    daum?: string // 다음 지도 링크
+    google?: string // 구글 지도 링크
+  }
+  subway?: SubwayInfo // 지하철 정보
+  bus?: BusStop[] // 버스 정보
+  airport?: AirportRoute // 인천공항 경로
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -297,6 +345,7 @@ export interface HospitalPageContent {
   aboutIntro?: AboutIntroInfo // 진료협력센터 소개 페이지 정보
   aboutGreeting?: AboutGreetingInfo // 센터장 인사말 페이지 정보
   aboutOrganization?: AboutOrganizationInfo // 조직도 페이지 정보
+  aboutLocation?: AboutLocationInfo // 오시는 길 페이지 정보
 }
 
 // 병원 컨텍스트 타입
