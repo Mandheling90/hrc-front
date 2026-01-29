@@ -1,0 +1,86 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.chip {
+  display: flex;
+  width: 150px;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 50px;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+  text-align: center;
+
+  @include tablet {
+    width: 110px;
+  }
+
+  @include mobile {
+    width: 80px;
+  }
+}
+
+// 크기 변형
+.large {
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+
+  @include tablet {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+    flex-shrink: 0;
+  }
+}
+
+.small {
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $color-white;
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
+
+// 색상 변형
+.blue {
+  color: $color-white;
+
+  // large size (공항버스용)
+  &.large {
+    background-color: #3D5BAB;
+  }
+
+  // small size (일반 버스용)
+  &.small {
+    background-color: #0068B7;
+  }
+}
+
+.deepblue {
+  background-color: #3D5BAB;
+  color: $color-white;
+}
+
+.green {
+  background-color: #53b332;
+  color: $color-white;
+}
+
+.red {
+  background-color: #ea4335;
+  color: $color-white;
+}
+
+.yellow {
+  background-color: #fbbc04;
+  color: $gray-12;
+}

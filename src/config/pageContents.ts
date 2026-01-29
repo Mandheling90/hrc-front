@@ -492,7 +492,7 @@ const anamContent: HospitalPageContent = {
     ],
     airport: {
       steps: [
-        { type: 'bus', label: '8011' },
+        { type: 'bus', label: '6011' },
         { type: 'destination', label: '인천국제공항 T1' },
         { type: 'bus', label: '성북 04' },
         { type: 'subway', label: '4호선 성신여대역' },
@@ -888,7 +888,7 @@ const guroContent: HospitalPageContent = {
   },
   aboutLocation: {
     address: {
-      jibun: '구로동',
+      jibun: '구로동 80',
       road: '서울시 구로구 구로동로 148 (구로동)'
     },
     mapLinks: {
@@ -896,15 +896,138 @@ const guroContent: HospitalPageContent = {
       daum: 'https://map.daum.net/link/map/고려대학교구로병원,37.4928,126.8856',
       google: 'https://maps.google.com/?q=고려대학교구로병원'
     },
-    subway: {
-      line: '1호선',
-      station: '구로역',
-      exit: '',
-      walkTime: '',
-      description: '1호선 구로역'
+    car: [
+      { label: '시내를 통하여', isActive: false },
+      { label: '사당 방면', isActive: true },
+      { label: '인천 방면', isActive: false },
+      { label: '단양 방면', isActive: false },
+      { label: '올림픽대로', isActive: false },
+      { label: '경부고속도로', isActive: false },
+      { label: '서해안고속도로', isActive: false },
+      { label: '영동고속도로', isActive: false },
+      { label: '외곽순환고속도로', isActive: false }
+    ],
+    shuttle: {
+      routes: [
+        { name: '병원', type: 'both' },
+        { name: '구로역', type: 'alighting' },
+        { name: '신도림역', type: 'both' },
+        { name: '구로역', type: 'both' },
+        { name: '병원', type: 'both' }
+      ],
+      schedules: [
+        { time: '06:30 ~ 08:20', interval: '5~10분 간격', note: '신도림행 : 06:45~08:15 (15분간격)' },
+        { time: '08:20 ~ 17:30', interval: '10분 간격', note: '점심시간 : 12:00~13:00 (20분간격)' },
+        { time: '17:30 ~ 18:00', interval: '5분 간격', note: '신도림행 : 17:35 ~17:55 (10분간격)' },
+        { time: '18:00 ~ 19:00', interval: '20분 간격', note: '구로역까지만 운행' }
+      ],
+      boardingLocations: [
+        {
+          name: 'B관(신관) 입구',
+          image: '/images/shuttle/b-guide.jpg'
+        },
+        {
+          name: '구로역',
+          image: '/images/shuttle/guro-station.jpg',
+          description: '1번 출구로 내려와 (또는 구로역 엘리베이터로 1층 이동) 큰 길까지 이동, 육교 아래부분',
+          notices: [{ type: 'notice', text: '승차 정류장 건너편' }]
+        },
+        {
+          name: '신도림역',
+          image: '/images/shuttle/sindorim-station.jpg',
+          description:
+            '1번 출구에서 신도림2차 푸르지오 아파트 쪽으로 횡단보도 건넌 후 우회전 → 횡단보도 건너편 좌측 40m'
+        }
+      ],
+      note: '※ 주말 및 공휴일은 운행하지 않습니다.'
     },
-    bus: [],
-    airport: undefined
+    subway: [
+      {
+        station: '신도림역',
+        lines: '1, 2호선',
+        busInfo: {
+          routes: ['503', '5714', '6512', '5615'],
+          description: '1번 출구 - 503,5714,6512.5615\n2번 출구 - 5619,6411'
+        },
+        destination: '고대구로병원 정문 하차'
+      },
+      {
+        station: '구로역',
+        lines: '1호선',
+        busInfo: {
+          routes: ['ALL'],
+          description: '구로역에서 대림역 방향 버스'
+        },
+        destination: '고대구로병원 정문 하차'
+      },
+      {
+        station: '대림역',
+        lines: '2, 7호선',
+        busInfo: {
+          routes: ['구로 10', '구로 11'],
+          description: '마을버스 - 구로 10, 11'
+        },
+        destination: '고대구로병원 정문 하차'
+      },
+      {
+        station: '남구로역',
+        lines: '2, 7호선',
+        busInfo: {
+          routes: ['ALL'],
+          description: '남구로역에서 대림역 방향 버스\n구로시장 경우, 1개 정류장 차이로 도보6-7분거리'
+        },
+        destination: '고대구로병원 정문 하차'
+      }
+    ],
+    bus: [
+      {
+        name: '시내버스',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '5615', type: 'green' },
+              { number: '5619', type: 'green' },
+              { number: '5626', type: 'green' },
+              { number: '5630', type: 'green' },
+              { number: '5712', type: 'green' },
+              { number: '5714', type: 'green' },
+              { number: '6512', type: 'green' },
+              { number: '503', type: 'blue' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '마을버스',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '구로 10', type: 'green' },
+              { number: '구로 11', type: 'green' }
+            ]
+          }
+        ]
+      }
+    ],
+    airport: [
+      {
+        number: '6003',
+        route: '인천공항 – 김포공항 – 마곡역 - 목동역 - 구로역 - 대림역(버스환승) - 강서구청 - 발산',
+        firstBus: '04:20',
+        lastBus: '23:09',
+        interval: '20 ~ 30분'
+      },
+      {
+        number: '6004',
+        route:
+          '인천공항 – KTX 광명역 - 시흥사거리 - 디지털단지오거리 - 가산디지털단지(버스환승) - 롯데시티호텔 구로 - 금천우체국',
+        firstBus: '04:25',
+        lastBus: '20:10',
+        interval: '25 ~ 40분'
+      }
+    ]
   }
 }
 

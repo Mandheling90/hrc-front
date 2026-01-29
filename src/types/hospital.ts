@@ -315,6 +315,65 @@ export interface AirportRoute {
   }[]
 }
 
+// 자가용 방면 정보
+export interface CarDirection {
+  label: string // 방면 라벨
+  isActive?: boolean // 활성화 여부
+}
+
+// 셔틀버스 운행 노선 정보
+export interface ShuttleRoute {
+  name: string // 정류장명
+  type?: 'boarding' | 'alighting' | 'both' // 승차/하차 구분
+}
+
+// 셔틀버스 운행 시간표
+export interface ShuttleSchedule {
+  time: string // 시간대
+  interval: string // 간격
+  note?: string // 비고
+}
+
+// 셔틀버스 탑승장소
+export interface ShuttleBoardingLocation {
+  name: string // 장소명
+  image?: string // 이미지 경로
+  description?: string // 설명
+  notices?: Array<{
+    type: 'notice' | 'info' // 공지 타입
+    text: string // 공지 텍스트
+  }>
+}
+
+// 셔틀버스 정보
+export interface ShuttleBusInfo {
+  routes: ShuttleRoute[] // 운행 노선
+  schedules: ShuttleSchedule[] // 운행 시간표
+  boardingLocations: ShuttleBoardingLocation[] // 탑승장소
+  note?: string // 주말/공휴일 안내 등
+}
+
+// 지하철 경로 상세 정보
+export interface SubwayRouteDetail {
+  station: string // 역명
+  lines: string // 노선 (예: "1, 2호선")
+  exits?: string // 출구 정보
+  busInfo?: {
+    routes: string[] // 버스 노선
+    description?: string // 설명
+  }
+  destination: string // 최종 목적지
+}
+
+// 공항버스 상세 정보
+export interface AirportBusDetail {
+  number: string // 버스 번호
+  route: string // 경유지 정보
+  firstBus: string // 첫차 시간
+  lastBus: string // 막차 시간
+  interval: string // 운행 간격
+}
+
 // 오시는 길 페이지 정보
 export interface AboutLocationInfo {
   address: {
@@ -326,9 +385,11 @@ export interface AboutLocationInfo {
     daum?: string // 다음 지도 링크
     google?: string // 구글 지도 링크
   }
-  subway?: SubwayInfo // 지하철 정보
+  car?: CarDirection[] // 자가용 방면 정보
+  shuttle?: ShuttleBusInfo // 셔틀버스 정보
+  subway?: SubwayInfo | SubwayRouteDetail[] // 지하철 정보 (단일 또는 상세 경로 배열)
   bus?: BusStop[] // 버스 정보
-  airport?: AirportRoute // 인천공항 경로
+  airport?: AirportRoute | AirportBusDetail[] // 인천공항 경로 (간단한 경로 또는 상세 정보 배열)
 }
 
 // 페이지 콘텐츠 타입
