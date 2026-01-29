@@ -308,34 +308,122 @@
 
 // 구로병원 전용 스타일
 
+// 버스 정보 (구로병원)
+.busContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem; // 56px
+}
+
+.busCategory {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // 8px
+}
+
+.busCategoryHeader {
+  display: flex;
+  gap: $spacing-2; // 8px
+  align-items: center;
+}
+
+.busCategoryTitle {
+  font-size: $font-size-xl; // 24px
+  font-weight: $font-weight-semibold; // 600
+  color: $gray-12;
+  margin: 0;
+  line-height: $line-height-normal;
+  letter-spacing: -0.96px;
+}
+
+.busCategoryRoutes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2; // 8px
+  padding: $spacing-5; // 20px
+  border: 1px solid $gray-9; // #8c8c8c
+  border-radius: $radius-md; // 8px
+
+  @include mobile {
+    padding: $spacing-4; // 16px
+  }
+}
+
 // 자가용 방면 버튼
 .carDirections {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: $spacing-4;
+  // padding: $spacing-5;
+  align-items: center;
+}
+
+.carDirectionsRow {
+  display: flex;
   justify-content: center;
+  align-items: flex-start;
+  gap: $spacing-4;
+  flex-wrap: wrap;
 }
 
 .carDirectionButton {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $spacing-4;
-  padding: $spacing-4 $spacing-6;
-  border: 2px solid $gray-4;
+  padding: 15px 30px;
+  width: 260px;
+  flex-shrink: 0;
   border-radius: 150px;
   background-color: $color-white;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--Color-Black-&-White-Black, black);
+  font-size: 21px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 36px;
+  word-wrap: break-word;
   cursor: pointer;
   transition: all $transition-base;
+  border: 2px solid $gray-6;
+  overflow: visible;
+  box-sizing: border-box;
+
+  span {
+    line-height: 36px;
+    text-align: left;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  // PlusIcon24 스타일
+  svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
 
   &:hover {
     border-color: $gray-6;
   }
 
   &.carDirectionButtonActive {
-    border-color: $color-primary;
+    width: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    background-color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 150px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #9f1836;
+    box-sizing: border-box;
+  }
+
+  @include mobile {
+    width: 100%;
+    max-width: 260px;
   }
 }
 
@@ -343,122 +431,43 @@
 .shuttleContent {
   display: flex;
   flex-direction: column;
-  gap: $spacing-12;
+  gap: 3.5rem; // 56px
+  padding: 30px;
 }
 
 .shuttleSection {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
+  gap: $spacing-6; // 24px
 }
 
-.shuttleSectionTitle {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  margin: 0;
+.shuttleSectionNoGap {
+  gap: 0;
 
-  &::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background-color: $color-primary;
-    border: 1px solid $color-primary;
-    border-radius: 2px;
+  .shuttleNote {
+    margin-top: $spacing-2; // 8px
   }
 }
 
 .shuttleRouteMap {
-  display: flex;
-  align-items: flex-start;
-  gap: $spacing-12;
-  padding: $spacing-4 0;
+  width: 100%;
+  height: 140px;
   position: relative;
+  overflow: hidden;
 }
 
-.shuttleRouteStop {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $spacing-4;
-  flex-shrink: 0;
-}
-
-.shuttleRouteStopCircle {
-  width: 32px;
-  height: 32px;
-  border: 8px solid $color-primary;
-  border-radius: 50%;
-  background-color: $color-white;
-}
-
-.shuttleRouteStopName {
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.shuttleRouteStopNote {
-  display: block;
-  font-size: $font-size-base;
-  font-weight: $font-weight-normal;
-  color: $gray-11;
-}
-
-.shuttleRouteLine {
-  position: absolute;
-  top: 16px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: $color-primary;
-  z-index: -1;
-}
-
-.shuttleScheduleList {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-2;
-  padding-left: $spacing-8;
-}
-
-.shuttleScheduleItem {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  font-size: $font-size-base;
-  color: $gray-11;
-
-  &::before {
-    content: '';
-    width: 8px;
-    height: 2px;
-    background-color: $gray-11;
-  }
-}
-
-.shuttleScheduleTime {
-  font-weight: $font-weight-normal;
-}
-
-.shuttleScheduleInterval {
-  font-weight: $font-weight-normal;
-}
-
-.shuttleScheduleNote {
-  font-weight: $font-weight-normal;
+.shuttleRouteImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .shuttleNote {
-  font-size: $font-size-base;
+  font-size: $font-size-xl; // 20px
+  font-family: Pretendard;
   color: $color-primary;
   margin: 0;
-  padding-left: $spacing-8;
+  // padding-left: 32px;
 }
 
 .shuttleBoardingLocations {
@@ -488,14 +497,14 @@
 }
 
 .shuttleBoardingName {
-  font-size: $font-size-base;
+  font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
   color: $gray-12;
   margin: 0;
 }
 
 .shuttleBoardingDescription {
-  font-size: $font-size-base;
+  font-size: $font-size-xl; // 20px
   color: $gray-11;
   margin: 0;
   line-height: $line-height-normal;
@@ -516,7 +525,7 @@
 .shuttleBoardingNoticeChip {
   padding: 4px 12px;
   border-radius: 5px;
-  font-size: $font-size-base;
+  font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
   white-space: nowrap;
   flex-shrink: 0;
@@ -533,101 +542,138 @@
 }
 
 .shuttleBoardingNoticeText {
-  font-size: $font-size-base;
+  font-size: $font-size-xl; // 20px
   color: $gray-11;
   flex: 1;
 }
 
 // 지하철 상세 경로 (구로병원)
-.subwayRoutes {
+.subwayRoutesContainer {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
+  gap: $spacing-4; // 16px
+  padding: 30px;
+  align-items: flex-end;
+}
+
+.subwaySearchButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-2; // 8px
+  padding: 5px 10px;
+  background: $color-primary;
+  border: none;
+  cursor: pointer;
+}
+
+.subwaySearchButtonText {
+  color: $color-white;
+  font-size: $font-size-xl; // 20px
+  font-family: Pretendard;
+  font-weight: $font-weight-semibold;
+}
+
+.subwayRoutesGrid {
+  display: flex;
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.subwayRoutesColumn {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: $spacing-6; // 24px
+}
+
+.subwayRoutesDivider {
+  width: 1px;
+  align-self: stretch;
+  border-left: 1px solid $gray-8;
+  flex-shrink: 0;
 }
 
 .subwayRouteDetail {
   display: flex;
   flex-direction: column;
-  gap: $spacing-6;
-}
-
-.subwayRouteTitle {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  margin: 0;
-
-  &::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background-color: $color-primary;
-    border: 1px solid $color-primary;
-    border-radius: 2px;
-  }
+  gap: $spacing-6; // 24px
 }
 
 .subwayRoutePath {
   display: flex;
-  align-items: center;
-  gap: $spacing-4;
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
 }
 
 .subwayRouteStep {
   display: flex;
+  flex: 1 1 0%;
   flex-direction: column;
   align-items: center;
-  gap: $spacing-4;
-  flex: 1;
+  gap: $spacing-4; // 16px
 }
 
 .subwayRouteIcon {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: $color-white;
+  border: 4px solid;
+  border-radius: 100px;
   width: 60px;
   height: 60px;
-  border-radius: 50%;
-  background-color: $color-white;
-  border: 4px solid;
+  box-sizing: border-box;
+
+  svg {
+    display: block;
+  }
 }
 
-.subwayRouteIconCircle {
-  width: 40px;
-  height: 40px;
+.subwayRouteIcon12호선 {
+  border-color: #00a23f;
+}
+
+.subwayRouteIcon1호선 {
+  border-color: #004a85;
+}
+
+.subwayRouteIcon27호선 {
+  border-color: #6e7e31;
 }
 
 .subwayRouteStepName {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-normal;
   color: $gray-12;
+  font-size: $font-size-lg; // 18px
+  font-family: Pretendard;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
   text-align: center;
   margin: 0;
+  white-space: nowrap;
 }
 
 .subwayRouteStepInfo {
   display: flex;
-  flex-direction: column;
+  align-self: stretch;
+  justify-content: center;
   align-items: center;
-  gap: $spacing-2;
-}
-
-.subwayRouteStepDescription {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-normal;
-  color: $gray-11;
-  text-align: center;
-  margin: 0;
-  white-space: pre-line;
+  flex-direction: column;
+  border-radius: 8px;
+  gap: 0;
 }
 
 .subwayRouteArrow {
-  font-size: $font-size-lg;
-  color: $gray-11;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // 버스 정류장 제목 (구로병원)
@@ -722,4 +768,14 @@
   p {
     margin: 0;
   }
+}
+
+.airportBusRouteCell {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.airportBusHighlight {
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
 }

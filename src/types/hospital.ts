@@ -342,6 +342,7 @@ export interface ShuttleBoardingLocation {
   notices?: Array<{
     type: 'notice' | 'info' // 공지 타입
     text: string // 공지 텍스트
+    label?: string // 배지 라벨 (예: '승차', '하차')
   }>
 }
 
@@ -358,17 +359,20 @@ export interface SubwayRouteDetail {
   station: string // 역명
   lines: string // 노선 (예: "1, 2호선")
   exits?: string // 출구 정보
-  busInfo?: {
-    routes: string[] // 버스 노선
-    description?: string // 설명
-  }
+  busInfo?: string[] // 버스 정보 (각 문자열이 하나의 p태그로 표시됨)
   destination: string // 최종 목적지
+}
+
+// 공항버스 경유지 텍스트 정보
+export interface AirportBusRouteText {
+  text: string // 텍스트 내용
+  highlight?: boolean // 하이라이트 여부
 }
 
 // 공항버스 상세 정보
 export interface AirportBusDetail {
   number: string // 버스 번호
-  route: string // 경유지 정보
+  route: AirportBusRouteText[] // 경유지 정보 (텍스트 배열)
   firstBus: string // 첫차 시간
   lastBus: string // 막차 시간
   interval: string // 운행 간격
