@@ -74,7 +74,7 @@ const commonMenuItems: MenuItem[] = [
     label: '진료협력센터 소개',
     subItems: [
       { href: '/about/intro', label: '진료협력센터 소개' },
-      { href: '/about/greeting', label: '센터장 인사말', disabled: true },
+      { href: '/about/greeting', label: '센터장 인사말' },
       { href: '/about/organization', label: '조직도/연락처', disabled: true },
       { href: '/about/location', label: '오시는 길', disabled: true }
     ]

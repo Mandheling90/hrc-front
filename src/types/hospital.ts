@@ -248,6 +248,29 @@ export interface AboutIntroInfo {
   }
 }
 
+// 센터장 인사말 슬로건 파트 (안산병원 전용 - 구간별 색상)
+export interface GreetingSloganPart {
+  text: string
+  color: 'black' | 'primary'
+}
+
+// 센터장 인사말 페이지 정보
+export interface AboutGreetingInfo {
+  slogan: string // 슬로건 (단일 문자열, 다른 병원용)
+  sloganParts?: GreetingSloganPart[] // 슬로건 파트 배열 (안산병원 전용 - 구간별 색상/스타일)
+  image: {
+    src: string // 이미지 경로
+    alt: string // 이미지 대체 텍스트
+    width: number // 이미지 너비
+    height: number // 이미지 높이
+  }
+  message: string[] // 인사말 텍스트 (문단별로 배열)
+  signature: {
+    name: string // 센터장 이름
+    title: string // 센터장 직함
+  }
+}
+
 // 페이지 콘텐츠 타입
 export interface HospitalPageContent {
   referral: {
@@ -260,6 +283,7 @@ export interface HospitalPageContent {
   network?: NetworkInfo // 협력네트워크 페이지 정보
   signupAgreement?: SignupAgreementInfo // 회원가입 개인정보 수집 약관 정보
   aboutIntro?: AboutIntroInfo // 진료협력센터 소개 페이지 정보
+  aboutGreeting?: AboutGreetingInfo // 센터장 인사말 페이지 정보
 }
 
 // 병원 컨텍스트 타입

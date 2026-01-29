@@ -7,6 +7,18 @@
 // Paperlogy 폰트 CDN
 @import url('https://cdn.jsdelivr.net/gh/AnyfontsProject/Paperlogy/dist/Paperlogy.css');
 
+// DaeguJunggu Eubseong OTF (센터장 인사말 슬로건 - 안산병원 전용)
+// 폰트 파일을 public/fonts/ 에 넣고 아래 src 경로를 실제 파일명에 맞게 수정하세요.
+@font-face {
+  font-family: 'DaeguJunggu Eubseong OTF';
+  src:
+    url('/fonts/DaeguJungguEubseong.otf') format('opentype'),
+    url('/fonts/DaeguJungguEubseong.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 // CSS 변수 정의
 :root {
   /* gray scale (Gray 1-12) */

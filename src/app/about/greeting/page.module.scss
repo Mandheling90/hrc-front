@@ -1,0 +1,364 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: -1.92px;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 $spacing-12;
+
+  @include tablet {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-10;
+  }
+
+  @include mobile {
+    font-size: 32px;
+    letter-spacing: -1.28px;
+    margin-bottom: $spacing-8;
+  }
+}
+
+// 우측 블록 내 슬로건 (Figma: 데스크톱 중앙 정렬, 태블릿 오버레이)
+.slogan {
+  font-size: 36px;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  text-align: center;
+  line-height: $line-height-relaxed;
+  margin-bottom: $spacing-12;
+  font-family: $font-family-base;
+
+  @include tablet {
+    font-size: 24px;
+    line-height: 1.4;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  @include mobile {
+    font-size: 24px;
+    margin-bottom: $spacing-8;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+// 안산병원 전용 슬로건 (우측 블록 내, 중앙 정렬)
+.sloganAnsan {
+  font-family: 'DaeguJunggu Eubseong OTF', $font-family-base;
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 96px;
+  text-align: center;
+  margin-bottom: $spacing-12;
+  word-wrap: break-word;
+
+  @include tablet {
+    font-size: 32px;
+    line-height: 1.4;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  @include mobile {
+    font-size: 32px;
+    line-height: 48px;
+    margin-bottom: $spacing-8;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+.sloganPartBlack {
+  color: #000000;
+}
+
+.sloganPartPrimary {
+  color: #9f1836;
+}
+
+// 안암병원: 슬로건 이미지
+.sloganImage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+
+  @include tablet {
+    max-width: 100%;
+  }
+
+  @include mobile {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+// Figma: 데스크톱 - 좌측 이미지·우측 영역 높이 동일, 좌측 ~45% / 우측 ~55% 비율
+// 태블릿 - 이미지 중앙 배치, 슬로건 오버레이, 텍스트 아래 배치
+.content {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: $spacing-16;
+  align-items: stretch;
+  max-width: 960px;
+  margin: 0 auto;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    max-width: none;
+    gap: $spacing-12;
+    align-items: start;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-8;
+    align-items: start;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  min-height: 100%;
+  display: flex;
+  justify-content: center; // 가로 중앙 정렬
+  align-items: flex-end; // 세로 하단 정렬
+  overflow: visible; // 태블릿에서 슬로건 오버레이를 위해 visible로 변경
+  border-radius: 8px;
+
+  @include tablet {
+    order: 1;
+    min-height: 0;
+    max-width: 100%; // 100%로 설정
+    width: 100%;
+    margin: 0; // 왼쪽 정렬
+    align-items: flex-end;
+    justify-content: flex-start; // 왼쪽 정렬
+    overflow: visible;
+  }
+
+  @include mobile {
+    order: 1;
+    min-height: 0;
+    max-width: 100%;
+    align-items: flex-end;
+    overflow: visible;
+  }
+}
+
+// 배경: 건물 스케치 이미지 (원본 높이만큼 크게, 더 많이 보이도록)
+.backgroundImage {
+  position: absolute;
+  bottom: 0; // 하단부터 시작
+  right: 0; // 오른쪽 정렬
+  width: 100%; // 전체 너비 사용하여 배경이 더 많이 보이도록
+  height: 100%; // 전체 높이 사용
+  z-index: 1;
+  opacity: 0.3;
+  overflow: hidden; // 배경 이미지만 잘림 처리
+
+  @include tablet {
+    top: 0; // 상단부터 시작
+    left: 0; // 왼쪽부터 시작
+    right: 0; // 오른쪽까지
+    bottom: 0; // 하단까지
+    width: 100%; // 전체 너비
+    height: 100%; // 전체 높이
+    border-radius: 8px;
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.buildingBg {
+  object-fit: cover; // 전체 영역 채우기
+  object-position: right center; // 오른쪽 중심부 표시하여 배경이 더 많이 보이도록
+  // Next.js fill → 부모(.backgroundImage) 크기에 맞춤
+
+  @include tablet {
+    object-fit: cover; // 태블릿에서도 전체 영역 채우기
+    object-position: center; // 중앙 정렬
+  }
+}
+
+// 전면: 센터장 사진 (크기 축소, 중앙 정렬)
+.directorImage {
+  position: relative;
+  width: 80%; // 크기 축소 (100% → 80%)
+  height: auto;
+  max-height: 85%; // 최대 높이 제한
+  object-fit: contain;
+  object-position: center;
+  z-index: 2;
+
+  @include tablet {
+    width: auto;
+    max-width: 100%; // 100%로 설정
+    max-height: 600px;
+    position: relative;
+    z-index: 2;
+    margin-left: 0; // 왼쪽 정렬
+  }
+
+  @include mobile {
+    width: 80%;
+    max-height: none;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// 태블릿: 슬로건 오버레이 (이미지 오른쪽 부분에 절대 위치)
+.sloganOverlay {
+  display: none; // 데스크톱에서는 숨김
+
+  @include tablet {
+    display: block;
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    z-index: 3;
+    max-width: 50%;
+    text-align: left;
+  }
+
+  @include mobile {
+    display: none; // 모바일에서는 숨김
+  }
+}
+
+// 모바일: 슬로건 최상단 표시
+.sloganMobile {
+  display: none; // 데스크톱/태블릿에서는 숨김
+
+  @include mobile {
+    display: block;
+    margin-bottom: $spacing-8;
+    text-align: center;
+    width: 100%;
+
+    .slogan {
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+
+    .sloganAnsan {
+      font-size: 32px;
+      line-height: 48px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// 데스크톱: 슬로건 표시
+.sloganDesktop {
+  @include tablet {
+    display: none; // 태블릿에서는 숨김
+  }
+
+  @include mobile {
+    display: none; // 모바일에서는 숨김 (최상단 슬로건 사용)
+  }
+}
+
+// 우측 한쪽: 제목 + 슬로건 + 본문 + 서명 (Figma: 본문·서명 왼쪽 정렬)
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+
+  @include tablet {
+    order: 2;
+    margin-top: $spacing-8;
+  }
+
+  @include mobile {
+    order: 2;
+  }
+}
+
+.greetingText {
+  font-size: $font-size-lg;
+  line-height: $line-height-relaxed;
+  color: $gray-12;
+  text-align: left;
+
+  p {
+    margin: 0 0 $spacing-4;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @include tablet {
+    font-size: $font-size-base;
+  }
+
+  @include mobile {
+    font-size: $font-size-base;
+  }
+}
+
+// Figma: 서명 왼쪽 정렬
+.signature {
+  margin-top: $spacing-8;
+  text-align: left;
+
+  @include tablet {
+    margin-top: $spacing-6;
+  }
+
+  @include mobile {
+    margin-top: $spacing-4;
+  }
+}
+
+.signatureName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  margin: 0 0 $spacing-1;
+
+  @include tablet {
+    font-size: $font-size-lg;
+  }
+
+  @include mobile {
+    font-size: $font-size-lg;
+  }
+}
+
+.signatureTitle {
+  font-size: $font-size-base;
+  color: $gray-11;
+  margin: 0;
+
+  @include tablet {
+    font-size: $font-size-sm;
+  }
+
+  @include mobile {
+    font-size: $font-size-sm;
+  }
+}
