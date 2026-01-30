@@ -119,7 +119,9 @@ export interface ReferralExchangeInfo {
   services?: ServiceItem[] // 진료정보교류 사업 목적 서비스 목록 (없으면 ProcedureList 사용)
   referralDescription?: ProcedureListItem[] // 진료정보교류 진료의뢰 설명 (services가 없을 때 사용)
   procedureSteps?: ProcedureListItem[] // 진료정보교류 진료의뢰 절차
+  procedureStepsNote?: string // 진료의뢰 절차 공지 (붉은 글씨)
   applicationSteps?: ProcedureListItem[] // 진료정보교류사업 이용 신청 방법
+  applicationStepsNote?: string // 이용 신청 방법 공지 (붉은 글씨)
   contact?: string | string[] // 문의 연락처 (문자열 또는 문자열 배열)
 }
 
@@ -156,8 +158,10 @@ export interface ReferralHiraInfo {
   intro: string[] // InfoBox 메시지
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
   businessPurpose?: ProcedureListItem[] // 사업 목적 (리스트 형태)
+  businessPurposeNote?: string // 사업 목적 공지 (붉은 글씨)
   businessPurposeServices?: ServiceItem[] // 사업 목적 (서비스 카드 형태, 안산병원 등)
   target?: ProcedureListItem[] // 대상 (구로병원 등)
+  targetNote?: string // 대상 공지 (붉은 글씨)
   steps: HiraStep[] // 진료의뢰 절차 스텝들
   contact?: string | string[] // 문의 연락처
 }
@@ -174,11 +178,15 @@ export interface NetworkInfo {
   intro: string[] // InfoBox 메시지
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
   benefits?: ProcedureListItem[] // 협력병·의원 혜택안내
+  benefitsNote?: string // 혜택안내 공지 (붉은 글씨)
   target?: {
     hospital?: ProcedureListItem[] // 협력병원 대상
+    hospitalNote?: string // 협력병원 대상 공지 (붉은 글씨)
     clinic?: ProcedureListItem[] // 협력의원 대상
+    clinicNote?: string // 협력의원 대상 공지 (붉은 글씨)
   }
   applicationMethod?: ProcedureListItem[] // 신청방법
+  applicationMethodNote?: string // 신청방법 공지 (붉은 글씨)
   processSteps?: NetworkProcessStep[] // 체결 절차 단계
   contact?: {
     phone?: string // 전화번호
@@ -239,6 +247,7 @@ export interface AboutIntroInfo {
     messages: string[] // InfoBox 메시지 배열
   }
   mainTasks: ProcedureListItem[] // 주요업무 항목들
+  mainTasksNote?: string // 주요업무 공지 (붉은 글씨)
   operationInfo: {
     cards: OperationInfoCardData[] // 운영 안내 카드들
     note?: string // 안내 메시지 (예: "일요일, 공휴일 휴무입니다.")
@@ -315,10 +324,22 @@ export interface AirportRoute {
   }[]
 }
 
+// 자가용 방면 경로 단계
+export interface CarDirectionStep {
+  text: string // 단계 설명 텍스트
+}
+
+// 자가용 방면 경로
+export interface CarDirectionRoute {
+  title: string // 경로 제목 (예: "강북", "내부순환대로 (성산대교)")
+  steps: CarDirectionStep[] // 경로 단계들
+}
+
 // 자가용 방면 정보
 export interface CarDirection {
   label: string // 방면 라벨
   isActive?: boolean // 활성화 여부
+  routes?: CarDirectionRoute[] // 상세 경로 정보 (팝업용)
 }
 
 // 셔틀버스 운행 노선 정보

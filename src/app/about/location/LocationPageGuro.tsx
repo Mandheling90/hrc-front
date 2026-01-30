@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -12,16 +12,21 @@ import { TransportAccordion } from '@/components/molecules/TransportAccordion/Tr
 import { MapPlaceholder } from '@/components/molecules/MapPlaceholder/MapPlaceholder'
 import { AddressSearchBar } from '@/components/molecules/AddressSearchBar/AddressSearchBar'
 import { MapServiceLinks } from '@/components/molecules/MapServiceLinks/MapServiceLinks'
-import { PlusIcon24 } from '@/components/icons/PlusIcon24'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
 import { SubwayIcon } from '@/components/icons/SubwayIcon'
 import { BusIcon } from '@/components/icons/BusIcon'
 import { MapIcon } from '@/components/icons/MapIcon'
 import { ArrowRightIcon } from '@/components/icons/ArrowRightIcon'
+import { CarDirectionModal } from '@/components/molecules/CarDirectionModal/CarDirectionModal'
+import { CarDirectionButtons } from '@/components/molecules/CarDirectionButtons'
+import { ShuttleRouteMap } from '@/components/molecules/ShuttleRouteMap'
+import type { CarDirection } from '@/types/hospital'
 
 export function LocationPageGuro() {
   const { pageContent } = useHospital()
   const locationInfo = pageContent?.aboutLocation
+  const [selectedDirection, setSelectedDirection] = useState<CarDirection | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // 노선별 색상 매핑 함수
   const getLineColor = (lines: string): string => {
@@ -65,36 +70,13 @@ export function LocationPageGuro() {
           {/* 자가용 정보 */}
           {locationInfo.car && locationInfo.car.length > 0 && (
             <TransportAccordion title='자가용' defaultExpanded={true}>
-              <div className={styles.carDirections}>
-                {/* 첫 번째 줄: 4개 버튼 */}
-                <div className={styles.carDirectionsRow}>
-                  {locationInfo.car.slice(0, 4).map((direction, index) => (
-                    <button
-                      key={index}
-                      type='button'
-                      className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
-                    >
-                      <span>{direction.label}</span>
-                      <PlusIcon24 />
-                    </button>
-                  ))}
-                </div>
-                {/* 두 번째 줄: 나머지 버튼들 (5개) */}
-                {locationInfo.car.length > 4 && (
-                  <div className={styles.carDirectionsRow}>
-                    {locationInfo.car.slice(4).map((direction, index) => (
-                      <button
-                        key={index + 4}
-                        type='button'
-                        className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
-                      >
-                        <span>{direction.label}</span>
-                        <PlusIcon24 />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <CarDirectionButtons
+                directions={locationInfo.car}
+                onDirectionClick={direction => {
+                  setSelectedDirection(direction)
+                  setIsModalOpen(true)
+                }}
+              />
             </TransportAccordion>
           )}
 
@@ -105,15 +87,7 @@ export function LocationPageGuro() {
                 {/* 운행노선 */}
                 <div className={styles.shuttleSection}>
                   <ProcedureList label='운행노선' items={[]} />
-                  <div className={styles.shuttleRouteMap}>
-                    <Image
-                      src='/images/Operation_route.png'
-                      alt='운행노선'
-                      width={1370}
-                      height={140}
-                      className={styles.shuttleRouteImage}
-                    />
-                  </div>
+                  <ShuttleRouteMap />
                 </div>
 
                 {/* 운행시간 */}
@@ -133,41 +107,63 @@ export function LocationPageGuro() {
                 <div className={styles.shuttleSection}>
                   <ProcedureList label='탑승장소' items={[]} />
                   <div className={styles.shuttleBoardingLocations}>
-                    {locationInfo.shuttle?.boardingLocations.map((location, index) => (
-                      <div key={index} className={styles.shuttleBoardingLocation}>
+                    {/* 첫 번째 탑승장소 (전체 너비) */}
+                    {locationInfo.shuttle?.boardingLocations[0] && (
+                      <div className={`${styles.shuttleBoardingLocation} ${styles.shuttleBoardingLocationFirst}`}>
                         <div className={styles.shuttleBoardingImage}>
                           <Image
-                            src={`/images/boarding_location_${index + 1}.png`}
-                            alt={location.name}
+                            src={`/images/boarding_location_1.png`}
+                            alt={locationInfo.shuttle.boardingLocations[0].name}
                             fill
                             className={styles.shuttleBoardingImg}
-                            sizes='(max-width: 768px) 100vw, 440px'
+                            sizes='(max-width: 768px) 100vw, 608px'
                           />
                         </div>
-                        <h4 className={styles.shuttleBoardingName}>{location.name}</h4>
-                        {location.description && (
-                          <p className={styles.shuttleBoardingDescription}>{location.description}</p>
-                        )}
-                        {location.notices && location.notices.length > 0 && (
-                          <div className={styles.shuttleBoardingNotices}>
-                            {location.notices.map((notice, noticeIndex) => (
-                              <div key={noticeIndex} className={styles.shuttleBoardingNotice}>
-                                <span
-                                  className={`${styles.shuttleBoardingNoticeChip} ${
-                                    notice.type === 'notice'
-                                      ? styles.shuttleBoardingNoticeChipNotice
-                                      : styles.shuttleBoardingNoticeChipInfo
-                                  }`}
-                                >
-                                  {notice.label}
-                                </span>
-                                <span className={styles.shuttleBoardingNoticeText}>{notice.text}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        <h4 className={styles.shuttleBoardingName}>{locationInfo.shuttle.boardingLocations[0].name}</h4>
                       </div>
-                    ))}
+                    )}
+                    {/* 나머지 탑승장소 (2열 배치) */}
+                    {locationInfo.shuttle?.boardingLocations && locationInfo.shuttle.boardingLocations.length > 1 && (
+                      <div className={styles.shuttleBoardingLocationRow}>
+                        {locationInfo.shuttle.boardingLocations.slice(1).map((location, index) => (
+                          <div key={index + 1} className={styles.shuttleBoardingLocation}>
+                            <div className={styles.shuttleBoardingImage}>
+                              <Image
+                                src={`/images/boarding_location_${index + 2}.png`}
+                                alt={location.name}
+                                fill
+                                className={styles.shuttleBoardingImg}
+                                sizes='(max-width: 768px) 100vw, 300px'
+                              />
+                            </div>
+                            <div className={styles.shuttleBoardingInfo}>
+                              <h4 className={styles.shuttleBoardingName}>{location.name}</h4>
+                              {location.description && (
+                                <p className={styles.shuttleBoardingDescription}>{location.description}</p>
+                              )}
+                              {location.notices && location.notices.length > 0 && (
+                                <div className={styles.shuttleBoardingNotices}>
+                                  {location.notices.map((notice, noticeIndex) => (
+                                    <div key={noticeIndex} className={styles.shuttleBoardingNotice}>
+                                      <span
+                                        className={`${styles.shuttleBoardingNoticeChip} ${
+                                          notice.type === 'notice'
+                                            ? styles.shuttleBoardingNoticeChipNotice
+                                            : styles.shuttleBoardingNoticeChipInfo
+                                        }`}
+                                      >
+                                        {notice.label}
+                                      </span>
+                                      <span className={styles.shuttleBoardingNoticeText}>{notice.text}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -343,6 +339,20 @@ export function LocationPageGuro() {
         </div>
       </main>
       <Footer />
+
+      {/* 자가용 방면 팝업 */}
+      {selectedDirection && selectedDirection.routes && (
+        <CarDirectionModal
+          isOpen={isModalOpen}
+          title={selectedDirection.label}
+          routes={selectedDirection.routes}
+          onClose={() => {
+            setIsModalOpen(false)
+            setSelectedDirection(null)
+          }}
+          closeOnBackdropClick={true}
+        />
+      )}
     </div>
   )
 }

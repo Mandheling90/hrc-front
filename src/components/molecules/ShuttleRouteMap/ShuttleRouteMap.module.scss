@@ -1,0 +1,191 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.shuttleRouteMap {
+  width: 100%;
+  height: 140px;
+  position: relative;
+}
+
+.shuttleRouteLine {
+  position: absolute;
+  top: 29.18px;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px dashed $gray-8; // #BBBBBB
+}
+
+.shuttleRouteIcons {
+  position: absolute;
+  left: 85px;
+  right: 85px;
+  top: 16.18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.shuttleRouteItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+
+.shuttleRouteIcon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  background: $color-white;
+  border-radius: 40px;
+  border: 8px solid $color-primary; // #9F1836
+}
+
+.shuttleRouteLabel {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  font-family: Pretendard;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  word-wrap: break-word;
+}
+
+.shuttleRouteLabelMain {
+  color: var(--Color-Black-&-White-Black, black);
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.shuttleRouteLabelSub {
+  color: $gray-11; // #636363
+  font-weight: 400;
+  line-height: 30px;
+}
+
+// 단일 라벨 (병원, 신도림역)
+.shuttleRouteItem:first-child .shuttleRouteLabel,
+.shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
+.shuttleRouteItem:last-child .shuttleRouteLabel {
+  color: var(--Color-Black-&-White-Black, black);
+  font-weight: 600;
+  line-height: 30px;
+  word-wrap: break-word;
+}
+
+// 테블릿 반응형
+@include tablet {
+  .shuttleRouteMap {
+    overflow: visible;
+  }
+
+  .shuttleRouteLine {
+    left: 0;
+    right: 0;
+    top: 35.59px;
+  }
+
+  .shuttleRouteIcons {
+    position: absolute;
+    width: calc(100% - 40px);
+    left: 20px;
+    top: 19.59px;
+    padding: 0;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .shuttleRouteLabel {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleRouteLabelMain {
+    color: #111111;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleRouteLabelSub {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  // 단일 라벨 (병원, 신도림역) - 테블릿
+  .shuttleRouteItem:first-child .shuttleRouteLabel,
+  .shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
+  .shuttleRouteItem:last-child .shuttleRouteLabel {
+    color: #111111;
+    font-size: 18px;
+    line-height: 27px;
+  }
+}
+
+// 모바일 반응형 - 세로 레이아웃
+@include mobile {
+  .shuttleRouteMap {
+    height: auto;
+    min-height: 304px;
+  }
+
+  .shuttleRouteLine {
+    // 세로 점선
+    top: 0;
+    left: 30px;
+    right: auto;
+    width: 0;
+    height: 304px;
+    border-top: none;
+    border-left: 1px dashed $gray-8;
+  }
+
+  .shuttleRouteIcons {
+    position: relative;
+    left: 15px;
+    right: auto;
+    top: 24px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+
+  .shuttleRouteItem {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .shuttleRouteLabel {
+    flex-direction: row;
+    align-items: flex-start;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleRouteLabelMain {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleRouteLabelSub {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  // 단일 라벨 (병원, 신도림역) - 모바일
+  .shuttleRouteItem:first-child .shuttleRouteLabel,
+  .shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
+  .shuttleRouteItem:last-child .shuttleRouteLabel {
+    color: #111111;
+    font-size: 18px;
+    line-height: 27px;
+  }
+}

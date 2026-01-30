@@ -898,7 +898,42 @@ const guroContent: HospitalPageContent = {
     },
     car: [
       { label: '사당동 방면', isActive: false },
-      { label: '시내 방면', isActive: true },
+      {
+        label: '시내 방면',
+        isActive: true,
+        routes: [
+          {
+            title: '강북',
+            steps: [
+              { text: '강북' },
+              { text: '영등포역 방향' },
+              { text: '구로역 사거리에서 좌회전\n(지하차도 진입X)' },
+              { text: '굴다리 지나\n삼거리에서 우측도로 1km 직진' },
+              { text: '도착' }
+            ]
+          },
+          {
+            title: '내부순환대로 (성산대교)',
+            steps: [
+              { text: '내부순환대로 (성산대교)' },
+              { text: '성산대교에서\n서부간선도로 진입' },
+              { text: '오금교에서 구로역\n방면으로 좌회전' },
+              { text: '굴다리 지나\n삼거리에서 우측도로 1km 직진' },
+              { text: '도착' }
+            ]
+          },
+          {
+            title: '김포공항 (남부순환대로)',
+            steps: [
+              { text: '김포공항 (남부순환대로)' },
+              { text: '오류 IC 진입' },
+              { text: '구로벤처단지 IC 나와서 좌회전' },
+              { text: '굴다리 지나\n병원사거리에서 우회전' },
+              { text: '도착' }
+            ]
+          }
+        ]
+      },
       { label: '인천 방면', isActive: false },
       { label: '안양 방면', isActive: false },
       { label: '올림픽대로', isActive: false },

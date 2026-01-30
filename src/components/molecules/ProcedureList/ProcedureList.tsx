@@ -15,11 +15,13 @@ export interface ProcedureListProps {
   items: ProcedureListItem[]
   /** 라벨 (예: "대상", "신청방법" - • 기호는 자동으로 추가됨) */
   label?: string
+  /** 붉은 글씨 공지 (리스트 하단에 표시) */
+  note?: string
   /** 추가 클래스명 */
   className?: string
 }
 
-export const ProcedureList: React.FC<ProcedureListProps> = ({ items, label, className = '' }) => {
+export const ProcedureList: React.FC<ProcedureListProps> = ({ items, label, note, className = '' }) => {
   // label이 있으면 항상 빨간색 모서리 깎인 사각형 bullet을 표시
   const renderLabel = () => {
     if (!label) return null
@@ -43,6 +45,7 @@ export const ProcedureList: React.FC<ProcedureListProps> = ({ items, label, clas
           </li>
         ))}
       </ul>
+      {note && <p className={styles.note}>{note}</p>}
     </div>
   )
 }

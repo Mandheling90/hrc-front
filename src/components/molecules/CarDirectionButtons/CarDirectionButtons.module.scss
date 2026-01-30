@@ -1,0 +1,205 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.carDirections {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+
+  @include mobile {
+    padding: 20px;
+    gap: 24px;
+  }
+}
+
+// 데스크톱 레이아웃
+.desktopLayout {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  width: 100%;
+
+  @include tablet {
+    display: none; // 테블릿에서 숨김
+  }
+}
+
+// 테블릿 레이아웃
+.tabletLayout {
+  display: none; // 기본적으로 숨김
+
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+    width: 100%;
+  }
+
+  @include desktop {
+    display: none; // 데스크톱에서 숨김
+  }
+
+  @include mobile {
+    display: none; // 모바일에서 숨김
+  }
+}
+
+// 모바일 레이아웃
+.mobileLayout {
+  display: none; // 기본적으로 숨김
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+.carDirectionsRow {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+
+  @include tablet {
+    gap: $spacing-2; // 8px
+  }
+}
+
+.carDirectionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 15px 30px;
+  width: 260px;
+  flex-shrink: 0;
+  border-radius: 150px;
+  background-color: $color-white;
+  color: var(--Color-Black-&-White-Black, black);
+  font-size: 21px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 36px;
+  word-wrap: break-word;
+  cursor: pointer;
+  transition: all $transition-base;
+  border: 2px solid $gray-6;
+  overflow: visible;
+  box-sizing: border-box;
+
+  span {
+    line-height: 36px;
+    text-align: left;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  // PlusIcon24 스타일
+  svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    border-color: $gray-6;
+  }
+
+  &.carDirectionButtonActive {
+    width: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    background-color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 150px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #9f1836;
+    box-sizing: border-box;
+  }
+
+  @include tablet {
+    flex: 1 1 0%;
+    width: auto;
+    height: 47px;
+    padding: 10px 20px;
+    border-width: 2px;
+    border-color: $gray-6;
+
+    span {
+      font-size: 20px;
+      line-height: 30px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.carDirectionButtonActive {
+      flex: 1 1 0%;
+      width: auto;
+      height: 47px;
+      padding: 10px 20px;
+      border-width: 2px;
+      border-color: #9f1836;
+    }
+  }
+
+  @include mobile {
+    display: none; // 모바일에서는 다른 버튼 스타일 사용
+  }
+}
+
+// 모바일 버튼 스타일
+.carDirectionButtonMobile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 10px;
+  width: 100%;
+  align-self: stretch;
+  border-radius: 150px;
+  background-color: $color-white;
+  color: var(--Color-Black-&-White-Black, black);
+  font-size: 18px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 27px;
+  word-wrap: break-word;
+  cursor: pointer;
+  transition: all $transition-base;
+  border: 2px solid $gray-6;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  span {
+    line-height: 27px;
+    text-align: left;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  // ArrowRightIcon 스타일
+  svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.carDirectionButtonMobileActive {
+    border-color: #9f1836;
+    border-width: 2px;
+  }
+}

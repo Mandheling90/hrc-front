@@ -356,21 +356,68 @@
   gap: $spacing-4;
   // padding: $spacing-5;
   align-items: center;
+
+  @include tablet {
+    // 테블릿에서 첫 줄의 4번째 버튼(안양)을 두 번째 줄로 이동
+    .carDirectionsRow:first-child {
+      position: relative;
+
+      .carDirectionButton:nth-child(4) {
+        // 첫 번째 줄의 4번째 버튼을 두 번째 줄로 이동
+        position: absolute;
+        top: calc(47px + #{$spacing-2}); // 버튼 높이 + gap
+        left: 0;
+        width: calc(33.333% - #{$spacing-2 * 2 / 3}); // 3개 중 하나의 너비
+      }
+    }
+
+    // 테블릿에서 두 번째 줄의 첫 번째 버튼(올림픽대로)을 숨김
+    // (안양이 그 자리를 차지)
+    .carDirectionsRow:nth-child(2) {
+      position: relative;
+
+      .carDirectionButton:first-child {
+        visibility: hidden; // 공간은 유지하되 보이지 않게
+      }
+
+      // 두 번째 줄의 4번째부터는 세 번째 줄로 이동
+      .carDirectionButton:nth-child(n + 4) {
+        display: none;
+      }
+    }
+
+    // 세 번째 줄 표시
+    .carDirectionsRow:nth-child(3) {
+      display: flex;
+    }
+  }
 }
 
 .carDirectionsRow {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: $spacing-4;
+  gap: 16px;
   flex-wrap: wrap;
+  width: 100%;
+
+  @include tablet {
+    gap: $spacing-2; // 8px
+  }
+
+  @include desktop {
+    // 데스크톱에서 세 번째 줄 숨김
+    &:nth-child(3) {
+      display: none;
+    }
+  }
 }
 
 .carDirectionButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-4;
+  gap: 16px;
   padding: 15px 30px;
   width: 260px;
   flex-shrink: 0;
@@ -421,6 +468,34 @@
     box-sizing: border-box;
   }
 
+  @include tablet {
+    flex: 1 1 0%;
+    width: auto;
+    height: 47px;
+    padding: 10px 20px;
+    border-width: 2px;
+    border-color: $gray-6;
+
+    span {
+      font-size: 20px;
+      line-height: 30px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.carDirectionButtonActive {
+      flex: 1 1 0%;
+      width: auto;
+      height: 47px;
+      padding: 10px 20px;
+      border-width: 2px;
+      border-color: #9f1836;
+    }
+  }
+
   @include mobile {
     width: 100%;
     max-width: 260px;
@@ -456,10 +531,124 @@
   overflow: hidden;
 }
 
-.shuttleRouteImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.shuttleRouteLine {
+  position: absolute;
+  top: 29.18px;
+  left: 0;
+  width: 1430px;
+  height: 0;
+  border-top: 1px dashed $gray-8; // #BBBBBB
+}
+
+.shuttleRouteIcons {
+  position: absolute;
+  left: 85px;
+  top: 16.18px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 228px;
+}
+
+.shuttleRouteItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+}
+
+.shuttleRouteIcon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  background: $color-white;
+  border-radius: 40px;
+  border: 8px solid $color-primary; // #9F1836
+}
+
+.shuttleRouteLabel {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  font-family: Pretendard;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  word-wrap: break-word;
+}
+
+.shuttleRouteLabelMain {
+  color: var(--Color-Black-&-White-Black, black);
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.shuttleRouteLabelSub {
+  color: $gray-11; // #636363
+  font-weight: 400;
+  line-height: 30px;
+}
+
+// 단일 라벨 (병원, 신도림역)
+.shuttleRouteItem:first-child .shuttleRouteLabel,
+.shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
+.shuttleRouteItem:last-child .shuttleRouteLabel {
+  color: var(--Color-Black-&-White-Black, black);
+  font-weight: 600;
+  line-height: 30px;
+  word-wrap: break-word;
+}
+
+// 테블릿 반응형
+@include tablet {
+  .shuttleRouteMap {
+    overflow: visible;
+  }
+
+  .shuttleRouteLine {
+    width: calc(100% - 40px);
+    top: 35.59px;
+    left: 20px;
+  }
+
+  .shuttleRouteIcons {
+    position: absolute;
+    width: calc(100% - 40px);
+    left: 20px;
+    top: 19.59px;
+    padding: 0;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .shuttleRouteLabel {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleRouteLabelMain {
+    color: #111111;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleRouteLabelSub {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  // 단일 라벨 (병원, 신도림역) - 테블릿
+  .shuttleRouteItem:first-child .shuttleRouteLabel,
+  .shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
+  .shuttleRouteItem:last-child .shuttleRouteLabel {
+    color: #111111;
+    font-size: 18px;
+    line-height: 27px;
+  }
 }
 
 .shuttleNote {
@@ -484,6 +673,20 @@
   min-width: 300px;
 }
 
+.shuttleBoardingLocationFirst {
+  // 데스크톱에서는 다른 카드와 동일하게 표시
+}
+
+.shuttleBoardingLocationRow {
+  display: contents; // 데스크톱에서는 부모의 flex 흐름 유지
+}
+
+.shuttleBoardingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
 .shuttleBoardingImage {
   position: relative;
   width: 100%;
@@ -493,7 +696,7 @@
 }
 
 .shuttleBoardingImg {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .shuttleBoardingName {
@@ -545,6 +748,130 @@
   font-size: $font-size-xl; // 20px
   color: $gray-11;
   flex: 1;
+}
+
+// 태블릿 - 탑승장소 반응형
+@include tablet {
+  .shuttleBoardingLocations {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .shuttleBoardingImage {
+    height: 190px;
+  }
+
+  .shuttleBoardingLocationFirst {
+    width: 100%;
+    flex: none;
+    flex-basis: 100%;
+    gap: 24px;
+
+    .shuttleBoardingImage {
+      height: 385px;
+    }
+  }
+
+  .shuttleBoardingLocationRow {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+
+    .shuttleBoardingLocation {
+      flex: 1 1 0;
+      min-width: auto;
+      gap: 24px;
+    }
+  }
+
+  .shuttleBoardingInfo {
+    gap: 8px;
+  }
+
+  .shuttleBoardingName {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleBoardingDescription {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .shuttleBoardingNotices {
+    gap: 8px;
+  }
+
+  .shuttleBoardingNotice {
+    align-items: flex-start;
+  }
+
+  .shuttleBoardingNoticeChip {
+    font-size: $font-size-xl; // 20px
+    line-height: 30px;
+  }
+
+  .shuttleBoardingNoticeText {
+    font-size: 18px;
+    line-height: 27px;
+  }
+}
+
+// 모바일 - 탑승장소 반응형
+@include mobile {
+  .shuttleBoardingLocations {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .shuttleBoardingLocationFirst {
+    width: 100%;
+    flex: none;
+    gap: 16px;
+  }
+
+  .shuttleBoardingLocationRow {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+
+    .shuttleBoardingLocation {
+      width: 100%;
+      min-width: auto;
+      gap: 16px;
+    }
+  }
+
+  .shuttleBoardingImage {
+    height: auto;
+    aspect-ratio: 335 / 212;
+  }
+
+  .shuttleBoardingInfo {
+    gap: 8px;
+  }
+
+  .shuttleBoardingName {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .shuttleBoardingDescription {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .shuttleBoardingNoticeChip {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 2px 8px;
+  }
+
+  .shuttleBoardingNoticeText {
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
 
 // 지하철 상세 경로 (구로병원)
@@ -676,6 +1003,95 @@
   justify-content: center;
 }
 
+// 태블릿 - 지하철 반응형
+@include tablet {
+  .subwayRoutesGrid {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .subwayRoutesDivider {
+    display: none;
+  }
+
+  .subwayRoutesColumn {
+    width: 100%;
+  }
+
+  .subwayRouteStepName {
+    font-size: 16px;
+    line-height: 24px;
+    white-space: normal;
+  }
+}
+
+// 모바일 - 지하철 반응형
+@include mobile {
+  .subwayRoutesContainer {
+    padding: 20px;
+    gap: 24px;
+  }
+
+  .subwayRoutesGrid {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .subwayRoutesDivider {
+    display: none;
+  }
+
+  .subwayRoutesColumn {
+    width: 100%;
+    gap: 32px;
+  }
+
+  .subwayRouteDetail {
+    gap: 24px;
+  }
+
+  .subwayRoutePath {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .subwayRouteStep {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    flex: none;
+  }
+
+  .subwayRouteArrow {
+    transform: rotate(90deg);
+    width: 60px;
+    height: 24px;
+    align-self: flex-start;
+    margin-left: 0;
+
+    svg {
+      width: 60px;
+      height: 24px;
+      transform: scale(2);
+    }
+  }
+
+  .subwayRouteIcon {
+    flex-shrink: 0;
+  }
+
+  .subwayRouteStepName {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .subwayRouteStepInfo {
+    align-items: flex-start;
+  }
+}
+
 // 버스 정류장 제목 (구로병원)
 .busStopTitle {
   display: flex;
@@ -753,6 +1169,9 @@
   color: $gray-12;
   text-align: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .airportBusTableCell {
@@ -763,6 +1182,9 @@
   color: $gray-12;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
   gap: $spacing-2;
 
   p {
@@ -773,9 +1195,61 @@
 .airportBusRouteCell {
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .airportBusHighlight {
   color: $color-primary;
   font-weight: $font-weight-semibold;
+}
+
+// 태블릿 - 공항버스 반응형
+@include tablet {
+  .airportBusDetails {
+    padding: 30px;
+    gap: 56px;
+  }
+
+  .airportBusDetail {
+    gap: 16px;
+  }
+
+  .airportBusTableHeader {
+    width: 200px;
+    padding: 20px 40px;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .airportBusTableCell {
+    padding: 20px 40px;
+    font-size: 18px;
+    line-height: 27px;
+  }
+}
+
+// 모바일 - 공항버스 반응형
+@include mobile {
+  .airportBusDetails {
+    padding: 20px;
+    gap: 56px;
+  }
+
+  .airportBusDetail {
+    gap: 16px;
+  }
+
+  .airportBusTableHeader {
+    width: 110px;
+    padding: 10px;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .airportBusTableCell {
+    padding: 10px;
+    font-size: 18px;
+    line-height: 27px;
+  }
 }

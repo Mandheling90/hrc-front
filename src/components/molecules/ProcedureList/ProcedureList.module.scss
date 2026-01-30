@@ -92,3 +92,18 @@
     }
   }
 }
+
+.note {
+  font-size: $font-size-xl; // 20px - 리스트와 동일
+  font-family: Pretendard;
+  font-weight: $font-weight-normal;
+  color: $color-primary;
+  line-height: $line-height-relaxed;
+  padding-left: 32px;
+  margin: $spacing-2 0 0 0;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font-size: $font-size-base;
+    padding-left: $spacing-5;
+  }
+}
