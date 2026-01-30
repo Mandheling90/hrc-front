@@ -399,6 +399,30 @@ export interface AirportBusDetail {
   interval: string // 운행 간격
 }
 
+// 안산 진료협력센터 위치 정보
+export interface MedicalCenterLocation {
+  address: string // 주소
+  phone: string // 전화번호
+  floorMapImage?: string // 층별 안내도 이미지 경로
+}
+
+// 안산 층별 안내도 범례 아이템
+export interface FloorMapLegendItem {
+  number: number // 번호 (1-23)
+  name: string // 부서명
+}
+
+// 안산 공항버스 정보 (세로 테이블 구조)
+export interface AnsanAirportBusInfo {
+  title: string // "인천공항에서 오는 법", "김포공항에서 오는 법"
+  stopNumber: string // 정차장 번호
+  route: string // 경유지
+  firstBus: string // 첫차
+  lastBus: string // 막차
+  interval: string // 운행간격
+  duration: string // 소요시간
+}
+
 // 오시는 길 페이지 정보
 export interface AboutLocationInfo {
   address: {
@@ -415,6 +439,10 @@ export interface AboutLocationInfo {
   subway?: SubwayInfo | SubwayRouteDetail[] // 지하철 정보 (단일 또는 상세 경로 배열)
   bus?: BusStop[] // 버스 정보
   airport?: AirportRoute | AirportBusDetail[] // 인천공항 경로 (간단한 경로 또는 상세 정보 배열)
+  // 안산병원 전용 필드
+  medicalCenter?: MedicalCenterLocation // 진료협력센터 정보
+  floorMapLegend?: FloorMapLegendItem[] // 층별 안내도 범례
+  ansanAirport?: AnsanAirportBusInfo[] // 안산 공항버스 정보
 }
 
 // 페이지 콘텐츠 타입

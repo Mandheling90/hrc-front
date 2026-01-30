@@ -9,9 +9,12 @@
       "Bash(curl:*)",
       "Bash(npx tsc:*)",
       "Bash(npm run build:*)",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "Bash(findstr:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["figma"]
+  "enabledMcpjsonServers": [
+    "figma"
+  ]
 }

@@ -7,8 +7,9 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { useHospital } from '@/hooks'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './page.module.scss'
-import { RouteChip } from '@/components/atoms/RouteChip/RouteChip'
 import { TransportAccordion } from '@/components/molecules/TransportAccordion/TransportAccordion'
+import { BusStopList } from '@/components/molecules/BusStopList/BusStopList'
+import { AirportBusTable } from '@/components/molecules/AirportBusTable'
 import { MapPlaceholder } from '@/components/molecules/MapPlaceholder/MapPlaceholder'
 import { AddressSearchBar } from '@/components/molecules/AddressSearchBar/AddressSearchBar'
 import { MapServiceLinks } from '@/components/molecules/MapServiceLinks/MapServiceLinks'
@@ -280,60 +281,14 @@ export function LocationPageGuro() {
           {/* 버스 정보 */}
           {locationInfo.bus && locationInfo.bus.length > 0 && (
             <TransportAccordion title='버스' defaultExpanded={true} contentBackground='white'>
-              <div className={styles.busContent}>
-                {locationInfo.bus.map((stop, stopIndex) => (
-                  <div key={stopIndex} className={styles.busCategory}>
-                    <div className={styles.busCategoryHeader}>
-                      <h3 className={styles.busCategoryTitle}>{stop.name}</h3>
-                    </div>
-                    <div className={styles.busCategoryRoutes}>
-                      {stop.directions[0]?.routes.map((route, routeIndex) => (
-                        <RouteChip key={routeIndex} variant={route.type} size='small'>
-                          {route.number}
-                        </RouteChip>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <BusStopList stops={locationInfo.bus} />
             </TransportAccordion>
           )}
 
           {/* 공항버스 정보 */}
           {locationInfo.airport && Array.isArray(locationInfo.airport) && (
             <TransportAccordion title='공항버스' defaultExpanded={true}>
-              <div className={styles.airportBusDetails}>
-                {locationInfo.airport.map((bus, index) => (
-                  <div key={index} className={styles.airportBusDetail}>
-                    <RouteChip variant='deepblue' size='large'>
-                      {bus.number}
-                    </RouteChip>
-                    <div className={styles.airportBusTable}>
-                      <div className={styles.airportBusTableRow}>
-                        <div className={styles.airportBusTableHeader}>경유지</div>
-                        <div className={`${styles.airportBusTableCell} ${styles.airportBusRouteCell}`}>
-                          {bus.route.map((routeText, index) => (
-                            <span key={index} className={routeText.highlight ? styles.airportBusHighlight : undefined}>
-                              {routeText.text}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className={styles.airportBusTableRow}>
-                        <div className={styles.airportBusTableHeader}>운행시간</div>
-                        <div className={styles.airportBusTableCell}>
-                          <p>첫차 {bus.firstBus}</p>
-                          <p>막차 {bus.lastBus}</p>
-                        </div>
-                      </div>
-                      <div className={styles.airportBusTableRow}>
-                        <div className={styles.airportBusTableHeader}>운행간격(분)</div>
-                        <div className={styles.airportBusTableCell}>{bus.interval}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <AirportBusTable buses={locationInfo.airport} />
             </TransportAccordion>
           )}
         </div>

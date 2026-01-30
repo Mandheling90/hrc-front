@@ -1253,3 +1253,43 @@
     line-height: 27px;
   }
 }
+
+// =============================================
+// 안산병원 전용 스타일
+// =============================================
+
+// 진료협력센터 콘텐츠
+.medicalCenterContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+  padding: 30px;
+
+  @include tablet {
+    padding: $spacing-5;
+    gap: $spacing-5;
+  }
+
+  @include mobile {
+    padding: $spacing-4;
+    gap: $spacing-4;
+  }
+}
+
+// 안산 공항버스 콘텐츠
+.ansanAirportContent {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  padding: 30px;
+
+  @include tablet {
+    padding: $spacing-5;
+    gap: 40px;
+  }
+
+  @include mobile {
+    padding: $spacing-4;
+    gap: 32px;
+  }
+}

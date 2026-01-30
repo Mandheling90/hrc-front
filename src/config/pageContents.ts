@@ -1492,15 +1492,196 @@ const ansanContent: HospitalPageContent = {
       daum: 'https://map.daum.net/link/map/고려대학교안산병원,37.3167,126.8306',
       google: 'https://maps.google.com/?q=고려대학교안산병원'
     },
-    subway: {
-      line: '4호선',
-      station: '고잔역',
-      exit: '',
-      walkTime: '',
-      description: '4호선 고잔역'
+    // 진료협력센터 정보
+    medicalCenter: {
+      address: '경기도 안산시 단원구 적금로 123 지하1층',
+      phone: '031-412-5103',
+      floorMapImage: '/images/FloorMapAnsan.png'
     },
-    bus: [],
-    airport: undefined
+    // 층별 안내도 범례
+    floorMapLegend: [
+      { number: 1, name: '진료협력센터' },
+      { number: 2, name: '원무과' },
+      { number: 3, name: '진단검사의학과' },
+      { number: 4, name: '영상의학과' },
+      { number: 5, name: '핵의학과' },
+      { number: 6, name: '재활의학과' },
+      { number: 7, name: '신경과' },
+      { number: 8, name: '정신건강의학과' },
+      { number: 9, name: '피부과' },
+      { number: 10, name: '비뇨의학과' },
+      { number: 11, name: '산부인과' },
+      { number: 12, name: '소아청소년과' },
+      { number: 13, name: '정형외과' },
+      { number: 14, name: '신경외과' },
+      { number: 15, name: '흉부외과' },
+      { number: 16, name: '외과' },
+      { number: 17, name: '이비인후과' },
+      { number: 18, name: '안과' },
+      { number: 19, name: '치과' },
+      { number: 20, name: '마취통증의학과' },
+      { number: 21, name: '응급의학과' },
+      { number: 22, name: '가정의학과' },
+      { number: 23, name: '직업환경의학과' }
+    ],
+    // 지하철 정보 (간단한 구조)
+    subway: [
+      {
+        station: '고잔역',
+        lines: '4호선, 수인분당선',
+        destination: '고려대학교 안산병원'
+      }
+    ],
+    // 버스 정보 (7개 정류장)
+    bus: [
+      {
+        name: '고대병원 앞 [도보 1분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 98', type: 'green' },
+              { number: '일반 99-1', type: 'green' },
+              { number: '직좌 5609', type: 'red' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '고대병원 앞 (건너편) [도보 2분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 98', type: 'green' },
+              { number: '일반 99-1', type: 'green' },
+              { number: '직좌 5609', type: 'red' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '자유센터 [도보 5분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 9', type: 'green' },
+              { number: '일반 9-1', type: 'green' },
+              { number: '일반 11', type: 'green' },
+              { number: '일반 22', type: 'green' },
+              { number: '일반 23', type: 'green' },
+              { number: '일반 30', type: 'green' },
+              { number: '일반 30-2', type: 'green' },
+              { number: '일반 52', type: 'green' },
+              { number: '일반 62', type: 'green' },
+              { number: '일반 99', type: 'green' },
+              { number: '일반 99-1', type: 'green' },
+              { number: '일반 101', type: 'green' },
+              { number: '일반 123', type: 'green' },
+              { number: '일반 125', type: 'green' },
+              { number: '일반 350', type: 'green' },
+              { number: '직좌 110', type: 'red' },
+              { number: '직좌 300', type: 'red' },
+              { number: '직좌 5609', type: 'red' },
+              { number: '직좌 7070', type: 'red' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '고잔 롯데캐슬골드파크 [도보 6분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 9', type: 'green' },
+              { number: '일반 9-1', type: 'green' },
+              { number: '일반 11', type: 'green' },
+              { number: '일반 22', type: 'green' },
+              { number: '일반 23', type: 'green' },
+              { number: '일반 30', type: 'green' },
+              { number: '일반 30-2', type: 'green' },
+              { number: '일반 52', type: 'green' },
+              { number: '일반 62', type: 'green' },
+              { number: '일반 66', type: 'green' },
+              { number: '일반 99', type: 'green' },
+              { number: '일반 99-1', type: 'green' },
+              { number: '일반 101', type: 'green' },
+              { number: '일반 123', type: 'green' },
+              { number: '일반 125', type: 'green' },
+              { number: '일반 350', type: 'green' },
+              { number: '직좌 110', type: 'red' },
+              { number: '직좌 300', type: 'red' },
+              { number: '직좌 5609', type: 'red' },
+              { number: '직좌 7070', type: 'red' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '고잔역 1번 출구 건너편 [도보 3분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 6', type: 'green' },
+              { number: '일반 97', type: 'green' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '고잔역 1번 출구 [도보 5분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 6', type: 'green' },
+              { number: '일반 97', type: 'green' },
+              { number: '일반 98', type: 'green' },
+              { number: '일반 99-1', type: 'green' },
+              { number: '일반 500', type: 'green' }
+            ]
+          }
+        ]
+      },
+      {
+        name: '고잔역 2번 출구 [도보 7분]',
+        directions: [
+          {
+            label: '',
+            routes: [
+              { number: '일반 97', type: 'green' },
+              { number: '일반 98', type: 'green' },
+              { number: '일반 99-1', type: 'green' },
+              { number: '일반 500', type: 'green' }
+            ]
+          }
+        ]
+      }
+    ],
+    // 공항버스 정보 (안산 전용 - 세로 테이블 구조)
+    ansanAirport: [
+      {
+        title: '인천공항에서 오는 법',
+        stopNumber: '7B',
+        route: '인천공항 – 김포공항 – 원종동대로빌딩 – 소사역- 낙원예식장 – 대야동가스공사 – 월곶신도시입구 – 모아아파트 - 영남1단지 – 금강아파트 – 이마트 – 시흥관광호텔 – 안산역 - 안산터미널',
+        firstBus: '안산행 06:10 - 공항행 05:00',
+        lastBus: '안산행 22:10 - 공항행 19:00',
+        interval: '25 ~ 30분',
+        duration: '90분'
+      },
+      {
+        title: '김포공항에서 오는 법',
+        stopNumber: '국내선 7번, 국제선 1번',
+        route: '김포공항 – 소사역 – 낙원예식장 – 영남APT - 계룡APT - 금강APT – 시흥관광호텔 - 안산역',
+        firstBus: '안산행 06:40',
+        lastBus: '안산행 22:40',
+        interval: '20 ~ 30분',
+        duration: '100분'
+      }
+    ]
   }
 }
 
