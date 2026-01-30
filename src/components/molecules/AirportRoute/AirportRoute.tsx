@@ -2,12 +2,12 @@
 
 import React from 'react'
 import { RouteChip } from '@/components/atoms/RouteChip/RouteChip'
-import type { AirportRoute } from '@/types/hospital'
+import type { AirportRoute as AirportRouteType } from '@/types/hospital'
 import styles from './AirportRoute.module.scss'
 
 export interface AirportRouteProps {
   /** 인천공항 경로 정보 */
-  route: AirportRoute
+  route: AirportRouteType
   /** 마지막 목적지 텍스트 (기본값: "고대병원하차") */
   finalDestination?: string
   /** 추가 클래스명 */
@@ -101,9 +101,7 @@ export const AirportRoute: React.FC<AirportRouteProps> = ({
             {group.route && (
               <div className={styles.airportStepGroup}>
                 <RouteChip variant={routeVariant}>{group.route.label}</RouteChip>
-                {group.destination && (
-                  <span className={styles.airportDestinationText}>{group.destination}</span>
-                )}
+                {group.destination && <span className={styles.airportDestinationText}>{group.destination}</span>}
               </div>
             )}
             {!group.route && group.destination && (
