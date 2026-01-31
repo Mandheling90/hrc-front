@@ -43,6 +43,8 @@ export interface TableProps<T = any> {
   scrollWithHeader?: boolean
   /** 행이 하이라이트되어야 하는지 확인하는 함수 */
   isHighlighted?: (item: T, index: number) => boolean
+  /** 헤더 숨김 여부 (기본값: false) */
+  hideHeader?: boolean
 }
 
 export function Table<T>({
@@ -55,7 +57,8 @@ export function Table<T>({
   className = '',
   defaultTextOverflow = 'wrap',
   scrollWithHeader = false,
-  isHighlighted
+  isHighlighted,
+  hideHeader = false
 }: TableProps<T>) {
   // 기본 셀 렌더링
   const renderCell = (column: TableColumn<T>, item: T, index: number) => {
@@ -79,29 +82,31 @@ export function Table<T>({
           style={scrollableHeight ? { maxHeight: scrollableHeight === '100%' ? '100%' : scrollableHeight } : undefined}
         >
           {/* 데스크톱/태블릿: 테이블 헤더 */}
-          <div className={styles.tableHeader}>
-            {columns.map((column, index) => {
-              const textOverflow = column.textOverflow || defaultTextOverflow
-              const isFlexGrow = column.width === '1fr'
-              return (
-                <React.Fragment key={column.id}>
-                  <div
-                    className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
-                      textOverflow === 'ellipsis' ? styles.ellipsis : ''
-                    } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''}`}
-                    style={
-                      isFlexGrow
-                        ? { flex: '1 1 0', textAlign: column.align || 'center' }
-                        : { width: column.width, textAlign: column.align || 'center' }
-                    }
-                  >
-                    {column.label}
-                  </div>
-                  {index < columns.length - 1 && <div className={styles.separator}></div>}
-                </React.Fragment>
-              )
-            })}
-          </div>
+          {!hideHeader && (
+            <div className={styles.tableHeader}>
+              {columns.map((column, index) => {
+                const textOverflow = column.textOverflow || defaultTextOverflow
+                const isFlexGrow = column.width === '1fr'
+                return (
+                  <React.Fragment key={column.id}>
+                    <div
+                      className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                        textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                      } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''}`}
+                      style={
+                        isFlexGrow
+                          ? { flex: '1 1 0', textAlign: column.align || 'center' }
+                          : { width: column.width, textAlign: column.align || 'center' }
+                      }
+                    >
+                      {column.label}
+                    </div>
+                    {index < columns.length - 1 && <div className={styles.separator}></div>}
+                  </React.Fragment>
+                )
+              })}
+            </div>
+          )}
 
           {/* 데스크톱/태블릿: 테이블 본문 */}
           <div className={`${styles.tableBody} ${styles.noScroll}`}>
@@ -144,29 +149,31 @@ export function Table<T>({
         /* 기본: 본문만 스크롤 */
         <>
           {/* 데스크톱/태블릿: 테이블 헤더 */}
-          <div className={styles.tableHeader}>
-            {columns.map((column, index) => {
-              const textOverflow = column.textOverflow || defaultTextOverflow
-              const isFlexGrow = column.width === '1fr'
-              return (
-                <React.Fragment key={column.id}>
-                  <div
-                    className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
-                      textOverflow === 'ellipsis' ? styles.ellipsis : ''
-                    } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''}`}
-                    style={
-                      isFlexGrow
-                        ? { flex: '1 1 0', textAlign: column.align || 'center' }
-                        : { width: column.width, textAlign: column.align || 'center' }
-                    }
-                  >
-                    {column.label}
-                  </div>
-                  {index < columns.length - 1 && <div className={styles.separator}></div>}
-                </React.Fragment>
-              )
-            })}
-          </div>
+          {!hideHeader && (
+            <div className={styles.tableHeader}>
+              {columns.map((column, index) => {
+                const textOverflow = column.textOverflow || defaultTextOverflow
+                const isFlexGrow = column.width === '1fr'
+                return (
+                  <React.Fragment key={column.id}>
+                    <div
+                      className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ''} ${
+                        textOverflow === 'ellipsis' ? styles.ellipsis : ''
+                      } ${textOverflow === 'scroll' ? styles.scroll : ''} ${isFlexGrow ? styles.flexGrow : ''}`}
+                      style={
+                        isFlexGrow
+                          ? { flex: '1 1 0', textAlign: column.align || 'center' }
+                          : { width: column.width, textAlign: column.align || 'center' }
+                      }
+                    >
+                      {column.label}
+                    </div>
+                    {index < columns.length - 1 && <div className={styles.separator}></div>}
+                  </React.Fragment>
+                )
+              })}
+            </div>
+          )}
 
           {/* 데스크톱/태블릿: 테이블 본문 */}
           <div
