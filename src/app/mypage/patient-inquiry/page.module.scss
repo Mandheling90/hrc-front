@@ -1,0 +1,850 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+  padding-bottom: 80px;
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -1.92px;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 80px;
+
+  @include tablet {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: 48px;
+  }
+
+  @include mobile {
+    font-size: 36px;
+    letter-spacing: -1.44px;
+    margin-bottom: 32px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+
+  @include tablet {
+    gap: 48px;
+  }
+
+  @include mobile {
+    gap: 40px;
+  }
+}
+
+// 안내 문구 섹션
+.noticeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.noticeItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.noticeBadge {
+  width: 16px;
+  height: 16px;
+  background-color: $color-secondary;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-white;
+  flex-shrink: 0;
+}
+
+.noticeText {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-12;
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+// 검색/조회 카드
+.searchCard {
+  padding: 40px;
+  background-color: $color-white;
+  border-radius: 20px;
+  border: 1px solid $gray-9;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  @include tablet {
+    padding: 20px;
+    gap: 56px;
+  }
+
+  @include mobile {
+    padding: 20px;
+    gap: 24px;
+  }
+}
+
+.searchCardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.searchTitleWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchTitle {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-primary;
+  margin: 0;
+
+  @include tablet {
+    font-size: 28px;
+  }
+
+  @include mobile {
+    font-size: 24px;
+  }
+}
+
+.searchSubtitle {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.64px;
+  color: $gray-11;
+  margin: 0;
+  display: none;
+
+  @include mobile {
+    display: block;
+    font-size: 16px;
+  }
+}
+
+.dividerLine {
+  width: 100%;
+  height: 2px;
+  background-color: $gray-8;
+}
+
+.searchContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filterRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterRowInline {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.filterLabel {
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+.filterRowContent {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+// 데스크톱/태블릿: 날짜 먼저, 라디오 나중 (CSS order로 조정)
+// 모바일: 라디오 먼저, 날짜 나중 (HTML 순서 유지)
+
+.dateRangeGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  order: 0; // 데스크톱에서 먼저
+
+  @include tablet {
+    order: 1; // 태블릿에서 나중 (라디오 버튼 다음)
+    width: 100%;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    order: 1; // 모바일에서 나중
+    width: 100%;
+  }
+}
+
+// 모바일에서 날짜 구분자 숨기기
+.dateSeparatorHidden {
+  @include mobile {
+    display: none;
+  }
+}
+
+.dateInputWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+  max-width: 220px;
+
+  @include tablet {
+    max-width: 100%;
+  }
+
+  @include mobile {
+    max-width: 100%;
+  }
+
+  input {
+    padding-right: 40px;
+
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+  }
+}
+
+.calendarIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: $gray-9;
+}
+
+.dateSeparator {
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-9;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.periodRadio {
+  order: 1; // 데스크톱에서 나중
+
+  @include tablet {
+    order: 0; // 태블릿에서 먼저 (날짜 입력 위)
+  }
+
+  @include mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    order: 0; // 모바일에서 먼저
+
+    // 라디오 버튼 항목 너비 고정
+    label {
+      width: 132px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.sortRadio {
+  @include mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+
+    // 첫 두 개 라디오 버튼 (최신 순, 오래된 순)은 한 줄에 절반씩
+    label:nth-child(1),
+    label:nth-child(2) {
+      flex: 1 1 0;
+    }
+
+    // 세 번째 라디오 버튼 (환자명 순)은 다음 줄에
+    label:nth-child(3) {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+.searchInputGroup {
+  display: flex;
+  gap: 8px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.searchTypeSelect {
+  flex-shrink: 0;
+  width: 320px;
+
+  @include tablet {
+    width: 160px;
+  }
+
+  @include mobile {
+    width: 100% !important;
+  }
+}
+
+.searchFieldWrapper {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.searchInput {
+  width: 507px;
+  flex-shrink: 0;
+
+  @include tablet {
+    width: auto;
+    flex: 1;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.searchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 15px;
+  border-radius: 5px;
+  white-space: nowrap;
+  align-self: stretch;
+
+  span {
+    font-size: 20px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5;
+
+    @include tablet {
+      font-size: 18px;
+    }
+
+    @include mobile {
+      font-size: 18px;
+    }
+  }
+
+  @include mobile {
+    justify-content: center;
+    width: 100%;
+    padding: 8px 15px;
+  }
+}
+
+// 의뢰환자 목록 섹션
+.listSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.listInfo {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+
+  @include mobile {
+    align-self: flex-start;
+  }
+}
+
+.consultBadgeLarge {
+  width: 16px;
+  height: 16px;
+  background-color: $color-secondary;
+  border-radius: 50%;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: $color-white;
+    border-radius: 50%;
+  }
+}
+
+.listInfoText {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-10;
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+.tableWrapper {
+  position: relative;
+  overflow-x: auto;
+}
+
+.patientTable {
+  min-width: 1200px;
+
+  // 태블릿에서 테이블 숨기기
+  @include tablet {
+    :global(.tableHeader),
+    :global(.tableBody) {
+      display: none;
+    }
+
+    :global(.mobileCardList) {
+      display: flex;
+    }
+  }
+
+  :global(.tableHeader),
+  :global(.tableRow) {
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid $gray-9;
+  }
+
+  :global(.tableHeader) {
+    background-color: $gray-2;
+  }
+
+  :global(.tableRow) {
+    background-color: $color-white;
+  }
+
+  :global(.headerCell),
+  :global(.dataCell) {
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+
+    @include tablet {
+      font-size: 18px;
+    }
+  }
+
+  :global(.headerCell) {
+    font-weight: $font-weight-semibold;
+    color: $gray-12;
+  }
+
+  :global(.dataCell) {
+    font-weight: $font-weight-normal;
+    color: $gray-11;
+  }
+
+  :global(.separator) {
+    align-self: center;
+    height: 18px;
+  }
+
+}
+
+// 만료된 행 스타일
+.expiredRow {
+  position: relative;
+  background-color: $color-white !important;
+  border-color: $gray-11 !important;
+
+  // 모든 데이터 셀 회색 처리
+  :global(.dataCell) {
+    color: $gray-11 !important;
+  }
+
+  // 블라인드 오버레이 레이어 (정보공개 동의여부 ~ 회신서 조회 영역만 덮음)
+  // 80px + 110px + 120px + 120px + separator 간격
+  &::after {
+    content: '조회기간 만료';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 450px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5;
+    letter-spacing: -0.8px;
+    color: $color-white;
+    pointer-events: none;
+
+    @include mobile {
+      width: 250px;
+      font-size: 16px;
+    }
+  }
+}
+
+// 진료의 셀
+.doctorCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.consultable {
+  color: $color-primary;
+  text-decoration: underline;
+}
+
+.doctorConsultable {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $color-primary;
+  text-decoration: underline;
+}
+
+.consultBadge {
+  width: 16px;
+  height: 16px;
+  background-color: $color-secondary;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: $color-white;
+    border-radius: 50%;
+  }
+}
+
+// Y/N 상태
+.statusY {
+  color: $color-primary;
+}
+
+// 조회 버튼
+.viewBtn {
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  min-width: 100px;
+
+  @include tablet {
+    font-size: 18px;
+    min-width: 80px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    min-width: 70px;
+    padding: 4px 8px;
+  }
+}
+
+// 페이지네이션
+.pagination {
+  margin-top: 40px;
+  justify-content: center;
+
+  @include tablet {
+    margin-top: 24px;
+  }
+
+  @include mobile {
+    margin-top: 20px;
+  }
+}
+
+// 태블릿/모바일 카드 리스트 스타일
+.patientCardList {
+  // 카드 내부 섹션 구분 (나이 뒤, 진료의 뒤, 약처방내역 뒤에 여백)
+  :global(.card) {
+    // 나이 행 뒤에 여백 (환자 기본 정보 섹션 끝)
+    > div:nth-child(4) {
+      margin-bottom: 8px;
+    }
+
+    // 진료의 행 뒤에 여백 (진료 정보 섹션 끝)
+    > div:nth-child(7) {
+      margin-bottom: 8px;
+    }
+
+    // 약처방내역 행 뒤에 여백 (동의 정보 섹션 끝)
+    > div:nth-child(9) {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+// 태블릿/모바일 카드 스타일
+.patientCard {
+  padding: 15px;
+  background-color: $color-white;
+  border-radius: 10px;
+  border: 1px solid $gray-9;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.cardHeader {
+  padding: 5px;
+  background-color: $gray-4;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardHeaderLabel {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+}
+
+.cardHeaderValue {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+}
+
+.cardBody {
+  padding: 0 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardColumns {
+  display: flex;
+  gap: 40px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.cardColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardLabel {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+.cardValue {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+.cardValuePrimary {
+  color: $color-primary;
+}
+
+.cardDoctorValue {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cardButtonRow {
+  display: flex;
+  gap: 40px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.cardButtonItem {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardViewBtn {
+  width: 100px;
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+// 만료된 카드 스타일
+.expiredCard {
+  border-color: $gray-11;
+  position: relative;
+  overflow: hidden;
+
+  // 기존 클래스 호환
+  .cardHeaderValue,
+  .cardValue {
+    color: $gray-11;
+  }
+
+  .cardValuePrimary {
+    color: $gray-11;
+  }
+
+  // CardList InfoRowContent 클래스 대응
+  :global(.infoValue),
+  :global(.infoValueAccent) {
+    color: $gray-11 !important;
+  }
+
+  // 만료 오버레이
+  &::after {
+    content: '조회기간 만료';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 183px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5;
+    color: $color-white;
+    pointer-events: none;
+
+    @include tablet {
+      height: 163px;
+    }
+    @include mobile {
+      height: 153px;
+    }
+  }
+}
+
+.cardExpiredOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 183px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-white;
+}

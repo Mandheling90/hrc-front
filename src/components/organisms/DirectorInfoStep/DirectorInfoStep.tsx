@@ -10,6 +10,7 @@ import { CalendarIcon } from '@/components/icons/CalendarIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import { DirectorFormData, DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import styles from './DirectorInfoStep.module.scss'
+import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 
 export interface DirectorInfoStepProps {
   /** 현재 스텝 번호 */
@@ -120,10 +121,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
             value=''
             onChange={() => {}}
           />
-          <div className={styles.helperText}>
-            <InfoIcon width={24} height={24} fill='var(--gray-11)' />
-            <span>무료 주차등록 희망시, 하단 차량등록증 첨부 필요.</span>
-          </div>
+
+          <InfoNote message='무료 주차등록 희망시, 하단 차량등록증 첨부 필요.' />
         </div>
 
         {/* 이메일 */}

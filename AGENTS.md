@@ -262,6 +262,9 @@ export * from './templates'
 
 ## Development Workflow
 
+> **⚠️ 빌드 검증 관련 주의사항:**
+> 작업 완료 후 `npm run build`를 자동으로 실행하지 마세요. 빌드 시간이 오래 걸리므로 사용자가 커밋 직전에 직접 수행합니다.
+
 1. **Before coding:**
    - Run `npm run dev` to start development server
    - Check existing patterns in similar components
@@ -275,6 +278,7 @@ export * from './templates'
    - Run `npm run lint`
    - Run `npx tsc --noEmit` for type checking
    - Ensure all imports are correct
+   - **빌드 검증은 사용자가 직접 수행** (에이전트가 자동으로 실행하지 않음)
 
 4. **After changes:**
    - Test the functionality thoroughly
@@ -306,3 +310,101 @@ When adding tests, follow these patterns:
 - E2E tests for critical paths
 
 Use testing frameworks compatible with Next.js 15 and React 19.
+
+---
+
+## 공용 컴포넌트 레퍼런스
+
+> **중요:** UI 구현 시 반드시 기존 공용 컴포넌트를 먼저 확인하고 사용하세요. 새 컴포넌트 생성 전에 아래 목록을 검토하세요.
+
+### Atoms (기본 UI 요소)
+
+| 컴포넌트 | 경로 | 용도 | 주요 Props |
+|---------|------|------|-----------|
+| **Button** | `atoms/Button` | 버튼 | `variant`: 'primary' \| 'secondary' \| 'outline' \| 'gray', `size`: 'small' \| 'medium' \| 'large', `fullWidth`, `pill` |
+| **Input** | `atoms/Input` | 입력 필드 | `label`, `error`, `width` |
+| **Select** | `atoms/Select` | 드롭다운 선택 | `options: {value, label}[]`, `value`, `onChange`, `placeholder`, `width` |
+| **Checkbox** | `atoms/Checkbox` | 체크박스 | `checked`, `onChange`, `label`, `minWidth`, `alwaysDark` |
+| **Radio** | `atoms/Radio` | 라디오 버튼 그룹 | `name`, `value`, `options: {value, label}[]`, `onChange`, `minWidth` |
+| **Textarea** | `atoms/Textarea` | 텍스트 영역 | `label`, `error`, `borderless`, `disableFocusHighlight` |
+| **InputLabel** | `atoms/InputLabel` | 입력 라벨 | `htmlFor`, `required`, `children` |
+| **StatusBadge** | `atoms/StatusBadge` | 상태 뱃지 | `variant`: 'waiting' \| 'expired' \| 'completed' |
+| **ScrollableBox** | `atoms/ScrollableBox` | 스크롤 박스 | `maxHeight`, `padding`, `hasBorder`, `hasBackground` |
+| **RouteChip** | `atoms/RouteChip` | 노선 칩 (버스/지하철) | `variant`: 'blue' \| 'deepblue' \| 'green' \| 'red' \| 'yellow', `size`: 'small' \| 'large' |
+
+### Molecules (Atoms 조합)
+
+| 컴포넌트 | 경로 | 용도 | 주요 Props |
+|---------|------|------|-----------|
+| **Table** | `molecules/Table` | 데이터 테이블 | `columns`, `data`, `getRowKey`, `onRowClick`, `scrollableHeight`, `renderMobileCard` |
+| **Pagination** | `molecules/Pagination` | 페이지네이션 | `currentPage`, `totalPages`, `onPageChange`, `maxVisiblePages` |
+| **AlertModal** | `molecules/AlertModal` | 알림 모달 | `isOpen`, `message`, `onClose`, `closeButtonText`, `closeOnBackdropClick` |
+| **Breadcrumbs** | `molecules/Breadcrumbs` | 경로 네비게이션 | `items: {label, href?, icon?}[]` |
+| **FormField** | `molecules/FormField` | 폼 필드 (라벨+인풋+버튼) | `label`, `required`, `id`, `name`, `value`, `onChange`, `buttonText`, `onButtonClick`, `rightElement` |
+| **SectionTitle** | `molecules/SectionTitle` | 섹션 제목 (아이콘 포함) | `title`, `showIcon`, `size`: 'default' \| 'small', `noMargin` |
+| **InfoNote** | `molecules/InfoNote` | 안내 메시지 (아이콘 포함) | `message` |
+| **CardList** | `molecules/CardList` | 카드 목록 | `cards: CardRow[][]`, `getCardKey`, `scrollableHeight`, `columns`, `onCardClick`, `variant` |
+| **SearchFilterWithInfo** | `molecules/SearchFilterWithInfo` | 검색 필터 + 안내 | `selectOptions`, `searchValue`, `onSearch`, `infoMessage` |
+| **ProgressSteps** | `molecules/ProgressSteps` | 진행 단계 표시 | `steps: {id, label}[]`, `currentStep` |
+| **SectionContainer** | `molecules/SectionContainer` | 섹션 래퍼 (구분선 자동) | `header`, `children`, `scrollable` |
+| **SectionHeader** | `molecules/SectionHeader` | 섹션 헤더 | `title`, `subtitle` |
+| **LabelInputRow** | `molecules/LabelInputRow` | 라벨 + 인풋 행 | `labelType`: 'checkbox' \| 'text', `textLabel`, `inputId`, `value`, `onInputChange` |
+| **CheckboxGroup** | `molecules/CheckboxGroup` | 체크박스 그룹 | `options: CheckboxOption[]`, `minWidth`, `gap`, `keepSingleRow` |
+| **AddressField** | `molecules/AddressField` | 주소 입력 필드 | 주소 검색 + 상세주소 입력 |
+| **DoctorCard** | `molecules/DoctorCard` | 의사 정보 카드 | 의사 프로필 표시용 |
+| **ClinicCard** | `molecules/ClinicCard` | 의원 정보 카드 | 의원 정보 표시용 |
+| **WeekSelector** | `molecules/WeekSelector` | 주간 선택기 | 날짜/주 선택용 |
+| **PrevNextNavigation** | `molecules/PrevNextNavigation` | 이전/다음 네비게이션 | 페이지 이동용 |
+
+### Organisms (복잡한 UI 섹션)
+
+| 컴포넌트 | 경로 | 용도 |
+|---------|------|------|
+| **Header** | `organisms/Header` | 사이트 헤더 |
+| **Footer** | `organisms/Footer` | 사이트 푸터 |
+| **LoginForm** | `organisms/LoginForm` | 로그인 폼 |
+| **SignupForm** | `organisms/SignupForm` | 회원가입 폼 |
+| **FindUserForm** | `organisms/FindUserForm` | 아이디/비밀번호 찾기 폼 |
+| **ResetPasswordForm** | `organisms/ResetPasswordForm` | 비밀번호 재설정 폼 |
+
+### Icons
+
+`src/components/icons/` 디렉토리에 70개 이상의 아이콘 컴포넌트가 있습니다.
+
+**자주 사용하는 아이콘:**
+- `SearchIcon`, `CheckIcon`, `CloseIcon`, `InfoIcon`, `WarningIcon`
+- `ChevronLeftIcon`, `ChevronRightIcon`, `ChevronDownIcon`, `ChevronUpIcon`
+- `ArrowRightIcon`, `ArrowDownIcon`, `DownloadIcon`
+- `PhoneIcon`, `FaxIcon`, `CalendarIcon`, `HomeIcon`
+- `DoctorIcon`, `PatientIcon`, `DocumentIcon`
+
+### 사용 예시
+
+```typescript
+// Atoms 사용
+import { Button } from '@/components/atoms/Button/Button'
+import { Input } from '@/components/atoms/Input/Input'
+import { Select } from '@/components/atoms/Select/Select'
+
+// Molecules 사용
+import { Table } from '@/components/molecules/Table/Table'
+import { Pagination } from '@/components/molecules/Pagination/Pagination'
+import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+
+// Icons 사용
+import { SearchIcon } from '@/components/icons/SearchIcon'
+import { CheckIcon } from '@/components/icons/CheckIcon'
+```
+
+### 컴포넌트 선택 가이드
+
+1. **버튼이 필요하면** → `Button` (variant로 스타일 조정)
+2. **입력 필드가 필요하면** → `Input`, `Select`, `Textarea`, `Checkbox`, `Radio`
+3. **테이블이 필요하면** → `Table` + `Pagination`
+4. **카드 목록이 필요하면** → `CardList`
+5. **모달/알림이 필요하면** → `AlertModal`
+6. **폼 필드(라벨+인풋+버튼)가 필요하면** → `FormField`
+7. **섹션 제목이 필요하면** → `SectionTitle` 또는 `SectionHeader`
+8. **안내 메시지가 필요하면** → `InfoNote`
+9. **검색 필터가 필요하면** → `SearchFilterWithInfo`
+10. **단계 표시가 필요하면** → `ProgressSteps`

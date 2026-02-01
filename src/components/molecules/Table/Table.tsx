@@ -43,6 +43,8 @@ export interface TableProps<T = any> {
   scrollWithHeader?: boolean
   /** 행이 하이라이트되어야 하는지 확인하는 함수 */
   isHighlighted?: (item: T, index: number) => boolean
+  /** 하이라이트된 행에 적용할 추가 클래스명 */
+  highlightedClassName?: string
   /** 헤더 숨김 여부 (기본값: false) */
   hideHeader?: boolean
 }
@@ -58,6 +60,7 @@ export function Table<T>({
   defaultTextOverflow = 'wrap',
   scrollWithHeader = false,
   isHighlighted,
+  highlightedClassName = '',
   hideHeader = false
 }: TableProps<T>) {
   // 기본 셀 렌더링
@@ -115,7 +118,7 @@ export function Table<T>({
               return (
                 <div
                   key={getRowKey(item, rowIndex)}
-                  className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''} ${highlighted ? styles.highlighted : ''}`}
+                  className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''} ${highlighted ? `${styles.highlighted} ${highlightedClassName}` : ''}`}
                   onClick={() => onRowClick?.(item, rowIndex)}
                 >
                   {columns.map((column, colIndex) => {
@@ -185,7 +188,7 @@ export function Table<T>({
               return (
                 <div
                   key={getRowKey(item, rowIndex)}
-                  className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''} ${highlighted ? styles.highlighted : ''}`}
+                  className={`${styles.tableRow} ${onRowClick ? styles.clickable : ''} ${highlighted ? `${styles.highlighted} ${highlightedClassName}` : ''}`}
                   onClick={() => onRowClick?.(item, rowIndex)}
                 >
                   {columns.map((column, colIndex) => {

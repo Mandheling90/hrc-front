@@ -4,6 +4,7 @@ import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import styles from './SearchFilterWithInfo.module.scss'
+import { InfoNote } from '../InfoNote/InfoNote'
 
 interface Option {
   value: string
@@ -84,12 +85,7 @@ export const SearchFilterWithInfo: React.FC<SearchFilterWithInfoProps> = ({
         </div>
       </div>
 
-      {hasInfo && (
-        <div className={styles.infoMessage}>
-          <InfoIcon width={24} height={24} />
-          <span>{infoMessage}</span>
-        </div>
-      )}
+      {hasInfo && <InfoNote message={infoMessage} />}
     </div>
   )
 }

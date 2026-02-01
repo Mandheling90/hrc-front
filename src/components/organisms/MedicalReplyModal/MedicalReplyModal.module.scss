@@ -1,0 +1,442 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+  padding: 20px;
+}
+
+.modal {
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  box-shadow: 0 0 39px rgba(0, 0, 0, 0.35);
+  width: 100%;
+  max-width: 1280px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px;
+
+  @include tablet {
+    max-width: 668px;
+    padding: 40px;
+    gap: 40px;
+  }
+
+  @include mobile {
+    max-width: 320px;
+    padding: 20px;
+    gap: 24px;
+  }
+}
+
+// 헤더
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $gray-8;
+
+  @include mobile {
+    align-items: flex-start;
+  }
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 20px;
+  background-color: $color-primary;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-white;
+
+  @include tablet {
+    font-size: 20px;
+    padding: 4px 20px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    padding: 4px 16px;
+  }
+}
+
+.title {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -1.28px;
+  color: $gray-12;
+  margin: 0;
+
+  @include tablet {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+
+  @include mobile {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+}
+
+.closeBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $gray-11;
+  padding: 0;
+
+  &:hover {
+    color: $gray-12;
+  }
+}
+
+// 본문
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  @include mobile {
+    gap: 32px;
+  }
+}
+
+// 안내 문구 박스
+.noticeBox {
+  background-color: #fdf9f4;
+  border: 1px solid #dbbf93;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+
+  @include tablet {
+    padding: 20px;
+  }
+
+  @include mobile {
+    padding: 20px;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: $font-weight-normal;
+    line-height: 1.5;
+    letter-spacing: -0.8px;
+    color: #816331;
+    margin: 0;
+
+    @include tablet {
+      font-size: 18px;
+      letter-spacing: -0.72px;
+    }
+
+    @include mobile {
+      font-size: 18px;
+      letter-spacing: -0.72px;
+    }
+  }
+}
+
+// 섹션 (환자 및 의뢰정보)
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionIcon {
+  width: 21px;
+  height: 21px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  color: $gray-12;
+  margin: 0;
+
+  @include tablet {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+}
+
+// 정보 그리드
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoGridRow {
+  display: flex;
+  gap: 8px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.infoRow {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 20px;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+
+  &.fullWidth {
+    flex: 1 1 100%;
+  }
+}
+
+.infoLabel {
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-12;
+
+  @include tablet {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.infoDivider {
+  width: 0;
+  height: 18px;
+  border-left: 1px solid $gray-11;
+}
+
+.infoValue {
+  flex: 1;
+  font-size: 20px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+  text-align: right;
+
+  @include tablet {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+// 진료소견 & 경과 요약 섹션
+.opinionSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opinionHeader {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #fef8f8;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+}
+
+.opinionTitle {
+  flex: 1;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  color: $gray-12;
+  margin: 0;
+
+  @include tablet {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+}
+
+.opinionContent {
+  padding: 40px;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  overflow: hidden;
+
+  @include tablet {
+    padding: 20px;
+  }
+
+  @include mobile {
+    padding: 20px;
+  }
+}
+
+.opinionText {
+  font-size: 20px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-12;
+  margin: 0;
+  white-space: pre-wrap;
+
+  @include tablet {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+// 작성일자
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 20px;
+  background-color: $gray-2;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+}
+
+.dateLabel {
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-12;
+
+  @include tablet {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.dateDivider {
+  width: 0;
+  height: 18px;
+  border-left: 1px solid $gray-11;
+}
+
+.dateValue {
+  flex: 1;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  color: $gray-12;
+  text-align: right;
+
+  @include tablet {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+}
+
+// 병원 서명
+.signature {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.signatureLogo {
+  width: 300px;
+  height: auto;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  @include mobile {
+    width: 240px;
+  }
+}

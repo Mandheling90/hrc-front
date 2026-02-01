@@ -11,6 +11,7 @@ import { ClinicCard } from '@/components/molecules/ClinicCard/ClinicCard'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import styles from './page.module.scss'
 import { InfoIcon } from '@/components/icons/InfoIcon'
+import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 
 // 임시 데이터 타입
 interface ClinicData {
@@ -232,10 +233,8 @@ export default function ClinicStatusPage() {
           {/* 지도 및 병의원 리스트 */}
           <div className={styles.contentSection}>
             {/* 위치 기반 검색 안내 */}
-            <div className={styles.locationInfo}>
-              <InfoIcon width={24} height={24} fill='var(--gray-11)' />
-              <p>현재 내 위치에서 가장 가까운 병의원이 검색됩니다.</p>
-            </div>
+
+            <InfoNote message='현재 내 위치에서 가장 가까운 병의원이 검색됩니다.' />
 
             {/* 지도와 카드 영역 */}
             <div className={styles.mapAndListContainer}>

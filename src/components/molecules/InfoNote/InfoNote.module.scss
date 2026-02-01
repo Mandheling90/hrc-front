@@ -4,16 +4,30 @@
 .infoNote {
   margin-top: $spacing-4;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: $spacing-2;
   font-size: $font-size-lg;
-  color: $gray-11;
+  color: $gray-10;
 
   svg {
     flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
   @include mobile {
     font-size: $font-size-base;
+    align-items: flex-start;
+
+    span {
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
   }
 }

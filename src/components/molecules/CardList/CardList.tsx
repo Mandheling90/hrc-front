@@ -9,11 +9,21 @@ export interface CardRow {
   /** 왼쪽에 표시할 내용 */
   leftContent: React.ReactNode
   /** 오른쪽에 표시할 내용 */
-  rightContent: React.ReactNode
+  rightContent?: React.ReactNode
   /** 강조 표시 여부 (회색 배경 적용) */
   highlighted?: boolean
   /** 모바일에서 두 줄로 표시 여부 (라벨 위, 값 아래) */
   twoLine?: boolean
+  /** 인포 행 여부 (두 컬럼 레이아웃, 각 컬럼에 라벨-값 쌍) */
+  infoRow?: boolean
+}
+
+/** 인포 행에서 사용할 라벨-값 쌍 데이터 */
+export interface InfoRowItem {
+  label: string
+  value: React.ReactNode
+  /** 값에 강조 색상(primary) 적용 여부 */
+  accent?: boolean
 }
 
 export interface CardListProps {
@@ -31,7 +41,17 @@ export interface CardListProps {
   onCardClick?: (cardIndex: number) => void
   /** 각 카드의 클래스명을 반환하는 함수 */
   getCardClassName?: (card: CardRow[], index: number) => string
+  /** 카드 변형 (기본: default, infoCard: 의뢰환자 조회 스타일) */
+  variant?: 'default' | 'infoCard'
 }
+
+/** 인포 행 컴포넌트 - 라벨과 값을 표시 */
+export const InfoRowContent: React.FC<InfoRowItem> = ({ label, value, accent }) => (
+  <div className={styles.infoRowContent}>
+    <span className={styles.infoLabel}>{label}</span>
+    <span className={`${styles.infoValue} ${accent ? styles.infoValueAccent : ''}`}>{value}</span>
+  </div>
+)
 
 export const CardList: React.FC<CardListProps> = ({
   cards,
@@ -40,8 +60,11 @@ export const CardList: React.FC<CardListProps> = ({
   className = '',
   columns,
   onCardClick,
-  getCardClassName
+  getCardClassName,
+  variant = 'default'
 }) => {
+  const isInfoCard = variant === 'infoCard'
+
   return (
     <div
       className={`${styles.cardList} ${columns ? styles.grid : ''} ${className}`}
@@ -56,16 +79,22 @@ export const CardList: React.FC<CardListProps> = ({
       {cards.map((cardRows, cardIndex) => (
         <div
           key={getCardKey(cardRows, cardIndex)}
-          className={`${styles.card} card ${onCardClick ? styles.clickable : ''} ${getCardClassName ? getCardClassName(cardRows, cardIndex) : ''}`}
+          className={`${styles.card} ${isInfoCard ? styles.infoCard : ''} card ${onCardClick ? styles.clickable : ''} ${getCardClassName ? getCardClassName(cardRows, cardIndex) : ''}`}
           onClick={() => onCardClick?.(cardIndex)}
         >
           {cardRows.map(row => (
             <div
               key={row.id}
-              className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''} ${!row.rightContent ? styles.singleContent : ''}`}
+              className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''} ${row.infoRow ? styles.infoRow : ''} ${!row.rightContent ? styles.singleContent : ''}`}
             >
-              <div className={styles.cardLeft}>{row.leftContent}</div>
-              {row.rightContent && <div className={styles.cardRight}>{row.rightContent}</div>}
+              <div className={`${styles.cardLeft} ${row.infoRow ? styles.infoColumn : ''}`}>
+                {row.leftContent}
+              </div>
+              {row.rightContent && (
+                <div className={`${styles.cardRight} ${row.infoRow ? styles.infoColumn : ''}`}>
+                  {row.rightContent}
+                </div>
+              )}
             </div>
           ))}
         </div>
