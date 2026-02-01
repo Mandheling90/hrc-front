@@ -1,0 +1,659 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.container {
+  width: 100%;
+  max-width: 1430px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+
+  @include tablet {
+    max-width: 100%;
+    padding: 0 40px 60px;
+  }
+
+  @include mobile {
+    padding: 0 20px 40px;
+  }
+}
+
+.pageTitle {
+  font-size: 48px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+  text-align: center;
+  margin: 0 0 80px;
+
+  @include tablet {
+    font-size: 36px;
+    margin-bottom: 60px;
+  }
+
+  @include mobile {
+    font-size: 36px;
+    margin-bottom: 32px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  @include tablet {
+    gap: 40px;
+  }
+
+  @include mobile {
+    gap: 32px;
+  }
+}
+
+// 상단 섹션
+.topSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.listButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.listButton {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 20px;
+  background-color: $color-white;
+  border: 1px solid $gray-6;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-9;
+
+  &:hover {
+    background-color: $gray-2;
+  }
+
+  svg {
+    color: $gray-11;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    padding: 6px 16px;
+    gap: 12px;
+  }
+}
+
+// 카드 컨테이너
+.cardsContainer {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+
+  @include tablet {
+    flex-direction: column;
+  }
+}
+
+// 환자진료정보 카드
+.patientInfoCard {
+  flex: 1;
+  padding: 40px;
+  background-color: #fdf9f4;
+  border: 1px solid $color-secondary;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  @include tablet {
+    padding: 20px;
+    gap: 24px;
+  }
+
+  @include mobile {
+    padding: 20px;
+    gap: 24px;
+
+    // 모바일에서 기본적으로 접힌 상태
+    .patientInfoGrid {
+      display: none;
+    }
+
+    .cardDivider {
+      display: none;
+    }
+
+    &.open {
+      .patientInfoGrid {
+        display: flex;
+      }
+
+      .cardDivider {
+        display: block;
+      }
+    }
+  }
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleButton {
+  display: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background-color: $gray-4;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: $gray-11;
+  }
+
+  @include mobile {
+    display: flex;
+  }
+}
+
+.cardTitle {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-primary;
+  margin: 0;
+
+  @include tablet {
+    font-size: 24px;
+  }
+
+  @include mobile {
+    font-size: 24px;
+  }
+}
+
+.cardDivider {
+  width: 100%;
+  height: 2px;
+  background-color: #e6cfad;
+}
+
+.patientInfoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 8px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.infoItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: $color-white;
+  border: 1px solid #e9b0b2;
+  border-radius: 10px;
+
+  @include mobile {
+    padding: 10px 16px;
+  }
+}
+
+.infoLabel {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+
+  @include tablet {
+    font-size: 18px;
+    padding: 5px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    padding: 5px;
+  }
+}
+
+.infoDivider {
+  width: 0;
+  height: 40px;
+  border-left: 1px solid #e9b0b2;
+
+  @include mobile {
+    height: 30px;
+  }
+}
+
+.infoValue {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-primary;
+
+  @include tablet {
+    font-size: 18px;
+    padding: 5px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    padding: 5px;
+  }
+}
+
+// 검색/조회 카드
+.searchCard {
+  flex: 1;
+  padding: 40px;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  @include tablet {
+    padding: 20px;
+    gap: 24px;
+  }
+
+  @include mobile {
+    padding: 20px;
+    gap: 32px;
+
+    // 모바일에서 기본적으로 접힌 상태
+    .searchContent {
+      display: none;
+    }
+
+    .cardDivider {
+      display: none;
+    }
+
+    &.open {
+      .searchContent {
+        display: flex;
+      }
+
+      .cardDivider {
+        display: block;
+      }
+    }
+  }
+
+  .cardDivider {
+    background-color: $gray-8;
+  }
+}
+
+.searchCardTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.searchCardTitle {
+  font-size: 28px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-primary;
+  margin: 0;
+
+  @include tablet {
+    font-size: 20px;
+  }
+
+  @include mobile {
+    font-size: 20px;
+  }
+}
+
+.searchCardSubtitle {
+  font-size: 16px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+  margin: 0;
+
+  @include mobile {
+    font-size: 14px;
+  }
+}
+
+.searchContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.searchField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fieldLabel {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+.periodWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dateRangeGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.dateInput {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 5px;
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: $font-weight-normal;
+    line-height: 1.5;
+    color: $gray-9;
+    background: transparent;
+    width: 100%;
+
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+
+  svg {
+    color: $gray-9;
+    flex-shrink: 0;
+  }
+}
+
+.dateSeparator {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-9;
+
+  @include mobile {
+    text-align: center;
+  }
+}
+
+.searchCategorySelect {
+  display: none;
+  width: 120px;
+  flex-shrink: 0;
+
+  @include tablet {
+    display: block;
+  }
+
+  @include mobile {
+    display: block;
+    width: 100%;
+  }
+}
+
+.searchInputWrapper {
+  display: flex;
+  gap: 8px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+
+  > div:nth-child(2) {
+    flex: 1;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5;
+    white-space: nowrap;
+
+    @include mobile {
+      padding: 8px 15px;
+    }
+  }
+}
+
+// 수진 이력 섹션
+.historySection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.sortRadio {
+  display: flex;
+  justify-content: flex-end;
+
+  @include mobile {
+    align-self: flex-end;
+  }
+}
+
+// 태블릿 카드 스타일
+.tabletCard {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabletCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background-color: #e8e8e8;
+}
+
+.tabletCardHeaderLabel {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+}
+
+.tabletCardHeaderValue {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+}
+
+.tabletCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px 20px;
+}
+
+.tabletCardRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.tabletCardLabel {
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+}
+
+.tabletCardValue {
+  flex: 1;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+  text-align: right;
+}
+
+// 모바일 카드 스타일
+.mobileCard {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.mobileCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  margin: 15px;
+  margin-bottom: 0;
+}
+
+.mobileCardHeaderLabel {
+  width: 80px;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+}
+
+.mobileCardHeaderValue {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+}
+
+.mobileCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 5px 20px 15px;
+}
+
+.mobileCardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.mobileCardLabel {
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-12;
+}
+
+.mobileCardValue {
+  flex: 1;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+  text-align: right;
+}
+
+// 페이지네이션
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 64px;
+
+  @include tablet {
+    margin-top: 48px;
+  }
+
+  @include mobile {
+    margin-top: 32px;
+  }
+}

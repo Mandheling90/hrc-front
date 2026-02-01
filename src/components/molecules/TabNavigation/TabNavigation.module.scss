@@ -1,0 +1,85 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+// 탭 섹션
+.tabsSection {
+  width: 100%;
+
+  @include mobile {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.tabs {
+  display: flex;
+  width: 100%;
+
+  @include mobile {
+    width: max-content;
+    min-width: 100%;
+    padding: 5px;
+    background-color: $color-primary;
+    border-radius: 30px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $gray-11;
+  background: none;
+  border: none;
+  border-bottom: 1px solid $gray-8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $gray-12;
+  }
+
+  &.active {
+    color: $color-white;
+    background-color: $color-primary;
+    border-radius: 30px;
+    border-bottom: none;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  @include tablet {
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  @include mobile {
+    flex: 0 0 auto;
+    padding: 10px 10px;
+    font-size: 18px;
+    color: $color-white;
+    border-bottom: none;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: none;
+
+    &:hover {
+      color: $color-white;
+    }
+
+    &.active {
+      color: $color-primary;
+      background-color: $color-white;
+      box-shadow: none;
+    }
+  }
+}

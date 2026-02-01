@@ -11,7 +11,9 @@
       "Bash(npm run build:*)",
       "Bash(npx eslint:*)",
       "Bash(findstr:*)",
-      "mcp__figma__get_metadata"
+      "mcp__figma__get_metadata",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

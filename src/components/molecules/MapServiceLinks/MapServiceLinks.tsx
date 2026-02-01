@@ -17,21 +17,11 @@ export interface MapServiceLinksProps {
   className?: string
 }
 
-export const MapServiceLinks: React.FC<MapServiceLinksProps> = ({
-  naver,
-  daum,
-  google,
-  className = ''
-}) => {
+export const MapServiceLinks: React.FC<MapServiceLinksProps> = ({ naver, daum, google, className = '' }) => {
   return (
     <div className={`${styles.mapLinks} ${className}`}>
       {naver && (
-        <a
-          href={naver}
-          target='_blank'
-          rel='noopener noreferrer'
-          className={styles.mapLink}
-        >
+        <a href={naver} target='_blank' rel='noopener noreferrer' className={styles.mapLink}>
           <div className={styles.mapLinkLogo}>
             <NaverLogo width={80} height={24} className={styles.mapLinkLogoImage} />
           </div>
@@ -39,12 +29,7 @@ export const MapServiceLinks: React.FC<MapServiceLinksProps> = ({
         </a>
       )}
       {daum && (
-        <a
-          href={daum}
-          target='_blank'
-          rel='noopener noreferrer'
-          className={styles.mapLink}
-        >
+        <a href={daum} target='_blank' rel='noopener noreferrer' className={styles.mapLink}>
           <div className={styles.mapLinkLogo}>
             <DaumLogo width={80} height={24} className={styles.mapLinkLogoImage} />
           </div>
@@ -52,12 +37,7 @@ export const MapServiceLinks: React.FC<MapServiceLinksProps> = ({
         </a>
       )}
       {google && (
-        <a
-          href={google}
-          target='_blank'
-          rel='noopener noreferrer'
-          className={styles.mapLink}
-        >
+        <a href={google} target='_blank' rel='noopener noreferrer' className={styles.mapLink}>
           <div className={styles.mapLinkLogo}>
             <GoogleLogo width={80} height={24} className={styles.mapLinkLogoImage} />
           </div>

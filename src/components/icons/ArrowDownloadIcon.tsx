@@ -29,4 +29,3 @@ export const ArrowDownloadIcon: React.FC<ArrowDownloadIconProps> = ({
     </svg>
   )
 }
-

@@ -19,9 +19,7 @@ export const BusStopList: React.FC<BusStopListProps> = ({ stops, className = '' 
       {stops.map((stop, stopIndex) => (
         <div key={stopIndex} className={styles.busStop}>
           <ProcedureList label={stop.name} items={[]} />
-          <div
-            className={`${styles.busDirections} ${stop.directions.length === 1 ? styles.busDirectionsSingle : ''}`}
-          >
+          <div className={`${styles.busDirections} ${stop.directions.length === 1 ? styles.busDirectionsSingle : ''}`}>
             {stop.directions.map((direction, dirIndex) => (
               <div key={dirIndex} className={styles.busDirection}>
                 {direction.label && <div className={styles.busDirectionLabel}>{direction.label}</div>}

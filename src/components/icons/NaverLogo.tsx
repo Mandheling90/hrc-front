@@ -6,11 +6,7 @@ export interface NaverLogoProps {
   className?: string
 }
 
-export const NaverLogo: React.FC<NaverLogoProps> = ({
-  width = 80,
-  height = 24,
-  className = ''
-}) => {
+export const NaverLogo: React.FC<NaverLogoProps> = ({ width = 80, height = 24, className = '' }) => {
   return (
     <svg
       width={width}

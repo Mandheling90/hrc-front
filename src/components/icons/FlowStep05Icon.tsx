@@ -6,11 +6,7 @@ export interface FlowStep05IconProps {
   className?: string
 }
 
-export const FlowStep05Icon: React.FC<FlowStep05IconProps> = ({
-  width = 135,
-  height = 97,
-  className = ''
-}) => {
+export const FlowStep05Icon: React.FC<FlowStep05IconProps> = ({ width = 135, height = 97, className = '' }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

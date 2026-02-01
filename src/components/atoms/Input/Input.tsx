@@ -12,11 +12,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, width, className = '', ...props }, ref) => {
     // width 스타일 계산
-    const widthStyle = width
-      ? typeof width === 'number'
-        ? { width: `${width}px` }
-        : { width }
-      : undefined
+    const widthStyle = width ? (typeof width === 'number' ? { width: `${width}px` } : { width }) : undefined
 
     return (
       <div className={`${styles.inputWrapper} ${className}`} style={widthStyle}>

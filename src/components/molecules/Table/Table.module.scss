@@ -56,6 +56,13 @@
   }
 }
 
+// 태블릿 카드 리스트가 있을 때 헤더 숨김
+.tableWrapper:has(.tabletCardList) .tableHeader {
+  @include tablet {
+    display: none;
+  }
+}
+
 // 본문만 스크롤일 때 헤더에 스크롤바 너비만큼 패딩 추가 (스크롤이 필요할 때만)
 // 스크롤바가 실제로 나타날 때만 패딩 추가하도록 제거
 // .tableWrapper:not(:has(.tableContainer)) .tableHeader {
@@ -143,6 +150,13 @@
 
   @include mobile {
     display: none; // 모바일에서 숨김
+  }
+}
+
+// 태블릿 카드 리스트가 있을 때 본문 숨김
+.tableWrapper:has(.tabletCardList) .tableBody {
+  @include tablet {
+    display: none;
   }
 
   // 가로 스크롤 모드
@@ -264,6 +278,18 @@
     @include mobile {
       display: none;
     }
+  }
+}
+
+// 태블릿 카드 리스트
+.tabletCardList {
+  display: none; // 데스크톱/모바일에서 숨김
+
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    width: 100%;
   }
 }
 

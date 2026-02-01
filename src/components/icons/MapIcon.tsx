@@ -7,12 +7,7 @@ export interface MapIconProps {
   className?: string
 }
 
-export const MapIcon: React.FC<MapIconProps> = ({
-  width = 40,
-  height = 40,
-  fill = 'black',
-  className = ''
-}) => {
+export const MapIcon: React.FC<MapIconProps> = ({ width = 40, height = 40, fill = 'black', className = '' }) => {
   return (
     <svg
       width={width}

@@ -6,11 +6,7 @@ export interface GoogleLogoProps {
   className?: string
 }
 
-export const GoogleLogo: React.FC<GoogleLogoProps> = ({
-  width = 80,
-  height = 24,
-  className = ''
-}) => {
+export const GoogleLogo: React.FC<GoogleLogoProps> = ({ width = 80, height = 24, className = '' }) => {
   return (
     <svg
       width={width}

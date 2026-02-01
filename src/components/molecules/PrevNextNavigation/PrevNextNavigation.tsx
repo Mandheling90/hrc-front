@@ -47,4 +47,3 @@ export const PrevNextNavigation: React.FC<PrevNextNavigationProps> = ({ prev, ne
     </section>
   )
 }
-

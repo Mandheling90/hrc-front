@@ -87,13 +87,9 @@ export const CardList: React.FC<CardListProps> = ({
               key={row.id}
               className={`${styles.cardRow} ${row.highlighted ? styles.highlighted : ''} ${row.twoLine ? styles.twoLine : ''} ${row.infoRow ? styles.infoRow : ''} ${!row.rightContent ? styles.singleContent : ''}`}
             >
-              <div className={`${styles.cardLeft} ${row.infoRow ? styles.infoColumn : ''}`}>
-                {row.leftContent}
-              </div>
+              <div className={`${styles.cardLeft} ${row.infoRow ? styles.infoColumn : ''}`}>{row.leftContent}</div>
               {row.rightContent && (
-                <div className={`${styles.cardRight} ${row.infoRow ? styles.infoColumn : ''}`}>
-                  {row.rightContent}
-                </div>
+                <div className={`${styles.cardRight} ${row.infoRow ? styles.infoColumn : ''}`}>{row.rightContent}</div>
               )}
             </div>
           ))}

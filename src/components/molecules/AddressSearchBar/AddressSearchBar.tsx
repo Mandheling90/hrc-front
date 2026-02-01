@@ -15,12 +15,7 @@ export interface AddressSearchBarProps {
   className?: string
 }
 
-export const AddressSearchBar: React.FC<AddressSearchBarProps> = ({
-  jibun,
-  road,
-  onSearchClick,
-  className = ''
-}) => {
+export const AddressSearchBar: React.FC<AddressSearchBarProps> = ({ jibun, road, onSearchClick, className = '' }) => {
   return (
     <div className={`${styles.addressInfoWrapper} ${className}`}>
       <div className={styles.addressInfo}>
@@ -36,12 +31,7 @@ export const AddressSearchBar: React.FC<AddressSearchBarProps> = ({
           </div>
         </div>
       </div>
-      <button
-        type='button'
-        className={styles.searchButton}
-        onClick={onSearchClick}
-        aria-label='길찾기 검색'
-      >
+      <button type='button' className={styles.searchButton} onClick={onSearchClick} aria-label='길찾기 검색'>
         <span className={styles.searchButtonText}>길 찾기</span>
         <div className={styles.searchButtonIcon}>
           <SearchIcon width={24} height={24} fill='#ffffff' />

@@ -60,13 +60,7 @@ export interface StaffFormData {
   mobilePhone: string
 }
 
-export type MedicalInstitutionType =
-  | '상급종합병원'
-  | '종합병원'
-  | '병원'
-  | '전문병원'
-  | '요양병원'
-  | '한방병원'
+export type MedicalInstitutionType = '상급종합병원' | '종합병원' | '병원' | '전문병원' | '요양병원' | '한방병원'
 
 export interface PersonnelFormData {
   totalEmployees: string

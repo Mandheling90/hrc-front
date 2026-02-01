@@ -35,6 +35,8 @@ export interface TableProps<T = any> {
   scrollableHeight?: string
   /** 모바일 카드 렌더링 함수 (선택적) */
   renderMobileCard?: (item: T, index: number) => React.ReactNode
+  /** 태블릿 카드 렌더링 함수 (선택적) */
+  renderTabletCard?: (item: T, index: number) => React.ReactNode
   /** 추가 클래스명 */
   className?: string
   /** 기본 텍스트 오버플로우 처리 방식 (컬럼별 설정이 없을 때 사용) */
@@ -56,6 +58,7 @@ export function Table<T>({
   onRowClick,
   scrollableHeight,
   renderMobileCard,
+  renderTabletCard,
   className = '',
   defaultTextOverflow = 'wrap',
   scrollWithHeader = false,
@@ -218,6 +221,15 @@ export function Table<T>({
             })}
           </div>
         </>
+      )}
+
+      {/* 태블릿: 카드 형태 */}
+      {renderTabletCard && (
+        <div className={styles.tabletCardList}>
+          {data.map((item, index) => (
+            <div key={getRowKey(item, index)}>{renderTabletCard(item, index)}</div>
+          ))}
+        </div>
       )}
 
       {/* 모바일: 카드 형태 */}

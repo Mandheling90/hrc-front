@@ -45,9 +45,7 @@ export const OperationInfoCards: React.FC<OperationInfoCardsProps> = ({
                     <span className={styles.infoLabel}>{row.label}</span>
                     <span className={styles.infoValue}>{row.value}</span>
                   </div>
-                  {rowIndex < card.rows.length - 1 && (
-                    <span className={styles.infoDivider}>|</span>
-                  )}
+                  {rowIndex < card.rows.length - 1 && <span className={styles.infoDivider}>|</span>}
                 </React.Fragment>
               ))}
             </div>

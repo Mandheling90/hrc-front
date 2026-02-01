@@ -7,7 +7,12 @@ export interface InfoIconProps {
   fill?: string
 }
 
-export const InfoIcon: React.FC<InfoIconProps> = ({ width = 24, height = 24, className = '', fill = 'var(--gray-10)' }) => {
+export const InfoIcon: React.FC<InfoIconProps> = ({
+  width = 24,
+  height = 24,
+  className = '',
+  fill = 'var(--gray-10)'
+}) => {
   return (
     <svg
       width={width}

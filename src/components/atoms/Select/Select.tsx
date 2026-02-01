@@ -105,18 +105,10 @@ export const Select: React.FC<SelectProps> = ({
   const displayText = selectedOption ? selectedOption.label : placeholder || ''
 
   // width 스타일 계산
-  const widthStyle = width
-    ? typeof width === 'number'
-      ? { width: `${width}px` }
-      : { width }
-    : undefined
+  const widthStyle = width ? (typeof width === 'number' ? { width: `${width}px` } : { width }) : undefined
 
   return (
-    <div
-      className={`${styles.selectWrapper} ${className}`}
-      ref={selectRef}
-      style={widthStyle}
-    >
+    <div className={`${styles.selectWrapper} ${className}`} ref={selectRef} style={widthStyle}>
       {label && (
         <label htmlFor={id} className={styles.label}>
           {label}
@@ -160,9 +152,7 @@ export const Select: React.FC<SelectProps> = ({
         )}
 
         {/* 숨겨진 input (form 제출용) */}
-        {name && (
-          <input type='hidden' name={name} value={currentValue} />
-        )}
+        {name && <input type='hidden' name={name} value={currentValue} />}
       </div>
       {error && <span className={styles.errorMessage}>{error}</span>}
     </div>

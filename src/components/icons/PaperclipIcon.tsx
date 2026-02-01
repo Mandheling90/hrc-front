@@ -31,4 +31,3 @@ export const PaperclipIcon: React.FC<PaperclipIconProps> = ({
     </svg>
   )
 }
-

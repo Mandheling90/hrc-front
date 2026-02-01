@@ -61,7 +61,12 @@ export const ClinicInfoStep: React.FC = () => {
               error=''
               inputClassName={styles.hospitalNameInput}
               rightElement={
-                <Button variant='primary' size='small' onClick={handleHospitalNameSearch} className={`${styles.searchButton} ${styles.iconOnly}`}>
+                <Button
+                  variant='primary'
+                  size='small'
+                  onClick={handleHospitalNameSearch}
+                  className={`${styles.searchButton} ${styles.iconOnly}`}
+                >
                   <SearchIcon width={22} height={22} fill='#fff' />
                 </Button>
               }
