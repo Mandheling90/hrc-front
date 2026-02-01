@@ -291,6 +291,11 @@
     gap: $spacing-2;
     width: 100%;
   }
+
+  // 모바일에서는 숨김 (태블릿 스타일 오버라이드)
+  @include mobile {
+    display: none;
+  }
 }
 
 // 모바일 카드 리스트
