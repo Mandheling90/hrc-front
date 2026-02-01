@@ -218,7 +218,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
+  padding: 10px 9px;
   background-color: $color-white;
   border: 1px solid #e9b0b2;
   border-radius: 10px;
@@ -236,6 +236,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   color: $gray-12;
+  white-space: nowrap;
 
   @include tablet {
     font-size: 18px;
@@ -266,6 +267,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   color: $color-primary;
+  white-space: nowrap;
 
   @include tablet {
     font-size: 18px;
@@ -553,7 +555,8 @@
 
 .tabletCardRow {
   display: flex;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   gap: 16px;
 }
 
@@ -641,6 +644,32 @@
   line-height: 1.5;
   color: $gray-11;
   text-align: right;
+}
+
+// 상세 내역 보기 버튼
+.detailButton {
+  padding: 5px 10px;
+  background-color: $color-primary;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-white;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    padding: 4px 8px;
+  }
 }
 
 // 페이지네이션
