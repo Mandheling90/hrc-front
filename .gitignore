@@ -42,3 +42,12 @@ next-env.d.ts
 
 # nul
 nul
+
+# MCP config
+.mcp.json
+
+# Figma env
+*.env.figma
+
+# Claude Code local settings
+.claude/settings.local.json

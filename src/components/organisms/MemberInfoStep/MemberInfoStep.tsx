@@ -1,17 +1,8 @@
 'use client'
 
-import { Button } from '@/components/atoms/Button/Button'
-import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
-import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
-import { Radio } from '@/components/atoms/Radio/Radio'
-import { Select } from '@/components/atoms/Select/Select'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
-import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
-import { FormField } from '@/components/molecules/FormField/FormField'
-import { Input } from '@/components/atoms/Input/Input'
-import { SearchIcon } from '@/components/icons/SearchIcon'
-// import { EyeIcon } from '@/components/icons/EyeIcon'
-import React, { useState } from 'react'
+import { MemberInfoForm, MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
+import React from 'react'
 import styles from './MemberInfoStep.module.scss'
 
 export interface MemberInfoStepProps {
@@ -21,106 +12,24 @@ export interface MemberInfoStepProps {
   onPrev: () => void
   /** 취소 핸들러 */
   onCancel: () => void
-  /** 이름 필드 비활성화 여부 (본인 인증 완료 시 true) */
-  nameDisabled?: boolean
+  /** 초기 데이터 (본인 인증에서 넘어온 데이터) */
+  initialData?: Partial<MemberInfoFormData>
 }
 
-export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel }) => {
-  const [formData, setFormData] = useState({
-    // 회원 정보
-    name: '',
-    birthDate: '',
-    memberType: '의사',
-    phone: '',
-    userId: '',
-    password: '',
-    passwordConfirm: '',
-    email: '',
-    emailDomain: '@naver.com',
-    emailDomainEditable: false,
-    school: '',
-    department: '전체',
-    specialty: '',
-    licenseNumber: '',
-    smsConsent: '동의',
-    emailConsent: '동의',
-    memberConsent: '동의',
-    // 병원 정보
-    hospitalName: '',
-    medicalInstitutionNumber: '',
-    zipCode: '',
-    address: '',
-    detailAddress: '',
-    hospitalPhone: '',
-    hospitalWebsite: ''
-  })
-
-  // const [showPassword, setShowPassword] = useState(false)
-  // const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onPrev, onCancel, initialData }) => {
+  // 본인 인증에서 넘어온 기본 데이터 (예시)
+  const defaultInitialData: Partial<MemberInfoFormData> = {
+    name: '홍길동',
+    birthDate: '1990-01-01',
+    phone: '010-1234-5678',
+    ...initialData
   }
 
-  const handleSelectChange = (name: string) => (value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+  const handleSubmit = (data: MemberInfoFormData) => {
+    // TODO: 회원가입 데이터 검증 및 처리
+    console.log('회원가입 데이터:', data)
+    onNext()
   }
-
-  const handleRadioChange = (name: string) => (value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const handleCheckboxChange = (name: string) => (checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: checked
-    }))
-  }
-
-  const handleIdDuplicateCheck = () => {
-    // TODO: 아이디 중복 확인 로직
-    console.log('아이디 중복 확인:', formData.userId)
-  }
-
-  const handleHospitalSearch = () => {
-    // TODO: 병원 검색 로직
-    console.log('병원 검색')
-  }
-
-  const handleZipCodeSearch = () => {
-    // TODO: 우편번호 검색 로직
-    console.log('우편번호 검색')
-  }
-
-  const departmentOptions = [
-    { value: '전체', label: '전체' },
-    { value: '내과', label: '내과' },
-    { value: '외과', label: '외과' },
-    { value: '정형외과', label: '정형외과' },
-    { value: '신경외과', label: '신경외과' },
-    { value: '산부인과', label: '산부인과' },
-    { value: '소아과', label: '소아과' },
-    { value: '이비인후과', label: '이비인후과' },
-    { value: '안과', label: '안과' },
-    { value: '피부과', label: '피부과' },
-    { value: '정신건강의학과', label: '정신건강의학과' },
-    { value: '재활의학과', label: '재활의학과' },
-    { value: '마취통증의학과', label: '마취통증의학과' },
-    { value: '영상의학과', label: '영상의학과' },
-    { value: '병리과', label: '병리과' },
-    { value: '진단검사의학과', label: '진단검사의학과' },
-    { value: '응급의학과', label: '응급의학과' }
-  ]
 
   return (
     <>
@@ -136,304 +45,16 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onCancel
         contentAlign='center'
       />
 
-      {/* 회원 정보 섹션 */}
-      <div className={styles.section}>
-        <SectionHeader title='회원 정보' subtitle='필수 입력 항목에 정보를 모두 입력해주세요.' />
-
-        <div className={styles.formGrid}>
-          <FormField
-            label='이름'
-            required
-            id='name'
-            name='name'
-            type='text'
-            placeholder='홍길동'
-            value={'홍길동'}
-            onChange={handleInputChange}
-            disabled
-          />
-
-          <FormField
-            label='생년월일'
-            required
-            id='birthDate'
-            name='birthDate'
-            type='text'
-            placeholder='YYYY-MM-DD'
-            value={'1990-01-01'}
-            onChange={handleInputChange}
-            disabled
-          />
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='memberType' required>
-              회원구분
-            </InputLabel>
-            <Radio
-              name='memberType'
-              value={formData.memberType}
-              options={[
-                { value: '의사', label: '의사' },
-                { value: '치과의사', label: '치과의사' },
-                { value: '한의사', label: '한의사' }
-              ]}
-              onChange={handleRadioChange('memberType')}
-            />
-          </div>
-
-          <FormField
-            label='휴대전화'
-            required
-            id='phone'
-            name='phone'
-            type='tel'
-            placeholder='010-0000-0000'
-            value={formData.phone}
-            onChange={handleInputChange}
-            disabled
-          />
-
-          <FormField
-            label='회원 ID'
-            required
-            id='userId'
-            name='userId'
-            type='text'
-            placeholder='이름을 입력해주세요.'
-            value={formData.userId}
-            onChange={handleInputChange}
-            buttonText='병원찾기'
-            onButtonClick={handleIdDuplicateCheck}
-          />
-
-          <FormField
-            label='비밀번호'
-            required
-            id='password'
-            name='password'
-            type='password'
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-
-          <FormField
-            label='비밀번호 확인'
-            required
-            id='passwordConfirm'
-            name='passwordConfirm'
-            type='password'
-            value={formData.passwordConfirm}
-            onChange={handleInputChange}
-          />
-
-          <FormField
-            label='이메일'
-            required
-            id='email'
-            name='email'
-            type='text'
-            placeholder='이메일을 입력해주세요.'
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-
-          <FormField
-            label='의사면허번호'
-            required
-            id='licenseNumber'
-            name='licenseNumber'
-            type='text'
-            placeholder='-없이 입력해주세요.'
-            value={formData.licenseNumber}
-            onChange={handleInputChange}
-            rightElement={
-              <Checkbox
-                checked={formData.emailDomainEditable}
-                onChange={handleCheckboxChange('emailDomainEditable')}
-                label='원장여부'
-              />
-            }
-            helperText='※ 원장여부 체크 시에만 협력병원 정보수정이 가능합니다.'
-          />
-
-          <FormField
-            label='출신학교'
-            required
-            id='school'
-            name='school'
-            type='text'
-            placeholder='예) https://refer.kumc.or.kr'
-            value={formData.school}
-            onChange={handleInputChange}
-          />
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='department' required>
-              진료과
-            </InputLabel>
-            <Select
-              id='department'
-              name='department'
-              options={departmentOptions}
-              value={formData.department}
-              onChange={handleSelectChange('department')}
-            />
-          </div>
-
-          <FormField
-            label='세부 전공'
-            id='specialty'
-            name='specialty'
-            type='text'
-            placeholder='세부 전공을 입력해주세요'
-            value={formData.specialty}
-            onChange={handleInputChange}
-          />
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='smsConsent' required>
-              SMS 수신 여부
-            </InputLabel>
-            <Radio
-              name='smsConsent'
-              value={formData.smsConsent}
-              options={[
-                { value: '동의', label: '동의' },
-                { value: '비동의', label: '비동의' }
-              ]}
-              onChange={handleRadioChange('smsConsent')}
-            />
-          </div>
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='emailConsent' required>
-              E-mail 수신 여부
-            </InputLabel>
-            <Radio
-              name='emailConsent'
-              value={formData.emailConsent}
-              options={[
-                { value: '동의', label: '동의' },
-                { value: '비동의', label: '비동의' }
-              ]}
-              onChange={handleRadioChange('emailConsent')}
-            />
-          </div>
-
-          <div className={styles.formField}>
-            <InputLabel htmlFor='memberConsent' required>
-              회신서 수신 동의여부
-            </InputLabel>
-            <Radio
-              name='memberConsent'
-              value={formData.memberConsent}
-              options={[
-                { value: '동의', label: '동의' },
-                { value: '비동의', label: '비동의' }
-              ]}
-              onChange={handleRadioChange('memberConsent')}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* 병원 정보 섹션 */}
-      <div className={styles.section}>
-        <SectionHeader title='병원 정보' subtitle='필수 입력 항목에 정보를 모두 입력해주세요.' />
-
-        <div className={styles.formGrid}>
-          <FormField
-            label='병원명'
-            required
-            id='hospitalName'
-            name='hospitalName'
-            type='text'
-            placeholder='고려대학교안암병원'
-            value={formData.hospitalName}
-            onChange={handleInputChange}
-            disabled
-            buttonText='병원 검색'
-            onButtonClick={handleHospitalSearch}
-            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
-            buttonClassName={styles.searchButton}
-          />
-
-          <FormField
-            label='요양기관번호'
-            required
-            id='medicalInstitutionNumber'
-            name='medicalInstitutionNumber'
-            type='text'
-            placeholder='요양기관번호를 입력해주세요.'
-            value={formData.medicalInstitutionNumber}
-            onChange={handleInputChange}
-          />
-
-          <FormField
-            label='병원주소'
-            required
-            id='zipCode'
-            name='zipCode'
-            type='text'
-            placeholder='우편번호'
-            value={formData.zipCode}
-            onChange={handleInputChange}
-            disabled
-            buttonText='우편번호 검색'
-            onButtonClick={handleZipCodeSearch}
-            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
-            buttonClassName={styles.searchButton}
-          >
-            <Input
-              type='text'
-              id='address'
-              name='address'
-              placeholder='주소'
-              value={formData.address}
-              onChange={handleInputChange}
-              disabled
-            />
-            <Input
-              type='text'
-              id='detailAddress'
-              name='detailAddress'
-              placeholder='상세주소를 입력해 주세요.'
-              value={formData.detailAddress}
-              onChange={handleInputChange}
-            />
-          </FormField>
-
-          <FormField
-            label='대표 전화'
-            required
-            id='hospitalPhone'
-            name='hospitalPhone'
-            type='tel'
-            placeholder='-없이 입력해주세요.'
-            value={formData.hospitalPhone}
-            onChange={handleInputChange}
-          />
-
-          <FormField
-            label='병원 홈페이지 주소'
-            id='hospitalWebsite'
-            name='hospitalWebsite'
-            type='text'
-            placeholder='예) https://refer.kumc.or.kr'
-            value={formData.hospitalWebsite}
-            onChange={handleInputChange}
-          />
-        </div>
-      </div>
-
-      <div className={styles.buttonGroup}>
-        <Button type='button' variant='gray' size='medium' onClick={onCancel}>
-          취소
-        </Button>
-        <Button type='button' variant='primary' size='medium' onClick={onNext}>
-          다음 단계
-        </Button>
-      </div>
+      <MemberInfoForm
+        mode='signup'
+        initialData={defaultInitialData}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+        onPrev={onPrev}
+        submitButtonText='다음 단계'
+        cancelButtonText='취소'
+        disabledFields={['name', 'birthDate', 'phone']}
+      />
     </>
   )
 }

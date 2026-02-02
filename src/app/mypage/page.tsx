@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { ArrowRightLargeIcon } from '@/components/icons/ArrowRightLargeIcon'
@@ -82,9 +83,9 @@ export default function MyPage() {
                   </div>
                 </div>
                 <div className={styles.userActions}>
-                  <button type='button' className={styles.userActionBtnPrimary}>
+                  <Link href='/mypage/edit-profile' className={styles.userActionBtnPrimary}>
                     회원정보 수정
-                  </button>
+                  </Link>
                   <button type='button' className={styles.userActionBtn}>
                     협력병•의원 정보수정
                   </button>

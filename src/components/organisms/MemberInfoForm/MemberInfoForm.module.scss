@@ -1,0 +1,112 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.memberInfoForm {
+  width: 100%;
+}
+
+// 필수 입력 안내 태그
+.requiredNotice {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.requiredTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  font-size: 18px;
+  font-weight: 400;
+  color: $gray-10;
+  background-color: $color-white;
+  border: 2px solid $gray-5;
+  border-radius: 150px;
+
+  @include tablet {
+    font-size: 16px;
+  }
+
+  @include mobile {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+}
+
+.section {
+  background-color: #fff;
+  border: 1px solid $gray-8;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 24px;
+
+  @include tablet {
+    padding: 32px;
+    border-radius: 16px;
+  }
+
+  @include mobile {
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  margin-top: 18px;
+
+  @include mobile {
+    gap: 18px;
+    margin-top: 16px;
+  }
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  min-width: 140px;
+
+  @include mobile {
+    min-width: auto;
+    flex-shrink: 0;
+    padding: 0 16px;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 56px;
+
+  button {
+    min-width: 260px;
+
+    @include mobile {
+      min-width: 0;
+      flex: 1;
+    }
+  }
+
+  @include tablet {
+    margin-top: 40px;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    margin-top: 24px;
+    gap: 12px;
+  }
+}
