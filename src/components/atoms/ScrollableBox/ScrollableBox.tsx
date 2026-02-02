@@ -21,15 +21,18 @@ export const ScrollableBox = React.forwardRef<HTMLDivElement, ScrollableBoxProps
     { children, maxHeight, padding = '16px', hasBorder = true, hasBackground = true, className, style, ...rest },
     ref
   ) => {
-    const customStyle: React.CSSProperties = {
+    const outerStyle: React.CSSProperties = {
       ...(maxHeight !== undefined &&
         maxHeight !== null && {
           maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight
         }),
+      ...style
+    }
+
+    const innerStyle: React.CSSProperties = {
       ...(padding !== null && {
         padding: typeof padding === 'number' ? `${padding}px` : padding
-      }),
-      ...style
+      })
     }
 
     const boxClassName = [
@@ -42,8 +45,10 @@ export const ScrollableBox = React.forwardRef<HTMLDivElement, ScrollableBoxProps
       .join(' ')
 
     return (
-      <div ref={ref} className={boxClassName} style={customStyle} {...rest}>
-        {children}
+      <div ref={ref} className={boxClassName} style={outerStyle} {...rest}>
+        <div className={styles.scrollableBoxInner} style={innerStyle}>
+          {children}
+        </div>
       </div>
     )
   }

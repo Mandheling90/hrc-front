@@ -2,6 +2,10 @@
 
 .agreementsSection {
   margin-bottom: 80px; // Figma 디자인에 맞게 80px로 수정
+
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: 56px; // Figma 모바일: 56px
+  }
 }
 
 .agreementItem {
@@ -47,6 +51,12 @@
     font-size: 18px;
     letter-spacing: -0.72px;
   }
+
+  // 모바일
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px !important; // Figma 모바일: 18px
+    letter-spacing: -0.72px;
+  }
 }
 
 .optionalText {
@@ -58,6 +68,12 @@
   // 테블릿 (769px ~ 1429px) - 유지
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  // 모바일
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px; // Figma 모바일: 18px
     letter-spacing: -0.72px;
   }
 }
@@ -214,6 +230,10 @@
 
 .warningSection {
   margin-bottom: 80px; // Figma 디자인에 맞게 80px로 수정
+
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: 56px; // Figma 모바일: 약간 줄임
+  }
 }
 
 .buttonGroup {
@@ -242,11 +262,17 @@
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
     height: auto;
-    gap: $spacing-4;
+    gap: 8px; // Figma 모바일: 8px
 
     > button {
       width: 100%;
-      height: 50px;
+      height: 50px; // Figma 모바일: 50px
+      padding: 10px 20px; // Figma 모바일: padding
+      font-size: 20px; // Figma 모바일: 20px
+      font-weight: $font-weight-semibold;
+      line-height: 30px; // Figma 모바일: 30px
+      letter-spacing: -0.8px;
+      border-radius: 5px;
     }
   }
 }
@@ -340,6 +366,10 @@
 }
 .allAgreementsItem {
   margin-top: 56px;
+
+  @media (max-width: $breakpoint-md) {
+    margin-top: 40px; // Figma 모바일: 약간 줄임
+  }
 }
 
 
@@ -353,6 +383,7 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    font-size: 20px !important;
+    font-size: 20px !important; // Figma 모바일: 20px
+    line-height: 30px !important;
   }
 }

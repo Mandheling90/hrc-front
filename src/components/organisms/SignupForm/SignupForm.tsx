@@ -1,6 +1,6 @@
 'use client'
 
-import { ProgressSteps } from '@/components/molecules/ProgressSteps/ProgressSteps'
+import { TabNavigation } from '@/components/molecules/TabNavigation/TabNavigation'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { AgreementStep } from '@/components/organisms/AgreementStep/AgreementStep'
 import { VerificationStep } from '@/components/organisms/VerificationStep/VerificationStep'
@@ -77,17 +77,23 @@ export const SignupForm: React.FC = () => {
   }
 
   const steps = [
-    { id: 1, label: '약관동의' },
-    { id: 2, label: '본인 인증' },
-    { id: 3, label: '회원정보 입력' },
-    { id: 4, label: '회원가입 완료' }
+    { id: '1', label: '약관동의', stepNumber: 1 },
+    { id: '2', label: '본인 인증', stepNumber: 2 },
+    { id: '3', label: '회원정보 입력', stepNumber: 3 },
+    { id: '4', label: '회원가입 완료', stepNumber: 4 }
   ]
 
   return (
     <div className={styles.signupForm}>
       <h1 className={styles.title}>회원가입</h1>
 
-      <ProgressSteps steps={steps} currentStep={currentStep} />
+      <TabNavigation
+        tabs={steps}
+        activeTab={String(currentStep)}
+        onTabChange={() => {}}
+        variant='signup'
+        disableClick
+      />
 
       <div className={styles.stepContent}>
         {currentStep === 1 && (

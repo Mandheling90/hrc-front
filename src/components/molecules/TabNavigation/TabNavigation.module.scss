@@ -10,6 +10,8 @@
   -ms-overflow-style: none;
   cursor: grab;
   user-select: none;
+  padding-bottom: 40px; // box-shadow가 잘리지 않도록 여백 추가 (데스크탑: 20px offset + 20px blur)
+  margin-bottom: -40px; // 추가된 padding 상쇄
 
   &::-webkit-scrollbar {
     display: none;
@@ -85,5 +87,157 @@
       background-color: $color-white;
       box-shadow: none;
     }
+  }
+}
+
+// 스텝 번호 (signup variant용)
+.stepNumber {
+  font-weight: $font-weight-medium;
+}
+
+// 탭 레이블
+.tabLabel {
+  font-weight: $font-weight-semibold;
+}
+
+// ===== 회원가입 Variant 스타일 =====
+.signupVariant {
+  margin-bottom: 60px;
+
+  .tabs {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    gap: 0;
+
+    @include mobile {
+      background-color: $color-primary;
+      border-radius: 30px; // Figma: 30px
+      padding: 5px; // Figma: 5px
+      gap: 16px; // Figma: 16px
+      margin: 0;
+      box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1); // Figma: 0px 10px 10px rgba(0, 0, 0, 0.10)
+    }
+  }
+
+  .tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 80px; // Figma: 모든 탭 80px
+    padding: 0;
+    font-size: 24px;
+    font-weight: $font-weight-semibold;
+    line-height: 36px; // Figma: 36px
+    color: $gray-11; // Figma: #636363
+    border-bottom: 1px solid $gray-8; // Figma: #BBBBBB
+    border-radius: 0;
+    box-shadow: none;
+    cursor: default;
+
+    .stepNumber {
+      font-size: 24px;
+      font-weight: $font-weight-semibold; // Figma: 600
+      line-height: 36px;
+      color: $gray-11;
+    }
+
+    .tabLabel {
+      font-size: 24px;
+      font-weight: $font-weight-semibold; // Figma: 600
+      line-height: 36px;
+      color: $gray-11;
+    }
+
+    &:hover {
+      color: $gray-11;
+    }
+
+    &.active {
+      background-color: $color-primary; // Figma: #9F1836
+      border-radius: 40px; // Figma: 40px
+      border-bottom: none;
+      box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2); // Figma: 0px 20px 20px rgba(0, 0, 0, 0.20)
+
+      .stepNumber {
+        color: $color-white;
+      }
+
+      .tabLabel {
+        color: $color-white;
+      }
+    }
+
+    // 태블릿 (769px ~ 1439px) - Figma: Step 번호 없이 레이블만 표시
+    @media (min-width: $breakpoint-md) and (max-width: 1439px) {
+      height: auto;
+      padding: 10px 30px; // Figma: padding-left: 30px, padding-right: 30px, padding-top: 10px, padding-bottom: 10px
+      font-size: 18px;
+      line-height: 27px;
+
+      .stepNumber {
+        display: none; // Figma 테블릿: Step 번호 숨김
+      }
+
+      .tabLabel {
+        font-size: 18px;
+        font-weight: $font-weight-semibold;
+        line-height: 27px;
+      }
+
+      &.active {
+        padding: 10px; // Figma active: padding 10px
+        border-radius: 30px; // Figma: 30px (데스크탑 40px와 다름)
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1); // Figma: 0px 10px 10px rgba(0, 0, 0, 0.10)
+      }
+    }
+
+    @include mobile {
+      flex: 0 0 auto;
+      height: 40px; // Figma 모바일: 40px
+      gap: 0;
+      padding: 0 10px; // Figma: padding-left: 10px, padding-right: 10px
+      font-size: 18px; // Figma: 18px
+      line-height: 27px; // Figma: 27px
+      color: $color-white;
+      border-bottom: none;
+      white-space: nowrap;
+
+      .stepNumber {
+        display: none; // Figma 모바일: Step 번호 숨김
+      }
+
+      .tabLabel {
+        font-size: 18px; // Figma: 18px
+        font-weight: $font-weight-semibold; // Figma: 600
+        line-height: 27px; // Figma: 27px
+        color: $color-white;
+      }
+
+      &:hover {
+        color: $color-white;
+      }
+
+      &.active {
+        background-color: $color-white;
+        border-radius: 20px; // Figma: 20px
+        box-shadow: none;
+
+        .stepNumber {
+          display: none;
+        }
+
+        .tabLabel {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    margin-bottom: 32px; // Figma 모바일: 32px
   }
 }

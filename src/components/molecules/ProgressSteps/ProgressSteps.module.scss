@@ -8,6 +8,7 @@
     left: 0;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    padding-bottom: 20px; /* box-shadow가 잘리지 않도록 여백 추가 */
     &::-webkit-scrollbar {
       display: none; /* Chrome, Safari, Opera */
     }
@@ -24,19 +25,18 @@
 
   @media (max-width: $breakpoint-md) {
     width: fit-content;
-    // min-width: 750px;
     align-items: center;
-    background-color: #7a1f2e;
-    border-radius: 50px;
-    padding: 5px 5px;
-    margin-bottom: 40px;
+    background-color: $color-primary; // Figma: #9F1836
+    border-radius: 30px; // Figma: 30px
+    padding: 5px; // Figma: 5px
+    margin-bottom: 32px; // Figma 모바일: 32px
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    gap: 24px;
-    margin: 0px 10px 0px 10px;
-    // min-width: 768px;
+    gap: 16px; // Figma: 16px
+    margin: 0;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1); // Figma: box-shadow
     &::-webkit-scrollbar {
       display: none;
     }
@@ -112,10 +112,13 @@
   @media (max-width: $breakpoint-md) {
     flex: none;
     gap: 0;
-    padding: 0;
+    padding: 0 10px; // Figma: padding-left: 10px, padding-right: 10px
     color: #ffffff;
     white-space: nowrap;
-    padding: 10px 12px;
+    height: 40px; // Figma 모바일: 40px
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -134,8 +137,7 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    font-size: 16px;
-    color: #ffffff;
+    display: none; // Figma 모바일: Step 번호 숨김
   }
 }
 
@@ -154,21 +156,27 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    font-size: 16px;
+    font-size: 18px; // Figma 모바일: 18px
+    font-weight: 600; // Figma: 600
+    line-height: 27px; // Figma: 27px
     color: #ffffff;
   }
 }
 
 .step.active {
   background-color: $color-primary;
-  border-radius: 50px;
+  border-radius: 40px; // Figma 디자인에 맞게 40px로 수정
   box-shadow: 0 12px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   z-index: 2;
   gap: 10px;
+  height: 80px; // Figma 디자인에 맞게 80px로 수정
 
   @media (max-width: $breakpoint-md) {
     background-color: $color-white;
+    border-radius: 20px; // Figma 모바일: 20px
+    box-shadow: none;
+    height: 40px; // Figma 모바일: 40px
   }
 
   .stepNumber {
@@ -185,8 +193,7 @@
     }
 
     @media (max-width: $breakpoint-md) {
-      font-size: 16px;
-      color: $color-primary;
+      display: none; // Figma 모바일: Step 번호 숨김
     }
   }
 
@@ -204,7 +211,9 @@
     }
 
     @media (max-width: $breakpoint-md) {
-      font-size: 16px;
+      font-size: 18px; // Figma 모바일: 18px
+      font-weight: 600; // Figma: 600
+      line-height: 27px; // Figma: 27px
       color: $color-primary;
     }
   }

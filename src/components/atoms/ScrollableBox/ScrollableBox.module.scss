@@ -1,12 +1,11 @@
 @import '@/styles/variables.scss';
 
 .scrollableBox {
-  border: 1px solid $gray-9; // Figma 디자인에 맞게 #8c8c8c로 수정
-  border-radius: 10px; // Figma 디자인에 맞게 10px로 수정
+  border: 1px solid $gray-9;
+  border-radius: 10px;
   background-color: #fff;
-  overflow-y: auto;
-  padding: 20px 15px 20px 20px; // Figma 디자인에 맞게 좌 20px, 우 15px로 수정
-  height: 210px; // Figma 디자인에 맞게 높이 210px로 수정
+  overflow: hidden;
+  height: 210px;
 
   &.noBorder {
     border: none;
@@ -16,6 +15,12 @@
   &.noBackground {
     background-color: transparent;
   }
+}
+
+.scrollableBoxInner {
+  height: 100%;
+  overflow-y: auto;
+  margin-right: 15px; // 스크롤바와 오른쪽 테두리 사이 여백
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -24,12 +29,12 @@
   &::-webkit-scrollbar-track {
     background: $gray-4;
     border-radius: 40px;
+    margin: 15px 0; // 상하 여백
   }
 
   &::-webkit-scrollbar-thumb {
     background: $color-primary;
     border-radius: 60px;
-    height: 85.333px;
 
     &:hover {
       background: darken($color-primary, 10%);

@@ -8,6 +8,8 @@ export interface TabItem {
   id: string
   /** 탭 레이블 */
   label: string
+  /** 스텝 번호 (signup variant에서 사용) */
+  stepNumber?: number
 }
 
 export interface TabNavigationProps {
@@ -19,13 +21,19 @@ export interface TabNavigationProps {
   onTabChange: (tabId: string) => void
   /** 추가 클래스명 */
   className?: string
+  /** 스타일 변형 (default: 일반 탭, signup: 회원가입 스텝) */
+  variant?: 'default' | 'signup'
+  /** 클릭 비활성화 여부 (signup에서 스텝 이동 방지용) */
+  disableClick?: boolean
 }
 
 export const TabNavigation: React.FC<TabNavigationProps> = ({
   tabs,
   activeTab,
   onTabChange,
-  className = ''
+  className = '',
+  variant = 'default',
+  disableClick = false
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -95,6 +103,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
   // 탭 클릭 핸들러 (드래그 중일 때는 클릭 방지)
   const handleTabClick = (tabId: string) => {
+    if (disableClick) return
     if (hasDragged) {
       setHasDragged(false)
       return
@@ -102,10 +111,12 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
     onTabChange(tabId)
   }
 
+  const variantClass = variant === 'signup' ? styles.signupVariant : ''
+
   return (
     <div
       ref={containerRef}
-      className={`${styles.tabsSection} ${isDragging ? styles.dragging : ''} ${className}`}
+      className={`${styles.tabsSection} ${variantClass} ${isDragging ? styles.dragging : ''} ${className}`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -122,7 +133,10 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
             className={`${styles.tab} ${activeTab === tab.id ? styles.active : ''}`}
             onClick={() => handleTabClick(tab.id)}
           >
-            {tab.label}
+            {variant === 'signup' && tab.stepNumber !== undefined && (
+              <span className={styles.stepNumber}>Step.{String(tab.stepNumber).padStart(2, '0')}</span>
+            )}
+            <span className={styles.tabLabel}>{tab.label}</span>
           </button>
         ))}
       </div>
