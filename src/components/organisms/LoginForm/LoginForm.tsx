@@ -105,10 +105,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onClick={togglePasswordVisibility}
             aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
           >
-            <EyeIcon width={20} height={20} showPassword={showPassword} />
+            <EyeIcon width={24} height={24} showPassword={showPassword} />
           </button>
         </div>
-        <Button type='submit' variant='primary' size='medium' fullWidth>
+        <Button type='submit' variant='primary' size='medium' fullWidth className={styles.loginButton}>
           로그인
         </Button>
       </form>
@@ -117,11 +117,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           <Link href='/find-user?tab=findId' className={styles.link}>
             아이디 찾기
           </Link>
-          <span className={styles.separator}>|</span>
+          <span className={styles.separator} />
           <Link href='/find-user?tab=findPassword' className={styles.link}>
             비밀번호 찾기
           </Link>
-          <span className={styles.separator}>|</span>
+          <span className={styles.separator} />
           <Link href='/signup' className={styles.link}>
             회원가입
           </Link>
