@@ -1,19 +1,21 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './SNSSection.module.scss'
 
 const snsPosts = [
   {
     id: 1,
     image: '/images/img-section3-1.jpg',
-    title: '[톡명의] 수술뿐만 아니라 연구로 미래를 바꾸는 의사과학자🔎 | 척추종양 명의🩺 | 톡쏘는 명의들💘'
+    title: '고려대학교 안암병원의 새로운 도약, 메디컴플렉스 신관 오픈(다큐멘터리)'
   },
   {
     id: 2,
     image: '/images/img-section3-2.jpg',
-    title: '환자를 위해 20여 개의 진료과가 한 공간에 모인 이곳은?! | 암센터의 운영 시스템 및 장점 | Dr.log'
+    title:
+      '[안암인싸] 고려대안암병원 l 산부인과 브이로그 1화 l 안암병원 신관? l 노티? 회진? 바로 알려준다! l 로봇수술은 처음이지?'
   },
   {
     id: 3,
@@ -23,20 +25,55 @@ const snsPosts = [
   {
     id: 4,
     image: '/images/img-section3-4.jpg',
-    title: '[ENG] 절체절명의 환자를 지켜내다ㅣ생과 사의 최전선, 응급의료센터🚨ㅣKU Top Team🏥'
+    title: '고대안암병원 SNS'
   }
 ]
 
 export const SNSSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+  const totalSlides = snsPosts.length
+  const visibleItems = 2
+
+  // 무한 루프를 위해 앞뒤로 아이템 복제
+  const extendedPosts = [...snsPosts.slice(-visibleItems), ...snsPosts, ...snsPosts.slice(0, visibleItems)]
 
   const handlePrev = () => {
-    setCurrentIndex(prev => (prev > 0 ? prev - 1 : snsPosts.length - 1))
+    setIsTransitioning(true)
+    setCurrentIndex(prev => prev - 1)
   }
 
   const handleNext = () => {
-    setCurrentIndex(prev => (prev < snsPosts.length - 1 ? prev + 1 : 0))
+    setIsTransitioning(true)
+    setCurrentIndex(prev => prev + 1)
   }
+
+  // 무한 루프 처리
+  const handleTransitionEnd = () => {
+    if (currentIndex >= totalSlides) {
+      setIsTransitioning(false)
+      setCurrentIndex(0)
+    } else if (currentIndex < 0) {
+      setIsTransitioning(false)
+      setCurrentIndex(totalSlides - 1)
+    }
+  }
+
+  // 실제 표시할 인덱스 (0 ~ totalSlides-1 범위)
+  const displayIndex = currentIndex < 0 ? totalSlides - 1 : currentIndex >= totalSlides ? 0 : currentIndex
+
+  // 메인 이미지 페이드 효과
+  const [isFading, setIsFading] = useState(false)
+  const [mainImageIndex, setMainImageIndex] = useState(0)
+
+  useEffect(() => {
+    setIsFading(true)
+    const timer = setTimeout(() => {
+      setMainImageIndex(displayIndex)
+      setIsFading(false)
+    }, 200)
+    return () => clearTimeout(timer)
+  }, [displayIndex])
 
   return (
     <section className={`section ${styles.section3}`}>
@@ -52,43 +89,78 @@ export const SNSSection: React.FC = () => {
       </div>
       <div className='container'>
         <h3 className={styles.sectionTitle}>고대안암병원 SNS</h3>
-        <div className='flex'>
-          <div className={styles.thumbSwiper}>
-            <div className={styles.swiperWrapper}>
-              {snsPosts.map((post, index) => (
-                <div
-                  key={post.id}
-                  className={`${styles.swiperSlide} ${index === currentIndex ? styles.active : ''}`}
-                  onClick={() => setCurrentIndex(index)}
-                >
-                  <div className={styles.imgBox}>
-                    <img src={post.image} alt={post.title} />
+        <div className={styles.contentWrap}>
+          <div className={styles.leftContent}>
+            <div className={styles.thumbSlider}>
+              <div
+                className={styles.thumbTrack}
+                style={{
+                  transform: `translateX(calc(-${currentIndex + visibleItems} * (50% + 12px)))`,
+                  transition: isTransitioning ? 'transform 0.4s ease-in-out' : 'none'
+                }}
+                onTransitionEnd={handleTransitionEnd}
+              >
+                {extendedPosts.map((post, index) => (
+                  <div key={`${post.id}-${index}`} className={styles.thumbItem}>
+                    <div className={styles.thumbImg}>
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        width={270}
+                        height={150}
+                        style={{ borderRadius: '20px', objectFit: 'cover' }}
+                      />
+                    </div>
+                    <p className={styles.thumbTitle}>{post.title}</p>
                   </div>
-                  <p>{post.title}</p>
+                ))}
+              </div>
+            </div>
+            <div className={styles.customControl}>
+              <div className={styles.pagination}>
+                <span className={styles.current}>{displayIndex + 1}</span>
+                <div className={styles.progress}>
+                  <span className={styles.bar} style={{ width: `${((displayIndex + 1) / totalSlides) * 100}%` }}></span>
                 </div>
-              ))}
+                <span className={styles.total}>{totalSlides}</span>
+              </div>
+              <div className={styles.controlBtns}>
+                <button className={styles.prev} type='button' onClick={handlePrev} aria-label='Previous'>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M15 4L7 12L15 20'
+                      stroke='#636363'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </button>
+                <button className={styles.next} type='button' onClick={handleNext} aria-label='Next'>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M9 4L17 12L9 20'
+                      stroke='#636363'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-          <div className={styles.mainSwiper}>
-            <div className={styles.swiperWrapper}>
-              {snsPosts.map((post, index) => (
-                <div key={post.id} className={`${styles.swiperSlide} ${index === currentIndex ? styles.active : ''}`}>
-                  <Link href='#'>
-                    <img src={post.image} alt={post.title} />
-                  </Link>
-                </div>
-              ))}
-            </div>
+          <div className={`${styles.mainImage} ${isFading ? styles.fading : ''}`}>
+            <Link href='#'>
+              <Image
+                src={snsPosts[mainImageIndex].image}
+                alt={snsPosts[mainImageIndex].title}
+                width={738}
+                height={415}
+                style={{ borderBottomLeftRadius: '40px', borderBottomRightRadius: '40px', objectFit: 'cover' }}
+              />
+            </Link>
           </div>
-        </div>
-        <div className={styles.customControl}>
-          <span className={styles.current}>{currentIndex + 1}</span>
-          <div className={styles.progress}>
-            <span className={styles.bar} style={{ width: `${((currentIndex + 1) / snsPosts.length) * 100}%` }}></span>
-          </div>
-          <span className={styles.total}>{snsPosts.length}</span>
-          <button className={styles.prev} type='button' onClick={handlePrev}></button>
-          <button className={styles.next} type='button' onClick={handleNext}></button>
         </div>
       </div>
     </section>

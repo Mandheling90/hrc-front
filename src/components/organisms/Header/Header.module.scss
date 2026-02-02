@@ -26,6 +26,45 @@ $header-height-mobile: 56px;
   width: 100%;
   z-index: $z-index-fixed;
   background: #fff;
+
+  // 메인페이지 투명 헤더
+  &.transparent {
+    position: absolute;
+    background: transparent;
+
+    .headerTop {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .gnbItem span {
+      color: #fff;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .gnbItem.active span {
+      color: #fff;
+    }
+
+    .textLink {
+      color: #fff;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .divider {
+      background-color: #fff;
+    }
+
+    .iconBtn {
+      color: #fff;
+    }
+  }
 }
 
 .headerTop {
@@ -53,11 +92,7 @@ $header-height-mobile: 56px;
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 245px; // 헤더와 동일한 패딩
-
-  @media (max-width: $bp-tablet) {
-    padding: 0 24px;
-  }
+  padding: 0; // container에서 패딩 처리
 
   @media (max-width: $bp-mobile) {
     display: none; // 모바일에서 숨김
@@ -181,7 +216,7 @@ $header-height-mobile: 56px;
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 245px;
 
   @media (max-width: $bp-tablet) {
     padding: 0 24px;
@@ -209,15 +244,13 @@ $header-height-mobile: 56px;
 }
 
 // ========================================
-// 로고 - 이용안내 영역과 동일한 너비 (518px)
+// 로고
 // ========================================
 .logo {
   flex-shrink: 0;
-  width: 22%;
-  max-width: 518px;
   margin: 0;
   display: flex;
-  justify-content: flex-end; // 우측 정렬
+  align-items: center;
 
   a {
     display: block;
@@ -237,10 +270,6 @@ $header-height-mobile: 56px;
       width: 180px;
       height: 30px;
     }
-  }
-
-  @media (max-width: $bp-tablet) {
-    width: auto;
   }
 }
 
@@ -268,17 +297,18 @@ $header-height-mobile: 56px;
 }
 
 .gnbItem {
-  width: 170px;
+  width: 180px;
 
   span {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 35px 0;
+    height: 100px;
     font-size: 20px;
     font-weight: 600;
     color: #000;
-    line-height: 150%;
-    letter-spacing: -0.8px;
+    line-height: 30px;
     text-align: center;
     white-space: nowrap;
     cursor: pointer;
@@ -301,15 +331,14 @@ $header-height-mobile: 56px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  width: 22%;
-  max-width: 518px;
 }
 
 .utilDesktop {
   display: flex;
   align-items: center;
-  width: 22%;
-  max-width: 518px;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 146px;
 
   @media (max-width: $bp-tablet) {
     display: none;
@@ -327,12 +356,10 @@ $header-height-mobile: 56px;
 }
 
 .textLink {
-  padding: 8px 10px;
   font-size: 18px;
   font-weight: 600;
   color: #000;
-  line-height: 150%;
-  letter-spacing: -0.72px;
+  line-height: 27px;
   text-align: center;
   background: none;
   border: none;
@@ -520,7 +547,7 @@ $header-height-mobile: 56px;
 
 // 메뉴 컬럼 - GNB 아이템과 동일한 너비
 .menuColumn {
-  width: 170px; // GNB 아이템과 동일한 너비
+  width: 180px; // GNB 아이템과 동일한 너비
   flex-shrink: 0;
   padding: 0;
   text-align: center;

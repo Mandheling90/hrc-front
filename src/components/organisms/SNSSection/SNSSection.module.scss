@@ -3,6 +3,28 @@
 .section3 {
   position: relative;
   margin-top: 80px;
+  min-height: 682px;
+  isolation: isolate;
+
+  // Background shape
+  &::before {
+    content: '';
+    display: block;
+    width: 96%;
+    height: 447px;
+    border-radius: 0 129px 40px 0;
+    background-color: #fff5ea;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    @media (max-width: $breakpoint-lg) {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
 
   .container {
     width: 100%;
@@ -15,35 +37,18 @@
     @media (max-width: $breakpoint-xl) {
       padding-bottom: 100px;
     }
+  }
 
-    &::after {
-      content: '';
-      display: block;
-      width: 200vw;
-      height: 566px;
-      border-radius: 0 130px 40px 0;
-      background-color: #fdf5eb;
-      position: absolute;
-      bottom: 0;
-      right: -5%;
-      z-index: -1;
-    }
+  .sectionTitle {
+    font-size: 32px;
+    font-weight: 600;
+    font-family: 'Paperlogy', sans-serif;
+    line-height: 48px;
+    color: var(--color-darken, #000);
 
-    .sectionTitle {
-      font-size: 33px;
-      font-weight: 700;
-      font-family: 'Paperozi', sans-serif;
-      margin-bottom: 100px;
-      color: var(--color-darken, #000);
-
-      @media (max-width: $breakpoint-2xl) {
-        margin-bottom: 80px;
-      }
-    }
-
-    .flex {
-      display: flex;
-      gap: 20px;
+    @media (max-width: $breakpoint-2xl) {
+      font-size: 28px;
+      line-height: 42px;
     }
   }
 }
@@ -51,14 +56,26 @@
 .verticalText {
   overflow: hidden;
   position: absolute;
-  top: 0px;
-  left: 0;
+  top: 14px;
+  left: 305px;
+  width: calc(100% - 305px);
+  pointer-events: none;
+
+  @media (max-width: $breakpoint-2xl) {
+    left: 200px;
+    width: calc(100% - 200px);
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    left: 100px;
+    width: calc(100% - 100px);
+  }
 
   .track {
     display: flex;
     width: max-content;
     will-change: transform;
-    animation: marquee 15s linear infinite;
+    animation: marquee 20s linear infinite;
   }
 
   .con {
@@ -75,11 +92,22 @@
     font-size: 120px;
     font-style: normal;
     font-weight: 800;
-    line-height: 150%;
+    line-height: 180px;
     letter-spacing: -2.4px;
 
     @media (max-width: $breakpoint-2xl) {
-      font-size: 108px;
+      font-size: 100px;
+      line-height: 150px;
+    }
+
+    @media (max-width: $breakpoint-xl) {
+      font-size: 80px;
+      line-height: 120px;
+    }
+
+    @media (max-width: $breakpoint-lg) {
+      font-size: 60px;
+      line-height: 90px;
     }
   }
 }
@@ -93,103 +121,150 @@
   }
 }
 
-.thumbSwiper {
-  height: 100%;
-  max-width: 420px;
-  margin: 0;
+.contentWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 112px;
+  gap: 40px;
 
   @media (max-width: $breakpoint-2xl) {
-    max-width: 380px;
+    margin-top: 90px;
+    gap: 30px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 60px;
+  }
+}
+
+.leftContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 415px;
+  flex-shrink: 0;
+
+  @media (max-width: $breakpoint-2xl) {
+    height: 380px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    height: auto;
+    width: 100%;
+    gap: 40px;
+  }
+}
+
+.thumbSlider {
+  width: 564px;
+  overflow: hidden;
+
+  @media (max-width: $breakpoint-2xl) {
+    width: 504px;
   }
 
   @media (max-width: $breakpoint-xl) {
-    max-width: 340px;
+    width: 464px;
   }
 
-  .swiperWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  @media (max-width: $breakpoint-lg) {
+    width: 100%;
+  }
+}
+
+.thumbTrack {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.thumbItem {
+  flex: 0 0 calc(50% - 12px);
+  min-width: calc(50% - 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 190px;
+
+  @media (max-width: $breakpoint-2xl) {
+    height: auto;
   }
 
-  .swiperSlide {
-    cursor: pointer;
-    max-width: 200px;
-    opacity: 0.6;
-    transition: opacity 0.3s;
+  .thumbImg {
+    width: 100%;
+    height: 150px;
+    border-radius: 20px;
+    overflow: hidden;
+    flex-shrink: 0;
 
-    &.active {
-      opacity: 1;
+    @media (max-width: $breakpoint-2xl) {
+      height: 135px;
     }
 
-    .imgBox {
-      border-radius: 10px;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
+  }
 
-    p {
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      margin-top: 12px;
-      font-weight: 500;
-      color: var(--color-darken, #000);
+  .thumbTitle {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    color: var(--color-darken, #000);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+
+    @media (max-width: $breakpoint-2xl) {
+      font-size: 16px;
+      line-height: 24px;
     }
   }
 }
 
-.mainSwiper {
-  width: 900px;
+.mainImage {
+  width: 738px;
+  height: 415px;
   flex-shrink: 0;
-  margin: 0;
-  margin-left: auto;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
-  border-radius: 70px;
-  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+
+  &.fading {
+    opacity: 0;
+  }
 
   @media (max-width: $breakpoint-2xl) {
-    width: 760px;
-    border-radius: 50px;
+    width: 600px;
+    height: 340px;
   }
 
   @media (max-width: $breakpoint-xl) {
-    width: 680px;
-    border-radius: 40px;
+    width: 500px;
+    height: 280px;
   }
 
-  .swiperWrapper {
-    display: flex;
-    position: relative;
+  @media (max-width: $breakpoint-lg) {
+    width: 100%;
+    height: auto;
+  }
+
+  a {
+    display: block;
     width: 100%;
     height: 100%;
-  }
 
-  .swiperSlide {
-    flex-shrink: 0;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.6s;
-
-    &.active {
-      opacity: 1;
-    }
-
-    a {
+    img {
       width: 100%;
-      display: block;
-
-      img {
-        width: 100%;
-        object-fit: contain;
-        display: block;
-      }
+      height: 100%;
+      object-fit: cover;
     }
   }
 }
@@ -197,25 +272,34 @@
 .customControl {
   display: flex;
   align-items: center;
-  gap: 12px;
-  position: absolute;
-  left: 0;
-  bottom: 150px;
-  z-index: 1;
+  gap: 40px;
+
+  @media (max-width: $breakpoint-lg) {
+    gap: 24px;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
   .current,
   .total {
+    font-family: 'Pretendard', sans-serif;
     font-size: 18px;
     font-weight: 600;
+    line-height: 27px;
     color: var(--color-darken, #000);
   }
 
   .progress {
     position: relative;
-    width: 100px;
+    width: 85px;
     height: 2px;
-    background: #e5e1dc;
+    background: #bbb;
     overflow: hidden;
+    border-radius: 10px;
 
     .bar {
       position: absolute;
@@ -223,34 +307,51 @@
       top: 0;
       height: 100%;
       width: 0;
-      background: #b87352;
+      background: var(--color-primary, #9f1836);
+      border-radius: 10px;
       transition: width 0.3s;
     }
   }
 
+  .controlBtns {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .prev,
   .next {
-    width: 36px;
-    height: 36px;
+    width: 54px;
+    height: 54px;
+    padding: 15px;
     border-radius: 50%;
-    border: 0;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 2px solid #e8e8e8;
+    background: var(--color-white, #fff);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
 
-    &::after {
-      content: '';
-      display: block;
-      font-size: 14px;
-      color: #000;
+    @media (max-width: $breakpoint-2xl) {
+      width: 48px;
+      height: 48px;
+      padding: 12px;
     }
-  }
 
-  .prev::after {
-    content: '◀';
-  }
+    &:hover {
+      border-color: #ccc;
+      background: #f9f9f9;
+    }
 
-  .next::after {
-    content: '▶';
+    svg {
+      width: 24px;
+      height: 24px;
+
+      @media (max-width: $breakpoint-2xl) {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }

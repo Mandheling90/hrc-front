@@ -100,6 +100,9 @@ export const Header: React.FC = () => {
   const { hospital } = useHospital()
   const pathname = usePathname()
 
+  // 메인페이지 여부 (투명 헤더)
+  const isMainPage = pathname === '/'
+
   // 임시 로그인 상태
   const isLoggedIn = false
   const menuItems = useMemo(() => {
@@ -196,7 +199,7 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* 헤더 */}
-      <header className={styles.header}>
+      <header className={`${styles.header} ${isMainPage ? styles.transparent : ''}`}>
         <div className={styles.headerTop}>
           <div className={styles.container}>
             <div className={styles.headerInner}>
@@ -210,8 +213,8 @@ export const Header: React.FC = () => {
               {/* 데스크톱 GNB */}
               <nav
                 className={styles.gnb}
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
+                onMouseEnter={() => !isMainPage && setIsDropdownOpen(true)}
+                onMouseLeave={() => !isMainPage && setIsDropdownOpen(false)}
               >
                 <ul className={styles.gnbList}>
                   {menuItems.map((item, index) => (
@@ -276,9 +279,9 @@ export const Header: React.FC = () => {
 
         {/* 드롭다운 메뉴 */}
         <div
-          className={`${styles.dropdown} ${isDropdownOpen ? styles.open : ''}`}
-          onMouseEnter={() => setIsDropdownOpen(true)}
-          onMouseLeave={() => setIsDropdownOpen(false)}
+          className={`${styles.dropdown} ${isDropdownOpen && !isMainPage ? styles.open : ''}`}
+          onMouseEnter={() => !isMainPage && setIsDropdownOpen(true)}
+          onMouseLeave={() => !isMainPage && setIsDropdownOpen(false)}
         >
           <div className={styles.container}>
             <div className={styles.dropdownInner}>

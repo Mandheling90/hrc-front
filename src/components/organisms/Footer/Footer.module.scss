@@ -1,162 +1,421 @@
 @import '@/styles/variables.scss';
 
 .footer {
-  background-color: #111;
-  padding: 80px 0 0;
-
-  @media (max-width: $breakpoint-md) {
-    padding: 20px 0 120px;
-  }
-
   .container {
     width: 100%;
     max-width: $container-max-width;
     padding: 0 20px;
     margin: 0 auto;
   }
+}
 
-  .top {
-    display: flex;
+// Partner Bar
+.partnerBar {
+  padding: 15px 0;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.partnerContainer {
+  width: 100%;
+  max-width: $container-max-width;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.partnerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 300px;
+
+  @media (max-width: $breakpoint-lg) {
+    gap: 100px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    gap: 40px;
+  }
+}
+
+.partnerSlider {
+  flex: 1;
+  overflow: hidden;
+  // CSS 변수: 이동 단위 (아이템 너비 + 갭)
+  --step: calc(25% + 10px);
+
+  @media (max-width: $breakpoint-lg) {
+    --step: calc(25% + 6px);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    --step: calc(50% + 8px);
+  }
+}
+
+.partnerTrack {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+
+  @media (max-width: $breakpoint-lg) {
+    gap: 24px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    gap: 16px;
+  }
+}
+
+.partnerItem {
+  // 4개가 보이도록: (100% - gap*3) / 4
+  flex: 0 0 calc(25% - 30px);
+  min-width: calc(25% - 30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+
+  @media (max-width: $breakpoint-lg) {
+    flex: 0 0 calc(25% - 18px);
+    min-width: calc(25% - 18px);
+    height: 32px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    // 모바일: 2개 보이도록
+    flex: 0 0 calc(50% - 8px);
+    min-width: calc(50% - 8px);
+    height: 28px;
+  }
+
+  img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
+
+.partnerControl {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.controlBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #999;
+    background: #f5f5f5;
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  &.pauseBtn svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+// Main Footer
+.mainFooter {
+  background-color: #f0f0f0;
+  padding: 50px 0;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 30px 0;
+  }
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+// Logo
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+
+  img {
+    width: 48px;
+    height: 48px;
 
     @media (max-width: $breakpoint-md) {
-      flex-direction: column;
-      align-items: center;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.logoTitle {
+  font-size: 17px;
+  font-family: 'Korea University Centennial OTF', sans-serif;
+  color: #8c8c8c;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 15px;
+  }
+}
+
+.logoSubtitle {
+  font-size: 9px;
+  font-family: 'Korea University Centennial OTF', sans-serif;
+  color: #8c8c8c;
+  text-align: center;
+}
+
+// Info
+.footerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 596px;
+
+  @media (max-width: $breakpoint-lg) {
+    max-width: 100%;
+  }
+}
+
+.policyLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  a {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    color: var(--color-darken, #000);
+    text-decoration: none;
+
+    &.primary {
+      color: #8c0028;
     }
 
-    h2 {
-      width: 230px;
-      height: 53px;
-      background-image: url(/assets/images/logo-bot.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-      text-indent: -9999px;
-      overflow: hidden;
-    }
-
-    .link {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-
-      @media (max-width: $breakpoint-md) {
-        margin-left: 0;
-        margin: 10px auto;
-        gap: 5px;
-        flex-wrap: wrap;
-      }
-
-      a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 14px;
-
-        @media (max-width: $breakpoint-md) {
-          width: calc(50% - 3px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-        }
-
-        &.colorPrimary {
-          color: var(--color-primary, #9f1836) !important;
-        }
-
-        &.textBold {
-          font-weight: bold;
-        }
-      }
-
-      .separator {
-        display: inline-block;
-        width: 1px;
-        height: 12px;
-        background-color: #fff;
-        margin-right: 20px;
-
-        @media (max-width: $breakpoint-md) {
-          display: none;
-        }
-      }
+    @media (max-width: $breakpoint-md) {
+      font-size: 14px;
+      line-height: 21px;
     }
   }
 
-  .infoBox {
-    margin-top: 40px;
-    color: var(--gray-300, #dee2e6);
+  .separator {
+    width: 1px;
+    height: 10px;
+    background-color: #8c8c8c;
+    display: inline-block;
+    transform: rotate(90deg);
+  }
+}
+
+.addressInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  p {
     font-size: 14px;
-    letter-spacing: -0.5px;
+    line-height: 21px;
+    color: #636363;
+    margin: 0;
+  }
+}
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.socialBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 20px 5px 5px;
+  border-radius: 50px;
+  border: 1px solid #d9d9d9;
+  text-decoration: none;
+
+  .socialIcon {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
     display: flex;
-
-    @media (max-width: $breakpoint-md) {
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    .info {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 16px;
-      color: #fff;
-
-      @media (max-width: $breakpoint-md) {
-        text-align: center;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      address {
-        font-style: normal;
-      }
-
-      .flex {
-        display: flex;
-        align-items: center;
-        gap: 50px;
-
-        @media (max-width: $breakpoint-md) {
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-        }
-
-        span {
-          display: block;
-        }
-      }
-    }
-
-    .mark {
-      width: 65px;
-      height: 65px;
-      margin-left: auto;
-
-      @media (max-width: $breakpoint-md) {
-        margin-left: 0;
-        margin-top: 20px;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-    }
+    align-items: center;
+    justify-content: center;
   }
 
-  .copy {
-    font-size: 14px;
-    color: #fff;
-    margin-top: 50px;
+  span:last-child {
+    font-size: 18px;
+    color: #636363;
 
     @media (max-width: $breakpoint-md) {
-      text-align: center;
-      margin-top: 20px;
+      font-size: 14px;
+    }
+  }
+}
+
+.copyright {
+  font-size: 14px;
+  line-height: 21px;
+  color: #636363;
+  margin: 0;
+}
+
+// Right
+.footerRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+  gap: 24px;
+
+  @media (max-width: $breakpoint-lg) {
+    align-items: flex-start;
+    width: 100%;
+  }
+}
+
+.dropdownBtns {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+}
+
+.dropdownBtn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  background-color: #636363;
+  border-radius: 45px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .plusIcon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: #fff;
+    }
+
+    &::before {
+      width: 15px;
+      height: 2px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &::after {
+      width: 2px;
+      height: 15px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.certifications {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.certItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  background-color: #fff;
+  max-width: 317px;
+
+  @media (max-width: $breakpoint-lg) {
+    max-width: 100%;
+    flex: 1;
+    min-width: 280px;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+}
+
+.certText {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-size: 14px;
+    line-height: 21px;
+    color: #636363;
+    margin: 0;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 12px;
+      line-height: 18px;
     }
   }
 }

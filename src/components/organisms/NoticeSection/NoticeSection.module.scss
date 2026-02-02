@@ -1,358 +1,419 @@
 @import '@/styles/variables.scss';
 
 .section2 {
-  margin-top: 80px;
+  padding: 80px 0;
 
-  .container {
-    width: 100%;
-    max-width: $container-max-width;
-    padding: 0 20px;
-    margin: 0 auto;
+  @media (max-width: $breakpoint-lg) {
+    padding: 60px 0;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+  gap: 80px;
+  align-items: flex-end;
+
+  @media (max-width: $breakpoint-2xl) {
+    gap: 50px;
   }
 
-  .flex {
-    display: flex;
-    gap: 50px;
+  @media (max-width: $breakpoint-xl) {
+    gap: 40px;
+  }
 
-    @media (max-width: $breakpoint-2xl) {
-      gap: 36px;
-    }
-
-    @media (max-width: $breakpoint-xl) {
-      gap: 28px;
-    }
-
-    @media (max-width: $breakpoint-lg) {
-      flex-direction: column;
-    }
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+    gap: 40px;
+    align-items: stretch;
   }
 }
 
 .notice {
-  width: 100%;
-
-  ul {
-    margin-top: 40px;
-    list-style: none;
-    padding: 0;
-
-    @media (max-width: $breakpoint-2xl) {
-      margin-top: 32px;
-    }
-
-    li {
-      & + li {
-        margin-top: 24px;
-      }
-
-      a {
-        height: 90px;
-        display: flex;
-        align-items: center;
-        border-radius: 10px;
-        background: var(--color-white, #fff);
-        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
-        gap: 40px;
-        padding: 0 48px;
-        text-decoration: none;
-        transition: all 0.3s;
-
-        @media (max-width: $breakpoint-2xl) {
-          height: 84px;
-          gap: 32px;
-          padding: 0 36px;
-        }
-
-        &:hover {
-          box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        span {
-          font-size: 22px;
-          font-weight: 500;
-          width: calc(100% - 160px);
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 1;
-          color: var(--color-darken, #000);
-
-          @media (max-width: $breakpoint-2xl) {
-            font-size: 20px;
-            width: calc(100% - 140px);
-          }
-        }
-
-        em {
-          display: block;
-          width: 160px;
-          flex-shrink: 0;
-          padding-left: 40px;
-          margin-left: 40px;
-          position: relative;
-          font-size: 22px;
-          color: var(--gray-500, #adb5bd);
-          font-style: normal;
-
-          @media (max-width: $breakpoint-2xl) {
-            width: 140px;
-            font-size: 20px;
-            padding-left: 32px;
-            margin-left: 32px;
-          }
-
-          &::before {
-            content: '';
-            width: 1px;
-            height: 60%;
-            background-color: var(--gray-300, #dee2e6);
-            position: absolute;
-            left: 0px;
-            top: 50%;
-            transform: translateY(-50%);
-          }
-        }
-      }
-    }
-  }
+  flex: 1;
+  min-width: 0;
 }
 
 .titleWrap {
   display: flex;
   align-items: center;
-}
-
-.sectionTitle {
-  font-size: 33px;
-  font-weight: 700;
-  font-family: 'Paperozi', sans-serif;
-  color: var(--color-darken, #000);
-}
-
-.tabsWrap {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--gray-500, #adb5bd);
-  border-radius: 22.5px;
-
-  .tabs {
-    --active-index: 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    button {
-      flex: 1 0 50%;
-      font-size: 18px;
-      color: var(--gray-500, #adb5bd);
-      font-weight: 600;
-      height: 45px;
-      border-radius: 22.5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 20px;
-      background-color: transparent;
-      transition: color 0.3s;
-      z-index: 1;
-      position: relative;
-      border: none;
-      cursor: pointer;
-
-      &.on {
-        color: var(--color-white, #fff);
-      }
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 45px;
-      border-radius: 22.5px;
-      background-color: var(--color-darken, #000);
-      z-index: 0;
-      transform: translateX(calc(var(--active-index) * 100%));
-      transition: transform 0.3s ease;
-    }
-  }
-
-  .more {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    position: relative;
-    background-color: var(--gray-200, #e9ecef);
-    margin-left: 10px;
-    display: block;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 2px;
-      height: 20px;
-      background: var(--gray-600, #6c757d);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 20px;
-      height: 2px;
-      background: var(--gray-600, #6c757d);
-    }
-  }
-}
-
-.swiper {
-  width: 600px;
-  height: 412px;
-  margin-left: auto;
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  flex-shrink: 0;
+  justify-content: space-between;
+  margin-bottom: 40px;
 
   @media (max-width: $breakpoint-2xl) {
-    width: 520px;
-    height: 381.5px;
+    margin-bottom: 32px;
   }
 
   @media (max-width: $breakpoint-lg) {
-    width: 60%;
-    height: 100%;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 600;
+  font-family: 'Paperlogy', sans-serif;
+  line-height: 48px;
+  color: var(--color-darken, #000);
+
+  @media (max-width: $breakpoint-2xl) {
+    font-size: 28px;
+    line-height: 42px;
   }
 
-  .swiperWrapper {
-    display: flex;
-    width: 100%;
-    height: 100%;
+  @media (max-width: $breakpoint-xl) {
+    font-size: 24px;
+    line-height: 36px;
+  }
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 32px;
+  height: 48px;
+  // padding: 0 15px 0 20px;
+  gap: 0;
+  border: 1px solid #e0e0e0;
+
+  @media (max-width: $breakpoint-2xl) {
+    height: 56px;
+    // padding: 0 12px 0 16px;
   }
 
-  .swiperSlide {
-    flex-shrink: 0;
-    width: 100%;
-    height: 100%;
-
-    a {
-      display: block;
-      width: 100%;
-      height: 100%;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
+  @media (max-width: $breakpoint-xl) {
+    height: 50px;
+    // padding: 0 10px 0 14px;
   }
 
-  .swiperControl {
-    width: 100%;
+  button {
+    font-size: 18px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.72px;
     height: 48px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0 25px;
     display: flex;
     align-items: center;
-    padding: 0 30px;
-
-    @media (max-width: $breakpoint-2xl) {
-      height: 44px;
-      padding: 0 24px;
-    }
-  }
-
-  .swiperPagination {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 700;
-    width: auto;
-    position: static;
+    justify-content: center;
+    background-color: transparent;
+    color: #888;
+    border: none;
+    border-radius: 55px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
 
     @media (max-width: $breakpoint-2xl) {
       font-size: 16px;
+      padding: 0 12px;
     }
 
-    .current {
-      font-size: 20px;
+    @media (max-width: $breakpoint-xl) {
+      font-size: 14px;
+      padding: 0 10px;
+    }
+
+    &.on {
+      background-color: #000;
       color: #fff;
-
-      @media (max-width: $breakpoint-2xl) {
-        font-size: 18px;
-      }
-    }
-
-    .sep {
-      margin: 0 4px;
     }
   }
 
-  .controlBtn {
+  .moreBtn {
+    width: 48px;
+    height: 48px;
+    min-width: 40px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-left: auto;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+    padding: 0;
+    // margin-left: 10px;
+    color: #666;
 
-    button {
-      width: 24px;
-      height: 24px;
-      background-color: #000;
-      border-radius: 5px;
-      position: static;
+    @media (max-width: $breakpoint-2xl) {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+    }
+
+    @media (max-width: $breakpoint-xl) {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+    }
+
+    &:hover {
+      background: #e5e5e5;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.noticeList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (max-width: $breakpoint-2xl) {
+    gap: 20px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    gap: 16px;
+  }
+
+  li {
+    a {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 0;
-      font-size: 0;
-      pointer-events: auto;
-      cursor: pointer;
-      border: none;
+      gap: 40px;
+      padding: 30px 48px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
+      text-decoration: none;
+      transition: all 0.3s;
 
-      &.swiperButtonPrev::before {
-        content: '';
-        width: 12px;
-        height: 12px;
-        display: block;
-        background-image: url(/images/icon/icon-left.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center;
+      @media (max-width: $breakpoint-2xl) {
+        gap: 32px;
+        padding: 24px 36px;
       }
 
-      &.swiperButtonNext::before {
-        content: '';
-        width: 12px;
-        height: 12px;
-        display: block;
-        background-image: url(/images/icon/icon-right.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center;
+      @media (max-width: $breakpoint-xl) {
+        gap: 24px;
+        padding: 20px 24px;
       }
 
-      &.swiperPause::before {
-        content: '';
-        width: 12px;
-        height: 12px;
-        display: block;
-        background-image: url(/images/icon/icon-pause.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center;
+      @media (max-width: $breakpoint-lg) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 20px;
       }
+
+      &:hover {
+        box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.noticeTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: $breakpoint-2xl) {
+    font-size: 22px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    font-size: 20px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    font-size: 18px;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #ccc;
+  flex-shrink: 0;
+
+  @media (max-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+.noticeDate {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: #333;
+  flex-shrink: 0;
+
+  @media (max-width: $breakpoint-2xl) {
+    font-size: 18px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    font-size: 16px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+// 핫라인 카드
+.hotlineCard {
+  width: 600px;
+  height: 440px;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #fff7e2;
+
+  @media (max-width: $breakpoint-2xl) {
+    width: 500px;
+    height: 380px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    width: 420px;
+    height: 340px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+}
+
+.slideContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  width: 100%;
+  overflow: hidden;
+
+  @media (max-width: $breakpoint-xl) {
+    bottom: 45px;
+  }
+}
+
+.slideTrack {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.doctorImg {
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.hotlineControl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  z-index: 4;
+
+  @media (max-width: $breakpoint-xl) {
+    padding: 10px 20px;
+  }
+}
+
+.pagination {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+
+  @media (max-width: $breakpoint-xl) {
+    font-size: 18px;
+  }
+
+  .current {
+    color: #fff;
+  }
+
+  .total {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.controlBtns {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  button {
+    width: 24px;
+    height: 24px;
+    background: #000;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #333;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  .pauseBtn {
+    svg {
+      width: 10px;
+      height: 10px;
     }
   }
 }
