@@ -18,10 +18,7 @@ import { BasicTreatmentStep } from '@/components/organisms/BasicTreatmentStep/Ba
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import styles from './page.module.scss'
 
-const breadcrumbItems = [
-  { label: '마이페이지', href: '/mypage' },
-  { label: '협력병원 정보수정' }
-]
+const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '협력병원 정보수정' }]
 
 export default function EditHospitalPage() {
   const router = useRouter()

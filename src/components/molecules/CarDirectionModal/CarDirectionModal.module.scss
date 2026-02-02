@@ -111,9 +111,11 @@
   background-image: repeating-linear-gradient(
     to right,
     $gray-8 0px,
-    $gray-8 20px,  // 실선: 0px ~ 20px
-    transparent 20px,  // 간격 시작: 20px
-    transparent 28px   // 간격 끝: 28px (총 간격 8px)
+    $gray-8 20px,
+    // 실선: 0px ~ 20px
+    transparent 20px,
+    // 간격 시작: 20px
+    transparent 28px // 간격 끝: 28px (총 간격 8px)
   );
   background-size: 28px 3px;
   background-repeat: repeat-x;

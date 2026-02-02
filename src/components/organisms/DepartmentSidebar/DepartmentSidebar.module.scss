@@ -76,7 +76,10 @@ $scrollbar-track: $gray-4;
   font-size: $font-size-sm;
   font-weight: $font-weight-semibold;
   cursor: pointer;
-  transition: background-color $transition-base, border-color $transition-base, color $transition-base;
+  transition:
+    background-color $transition-base,
+    border-color $transition-base,
+    color $transition-base;
   display: flex;
   align-items: center;
   justify-content: center;

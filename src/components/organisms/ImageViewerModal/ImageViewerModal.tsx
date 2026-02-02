@@ -163,12 +163,7 @@ export const ImageViewerModal: React.FC<ImageViewerModalProps> = ({
             <div className={styles.detailSection}>
               <div className={styles.detailViewer}>
                 {/* 이전 버튼 */}
-                <button
-                  type='button'
-                  className={styles.navButton}
-                  onClick={handlePrevImage}
-                  aria-label='이전 이미지'
-                >
+                <button type='button' className={styles.navButton} onClick={handlePrevImage} aria-label='이전 이미지'>
                   <ChevronLeftIcon width={24} height={24} stroke='#000000' />
                 </button>
 
@@ -191,12 +186,7 @@ export const ImageViewerModal: React.FC<ImageViewerModalProps> = ({
                 </div>
 
                 {/* 다음 버튼 */}
-                <button
-                  type='button'
-                  className={styles.navButton}
-                  onClick={handleNextImage}
-                  aria-label='다음 이미지'
-                >
+                <button type='button' className={styles.navButton} onClick={handleNextImage} aria-label='다음 이미지'>
                   <ChevronRightIcon width={24} height={24} stroke='#000000' />
                 </button>
               </div>

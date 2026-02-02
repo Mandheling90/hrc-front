@@ -20,31 +20,33 @@ export default function AboutIntroPage() {
   const { pageContent, hospitalId } = useHospital()
   const aboutIntro = pageContent.aboutIntro
 
-  // aboutIntro가 없으면 빈 화면 반환
-  if (!aboutIntro) {
-    return null
-  }
-
   // 안산병원일 때 태블릿 스타일 적용
   const applyTabletStyle = hospitalId === 'ansan'
 
   // 운영 안내 카드 데이터 변환
   const operationCards = useMemo(() => {
+    if (!aboutIntro) return []
     return aboutIntro.operationInfo.cards.map(card => ({
       icon: getIcon(card.icon),
       title: card.title,
       rows: card.rows
     }))
-  }, [aboutIntro.operationInfo.cards])
+  }, [aboutIntro])
 
   // 진료의뢰 절차 단계 데이터 변환
   const procedureSteps = useMemo(() => {
+    if (!aboutIntro) return []
     return aboutIntro.procedureFlow.steps.map(step => ({
       chip: step.chip,
       items: step.items,
       stepIcon: getIcon(step.stepIcon)
     }))
-  }, [aboutIntro.procedureFlow.steps])
+  }, [aboutIntro])
+
+  // aboutIntro가 없으면 빈 화면 반환
+  if (!aboutIntro) {
+    return null
+  }
 
   return (
     <div className={styles.wrap}>

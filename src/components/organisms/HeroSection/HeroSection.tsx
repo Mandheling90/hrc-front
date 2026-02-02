@@ -6,14 +6,7 @@ import { useHospital } from '@/hooks'
 import styles from './HeroSection.module.scss'
 
 // 전화 아이콘
-const PhoneIcon = () => (
-  <img
-    src='/images/icon-phone.svg'
-    alt='전화'
-    width={57}
-    height={56}
-  />
-)
+const PhoneIcon = () => <img src='/images/icon-phone.svg' alt='전화' width={57} height={56} />
 
 // 다운로드 아이콘
 const DownloadIcon = () => (
@@ -106,7 +99,13 @@ const HospitalIcon = () => (
       />
       <path d='M26.3574 0H22.6602V10.7332H26.3574V0Z' fill='white' />
       <path d='M29.9105 3.53394H19.0859V7.20001H29.9105V3.53394Z' fill='white' />
-      <path d='M1.11328 43.8958H47.886' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
+      <path
+        d='M1.11328 43.8958H47.886'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
       <path
         d='M17.263 19.1609H13.2539V23.1362H17.263V19.1609Z'
         stroke='white'
@@ -169,17 +168,83 @@ const CalendarIcon = () => (
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path d='M47.9201 16.1978H1.30859' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M47.9201 30.3643H1.30859' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M13.2422 43.275V16.8201' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M25.0312 43.275V16.8201' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M36.8125 43.275V16.8201' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M13.7812 6.66461V1.27563' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M20.918 6.66461V1.27563' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M6.66016 6.66461V1.27563' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M35.7227 6.66461V1.27563' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M42.8438 6.66461V1.27563' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M28.5859 6.66461V1.27563' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
+      <path
+        d='M47.9201 16.1978H1.30859'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M47.9201 30.3643H1.30859'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M13.2422 43.275V16.8201'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M25.0312 43.275V16.8201'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M36.8125 43.275V16.8201'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M13.7812 6.66461V1.27563'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M20.918 6.66461V1.27563'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M6.66016 6.66461V1.27563'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M35.7227 6.66461V1.27563'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M42.8438 6.66461V1.27563'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M28.5859 6.66461V1.27563'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
       <path
         d='M47.7415 24.189C53.2359 24.189 57.69 19.8479 57.69 14.493C57.69 9.13796 53.2359 4.79688 47.7415 4.79688C42.2471 4.79688 37.793 9.13796 37.793 14.493C37.793 19.8479 42.2471 24.189 47.7415 24.189Z'
         fill='white'
@@ -188,7 +253,13 @@ const CalendarIcon = () => (
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path d='M47.5234 19.0042V14.197L51.262 11.9414' stroke='#3A3A3A' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
+      <path
+        d='M47.5234 19.0042V14.197L51.262 11.9414'
+        stroke='#3A3A3A'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
     </g>
     <defs>
       <clipPath id='clip0_calendar'>
@@ -223,9 +294,27 @@ const MapIcon = () => (
         strokeLinecap='round'
         strokeLinejoin='round'
       />
-      <path d='M11.4414 40.8364V23.6621' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M32.7969 40.8364V23.6621' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
-      <path d='M21.7656 44.3055V34.5908' stroke='white' strokeWidth='2.41881' strokeLinecap='round' strokeLinejoin='round' />
+      <path
+        d='M11.4414 40.8364V23.6621'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M32.7969 40.8364V23.6621'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M21.7656 44.3055V34.5908'
+        stroke='white'
+        strokeWidth='2.41881'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
     </g>
     <defs>
       <clipPath id='clip0_map'>
@@ -360,11 +449,7 @@ export const HeroSection: React.FC = () => {
                 return (
                   <li key={index}>
                     <Link href={link.href}>
-                      {IconComponent ? (
-                        <IconComponent />
-                      ) : (
-                        <i className={`icon ${link.icon} ${styles.icon}`}></i>
-                      )}
+                      {IconComponent ? <IconComponent /> : <i className={`icon ${link.icon} ${styles.icon}`}></i>}
                       <p>{link.label}</p>
                     </Link>
                   </li>

@@ -14,10 +14,7 @@ import { ClinicStaffInfoStep } from '@/components/organisms/ClinicStaffInfoStep/
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import styles from './page.module.scss'
 
-const breadcrumbItems = [
-  { label: '마이페이지', href: '/mypage' },
-  { label: '협력의원 정보수정' }
-]
+const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '협력의원 정보수정' }]
 
 export default function EditClinicPage() {
   const router = useRouter()

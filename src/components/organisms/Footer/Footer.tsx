@@ -52,11 +52,7 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
 
   // 무한 루프를 위해 앞뒤로 아이템 복제 (앞에 4개, 뒤에 4개 추가)
-  const extendedLogos = [
-    ...partnerLogos.slice(-4),
-    ...partnerLogos,
-    ...partnerLogos.slice(0, 4)
-  ]
+  const extendedLogos = [...partnerLogos.slice(-4), ...partnerLogos, ...partnerLogos.slice(0, 4)]
 
   const handlePartnerPrev = () => {
     setIsTransitioning(true)
@@ -107,7 +103,13 @@ export const Footer: React.FC = () => {
             <div className={styles.partnerControl}>
               <button className={styles.controlBtn} onClick={handlePartnerPrev} aria-label='이전'>
                 <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M15 4L7 12L15 20' stroke='#686868' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+                  <path
+                    d='M15 4L7 12L15 20'
+                    stroke='#686868'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
                 </svg>
               </button>
               <button
@@ -128,7 +130,13 @@ export const Footer: React.FC = () => {
               </button>
               <button className={styles.controlBtn} onClick={handlePartnerNext} aria-label='다음'>
                 <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M9 4L17 12L9 20' stroke='#686868' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+                  <path
+                    d='M9 4L17 12L9 20'
+                    stroke='#686868'
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
                 </svg>
               </button>
             </div>
@@ -162,7 +170,9 @@ export const Footer: React.FC = () => {
                 ))}
               </div>
               <div className={styles.addressInfo}>
-                <p>주소 : (우) {hospital.address.zipCode}. {hospital.address.full}</p>
+                <p>
+                  주소 : (우) {hospital.address.zipCode}. {hospital.address.full}
+                </p>
                 <p>대표번호 : {hospital.contact.reservation}</p>
               </div>
               <div className={styles.socialLinks}>

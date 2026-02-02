@@ -291,7 +291,9 @@
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
 
   &:hover {
     background-color: $gray-2;

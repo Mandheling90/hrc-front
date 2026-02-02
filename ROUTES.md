@@ -3,12 +3,14 @@
 ## 📋 현재 작업 완료된 경로 (Header.tsx 기준)
 
 ### 홈 & 인증
+
 - `/` - 홈 페이지 ✅
 - `/login` - 로그인 ✅
 - `/signup` - 회원가입 ✅
 - `/find-user` - 아이디/비밀번호 찾기 ✅ (Header에 없음)
 
 ### 진료의뢰 메뉴
+
 - `/referral` - 진료의뢰시스템 소개 ✅
 - `/referral/request` - 진료협력센터 의뢰 ✅
 - `/referral/request/exchange` - 진료정보교류 의뢰 ✅
@@ -16,6 +18,7 @@
 - `/referral/department` - 진료과 안내 ✅
 
 ### 협력네트워크 메뉴
+
 - `/referral/network` - 협력네트워크 소개&신청 ✅
 - `/referral/network/hospital-application` - 협력병원 신청 ✅
 - `/referral/network/hospital-application/complete` - 협력병원 신청 완료 ✅ (Header에 없음)
@@ -23,6 +26,7 @@
 - `/referral/network/status` - 협력병의원 현황 ✅
 
 ### 기타
+
 - `/style-guide` - 스타일 가이드 ✅ (Header에 없음)
 
 ---
@@ -30,21 +34,25 @@
 ## 🚧 작업 예정 경로 (disabled: true)
 
 ### 협력네트워크 메뉴
+
 - `/network/hotline` - 교수직통 핫라인 ⏳
 - `/network/e-consult` - e-Consult 신청 ⏳
 
 ### 공지/정보 메뉴
+
 - `/notice/list` - 공지사항 ⏳
 - `/notice/news` - 병원소식 ⏳
 - `/notice/event` - 교육/행사 ⏳
 
 ### 진료협력센터 소개 메뉴
+
 - `/about/intro` - 진료협력센터 소개 ⏳
 - `/about/greeting` - 센터장 인사말 ⏳
 - `/about/organization` - 조직도/연락처 ⏳
 - `/about/location` - 오시는 길 ⏳
 
 ### 마이페이지 메뉴 (로그인 시 표시)
+
 - `/mypage/info` - 회원정보 수정 ⏳
 - `/mypage/hospital-info` - 협력병원 정보수정 ⏳
 - `/mypage/patients` - 의뢰환자 조회 ⏳
