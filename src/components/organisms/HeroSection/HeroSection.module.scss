@@ -249,6 +249,17 @@
     height: auto;
     min-height: 280px;
   }
+
+  .line {
+    justify-content: center;
+  }
+
+  .kakaoLink {
+    svg {
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+  }
 }
 
 .down {

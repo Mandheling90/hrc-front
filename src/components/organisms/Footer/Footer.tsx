@@ -144,8 +144,8 @@ export const Footer: React.FC = () => {
             <div className={styles.footerLogo}>
               <Image src='/images/main/logo-footer.png' alt={hospital.name.full} width={48} height={48} />
               <div className={styles.logoText}>
-                <span className={styles.logoTitle}>고려대학교 안암병원 진료협력센터</span>
-                <span className={styles.logoSubtitle}>KOREA UNIVERSITY ANAM HOSPITAL REFERRAL CENTER</span>
+                <span className={styles.logoTitle}>{hospital.name.full}</span>
+                <span className={styles.logoSubtitle}>{hospital.name.english}</span>
               </div>
             </div>
 
@@ -174,7 +174,7 @@ export const Footer: React.FC = () => {
                 ))}
               </div>
               <p className={styles.copyright}>
-                Copyright© {currentYear} by Korea University Anam Hospital All Rights Reserved.
+                Copyright© {currentYear} by {hospital.copyright} All Rights Reserved.
               </p>
             </div>
 

@@ -3,7 +3,56 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useHospital } from '@/hooks'
 import styles from './NoticeSection.module.scss'
+
+// 교육/행사 데이터 (구로병원용)
+const educationEvents = [
+  // 진료협력센터
+  {
+    id: 1,
+    title: '2025년 상반기 진료협력센터 심포지엄',
+    date: '2025.08.15',
+    image: '/images/Frame 1000006464.png',
+    category: 'center'
+  },
+  {
+    id: 2,
+    title: '협력병원 대상 최신 의료기술 세미나',
+    date: '2025.07.28',
+    image: '/images/Frame 1000006464-1.png',
+    category: 'center'
+  },
+  {
+    id: 3,
+    title: '의료진 대상 연수 프로그램 안내',
+    date: '2025.07.10',
+    image: '/images/Frame 1000006464-2.png',
+    category: 'center'
+  },
+  // 고대구로병원
+  {
+    id: 4,
+    title: '고대구로병원 건강강좌 개최',
+    date: '2025.08.10',
+    image: '/images/Frame 1000006464.png',
+    category: 'hospital'
+  },
+  {
+    id: 5,
+    title: '지역사회 건강증진 프로그램',
+    date: '2025.07.20',
+    image: '/images/Frame 1000006464-1.png',
+    category: 'hospital'
+  },
+  {
+    id: 6,
+    title: '환자안전 캠페인 행사',
+    date: '2025.07.05',
+    image: '/images/Frame 1000006464-2.png',
+    category: 'hospital'
+  }
+]
 
 const notices = [
   // 진료협력센터
@@ -41,9 +90,14 @@ const notices = [
   { id: 6, title: '최종일 교수, 보건복지부 장관표창 수상', date: '2025.06.27', category: 'hospital' }
 ]
 
-const categories = [
+const categoriesAnam = [
   { id: 'center', label: '진료협력센터' },
   { id: 'hospital', label: '고대안암병원' }
+]
+
+const categoriesGuro = [
+  { id: 'center', label: '진료협력센터' },
+  { id: 'hospital', label: '고대구로병원' }
 ]
 
 const slides = [
@@ -52,11 +106,14 @@ const slides = [
 ]
 
 export const NoticeSection: React.FC = () => {
+  const { isGuro } = useHospital()
   const [activeCategory, setActiveCategory] = useState(1)
   const [currentSlide, setCurrentSlide] = useState(0)
   const totalSlides = slides.length
 
+  const categories = isGuro ? categoriesGuro : categoriesAnam
   const filteredNotices = notices.filter(notice => notice.category === categories[activeCategory].id)
+  const filteredEvents = educationEvents.filter(event => event.category === categories[activeCategory].id)
 
   const handlePrev = () => {
     setCurrentSlide(prev => (prev > 0 ? prev - 1 : totalSlides - 1))
@@ -66,6 +123,109 @@ export const NoticeSection: React.FC = () => {
     setCurrentSlide(prev => (prev < totalSlides - 1 ? prev + 1 : 0))
   }
 
+  // 구로병원 레이아웃
+  if (isGuro) {
+    return (
+      <section className={styles.section2}>
+        <div className={styles.container}>
+          <div className={styles.flexGuro}>
+            {/* 교육/행사 */}
+            <div className={styles.education}>
+              <div className={styles.titleWrap}>
+                <h3 className={styles.sectionTitle}>교육/행사</h3>
+                <div className={styles.tabs}>
+                  {categories.map((category, index) => (
+                    <button
+                      key={category.id}
+                      className={activeCategory === index ? styles.on : ''}
+                      onClick={() => setActiveCategory(index)}
+                    >
+                      {category.label}
+                    </button>
+                  ))}
+                  <button className={styles.moreBtn} aria-label='더보기'>
+                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <path d='M8 3V13M3 8H13' stroke='#000' strokeWidth='1.5' strokeLinecap='round' />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div className={styles.eventCards}>
+                {filteredEvents.slice(0, 3).map(event => (
+                  <Link key={event.id} href={`/education/${event.id}`} className={styles.eventCard}>
+                    <div className={styles.eventImage}>
+                      <Image
+                        src={event.image}
+                        alt={event.title}
+                        width={230}
+                        height={230}
+                        style={{ objectFit: 'cover' }}
+                      />
+                    </div>
+                    <div className={styles.eventInfo}>
+                      <p className={styles.eventTitle}>{event.title}</p>
+                      <span className={styles.eventDate}>{event.date}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* 핫라인 카드 */}
+            <div className={styles.hotlineCard}>
+              <div className={styles.slideContainer}>
+                <div className={styles.slideTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                  {slides.map(slide => (
+                    <div key={slide.id} className={styles.slide}>
+                      <Image src={slide.image} alt={slide.alt} fill sizes='600px' className={styles.doctorImg} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.hotlineControl}>
+                <div className={styles.pagination}>
+                  <span className={styles.current}>{currentSlide + 1}</span>
+                  <span className={styles.total}>/{totalSlides}</span>
+                </div>
+                <div className={styles.controlBtns}>
+                  <button onClick={handlePrev} aria-label='이전'>
+                    <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <path
+                        d='M8 10L4 6L8 2'
+                        stroke='#fff'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                    </svg>
+                  </button>
+                  <button className={styles.pauseBtn} aria-label='일시정지'>
+                    <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <rect x='1' y='1' width='2' height='8' fill='#fff' />
+                      <rect x='7' y='1' width='2' height='8' fill='#fff' />
+                    </svg>
+                  </button>
+                  <button onClick={handleNext} aria-label='다음'>
+                    <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <path
+                        d='M4 10L8 6L4 2'
+                        stroke='#fff'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  // 안암병원 레이아웃 (기본)
   return (
     <section className={styles.section2}>
       <div className={styles.container}>

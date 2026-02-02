@@ -417,3 +417,184 @@
     }
   }
 }
+
+// 구로병원 레이아웃
+.flexGuro {
+  display: flex;
+  gap: 80px;
+  align-items: flex-end;
+
+  @media (max-width: $breakpoint-2xl) {
+    gap: 60px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    gap: 40px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+    gap: 40px;
+    align-items: stretch;
+  }
+}
+
+.education {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (max-width: $breakpoint-2xl) {
+    gap: 32px;
+  }
+}
+
+.eventCards {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 24px;
+
+  @media (max-width: $breakpoint-2xl) {
+    gap: 20px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    gap: 16px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.eventCard {
+  width: 230px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-decoration: none;
+  transition: transform 0.3s;
+
+  @media (max-width: $breakpoint-2xl) {
+    width: 200px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    width: 180px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    width: auto;
+    flex: 1;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.eventImage {
+  width: 230px;
+  height: 230px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e1e1e1;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: $breakpoint-2xl) {
+    width: 200px;
+    height: 200px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    width: 180px;
+    height: 180px;
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    width: 120px;
+    height: 120px;
+    aspect-ratio: auto;
+  }
+}
+
+.eventInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+
+  @media (max-width: $breakpoint-2xl) {
+    gap: 16px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    gap: 8px;
+    justify-content: center;
+  }
+}
+
+.eventTitle {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  color: #000;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  @media (max-width: $breakpoint-2xl) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    font-size: 18px;
+    line-height: 27px;
+    -webkit-line-clamp: 2;
+  }
+}
+
+.eventDate {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  color: #8c8c8c;
+
+  @media (max-width: $breakpoint-2xl) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @media (max-width: $breakpoint-xl) {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}

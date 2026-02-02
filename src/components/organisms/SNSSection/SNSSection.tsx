@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useHospital } from '@/hooks'
 import styles from './SNSSection.module.scss'
 
 const snsPosts = [
@@ -30,6 +31,7 @@ const snsPosts = [
 ]
 
 export const SNSSection: React.FC = () => {
+  const { hospital } = useHospital()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(true)
   const totalSlides = snsPosts.length
@@ -88,7 +90,7 @@ export const SNSSection: React.FC = () => {
         </div>
       </div>
       <div className='container'>
-        <h3 className={styles.sectionTitle}>고대안암병원 SNS</h3>
+        <h3 className={styles.sectionTitle}>고대{hospital.name.short} SNS</h3>
         <div className={styles.contentWrap}>
           <div className={styles.leftContent}>
             <div className={styles.thumbSlider}>
