@@ -38,8 +38,6 @@
   border-radius: $radius-lg;
 }
 
-
-
 // 교통수단 섹션
 .transportSection {
   margin-bottom: $spacing-8;
@@ -150,7 +148,7 @@
   flex-direction: row;
   gap: 10px;
   padding: 5px 30px;
-  background-color: #ED6C00;
+  background-color: #ed6c00;
   color: $color-white;
   font-size: 24px;
   font-family: $font-family-base;
@@ -302,9 +300,6 @@
     align-self: flex-end;
   }
 }
-
-
-
 
 // 구로병원 전용 스타일
 

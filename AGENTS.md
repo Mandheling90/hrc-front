@@ -319,59 +319,60 @@ Use testing frameworks compatible with Next.js 15 and React 19.
 
 ### Atoms (기본 UI 요소)
 
-| 컴포넌트 | 경로 | 용도 | 주요 Props |
-|---------|------|------|-----------|
-| **Button** | `atoms/Button` | 버튼 | `variant`: 'primary' \| 'secondary' \| 'outline' \| 'gray', `size`: 'small' \| 'medium' \| 'large', `fullWidth`, `pill` |
-| **Input** | `atoms/Input` | 입력 필드 | `label`, `error`, `width` |
-| **Select** | `atoms/Select` | 드롭다운 선택 | `options: {value, label}[]`, `value`, `onChange`, `placeholder`, `width` |
-| **Checkbox** | `atoms/Checkbox` | 체크박스 | `checked`, `onChange`, `label`, `minWidth`, `alwaysDark` |
-| **Radio** | `atoms/Radio` | 라디오 버튼 그룹 | `name`, `value`, `options: {value, label}[]`, `onChange`, `minWidth` |
-| **Textarea** | `atoms/Textarea` | 텍스트 영역 | `label`, `error`, `borderless`, `disableFocusHighlight` |
-| **InputLabel** | `atoms/InputLabel` | 입력 라벨 | `htmlFor`, `required`, `children` |
-| **StatusBadge** | `atoms/StatusBadge` | 상태 뱃지 | `variant`: 'waiting' \| 'expired' \| 'completed' |
-| **ScrollableBox** | `atoms/ScrollableBox` | 스크롤 박스 | `maxHeight`, `padding`, `hasBorder`, `hasBackground` |
-| **RouteChip** | `atoms/RouteChip` | 노선 칩 (버스/지하철) | `variant`: 'blue' \| 'deepblue' \| 'green' \| 'red' \| 'yellow', `size`: 'small' \| 'large' |
+| 컴포넌트          | 경로                  | 용도                  | 주요 Props                                                                                                              |
+| ----------------- | --------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Button**        | `atoms/Button`        | 버튼                  | `variant`: 'primary' \| 'secondary' \| 'outline' \| 'gray', `size`: 'small' \| 'medium' \| 'large', `fullWidth`, `pill` |
+| **Input**         | `atoms/Input`         | 입력 필드             | `label`, `error`, `width`                                                                                               |
+| **Select**        | `atoms/Select`        | 드롭다운 선택         | `options: {value, label}[]`, `value`, `onChange`, `placeholder`, `width`                                                |
+| **Checkbox**      | `atoms/Checkbox`      | 체크박스              | `checked`, `onChange`, `label`, `minWidth`, `alwaysDark`                                                                |
+| **Radio**         | `atoms/Radio`         | 라디오 버튼 그룹      | `name`, `value`, `options: {value, label}[]`, `onChange`, `minWidth`                                                    |
+| **Textarea**      | `atoms/Textarea`      | 텍스트 영역           | `label`, `error`, `borderless`, `disableFocusHighlight`                                                                 |
+| **InputLabel**    | `atoms/InputLabel`    | 입력 라벨             | `htmlFor`, `required`, `children`                                                                                       |
+| **StatusBadge**   | `atoms/StatusBadge`   | 상태 뱃지             | `variant`: 'waiting' \| 'expired' \| 'completed'                                                                        |
+| **ScrollableBox** | `atoms/ScrollableBox` | 스크롤 박스           | `maxHeight`, `padding`, `hasBorder`, `hasBackground`                                                                    |
+| **RouteChip**     | `atoms/RouteChip`     | 노선 칩 (버스/지하철) | `variant`: 'blue' \| 'deepblue' \| 'green' \| 'red' \| 'yellow', `size`: 'small' \| 'large'                             |
 
 ### Molecules (Atoms 조합)
 
-| 컴포넌트 | 경로 | 용도 | 주요 Props |
-|---------|------|------|-----------|
-| **Table** | `molecules/Table` | 데이터 테이블 | `columns`, `data`, `getRowKey`, `onRowClick`, `scrollableHeight`, `renderMobileCard` |
-| **Pagination** | `molecules/Pagination` | 페이지네이션 | `currentPage`, `totalPages`, `onPageChange`, `maxVisiblePages` |
-| **AlertModal** | `molecules/AlertModal` | 알림 모달 | `isOpen`, `message`, `onClose`, `closeButtonText`, `closeOnBackdropClick` |
-| **Breadcrumbs** | `molecules/Breadcrumbs` | 경로 네비게이션 | `items: {label, href?, icon?}[]` |
-| **FormField** | `molecules/FormField` | 폼 필드 (라벨+인풋+버튼) | `label`, `required`, `id`, `name`, `value`, `onChange`, `buttonText`, `onButtonClick`, `rightElement` |
-| **SectionTitle** | `molecules/SectionTitle` | 섹션 제목 (아이콘 포함) | `title`, `showIcon`, `size`: 'default' \| 'small', `noMargin` |
-| **InfoNote** | `molecules/InfoNote` | 안내 메시지 (아이콘 포함) | `message` |
-| **CardList** | `molecules/CardList` | 카드 목록 | `cards: CardRow[][]`, `getCardKey`, `scrollableHeight`, `columns`, `onCardClick`, `variant` |
-| **SearchFilterWithInfo** | `molecules/SearchFilterWithInfo` | 검색 필터 + 안내 | `selectOptions`, `searchValue`, `onSearch`, `infoMessage` |
-| **ProgressSteps** | `molecules/ProgressSteps` | 진행 단계 표시 | `steps: {id, label}[]`, `currentStep` |
-| **SectionContainer** | `molecules/SectionContainer` | 섹션 래퍼 (구분선 자동) | `header`, `children`, `scrollable` |
-| **SectionHeader** | `molecules/SectionHeader` | 섹션 헤더 | `title`, `subtitle` |
-| **LabelInputRow** | `molecules/LabelInputRow` | 라벨 + 인풋 행 | `labelType`: 'checkbox' \| 'text', `textLabel`, `inputId`, `value`, `onInputChange` |
-| **CheckboxGroup** | `molecules/CheckboxGroup` | 체크박스 그룹 | `options: CheckboxOption[]`, `minWidth`, `gap`, `keepSingleRow` |
-| **AddressField** | `molecules/AddressField` | 주소 입력 필드 | 주소 검색 + 상세주소 입력 |
-| **DoctorCard** | `molecules/DoctorCard` | 의사 정보 카드 | 의사 프로필 표시용 |
-| **ClinicCard** | `molecules/ClinicCard` | 의원 정보 카드 | 의원 정보 표시용 |
-| **WeekSelector** | `molecules/WeekSelector` | 주간 선택기 | 날짜/주 선택용 |
-| **PrevNextNavigation** | `molecules/PrevNextNavigation` | 이전/다음 네비게이션 | 페이지 이동용 |
+| 컴포넌트                 | 경로                             | 용도                      | 주요 Props                                                                                            |
+| ------------------------ | -------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Table**                | `molecules/Table`                | 데이터 테이블             | `columns`, `data`, `getRowKey`, `onRowClick`, `scrollableHeight`, `renderMobileCard`                  |
+| **Pagination**           | `molecules/Pagination`           | 페이지네이션              | `currentPage`, `totalPages`, `onPageChange`, `maxVisiblePages`                                        |
+| **AlertModal**           | `molecules/AlertModal`           | 알림 모달                 | `isOpen`, `message`, `onClose`, `closeButtonText`, `closeOnBackdropClick`                             |
+| **Breadcrumbs**          | `molecules/Breadcrumbs`          | 경로 네비게이션           | `items: {label, href?, icon?}[]`                                                                      |
+| **FormField**            | `molecules/FormField`            | 폼 필드 (라벨+인풋+버튼)  | `label`, `required`, `id`, `name`, `value`, `onChange`, `buttonText`, `onButtonClick`, `rightElement` |
+| **SectionTitle**         | `molecules/SectionTitle`         | 섹션 제목 (아이콘 포함)   | `title`, `showIcon`, `size`: 'default' \| 'small', `noMargin`                                         |
+| **InfoNote**             | `molecules/InfoNote`             | 안내 메시지 (아이콘 포함) | `message`                                                                                             |
+| **CardList**             | `molecules/CardList`             | 카드 목록                 | `cards: CardRow[][]`, `getCardKey`, `scrollableHeight`, `columns`, `onCardClick`, `variant`           |
+| **SearchFilterWithInfo** | `molecules/SearchFilterWithInfo` | 검색 필터 + 안내          | `selectOptions`, `searchValue`, `onSearch`, `infoMessage`                                             |
+| **ProgressSteps**        | `molecules/ProgressSteps`        | 진행 단계 표시            | `steps: {id, label}[]`, `currentStep`                                                                 |
+| **SectionContainer**     | `molecules/SectionContainer`     | 섹션 래퍼 (구분선 자동)   | `header`, `children`, `scrollable`                                                                    |
+| **SectionHeader**        | `molecules/SectionHeader`        | 섹션 헤더                 | `title`, `subtitle`                                                                                   |
+| **LabelInputRow**        | `molecules/LabelInputRow`        | 라벨 + 인풋 행            | `labelType`: 'checkbox' \| 'text', `textLabel`, `inputId`, `value`, `onInputChange`                   |
+| **CheckboxGroup**        | `molecules/CheckboxGroup`        | 체크박스 그룹             | `options: CheckboxOption[]`, `minWidth`, `gap`, `keepSingleRow`                                       |
+| **AddressField**         | `molecules/AddressField`         | 주소 입력 필드            | 주소 검색 + 상세주소 입력                                                                             |
+| **DoctorCard**           | `molecules/DoctorCard`           | 의사 정보 카드            | 의사 프로필 표시용                                                                                    |
+| **ClinicCard**           | `molecules/ClinicCard`           | 의원 정보 카드            | 의원 정보 표시용                                                                                      |
+| **WeekSelector**         | `molecules/WeekSelector`         | 주간 선택기               | 날짜/주 선택용                                                                                        |
+| **PrevNextNavigation**   | `molecules/PrevNextNavigation`   | 이전/다음 네비게이션      | 페이지 이동용                                                                                         |
 
 ### Organisms (복잡한 UI 섹션)
 
-| 컴포넌트 | 경로 | 용도 |
-|---------|------|------|
-| **Header** | `organisms/Header` | 사이트 헤더 |
-| **Footer** | `organisms/Footer` | 사이트 푸터 |
-| **LoginForm** | `organisms/LoginForm` | 로그인 폼 |
-| **SignupForm** | `organisms/SignupForm` | 회원가입 폼 |
-| **FindUserForm** | `organisms/FindUserForm` | 아이디/비밀번호 찾기 폼 |
-| **ResetPasswordForm** | `organisms/ResetPasswordForm` | 비밀번호 재설정 폼 |
+| 컴포넌트              | 경로                          | 용도                    |
+| --------------------- | ----------------------------- | ----------------------- |
+| **Header**            | `organisms/Header`            | 사이트 헤더             |
+| **Footer**            | `organisms/Footer`            | 사이트 푸터             |
+| **LoginForm**         | `organisms/LoginForm`         | 로그인 폼               |
+| **SignupForm**        | `organisms/SignupForm`        | 회원가입 폼             |
+| **FindUserForm**      | `organisms/FindUserForm`      | 아이디/비밀번호 찾기 폼 |
+| **ResetPasswordForm** | `organisms/ResetPasswordForm` | 비밀번호 재설정 폼      |
 
 ### Icons
 
 `src/components/icons/` 디렉토리에 70개 이상의 아이콘 컴포넌트가 있습니다.
 
 **자주 사용하는 아이콘:**
+
 - `SearchIcon`, `CheckIcon`, `CloseIcon`, `InfoIcon`, `WarningIcon`
 - `ChevronLeftIcon`, `ChevronRightIcon`, `ChevronDownIcon`, `ChevronUpIcon`
 - `ArrowRightIcon`, `ArrowDownIcon`, `DownloadIcon`
