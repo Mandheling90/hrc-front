@@ -86,9 +86,9 @@ export default function MyPage() {
                   <Link href='/mypage/edit-profile' className={styles.userActionBtnPrimary}>
                     회원정보 수정
                   </Link>
-                  <button type='button' className={styles.userActionBtn}>
+                  <Link href='/mypage/edit-clinic' className={styles.userActionBtn}>
                     협력병•의원 정보수정
-                  </button>
+                  </Link>
                 </div>
               </div>
 
