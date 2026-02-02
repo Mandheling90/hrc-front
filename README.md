@@ -28,18 +28,41 @@ src/
 │   ├── login/           # 로그인 페이지
 │   ├── signup/          # 회원가입 페이지
 │   ├── find-user/       # 아이디/비밀번호 찾기
+│   ├── reset-password/  # 비밀번호 재설정
 │   ├── referral/        # 진료의뢰 페이지
+│   │   ├── department/  # 진료과 안내
 │   │   └── request/     # 진료협력센터 의뢰
 │   │       ├── exchange/ # 진료정보교류 의뢰
 │   │       └── hira/     # 심평원중계시스템 의뢰
+│   ├── network/         # 협력네트워크
+│   │   ├── hospital-application/ # 협력병원 신청
+│   │   ├── clinic-application/   # 협력병의원 신청
+│   │   ├── status/      # 협력병의원 현황
+│   │   ├── hotline/     # 교수직통 핫라인
+│   │   └── e-consult/   # e-Consult
+│   ├── notice/          # 공지/정보
+│   │   ├── list/        # 공지사항
+│   │   └── event/       # 교육/행사
+│   ├── about/           # 진료협력센터 소개
+│   │   ├── intro/       # 센터 소개
+│   │   ├── greeting/    # 센터장 인사말
+│   │   ├── organization/ # 조직도/연락처
+│   │   └── location/    # 오시는 길
+│   ├── mypage/          # 마이페이지
+│   │   ├── edit-profile/ # 회원정보 수정
+│   │   ├── edit-hospital/ # 협력병원 정보수정
+│   │   ├── edit-clinic/  # 협력병의원 정보수정
+│   │   ├── patient-inquiry/ # 의뢰환자 조회
+│   │   ├── patient-result/  # 의뢰환자 결과조회
+│   │   └── withdraw/     # 회원탈퇴
 │   └── style-guide/     # 스타일 가이드 페이지
 │
 ├── components/          # Atomic Design 패턴
-│   ├── atoms/           # Button, Input, Checkbox, Radio, Select, InputLabel
+│   ├── atoms/           # Button, Input, Checkbox, Radio, Select 등
 │   ├── molecules/       # ServiceCard, AlertModal, ProgressSteps 등
 │   ├── organisms/       # Header, Footer, LoginForm, SignupForm 등
 │   ├── templates/       # MainTemplate
-│   ├── icons/           # SVG 아이콘 컴포넌트
+│   ├── icons/           # SVG 아이콘 컴포넌트 (70개+)
 │   └── providers/       # 전역 Provider 컴포넌트
 │
 ├── config/              # 설정 파일
@@ -63,100 +86,204 @@ src/
 
 ## 페이지 구성
 
-| 경로                         | 설명                  | 주요 컴포넌트                                          |
-| ---------------------------- | --------------------- | ------------------------------------------------------ |
-| `/`                          | 홈페이지              | HeroSection, NoticeSection, SNSSection, PartnerSection |
-| `/login`                     | 로그인                | LoginForm                                              |
-| `/signup`                    | 회원가입 (4단계)      | SignupForm, ProgressSteps                              |
-| `/find-user`                 | 아이디/비밀번호 찾기  | FindUserForm, FindPasswordForm                         |
-| `/referral`                  | 진료의뢰시스템 소개   | ServiceCard                                            |
-| `/referral/request`          | 진료협력센터 의뢰     | ServiceSection, InfoBox, Breadcrumbs                   |
-| `/referral/request/exchange` | 진료정보교류 의뢰     | SectionTitle, ServiceSection, InfoBox                  |
-| `/referral/request/hira`     | 심평원중계시스템 의뢰 | SectionTitle, ServiceSection, ProcedureList            |
-| `/referral/network`          | 협력네트워크 소개     | ServiceSection                                         |
-| `/style-guide`               | 스타일 가이드         | 모든 UI 컴포넌트 및 디자인 토큰                        |
+### 메인 / 인증
 
-## 스타일 가이드
+| 경로              | 설명                 | 주요 컴포넌트                                          |
+| ----------------- | -------------------- | ------------------------------------------------------ |
+| `/`               | 홈페이지             | HeroSection, NoticeSection, SNSSection, PartnerSection |
+| `/login`          | 로그인               | LoginForm                                              |
+| `/signup`         | 회원가입 (4단계)     | SignupForm, ProgressSteps                              |
+| `/find-user`      | 아이디/비밀번호 찾기 | FindUserForm                                           |
+| `/reset-password` | 비밀번호 재설정      | ResetPasswordForm                                      |
 
-프로젝트의 모든 UI 컴포넌트와 디자인 토큰을 한눈에 확인할 수 있는 스타일 가이드 페이지를 제공합니다.
+### 진료의뢰
 
-### 접속 방법
+| 경로                         | 설명                  | 주요 컴포넌트                            |
+| ---------------------------- | --------------------- | ---------------------------------------- |
+| `/referral`                  | 진료의뢰시스템 소개   | ServiceCard, ServiceSection              |
+| `/referral/request`          | 진료협력센터 의뢰     | ServiceSection, InfoBox, Breadcrumbs     |
+| `/referral/request/exchange` | 진료정보교류 의뢰     | SectionTitle, ServiceSection, InfoBox    |
+| `/referral/request/hira`     | 심평원중계시스템 의뢰 | SectionTitle, ServiceSection, InfoBox    |
+| `/referral/department`       | 진료과 안내           | DepartmentSidebar, ScheduleTable, Pagination |
 
-```bash
-npm run dev
-# http://localhost:3000/style-guide 접속
-```
+### 협력네트워크
 
-### 포함 내용
+| 경로                                | 설명               | 주요 컴포넌트                               |
+| ----------------------------------- | ------------------ | ------------------------------------------- |
+| `/network`                          | 협력네트워크 소개  | ServiceSection, ServiceCard                 |
+| `/network/hospital-application`     | 협력병원 신청      | ProgressSteps, HospitalInfoStep 등          |
+| `/network/hospital-application/complete` | 협력병원 신청완료 | CompleteStep                               |
+| `/network/clinic-application`       | 협력병의원 신청    | ProgressSteps, ClinicInfoStep 등            |
+| `/network/status`                   | 협력병의원 현황    | TabNavigation, ClinicCard, Pagination       |
+| `/network/hotline`                  | 교수직통 핫라인    | DoctorCard, ScheduleTable, WeekSelector     |
+| `/network/e-consult`                | e-Consult 소개     | ServiceSection, InfoBox                     |
+| `/network/e-consult/login`          | e-Consult 로그인   | LoginForm                                   |
+| `/network/e-consult/list`           | e-Consult 목록     | Table, Pagination, SearchFilterWithInfo     |
+| `/network/e-consult/list/[id]`      | e-Consult 상세     | MedicalReplyModal, DiagnosticDetailModal    |
 
-| 섹션              | 설명                                                                       |
-| ----------------- | -------------------------------------------------------------------------- |
-| **Colors**        | Primary, System, Gray Scale, Dark Mode 색상 팔레트                         |
-| **Typography**    | Font Families, Sizes, Weights, Line Heights                                |
-| **Spacing**       | $spacing-1 ~ $spacing-24 (4px ~ 96px)                                      |
-| **Border Radius** | $radius-sm ~ $radius-full                                                  |
-| **Shadow**        | $shadow-sm ~ $shadow-xl                                                    |
-| **Breakpoints**   | 반응형 브레이크포인트 ($breakpoint-sm ~ $breakpoint-2xl)                   |
-| **Z-index**       | 레이어 순서 ($z-index-dropdown ~ $z-index-tooltip)                         |
-| **Transitions**   | 애니메이션 속도 ($transition-fast ~ $transition-slower)                    |
-| **Atoms**         | Button, Input, Checkbox, Radio, Select 컴포넌트                            |
-| **Molecules**     | ServiceCard, AlertModal, InfoBox, ProgressSteps, Breadcrumbs, SectionTitle |
-| **Icons**         | 27개 아이콘 컴포넌트                                                       |
+### 공지/정보
 
-### 다크모드 지원
+| 경로               | 설명          | 주요 컴포넌트                   |
+| ------------------ | ------------- | ------------------------------- |
+| `/notice/list`     | 공지사항 목록 | Table, Pagination               |
+| `/notice/list/[id]`| 공지사항 상세 | PrevNextNavigation              |
+| `/notice/event`    | 교육/행사     | CardList, Pagination            |
 
-스타일 가이드 페이지 우측 상단의 **다크모드 토글** 버튼을 클릭하여 라이트/다크 모드에서의 스타일을 확인할 수 있습니다.
+### 진료협력센터 소개
+
+| 경로                 | 설명           | 주요 컴포넌트                                   |
+| -------------------- | -------------- | ----------------------------------------------- |
+| `/about/intro`       | 센터 소개      | SectionTitle, InfoBox                           |
+| `/about/greeting`    | 센터장 인사말  | SectionTitle                                    |
+| `/about/organization`| 조직도/연락처  | OperationInfoCards, ScheduleTitle               |
+| `/about/location`    | 오시는 길      | TabNavigation, TransportAccordion, MapPlaceholder |
+
+### 마이페이지
+
+| 경로                      | 설명              | 주요 컴포넌트                                |
+| ------------------------- | ----------------- | -------------------------------------------- |
+| `/mypage`                 | 마이페이지 메인   | ServiceCard                                  |
+| `/mypage/edit-profile`    | 회원정보 수정     | MemberInfoForm, FormField                    |
+| `/mypage/edit-hospital`   | 협력병원 정보수정 | HospitalInfoStep, StaffInfoStep 등           |
+| `/mypage/edit-clinic`     | 협력병의원 정보수정| ClinicInfoStep, DirectorInfoStep 등         |
+| `/mypage/patient-inquiry` | 의뢰환자 조회     | Table, Pagination, SearchFilterWithInfo      |
+| `/mypage/patient-result`  | 의뢰환자 결과조회 | Table, PathologyResultModal, ImageViewerModal|
+| `/mypage/withdraw`        | 회원탈퇴          | AlertModal                                   |
+
+### 기타
+
+| 경로           | 설명          | 주요 컴포넌트                        |
+| -------------- | ------------- | ------------------------------------ |
+| `/style-guide` | 스타일 가이드 | 모든 UI 컴포넌트 및 디자인 토큰      |
 
 ## 컴포넌트 구조 (Atomic Design)
 
-### Atoms (6개)
+### Atoms (10개)
 
-- Button (variant: primary/secondary/outline/gray, size: small/medium/large)
-- Input (forwardRef 지원)
-- InputLabel
-- Checkbox (접근성 지원)
-- Radio
-- Select
+- **Button** - variant: primary/secondary/outline/gray, size: small/medium/large
+- **Input** - forwardRef 지원
+- **InputLabel**
+- **Checkbox** - 접근성 지원
+- **Radio**
+- **Select**
+- **Textarea**
+- **ScrollableBox**
+- **StatusBadge** - 상태 표시 배지
+- **RouteChip** - 교통 노선 칩
 
-### Molecules (10개)
+### Molecules (50개+)
 
-- ServiceCard, AlertModal, ProgressSteps, AgreementContent
-- Breadcrumbs, InfoBox, NoticeList, SystemIntroBox
-- SectionTitle (섹션 제목 컴포넌트)
-- ProcedureList (절차/단계 목록 컴포넌트)
+**폼 관련**
+- FormField, LabelInputRow, LabelInputRowGroup
+- AddressField, AddressSearchBar
+- CheckboxGroup, DoctorSearchModal
 
-### Organisms (15개)
+**카드/리스트**
+- ServiceCard (Horizontal, Vertical, StepBadge 변형)
+- ClinicCard, DoctorCard, CardList
+- NoticeList, ProcedureList, BusStopList
 
+**네비게이션**
+- Breadcrumbs, Pagination, PrevNextNavigation
+- TabNavigation, ProgressSteps, ProcessSteps
+
+**테이블/데이터**
+- Table, ScheduleTable
+- ScheduleTitle, WeekSelector
+
+**모달/알림**
+- AlertModal, LoadSaveModal
+- CarDirectionModal
+
+**섹션**
+- SectionTitle, SectionContainer, SectionHeader
+- InfoBox, InfoNote, SystemIntroBox
+
+**교통/지도**
+- MapPlaceholder, MapServiceLinks, ShuttleRouteMap
+- TransportAccordion, AirportRoute
+- AirportBusTable, AirportBusTableAnsan
+- SubwayInfoAnsan, CarDirectionButtons
+- FloorMapAnsan
+
+**기타**
+- AgreementContent, PrivacyConsentContent
+- OperationInfoCards, ProcedureFlow
+- SearchFilterWithInfo
+
+### Organisms (30개+)
+
+**레이아웃**
 - **Header** - 반응형 GNB 메가 드롭다운 메뉴
-  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴, 이용안내 + 5개 메뉴 컬럼
+  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴
   - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴
   - 모바일 (~768px): 우측 사이드 패널 메뉴
-  - 현재 페이지 하이라이트 기능
-  - 미개발 페이지 비활성화(회색) 표시
-- Footer
+- **Footer**
+
+**인증**
 - LoginForm, SignupForm
-- FindPasswordForm, FindUserForm
-- AgreementStep, VerificationStep, MemberInfoStep, CompleteStep
-- HeroSection, NoticeSection, PartnerSection, ServiceSection, SNSSection
+- FindUserForm, ResetPasswordForm
 
-### Icons (27개)
+**회원가입 단계**
+- AgreementStep, VerificationStep
+- MemberInfoStep, MemberInfoForm, CompleteStep
 
-- CheckIcon, ChevronDownIcon, ConsultingIcon, EyeIcon, HomeIcon
-- InfoIcon, IPinIcon, LinkIcon, NetworkIcon, PatientIcon
-- PhoneIcon, ReferralIcon, SearchIcon, ServiceTitleIcon, ShieldIcon
-- SystemIcon, WarningIcon
-- **진료의뢰 전용 아이콘**:
-  - PhoneRequestIcon (전화의뢰)
-  - DocumentReferralIcon (문서 진료의뢰)
-  - HospitalPortalIcon (심평원 중계포털)
-  - SNSTalkIcon (카카오톡 TALK)
-  - ContinuityIcon (진료의 연속성)
-  - SafetyIcon (환자 안전)
-  - QualityIcon (의료서비스 질 향상)
-- **기타 아이콘**:
-  - ChartStepperIcon (진행 단계)
-  - DoctorIcon (의사)
-  - FluentArrowCircleUpRight (외부 링크)
+**병원 신청 단계**
+- HospitalInfoStep, StaffInfoStep
+- BasicTreatmentStep, BedAndFacilityStep
+- CareSystemStep, HospitalCharacteristicsStep
+- MedicalDepartmentStep
+
+**병의원 신청 단계**
+- ClinicInfoStep, ClinicStaffInfoStep, DirectorInfoStep
+
+**홈페이지 섹션**
+- HeroSection, NoticeSection
+- PartnerSection, ServiceSection, SNSSection
+
+**기타**
+- DepartmentSidebar
+- DiagnosticDetailModal, ImageViewerModal
+- MedicalReplyModal, PathologyResultModal
+
+### Icons (70개+)
+
+**기본 UI 아이콘**
+- CheckIcon, ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, ChevronRightIcon
+- CloseIcon, SearchIcon, EyeIcon, HomeIcon, InfoIcon, WarningIcon
+- ArrowDownIcon, ArrowRightIcon, ArrowRightCircleIcon, ArrowDownloadIcon
+
+**서비스 아이콘**
+- ConsultingIcon, NetworkIcon, PatientIcon, ReferralIcon
+- SystemIcon, ShieldIcon, LinkIcon, ServiceTitleIcon
+
+**진료의뢰 전용 아이콘**
+- PhoneRequestIcon, DocumentReferralIcon, HospitalPortalIcon
+- SNSTalkIcon, ContinuityIcon, SafetyIcon, QualityIcon
+
+**프로세스/문서 아이콘**
+- ChartStepperIcon, FlowArrowIcon, FlowStep01~05Icon
+- DocumentIcon, FileUploadIcon, FileRemoveIcon
+- ApprovalIcon, CertificateIcon, ReviewIcon
+
+**인물/시설 아이콘**
+- DoctorIcon, DoctorInfoIcon, IPinIcon
+- ConsultIcon, ConsultBadgeIcon, EConsultingIcon
+
+**파일/데이터 아이콘**
+- DownloadIcon, LoadIcon, SaveIcon, PaperclipIcon, PlusIcon
+
+**교통 아이콘**
+- BusIcon, SubwayIcon, CarIcon, BridgeIcon, RoadIcon
+- MapIcon, ListIcon
+
+**시간/운영 아이콘**
+- CalendarIcon, OperationTimeIcon, OperationPhoneFaxIcon
+- EmergencyNightIcon, FaxIcon, PhoneIcon, HandshakeIcon
+
+**기타 아이콘**
+- FluentArrowCircleUpRight, CollapseDownIcon, CollapseUpIcon
+- RouteChip (버스 노선), NaverLogo, GoogleLogo, DaumLogo
 
 ## 스타일 시스템
 
@@ -164,12 +291,15 @@ npm run dev
 
 ```scss
 // 주요 색상
---color-primary: #9f1836 // 주홍색
-  --color-secondary: #fae3ba // 베이지색
-  --color-point: #ec5a29 // 포인트 주황색
-  // 그레이스케일
-  --gray-100 ~--gray-900 // 다크모드
-  [data-theme= 'dark'] 지원;
+--color-primary: #9f1836    // 주홍색
+--color-secondary: #fae3ba  // 베이지색
+--color-point: #ec5a29      // 포인트 주황색
+
+// 그레이스케일
+--gray-100 ~ --gray-900
+
+// 다크모드
+[data-theme='dark'] 지원
 ```
 
 ### 반응형 브레이크포인트
@@ -185,9 +315,9 @@ $breakpoints: (
 );
 
 // Header 전용 브레이크포인트
-$bp-mobile: 768px; // 모바일: ~768px
-$bp-tablet: 1429px; // 태블릿: 769px ~ 1429px
-// 데스크톱: 1430px~
+$bp-mobile: 768px;    // 모바일: ~768px
+$bp-tablet: 1429px;   // 태블릿: 769px ~ 1429px
+                      // 데스크톱: 1430px~
 ```
 
 ## 병원별 환경 설정
@@ -262,10 +392,34 @@ npm run format:check # Prettier 검사
 
 ## 개발 현황
 
-### 완성된 부분
+### 퍼블리싱 완료 (전체 35개 페이지)
+
+**메인/인증 (5개)**
+- 홈페이지, 로그인, 회원가입(4단계), 아이디/비밀번호 찾기, 비밀번호 재설정
+
+**진료의뢰 (5개)**
+- 진료의뢰 소개, 진료협력센터 의뢰, 진료정보교류 의뢰, 심평원중계시스템 의뢰, 진료과 안내
+
+**협력네트워크 (8개)**
+- 협력네트워크 소개, 협력병원 신청, 협력병원 신청완료, 협력병의원 신청
+- 협력병의원 현황, 교수직통 핫라인, e-Consult 소개, e-Consult 로그인, e-Consult 목록/상세
+
+**공지/정보 (3개)**
+- 공지사항 목록/상세, 교육/행사
+
+**진료협력센터 소개 (4개)**
+- 센터 소개, 센터장 인사말, 조직도/연락처, 오시는 길
+
+**마이페이지 (7개)**
+- 마이페이지 메인, 회원정보 수정, 협력병원 정보수정, 협력병의원 정보수정
+- 의뢰환자 조회, 의뢰환자 결과조회, 회원탈퇴
+
+**기타 (1개)**
+- 스타일 가이드
+
+### 완성된 기능
 
 - UI 컴포넌트 구조 (Atomic Design)
-- 10개 주요 페이지 (홈, 로그인, 회원가입, 아이디/비밀번호 찾기, 진료의뢰 소개, 진료협력센터 의뢰, 진료정보교류 의뢰, 심평원중계시스템 의뢰, 협력네트워크 소개, 스타일가이드)
 - 반응형 디자인 (모바일, 태블릿, 데스크톱)
 - 다크모드 CSS 변수 준비
 - 접근성 지원 (ARIA labels, semantic HTML)
@@ -273,31 +427,9 @@ npm run format:check # Prettier 검사
 - 병원별 환경 설정 시스템 (안암/구로/안산)
 - HospitalContext 및 useHospital 훅
 - 병원별 페이지 콘텐츠 관리
-- 진료의뢰 전용 아이콘 컴포넌트 (7개)
-- **Header 컴포넌트 (반응형 GNB)**
-  - 데스크톱 (1430px+): 메가 드롭다운 메뉴 (호버 트리거), 이용안내 영역 + 5개 메뉴 컬럼
-  - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴
-  - 모바일 (~768px): 우측 사이드 패널 메뉴
-  - 현재 페이지 하이라이트 표시
-  - 미개발 페이지 비활성화(회색) 표시
-  - 메뉴 구조: 진료의뢰, 협력네트워크, 공지/정보, 진료협력센터 소개, 마이페이지(로그인 시)
+- Header 컴포넌트 (반응형 GNB)
 
-### 진행 중인 부분
-
-- 회원가입 프로세스 (4단계)
-- ProgressSteps 컴포넌트 반응형
-
-### 미개발 페이지
-
-| 카테고리          | 페이지                                                          |
-| ----------------- | --------------------------------------------------------------- |
-| 진료의뢰          | 진료과 안내                                                     |
-| 협력네트워크      | 협력병원 신청, 협력병의원 현황, 교수직통 핫라인, e-Consult 신청 |
-| 공지/정보         | 공지사항, 병원소식, 교육/행사                                   |
-| 진료협력센터 소개 | 센터 소개, 센터장 인사말, 조직도/연락처, 오시는 길              |
-| 마이페이지        | 회원정보 수정, 협력병원 정보수정, 의뢰환자 조회, e-Consult 조회 |
-
-### 미포함 항목(백엔드 연동)
+### 미포함 항목 (백엔드 연동)
 
 - API 통신 로직
 - 백엔드 연동
