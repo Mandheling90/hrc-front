@@ -1,0 +1,145 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  flex: 1;
+  padding: 80px 0;
+
+  @include tablet {
+    padding: 48px 0;
+  }
+
+  @include mobile {
+    padding: 32px 0;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 849px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @include mobile {
+    padding: 0 16px;
+  }
+}
+
+.title {
+  @include page-title-large;
+}
+
+.noticeSection {
+  width: 100%;
+  margin-bottom: 80px;
+
+  @include tablet {
+    margin-bottom: 48px;
+  }
+
+  @include mobile {
+    margin-bottom: 32px;
+  }
+}
+
+.noticeList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.noticeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #636363;
+  line-height: 1.5;
+  letter-spacing: -0.04em;
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+.bullet {
+  flex-shrink: 0;
+  width: 8px;
+  height: 2px;
+  background-color: #636363;
+  margin-top: 14px;
+
+  @include tablet {
+    margin-top: 12px;
+  }
+
+  @include mobile {
+    margin-top: 11px;
+  }
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup {
+  position: relative;
+  width: 100%;
+
+  &:last-of-type {
+    margin-bottom: 24px;
+  }
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #636363;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+
+  button {
+    flex: 1;
+  }
+}

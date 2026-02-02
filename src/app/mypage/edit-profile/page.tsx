@@ -35,10 +35,7 @@ const mockUserData: Partial<MemberInfoFormData> = {
   hospitalWebsite: 'https://anam.kumc.or.kr/'
 }
 
-const breadcrumbItems = [
-  { label: '마이페이지', href: '/mypage' },
-  { label: '회원정보 수정' }
-]
+const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '회원정보 수정' }]
 
 export default function EditProfilePage() {
   const router = useRouter()
@@ -48,8 +45,7 @@ export default function EditProfilePage() {
   }
 
   const handleWithdraw = () => {
-    // TODO: 회원탈퇴 처리
-    console.log('회원탈퇴')
+    router.push('/mypage/withdraw')
   }
 
   const handleSubmit = (data: MemberInfoFormData) => {
