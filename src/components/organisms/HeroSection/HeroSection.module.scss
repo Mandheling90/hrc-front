@@ -9,11 +9,12 @@
     margin-top: -90px;
   }
 
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: $breakpoint-md) {
     margin-top: -68px;
+    min-height: auto;
   }
 
-  .container {
+  :global(.container) {
     height: 100vh;
     position: relative;
     width: 100%;
@@ -21,6 +22,14 @@
     padding: 0 20px;
     margin: 0 auto;
     z-index: 1;
+
+    @media (max-width: $breakpoint-md) {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 30px;
+      padding-bottom: 20px;
+    }
   }
 }
 
@@ -93,6 +102,14 @@
     font-weight: 600;
     line-height: 72px;
     letter-spacing: 1.44px;
+
+    br {
+      display: none;
+
+      @media (max-width: $breakpoint-md) {
+        display: block;
+      }
+    }
   }
 
   @media (max-width: $breakpoint-2xl) {
@@ -126,6 +143,27 @@
       line-height: 48px;
     }
   }
+
+  @media (max-width: $breakpoint-md) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0;
+
+    span {
+      display: block;
+    }
+
+    strong {
+      font-size: 36px;
+      line-height: 54px;
+      letter-spacing: 1.08px;
+    }
+  }
 }
 
 .quickBox {
@@ -141,15 +179,36 @@
   z-index: 2;
 
   @media (max-width: $breakpoint-lg) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: auto;
-    gap: 16px;
     bottom: 20px;
   }
 
   @media (max-width: $breakpoint-md) {
-    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    bottom: 20px;
+    position: relative;
+    transform: none;
+    left: 0;
+    padding: 0;
+    margin-top: auto;
+  }
+}
+
+// 아코디언 화살표 아이콘
+.chevronIcon {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+  transform: rotate(90deg);
+  display: none;
+
+  @media (max-width: $breakpoint-md) {
+    display: block;
+  }
+
+  &.open {
+    transform: rotate(-90deg);
   }
 }
 
@@ -163,12 +222,27 @@
   display: flex;
   flex-direction: column;
 
+  @media (max-width: $breakpoint-md) {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+    padding: 0;
+    overflow: visible;
+
+    &::after {
+      display: none;
+    }
+  }
+
   .boxTitle {
     color: #fff;
     font-size: 32px;
     font-weight: 600;
     line-height: 48px;
     margin-bottom: 16px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: default;
+    width: 100%;
 
     @media (max-width: $breakpoint-2xl) {
       font-size: 28px;
@@ -179,6 +253,18 @@
       font-size: 24px;
       line-height: 36px;
     }
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: 0;
+      margin-bottom: 0;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
   }
 
   .linkList {
@@ -186,6 +272,21 @@
     flex-direction: column;
     gap: 8px;
     flex: 1;
+
+    @media (max-width: $breakpoint-md) {
+      display: none;
+      padding: 10px;
+      gap: 8px;
+    }
+  }
+
+  // 아코디언 열림 상태
+  &.accordionOpen {
+    @media (max-width: $breakpoint-md) {
+      .linkList {
+        display: flex;
+      }
+    }
   }
 
   .line {
@@ -215,6 +316,15 @@
     @media (max-width: $breakpoint-lg) {
       font-size: 16px;
       padding: 8px 14px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      flex: none;
+      min-height: auto;
+      font-size: 18px;
+      line-height: 27px;
+      padding: 10px 20px;
+      border-radius: 5px;
     }
   }
 
@@ -252,6 +362,26 @@
     min-height: 280px;
   }
 
+  @media (max-width: $breakpoint-md) {
+    flex: none;
+    height: auto;
+    min-height: auto;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+    border: 1px solid #fff;
+    border-radius: 10px;
+
+    // 아코디언 열림 상태 - 빨간 그라데이션
+    &.accordionOpen {
+      background: linear-gradient(180deg, rgba(159, 24, 54, 0.5) 4%, rgba(159, 24, 54, 0.85) 76%);
+
+      .boxTitle {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+        border: 1px solid #fff;
+        border-radius: 10px;
+      }
+    }
+  }
+
   .line {
     justify-content: center;
   }
@@ -272,6 +402,26 @@
   @media (max-width: $breakpoint-lg) {
     height: auto;
     min-height: 280px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    flex: none;
+    height: auto;
+    min-height: auto;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+    border: 1px solid #fff;
+    border-radius: 10px;
+
+    // 아코디언 열림 상태 - 빨간 그라데이션
+    &.accordionOpen {
+      background: linear-gradient(180deg, rgba(159, 24, 54, 0.5) 4%, rgba(159, 24, 54, 0.85) 76%);
+
+      .boxTitle {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+        border: 1px solid #fff;
+        border-radius: 10px;
+      }
+    }
   }
 
   .line {
@@ -311,6 +461,23 @@
     min-height: 280px;
   }
 
+  @media (max-width: $breakpoint-md) {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    background: none;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+
+    // Hide dividers on mobile
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
   // Vertical divider
   &::before {
     content: '';
@@ -344,10 +511,22 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
 
+    @media (max-width: $breakpoint-md) {
+      gap: 8px;
+      height: auto;
+    }
+
     li {
       display: flex;
       align-items: center;
       justify-content: center;
+
+      @media (max-width: $breakpoint-md) {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+        border-radius: 10px;
+        border: 1px solid #fff;
+        overflow: hidden;
+      }
 
       a {
         display: flex;
@@ -358,6 +537,16 @@
         color: #fff;
         padding: 20px;
         transition: all 0.3s;
+        border-radius: 0;
+
+        @media (max-width: $breakpoint-md) {
+          flex-direction: row;
+          gap: 0;
+          padding: 10px;
+          width: 100%;
+          justify-content: center;
+          border-radius: 10px;
+        }
 
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
@@ -409,6 +598,23 @@
       font-size: 18px;
       line-height: 27px;
     }
+
+    @media (max-width: $breakpoint-md) {
+      width: 88px;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 27px;
+      letter-spacing: 0;
+      text-align: center;
+    }
+  }
+
+  svg {
+    @media (max-width: $breakpoint-md) {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
   }
 }
 
@@ -435,22 +641,77 @@
     min-height: 280px;
   }
 
+  @media (max-width: $breakpoint-md) {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 10px 20px;
+    gap: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--color-primary, #9f1836);
+
+    &::after {
+      display: none;
+    }
+  }
+
   .phoneIcon {
-    .icon {
-      width: 57px;
-      height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (max-width: $breakpoint-md) {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phoneIconDesktop {
       display: block;
 
-      @media (max-width: $breakpoint-xl) {
-        width: 50px;
-        height: 49px;
+      @media (max-width: $breakpoint-md) {
+        display: none;
       }
 
-      &::before {
-        background-image: url(/images/icon/icon-tel.svg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
+      img {
+        width: 57px;
+        height: 56px;
+
+        @media (max-width: $breakpoint-xl) {
+          width: 50px;
+          height: 49px;
+        }
+      }
+    }
+
+    .phoneIconMobile {
+      display: none;
+
+      @media (max-width: $breakpoint-md) {
+        display: block;
+
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+
+    .phoneLabel {
+      display: none;
+
+      @media (max-width: $breakpoint-md) {
+        display: block;
+        font-size: 20px;
+        font-weight: 600;
+        color: #fff;
+        line-height: 30px;
+        letter-spacing: 0;
       }
     }
   }
@@ -472,6 +733,14 @@
       font-size: 24px;
       line-height: 36px;
     }
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 36px;
+      letter-spacing: 0;
+      margin-top: 0;
+    }
   }
 
   .contactList {
@@ -479,6 +748,10 @@
     padding: 0;
     margin: 0;
     margin-top: 16px;
+
+    @media (max-width: $breakpoint-md) {
+      display: none;
+    }
 
     li {
       font-size: 20px;

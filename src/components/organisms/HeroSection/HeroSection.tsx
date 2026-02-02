@@ -1,12 +1,29 @@
 'use client'
 
-import React, { useRef, useEffect, useMemo } from 'react'
+import React, { useRef, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useHospital } from '@/hooks'
 import styles from './HeroSection.module.scss'
 
 // 전화 아이콘
 const PhoneIcon = () => <img src='/images/icon-phone.svg' alt='전화' width={57} height={56} />
+
+// 모바일 전화 아이콘
+const PhoneIconMobile = () => <img src='/images/icon-phone.svg' alt='전화' width={32} height={32} />
+
+// 아코디언 화살표 아이콘
+const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    className={`${styles.chevronIcon} ${isOpen ? styles.open : ''}`}
+  >
+    <path d='M9 4L17 12L9 20' stroke='white' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+  </svg>
+)
 
 // 다운로드 아이콘
 const DownloadIcon = () => (
@@ -355,6 +372,10 @@ export const HeroSection: React.FC = () => {
   const { isGuro, hospital } = useHospital()
   const videoRef = useRef<HTMLVideoElement>(null)
 
+  // 모바일 아코디언 상태
+  const [isInquiryOpen, setIsInquiryOpen] = useState(false)
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false)
+
   // 병원별 비디오 소스
   const videoSrc = useMemo(() => {
     if (isGuro) {
@@ -406,11 +427,23 @@ export const HeroSection: React.FC = () => {
       <div className='container'>
         <h2 className={styles.title}>
           <span>의료네트워크의 중심,</span>
-          <strong>고려대학교 {hospital.name.short} 진료협력센터</strong>
+          <strong>
+            고려대학교 {hospital.name.short}
+            <br />
+            진료협력센터
+          </strong>
         </h2>
         <div className={styles.quickBox}>
-          <div className={`${styles.box} ${styles.inquiry}`}>
-            <p className={styles.boxTitle}>조회 서비스</p>
+          <div className={`${styles.box} ${styles.inquiry} ${isInquiryOpen ? styles.accordionOpen : ''}`}>
+            <button
+              className={styles.boxTitle}
+              onClick={() => setIsInquiryOpen(!isInquiryOpen)}
+              type='button'
+              aria-expanded={isInquiryOpen}
+            >
+              <span>조회 서비스</span>
+              <ChevronIcon isOpen={isInquiryOpen} />
+            </button>
             <div className={styles.linkList}>
               {inquiryLinks.map((link, index) => (
                 <Link key={index} href={link.href} className={`${styles.line} ${link.icon === 'kakao' ? styles.kakaoLink : ''}`}>
@@ -431,8 +464,16 @@ export const HeroSection: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className={`${styles.box} ${styles.down}`}>
-            <p className={styles.boxTitle}>서식 다운로드</p>
+          <div className={`${styles.box} ${styles.down} ${isDownloadOpen ? styles.accordionOpen : ''}`}>
+            <button
+              className={styles.boxTitle}
+              onClick={() => setIsDownloadOpen(!isDownloadOpen)}
+              type='button'
+              aria-expanded={isDownloadOpen}
+            >
+              <span>서식 다운로드</span>
+              <ChevronIcon isOpen={isDownloadOpen} />
+            </button>
             <div className={styles.linkList}>
               {downloadLinks.map((link, index) => (
                 <Link key={index} href={link.href} className={styles.line}>
@@ -459,7 +500,9 @@ export const HeroSection: React.FC = () => {
           </div>
           <div className={`${styles.box} ${styles.last}`}>
             <div className={styles.phoneIcon}>
-              <PhoneIcon />
+              <span className={styles.phoneIconDesktop}><PhoneIcon /></span>
+              <span className={styles.phoneIconMobile}><PhoneIconMobile /></span>
+              <span className={styles.phoneLabel}>문의</span>
             </div>
             <p className={styles.phoneNumber}>{contactInfo.phone}</p>
             <ul className={styles.contactList}>

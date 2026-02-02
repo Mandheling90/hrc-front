@@ -173,6 +173,20 @@ export const NoticeSection: React.FC = () => {
 
             {/* 핫라인 카드 */}
             <div className={styles.hotlineCard}>
+              {/* 모바일 오버레이 콘텐츠 */}
+              <div className={styles.hotlineOverlay}>
+                <div className={styles.hotlineTitle}>
+                  <span className={styles.hotlineSubtitle}>협력 병·의원 전용</span>
+                  <span className={styles.hotlineMain}>의사전용 핫라인 안내</span>
+                </div>
+                <div className={styles.hotlineBadge}>본 서비스는 로그인 후 이용하실 수 있습니다.</div>
+              </div>
+              <Link href='#' className={styles.hotlineShortcut}>
+                <span>바로가기</span>
+                <svg width='17' height='3' viewBox='0 0 17 3' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M0 1.5H17M17 1.5L14 0M17 1.5L14 3' stroke='#000' strokeWidth='0.5' />
+                </svg>
+              </Link>
               <div className={styles.slideContainer}>
                 <div className={styles.slideTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                   {slides.map(slide => (
@@ -266,6 +280,20 @@ export const NoticeSection: React.FC = () => {
 
           {/* 핫라인 카드 */}
           <div className={styles.hotlineCard}>
+            {/* 모바일 오버레이 콘텐츠 */}
+            <div className={styles.hotlineOverlay}>
+              <div className={styles.hotlineTitle}>
+                <span className={styles.hotlineSubtitle}>협력 병·의원 전용</span>
+                <span className={styles.hotlineMain}>의사전용 핫라인 안내</span>
+              </div>
+              <div className={styles.hotlineBadge}>본 서비스는 로그인 후 이용하실 수 있습니다.</div>
+            </div>
+            <Link href='#' className={styles.hotlineShortcut}>
+              <span>바로가기</span>
+              <svg width='17' height='3' viewBox='0 0 17 3' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <path d='M0 1.5H17M17 1.5L14 0M17 1.5L14 3' stroke='#000' strokeWidth='0.5' />
+              </svg>
+            </Link>
             <div className={styles.slideContainer}>
               <div className={styles.slideTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                 {slides.map(slide => (

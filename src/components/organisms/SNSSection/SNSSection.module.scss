@@ -6,6 +6,12 @@
   min-height: 682px;
   isolation: isolate;
 
+  @media (max-width: $breakpoint-md) {
+    margin-top: 32px;
+    margin-bottom: 30px;
+    min-height: auto;
+  }
+
   // Background shape
   &::before {
     content: '';
@@ -24,18 +30,26 @@
       width: 100%;
       border-radius: 0;
     }
+
+    @media (max-width: $breakpoint-md) {
+      width: 300px;
+      height: 240px;
+      top: 80px;
+      bottom: auto;
+      border-radius: 0 129px 40px 0;
+    }
   }
 
-  .container {
-    width: 100%;
-    max-width: $container-max-width;
-    padding: 0 20px;
-    margin: 0 auto;
+  :global(.container) {
     position: relative;
     padding-bottom: 110px;
 
     @media (max-width: $breakpoint-xl) {
       padding-bottom: 100px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      padding-bottom: 40px;
     }
   }
 
@@ -49,6 +63,11 @@
     @media (max-width: $breakpoint-2xl) {
       font-size: 28px;
       line-height: 42px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 24px;
+      line-height: 36px;
     }
   }
 }
@@ -69,6 +88,10 @@
   @media (max-width: $breakpoint-lg) {
     left: 100px;
     width: calc(100% - 100px);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
   }
 
   .track {
@@ -138,6 +161,12 @@
     gap: 40px;
     margin-top: 60px;
   }
+
+  @media (max-width: $breakpoint-md) {
+    margin-top: 0;
+    gap: 16px;
+    flex-direction: column;
+  }
 }
 
 .leftContent {
@@ -157,6 +186,11 @@
     width: 100%;
     gap: 40px;
   }
+
+  @media (max-width: $breakpoint-md) {
+    gap: 16px;
+    order: 1;
+  }
 }
 
 .thumbSlider {
@@ -173,6 +207,10 @@
 
   @media (max-width: $breakpoint-lg) {
     width: 100%;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
   }
 }
 
@@ -194,6 +232,10 @@
     height: auto;
   }
 
+  @media (max-width: $breakpoint-md) {
+    gap: 8px;
+  }
+
   .thumbImg {
     width: 100%;
     height: 150px;
@@ -203,6 +245,11 @@
 
     @media (max-width: $breakpoint-2xl) {
       height: 135px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      height: 100px;
+      border-radius: 12px;
     }
 
     img {
@@ -226,6 +273,11 @@
     @media (max-width: $breakpoint-2xl) {
       font-size: 16px;
       line-height: 24px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 14px;
+      line-height: 21px;
     }
   }
 }
@@ -256,6 +308,12 @@
     height: auto;
   }
 
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+    height: 180px;
+    order: -1;
+  }
+
   a {
     display: block;
     width: 100%;
@@ -265,6 +323,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+
+      @media (max-width: $breakpoint-md) {
+        border-radius: 0 0 20px 20px !important;
+      }
     }
   }
 }
@@ -276,6 +338,12 @@
 
   @media (max-width: $breakpoint-lg) {
     gap: 24px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    gap: 40px;
+    justify-content: flex-start;
+    width: 100%;
   }
 
   .pagination {
@@ -291,6 +359,11 @@
     font-weight: 600;
     line-height: 27px;
     color: var(--color-darken, #000);
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
   .progress {
@@ -300,6 +373,10 @@
     background: #bbb;
     overflow: hidden;
     border-radius: 10px;
+
+    @media (max-width: $breakpoint-md) {
+      width: 60px;
+    }
 
     .bar {
       position: absolute;
@@ -339,6 +416,12 @@
       padding: 12px;
     }
 
+    @media (max-width: $breakpoint-md) {
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+    }
+
     &:hover {
       border-color: #ccc;
       background: #f9f9f9;
@@ -351,6 +434,11 @@
       @media (max-width: $breakpoint-2xl) {
         width: 20px;
         height: 20px;
+      }
+
+      @media (max-width: $breakpoint-md) {
+        width: 16px;
+        height: 16px;
       }
     }
   }

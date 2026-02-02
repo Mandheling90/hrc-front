@@ -52,7 +52,9 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear()
 
   // 무한 루프를 위해 앞뒤로 아이템 복제 (앞에 4개, 뒤에 4개 추가)
+  // 모바일 CSS 애니메이션을 위해 전체 배열을 2번 반복
   const extendedLogos = [...partnerLogos.slice(-4), ...partnerLogos, ...partnerLogos.slice(0, 4)]
+  const mobileLogos = [...partnerLogos, ...partnerLogos]
 
   const handlePartnerPrev = () => {
     setIsTransitioning(true)
@@ -82,8 +84,9 @@ export const Footer: React.FC = () => {
         <div className={styles.partnerContainer}>
           <div className={styles.partnerContent}>
             <div className={styles.partnerSlider}>
+              {/* 데스크탑용 트랙 (JS 기반 슬라이딩) */}
               <div
-                className={styles.partnerTrack}
+                className={`${styles.partnerTrack} ${styles.desktopTrack}`}
                 style={
                   {
                     '--offset': partnerIndex + 4,
@@ -94,7 +97,15 @@ export const Footer: React.FC = () => {
                 onTransitionEnd={handleTransitionEnd}
               >
                 {extendedLogos.map((partner, index) => (
-                  <div key={`${partner.id}-${index}`} className={styles.partnerItem}>
+                  <div key={`desktop-${partner.id}-${index}`} className={styles.partnerItem}>
+                    <Image src={partner.image} alt={partner.alt} width={250} height={40} />
+                  </div>
+                ))}
+              </div>
+              {/* 모바일용 트랙 (CSS 애니메이션) */}
+              <div className={`${styles.partnerTrack} ${styles.mobileTrack}`}>
+                {mobileLogos.map((partner, index) => (
+                  <div key={`mobile-${partner.id}-${index}`} className={styles.partnerItem}>
                     <Image src={partner.image} alt={partner.alt} width={250} height={40} />
                   </div>
                 ))}
