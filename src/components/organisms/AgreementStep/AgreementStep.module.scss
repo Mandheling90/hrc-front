@@ -277,35 +277,66 @@
   }
 }
 
+// 이용약관 콘텐츠 컨테이너
+.termsContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px; // Figma: gap 16px
+}
+
 // 이용약관 스타일
 .termsMainTitle {
   font-family: 'Pretendard', sans-serif;
-  font-size: 20px; // Figma 디자인에 맞게 20px
+  font-size: 24px; // Figma: 24px
   font-weight: 600; // Semibold
-  color: $gray-11; // #636363
-  line-height: 1.5;
-  letter-spacing: -0.8px;
-  margin: 0 0 0 0; // Figma 디자인에 맞게 여백 추가
+  color: $gray-9; // Figma: #8C8C8C
+  line-height: 36px; // Figma: 36px (1.5)
+  letter-spacing: -0.96px; // Figma: -4%
+  margin: 0;
+  align-self: stretch;
 
   // 테블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 20px;
-    letter-spacing: -0.8px;
+    font-size: 24px;
+    letter-spacing: -0.96px;
   }
 
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.8px;
   }
 }
 
 .termsSection {
-  margin-bottom: 0; // 각 조항 간 여백은 내용에 따라 조정
-  display: flex;
-  flex-direction: column;
-  gap: 8px; // Figma 디자인에 맞게 타이틀과 내용 사이 여백 추가
+  align-self: stretch;
+  padding-left: 32px; // Figma: padding-left 32px
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; // Figma: gap 10px
 
-  &:last-child {
-    margin-bottom: 0;
+  @media (max-width: $breakpoint-md) {
+    padding-left: 24px;
+  }
+}
+
+.termsSectionText {
+  flex: 1 1 0;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px; // Figma: 20px
+  font-weight: 400; // Regular
+  color: $gray-9; // Figma: #8C8C8C
+  line-height: 30px; // Figma: 30px (1.5)
+  letter-spacing: -0.8px; // Figma: -4%
+  word-wrap: break-word;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
   }
 }
 
@@ -317,7 +348,7 @@
     font-size: 20px;
     font-weight: 400; // Regular
     color: $gray-9; // #8c8c8c
-    line-height: 1.5;
+    line-height: 30px; // Figma: 30px
     letter-spacing: -0.8px;
     margin: 0; // 기본 마진 제거
 
@@ -341,6 +372,7 @@
 
     p {
       font-size: 18px;
+      line-height: 27px;
     }
   }
 }
@@ -350,7 +382,7 @@
   font-size: 20px;
   font-weight: 400; // Regular
   color: $gray-9; // #8c8c8c
-  line-height: 1.5;
+  line-height: 30px; // Figma: 30px
   letter-spacing: -0.8px;
   margin: 0 0 0 0; // 조항 제목과 내용 사이 여백은 다음 p 태그의 margin으로 처리
 
@@ -362,6 +394,7 @@
 
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
+    line-height: 27px;
   }
 }
 .allAgreementsItem {
@@ -372,13 +405,12 @@
   }
 }
 
-
-.allAgreementsText{
+.allAgreementsText {
   font-size: 24px !important;
   font-weight: 600 !important;
 
-   // 테블릿 (769px ~ 1429px)
-   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 20px !important;
   }
 
