@@ -89,8 +89,10 @@ export interface MemberInfoFormProps {
   showMemberSection?: boolean
   /** 병원 정보 섹션 표시 여부 */
   showHospitalSection?: boolean
-  /** 필수 입력 안내 태그 표시 여부 */
-  showRequiredNotice?: boolean
+  /** 회원탈퇴 버튼 표시 여부 */
+  showWithdrawButton?: boolean
+  /** 회원탈퇴 핸들러 */
+  onWithdraw?: () => void
 }
 
 // 진료과 옵션
@@ -142,7 +144,8 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   disabledFields = [],
   showMemberSection = true,
   showHospitalSection = true,
-  showRequiredNotice = false
+  showWithdrawButton = false,
+  onWithdraw
 }) => {
   const [formData, setFormData] = useState<MemberInfoFormData>({
     ...defaultFormData,
@@ -217,10 +220,12 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
 
   return (
     <div className={styles.memberInfoForm}>
-      {/* 필수 입력 안내 태그 (회원정보 수정 모드) */}
-      {showRequiredNotice && (
-        <div className={styles.requiredNotice}>
-          <span className={styles.requiredTag}>필수 입력 항목을 모두 입력해주세요.</span>
+      {/* 상단 영역: 회원탈퇴 버튼 (우측 정렬) */}
+      {showWithdrawButton && (
+        <div className={styles.topNotice}>
+          <button type='button' className={styles.withdrawButton} onClick={onWithdraw}>
+            회원탈퇴
+          </button>
         </div>
       )}
 
