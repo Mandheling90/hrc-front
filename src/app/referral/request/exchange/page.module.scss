@@ -30,7 +30,6 @@
 
 .procedureListWrapper {
   margin-left: 32px;
-  margin-top: $spacing-4;
 }
 
 // 플로우차트 이미지
@@ -56,7 +55,8 @@
   gap: $spacing-5;
   margin-top: $spacing-5;
 
-  @media (min-width: $breakpoint-md) {
+  // 데스크톱 (1430px 이상)에서만 가로 배치
+  @media (min-width: 1430px) {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
@@ -66,66 +66,48 @@
 
 .methodSteps {
   flex: 1;
+  margin-left: 32px; // Figma 데스크톱: 32px
+
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    margin-left: $spacing-4; // 16px - Figma 모바일
+  }
 }
 
 .mychartLink {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: $spacing-4;
+  margin-left: 32px; // methodSteps와 동일한 왼쪽 여백
 
-  @media (min-width: $breakpoint-md) {
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    margin-left: $spacing-4; // 16px - methodSteps와 동일
+  }
+
+  // 데스크톱 (1430px 이상)
+  @media (min-width: 1430px) {
+    justify-content: center;
     margin-top: 0;
     margin-left: $spacing-5;
   }
 }
 
 .mychartButton {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $spacing-3;
-  padding: $spacing-3 $spacing-4;
-  background-color: $color-white;
-  border: 1px solid $gray-4;
-  border-radius: $radius-sm;
+  display: inline-block;
   text-decoration: none;
   transition: all $transition-base;
-  color: $gray-12;
-  min-height: 44px;
 
   &:hover {
-    border-color: $gray-7;
-  }
-
-  @media (min-width: $breakpoint-md) {
-    padding: $spacing-3 $spacing-4;
-  }
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    padding: $spacing-2 $spacing-3;
-    min-height: 40px;
-    gap: $spacing-2;
+    opacity: 0.8;
   }
 }
 
 .mychartImage {
   height: auto;
   object-fit: contain;
-  flex-shrink: 0;
-  max-height: 32px;
   width: auto;
-}
-
-.arrowIcon {
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    width: 14px;
-    height: 14px;
-  }
 }
 
 // 문의 섹션

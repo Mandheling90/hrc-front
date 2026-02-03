@@ -121,7 +121,7 @@
 @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
   .card {
     padding: 20px; // Figma 태블릿: 20px
-    gap: 24px; // Figma 태블릿: 카드 내부 gap 24px
+    gap: 16px; // Figma 태블릿: 카드 내부 gap 16px
   }
 
   .iconCircle {
@@ -150,9 +150,10 @@
   .card {
     flex-direction: row;
     align-items: center;
-    text-align: left;
+    justify-content: center; // Figma 모바일: center
+    text-align: center; // Figma 모바일: center
     gap: $spacing-4; // 16px - Figma 모바일
-    padding: 10px; // Figma 모바일: 10px
+    padding: 20px 30px; // Figma 모바일: 20px 30px
     border-radius: 10px; // Figma 모바일: 10px
     box-shadow: none;
 
@@ -190,12 +191,12 @@
   }
 
   .textWrapper {
-    flex: 1;
+    flex: 0 0 auto; // Figma 모바일: hug content
     min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; // Figma 모바일: center
     gap: 0; // Figma 모바일: gap 없음
   }
 
@@ -206,6 +207,8 @@
     margin: 0;
     line-height: 1.5; // 30px
     letter-spacing: -0.8px; // -4% of 20px
+    width: 150px; // Figma 모바일: 150px 고정
+    text-align: center; // Figma 모바일: center
   }
 
   .description {

@@ -41,7 +41,7 @@
   // 모바일 (768px 이하) - 1열
   @media (max-width: $breakpoint-md) {
     grid-template-columns: 1fr;
-    gap: 8px; // Figma 모바일: 8px
+    gap: $spacing-4; // 16px - Figma 모바일
   }
 }
 
@@ -63,10 +63,10 @@
     gap: $spacing-4; // 16px
   }
 
-  // 모바일 (768px 이하) - mobileSpan 지원을 위해 2열 그리드
+  // 모바일 (768px 이하) - 1열
   @media (max-width: $breakpoint-md) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px; // Figma 모바일: 8px
+    grid-template-columns: 1fr; // Figma 모바일: 1열
+    gap: $spacing-4; // 16px - Figma 모바일
   }
 }
 

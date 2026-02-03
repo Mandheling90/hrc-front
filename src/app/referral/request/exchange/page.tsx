@@ -9,7 +9,6 @@ import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
 import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
-import { FluentArrowCircleUpRight } from '@/components/icons/FluentArrowCircleUpRight'
 import { useHospital } from '@/hooks'
 import { mapServiceItems, mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
@@ -38,11 +37,17 @@ export default function ExchangePage() {
           <h1 className={styles.pageTitle}>진료정보교류 의뢰</h1>
 
           {/* 페이지 소개 섹션 */}
-          <InfoBox variant='info' messages={exchangeInfo?.intro || []} className={styles.introBox} />
+          <InfoBox
+            variant='info'
+            messages={exchangeInfo?.intro || []}
+            className={styles.introBox}
+            textAlign='center'
+            contentAlign='center'
+          />
 
           {/* 진료정보교류 사업 목적 섹션 또는 진료정보교류 진료의뢰 설명 */}
           {exchangeInfo?.services && exchangeInfo.services.length > 0 ? (
-            <ServiceSection title='진료정보교류 사업 목적' services={services} horizontalLayout />
+            <ServiceSection title='진료정보교류 사업 목적' services={services} columns={3} />
           ) : (
             exchangeInfo?.referralDescription &&
             exchangeInfo.referralDescription.length > 0 && (
@@ -88,7 +93,6 @@ export default function ExchangePage() {
                     className={styles.mychartImage}
                     priority
                   />
-                  <FluentArrowCircleUpRight className={styles.arrowIcon} />
                 </a>
               </div>
             </div>
