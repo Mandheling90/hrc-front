@@ -1,8 +1,8 @@
 @import '@/styles/variables.scss';
 
 .infoBox {
-  background-color: #fdf9f4;
-  border: 1px solid #dbbf93;
+  background-color: $color-secondary-bg;
+  border: 1px solid $color-secondary-hover;
   border-radius: 10px;
   padding: 40px 20px;
   text-align: center;
@@ -74,8 +74,8 @@
   }
 
   .infoBox {
-    background-color: #fdf9f4;
-    border: 1px solid #dbbf93;
+    background-color: $color-secondary-bg;
+    border: 1px solid $color-secondary-hover;
     border-radius: 10px;
     padding: 30px; // Figma 디자인에 맞게 30px로 유지
     text-align: left;
@@ -192,10 +192,10 @@
 
 // Guide variant
 .guide {
-  background-color: #fdf9f4;
-  border: 1px solid #dbbf93;
+  background-color: $color-secondary-bg;
+  border: 1px solid $color-secondary-hover;
   border-radius: 10px;
-  padding: 30px 20px;
+  padding: 40px 20px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
