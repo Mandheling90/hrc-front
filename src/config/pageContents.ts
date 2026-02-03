@@ -191,8 +191,9 @@ const anamContent: HospitalPageContent = {
   },
   network: {
     intro: [
-      '고려대학교 안암병원은 국민 의료 환경 및 의료의 질 향상을 위해 의료전달체계 확립에 힘쓰며,',
-      '진료의뢰 및 회송 체계 활성화를 위해 협력 병·의원 체결을 진행하고 있습니다.'
+      '고려대학교 안암병원은 진료, 교육, 연구에 관한 사항을 상호 협력함으로써 국민의료환경 및 의료의 질을 향상시키고\n의료전달체계를 확립하여 의료계의 발전을 도모하고자 협력네트워크를 운영하고 있습니다.',
+      '원장님의 적극적인 지원과 관심으로 진료의뢰 및 회송체계를 활성화시키고자 노력하고 있으며,\n더욱 원활한 의뢰 · 회송체계를 위해 협력병 · 의원 체결을 하고자 합니다.',
+      '협력병·의원 체결 신청을 해주시면 절차에 따라 체결 진행하겠습니다.'
     ],
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
@@ -684,35 +685,41 @@ const guroContent: HospitalPageContent = {
   },
   network: {
     intro: [
-      '고려대학교 구로병원은 국민 의료 환경 및 의료의 질 향상을 위해 의료전달체계 확립에 힘쓰며,',
-      '진료의뢰 및 회송 체계 활성화를 위해 협력 병·의원 체결을 진행하고 있습니다.'
+      '진료, 교육, 연구에 관한 사항을 상호 협력함으로써 국민의료환경 및 의료의 질을 향상시키고',
+      '의료전달체계를 확립하여 의료계의 발전을 도모하고자 협력네트워크를 운영하고 있습니다.'
     ],
+    introStyle: 'withIcon',
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
       { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },
       { label: 'network', href: '/network', icon: 'ChevronDownIcon', iconAfter: true },
       { label: '협력네트워크 소개 & 신청', icon: 'ChevronDownIcon', iconAfter: true }
     ],
+    cooperationContent: [
+      { text: '진료를 위한 상호협력' },
+      { text: '의료정보 공유' },
+      { text: '의학적 지식 및 기술 상호교류' },
+      { text: '진료과별 간담회 및 초청 교육' },
+      { text: '협력병·의원 지정 표시' }
+    ],
     benefits: [
-      { text: '협약서(협력병원), 협력증서(협력병의원) 제공' },
+      { text: '현판(협력병원), 협력증서(협력병·의원) 제공' },
       { text: '병원 주차장 무료 이용' },
       {
-        text: '종합검진 20% 감면(기본검진에 한함) 및 고대구로병원 장례식장 빈소사용료 20% 감면 (감면 대상: 원장님 본인, 배우자, 본인의 직계존비속)'
+        text: '종합검진(기본검진 20% 감면) 및 장례식장(빈소사용료 일부) 감면\n감면대상 : 원장님 본인, 배우자, 본인의 직계존비속'
       },
-      { text: '병원 및 진료가 주최 각종 연수강좌 안내' },
-      { text: '응급환자 신속 대처를 위한 교수 직통 핫라인 제공' },
-      { text: '직원 직무교육 및 서비스교육 제공' },
+      { text: '병원 및 진료과 주최 각종 연수강좌 안내' },
+      { text: '간담회 초청' },
       { text: '상호교류가 활발한 병·의원장 외래교수 위촉' },
-      { text: '초진환자 의뢰 시 빠른 예약 서비스 제공' },
-      { text: '협력병·의원 의료진에 대한 상하반기 일요일 종합검진 실시(약 40% 감면)' }
+      { text: '초진 환자 의뢰 시 협력병원 패스트 트랙 예약 서비스 제공' }
     ],
     target: {
-      hospital: [{ text: '협력병원: 상호협력이 우수한 병원급 이상의 의료기관을 대상으로 매월 선정' }],
-      clinic: [{ text: '협력의원: 진료의뢰 및 회송을 통한 상호협력이 우수한 의원을 대상으로 매월 선정' }]
+      hospital: [{ text: '협력병원(병원급 이상) : 상호협력이 우수한 병원급 이상의 의료기관을 대상으로 매월 선정' }],
+      clinic: [{ text: '협력의원 : 진료의뢰 및 회송을 통한 상호협력이 우수한 의원을 대상으로 매월 선정' }]
     },
     applicationMethod: [
-      { text: '홈페이지 신청: 온라인 신청하기에서 협력병의원 체결 신청서를 작성하여 저장' },
-      { text: '팩스 신청: 홈페이지에서 협력의원 체결 신청서를 다운로드하여 작성 후 진료협력센터로 팩스 접수' }
+      { text: '홈페이지 신청 : 온라인신청하기 에서 협력병의원 체결 신청서를 작성하여 저장' },
+      { text: '팩스 신청 : 홈페이지에서 협력병 · 의원 체결 신청서를 다운로드 하여 작성 후 진료협력센터로 팩스 접수' }
     ],
     processSteps: [
       { stepNumber: '01', title: '신청서 접수', icon: 'DocumentIcon' },
@@ -722,8 +729,8 @@ const guroContent: HospitalPageContent = {
       { stepNumber: '05', title: '협력증서 전달', icon: 'CertificateIcon' }
     ],
     contact: {
-      phone: '02-2626-1681',
-      fax: '02-2626-1115'
+      phone: '02-2626-8446',
+      fax: '02-2626-1691'
     },
     downloadLink: '#',
     applicationLinks: {
@@ -1274,6 +1281,7 @@ const ansanContent: HospitalPageContent = {
       '고려대학교 안산병원은 국민 의료 환경 및 의료의 질 향상을 위해 의료전달체계 확립에 힘쓰며,',
       '진료의뢰 및 회송 체계 활성화를 위해 협력 병·의원 체결을 진행하고 있습니다.'
     ],
+    introStyle: 'withIcon',
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
       { label: '진료의뢰', href: '/referral', icon: 'ChevronDownIcon', iconAfter: true },

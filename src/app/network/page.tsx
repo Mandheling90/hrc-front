@@ -10,6 +10,7 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
 import { ServiceSection, ServiceItem } from '@/components/organisms/ServiceSection/ServiceSection'
 import { Button } from '@/components/atoms/Button/Button'
+import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import { FaxIcon } from '@/components/icons/FaxIcon'
 import { DownloadIcon } from '@/components/icons/DownloadIcon'
 import { DocumentIcon } from '@/components/icons/DocumentIcon'
@@ -21,6 +22,7 @@ import { useHospital } from '@/hooks'
 import { mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
 import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
+import { NetworkIntroIcon } from '@/components/icons/NetworkIntroIcon'
 
 export default function NetworkPage() {
   const router = useRouter()
@@ -70,13 +72,24 @@ export default function NetworkPage() {
         <div className='container'>
           <h1 className={styles.pageTitle}>협력네트워크 소개 & 신청</h1>
 
+          {/* Intro Box - 병원별 스타일 분기 */}
           <InfoBox
             variant='guide'
+            icon={networkInfo.introStyle === 'withIcon' ? <NetworkIntroIcon width={110} height={110} /> : undefined}
             messages={networkInfo.intro || []}
             showBullets={false}
             contentAlign='center'
+            textAlign='center'
             className={styles.introBox}
           />
+
+          {/* 상호협력내용 - 구로병원 전용 */}
+          {networkInfo.cooperationContent && networkInfo.cooperationContent.length > 0 && (
+            <section className={styles.section}>
+              <SectionTitle title='상호협력내용' />
+              <ProcedureList items={networkInfo.cooperationContent} />
+            </section>
+          )}
 
           {/* 협력병·의원 혜택안내 */}
           {networkInfo.benefits && networkInfo.benefits.length > 0 && (
@@ -115,7 +128,18 @@ export default function NetworkPage() {
 
             {/* 체결절차 */}
             {processSteps.length > 0 && (
-              <ServiceSection services={processSteps} useStepBadge={true} tabletThreeTwoLayout={true} />
+              <div className={styles.processSection}>
+                <div className={styles.processLabel}>
+                  <span className={styles.processBullet}></span>
+                  체결절차
+                </div>
+                <ServiceSection
+                  services={processSteps}
+                  useStepBadge={true}
+                  tabletThreeTwoLayout={true}
+                  className={styles.processCards}
+                />
+              </div>
             )}
           </section>
 
@@ -159,31 +183,16 @@ export default function NetworkPage() {
               </Button>
             )}
 
-            <div className={styles.buttonGroup}>
-              <Button
-                variant='outline'
-                size='medium'
-                className={`${styles.applicationButton} ${styles.hospitalButton}`}
-                onClick={() => {
-                  router.push('/network/hospital-application')
-                }}
-              >
-                협력병원 온라인 신청
-              </Button>
-              {networkInfo.applicationLinks?.clinic && (
-                <Button
-                  variant='primary'
-                  size='medium'
-                  className={styles.applicationButton}
-                  onClick={() => {
-                    // TODO: 협력의원 신청 페이지 경로로 변경
-                    router.push('/network/clinic-application')
-                  }}
-                >
-                  협력의원 온라인 신청
-                </Button>
-              )}
-            </div>
+            <ConfirmButtons
+              secondaryButton={{
+                label: '협력병원 온라인 신청',
+                onClick: () => router.push('/network/hospital-application')
+              }}
+              primaryButton={{
+                label: '협력의원 온라인 신청',
+                onClick: () => router.push('/network/clinic-application')
+              }}
+            />
           </section>
         </div>
       </main>

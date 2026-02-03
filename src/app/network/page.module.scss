@@ -12,11 +12,21 @@
 .pageTitle {
   @include page-title-large;
   text-align: center;
-  margin-bottom: $spacing-8;
+  margin-bottom: 80px; // Figma: gap 80px
+
+  @include tablet {
+    margin-bottom: 32px; // Figma 태블릿: gap 32px
+  }
+
+  @include mobile {
+    font-size: $font-size-4xl; // 36px - Figma 모바일
+    margin-bottom: 32px; // Figma 모바일: gap 32px
+    letter-spacing: -1.44px;
+  }
 }
 
 .introBox {
-  margin: $spacing-8 0 $spacing-10;
+  margin: 0 0 $spacing-10; // pageTitle에서 gap 처리
 }
 
 .section {
@@ -54,17 +64,95 @@
   }
 }
 
+// 체결절차 섹션
+.processSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; // Figma: 24px
+}
+
+.processLabel {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2; // 8px
+  padding-left: 32px; // Figma: 32px
+  font-size: $font-size-2xl; // 24px
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+
+  @include tablet {
+    padding-left: 20px;
+    font-size: $font-size-xl; // 20px - Figma 태블릿
+    letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    padding-left: 20px;
+    font-size: $font-size-xl; // 20px
+    letter-spacing: -0.8px;
+  }
+}
+
+.processBullet {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: $color-primary;
+  border: 1px solid $color-primary;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.processCards {
+  padding: 0 32px; // Figma: px-32px
+  margin: 0 !important; // section 기본 margin 제거
+
+  @include tablet {
+    padding: 0 16px;
+  }
+
+  @include mobile {
+    padding: 0 16px;
+  }
+
+  // ServiceSection 내부 section의 margin 제거
+  :global([class*='ServiceSection_section']) {
+    margin: 0;
+  }
+
+  // ServiceSection 내부 grid의 gap 오버라이드
+  :global([class*='ServiceSection_grid']) {
+    gap: 24px; // Figma: 24px
+    padding-top: 0;
+
+    @include tablet {
+      gap: 16px; // Figma 태블릿: 16px
+    }
+
+    @include mobile {
+      gap: 16px; // Figma 모바일: 16px
+    }
+  }
+}
+
 .contactSection {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  gap: $spacing-6;
+  gap: 24px; // Figma: 24px
   margin: $spacing-6 0;
   width: 100%;
 
   @include tablet {
+    flex-direction: row; // 태블릿: 가로 배치
+    gap: 16px;
+  }
+
+  @include mobile {
     flex-direction: column;
-    gap: $spacing-4;
+    gap: 8px; // Figma 모바일: 8px
   }
 }
 
@@ -72,17 +160,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-4;
-  padding: $spacing-5;
+  gap: 56px; // Figma: 56px
+  padding: 30px 50px; // Figma: 30px 50px
   background-color: $color-white;
-  border: 1px solid $gray-4;
-  border-radius: $radius-md;
+  border: 1px solid $gray-9; // Figma: #8C8C8C
+  border-radius: 10px; // Figma: 10px
   flex: 1 1 0;
   min-width: 0;
 
   @include tablet {
+    flex: 1; // 태블릿: 반반씩 차지
+    padding: 30px;
+    gap: 16px;
+    justify-content: center; // 가운데 정렬
+  }
+
+  @include mobile {
     flex: 1 1 auto;
-    padding: $spacing-6;
+    height: 100px; // Figma 모바일: 100px
+    padding: 30px; // Figma 모바일: 30px
+    gap: 16px;
+    justify-content: center; // 가운데 정렬
   }
 }
 
@@ -91,45 +189,80 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 60px;
-  min-width: 60px;
-  height: 60px;
+  width: 100px; // Figma: 100px
+  min-width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background-color: rgba(159, 24, 54, 0.1);
+  background-color: #fcebeb; // Figma: #FCEBEB
 
   @include tablet {
-    width: 48px;
-    min-width: 48px;
-    height: 48px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+  }
+
+  @include mobile {
+    width: 40px; // Figma 모바일: 40px
+    min-width: 40px;
+    height: 40px;
   }
 }
 
 .contactIconSvg {
-  width: 24px;
-  height: 24px;
+  width: 60px; // Figma: 60px
+  height: 60px;
 
   @include tablet {
     width: 24px !important;
+    height: 24px !important;
+  }
+
+  @include mobile {
+    width: 24px !important; // Figma 모바일: 24px
     height: 24px !important;
   }
 }
 
 .contactInfo {
   display: flex;
-  align-items: center;
-  gap: $spacing-2;
+  align-items: flex-start;
+  gap: 24px; // Figma: 24px
 }
 
 .contactLabel {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
   color: $gray-12;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+
+  @include tablet {
+    font-size: 20px; // Figma 태블릿: 20px
+    letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    font-size: 20px; // Figma 모바일: 20px
+    letter-spacing: -0.8px;
+  }
 }
 
 .contactValue {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-medium;
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
   color: $gray-12;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+
+  @include tablet {
+    font-size: 20px; // Figma 태블릿: 20px
+    letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    font-size: 20px; // Figma 모바일: 20px
+    letter-spacing: -0.8px;
+  }
 }
 
 .downloadButton {
@@ -139,35 +272,57 @@
   margin: $spacing-4 0;
 
   span {
-    font-weight: 700;
+    font-size: 20px; // Figma: 20px
+    font-weight: $font-weight-semibold; // Figma: 600
+    letter-spacing: -0.8px;
   }
 }
 
 .buttonGroup {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 24px; // Figma: 24px
   margin-top: $spacing-8;
 
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) {
+  @include tablet {
     gap: 16px;
   }
 
-  @media (max-width: $breakpoint-md) {
+  @include mobile {
     flex-direction: column;
+    gap: 12px;
   }
 }
 
 .applicationButton {
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) {
-    min-width: 300px;
+  min-width: 360px; // Figma: 360px
+  padding: 15px 30px; // Figma: 15px 30px
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  border-radius: 5px; // Figma: 5px
+
+  @include tablet {
+    min-width: 280px;
+    padding: 12px 24px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    min-width: 100%;
+    padding: 12px 20px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
 }
 
 .hospitalButton {
   color: $color-primary !important;
   border-color: $color-primary !important;
-  border-width: 1px !important;
+  border-width: 2px !important; // Figma: 2px
+  background-color: $color-white !important;
 
   &:hover:not(:disabled) {
     background-color: #fff !important;
