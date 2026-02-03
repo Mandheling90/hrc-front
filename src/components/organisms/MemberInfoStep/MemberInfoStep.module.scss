@@ -1,9 +1,31 @@
 @import '@/styles/variables.scss';
 
 .infoGuideBox {
-  margin-bottom: 35px;
+  width: 630px;
+  margin: 0 auto 40px auto; // Figma 디자인에 맞게 40px로 수정
+  padding: 30px 60px !important; // Figma 디자인에 맞게 수정 (상하 30px, 좌우 60px)
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 100%;
+    max-width: 630px;
+    margin-bottom: 40px; // Figma 태블릿 디자인에 맞게 40px
+    padding: 30px 60px !important; // Figma 태블릿 디자인에 맞게 유지
+  }
+
+  // 모바일 (768px 이하)
   @media (max-width: $breakpoint-md) {
-    margin-bottom: 30px;
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 20px !important;
+  }
+
+  // guideList에 padding-left 추가
+  :global(.guideList) {
+    padding-left: 16px;
+
+    @media (max-width: $breakpoint-md) {
+      padding-left: 0;
+    }
   }
 }

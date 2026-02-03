@@ -2,7 +2,19 @@
 @import '@/styles/mixins.scss';
 
 .memberInfoForm {
-  width: 100%;
+  width: 630px;
+  margin: 0 auto;
+
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 100%;
+    max-width: 630px;
+  }
+
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+  }
 }
 
 // 상단 영역: 회원탈퇴 버튼 (우측 정렬)
@@ -55,32 +67,37 @@
 
 .section {
   background-color: #fff;
-  border: 1px solid $gray-8;
+  border: 1px solid $gray-9; // Figma 디자인에 맞게 #8C8C8C로 수정
   border-radius: 20px;
   padding: 40px;
   margin-bottom: 24px;
 
   @include tablet {
-    padding: 32px;
-    border-radius: 16px;
+    padding: 40px; // Figma 태블릿 디자인에 맞게 40px 유지
+    border-radius: 20px;
   }
 
   @include mobile {
     padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 16px;
+    border-radius: 20px; // Figma 모바일 디자인에 맞게 20px
+    margin-bottom: 24px; // Figma 모바일 디자인에 맞게 24px
   }
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 22px;
-  margin-top: 18px;
+  gap: 24px; // Figma 디자인에 맞게 24px로 수정
+  margin-top: 56px; // Figma 디자인에 맞게 56px로 수정 (헤더와 필드 사이 간격)
+
+  @include tablet {
+    gap: 24px; // Figma 태블릿 디자인에 맞게 24px 유지
+    margin-top: 32px; // Figma 태블릿 디자인에 맞게 32px
+  }
 
   @include mobile {
-    gap: 18px;
-    margin-top: 16px;
+    gap: 24px; // Figma 모바일 디자인에 맞게 24px
+    margin-top: 32px; // Figma 모바일 디자인에 맞게 32px
   }
 }
 
@@ -104,28 +121,3 @@
   }
 }
 
-.buttonGroup {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 56px;
-
-  button {
-    min-width: 260px;
-
-    @include mobile {
-      min-width: 0;
-      flex: 1;
-    }
-  }
-
-  @include tablet {
-    margin-top: 40px;
-  }
-
-  @include mobile {
-    flex-direction: column;
-    margin-top: 24px;
-    gap: 12px;
-  }
-}

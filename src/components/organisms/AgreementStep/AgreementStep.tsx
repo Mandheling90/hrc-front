@@ -1,9 +1,9 @@
 'use client'
 
-import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { AgreementContent } from '@/components/molecules/AgreementContent/AgreementContent'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import React from 'react'
 import styles from './AgreementStep.module.scss'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
@@ -153,14 +153,10 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
         />
       </div>
 
-      <div className={styles.buttonGroup}>
-        <Button variant='outline' size='large' onClick={onCancel}>
-          이전 단계
-        </Button>
-        <Button variant='primary' size='large' onClick={onNext}>
-          다음 단계
-        </Button>
-      </div>
+      <ConfirmButtons
+        secondaryButton={{ label: '이전 단계', onClick: onCancel }}
+        primaryButton={{ label: '다음 단계', onClick: onNext }}
+      />
     </>
   )
 }

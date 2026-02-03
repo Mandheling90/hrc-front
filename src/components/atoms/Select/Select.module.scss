@@ -30,7 +30,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: $color-white;
-  border: 1px solid $gray-10;
+  border: 1px solid $gray-9;
   border-radius: 5px;
   cursor: pointer;
   transition: all $transition-base;
@@ -70,9 +70,16 @@
     border-color: $gray-7;
   }
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: $font-size-base; // 16px
+    line-height: 24px;
+  }
+
   @media (max-width: $breakpoint-md) {
     height: 43px;
-    font-size: $font-size-lg;
+    font-size: $font-size-base; // 16px
+    line-height: 24px;
   }
 }
 
@@ -106,7 +113,7 @@
   min-width: 100%;
   z-index: $z-index-dropdown;
   background-color: $color-white;
-  border: 1px solid $gray-10;
+  border: 1px solid $gray-9;
   border-radius: 5px;
   box-shadow: $shadow-lg;
   max-height: 300px;
@@ -172,6 +179,17 @@
     &:hover {
       background-color: darken($color-primary, 5%);
     }
+  }
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: $font-size-base; // 16px
+    line-height: 24px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-base; // 16px
+    line-height: 24px;
   }
 }
 

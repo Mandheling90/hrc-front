@@ -1,12 +1,13 @@
 'use client'
 
-import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { FormField } from '@/components/molecules/FormField/FormField'
+import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
+import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import React, { useState, useEffect } from 'react'
@@ -381,7 +382,9 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
             />
 
             <div className={styles.formField}>
-              <InputLabel htmlFor='smsConsent'>SMS 동의여부</InputLabel>
+              <InputLabel htmlFor='smsConsent' required>
+                SMS 동의여부
+              </InputLabel>
               <Radio
                 name='smsConsent'
                 value={formData.smsConsent}
@@ -391,7 +394,9 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
             </div>
 
             <div className={styles.formField}>
-              <InputLabel htmlFor='emailConsent'>E-mail 동의여부</InputLabel>
+              <InputLabel htmlFor='emailConsent' required>
+                E-mail 동의여부
+              </InputLabel>
               <Radio
                 name='emailConsent'
                 value={formData.emailConsent}
@@ -401,7 +406,9 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
             </div>
 
             <div className={styles.formField}>
-              <InputLabel htmlFor='replyConsent'>회신서 수신 동의 여부</InputLabel>
+              <InputLabel htmlFor='replyConsent' required>
+                회신서 수신 동의 여부
+              </InputLabel>
               <Radio
                 name='replyConsent'
                 value={formData.replyConsent}
@@ -409,6 +416,8 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 onChange={handleRadioChange('replyConsent')}
               />
             </div>
+
+            <InfoNote message='동의 여부 변경 시 진료협력센터로 연락 주시기 바랍니다.' />
           </div>
         </div>
       )}
@@ -505,19 +514,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       )}
 
       {/* 버튼 그룹 */}
-      <div className={styles.buttonGroup}>
-        {mode === 'signup' && onPrev && (
-          <Button type='button' variant='gray' size='medium' onClick={onPrev}>
-            이전 단계
-          </Button>
-        )}
-        <Button type='button' variant='outline' size='large' onClick={onCancel}>
-          {cancelButtonText || defaultCancelText}
-        </Button>
-        <Button type='button' variant='primary' size='large' onClick={handleSubmit}>
-          {submitButtonText || defaultSubmitText}
-        </Button>
-      </div>
+      <ConfirmButtons
+        secondaryButton={{ label: cancelButtonText || defaultCancelText, onClick: onCancel }}
+        primaryButton={{ label: submitButtonText || defaultSubmitText, onClick: handleSubmit }}
+      />
     </div>
   )
 }

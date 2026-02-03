@@ -9,19 +9,21 @@
   font-size: 32px;
   font-weight: 600;
   color: $color-primary;
-  margin: 0 0 10px 0;
-  letter-spacing: -0.88px;
-  line-height: 1.5;
+  margin: 0 0 0 0; // Figma 디자인에 맞게 마진 제거
+  letter-spacing: -1.28px; // Figma 디자인에 맞게 -4% (-1.28px)
+  line-height: 48px; // Figma 디자인에 맞게 48px
 
   // 테블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 24px;
+    line-height: 36px;
     letter-spacing: -0.96px;
   }
 
   // 모바일 (768px 이하)
   @media (max-width: $breakpoint-md) {
-    font-size: 24px;
+    font-size: 24px; // Figma 모바일 디자인에 맞게 24px
+    line-height: 36px;
     letter-spacing: -0.96px;
   }
 }
@@ -32,21 +34,23 @@
   font-weight: 400;
   color: $gray-11;
   margin: 0 0 0 0;
-  padding-bottom: 24px;
-  border-bottom: 2px solid #ddd;
-  letter-spacing: -0.6px;
-  line-height: 1.5;
+  padding-bottom: 16px; // Figma 디자인에 맞게 조정
+  border-bottom: 2px solid $gray-8; // Figma 디자인에 맞게 #BBBBBB로 수정
+  letter-spacing: -0.72px;
+  line-height: 27px; // Figma 디자인에 맞게 27px로 수정
 
   // 테블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 16px;
+    line-height: 24px;
     letter-spacing: -0.64px;
   }
 
   // 모바일 (768px 이하)
   @media (max-width: $breakpoint-md) {
-    font-size: 16px;
-    padding-bottom: 18px;
+    font-size: 16px; // Figma 모바일 디자인에 맞게 16px
+    line-height: 24px;
+    padding-bottom: 12px;
     letter-spacing: -0.64px;
   }
 }

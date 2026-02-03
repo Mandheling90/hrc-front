@@ -109,9 +109,11 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    height: 50px;
-    padding: 0 24px;
-    font-size: 18px;
+    height: 50px; // Figma 모바일 디자인에 맞게 50px
+    padding: 10px 20px; // Figma 모바일 디자인에 맞게 수정
+    font-size: 20px; // Figma 모바일 디자인에 맞게 20px
+    line-height: 30px;
+    letter-spacing: -0.8px;
   }
 }
 

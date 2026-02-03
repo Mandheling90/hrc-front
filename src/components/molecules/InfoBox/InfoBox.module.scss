@@ -306,7 +306,7 @@
 .guideItem {
   display: flex;
   gap: 8px;
-  align-items: center;
+  align-items: flex-start; // 두 줄 텍스트에서 bullet이 첫 줄에 맞게 정렬
 }
 
 .bullet {
@@ -314,10 +314,12 @@
   width: 8px;
   height: 2px;
   background-color: $gray-11;
+  margin-top: 14px; // Figma 디자인에 맞게 첫 줄 텍스트와 정렬 (line-height 30px의 중앙)
 
-  // @media (max-width: $breakpoint-md) {
-  //   display: none;
-  // }
+  // 모바일 (768px 이하) - line-height 27px 기준
+  @media (max-width: $breakpoint-md) {
+    margin-top: 12px; // (27px - 2px) / 2 ≈ 12px
+  }
 }
 
 .guideMessage {
