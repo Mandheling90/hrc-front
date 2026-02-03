@@ -369,7 +369,7 @@ Use testing frameworks compatible with Next.js 15 and React 19.
 
 ### Icons
 
-`src/components/icons/` 디렉토리에 70개 이상의 아이콘 컴포넌트가 있습니다.
+`src/components/icons/` 디렉토리에 99개의 아이콘 컴포넌트가 있습니다.
 
 **자주 사용하는 아이콘:**
 

@@ -51,7 +51,9 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 // Color definitions
 const primaryColors = [
   { name: 'Primary', hex: '#9f1836', scssVar: '$color-primary' },
-  { name: 'Secondary', hex: '#fae3ba', scssVar: '$color-secondary' },
+  { name: 'Secondary', hex: '#c09c63', scssVar: '$color-secondary' },
+  { name: 'Secondary BG', hex: '#fdf9f4', scssVar: '$color-secondary-bg' },
+  { name: 'Secondary Hover', hex: '#dbbf93', scssVar: '$color-secondary-hover' },
   { name: 'Point', hex: '#ec5a29', scssVar: '$color-point' }
 ]
 
@@ -105,7 +107,8 @@ const fontSizes = [
   { name: 'xl', size: '20px', rem: '1.25rem', scssVar: '$font-size-xl' },
   { name: '2xl', size: '24px', rem: '1.5rem', scssVar: '$font-size-2xl' },
   { name: '3xl', size: '30px', rem: '1.875rem', scssVar: '$font-size-3xl' },
-  { name: '4xl', size: '36px', rem: '2.25rem', scssVar: '$font-size-4xl' }
+  { name: '4xl', size: '36px', rem: '2.25rem', scssVar: '$font-size-4xl' },
+  { name: '5xl', size: '48px', rem: '3rem', scssVar: '$font-size-5xl' }
 ]
 
 const fontWeights = [
@@ -166,10 +169,11 @@ const shadows = [
 // Breakpoints
 const breakpoints = [
   { name: 'sm', size: '500px', scssVar: '$breakpoint-sm' },
-  { name: 'md', size: '720px', scssVar: '$breakpoint-md' },
+  { name: 'md', size: '768px', scssVar: '$breakpoint-md' },
   { name: 'lg', size: '1024px', scssVar: '$breakpoint-lg' },
   { name: 'xl', size: '1200px', scssVar: '$breakpoint-xl' },
-  { name: '2xl', size: '1430px', scssVar: '$breakpoint-2xl' }
+  { name: '2xl', size: '1498px', scssVar: '$breakpoint-2xl' },
+  { name: 'container', size: '1530px', scssVar: '$container-max-width' }
 ]
 
 // Z-index
@@ -748,8 +752,8 @@ export default function StyleGuidePage() {
               messages={[
                 '반응형 GNB 메가 드롭다운 메뉴',
                 '데스크톱 (1430px+): 호버 시 메가 드롭다운',
-                '태블릿 (721px~1430px): 전체화면 슬라이드 다운 메뉴',
-                '모바일 (720px 이하): 우측 사이드 패널 메뉴',
+                '태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴',
+                '모바일 (768px 이하): 우측 사이드 패널 메뉴',
                 '메뉴: 진료의뢰, 협력네트워크, 공지/정보, 진료협력센터 소개, 마이페이지(로그인 시)'
               ]}
             />

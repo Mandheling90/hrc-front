@@ -62,7 +62,7 @@ src/
 │   ├── molecules/       # ServiceCard, AlertModal, ProgressSteps 등
 │   ├── organisms/       # Header, Footer, LoginForm, SignupForm 등
 │   ├── templates/       # MainTemplate
-│   ├── icons/           # SVG 아이콘 컴포넌트 (70개+)
+│   ├── icons/           # SVG 아이콘 컴포넌트 (99개)
 │   └── providers/       # 전역 Provider 컴포넌트
 │
 ├── config/              # 설정 파일
@@ -171,18 +171,18 @@ src/
 - **StatusBadge** - 상태 표시 배지
 - **RouteChip** - 교통 노선 칩
 
-### Molecules (50개+)
+### Molecules (53개)
 
 **폼 관련**
 
 - FormField, LabelInputRow, LabelInputRowGroup
 - AddressField, AddressSearchBar
-- CheckboxGroup, DoctorSearchModal
+- CheckboxGroup, DoctorSearchModal, ConfirmButtons
 
 **카드/리스트**
 
-- ServiceCard (Horizontal, Vertical, StepBadge 변형)
-- ClinicCard, DoctorCard, CardList
+- ServiceCard, HorizontalServiceCard, VerticalServiceCard, StepBadgeCard
+- IconTitleCard, ClinicCard, DoctorCard, CardList
 - NoticeList, ProcedureList, BusStopList
 
 **네비게이션**
@@ -219,7 +219,7 @@ src/
 - OperationInfoCards, ProcedureFlow
 - SearchFilterWithInfo
 
-### Organisms (30개+)
+### Organisms (35개)
 
 **레이아웃**
 
@@ -238,6 +238,13 @@ src/
 
 - AgreementStep, VerificationStep
 - MemberInfoStep, MemberInfoForm, CompleteStep
+
+**약관/동의 콘텐츠**
+
+- TermsOfUseContent (이용약관)
+- PersonalInfoRequiredContent (필수 개인정보 수집)
+- PersonalInfoOptionalContent (선택 개인정보 수집)
+- ThirdPartyInfoContent (제3자 정보제공)
 
 **병원 신청 단계**
 
@@ -261,13 +268,13 @@ src/
 - DiagnosticDetailModal, ImageViewerModal
 - MedicalReplyModal, PathologyResultModal
 
-### Icons (70개+)
+### Icons (99개)
 
 **기본 UI 아이콘**
 
 - CheckIcon, ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, ChevronRightIcon
 - CloseIcon, SearchIcon, EyeIcon, HomeIcon, InfoIcon, WarningIcon
-- ArrowDownIcon, ArrowRightIcon, ArrowRightCircleIcon, ArrowDownloadIcon
+- ArrowDownIcon, ArrowRightIcon, ArrowRightIcon16, ArrowRightLargeIcon, ArrowRightCircleIcon, ArrowDownloadIcon
 
 **서비스 아이콘**
 
@@ -292,7 +299,7 @@ src/
 
 **파일/데이터 아이콘**
 
-- DownloadIcon, LoadIcon, SaveIcon, PaperclipIcon, PlusIcon
+- DownloadIcon, LoadIcon, SaveIcon, PaperclipIcon, PlusIcon, PlusIcon24
 
 **교통 아이콘**
 
@@ -315,29 +322,44 @@ src/
 
 ```scss
 // 주요 색상
---color-primary: #9f1836 // 주홍색
-  --color-secondary: #fae3ba // 베이지색
-  --color-point: #ec5a29 // 포인트 주황색
-  // 그레이스케일
-  --gray-100 ~--gray-900 // 다크모드
-  [data-theme= 'dark'] 지원;
+$color-primary: #9f1836;        // 주홍색(버건디)
+$color-secondary: #c09c63;      // 골드/탄색
+$color-secondary-bg: #fdf9f4;   // Secondary 배경색
+$color-secondary-hover: #dbbf93; // Secondary 호버색
+$color-point: #ec5a29;          // 포인트 주황색
+
+// 시스템 색상
+$color-error: #ff0000;
+$color-red: #ff4141;
+$color-blue: #418be2;
+
+// 그레이스케일 (Gray 1~12)
+$gray-1: #fdfdfd ~ $gray-12: #202020;
+
+// 다크모드
+$color-bg-dark: #0e0f10;
+$color-bg-dark-secondary: #16181b;
+$color-text-dark: #f2f3f5;
+$color-text-dark-secondary: #d6dae1;
+// [data-theme='dark'] 지원
 ```
 
 ### 반응형 브레이크포인트
 
 ```scss
 // 전역 브레이크포인트 (variables.scss)
-$breakpoints: (
-  sm: 500px,
-  md: 720px,
-  lg: 1024px,
-  xl: 1200px,
-  2xl: 1430px
-);
+$breakpoint-sm: 500px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1498px;
 
-// Header 전용 브레이크포인트
-$bp-mobile: 768px; // 모바일: ~768px
-$bp-tablet: 1429px; // 태블릿: 769px ~ 1429px
+// Container 최대 너비
+$container-max-width: 1530px;
+
+// Header 전용 브레이크포인트 (mixins.scss)
+$header-bp-mobile: 768px;  // 모바일: ~768px
+$header-bp-tablet: 1429px; // 태블릿: 769px ~ 1429px
 // 데스크톱: 1430px~
 ```
 
