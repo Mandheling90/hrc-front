@@ -32,12 +32,16 @@
     flex-direction: column;
   }
 
-  // tabletThreeTwoLayout이 아닐 때만 태블릿에서 1열로 변경
-  &:not(.tabletThreeTwoLayout) {
-    @include tablet {
-      grid-template-columns: 1fr;
-      gap: $spacing-3;
-    }
+  // 태블릿 (769px ~ 1429px) - 2열 그리드
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    grid-template-columns: repeat(2, 1fr); // Figma 태블릿: 2열
+    gap: $spacing-4; // 16px - Figma 태블릿
+  }
+
+  // 모바일 (768px 이하) - 1열
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: 8px; // Figma 모바일: 8px
   }
 }
 

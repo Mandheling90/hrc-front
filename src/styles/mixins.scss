@@ -269,14 +269,14 @@ $header-bp-mobile: 768px;
   line-height: 1.5;
   letter-spacing: -1.92px;
 
-  // 태블릿
-  @media (max-width: $breakpoint-md) {
-    font-size: 32px;
-    margin: 0 0 $spacing-10;
-    letter-spacing: -1.28px;
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 36px; // Figma 태블릿: 36px
+    margin: 0 0 $spacing-12; // 48px
+    letter-spacing: -1.44px; // -4% of 36px
   }
 
-  // 모바일
+  // 모바일 (768px 이하)
   @media (max-width: $breakpoint-md) {
     font-size: $font-size-2xl; // 24px
     margin: 0 0 $spacing-6;

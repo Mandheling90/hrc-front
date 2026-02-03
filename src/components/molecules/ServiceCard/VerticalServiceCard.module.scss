@@ -117,15 +117,15 @@
   }
 }
 
-// 태블릿
-@include tablet {
+// 태블릿 (769px ~ 1429px)
+@media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
   .card {
-    padding: 24px 20px;
-    gap: 20px;
+    padding: 20px; // Figma 태블릿: 20px
+    gap: 16px; // Figma 태블릿: 16px
   }
 
   .iconCircle {
-    width: 80px;
+    width: 80px; // Figma 태블릿: 80px
     height: 80px;
 
     svg {
@@ -135,24 +135,24 @@
   }
 
   .title {
-    font-size: $font-size-xl;
+    font-size: $font-size-xl; // 20px
   }
 
   .description {
-    font-size: $font-size-base;
+    font-size: $font-size-base; // 16px
     letter-spacing: -0.64px;
   }
 }
 
-// 모바일 스타일
+// 모바일 스타일 (768px 이하)
 @media (max-width: $breakpoint-md) {
   .card {
     flex-direction: row;
     align-items: center;
     text-align: left;
-    gap: $spacing-4;
-    padding: $spacing-4;
-    border-radius: $radius-md;
+    gap: $spacing-4; // 16px - Figma 모바일
+    padding: 10px; // Figma 모바일: 10px
+    border-radius: 10px; // Figma 모바일: 10px
     box-shadow: none;
 
     &:hover {
@@ -171,9 +171,9 @@
   }
 
   .iconCircle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 60px; // Figma 모바일: 60px
+    height: 60px;
+    border-radius: 42px; // Figma 모바일: 42px
     background-color: #fcebeb;
     display: flex;
     align-items: center;
@@ -181,8 +181,8 @@
     flex-shrink: 0;
 
     svg {
-      width: 32px;
-      height: 32px;
+      width: 36px; // Figma 모바일: 36px
+      height: 36px;
       color: $color-primary;
       flex-shrink: 0;
     }
@@ -195,25 +195,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 4px;
+    gap: 0; // Figma 모바일: gap 없음
   }
 
   .title {
-    font-size: $font-size-lg; // 18px
+    font-size: $font-size-xl; // 20px - Figma 모바일
     font-weight: $font-weight-semibold;
     color: $gray-12;
     margin: 0;
-    line-height: 1.5;
-    letter-spacing: -0.72px;
+    line-height: 1.5; // 30px
+    letter-spacing: -0.8px; // -4% of 20px
   }
 
   .description {
-    font-size: $font-size-sm; // 14px
+    font-size: $font-size-base; // 16px - Figma 모바일
     font-weight: $font-weight-normal;
     color: $gray-9;
     margin: 0;
-    line-height: 1.5;
-    letter-spacing: -0.56px;
+    line-height: 1.5; // 24px
+    letter-spacing: -0.64px; // -4% of 16px
     text-align: left;
   }
 

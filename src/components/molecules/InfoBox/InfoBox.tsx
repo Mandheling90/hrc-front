@@ -16,6 +16,8 @@ export interface InfoBoxProps {
   showBullets?: boolean
   /** 콘텐츠 시작 위치 (guide variant용, 기본값: 'left') */
   contentAlign?: 'left' | 'center'
+  /** 텍스트 정렬 (guide variant용, 기본값: 'left') */
+  textAlign?: 'left' | 'center'
   /** 마지막 메시지 강조 표시 (guide variant용) */
   highlightLast?: boolean
   /** 텍스트 색상 (기본값: 'default', 'black'로 설정 시 검정색) */
@@ -31,6 +33,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   variant = 'info',
   showBullets = false,
   contentAlign = 'left',
+  textAlign = 'left',
   highlightLast = false,
   textColor = 'default',
   className = ''
@@ -66,7 +69,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
     return (
       <div
         className={`${styles.guide} ${contentAlign === 'center' ? styles.contentCenter : ''} ${
-          contentAlign === 'center' && !hasIcon ? styles.centerText : ''
+          contentAlign === 'center' ? styles.centerText : ''
         } ${className}`}
       >
         <div className={styles.guideInner}>
@@ -80,12 +83,15 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
                 const isLast = index === messages.length - 1
                 const shouldHighlight = highlightLast && isLast
                 return (
-                  <div key={index} className={styles.guideItem}>
+                  <div
+                    key={index}
+                    className={`${styles.guideItem} ${textAlign === 'center' ? styles.guideItemCenter : ''}`}
+                  >
                     {showBullets && <span className={styles.bullet}></span>}
                     <p
                       className={`${styles.guideMessage} ${shouldHighlight ? styles.guideMessageHighlight : ''} ${
                         textColor === 'black' && !shouldHighlight ? styles.textBlack : ''
-                      }`}
+                      } ${textAlign === 'center' ? styles.textCenter : ''}`}
                     >
                       {message}
                     </p>

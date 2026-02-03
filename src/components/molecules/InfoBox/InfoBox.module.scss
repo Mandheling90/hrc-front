@@ -309,6 +309,10 @@
   align-items: flex-start; // 두 줄 텍스트에서 bullet이 첫 줄에 맞게 정렬
 }
 
+.guideItemCenter {
+  justify-content: center;
+}
+
 .bullet {
   flex-shrink: 0;
   width: 8px;
@@ -358,6 +362,10 @@
   @media (max-width: $breakpoint-md) {
     letter-spacing: -0.72px;
   }
+}
+
+.textCenter {
+  text-align: center;
 }
 
 .textBlack {

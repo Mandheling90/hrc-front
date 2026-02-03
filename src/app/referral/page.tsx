@@ -29,8 +29,9 @@ export default function ReferralPage() {
             variant='guide'
             icon={<SystemIcon width={48} height={48} fill='#8b6f47' />}
             messages={pageContent.referral.intro}
-            showBullets={true}
+            showBullets={false}
             contentAlign='center'
+            textAlign='center'
           />
           <ServiceSection title='이용가능한 서비스' services={services} />
         </div>
