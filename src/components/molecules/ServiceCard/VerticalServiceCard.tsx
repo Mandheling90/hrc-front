@@ -18,7 +18,8 @@ export const VerticalServiceCard: React.FC<VerticalServiceCardProps> = ({
   className = '',
   style,
   size = 'default',
-  mobileSpan
+  mobileSpan,
+  mobileAlign = 'left'
 }) => {
   const renderDescription = () => {
     if (!description) return null
@@ -51,7 +52,9 @@ export const VerticalServiceCard: React.FC<VerticalServiceCardProps> = ({
 
   // mobileSpan에 따른 클래스 추가
   const mobileSpanClass = mobileSpan === 2 ? styles.mobileSpanTwo : mobileSpan === 1 ? styles.mobileVertical : ''
-  const cardClassName = `${styles.card} ${styles[size]} ${mobileSpanClass} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${className}`
+  // mobileAlign에 따른 클래스 추가
+  const mobileAlignClass = mobileAlign === 'center' ? styles.mobileAlignCenter : ''
+  const cardClassName = `${styles.card} ${styles[size]} ${mobileSpanClass} ${mobileAlignClass} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${className}`
 
   if (href) {
     return (

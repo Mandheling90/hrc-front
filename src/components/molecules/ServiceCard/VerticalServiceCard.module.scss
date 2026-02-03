@@ -150,10 +150,10 @@
   .card {
     flex-direction: row;
     align-items: center;
-    justify-content: center; // Figma 모바일: center
-    text-align: center; // Figma 모바일: center
+    justify-content: flex-start; // Figma 모바일: 왼쪽 정렬
+    text-align: left; // Figma 모바일: 왼쪽 정렬
     gap: $spacing-4; // 16px - Figma 모바일
-    padding: 20px 30px; // Figma 모바일: 20px 30px
+    padding: 10px; // Figma 모바일: 10px
     border-radius: 10px; // Figma 모바일: 10px
     box-shadow: none;
 
@@ -191,12 +191,12 @@
   }
 
   .textWrapper {
-    flex: 0 0 auto; // Figma 모바일: hug content
+    flex: 1; // Figma 모바일: fill
     min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; // Figma 모바일: center
+    align-items: flex-start; // Figma 모바일: 왼쪽 정렬
     gap: 0; // Figma 모바일: gap 없음
   }
 
@@ -207,8 +207,8 @@
     margin: 0;
     line-height: 1.5; // 30px
     letter-spacing: -0.8px; // -4% of 20px
-    width: 150px; // Figma 모바일: 150px 고정
-    text-align: center; // Figma 모바일: center
+    width: auto; // Figma 모바일: 자동
+    text-align: left; // Figma 모바일: 왼쪽 정렬
   }
 
   .description {
@@ -218,7 +218,7 @@
     margin: 0;
     line-height: 1.5; // 24px
     letter-spacing: -0.64px; // -4% of 16px
-    text-align: left;
+    text-align: left; // Figma 모바일: 왼쪽 정렬
   }
 
   // mobileSpan이 1일 때 수직 레이아웃 유지 (데스크톱/태블릿처럼)
@@ -286,6 +286,27 @@
 
     .description {
       font-size: $font-size-lg !important; // 18px
+    }
+  }
+
+  // mobileAlign: center일 때 중앙 정렬 스타일
+  .mobileAlignCenter {
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 20px 30px !important;
+
+    .textWrapper {
+      flex: 0 0 auto !important;
+      align-items: center !important;
+    }
+
+    .title {
+      width: 150px !important;
+      text-align: center !important;
+    }
+
+    .description {
+      text-align: center !important;
     }
   }
 }

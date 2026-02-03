@@ -47,7 +47,7 @@ export default function ExchangePage() {
 
           {/* 진료정보교류 사업 목적 섹션 또는 진료정보교류 진료의뢰 설명 */}
           {exchangeInfo?.services && exchangeInfo.services.length > 0 ? (
-            <ServiceSection title='진료정보교류 사업 목적' services={services} columns={3} />
+            <ServiceSection title='진료정보교류 사업 목적' services={services} columns={3} mobileAlign='center' />
           ) : (
             exchangeInfo?.referralDescription &&
             exchangeInfo.referralDescription.length > 0 && (

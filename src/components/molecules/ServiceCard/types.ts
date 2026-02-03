@@ -22,6 +22,8 @@ export interface VerticalServiceCardProps extends BaseCardProps {
   size?: 'default' | 'small'
   /** 모바일에서 차지할 칸 수 (1 또는 2, 기본값: 1) */
   mobileSpan?: number
+  /** 모바일에서 정렬 방식 (기본값: 'left') */
+  mobileAlign?: 'left' | 'center'
 }
 
 /** 가로형 카드 props (아이콘 옆 텍스트) */
@@ -45,4 +47,6 @@ export interface ServiceItemConfig extends BaseCardProps {
   badgeText?: string
   /** 모바일에서 차지할 칸 수 (1 또는 2, 기본값: 1) */
   mobileSpan?: number
+  /** 모바일에서 정렬 방식 (기본값: 'left') */
+  mobileAlign?: 'left' | 'center'
 }

@@ -31,6 +31,8 @@ export interface ServiceItem {
   layoutType?: CardLayoutType
   /** 배지 텍스트 (step-badge 타입일 때) */
   badgeText?: string
+  /** 모바일에서 정렬 방식 (기본값: 'left') */
+  mobileAlign?: 'left' | 'center'
 }
 
 export interface ServiceSectionProps {
@@ -41,6 +43,8 @@ export interface ServiceSectionProps {
   defaultLayoutType?: CardLayoutType
   /** 그리드 열 수 설정 */
   columns?: 2 | 3 | 4 | 'auto'
+  /** 모바일에서 기본 정렬 방식 (개별 카드에서 override 가능) */
+  mobileAlign?: 'left' | 'center'
   /** @deprecated 새 API에서는 defaultLayoutType='horizontal'을 사용하세요 */
   horizontalLayout?: boolean
   /** @deprecated 새 API에서는 defaultLayoutType='step-badge'를 사용하세요 */
@@ -59,6 +63,7 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
   className = '',
   defaultLayoutType = 'vertical',
   columns = 'auto',
+  mobileAlign = 'left',
   // Legacy props (deprecated)
   horizontalLayout = false,
   useStepBadge = false,
@@ -124,7 +129,7 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
       default:
         return (
           <div key={service.id} className={mobileSpanClass}>
-            <VerticalServiceCard {...commonProps} mobileSpan={service.mobileSpan} />
+            <VerticalServiceCard {...commonProps} mobileSpan={service.mobileSpan} mobileAlign={service.mobileAlign || mobileAlign} />
           </div>
         )
     }
