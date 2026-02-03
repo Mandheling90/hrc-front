@@ -10,6 +10,8 @@ export interface ConfirmButtonsProps {
     label: string
     onClick: () => void
     disabled?: boolean
+    /** 버튼 스타일 (기본값: 'primary') */
+    variant?: 'primary' | 'outline'
   }
   /** 보조 버튼 (왼쪽, 선택사항) */
   secondaryButton?: {
@@ -17,6 +19,8 @@ export interface ConfirmButtonsProps {
     onClick: () => void
     disabled?: boolean
   }
+  /** margin-top 제거 여부 */
+  noMargin?: boolean
   /** 추가 클래스명 */
   className?: string
 }
@@ -24,13 +28,14 @@ export interface ConfirmButtonsProps {
 export const ConfirmButtons: React.FC<ConfirmButtonsProps> = ({
   primaryButton,
   secondaryButton,
+  noMargin = false,
   className
 }) => {
   const isSingleButton = !secondaryButton
 
   return (
     <div
-      className={`${styles.confirmButtons} ${isSingleButton ? styles.singleButton : ''} ${className || ''}`}
+      className={`${styles.confirmButtons} ${isSingleButton ? styles.singleButton : ''} ${noMargin ? styles.noMargin : ''} ${className || ''}`}
     >
       {secondaryButton && (
         <Button
@@ -44,7 +49,7 @@ export const ConfirmButtons: React.FC<ConfirmButtonsProps> = ({
         </Button>
       )}
       <Button
-        variant='primary'
+        variant={primaryButton.variant || 'primary'}
         size='large'
         onClick={primaryButton.onClick}
         disabled={primaryButton.disabled}

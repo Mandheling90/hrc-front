@@ -1,7 +1,7 @@
 'use client'
 
-import { Button } from '@/components/atoms/Button/Button'
 import { CheckIcon } from '@/components/icons/CheckIcon'
+import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import React from 'react'
 import styles from './CompleteStep.module.scss'
 import { useRouter } from 'next/navigation'
@@ -41,39 +41,47 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({
 
   return (
     <div className={styles.completeStep}>
-      {/* 완료 메시지 박스 */}
-      <div className={styles.completeBox}>
-        <div className={styles.iconWrapper}>
-          <CheckIcon width={60} height={60} stroke='#816331' strokeWidth={4} />
+      {/* 콘텐츠 영역 (completeBox + infoSection) */}
+      <div className={styles.contentWrapper}>
+        {/* 완료 메시지 박스 */}
+        <div className={styles.completeBox}>
+          <div className={styles.iconWrapper}>
+            <CheckIcon width={64} height={43} stroke='#816331' strokeWidth={8} />
+          </div>
+          <div className={styles.textWrapper}>
+            <h2 className={styles.completeTitle}>{title}</h2>
+            <div className={styles.completeDescription}>
+              {description.split('\n').map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
+          </div>
         </div>
-        <h2 className={styles.completeTitle}>{title}</h2>
-        <div className={styles.completeDescription}>
-          {description.split('\n').map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
-        </div>
-      </div>
 
-      {/* 사용자 정보 표시 */}
-      <div className={styles.infoSection}>
-        <div className={styles.infoField}>
-          <span className={styles.infoLabel}>아이디</span>
-          <div className={styles.infoDivider}></div>
-          <span className={styles.infoValue}>{userId}</span>
-        </div>
-        <div className={styles.infoField}>
-          <span className={styles.infoLabel}>이메일</span>
-          <div className={styles.infoDivider}></div>
-          <span className={styles.infoValue}>{email}</span>
+        {/* 사용자 정보 표시 */}
+        <div className={styles.infoSection}>
+          <div className={styles.infoField}>
+            <span className={styles.infoLabel}>아이디</span>
+            <div className={styles.infoDivider}></div>
+            <span className={styles.infoValue}>{userId}</span>
+          </div>
+          <div className={styles.infoField}>
+            <span className={styles.infoLabel}>이메일</span>
+            <div className={styles.infoDivider}></div>
+            <span className={styles.infoValue}>{email}</span>
+          </div>
         </div>
       </div>
 
       {/* 메인으로 이동 버튼 */}
-      <div className={styles.buttonWrapper}>
-        <Button type='button' variant='outline' size='large' onClick={handleGoToMain} className={styles.mainButton}>
-          {buttonText}
-        </Button>
-      </div>
+      <ConfirmButtons
+        primaryButton={{
+          label: buttonText,
+          onClick: handleGoToMain,
+          variant: 'outline'
+        }}
+        noMargin
+      />
     </div>
   )
 }
