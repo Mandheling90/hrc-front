@@ -5,6 +5,7 @@ import {
   VerticalServiceCard,
   HorizontalServiceCard,
   StepBadgeCard,
+  IconTitleCard,
   CardLayoutType
 } from '@/components/molecules/ServiceCard'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
@@ -100,6 +101,22 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
         return (
           <div key={service.id} className={mobileSpanClass}>
             <StepBadgeCard {...commonProps} badgeText={badgeText} />
+          </div>
+        )
+      }
+      case 'icon-title': {
+        // 아이콘+제목 그룹 카드 (description은 배열이어야 함)
+        const descArray = Array.isArray(service.description) ? service.description : [service.description]
+        return (
+          <div key={service.id} className={mobileSpanClass}>
+            <IconTitleCard
+              icon={service.icon}
+              title={service.title}
+              description={descArray}
+              href={service.href}
+              onClick={service.onClick}
+              className={service.className}
+            />
           </div>
         )
       }

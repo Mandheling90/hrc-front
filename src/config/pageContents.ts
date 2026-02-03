@@ -61,7 +61,8 @@ const anamContent: HospitalPageContent = {
         title: '전화의뢰',
         description: ['T. 02-920-5892~4', '평일 08:30~17:30', '토요일 09:00~12:30'],
         href: '#',
-        mobileSpan: 2
+        mobileSpan: 2,
+        layoutType: 'icon-title'
       },
       {
         id: 'electronic-request',
@@ -553,9 +554,10 @@ const guroContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: ['T. 02-2626-1681', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        description: ['T. 02-2626-1681', '평일 08:30~17:30'],
         href: '#',
-        mobileSpan: 2
+        mobileSpan: 2,
+        layoutType: 'icon-title'
       },
       {
         id: 'electronic-request',
@@ -577,9 +579,10 @@ const guroContent: HospitalPageContent = {
         id: 'sns-request',
         icon: 'SNSTalkIcon',
         title: 'SNS 의뢰',
-        description: '고대구로병원 카카오톡 채널',
+        description: ['고대구로병원 카카오톡 채널', '평일 08:30~17:30'],
         href: '#',
-        mobileSpan: 1
+        mobileSpan: 2,
+        layoutType: 'icon-title'
       }
     ]
   },
@@ -1107,8 +1110,8 @@ const ansanContent: HospitalPageContent = {
     ],
     phone: '031-412-5103',
     operatingHours: {
-      weekday: '08:30~17:30',
-      saturday: '09:00~12:30'
+      weekday: '08:00~18:00',
+      saturday: '08:00~13:00'
     },
     breadcrumbs: [
       { label: '', href: '/', icon: 'HomeIcon' },
@@ -1120,9 +1123,10 @@ const ansanContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: ['T. 031-412-5103', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        description: ['T. 031-412-5103', '평일 08:00~18:00', '토요일 08:00~13:00'],
         href: '#',
-        mobileSpan: 2
+        mobileSpan: 2,
+        layoutType: 'icon-title'
       },
       {
         id: 'electronic-request',

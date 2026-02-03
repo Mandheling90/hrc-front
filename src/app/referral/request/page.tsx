@@ -11,7 +11,7 @@ import { mapServiceItems, mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
 
 export default function ReferralRequestPage() {
-  const { pageContent } = useHospital()
+  const { pageContent, hospitalId } = useHospital()
 
   // pageContent에서 request 페이지 정보 가져오기
   const requestInfo = pageContent.referralRequest
@@ -38,10 +38,11 @@ export default function ReferralRequestPage() {
             messages={requestInfo?.intro || []}
             showBullets={false}
             contentAlign='center'
+            textAlign='center'
             className={styles.introBox}
           />
 
-          <ServiceSection services={services} />
+          <ServiceSection services={services} columns={hospitalId === 'guro' ? undefined : 3} />
         </div>
       </main>
       <Footer />

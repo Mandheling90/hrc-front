@@ -3,7 +3,7 @@
 import React from 'react'
 
 /** 카드 레이아웃 타입 */
-export type CardLayoutType = 'vertical' | 'horizontal' | 'step-badge'
+export type CardLayoutType = 'vertical' | 'horizontal' | 'step-badge' | 'icon-title'
 
 /** 기본 카드 props (공통) */
 export interface BaseCardProps {

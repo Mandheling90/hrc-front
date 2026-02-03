@@ -121,12 +121,13 @@
 @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
   .card {
     padding: 20px; // Figma 태블릿: 20px
-    gap: 16px; // Figma 태블릿: 16px
+    gap: 24px; // Figma 태블릿: 카드 내부 gap 24px
   }
 
   .iconCircle {
     width: 80px; // Figma 태블릿: 80px
     height: 80px;
+    border-radius: 56px; // Figma 태블릿: 56px
 
     svg {
       width: 48px;
@@ -139,8 +140,8 @@
   }
 
   .description {
-    font-size: $font-size-base; // 16px
-    letter-spacing: -0.64px;
+    font-size: $font-size-lg; // 18px - Figma 태블릿
+    letter-spacing: -0.72px;
   }
 }
 
@@ -222,58 +223,66 @@
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 20px !important;
-    padding: 24px 20px !important;
-    justify-content: center !important; // 내용을 중앙 정렬하여 높이 통일
+    gap: 8px !important; // Figma 모바일: 8px
+    padding: 20px !important; // Figma 모바일: 20px
+    justify-content: center !important;
 
     .iconCircle {
-      width: 80px !important;
-      height: 80px !important;
-      border-radius: 70px !important;
+      width: 60px !important; // Figma 모바일: 60px
+      height: 60px !important;
+      border-radius: 42px !important; // Figma 모바일: 42px
       background-color: #fcebeb !important;
 
       svg {
-        width: 48px !important;
-        height: 48px !important;
+        width: 36px !important; // Figma 모바일: 36px
+        height: 36px !important;
       }
     }
 
     .textWrapper {
       align-items: center !important;
       text-align: center !important;
+      gap: 0 !important; // Figma 모바일: title과 description 사이 gap 없음
+    }
+
+    .title {
+      font-size: $font-size-xl !important; // 20px
     }
 
     .description {
       text-align: center !important;
+      font-size: $font-size-lg !important; // 18px - Figma 모바일
     }
   }
 
-  // mobileSpan이 2일 때 높이 증가 및 분홍색 원 아이콘 적용
+  // mobileSpan이 2일 때 기본 스타일 (수평 레이아웃)
   .mobileSpanTwo {
-    min-height: 120px;
-    padding: 30px $spacing-4 !important;
+    padding: 20px !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 2rem;
+    gap: 24px !important;
 
-    // 가운데 정렬을 위해 텍스트 영역이 너무 넓게 늘어나지 않도록 조정
     .textWrapper {
       flex: 0 0 auto;
     }
 
     .iconCircle {
-      width: 80px !important;
-      height: 80px !important;
-      border-radius: 50% !important;
+      width: 60px !important;
+      height: 60px !important;
+      border-radius: 42px !important;
       background-color: #fcebeb !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
 
       svg {
-        width: 40px !important;
-        height: 40px !important;
+        width: 36px !important;
+        height: 36px !important;
       }
+    }
+
+    .description {
+      font-size: $font-size-lg !important; // 18px
     }
   }
 }

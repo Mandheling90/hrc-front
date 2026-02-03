@@ -57,8 +57,16 @@
 .columns3 {
   grid-template-columns: repeat(3, 1fr);
 
-  @include tablet {
-    grid-template-columns: 1fr;
+  // 태블릿 (769px ~ 1429px) - 3열 유지, gap 16px
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-4; // 16px
+  }
+
+  // 모바일 (768px 이하) - mobileSpan 지원을 위해 2열 그리드
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px; // Figma 모바일: 8px
   }
 }
 

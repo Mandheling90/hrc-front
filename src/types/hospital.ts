@@ -66,6 +66,7 @@ export interface ServiceItem {
   tabletSpan?: number // 태블릿에서 차지할 칸 수 (기본값: 1)
   mobileSpan?: number // 모바일에서 차지할 칸 수 (기본값: 1, 2로 설정 시 2열로 표시)
   mobileTitleBelowIcon?: boolean // 모바일에서 title을 아이콘 아래에 배치
+  layoutType?: string // 카드 레이아웃 타입 ('vertical' | 'horizontal' | 'step-badge' | 'icon-title')
 }
 
 // Breadcrumb 아이템 타입

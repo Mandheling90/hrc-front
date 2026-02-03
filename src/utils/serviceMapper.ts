@@ -1,5 +1,6 @@
 import { ServiceItem, BreadcrumbItemConfig } from '@/types/hospital'
 import { getServiceIcon, getNavIcon, iconRegistry } from '@/config/iconRegistry'
+import { CardLayoutType } from '@/components/molecules/ServiceCard'
 import React from 'react'
 
 // ServiceSection에서 사용하는 매핑된 서비스 아이템 타입
@@ -12,6 +13,7 @@ export interface MappedServiceItem {
   tabletSpan?: number
   mobileSpan?: number
   mobileTitleBelowIcon?: boolean
+  layoutType?: CardLayoutType
 }
 
 // Breadcrumbs에서 사용하는 매핑된 아이템 타입
@@ -44,7 +46,8 @@ export function mapServiceItems(
     href: item.href,
     tabletSpan: item.tabletSpan,
     mobileSpan: item.mobileSpan,
-    mobileTitleBelowIcon: item.mobileTitleBelowIcon
+    mobileTitleBelowIcon: item.mobileTitleBelowIcon,
+    layoutType: item.layoutType as CardLayoutType | undefined
   }))
 }
 
