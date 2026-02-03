@@ -2,6 +2,16 @@
 
 .verificationGuideBox {
   margin-bottom: 40px;
+
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 40px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    margin-bottom: 40px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 40px로 수정
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: 40px;
+  }
 }
 
 .verificationCards {
@@ -9,9 +19,17 @@
   gap: 24px;
   margin-bottom: 40px;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 24px, 40px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 24px로 수정
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
+    margin-bottom: 40px;
   }
 }
 
@@ -25,9 +43,16 @@
   align-items: center;
   gap: 32px;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 수정
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 50px;
+    gap: 32px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 30px, 32px로 수정
   @media (max-width: $breakpoint-md) {
-    padding: 32px 24px;
-    gap: 24px;
+    padding: 30px;
+    gap: 32px;
   }
 }
 
@@ -40,18 +65,32 @@
   background-color: #fcebeb;
   border-radius: 50%;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 100x100px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 100px;
+    height: 100px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 100x100px 유지
   @media (max-width: $breakpoint-md) {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
   }
 
   svg {
     width: 60px;
     height: 60px;
 
+    // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 60x60px 유지
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      width: 60px;
+      height: 60px;
+    }
+
+    // 모바일 - Figma 디자인에 맞게 60x60px 유지
     @media (max-width: $breakpoint-md) {
-      width: 48px;
-      height: 48px;
+      width: 60px;
+      height: 60px;
     }
   }
 }
@@ -63,8 +102,13 @@
   gap: 56px;
   width: 100%;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 24px로 수정
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    gap: 24px;
+  }
+
   @media (max-width: $breakpoint-md) {
-    gap: 32px;
+    gap: 24px;
   }
 }
 
@@ -85,14 +129,17 @@
   margin: 0;
   text-align: center;
 
-  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 24px 유지
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 20px로 수정
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 20px;
-    letter-spacing: -0.96px;
+    letter-spacing: -0.8px;
   }
 
+  // 모바일 - Figma 디자인에 맞게 20px/30px로 수정
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.8px;
   }
 }
 
@@ -106,14 +153,18 @@
   margin: 0;
   text-align: center;
 
-  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 18px 유지
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 16px로 수정
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 16px;
-    letter-spacing: -0.72px;
+    line-height: 24px;
+    letter-spacing: -0.64px;
   }
 
+  // 모바일 - Figma 디자인에 맞게 16px/24px로 수정
   @media (max-width: $breakpoint-md) {
     font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.64px;
   }
 }
 

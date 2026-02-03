@@ -2,6 +2,16 @@
 
 .noticeSection {
   margin-bottom: 40px;
+
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 40px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    margin-bottom: 40px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 40px 유지
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: 40px;
+  }
 }
 
 .noticeHeader {
@@ -24,27 +34,37 @@
   letter-spacing: -0.8px;
   margin: 0;
 
-  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 20px 유지
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 18px로 수정
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 20px;
-    letter-spacing: -0.8px;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
   }
 
+  // 모바일 - Figma 디자인에 맞게 18px/27px로 수정
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
   }
 }
 
 .noticeList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0; // Figma 디자인에 맞게 gap 제거
   padding-left: 32px;
   line-height: $line-height-normal;
   color: $gray-11;
 
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 32px 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding-left: 32px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 16px로 수정
   @media (max-width: $breakpoint-md) {
-    padding-left: 24px;
+    padding-left: 16px;
   }
 }
 
@@ -62,6 +82,20 @@
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
   flex-shrink: 0;
+
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 18px로 수정
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
+
+  // 모바일 - Figma 디자인에 맞게 18px/27px로 수정
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
 }
 
 .noticeText {
@@ -87,22 +121,29 @@
     }
   }
 
-  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 18px 유지
+  // 테블릿 (769px ~ 1429px) - Figma 디자인에 맞게 16px로 수정
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 18px;
-    letter-spacing: -0.72px;
-
-    p {
-      font-size: 18px;
-      letter-spacing: -0.72px;
-    }
-  }
-
-  @media (max-width: $breakpoint-md) {
     font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.64px;
 
     p {
       font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.64px;
+    }
+  }
+
+  // 모바일 - Figma 디자인에 맞게 16px/24px로 수정
+  @media (max-width: $breakpoint-md) {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.64px;
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.64px;
     }
   }
 }

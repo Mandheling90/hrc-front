@@ -202,11 +202,11 @@
 
   // 테블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    padding: 30px;
+    padding: 20px; // Figma 태블릿 디자인에 맞게 수정
   }
 
   @media (max-width: $breakpoint-md) {
-    padding: 30px;
+    padding: 20px;
   }
 
   &.contentCenter {
@@ -272,20 +272,23 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: var(--Color-Primary-Deep-deep, #8c0028);
-  text-align: center;
+  color: #000; // Figma 디자인에 맞게 black으로 수정
+  text-align: left; // Figma 디자인에 맞게 left로 수정
   line-height: 150%; /* 36px */
   letter-spacing: -0.96px;
   margin: 0 0 8px 0;
 
-  // 테블릿 (769px ~ 1429px) - 제목 20px
+  // 테블릿 (769px ~ 1429px) - 제목 20px/30px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 20px;
+    line-height: 30px;
     letter-spacing: -0.8px;
   }
 
+  // 모바일 - Figma 디자인에 맞게 20px/30px
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
+    line-height: 30px;
     letter-spacing: -0.8px;
   }
 }
@@ -293,7 +296,7 @@
 .guideList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0; // Figma 디자인에 맞게 gap 제거
 
   // @media (max-width: $breakpoint-md) {
   //   align-items: center;
