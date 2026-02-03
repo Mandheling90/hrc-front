@@ -25,8 +25,9 @@
     }
   }
 
-  @media (max-width: $breakpoint-md) {
-    padding: 30px 15px;
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 30px;
 
     &.contentLeft {
       padding: 30px;
@@ -34,6 +35,22 @@
 
     p {
       font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.72px;
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 30px;
+
+    &.contentLeft {
+      padding: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.72px;
     }
   }
 }
@@ -82,10 +99,16 @@
     }
   }
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 30px;
+    gap: 20px;
+  }
+
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
     gap: 16px;
-    padding: 20px 24px;
+    padding: 30px;
   }
 }
 
@@ -101,6 +124,12 @@
   svg {
     width: 100%;
     height: 100%;
+  }
+
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 44px;
+    height: 44px;
   }
 
   @media (max-width: $breakpoint-md) {
@@ -122,8 +151,15 @@
   letter-spacing: -0.96px;
   line-height: 1.5;
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
+    letter-spacing: -0.8px;
   }
 }
 
@@ -140,8 +176,17 @@
     margin-bottom: 0;
   }
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
+
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
   }
 }
 
@@ -155,8 +200,13 @@
   align-items: center;
   justify-content: flex-start;
 
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 30px;
+  }
+
   @media (max-width: $breakpoint-md) {
-    padding: 24px 16px;
+    padding: 30px;
   }
 
   &.contentCenter {
@@ -183,10 +233,14 @@
   gap: 40px;
   align-items: center;
 
-  //???
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    gap: 20px;
+  }
+
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     width: 100%;
   }
 }
@@ -232,6 +286,7 @@
 
   @media (max-width: $breakpoint-md) {
     font-size: 20px;
+    letter-spacing: -0.8px;
   }
 }
 
@@ -274,12 +329,14 @@
   // 테블릿 (769px ~ 1429px) - 내용 18px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 18px;
+    line-height: 27px;
     letter-spacing: -0.72px;
   }
 
   @media (max-width: $breakpoint-md) {
-    font-size: 16px;
-    letter-spacing: -0.64px;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
   }
 }
 
@@ -288,12 +345,13 @@
   color: #9f1836;
   letter-spacing: -0.8px;
 
-  @media (max-width: $breakpoint-md) {
+  // 테블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     letter-spacing: -0.72px;
   }
 
   @media (max-width: $breakpoint-md) {
-    letter-spacing: -0.64px;
+    letter-spacing: -0.72px;
   }
 }
 

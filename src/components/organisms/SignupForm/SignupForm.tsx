@@ -19,6 +19,7 @@ export const SignupForm: React.FC = () => {
     personalInfoRequired: false,
     personalInfoOptional1: false,
     personalInfoOptional2: false,
+    marketingAgreement: false,
     allAgreements: false
   })
 
@@ -34,10 +35,10 @@ export const SignupForm: React.FC = () => {
   const handleAllAgreementsChange = (checked: boolean) => {
     setAgreements({
       termsOfUse: checked,
-
       personalInfoRequired: checked,
       personalInfoOptional1: checked,
       personalInfoOptional2: checked,
+      marketingAgreement: checked,
       allAgreements: checked
     })
   }
@@ -50,8 +51,8 @@ export const SignupForm: React.FC = () => {
 
   const handleNext = () => {
     if (currentStep === 1) {
-      // 필수 체크 확인
-      if (!agreements.termsOfUse || !agreements.personalInfoRequired) {
+      // 필수 체크 확인 (이용약관, 개인정보수집, 제3자정보제공)
+      if (!agreements.termsOfUse || !agreements.personalInfoRequired || !agreements.personalInfoOptional2) {
         setShowAlert(true)
         return
       }

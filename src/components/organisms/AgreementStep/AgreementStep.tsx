@@ -4,10 +4,15 @@ import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { AgreementContent } from '@/components/molecules/AgreementContent/AgreementContent'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
-import { useHospital } from '@/contexts/HospitalContext'
 import React from 'react'
 import styles from './AgreementStep.module.scss'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import {
+  TermsOfUseContent,
+  PersonalInfoRequiredContent,
+  PersonalInfoOptionalContent,
+  ThirdPartyInfoContent
+} from './contents'
 
 export interface AgreementStepProps {
   /** 동의 상태 객체 */
@@ -16,6 +21,7 @@ export interface AgreementStepProps {
     personalInfoRequired: boolean
     personalInfoOptional1: boolean
     personalInfoOptional2: boolean
+    marketingAgreement: boolean
     allAgreements: boolean
   }
   /** 개별 동의 변경 핸들러 */
@@ -35,48 +41,10 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
   onCancel,
   onNext
 }) => {
-  const { pageContent } = useHospital()
-  const agreementInfo = pageContent.signupAgreement
-
-  // 약관 정보가 없으면 기본값 사용 (안암병원)
-  const defaultAgreement = {
-    hospitalName: '고려대학교 안암병원',
-    intro:
-      '고려대학교 안암병원은 개인정보보호법에 의거하여 귀하의 개인정보를 수집함에 있어 아래의 내용을 안내하고 있습니다.',
-    purpose: {
-      title: '1. 개인 정보의 수집 목적 및 이용',
-      items: [
-        '홈페이지 회원가입 및 관리, 홈페이지 기본서비스 제공',
-        '- 이용자 확인 및 의사소통 경로 확보',
-        '- 홈페이지 이용 관련 서비스 제공'
-      ]
-    },
-    items: {
-      title: '2. 수집하려는 개인정보의 항목',
-      required:
-        '- 필수 항목 : 아이디, 이름, 생년월일, 성별, 면허종류(회원구분), 면허번호, 핸드폰번호, 이메일주소, 이메일 수신여부, 진료회송여부, SMS서비스 동의여부, 소속병원명, 요양기관번호, 병원주소, 대표전화',
-      autoCollected:
-        '*서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은 정보들이 자동으로 생성되어 수집될 수 있습니다. (서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보)'
-    },
-    retention: {
-      title: '3. 개인정보의 보유 이용기간',
-      period:
-        '홈페이지 회원가입 탈퇴시까지 혹은 회원에서 제명 처리된 일까지 (즉시 파기 처리함) 단, 진료서비스 제공을 위하여 수집된 경우 의료법 기준에 준함 (의료법 시행규칙 제15조에 명시된 기간)',
-      dormant:
-        "정보통신망 이용촉진 및 정보보호 등에 관한 법률 및 동법 시행령에 따라 연속하여 1년동안 서비스를 이용하지 않은 회원(이하 '휴면계정'이라 한다)의 개인정보를 보호하기 위해 개인정보 파기 등 필요한 조치를 취합니다."
-    },
-    refusal: {
-      title: '4. 동의를 거부할 권리 / 동의거부에 따른 안내',
-      description:
-        '고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해 거부할 경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.'
-    }
-  }
-
-  const agreement = agreementInfo || defaultAgreement
-
   return (
     <>
       <div className={styles.agreementsSection}>
+        {/* 이용약관 동의 */}
         <div className={styles.agreementItem}>
           <Checkbox
             checked={agreements.termsOfUse}
@@ -89,491 +57,10 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
             className={styles.agreementCheckbox}
             alwaysDark
           />
-
-          <AgreementContent
-            scrollableContent={
-              <>
-                <p className={styles.termsMainTitle}>1. 고대의료원 홈페이지 회원가입 약관</p>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제 1조 (목적)</p>
-                    <p>
-                      본 약관은 고려대학병원(이하 &quot;병원&quot;라 합니다)에서 운영하는 인터넷 홈페이지에서 제공하는
-                      인터넷 관련 서비스(이하 &quot;서비스&quot;라 합니다)의 이용에 관한 사항을 규정함을 목적으로
-                      합니다.
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제 2조 (정의)</p>
-                    <p>
-                      {`① 이용자 : '이용자'란 서비스에 접속하여 본 약관에 따라 병원이 제공하는 서비스를 받는 회원 및 비회원을 말합니다.`}
-                    </p>
-                    <p>
-                      {`② 회원 : '회원'이란 병원이 회원으로 적합하다고 인정하는 일반 개인으로 본 약관에 동의하며 서비스의 회원가입양식을 작성하고 아이디와 비밀번호를 이용하여 서비스를 제공받는 사람을 말합니다.`}
-                    </p>
-                    <p>③ 운영자 : 서비스의 전반적인 관리와 원활한 운영을 위하여 병원에서 선정한 사람</p>
-                    <p>
-                      ④ 연결사이트 : 홈페이지와 하이퍼링크 방식(하이퍼링크의 대상에는 문자, 정지 및 동화상 등이 포함됨)
-                      등으로 연결된 웹 사이트를 말합니다.
-                    </p>
-                    <p>
-                      ⑤ 개인정보 : 당해 정보에 포함되어 있는 성명, 주민등록번호 등의 사항에 의하여 특정 개인을 식별할 수
-                      있는 정보(당해 정보만으로는 특정 개인을 인식할 수 없더라도 다른 정보와 용이하게 결합하여 식별할 수
-                      있는 것을 포함한다)를 말합니다.
-                    </p>
-                    <p>⑥ 해지 : 이용자가 서비스 개통 후 이용계약을 해약하는 것</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제3조 (약관의 게시 및 변경)</p>
-                    <p>
-                      ① 병원은 본 약관의 내용과 상호, 병원 소재지, 전자우편 주소 등을 이용자가 알 수 있도록 홈페이지에
-                      게시합니다.
-                    </p>
-                    <p>
-                      ② 병원은 불가피한 사정이 있는 경우 관계법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.
-                    </p>
-                    <p>
-                      ③ 병원은 약관을 개정할 경우에는 적용일자 및 개정사유를 명시하여 현행약관과 함께 서비스화면에 그
-                      적용일자 7일 이전부터 적용일자 전일까지 공지합니다.
-                    </p>
-                    <p>④ 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 관계법령 또는 상관례에 따릅니다.</p>
-                    <p>
-                      {`⑤ "이용자"는 변경된 약관에 대해 거부할 권리가 있습니다. "이용자"는 변경된 약관이 공지된 후 15일 이내에 거부의사를 표명할 수 있습니다. "이용자"가 거부하는 경우 "병원"은 당해 "이용자"와의 계약을 해지할 수 있습니다. 만약 "이용자"가 변경된 약관이 공지된 후 15일 이내에 거부의사를 표시하지 않는 경우에는 동의하는 것으로 간주합니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제4조 (회원 가입)</p>
-                    <p>
-                      {`① 회원가입계약의 성립시기는 "회원"이 되고자 하는 자(이하 "가입신청자")가 약관의 내용에 대하여 동의를 한 다음 회원가입신청을 하고, "병원"이 이러한 신청에 대하여 승낙함으로써 체결됩니다.`}
-                    </p>
-                    <p>
-                      {`② "병원"은 "가입신청자"의 신청에 대하여 "서비스" 이용을 승낙함을 원칙으로 합니다. 다만, "병원"은 다음 각 호에 해당하는 신청에 대하여는 승낙을 하지 않거나 사후에 이용계약을 해지할 수 있습니다.`}
-                    </p>
-                    <p>1. 가입신청자가 본 약관 제7조 제2항에 의거하여 이전에 회원 자격을 상실한 적이 있는 경우</p>
-                    <p>2. 실명이 아니거나 타인의 명의를 이용한 경우</p>
-                    <p>{`3. 허위의 정보를 기재하거나, "병원"이 제시하는 내용을 기재하지 않은 경우`}</p>
-                    <p>4. 14세 미만 아동이 법정대리인(부모 등)의 동의를 얻지 아니한 경우</p>
-                    <p>
-                      5. 기타 회원으로 등록하는 것이 병원의 기술상 또는 업무 수행상 현저히 지장이 있다고 판단되는 경우
-                    </p>
-                    <p>
-                      6. 이용자의 귀책사유로 인하여 승인이 불가능하거나 기타 규정한 제반 사항을 위반하며 신청하는 경우
-                    </p>
-                    <p>{`7. "병원"이 정한 회원가입요건이 미비 되었을 때`}</p>
-                    <p>
-                      {`③ 제1항에 따른 신청에 있어 "병원"은 "회원"의 종류에 따라 전문기관을 통한 실명확인 및 본인인증을 요청할 수 있습니다.`}
-                    </p>
-                    <p>④ 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 관계법령 또는 상관례에 따릅니다.</p>
-                    <p>
-                      {`④ "병원"은 "회원"에 대해 회사정책에 따라 등급별로 구분하여 이용시간, 이용횟수, 서비스 메뉴 등을 세분하여 이용에 차등을 둘 수 있습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제 5조 회원 탈퇴 및 자격의 상실등</p>
-                    <p>
-                      {`① "회원"은 병원에 언제든지 탈퇴를 요청할 수 있으며 "병원"은 즉시 회원탈퇴를 처리합니다. 단, 탈퇴의 요청은 전자메일 또는 서면으로 하여야 하며, 요청하는 자의 이름, 주민등록번호, 비밀번호, 전화번호, 해지사유등을 기재하여야 합니다.`}
-                    </p>
-                    <p>
-                      {`② "회원"이 "탈퇴"할 경우, 관련법 및 개인정보취급방침에 따라 "병원"이 회원정보를 보유하는 경우를 제외하고는 탈퇴 즉시 "회원"의 모든 데이터는 소멸됩니다.`}
-                    </p>
-                    <p>
-                      {`③ "회원"이 계약을 해지하는 경우, "회원"이 작성한 "게시물" 중 고객의소리, 상담, 커뮤니티 등과 같은 "게시물" 일체는 삭제되지 않을 수 있으니 사전에 삭제 후 탈퇴하시기 바랍니다.`}
-                    </p>
-                    <p>
-                      {`④ 회원이 다음 각호의 사유에 해당하는 경우, "병원"은 회원자격을 적절한 방법으로 제한 및 정지, 상실시킬 수 있습니다.`}
-                    </p>
-                    <p>1. 등록 신청 시에 허위 내용을 등록한 경우</p>
-                    <p>2. 다른 사람의 서비스 이용을 방해하거나 그 정보를 도용하는 등 질서를 위협하는 경우</p>
-                    <p>3. 병원 내에 제공되는 정보를 변경하는 등 홈페이지 운영을 방해한 경우</p>
-                    <p>4. 사이트를 이용하여 법령 및 본 약관, 공서양속에 반하는 행위를 하는 경우</p>
-                    <p>5. 기타 회원으로서의 자격을 지속시키는 것이 부적절하다고 판단되는 경우</p>
-                    <p>
-                      ⑤ 홈페이지를 통하여 진료예약을 한 후 정당한 사유 없이 2회 이상 진료예약을 포기하거나 예약한 진료를
-                      받지 않은 경우 홈페이지에서의 진료예약에 대한 자격을 3개월간 제한합니다.
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제6조 (회원에 대한 통지)</p>
-                    <p>
-                      {`① "병원"이 "회원"에 대한 통지를 하는 경우 이용자가 회원 가입시 기재한 e-mail 또는 핸드폰 문자 등으로 할 수 있습니다.`}
-                    </p>
-                    <p>
-                      {`② "병원"이 불특정다수 이용자에 대한 통지를 하는 경우 "병원" 홈페이지에 사전 게시함으로써 제1항의 통지에 갈음할 수 있습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제7조 (회원정보의 수정)</p>
-                    <p>
-                      {`① "회원"은 개인정보관리화면을 통하여 언제든지 본인의 개인정보를 열람하고 수정할 수 있습니다. 다만, 서비스 관리를 위해 필요한 실명, 주민등록번호, 아이디 등은 수정이 불가능합니다.`}
-                    </p>
-                    <p>
-                      {`② "회원"은 회원가입신청시 기재한 사항이 변경되었을 경우 온라인으로 수정을 하거나 전자우편 기타 방법으로 "병원"에 대하여 그 변경사항을 알려야 합니다.`}
-                    </p>
-                    <p>
-                      {`③ 제2항의 변경사항을 "병원"에 알리지 않아 발생한 불이익에 대하여 "병원"은 책임지지 않습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제8조 (서비스 이용시간)</p>
-                    <p>
-                      {`① 서비스 이용시간은 "병원"의 업무상 또는 기술상 특별한 지장이 없는 한 연중무휴, 1일 24시간을 원칙으로 합니다.`}
-                    </p>
-                    <p>{`② 제1항의 이용시간 중 정기점검 등의 필요로 인하여 "병원"이 정한 날 또는 시간은 예외로 합니다.`}</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제 9조 서비스의 내용 및 변경</p>
-                    <p>① 병원은 이용자에게 아래와 같은 서비스를 제공합니다.</p>
-                    <p>1. 병원의 의료진 및 진료일정 안내</p>
-                    <p>2. 진료예약서비스</p>
-                    <p>3. 건강/영양/복약 상담서비스</p>
-                    <p>4. 병원에서 제공하는 건강정보</p>
-                    <p>5. 마이페이지 서비스</p>
-                    <p>6. 채용 시 본인확인, 입사전형, 지원서 수정, 합격 여부 확인, 채용 자격요건 확인</p>
-                    <p>{`7. 기타 "병원"이 정하는 서비스`}</p>
-                    <p>
-                      ② 병원은 불가피한 사정이 있는 경우 제공하는 서비스의 내용을 변경할 수 있으며, 이 경우 변경된
-                      서비스의 내용 및 제공일자를 제6조에서 정한방법으로 이용자에게 통지하고, 서비스를 변경하여 제공할
-                      수 있습니다.
-                    </p>
-                    <p>
-                      ③ 병원은 서비스 내용의 변경으로 인하여 이용자가 입은 손해에 대하여 배상하지 아니합니다. 단, 병원의
-                      고의 또는 중과실이 있는 경우에는 그러하지 아니합니다.
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제 10조 서비스의 중지 및 중지에 대한 공지</p>
-                    <p>
-                      {`① 귀하는 사이트 서비스에 보관되거나 전송된 메시지 및 기타 통신 메시지 등의 내용이 국가의 비상사태, 정전, 사이트의 관리 범위 외의 서비스 설비 장애 및 기타 불가항력에 의하여 보관되지 못하였거나 삭제된 경우, 전송되지 못한 경우 및 기타 통신 데이터의 손실이 있을 경우에 "병원"은 관련 책임을 부담하지 아니합니다.`}
-                    </p>
-                    <p>
-                      {`② 사이트가 정상적인 서비스 제공의 어려움으로 인하여 일시적으로 서비스를 중지하여야 할 경우에는 서비스 중지 1주일 전에 홈페이지에 서비스 중지사유 및 일시를 공지한 후 서비스를 중지할 수 있으며, 이 기간 동안 귀하가 공지내용을 인지하지 못한 데 대하여 의료원은 책임을 부담하지 아니합니다. 부득이한 사정이 있을 경우 위 사전 공지기간은 감축되거나 생략될 수 있습니다. 또한 위 서비스 중지에 의하여 본 서비스에 보관되거나 전송된 메시지 및 기타 통신 메시지 등의 내용이 보관되지 못하였거나 삭제된 경우, 전송되지 못한 경우 및 기타 통신 데이터의 손실이 있을 경우에 대하여도 "병원"은 책임을 부담하지 아니합니다.`}
-                    </p>
-                    <p>
-                      {`③ "병원"의 사정으로 서비스를 영구적으로 중단하여야 할 경우에는 제 2 항에 의거합니다. 다만, 이 경우 사전 공지기간은 1개월로 합니다.`}
-                    </p>
-                    <p>
-                      {`④ "병원"은 사전 공지 후 서비스를 일시적으로 수정, 변경 및 중단할 수 있으며, 이에 대하여 귀하 또는 제3자에게 어떠한 책임도 부담하지 아니합니다.`}
-                    </p>
-                    <p>
-                      {`⑤ "병원"은 긴급한 시스템 점검, 증설 및 교체 등 부득이한 사유로 인하여 예고없이 일시적으로 서비스를 중단할 수 있으며, 새로운 서비스로의 교체 등 "병원"이 적절하다고 판단하는 사유에 의하여 현재 제공되는 서비스를 완전히 중단할 수 있습니다.`}
-                    </p>
-                    <p>
-                      {`⑥ "병원"은 국가비상사태, 정전, 서비스 설비의 장애 또는 서비스 이용의 폭주 등으로 정상적인 서비스 제공이 불가능할 경우, 서비스의 전부 또는 일부를 제한하거나 중지할 수 있습니다. 다만 이 경우 그 사유 및 기간 등을 이용자에게 사전 또는 사후에 공지합니다.`}
-                    </p>
-                    <p>
-                      {`⑦ "병원"은 사이트가 통제할 수 없는 사유로 인한 서비스중단의 경우(시스템관리자의 고의,과실없는 디스크장애, 시스템다운 등)에 사전통지가 불가능하며 타인(PC통신회사, 기간통신사업자 등)의 고의,과실로 인한 시스템중단 등의 경우에는 통지하지 않습니다.`}
-                    </p>
-                    <p>
-                      {`⑧ "병원"은 서비스를 특정범위로 분할하여 각 범위별로 이용가능시간을 별도로 지정할 수 있습니다. 다만 이 경우 그 내용을 공지합니다.`}
-                    </p>
-                    <p>
-                      {`⑨ "병원"은 귀하가 본 약관의 내용에 위배되는 행동을 한 경우, 임의로 서비스 사용을 제한 및 중지하거나 귀하의 동의없이 이용계약을 해지할 수 있습니다. 이 경우 "병원"은 위 이용자의 접속을 금지할 수 있습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>11조 (정보제공 및 홍보물 게재)</p>
-                    <p>
-                      {`① "병원"은 서비스를 운영함에 있어서 각종 정보를 홈페이지에 게재하는 방법, 전자우편 등의 방법으로 "회원"에게 제공할 수 있습니다.`}
-                    </p>
-                    <p>
-                      {`② "병원"은 서비스에 적절하다고 판단되거나 공익성이 있는 홍보물을 홈페이지, 이메일 등에 게재할 수 있습니다. 광고가 게재된 이메일 등을 수신한 "회원"은 수신거절을 "병원"측에 할 수 있습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제12조 (사이트 게시물의 관리·운영)</p>
-                    <p>① 귀하가 게시한 게시물의 내용에 대한 권리는 귀하에게 있습니다.</p>
-                    <p>
-                      {`② "병원"은 "저작권법 등 관련 법령 등의 허용범위 내에서" 게시된 내용을 사전 통지 없이 편집, 이동할 수 있는 권리를 보유하며, 다음의 경우 사전 통지 없이 삭제할 수 있습니다.`}
-                    </p>
-                    <p>1. 본 서비스 약관에 위배되거나 상용 또는 불법, 음란, 저속하다고 판단되는 게시물을 게시한 경우</p>
-                    <p>2. 다른 회원 또는 제 3자를 비방하거나 중상 모략으로 명예를 손상시키는 내용인 경우</p>
-                    <p>3. 공공질서 및 미풍양속에 위반되는 내용인 경우</p>
-                    <p>4. 범죄적 행위에 결부된다고 인정되는 내용일 경우</p>
-                    <p>5. 제3자의 저작권 등 기타 권리를 침해하는 내용인 경우</p>
-                    <p>6. 기타 관계 법령에 위배되는 경우</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제13조 (개인정보의 보유기간 및 이용기간)</p>
-                    <p>병원은 회원 자격을 가지고 있는 기간을 개인정보의 보유기간 및 이용기간으로 정합니다.</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제14조 (진료예약서비스)</p>
-                    <p>① 이용자는 홈페이지상에서 이하의 방법에 의하여 진료예약을 신청합니다.</p>
-                    <p>1. 주민등록번호, 비밀번호, 성명, 주소, 전화번호, 환자상태 입력</p>
-                    <p>3. 이 약관에 동의한다는 표시</p>
-                    <p>② 병원은 제1항의 예약신청에 대하여 다음 각호의 사유에 해당하지 않는 한 승낙합니다.</p>
-                    <p>1. 신청 내용에 허위, 기재누락, 오기가 있는 경우</p>
-                    <p>2. 기타 예약신청에 승낙하는 것이 기술상 내부 운영상 현저히 지장이 있다고 판단하는 경우</p>
-                    <p>③ 병원의 승낙 통지가 이용자의 전자우편 이나 SMS으로 도달된 때에 예약이 성립된 것으로 봅니다.</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제15조 (건강상담서비스)</p>
-                    <p>
-                      ① 병원은 이용자의 상담 내용이 다음 각호의 사유로 인하여 훼손된 경우 병원은 책임을 지지 않습니다.
-                    </p>
-                    <p>1. 사용자의 부주의로 비밀번호가 유출된 경우</p>
-                    <p>{`2. 사용자가 '상담삭제' 기능을 사용한 경우`}</p>
-                    <p>3. 사용자가 개인정보를 상담내용에 기입한 경우</p>
-                    <p>4. 천재지변등 기타 불가항력에 의한 경우</p>
-                    <p>
-                      ② 이용자의 상담요청에 대한 종합적이고 적절한 답변을 위하여 상담의사들은 상담 내용과 답변을 참고할
-                      수 있습니다.
-                    </p>
-                    <p>
-                      ③ 서비스에서 진행된 상담의 내용은 특정 개인을 식별할 수 없는 형태로 다음과 같은 목적으로 사용할 수
-                      있습니다.
-                    </p>
-                    <p>1. 학술활동</p>
-                    <p>2. 인쇄물, CD-ROM 등의 저작활동</p>
-                    <p>3. FAQ, 추천상담 등의 서비스 내용의 일부</p>
-                    <p>
-                      ④ 상담에 대한 답변 내용은 각 전문 의사의 의학적 지식을 바탕으로 한 주관적인 답변으로 병원의
-                      공식적인 의견이 될 수 없으며, 상담내용에 대하여 병원은 일체의 책임을 지지 않습니다.
-                    </p>
-                    <p>⑤ 다음과 같은 상담신청의 경우에는 상담을 거절할 수 있습니다.</p>
-                    <p>1. 같은 내용의 상담을 반복하여 신청하는 경우</p>
-                    <p>2. 상식에 어긋나는 표현을 사용하여 상담을 신청하는 경우</p>
-                    <p>3. 진단명을 요구하는 상담을 신청하는 경우</p>
-                    <p>4. 치료비, 검사비, 의약품 가격 등에 대하여 상담을 신청하는 경우</p>
-                    <p>5. 객관적 근거 없이 타병원 진료내용에 대해 판단을 요청하는 경우</p>
-                    <p>6. 설명이 부족하거나, 설명만으로 정확한 판단이 불가능한 경우</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제16조 (건강관련정보 제공 서비스)</p>
-                    <p>
-                      ① 병원에서 제공하는 건강관련정보는 개략적이며 일반적인 것으로서 특정인의 의견에 지나지 않으며
-                      어떠한 경우에도 전문적인 의학적 진단, 진료, 치료를 대신할 수 없습니다.
-                    </p>
-                    <p>
-                      ② 병원은 건강관련정보제공서비스에서 언급된 어떠한 특정한 검사나 제품 또는 치료법을 보증하지
-                      않습니다.
-                    </p>
-                    <p>
-                      ③ 병원이 제공하는 건강관련정보는 전적으로 이용자의 판단에 따라 이용되는 것으로서, 병원은
-                      건강관련정보의 제공과 관련하여 어떠한 책임도 지지 않습니다.
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제17조 (병원과 연결 사이트간의 관계)</p>
-                    <p>
-                      결 사이트가 독자적으로 제공하는 재화, 용역, 서비스에 의하여 이용자와 행하는 거래에 대해서 어떠한
-                      보증책임을 지지 않습니다.
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제18조 (병원의 의무)</p>
-                    <p>
-                      ① 병원은 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며 본 약관이 정하는 바에
-                      따라 지속적이고, 안정적으로 서비스를 제공하는 데 최선을 다합니다.
-                    </p>
-                    <p>
-                      ② 병원은 이용자의 신용정보를 포함한 개인신상정보의 보안에 대하여 기술적 안전 조치를 강구하고
-                      관리에 만전을 기함으로써 이용자의 정보보안에 최선을 다합니다.
-                    </p>
-                    <p>
-                      ③ 병원은 공정하고 건전한 운영과 지속적인 연구·개발을 통하여 양질의 서비스를 제공함으로써
-                      고객만족을 극대화 하여 인터넷 비즈니스 발전에 기여하도록 합니다.
-                    </p>
-                    <p>④ 병원은 이용자가 원하지 않는 영리목적의 광고성 전자우편을 발송하지 않습니다.</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제19조 (개인정보보호 의무)</p>
-                    <p>
-                      {`① "병원"은 "정보통신망 이용촉진 및 정보보호 등에 관한 법률" 등 관계 법령이 정하는 바에 따라 "회원"의 개인정보를 보호하기 위해 노력합니다. 개인정보의 보호 및 사용에 대해서는 관련법 및 "병원"의 개인정보취급방침이 적용됩니다. 다만, "병원"의 공식 사이트 이외의 링크된 사이트에서는 "병원"의 개인정보취급방침이 적용되지 않습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제20조 (이용자의 아이디 및 비밀번호의 관리에 대한 의무)</p>
-                    <p>
-                      {`① "회원"의 "아이디"와 "비밀번호"에 관한 관리책임은 "회원"에게 있으며, 이를 제3자가 이용하도록 하여서는 안 됩니다.`}
-                    </p>
-                    <p>
-                      {`② "병원"은 "회원"의 "아이디"가 개인정보 유출 우려가 있거나, 반사회적 또는 미풍양속에 어긋나거나 "병원" 및 "병원"의 운영자로 오인한 우려가 있는 경우, 해당 "아이디"의 이용을 제한할 수 있습니다.`}
-                    </p>
-                    <p>
-                      {`③ "회원"은 "아이디" 및 "비밀번호"가 도용되거나 제3자가 사용하고 있음을 인지한 경우에는 이를 즉시 "병원"에 통지하고 "병원"의 안내에 따라야 합니다.`}
-                    </p>
-                    <p>
-                      {`④ 제3항의 경우에 해당 "회원"이 "병원"에 그 사실을 통지하지 않거나, 통지한 경우에도 "회사"의 안내에 따르지 않아 발생한 불이익에 대하여 "회사"는 책임지지 않습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제21조 (이용자의 의무)</p>
-                    <p>
-                      ① 회원 가입시에 요구되는 정보는 정확하게 기입하여야 합니다. 또한 이미 제공된 귀하에 대한 정보가
-                      정확한 정보가 되도록 유지, 갱신하여야 하며, 회원은 자신의 ID 및 비밀번호를 제3자가 이용하게 해서는
-                      안됩니다.
-                    </p>
-                    <p>{`② 이용자는 "병원"의 사전 승낙 없이 서비스를 이용하여 어떠한 영리행위도 할 수 없습니다.`}</p>
-                    <p>
-                      {`③ 이용자는 "병원"의 인터넷 서비스를 이용하여 얻은 정보를 "병원"의 사전승낙 없이 복사, 복제, 변경, 번역, 출판, 방송 기타의 방법으로 사용하거나 이를 타인에게 제공할 수 없습니다.`}
-                    </p>
-                    <p>④ 이용자는 다음의 행위를 하여서는 안됩니다.</p>
-                    <p>1. 회원가입신청 또는 변경시 허위내용을 등록하는 행위</p>
-                    <p>2. 타인의 정보도용</p>
-                    <p>{`3. "병원"이 게시한 정보의 변경`}</p>
-                    <p>{`4. "병원"이 정한 정보 이외의 정보(컴퓨터 프로그램 등) 등의 송신 또는 게시`}</p>
-                    <p>{`5. "병원"과 기타 제3자의 저작권 등 지적재산권에 대한 침해`}</p>
-                    <p>{`6. "병원" 및 기타 제3자의 명예를 손상시키거나 업무를 방해하는 행위`}</p>
-                    <p>
-                      {`7. 외설 또는 폭력적인 메시지, 화상, 음성, 기타 공서양속에 반하는 정보를 "서비스"에 공개 또는 게시하는 행위`}
-                    </p>
-                    <p>{`8. "병원"의 동의 없이 영리를 목적으로 "서비스"를 사용하는 행위`}</p>
-                    <p>
-                      {`9. "병원"의 직원이나 서비스 관리자를 가장 혹은 사칭하거나 타인의 명의를 도용하여 글을 게시하거나 메일을 발송하는 행위`}
-                    </p>
-                    <p>10. 다른 이용자에 대한 개인정보를 동의 없이 수집, 저장, 공개하는 행위</p>
-                    <p>11. 다른 이용자에 대한 건강진료 및 상담을 하거나 알선하는 행위</p>
-                    <p>12. 제3자의 진료행위를 선전하는 행위</p>
-                    <p>13. 상품을 판매하거나 판매를 알선하는 행위</p>
-                    <p>14. 기타 부적절하다고 판단하는 행위</p>
-                    <p>
-                      {`15. 서비스의 안전적인 운영에 지장을 주거나 줄 우려가 있는 일체의 행위 16. "병원"이 제공하는 서비스에 정한 약관 혹은 기타 정보통신망 이용촉진 및 정보보호 등에 관한 법률 제44조의 7 제1항에 위배되는 행위`}
-                    </p>
-                    <p>
-                      {`⑤ 제4항에 해당하는 행위를 한 이용자가 있을 경우 "병원"은 본 약관 제5조 제4항에서 정한 바에 따라 이용자의 회원자격을 적절한 방법으로 제한 및 정지, 상실시킬 수 있습니다.`}
-                    </p>
-                    <p>{`⑥ 이용자는 그 귀책사유로 인하여 "병원"이나 다른 이용자가 입은 손해를 배상할 책임이 있습니다.`}</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제22조 (저작권의 귀속 및 이용제한)</p>
-                    <p>
-                      {`① "병원"이 제공하는 인터넷 서비스, 그에 필요한 소프트웨어, 이미지, 마크, 로고, 디자인, 서비스명칭, 정보 및 상표 등과 관련된 지적재산권 및 기타 권리는 "병원"에 소유권이 있습니다.`}
-                    </p>
-                    <p>
-                      {`② 귀하는 "병원"이 명시적으로 승인한 경우를 제외하고는 전항의 소정의 각 재산에 대한 전부 또는 일부의 수정, 대여, 대출, 판매, 배포, 제작, 양도, 재라이센스, 담보권 설정 행위, 상업적 이용 행위를 할 수 없으며, 제3자로 하여금 이와 같은 행위를 하도록 허락할 수 없습니다.`}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제23조 (분쟁해결)</p>
-                    <p>
-                      ① 본 이용약관에 규정된 것을 제외하고 발생하는 서비스 이용에 관한 제반 문제에 관한 분쟁은 최대한
-                      쌍방합의에 의해 해결하도록 합니다.
-                    </p>
-                    <p>
-                      ② 이용자가 홈페이지 이용과 관련하여 불만이 있거나 의견을 제시하고자 하는 경우에는 전자우편으로
-                      홈페이지에 대한 불만사항 또는 의견을 제출하면 됩니다.
-                    </p>
-                    <p>
-                      ③ 병원은 이용자로부터 제출되는 불만사항 및 의견이 정당하다고 판단하는 경우 우선적으로 그 사항을
-                      처리합니다. 다만, 신속한 처리가 곤란한 경우에는 이용자에게 그 사유와 처리일정을 즉시 통보해
-                      드립니다.
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p className={styles.termsArticleTitle}>제24조 (재판권 및 준거법)</p>
-                    <p>
-                      ① 병원과 이용자간에 서비스 이용으로 발생한 분쟁에 관한 소송은 민사소송법상의 관할법원으로 합니다.
-                    </p>
-                    <p>② 병원과 이용자간에 제기된 전자거래 소송에는 한국법을 적용합니다.</p>
-                  </div>
-                </div>
-                <p className={styles.termsMainTitle}>2. 수집하는 개인정보의 항목 및 수집방법</p>
-                <div className={styles.termsSection}>
-                  <div className={styles.termsIndent}>
-                    <p>
-                      {`"병원"은 이용자의 정보수집시 필요한 최소한의 정보를 수집합니다. 다음 사항을 필수 사항으로 하며 그 외 사항은 선택사항으로 합니다.`}
-                    </p>
-                    <p>① 일반 회원가입 시 수집항목</p>
-                    <p>필수항목 :</p>
-                    <p>
-                      성명,주민등록번호,외국인등록번호(외국인에한함),주소,전화번호,아이디,비밀번호,이메일,생년월일,혈액형,신장,몸무게,
-                      만14세 미만인 경우 법정대리인 정보 서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은
-                      정보들이 자동으로 생성되어 수집될 수 있습니다.
-                    </p>
-                    <p>서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보 :</p>
-                    <p>② 아이핀 회원가입 시 수집항목</p>
-                    <p>필수항목 :</p>
-                    <p>
-                      성명,아이핀번호,외국인등록번호(외국인에한함),주소,전화번호,아이디,비밀번호,이메일,생년월일,혈액형,신장,몸무게
-                      서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은 정보들이 자동으로 생성되어 수집될
-                      수 있습니다.
-                    </p>
-                    <p>서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보 :</p>
-                    <p>③ 예약 시 수집항목</p>
-                    <p>필수항목 :</p>
-                    <p>
-                      병원등록번호, 성명(한글), 주민등록번호, 주소, 전화번호, 휴대폰번호, 이메일, 자동전화안내,
-                      문자메시지, E-mail 신청여부, 진료에 필요한 고객 건강상태 건강정보: 병력 및 가족력 등 진료서비스
-                      제공을 위하여 의료진이 필요하다고 판단되는 개인정보
-                    </p>
-                    <p>④ 채용시 수집방법</p>
-                    <p>
-                      성명(한글, 한문, 영문), 생년월일, 성별, 비밀번호, 신장, 체중, 시력, 혈액형, 보훈사항, 종교,
-                      연락처, 이메일, 주소, 결혼여부, 병역사항, 학력사항, 경력사항, 자격 및 면허, 외국어, 가족사항,
-                      교육사항, 상벌사항, 실습사항, 사진, 취미, 특기, 건강사항, 장애여부 및 등급, 보훈사항, 자기소개
-                    </p>
-                    <p>
-                      정보 서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은 정보들이 자동으로 생성되어
-                      수집될 수 있습니다.
-                    </p>
-                    <p>서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보 :</p>
-                    <p>⑤ 개인정보 수집방법</p>
-                    <p>다음과 같은 방법으로 개인정보를 수집합니다.</p>
-                    <p>-홈페이지, 서면양식, 팩스, 전화, 상담 게시판, 이메일, 이벤트 응모</p>
-                    <p>-생성정보 수집 툴을 통한 수집(방문자 분석 툴과 같은 수집 툴 등)</p>
-                  </div>
-                </div>
-                <div className={styles.termsSection}>
-                  <p className={styles.termsMainTitle}>3. 개인정보 보유 및 이용기간</p>
-                  <div className={styles.termsIndent}>
-                    <p>
-                      {`병원은 회원님이 '홈페이지'에서 제공하는 서비스를 받는 동안 회원님의 개인 정보는 '홈페이지'에서 계속 보유하며 서비스 제공을 위해 이용하게 됩니다. 단, 개인정보 수집목적 달성을 하거나 탈퇴, 회원자격 상실 사유에 의해 회원 자격을 제한 및 정지시키는 경우에는 해당 개인의 정보는 재생할 수 없는 기술적 방법에 의해 삭제되며 어떠한 용도로도 열람 또는 이용될 수 없도록 처리됩니다.`}
-                    </p>
-                  </div>
-                </div>
-              </>
-            }
-            wrapAllInScrollBox={true}
-          />
+          <AgreementContent scrollableContent={<TermsOfUseContent />} wrapAllInScrollBox={true} />
         </div>
 
+        {/* 개인정보 수집 및 이용 목적 (필수) */}
         <div className={styles.agreementItem}>
           <Checkbox
             checked={agreements.personalInfoRequired}
@@ -586,44 +73,10 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
             className={styles.agreementCheckbox}
             alwaysDark
           />
-          <AgreementContent
-            scrollableContent={
-              <>
-                <p className={styles.agreementIntro}>{agreement.intro}</p>
-                <div className={styles.agreementSection}>
-                  <p className={styles.agreementSubTitle}>{agreement.purpose.title}</p>
-                  <div className={styles.agreementIndent}>
-                    {agreement.purpose.items.map((item, index) => (
-                      <p key={index}>{item}</p>
-                    ))}
-                  </div>
-                </div>
-                <div className={styles.agreementSection}>
-                  <p className={styles.agreementSubTitle}>{agreement.items.title}</p>
-                  <div className={styles.agreementIndent}>
-                    <p>{agreement.items.required}</p>
-                    <p>{agreement.items.autoCollected}</p>
-                  </div>
-                </div>
-                <div className={styles.agreementSection}>
-                  <p className={styles.agreementSubTitle}>{agreement.retention.title}</p>
-                  <div className={styles.agreementIndent}>
-                    <p>{agreement.retention.period}</p>
-                    <p>{agreement.retention.dormant}</p>
-                  </div>
-                </div>
-                <div className={styles.agreementSection}>
-                  <p className={styles.agreementSubTitle}>{agreement.refusal.title}</p>
-                  <div className={styles.agreementIndent}>
-                    <p>{agreement.refusal.description}</p>
-                  </div>
-                </div>
-              </>
-            }
-            wrapAllInScrollBox={true}
-          />
+          <AgreementContent scrollableContent={<PersonalInfoRequiredContent />} wrapAllInScrollBox={true} />
         </div>
 
+        {/* 개인정보 수집 및 이용 목적 (선택) */}
         <div className={styles.agreementItem}>
           <Checkbox
             checked={agreements.personalInfoOptional1}
@@ -637,109 +90,44 @@ export const AgreementStep: React.FC<AgreementStepProps> = ({
             className={styles.agreementCheckbox}
             alwaysDark
           />
-          <AgreementContent
-            scrollableContent={
-              <>
-                <div>
-                  <p>1. 개인 정보의 수집 목적 및 이용</p>
-                  <p>
-                    {`"병원"은 수집한 개인정보를 다음의 목적을 위해 활용합니다.`}
-                    <br />
-                    이용자가 제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며 이용 목적이 변경될
-                    시에는 사전 동의를 구할 것입니다.
-                  </p>
-                </div>
-                <div className={styles.agreementSection}>
-                  <p className={styles.agreementSubTitle}>온라인 안내</p>
-                  <div className={styles.agreementIndent}>
-                    <p>① 서비스제공</p>
-                    <p>
-                      진료 및 건진 예약, 예약조회 및 회원제 서비스 이용에 따른 본인 확인 절차에 이용 고지사항 전달,
-                      불만처리 등을 위한 원활한 의사소통 경로의 확보, 새로운 서비스 및 행사정보 등의 안내
-                    </p>
-                    <p>② 회원관리</p>
-                    <p>③ 신규 서비스 개발과 개인 맞춤 서비스 제공을 위한 자료</p>
-                    <p>④ 건강 컨텐츠 및 임상연구정보 제공</p>
-                    <p>⑤ 소비자 기본법 제52조에 의거한 소비자 위해 정보 수집</p>
-                    <p>⑥ 영양상담, 복약상담, 고객의 소리 문의 시 답변내용 전달</p>
-                  </div>
-                </div>
-                <div className={styles.agreementSection}>
-                  <p className={styles.agreementSubTitle}>오프라인 안내</p>
-                  <div className={styles.agreementIndent}>
-                    <p>① 진료/건진 예약, 예약조회 및 병원서비스 이용에 따른 본인 확인 절차에 사용</p>
-                    <p>
-                      ② 고지사항 전달, 불만처리 등을 위한 원활한 의사소통경로의 확보, 새로운 서비스 및 행사정보 등의
-                      안내
-                    </p>
-                    <p>③ 차별화된 의료컨텐츠 제공</p>
-                    <p>④ 증명서 발송 등 물품 배송</p>
-                    <p>⑤ 신규서비스 개발과 개인 맞춤 서비스 제공을 위한 자료</p>
-                    <p>⑥ 진단 및 치료를 위한 진료서비스와 진료비 청구, 수납, 환급 등의 원무서비스 제공</p>
-                    <p>⑦ 교육, 연구, 진료서비스에 필요한 최소한의 분석 자료</p>
-                    <p>⑧ 수탁검사 및 임상시험심사를 위한 기초자료</p>
-                    <p>⑨ 건강 컨텐츠 및 임상연구정보 제공</p>
-                    <p>⑩ 소비자 기본법 제 52조에 의거한 소비자 위해 정보 수집</p>
-                  </div>
-                </div>
-                <div>
-                  <p>2. 수집하는 개인정보의 항목 및 수집방법</p>
-                  <p>
-                    {`"병원"은 이용자의 정보수집시 필요한 최소한의 정보를 수집합니다. 다음 사항을 필수 사항으로 하며 그 외 사항은 선택사항으로 합니다.`}
-                  </p>
-                  <div className={styles.agreementIndent}>
-                    <p>① 일반 회원가입 시 수집항목</p>
-                    <p>필수항목 :</p>
-                    <p>
-                      성명,주민등록번호,외국인등록번호(외국인에한함),주소,전화번호,아이디,비밀번호,이메일,생년월일,혈액형,신장,몸무게,
-                      만14세 미만인 경우 법정대리인 정보 서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은
-                      정보들이 자동으로 생성되어 수집될 수 있습니다.
-                    </p>
-                    <p>서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보 :</p>
-                    <p>② 아이핀 회원가입 시 수집항목</p>
-                    <p>필수항목 :</p>
-                    <p>
-                      성명,아이핀번호,외국인등록번호(외국인에한함),주소,전화번호,아이디,비밀번호,이메일,생년월일,혈액형,신장,몸무게
-                      서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은 정보들이 자동으로 생성되어 수집될
-                      수 있습니다.
-                    </p>
-                    <p>서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보 :</p>
-                    <p>③ 예약 시 수집항목</p>
-                    <p>필수항목 :</p>
-                    <p>
-                      병원등록번호, 성명(한글), 주민등록번호, 주소, 전화번호, 휴대폰번호, 이메일, 자동전화안내,
-                      문자메시지, E-mail 신청여부, 진료에 필요한 고객 건강상태 건강정보: 병력 및 가족력 등 진료서비스
-                      제공을 위하여 의료진이 필요하다고 판단되는 개인정보
-                    </p>
-                    <p>④ 채용시 수집방법</p>
-                    <p>
-                      성명(한글, 한문, 영문), 생년월일, 성별, 비밀번호, 신장, 체중, 시력, 혈액형, 보훈사항, 종교,
-                      연락처, 이메일, 주소, 결혼여부, 병역사항, 학력사항, 경력사항, 자격 및 면허, 외국어, 가족사항,
-                      교육사항, 상벌사항, 실습사항, 사진, 취미, 특기, 건강사항, 장애여부 및 등급, 보훈사항, 자기소개
-                    </p>
-                    <p>
-                      정보 서비스 이용 과정이나 서비스 제공 업무 처리 과정에서 다음과 같은 정보들이 자동으로 생성되어
-                      수집될 수 있습니다.
-                    </p>
-                    <p>서비스 이용기록, 접속 로그, 쿠키, 접속 IP 정보 :</p>
-                    <p>⑤ 개인정보 수집방법</p>
-                    <p>다음과 같은 방법으로 개인정보를 수집합니다.</p>
-                    <p>-홈페이지, 서면양식, 팩스, 전화, 상담 게시판, 이메일, 이벤트 응모</p>
-                    <p>-생성정보 수집 툴을 통한 수집(방문자 분석 툴과 같은 수집 툴 등)</p>
-                  </div>
-                </div>
-                <div>
-                  <p>3. 개인정보 보유 및 이용기간</p>
-                  <p>
-                    {`병원은 회원님이 '홈페이지'에서 제공하는 서비스를 받는 동안 회원님의 개인 정보는 '홈페이지'에서 계속 보유하며 서비스 제공을 위해 이용하게 됩니다. 단, 개인정보 수집목적 달성을 하거나 탈퇴, 회원자격 상실 사유에 의해 회원 자격을 제한 및 정지시키는 경우에는 해당 개인의 정보는 재생할 수 없는 기술적 방법에 의해 삭제되며 어떠한 용도로도 열람 또는 이용될 수 없도록 처리됩니다.`}
-                  </p>
-                </div>
-              </>
-            }
-            wrapAllInScrollBox={true}
-          />
+          <AgreementContent scrollableContent={<PersonalInfoOptionalContent />} wrapAllInScrollBox={true} />
         </div>
 
+        {/* 제3자 정보제공 동의 */}
+        <div className={styles.agreementItem}>
+          <Checkbox
+            checked={agreements.personalInfoOptional2}
+            onChange={onAgreementChange('personalInfoOptional2')}
+            label={
+              <>
+                제3자 정보 제공에 동의합니다. <span className={styles.highlightText}>(필수사항)</span>
+              </>
+            }
+            className={styles.agreementCheckbox}
+            alwaysDark
+          />
+          <AgreementContent scrollableContent={<ThirdPartyInfoContent />} wrapAllInScrollBox={true} />
+        </div>
+
+        {/* 마케팅 광고 활용 동의 */}
+        <div className={styles.agreementItem}>
+          <Checkbox
+            checked={agreements.marketingAgreement}
+            onChange={onAgreementChange('marketingAgreement')}
+            label={
+              <>
+                수집하는 개인정보 및 마케팅 광고활용 <span className={styles.optionalText}>(선택사항)</span>
+              </>
+            }
+            className={styles.agreementCheckbox}
+            alwaysDark
+          />
+          <div className={styles.simpleAgreementBox}>
+            <p>수집하는 개인정보의 마케팅 및 광고 활용의 이용목적에 동의합니다.</p>
+          </div>
+        </div>
+
+        {/* 전체 동의 */}
         <div className={`${styles.agreementItem} ${styles.allAgreementsItem}`}>
           <Checkbox
             checked={agreements.allAgreements}

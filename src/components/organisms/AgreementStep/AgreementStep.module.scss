@@ -165,6 +165,23 @@
   &:last-child {
     margin-bottom: 0;
   }
+
+  // 직접 자식 p 태그 스타일 (클래스 없는 일반 텍스트)
+  > p {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: $gray-9; // Figma: #8C8C8C
+    line-height: 30px;
+    letter-spacing: -0.8px;
+    margin: 0;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.72px;
+    }
+  }
 }
 
 .agreementSubTitle {
@@ -184,6 +201,41 @@
 
   @media (max-width: $breakpoint-md) {
     font-size: 18px;
+  }
+}
+
+// 번호 항목들 컨테이너 (①②③④⑤) - Figma: gap 16px, padding-left 32px
+.numberedItemsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; // Figma: 번호 항목 간 gap 16px
+  padding-left: 32px; // Figma: padding-left 32px
+
+  @media (max-width: $breakpoint-md) {
+    padding-left: 24px;
+  }
+}
+
+// 번호 항목 개별 블록
+.numberedItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0; // 항목 내부는 gap 없음
+
+  p {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: $gray-9;
+    line-height: 30px;
+    letter-spacing: -0.8px;
+    margin: 0;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.72px;
+    }
   }
 }
 
@@ -397,6 +449,325 @@
     line-height: 27px;
   }
 }
+// 제3자 정보제공 테이블 스타일
+.thirdPartyTable {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border: 1px solid $gray-9;
+  border-radius: 5px;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+  }
+}
+
+.tableHeaderRow {
+  background-color: #f9f9f9;
+}
+
+.tableCell {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: $gray-11;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  padding: 0 10px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
+.tableCellWide {
+  flex: 1.5;
+}
+
+.tableDivider {
+  width: 0;
+  height: 18px;
+  border-left: 1px solid $gray-9;
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+    height: 0;
+    border-left: none;
+    border-top: 1px solid $gray-9;
+  }
+}
+
+// 나이스평가정보 특수 행 스타일
+.tableRowComplex {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 16px;
+  padding: 10px 0;
+  border: 1px solid $gray-9;
+  border-radius: 5px;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+  }
+}
+
+// 세로로 전체 행을 차지하는 셀 (수탁업체, 개인정보 보유기간)
+.tableCellVertical {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: $gray-11;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  padding: 0 10px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
+// 세로 구분선 (전체 높이)
+.tableDividerVertical {
+  width: 0;
+  align-self: stretch;
+  border-left: 1px solid $gray-9;
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+    height: 0;
+    border-left: none;
+    border-top: 1px solid $gray-9;
+  }
+}
+
+// 중간 섹션 (위탁업무의 내용 + 위탁개인정보) 컨테이너
+.tableMiddleSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 2;
+
+  @media (max-width: $breakpoint-md) {
+    gap: 8px;
+  }
+}
+
+// 중간 섹션 내부의 서브 행
+.tableSubRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}
+
+// 위탁업무의 내용 셀 (고정 너비)
+.tableCellTask {
+  width: 216px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: $gray-11;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+
+  @media (max-width: $breakpoint-md) {
+    width: auto;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
+// 위탁개인정보 셀 컨테이너
+.tableCellInfoContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+// 위탁개인정보 내용 (여러 줄)
+.tableCellInfoItem {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: $gray-11;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  text-align: center;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+    text-align: left;
+  }
+}
+
+// 서브 행 사이의 가로 구분선
+.tableSubRowDivider {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid $gray-9;
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+// 간단한 약관 박스 스타일 (마케팅 동의 등)
+.simpleAgreementBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  align-self: stretch;
+
+  p {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: $gray-11;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+    margin: 0;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 16px;
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.64px;
+    }
+  }
+}
+
+// 캡션 텍스트 스타일 (14px)
+.captionText {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: $gray-9;
+  line-height: 21px; // 1.5em
+  letter-spacing: -0.56px; // -4%
+  margin: 0;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.48px;
+  }
+}
+
+// 개인정보 수집 및 이용목적 섹션 컨테이너
+.privacySection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// 개인정보 섹션 아이템
+.privacySectionItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// 개인정보 섹션 타이틀
+.privacySectionTitle {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: $gray-9;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  margin: 0;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
+}
+
+// 개인정보 섹션 내용 (들여쓰기)
+.privacySectionContent {
+  display: flex;
+  flex-direction: column;
+  padding-left: 32px;
+
+  p {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: $gray-9;
+    line-height: 30px;
+    letter-spacing: -0.8px;
+    margin: 0;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding-left: 24px;
+
+    p {
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: -0.72px;
+    }
+  }
+}
+
 .allAgreementsItem {
   margin-top: 56px;
 

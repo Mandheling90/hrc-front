@@ -103,6 +103,10 @@
 // ===== 회원가입 Variant 스타일 =====
 .signupVariant {
   margin-bottom: 60px;
+  padding-left: 20px; // 첫 번째 탭 활성화 시 왼쪽 box-shadow가 잘리지 않도록 여백 추가
+  padding-right: 20px; // 마지막 탭 활성화 시 오른쪽 box-shadow가 잘리지 않도록 여백 추가
+  margin-left: -20px; // 추가된 padding 상쇄
+  margin-right: -20px; // 추가된 padding 상쇄
 
   .tabs {
     background: transparent;
