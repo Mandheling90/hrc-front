@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useRef, useCallback } from 'react'
-import { ScrollableBox } from '@/components/atoms/ScrollableBox/ScrollableBox'
+import React, { useRef } from 'react'
 import styles from './DepartmentSidebar.module.scss'
 
 export interface Department {
@@ -61,10 +60,9 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
   return (
     <div className={`${styles.sidebar} ${className}`} style={sidebarStyle}>
       <header className={styles.header}>
-        <h2 className={styles.title}>
-          진료과 목록 :{' '}
-          <span className={styles.titleHighlight}>{selectedDepartment ? selectedDepartment.name : '전체'}</span>
-        </h2>
+        <span className={styles.title}>진료과 목록</span>
+        <span className={styles.titleColon}>:</span>
+        <span className={styles.titleHighlight}>{selectedDepartment ? selectedDepartment.name : '전체'}</span>
       </header>
 
       <div className={styles.body}>
@@ -98,15 +96,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
           })}
         </aside>
 
-        <div className={styles.divider} aria-hidden='true' />
-
-        <ScrollableBox
-          ref={listRef}
-          className={styles.departmentList}
-          padding={null}
-          hasBorder={false}
-          hasBackground={false}
-        >
+        <div ref={listRef} className={styles.departmentList}>
           {initialsWithDepts.map(initial => {
             const depts = groupedDepartments[initial]
             if (!depts?.length) return null
@@ -135,7 +125,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
               </div>
             )
           })}
-        </ScrollableBox>
+        </div>
       </div>
     </div>
   )

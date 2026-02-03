@@ -14,6 +14,10 @@
     @include tablet {
       padding: 0 24px;
     }
+
+    @include mobile {
+      padding: 0 20px; // Figma mobile: 20px
+    }
   }
 }
 
@@ -24,6 +28,12 @@
 
   @include tablet {
     margin-bottom: $spacing-6;
+  }
+
+  @include mobile {
+    font-size: 36px; // Figma mobile: 36px
+    margin-bottom: 32px; // Figma mobile: 32px gap
+    letter-spacing: -1.44px;
   }
 }
 
@@ -36,6 +46,11 @@
   @include tablet {
     gap: $spacing-4;
     margin-top: $spacing-6;
+  }
+
+  @include mobile {
+    gap: 24px; // Figma mobile: 24px
+    margin-top: 0;
   }
 }
 
@@ -53,7 +68,7 @@
   gap: $spacing-4;
   padding: $spacing-5 $spacing-12;
   background-color: $gray-2;
-  border: 1px solid $gray-8;
+  border: 1px solid $gray-9; // Figma: #8C8C8C
   border-radius: 10px 10px 0 0;
   font-family: Pretendard, sans-serif;
   font-weight: $font-weight-semibold;
@@ -64,21 +79,41 @@
 
   @include tablet {
     padding: $spacing-4 $spacing-6;
-    font-size: $font-size-lg; // 18px
     gap: $spacing-3;
+  }
+
+  @include mobile {
+    padding: 20px 50px; // Figma mobile: 20px 50px
+    gap: 16px; // Figma mobile: 16px
+    letter-spacing: -0.8px;
   }
 }
 
 .departmentLabel {
   color: $gray-12;
+  font-size: 24px; // Figma desktop: 24px
+
+  @include tablet {
+    font-size: 20px; // Figma tablet: 20px
+  }
 }
 
 .departmentSeparator {
   color: $gray-12;
+  font-size: 20px; // Figma desktop: 20px
+
+  @include tablet {
+    font-size: 18px; // Figma tablet: 18px
+  }
 }
 
 .departmentName {
   color: $color-primary;
+  font-size: 24px; // Figma desktop: 24px
+
+  @include tablet {
+    font-size: 20px; // Figma tablet: 20px
+  }
 }
 
 .initialButtons {
@@ -87,14 +122,19 @@
   flex-wrap: wrap;
   gap: $spacing-4;
   padding: $spacing-5;
-  background-color: $gray-3;
-  border: 1px solid $gray-8;
+  background-color: $gray-4; // Figma: #E8E8E8
+  border: 1px solid $gray-9; // Figma: #8C8C8C
   border-top: none;
-  border-bottom: 1px solid $gray-8;
+  border-bottom: 1px solid $gray-9;
 
   @include tablet {
     gap: $spacing-3;
     padding: $spacing-4;
+  }
+
+  @include mobile {
+    gap: 8px; // Figma mobile: 8px
+    padding: 20px; // Figma mobile: 20px
   }
 }
 
@@ -108,7 +148,7 @@
   border: none;
   background-color: $color-white;
   color: $gray-12;
-  font-size: $font-size-lg; // 18px
+  font-size: 20px; // Figma desktop: 20px
   font-weight: $font-weight-semibold;
   cursor: pointer;
   transition: all $transition-base;
@@ -121,7 +161,15 @@
     height: 40px;
     min-width: 40px;
     min-height: 40px;
-    font-size: $font-size-base;
+    font-size: 18px; // Figma tablet: 18px
+  }
+
+  @include mobile {
+    width: 40px; // Figma mobile: 40px
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 18px; // Figma mobile: 18px
   }
 
   &:hover:not(:disabled):not(.active) {
@@ -129,13 +177,14 @@
   }
 
   &.active {
-    border: 1px solid $color-primary;
+    outline: 3px solid #de989b; // Figma: active border
+    border: none;
     color: $gray-12;
   }
 
   &.disabled {
     background-color: $gray-8;
-    color: $gray-10;
+    color: $gray-11; // Figma: #636363
     cursor: not-allowed;
   }
 }
@@ -145,14 +194,19 @@
   flex-wrap: wrap;
   gap: $spacing-4;
   padding: $spacing-5;
-  background-color: $gray-3;
-  border: 1px solid $gray-8;
+  background-color: $gray-4; // Figma: #E8E8E8
+  border: 1px solid $gray-9; // Figma: #8C8C8C
   border-top: none;
   border-radius: 0 0 10px 10px;
 
   @include tablet {
     gap: $spacing-3;
     padding: $spacing-4;
+  }
+
+  @include mobile {
+    gap: 8px; // Figma mobile: 8px
+    padding: 15px 20px; // Figma mobile: 15px 20px
   }
 }
 
@@ -166,17 +220,24 @@
   border: none;
   background-color: rgba(254, 248, 248, 1); // #fef8f8
   color: $gray-12;
-  font-size: $font-size-lg; // 18px
+  font-size: 20px; // Figma desktop: 20px
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  letter-spacing: -0.72px;
+  letter-spacing: -0.8px; // Figma desktop: -0.8px (20px * -4%)
   cursor: pointer;
   transition: all $transition-base;
   white-space: nowrap;
 
   @include tablet {
     padding: $spacing-2 $spacing-4;
-    font-size: $font-size-base;
+    font-size: 18px; // Figma tablet: 18px
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    padding: 5px 20px; // Figma mobile: 5px 20px
+    font-size: 18px; // Figma mobile: 18px
+    letter-spacing: -0.72px;
   }
 
   &:hover:not(.active) {
@@ -194,27 +255,19 @@
 .doctorsSection {
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: 0;
   width: 100%;
-  border: 1px solid $gray-8;
+  border: 1px solid $gray-9; // Figma: #8C8C8C
   border-radius: 10px;
   overflow: hidden;
 }
 
 .weekSelectorWrapper {
-  border-bottom: 1px solid $gray-7;
-  padding: 30px $spacing-12;
   flex-shrink: 0;
-  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @include tablet {
-    padding: $spacing-4 $spacing-6;
-    height: auto;
-    min-height: 80px;
-  }
+  width: 100%;
 }
 
 .doctorsList {
@@ -229,15 +282,15 @@
 
 .doctorCard {
   display: flex;
-  gap: $spacing-4;
-  padding: $spacing-5;
-  border-bottom: 1px solid $gray-8;
+  gap: 16px; // Figma tablet: 16px
+  padding: 20px; // Figma tablet: 20px
+  border-bottom: 1px solid $gray-9; // Figma: #8C8C8C
   align-items: flex-end;
 
-  @include tablet {
-    flex-direction: column;
-    padding: $spacing-4;
-    align-items: stretch;
+  @include mobile {
+    flex-direction: column; // Figma mobile: 세로 배치
+    align-items: flex-start;
+    gap: 16px;
   }
 
   &:last-child {
@@ -247,41 +300,48 @@
 
 .doctorInfo {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
-  min-width: 0;
+  gap: 0;
+
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .doctorHeader {
   display: flex;
   align-items: center;
-  gap: $spacing-4;
+  gap: 16px; // Figma tablet: 16px
   flex-wrap: wrap;
+  margin-bottom: 8px; // Figma: 8px gap to specialties
 }
 
 .doctorName {
-  font-size: 32px; // Figma: size-32
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
+  font-size: 32px; // Figma desktop: 32px
+  font-weight: $font-weight-semibold; // 600
+  color: black; // Figma: black
   margin: 0;
-  line-height: 1.5;
-  letter-spacing: -1.28px;
+  line-height: 1.5; // 48px / 32px
+  letter-spacing: -1.28px; // Figma desktop: -1.28px
 
   @include tablet {
-    font-size: $font-size-xl;
+    font-size: 24px; // Figma tablet: 24px
+    letter-spacing: -0.96px;
   }
 }
 
 .doctorDepartment {
-  font-size: $font-size-lg; // 18px
-  font-weight: $font-weight-normal;
-  color: $gray-12;
-  line-height: 1.5;
-  letter-spacing: -0.72px;
+  font-size: 20px; // Figma desktop: 20px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: black; // Figma: black
+  line-height: 1.5; // 30px / 20px
+  letter-spacing: -0.8px; // Figma desktop: -0.8px
 
   @include tablet {
-    font-size: $font-size-base;
+    font-size: 18px; // Figma tablet: 18px
+    letter-spacing: -0.72px;
   }
 }
 
@@ -289,67 +349,64 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-
-  @include tablet {
-    width: 100%;
-  }
+  width: 100%;
+  margin-bottom: 16px; // Figma: 16px gap to scheduleTable
 }
 
 .specialtiesLabel {
-  font-size: $font-size-lg; // 20px
-  font-weight: $font-weight-semibold;
-  color: $color-primary;
-  line-height: 1.5;
-  letter-spacing: -0.8px;
+  font-size: 20px; // Figma desktop: 20px
+  font-weight: $font-weight-semibold; // 600
+  color: $color-primary; // #9F1836
+  line-height: 1.5; // 30px / 20px
+  letter-spacing: -0.8px; // Figma desktop: -0.8px
 
   @include tablet {
-    font-size: $font-size-base;
+    font-size: 18px; // Figma tablet: 18px
+    letter-spacing: -0.72px;
   }
 }
 
 .specialtiesText {
-  font-size: 18px; // Figma: size-18
-  font-weight: $font-weight-normal;
-  color: $gray-10;
-  line-height: 1.5;
-  letter-spacing: -0.72px;
+  font-size: 18px; // Figma desktop: 18px
+  font-weight: $font-weight-normal; // 400
+  color: $gray-11; // Figma: #636363
+  line-height: 1.5; // 27px / 18px
+  letter-spacing: -0.72px; // Figma desktop: -0.72px
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  word-break: break-word;
+  white-space: nowrap;
 
   @include tablet {
-    font-size: $font-size-sm;
+    font-size: 16px; // Figma tablet: 16px
+    letter-spacing: -0.64px;
   }
 }
 
 .scheduleTable {
-  margin-top: $spacing-4;
-
-  @include tablet {
-    width: 100%;
-  }
+  margin-top: 0;
+  width: 100%;
 }
 
 .doctorActions {
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: 16px; // Figma tablet: 16px
   align-items: stretch;
+  justify-content: flex-end;
   flex-shrink: 0;
-  width: 189px;
+  width: 189px; // 고정 너비
 
-  @include tablet {
+  @include mobile {
+    flex-direction: row; // Figma mobile: 가로 배치
     width: 100%;
-    flex-direction: row;
+    gap: 8px; // Figma mobile: 8px
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 }
 
 .eConsultButton {
-  background-color: #c09c63;
+  background-color: #c09c63; // Figma: #C09C63
   border: none;
   border-radius: 5px;
   color: $color-white;
@@ -358,15 +415,15 @@
   align-items: center;
   justify-content: center;
   gap: 0;
-  padding: $spacing-2;
+  padding: 10px;
   height: 125px;
   width: 100%;
   cursor: pointer;
   transition: background-color $transition-base;
 
-  @include tablet {
+  @include mobile {
+    flex: 1; // 모바일: 반반 차지
     height: auto;
-    min-height: 100px;
   }
 
   &:hover:not(:disabled) {
@@ -382,44 +439,50 @@
     width: 48px;
     height: 48px;
     margin-bottom: 0;
+
+    @include mobile {
+      width: 32px; // Figma mobile: 32px
+      height: 32px;
+    }
   }
 
   span {
-    font-size: $font-size-base; // 16px
-    font-weight: $font-weight-semibold;
+    font-size: 18px; // Figma desktop: 18px
+    font-weight: $font-weight-semibold; // 600
     white-space: nowrap;
-    line-height: 1.5;
-    letter-spacing: -0.64px;
+    line-height: 1.5; // 27px / 18px
+    letter-spacing: -0.72px;
 
     @include tablet {
-      font-size: $font-size-sm;
+      font-size: 16px; // Figma tablet: 16px
+      letter-spacing: -0.64px;
     }
   }
 }
 
 .doctorInfoButton {
   background-color: $color-white;
-  border: 2px solid $gray-7;
+  border: 2px solid $gray-4; // Figma: #E8E8E8
   border-radius: 5px;
-  color: $gray-8;
+  color: $gray-9; // Figma: #8C8C8C
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0;
-  padding: $spacing-2;
+  padding: 10px;
   height: 125px;
   width: 100%;
   cursor: pointer;
   transition: all $transition-base;
 
-  @include tablet {
+  @include mobile {
+    flex: 1; // Figma mobile: flex 1 (takes remaining space)
     height: auto;
-    min-height: 100px;
   }
 
   &:hover:not(:disabled) {
-    border-color: $gray-8;
+    border-color: $gray-6;
     background-color: $gray-2;
   }
 
@@ -432,17 +495,24 @@
     width: 48px;
     height: 48px;
     margin-bottom: 0;
+
+    @include mobile {
+      width: 32px; // Figma mobile: 32px
+      height: 32px;
+    }
   }
 
   span {
-    font-size: $font-size-base; // 16px
-    font-weight: $font-weight-semibold;
+    font-size: 18px; // Figma desktop: 18px
+    font-weight: $font-weight-semibold; // 600
+    color: $gray-9; // Figma: #8C8C8C
     white-space: nowrap;
-    line-height: 1.5;
-    letter-spacing: -0.64px;
+    line-height: 1.5; // 27px / 18px
+    letter-spacing: -0.72px;
 
     @include tablet {
-      font-size: $font-size-sm;
+      font-size: 16px; // Figma tablet: 16px
+      letter-spacing: -0.64px;
     }
   }
 }
@@ -452,7 +522,59 @@
   text-align: center;
   color: $gray-10;
   font-size: $font-size-lg;
-  //   background-color: $gray-2;
-  //   border-radius: $radius-lg;
-  //   border: 1px solid $gray-3;
+}
+
+// =============================================
+// 공유 컴포넌트 오버라이드 (이 페이지 전용)
+// =============================================
+
+// ScheduleTitle 오버라이드 - margin 제거 (부모 gap으로 간격 처리)
+.content {
+  :global([class*='ScheduleTitle_scheduleTitle']) {
+    margin-bottom: 0;
+
+    @include mobile {
+      padding: 20px 50px; // Figma mobile: 20px 50px
+    }
+  }
+
+  :global([class*='ScheduleTitle_title']) {
+    @include mobile {
+      font-size: 24px; // Figma mobile: 24px
+      letter-spacing: -0.96px;
+    }
+  }
+}
+
+// ScrollableBox 오버라이드 - margin 제거
+.doctorsList {
+  :global([class*='ScrollableBox_scrollableBoxInner']) {
+    margin: 0;
+    height: 100%;
+  }
+}
+
+// WeekSelector 오버라이드 - 태블릿 폰트 사이즈
+.weekSelectorWrapper {
+  :global([class*='WeekSelector_dateText']) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+// ScheduleTable 오버라이드 - 태블릿 폰트 사이즈
+.scheduleTable {
+  :global([class*='ScheduleTable_table']) {
+    font-size: 16px;
+  }
+
+  :global([class*='ScheduleTable_headerCell']) {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+
+  :global([class*='ScheduleTable_periodCell']) {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
 }

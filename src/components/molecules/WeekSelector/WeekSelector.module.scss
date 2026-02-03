@@ -5,13 +5,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-6;
+  gap: 24px; // Figma: 24px
   width: 100%;
-
-  @include tablet {
-    justify-content: space-between;
-    gap: 0;
-  }
+  height: 80px; // Figma: 80px
+  padding: 30px 50px; // Figma: 30px 50px
+  border-radius: 10px;
+  border-bottom: 1px solid $gray-8; // Figma: #BBBBBB
 }
 
 .navButton {
@@ -39,10 +38,6 @@
     opacity: 0.3;
     cursor: not-allowed;
   }
-
-  @include tablet {
-    padding: $spacing-2;
-  }
 }
 
 .dateRange {
@@ -52,12 +47,10 @@
 }
 
 .dateText {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
+  font-size: 20px; // Figma: 20px
+  font-weight: $font-weight-semibold; // Figma: 600
   color: $gray-12;
+  line-height: 1.5; // Figma: 30px / 20px = 1.5
+  letter-spacing: -0.8px;
   white-space: nowrap;
-
-  @include tablet {
-    font-size: $font-size-base;
-  }
 }

@@ -3,8 +3,8 @@
 
 .sectionContainer {
   background-color: $color-white;
-  border: 1px solid $gray-4;
-  border-radius: $radius-lg;
+  border: 1px solid $gray-9; // Figma: #8C8C8C
+  border-radius: 10px; // Figma: 10px
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -12,20 +12,11 @@
 }
 
 .header {
-  padding: $spacing-6;
-  padding-bottom: $spacing-4;
+  padding: 0; // Figma: WeekSelector has its own padding
 
   @include tablet {
-    padding: $spacing-4;
-    padding-bottom: $spacing-3;
+    padding: 0;
   }
-}
-
-.divider {
-  height: 1px;
-  background-color: $gray-4;
-  margin: 0;
-  width: 100%;
 }
 
 .content {
@@ -37,25 +28,35 @@
 .content.scrollable {
   flex: 1;
   min-height: 0;
-  padding-right: $spacing-1;
+  overflow-y: auto;
+
+  // 커스텀 스크롤바
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $gray-4;
+    border-radius: 40px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 60px;
+  }
 }
 
 .content > * {
-  padding: $spacing-6;
   margin-bottom: 0 !important;
   border: none !important;
   border-radius: 0 !important;
-
-  @include tablet {
-    padding: $spacing-4;
-  }
 }
 
 .itemDivider {
   height: 1px;
   min-height: 1px;
   max-height: 1px;
-  background-color: $gray-4;
+  background-color: $gray-9; // Figma: #8C8C8C
   margin: 0;
   padding: 0 !important;
   flex-shrink: 0;

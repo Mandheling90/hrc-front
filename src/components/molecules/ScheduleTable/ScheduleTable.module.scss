@@ -29,14 +29,9 @@
   background-color: $gray-2;
   border: 1px solid $gray-6;
   border-top: none;
-  font-size: 18px;
+  font-size: 18px; // Figma: 18px
   line-height: 1.5;
   letter-spacing: -0.72px;
-
-  @include tablet {
-    padding: $spacing-3 $spacing-2;
-    font-size: $font-size-sm;
-  }
 }
 
 .periodCell {
@@ -46,16 +41,10 @@
   color: $gray-11;
   background-color: $color-white;
   border: 1px solid $gray-6;
-  font-size: 18px;
+  font-size: 18px; // Figma: 18px
   line-height: 1.5;
   letter-spacing: -0.72px;
   width: auto;
-
-  @include tablet {
-    padding: $spacing-3 $spacing-2;
-    font-size: $font-size-sm;
-    width: 60px;
-  }
 }
 
 .slotCell {
@@ -64,15 +53,9 @@
   border: 1px solid $gray-6;
   border-left: 1px solid $gray-6;
   min-width: 30px;
-  height: 49px;
+  height: 49px; // Figma: 49px (same for tablet)
   vertical-align: middle;
   background-color: $color-white;
-
-  @include tablet {
-    padding: $spacing-3 $spacing-2;
-    min-width: 40px;
-    height: 50px;
-  }
 }
 
 .dot {
@@ -83,8 +66,5 @@
   background-color: $color-primary;
   vertical-align: middle;
 
-  @include tablet {
-    width: 10px;
-    height: 10px;
-  }
+  // Figma tablet: 15px (same as desktop)
 }

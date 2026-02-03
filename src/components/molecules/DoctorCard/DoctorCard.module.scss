@@ -17,9 +17,8 @@
   min-height: 200px;
 
   @include tablet {
-    flex-direction: column;
-    gap: $spacing-6;
-    align-items: stretch;
+    gap: 16px; // Figma tablet: 16px
+    align-items: flex-end;
   }
 }
 
@@ -31,9 +30,7 @@
   align-items: flex-end;
 
   @include tablet {
-    width: 100%;
-    height: 200px;
-    align-self: auto;
+    display: none; // Figma tablet: 이미지 없음
   }
 }
 
@@ -81,8 +78,7 @@
   padding: 0;
 
   @include tablet {
-    flex-direction: column;
-    gap: $spacing-4;
+    gap: 16px; // Figma tablet: 16px
   }
 }
 
@@ -90,60 +86,56 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0; // Figma: use individual margins
   min-width: 0;
 
   @include tablet {
-    width: 100%;
+    flex: none;
+    width: 462px; // Figma tablet: 462px
+    max-width: 100%;
   }
 }
 
 .header {
-  margin-bottom: 0;
+  margin-bottom: 8px; // Figma: 8px gap between header and specialties
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
 
-  @include tablet {
-    justify-content: center;
-  }
+  // Figma tablet: same as desktop (flex-start)
 }
 
 .name {
-  font-size: 32px; // 32px
+  font-size: 32px; // Figma: 32px (same for tablet)
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: black; // Figma: black
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.5; // Figma: 48px / 32px = 1.5
   letter-spacing: -1.28px;
-
-  @include tablet {
-    font-size: $font-size-xl; // 20px
-  }
 }
 
 .department {
-  font-size: 20px; // 20px
-  font-weight: $font-weight-normal;
-  color: $gray-12;
-  line-height: 1.5;
+  font-size: 20px; // Figma: 20px (same for tablet)
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: black; // Figma: black
+  line-height: 1.5; // Figma: 30px / 20px = 1.5
   letter-spacing: -0.8px;
-
-  @include tablet {
-    font-size: $font-size-sm; // 14px
-  }
 }
 
 .specialties {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 0;
+  margin-bottom: 24px; // Figma: 24px gap between specialties and scheduleTable
+
+  @include tablet {
+    margin-bottom: 16px; // Figma tablet: 16px
+  }
 }
 
 .specialtiesLabel {
-  font-size: 20px; // 20px
+  font-size: 20px; // Figma: 20px (same for tablet)
   font-weight: $font-weight-semibold;
   color: $color-primary;
   line-height: 1.5;
@@ -152,7 +144,7 @@
 }
 
 .specialtiesText {
-  font-size: 18px; // 18px
+  font-size: 18px; // Figma: 18px (same for tablet)
   font-weight: $font-weight-normal;
   color: $gray-11;
   line-height: 1.5;
@@ -163,6 +155,10 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   word-break: break-word;
+
+  @include tablet {
+    -webkit-line-clamp: unset; // Figma tablet: 줄바꿈 허용
+  }
 }
 
 .scheduleSection {
@@ -179,8 +175,9 @@
   justify-content: flex-end;
 
   @include tablet {
-    flex-direction: row;
-    width: 100%;
+    flex: 1;
+    width: auto;
+    gap: 16px; // Figma tablet: 16px
   }
 }
 
@@ -216,7 +213,7 @@
   }
 
   span {
-    font-size: 18px;
+    font-size: 18px; // Figma: 18px (same for tablet)
     font-weight: $font-weight-semibold;
     white-space: nowrap;
     line-height: 1.5;
@@ -257,7 +254,7 @@
   }
 
   span {
-    font-size: 18px;
+    font-size: 18px; // Figma: 18px (same for tablet)
     font-weight: $font-weight-semibold;
     white-space: nowrap;
     line-height: 1.5;

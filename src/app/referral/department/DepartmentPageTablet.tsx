@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { WeekSelector } from '@/components/molecules/WeekSelector/WeekSelector'
+import { ScheduleTitle } from '@/components/molecules/ScheduleTitle/ScheduleTitle'
 import { ScheduleTable, ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 import { EConsultingIcon } from '@/components/icons/EConsultingIcon'
 import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
@@ -165,6 +166,8 @@ export const DepartmentPageTablet: React.FC<DepartmentPageTabletProps> = ({
             </div>
 
             {/* 의료진 일정 영역 */}
+            <ScheduleTitle title='진료 일정표 확인' />
+
             <div className={styles.doctorsSection}>
               <div className={styles.weekSelectorWrapper}>
                 <WeekSelector

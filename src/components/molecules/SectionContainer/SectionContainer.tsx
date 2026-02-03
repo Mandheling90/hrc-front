@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { ScrollableBox } from '@/components/atoms/ScrollableBox/ScrollableBox'
 import styles from './SectionContainer.module.scss'
 
 export interface SectionContainerProps {
@@ -29,37 +28,16 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({
 
   return (
     <div className={`${styles.sectionContainer} ${containerClassName}`}>
-      {header && (
-        <>
-          <div className={styles.header}>{header}</div>
-          {childrenArray.length > 0 && <div className={styles.divider} />}
-        </>
-      )}
+      {header && <div className={styles.header}>{header}</div>}
 
-      {scrollable ? (
-        <ScrollableBox
-          className={`${styles.content} ${styles.scrollable} ${className}`}
-          padding={null}
-          hasBorder={false}
-          hasBackground={false}
-        >
-          {childrenArray.map((child, index) => (
-            <React.Fragment key={index}>
-              {child}
-              {index < childrenArray.length - 1 && <div className={styles.itemDivider} />}
-            </React.Fragment>
-          ))}
-        </ScrollableBox>
-      ) : (
-        <div className={`${styles.content} ${className}`}>
-          {childrenArray.map((child, index) => (
-            <React.Fragment key={index}>
-              {child}
-              {index < childrenArray.length - 1 && <div className={styles.itemDivider} />}
-            </React.Fragment>
-          ))}
-        </div>
-      )}
+      <div className={`${styles.content} ${scrollable ? styles.scrollable : ''} ${className}`}>
+        {childrenArray.map((child, index) => (
+          <React.Fragment key={index}>
+            {child}
+            {index < childrenArray.length - 1 && <div className={styles.itemDivider} />}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   )
 }

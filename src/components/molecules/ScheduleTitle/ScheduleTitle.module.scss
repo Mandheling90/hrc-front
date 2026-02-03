@@ -2,30 +2,33 @@
 @import '@/styles/mixins.scss';
 
 .scheduleTitle {
-  background-color: $gray-2;
-  border: 1px solid $gray-4;
-  border-radius: $radius-md;
-  padding: $spacing-4 $spacing-6;
+  background-color: $gray-2; // Figma: #F9F9F9
+  border: 1px solid $gray-9; // Figma: #8C8C8C
+  border-radius: 10px; // Figma: 10px
+  padding: 20px 50px; // Figma: 20px 50px
   margin-bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 56px; // Figma: 56px
 
   @include tablet {
-    padding: $spacing-3 $spacing-4;
+    padding: 16px 30px;
     margin-bottom: $spacing-5;
   }
 }
 
 .title {
-  font-size: $font-size-xl; // 20px
-  font-weight: $font-weight-bold;
+  font-size: 32px; // Figma: 32px
+  font-weight: $font-weight-semibold; // Figma: 600
   color: $gray-12;
   margin: 0;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.5; // Figma: 48px / 32px = 1.5
+  letter-spacing: -1.28px;
 
   @include tablet {
-    font-size: $font-size-lg; // 18px
+    font-size: 24px;
+    letter-spacing: -0.96px;
   }
 }
