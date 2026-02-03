@@ -17,7 +17,8 @@ export const HorizontalServiceCard: React.FC<HorizontalServiceCardProps> = ({
   onClick,
   className = '',
   style,
-  size = 'default'
+  size = 'default',
+  mobileAlign = 'center'
 }) => {
   const renderDescription = () => {
     if (!description) return null
@@ -48,7 +49,8 @@ export const HorizontalServiceCard: React.FC<HorizontalServiceCardProps> = ({
     </>
   )
 
-  const cardClassName = `${styles.card} ${styles[size]} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${className}`
+  const mobileAlignClass = mobileAlign === 'left' ? styles.mobileAlignLeft : ''
+  const cardClassName = `${styles.card} ${styles[size]} ${onClick ? styles.clickable : ''} ${href ? styles.linkCard : ''} ${mobileAlignClass} ${className}`
 
   if (href) {
     return (

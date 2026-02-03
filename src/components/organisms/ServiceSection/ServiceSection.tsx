@@ -97,7 +97,7 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
       case 'horizontal':
         return (
           <div key={service.id} className={mobileSpanClass}>
-            <HorizontalServiceCard {...commonProps} />
+            <HorizontalServiceCard {...commonProps} mobileAlign={service.mobileAlign || mobileAlign} />
           </div>
         )
       case 'step-badge': {

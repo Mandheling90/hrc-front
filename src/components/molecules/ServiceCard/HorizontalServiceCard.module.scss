@@ -212,3 +212,22 @@
     text-align: center;
   }
 }
+
+// 모바일에서 왼쪽 정렬
+.mobileAlignLeft {
+  @include mobile {
+    justify-content: flex-start;
+
+    .textWrapper {
+      align-items: flex-start;
+    }
+
+    .title {
+      text-align: left;
+    }
+
+    .description {
+      text-align: left;
+    }
+  }
+}

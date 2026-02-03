@@ -30,6 +30,8 @@ export interface VerticalServiceCardProps extends BaseCardProps {
 export interface HorizontalServiceCardProps extends BaseCardProps {
   /** 반응형 사이즈 */
   size?: 'default' | 'small' | 'compact'
+  /** 모바일에서 정렬 방식 (기본값: 'center') */
+  mobileAlign?: 'left' | 'center'
 }
 
 /** 스텝 배지 카드 props */
