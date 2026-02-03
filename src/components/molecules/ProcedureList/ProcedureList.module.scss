@@ -2,6 +2,11 @@
 
 .procedureInfo {
   padding: 0;
+  padding-left: 32px; // Figma: 32px 왼쪽 마진
+
+  @media (max-width: $breakpoint-md) {
+    padding-left: 20px; // 모바일: 20px
+  }
 }
 
 .label {
@@ -12,6 +17,17 @@
   font-weight: $font-weight-semibold;
   color: $gray-12;
   margin-bottom: 0;
+
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: $font-size-xl; // 20px - Figma 태블릿
+    letter-spacing: -0.8px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-xl; // 20px - Figma 모바일
+    letter-spacing: -0.8px;
+  }
 }
 
 .bullet {

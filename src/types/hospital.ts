@@ -177,7 +177,9 @@ export interface NetworkProcessStep {
 // 협력네트워크 페이지 정보
 export interface NetworkInfo {
   intro: string[] // InfoBox 메시지
+  introStyle?: 'default' | 'withIcon' // Intro 스타일 (구로병원: withIcon)
   breadcrumbs?: BreadcrumbItemConfig[] // Breadcrumb 설정
+  cooperationContent?: ProcedureListItem[] // 상호협력내용 (구로병원 전용)
   benefits?: ProcedureListItem[] // 협력병·의원 혜택안내
   benefitsNote?: string // 혜택안내 공지 (붉은 글씨)
   target?: {

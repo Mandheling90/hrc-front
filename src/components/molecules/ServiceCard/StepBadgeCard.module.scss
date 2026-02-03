@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 20px 30px 30px 30px;
+  gap: 24px; // Figma: 24px
+  padding: 30px; // Figma: 30px
   background-color: $color-white;
   border: 1px solid $gray-9;
   border-radius: 10px;
@@ -41,13 +41,13 @@
 .stepBadge {
   background-color: $color-primary;
   color: $color-white;
-  padding: 8px 20px;
-  border-radius: 10px;
-  font-size: $font-size-base;
-  font-weight: $font-weight-bold;
+  padding: 8px 20px; // Figma: 8px 20px
+  border-radius: 5px; // Figma: 5px
+  font-size: $font-size-2xl; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
   white-space: nowrap;
-  letter-spacing: -0.64px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.96px; // Figma: 24px * -4%
+  line-height: 1.5; // Figma: 36px / 24px
   width: fit-content;
 }
 
@@ -55,7 +55,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px; // Figma: 24px
 }
 
 .iconCircle {
@@ -86,16 +86,17 @@
   overflow-wrap: break-word;
 }
 
-// 태블릿/모바일
-@media (max-width: $breakpoint-md) {
+// 태블릿 (769px ~ 1429px)
+@media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
   .card {
-    padding: 20px 20px 30px 20px;
-    gap: 20px;
+    padding: 20px;
+    gap: 16px;
   }
 
   .stepBadge {
-    font-size: $font-size-sm;
-    padding: 6px 16px;
+    font-size: $font-size-xl; // 20px - Figma 태블릿
+    padding: 4px 12px; // Figma 태블릿: 4px 12px
+    letter-spacing: -0.8px;
   }
 
   .iconCircle {
@@ -109,7 +110,36 @@
   }
 
   .title {
-    font-size: $font-size-xl;
+    font-size: $font-size-lg; // 18px
+    letter-spacing: -0.72px;
+  }
+}
+
+// 모바일 (768px 이하)
+@media (max-width: $breakpoint-md) {
+  .card {
+    padding: 20px;
+    gap: 8px; // Figma 모바일: 8px
+  }
+
+  .stepBadge {
+    font-size: $font-size-lg; // 18px
+    padding: 4px 8px; // Figma 모바일: 4px 8px
+    letter-spacing: -0.72px;
+  }
+
+  .iconCircle {
+    width: 80px;
+    height: 80px;
+
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .title {
+    font-size: $font-size-xl; // 20px - Figma 모바일
     letter-spacing: -0.8px;
   }
 }
