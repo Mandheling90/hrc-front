@@ -12,21 +12,24 @@
 .pageTitle {
   font-size: 48px; // size-48
   font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
+  line-height: 72px; // Figma 기준 72px
   letter-spacing: -1.92px;
   color: $gray-12;
   text-align: center;
-  margin: 0 0 $spacing-20;
+  margin: 0 0 $spacing-20; // 80px - Figma gap: 80px
   padding: 0;
 
+  // 태블릿 - Figma 기준 48px 유지, gap: 48px
   @include tablet {
-    font-size: 36px;
-    letter-spacing: -1.44px;
-    margin-bottom: $spacing-16;
+    font-size: 48px;
+    line-height: 72px;
+    letter-spacing: -1.92px;
+    margin-bottom: 48px; // Figma gap: 48px
   }
 
   @include mobile {
     font-size: 36px; // 모바일: size-48 (36px)
+    line-height: 54px;
     letter-spacing: -1.44px;
     margin-bottom: $spacing-8;
   }
@@ -59,10 +62,27 @@
   flex: 1;
   font-size: $font-size-2xl; // size-24
   font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
+  line-height: 36px; // Figma 기준 36px
   letter-spacing: -0.96px;
   color: $gray-12;
   text-align: center;
+
+  // 태블릿 (769px ~ 1429px) - Figma 기준 고정 너비
+  @include tablet {
+    &:nth-child(1) {
+      flex: none;
+      width: 230px; // 진료과
+    }
+
+    &:nth-child(3) {
+      flex: none;
+      width: 160px; // 교수명
+    }
+
+    &:nth-child(5) {
+      flex: 1; // 핫라인
+    }
+  }
 }
 
 .separator {
@@ -96,10 +116,27 @@
   flex: 1;
   font-size: $font-size-2xl; // size-24
   font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
+  line-height: 36px; // Figma 기준 36px
   letter-spacing: -0.96px;
   color: $gray-11;
   text-align: center;
+
+  // 태블릿 (769px ~ 1429px) - Figma 기준 고정 너비
+  @include tablet {
+    &:nth-child(1) {
+      flex: none;
+      width: 230px; // 진료과
+    }
+
+    &:nth-child(3) {
+      flex: none;
+      width: 160px; // 교수명
+    }
+
+    &:nth-child(5) {
+      flex: 1; // 핫라인
+    }
+  }
 }
 
 // 모바일 카드 리스트
@@ -126,11 +163,11 @@
 }
 
 .mobileCardDepartment {
-  font-size: 20px; // size-24 (20px)
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
+  font-size: 20px; // Figma 모바일 기준
+  font-weight: $font-weight-semibold; // 600
+  line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: $gray-11; // #636363
 }
 
 .mobileCardInfo {
@@ -140,27 +177,25 @@
 }
 
 .mobileCardName {
-  font-size: 20px; // size-24 (20px)
-  font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
+  font-size: 20px; // Figma 모바일 기준
+  font-weight: $font-weight-normal; // 400
+  line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
-  color: $gray-11;
-  text-align: right;
+  color: $gray-11; // #636363
 }
 
 .mobileCardSeparator {
   width: 1px;
   height: 18px;
-  background-color: $gray-8; // #bbb
+  background-color: $gray-9; // #8C8C8C - Figma 모바일 기준
   flex-shrink: 0;
   color: transparent; // 구분선만 표시
 }
 
 .mobileCardHotline {
-  font-size: 20px; // size-24 (20px)
-  font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
+  font-size: 20px; // Figma 모바일 기준
+  font-weight: $font-weight-normal; // 400
+  line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
-  color: $gray-11;
-  text-align: right;
+  color: $gray-11; // #636363
 }
