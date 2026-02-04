@@ -4,7 +4,6 @@ import React from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
-import { Button } from '@/components/atoms/Button/Button'
 import { PaperclipIcon } from '@/components/icons/PaperclipIcon'
 import { ArrowDownloadIcon } from '@/components/icons/ArrowDownloadIcon'
 import { PrevNextNavigation } from '@/components/molecules/PrevNextNavigation/PrevNextNavigation'
@@ -20,15 +19,14 @@ interface NoticeDetail {
 }
 
 // 임시 상세 데이터 (리스트와 동일한 구조를 가정)
+// Figma 기준: notice-1은 이전 글이 있고, 다음 글이 없는 상태 (배열 마지막)
 const mockNoticeDetails: NoticeDetail[] = [
   {
-    id: 'notice-1',
-    title: '[진료의뢰-회송시범사업]중계포털 의뢰서 작성 방법 안내',
-    registeredDate: '2024-09-26',
-    isNotice: true,
-    attachmentName: '중계포털 의뢰서 작성 안내.pdf',
-    content:
-      '진료의뢰-회송 시범사업 중계포털 의뢰서 작성 방법 리플릿을 첨부하오니 많은 이용 부탁드립니다.\n\n감사합니다.'
+    id: '3',
+    title: '2025년 12월 외래진료 시간표입니다.',
+    registeredDate: '2025-12-01',
+    isNotice: false,
+    content: '2025년 12월 외래진료 시간표를 안내드립니다.'
   },
   {
     id: 'notice-2',
@@ -38,11 +36,13 @@ const mockNoticeDetails: NoticeDetail[] = [
     content: '고려대학교 안암병원 협력병·의원장 무료주차 서비스 변경 안내입니다.'
   },
   {
-    id: '3',
-    title: '2025년 12월 외래진료 시간표입니다.',
-    registeredDate: '2025-12-01',
-    isNotice: false,
-    content: '2025년 12월 외래진료 시간표를 안내드립니다.'
+    id: 'notice-1',
+    title: '【진료의뢰-회송시범사업】중계포털 의뢰서 작성 방법 안내',
+    registeredDate: '2024-09-26',
+    isNotice: true,
+    attachmentName: '중계포털 의뢰서 작성 안내.pdf',
+    content:
+      '진료의뢰-회송 시범사업 중계포털 의뢰서 작성 방법 리플릿을 첨부하오니 많은 이용 부탁드립니다.\n\n감사합니다.'
   }
 ]
 
@@ -86,6 +86,7 @@ export default function NoticeDetailPage() {
               <div className={styles.noticeTitleArea}>
                 <h2 className={styles.noticeTitle}>{notice.title}</h2>
               </div>
+              <div className={styles.headerDivider} />
               <div className={styles.noticeDateArea}>
                 <span className={styles.noticeDate}>{notice.registeredDate}</span>
               </div>
@@ -120,9 +121,9 @@ export default function NoticeDetailPage() {
 
           {/* 목록 버튼 */}
           <section className={styles.backButtonSection}>
-            <Button variant='gray' size='medium' onClick={handleBackToList}>
+            <button type='button' className={styles.listButton} onClick={handleBackToList}>
               목록
-            </Button>
+            </button>
           </section>
         </div>
       </main>

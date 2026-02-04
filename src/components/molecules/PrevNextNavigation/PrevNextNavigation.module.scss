@@ -8,6 +8,7 @@
 
   @include mobile {
     margin-bottom: $spacing-8;
+    width: 100%;
   }
 }
 
@@ -20,6 +21,11 @@
 
   &:first-child {
     border-top: 1px solid $gray-8; // Figma: #BBBBBB
+  }
+
+  @include mobile {
+    gap: 8px;
+    width: 100%;
   }
 }
 
@@ -46,6 +52,18 @@
   line-height: 30px;
   letter-spacing: -0.8px;
   flex-shrink: 0;
+
+  @include tablet {
+    font-size: $font-size-lg; // 18px
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: $font-size-lg;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
 }
 
 // 다음 글 비활성화 상태
@@ -78,6 +96,18 @@
   &:hover {
     color: $color-primary;
   }
+
+  @include tablet {
+    font-size: $font-size-lg; // 18px
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: $font-size-lg;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
 }
 
 .navEmpty {
@@ -90,4 +120,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @include tablet {
+    font-size: $font-size-lg; // 18px
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: $font-size-lg;
+    line-height: 27px;
+    letter-spacing: -0.72px;
+  }
 }
