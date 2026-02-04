@@ -12,9 +12,9 @@
 .pageTitle {
   font-size: 48px;
   font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
+  line-height: 72px; // Figma 기준
   letter-spacing: -1.92px;
-  color: $gray-12;
+  color: $color-darken; // Figma: black
   text-align: center;
   margin: 0 0 $spacing-20;
   padding: 0;
@@ -147,9 +147,15 @@
   }
 }
 
-.table {
+// 공지사항 테이블 스타일
+.noticeTable {
   max-width: 1430px;
   margin: 0 auto;
+
+  // 행 호버 시 배경색 변경
+  :global(.tableRow.clickable):hover {
+    background-color: #f8efe2 !important;
+  }
 }
 
 // 공지 배지 스타일
@@ -157,13 +163,54 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 58px;
   padding: 4px 12px;
   background-color: $color-primary;
   color: $color-white;
-  font-size: $font-size-sm;
+  font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
-  border-radius: 4px;
-  letter-spacing: -0.56px;
+  line-height: 30px;
+  border-radius: 5px;
+  letter-spacing: -0.8px;
+}
+
+// 번호 텍스트 스타일
+.numberText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-normal;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $gray-11; // #636363
+}
+
+// 제목 텍스트 스타일
+.titleText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $color-darken; // black
+  transition: color 0.2s;
+  // 텍스트 오버플로우 처리
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  // 행 호버 시 색상 변경
+  :global(.tableRow):hover & {
+    color: #816331;
+  }
+}
+
+// 날짜 텍스트 스타일
+.dateText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-normal;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $gray-11; // #636363
 }
 
 .paginationWrapper {

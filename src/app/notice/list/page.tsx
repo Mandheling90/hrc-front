@@ -24,7 +24,7 @@ const mockNotices: NoticeData[] = [
   {
     id: 'notice-1',
     number: 'notice',
-    title: '[진료의뢰-회송시범사업]중계포털 의뢰서 작성 방법 안내',
+    title: '【진료의뢰-회송시범사업】중계포털 의뢰서 작성 방법 안내',
     registeredDate: '2025-11-25',
     isNotice: true
   },
@@ -87,7 +87,8 @@ const mockNotices: NoticeData[] = [
   {
     id: '10',
     number: 77,
-    title: 'Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac...',
+    title:
+      'Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
     registeredDate: '2025-05-01',
     isNotice: false
   }
@@ -149,28 +150,29 @@ export default function NoticeListPage() {
       {
         id: 'number',
         label: '번호',
-        width: '100px',
+        width: '70px',
         align: 'center',
         renderCell: item => {
           if (item.isNotice) {
             return <span className={styles.noticeBadge}>공지</span>
           }
-          return <span>{item.number}</span>
+          return <span className={styles.numberText}>{item.number}</span>
         }
       },
       {
         id: 'title',
         label: '제목',
         width: '1fr',
-        field: 'title',
-        align: 'left'
+        align: 'left',
+        textOverflow: 'ellipsis',
+        renderCell: item => <span className={styles.titleText}>{item.title}</span>
       },
       {
         id: 'registeredDate',
         label: '등록일',
         width: '150px',
-        field: 'registeredDate',
-        align: 'center'
+        align: 'center',
+        renderCell: item => <span className={styles.dateText}>{item.registeredDate}</span>
       }
     ],
     []
@@ -247,12 +249,12 @@ export default function NoticeListPage() {
             selectOptions={categoryOptions}
             selectValue={selectedCategory}
             onSelectChange={setSelectedCategory}
-            selectWidth={120}
+            selectWidth={180}
             searchPlaceholder='검색어를 입력해주세요.'
             searchValue={searchQuery}
             onSearchValueChange={setSearchQuery}
             onSearch={handleSearch}
-            searchFieldWidth={400}
+            searchFieldWidth={480}
           />
 
           {/* 데스크톱/태블릿: 테이블, 모바일: 카드 */}
@@ -263,8 +265,7 @@ export default function NoticeListPage() {
                 data={paginatedData}
                 getRowKey={item => item.id}
                 onRowClick={handleRowClick}
-                className={styles.table}
-                isHighlighted={item => item.isNotice}
+                className={styles.noticeTable}
               />
             ) : (
               <CardList
