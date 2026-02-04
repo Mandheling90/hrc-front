@@ -11,8 +11,8 @@
   @include tablet {
     flex-direction: column;
     align-items: stretch;
-    gap: $spacing-3;
-    margin-bottom: $spacing-8;
+    gap: 32px; // Figma: 검색 섹션과 안내 메시지 사이 32px
+    margin-bottom: 8px; // Figma: 카드 리스트와의 간격
   }
 
   @include mobile {
@@ -71,13 +71,16 @@
   flex: 1;
 
   @include tablet {
-    width: 100%;
+    width: 100% !important; // 인라인 스타일 오버라이드
     flex: 1;
     min-width: 0;
   }
 
   @include mobile {
-    width: 100%;
+    width: 100% !important; // 인라인 스타일 오버라이드
+    height: auto;
+    padding: 10px 16px; // Figma 모바일: 16px 좌우, 10px 상하
+    border-bottom: 1px solid $gray-8; // Figma 모바일: #BBBBBB
   }
 }
 
@@ -100,11 +103,11 @@
     border-radius: 0;
     padding: 0;
     height: auto;
-    font-size: $font-size-xl;
+    font-size: $font-size-xl; // 20px
     color: $gray-12;
     letter-spacing: -0.8px;
     background-color: transparent;
-    line-height: $line-height-normal;
+    line-height: $line-height-normal; // 1.5
 
     &:focus {
       outline: none;
@@ -112,7 +115,14 @@
     }
 
     &::placeholder {
-      color: $gray-9;
+      color: $gray-9; // Figma: #8C8C8C
+    }
+
+    // Figma 모바일: 18px, line-height 27px
+    @include mobile {
+      font-size: $font-size-lg; // 18px
+      line-height: 27px;
+      letter-spacing: -0.72px; // -4%
     }
   }
 }
@@ -139,29 +149,18 @@
   }
 }
 
-.infoMessage {
-  display: flex;
-  align-items: center;
-  gap: $spacing-2;
-  font-size: $font-size-lg;
-  color: $gray-11;
-  letter-spacing: -0.72px;
+// InfoNote 컴포넌트에 전달되는 클래스
+.infoNote {
+  order: 1; // 데스크톱에서 왼쪽에 배치
   flex-shrink: 0;
-  width: auto; // 데스크톱에서는 자동 너비
-
-  // 데스크톱에서 왼쪽에 배치
-  order: 1;
 
   @include tablet {
-    width: 100%;
     order: 2; // 태블릿에서는 아래로
-    justify-content: flex-end; // 태블릿에서 오른쪽 정렬
+    align-self: flex-end; // 오른쪽 정렬
   }
 
   @include mobile {
-    font-size: $font-size-base;
-    gap: $spacing-2;
-    width: 100%;
-    order: 2; // 모바일에서도 아래로
+    order: 2;
+    align-self: flex-start; // Figma 모바일: 왼쪽 정렬
   }
 }

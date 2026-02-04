@@ -221,116 +221,115 @@
   margin: 0 auto;
 }
 
+// Figma 태블릿 기준 카드 스타일
 .cardNumber {
   font-size: $font-size-lg; // 18px
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $gray-11; // Figma: #636363
   letter-spacing: -0.72px;
+  line-height: 27px;
 }
 
 .cardTitle {
-  font-size: $font-size-xl; // 20px
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  letter-spacing: -0.8px;
-  line-height: 1.5;
+  font-size: $font-size-lg; // 18px - Figma 기준
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $gray-12; // Figma: #202020
+  letter-spacing: -0.72px;
+  line-height: 27px;
   word-break: break-word;
   overflow-wrap: break-word;
 }
 
-.cardInfo {
+// 진료과 (소화기내과) - Figma: semibold, black
+.cardDepartment {
   font-size: $font-size-lg; // 18px
-  font-weight: $font-weight-normal;
-  color: $gray-11;
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
   letter-spacing: -0.72px;
+  line-height: 27px;
+}
+
+// 신청자 (김*수) - Figma: semibold, black
+.cardApplicant {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
+  letter-spacing: -0.72px;
+  line-height: 27px;
+}
+
+// 의료기관명 (고대협력병원) - Figma 모바일: semibold, black
+.cardHospital {
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
+  letter-spacing: -0.72px;
+  line-height: 27px;
 }
 
 .cardDate {
   font-size: $font-size-lg; // 18px
-  font-weight: $font-weight-normal;
-  color: $gray-11;
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $gray-11; // Figma: #636363
   letter-spacing: -0.72px;
+  line-height: 27px;
 }
 
-// e-Consult 카드 내부 스타일 커스터마이징
+// e-Consult 카드 내부 스타일 커스터마이징 (Figma 태블릿 기준)
 .eConsultCardList {
-  // 모든 카드에 공통 스타일
+  // 그리드 레이아웃 설정 - Figma: gap 8px
+  &:global(.grid) {
+    gap: 8px !important;
+  }
+
+  // 모든 카드에 공통 스타일 - Figma: padding 20px, border-radius 10px
   :global(.card) {
     position: relative;
-    padding: 20px;
-    min-height: 200px;
+    padding: 20px; // Figma 기준
+    min-height: auto;
     justify-content: flex-start;
+    gap: 16px; // Figma: 내부 요소 간격
 
     @include mobile {
-      padding: 16px;
+      padding: 15px; // Figma 모바일: 15px
     }
   }
 
-  // 상태별 카드 배경색 (전역 클래스 card와 상태 클래스를 함께 사용)
-  :global(.card.cardStatusWaiting) {
-    background-color: #fdf8ee !important;
+  // 상태별 카드 배경색 - Figma 태블릿 기준
+  @include tablet {
+    :global(.card.cardStatusWaiting) {
+      background-color: $color-white !important;
+    }
+
+    :global(.card.cardStatusExpired) {
+      background-color: #f9f9f9 !important;
+    }
+
+    :global(.card.cardStatusCompleted) {
+      background-color: #fef8f8 !important;
+    }
   }
 
-  :global(.card.cardStatusExpired) {
-    background-color: #f5f5f5 !important;
+  // Figma 모바일: 모든 카드 흰색 배경 (상태 무관)
+  @include mobile {
+    :global(.card),
+    :global(.card.cardStatusWaiting),
+    :global(.card.cardStatusExpired),
+    :global(.card.cardStatusCompleted) {
+      background-color: $color-white !important;
+    }
   }
 
-  :global(.card.cardStatusCompleted) {
-    background-color: #fdf9f8 !important;
-  }
-
-  // 번호 행 스타일
-  :global(.cardRow:first-child) {
-    align-items: flex-start;
-    margin-bottom: 4px;
-  }
-
-  // 제목 행 스타일
-  :global(.cardRow:nth-child(2)) {
-    align-items: flex-start;
-    margin-bottom: 12px;
+  // 카드 행 기본 스타일 재정의
+  :global(.cardRow) {
+    padding: 0 !important;
   }
 
   // 상태/날짜 행 스타일 (하단 정렬)
   :global(.cardRow:last-child) {
     margin-top: auto;
-    align-items: flex-end;
-    padding-top: 12px;
-  }
-
-  // 카드 번호 스타일
-  .cardNumber {
-    font-size: $font-size-lg; // 18px
-    font-weight: $font-weight-semibold;
-    color: $gray-12;
-    letter-spacing: -0.72px;
-  }
-
-  // 카드 제목 스타일
-  .cardTitle {
-    font-size: $font-size-xl; // 20px
-    font-weight: $font-weight-semibold;
-    color: $gray-12;
-    letter-spacing: -0.8px;
-    line-height: 1.5;
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-
-  // 카드 정보 (의료기관명, 신청자) 스타일
-  .cardInfo {
-    font-size: $font-size-lg; // 18px
-    font-weight: $font-weight-normal;
-    color: $gray-11;
-    letter-spacing: -0.72px;
-  }
-
-  // 카드 날짜 스타일
-  .cardDate {
-    font-size: $font-size-lg; // 18px
-    font-weight: $font-weight-normal;
-    color: $gray-11;
-    letter-spacing: -0.72px;
+    align-items: center;
+    padding-top: 0;
   }
 }
 

@@ -17,6 +17,7 @@ interface EConsultData {
   title: string
   applicant: string
   hospitalName: string
+  department: string // Figma 태블릿에서 표시되는 진료과
   status: 'waiting' | 'expired' | 'completed'
   registeredDate: string
 }
@@ -29,6 +30,7 @@ const mockEConsults: EConsultData[] = [
     title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
     applicant: '김*수',
     hospitalName: '고대협력병원',
+    department: '소화기내과',
     status: 'waiting',
     registeredDate: '2025-11-25'
   },
@@ -38,7 +40,8 @@ const mockEConsults: EConsultData[] = [
     title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
     applicant: '김*수',
     hospitalName: '고대협력병원',
-    status: 'waiting',
+    department: '소화기내과',
+    status: 'expired',
     registeredDate: '2025-11-25'
   },
   {
@@ -47,7 +50,8 @@ const mockEConsults: EConsultData[] = [
     title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
     applicant: '김*수',
     hospitalName: '고대협력병원',
-    status: 'expired',
+    department: '소화기내과',
+    status: 'completed',
     registeredDate: '2025-11-25'
   },
   {
@@ -56,6 +60,7 @@ const mockEConsults: EConsultData[] = [
     title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
     applicant: '김*수',
     hospitalName: '고대협력병원',
+    department: '소화기내과',
     status: 'completed',
     registeredDate: '2025-11-25'
   },
@@ -65,6 +70,7 @@ const mockEConsults: EConsultData[] = [
     title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
     applicant: '김*수',
     hospitalName: '고대협력병원',
+    department: '소화기내과',
     status: 'completed',
     registeredDate: '2025-11-25'
   },
@@ -74,24 +80,7 @@ const mockEConsults: EConsultData[] = [
     title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
     applicant: '김*수',
     hospitalName: '고대협력병원',
-    status: 'completed',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '7',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    status: 'completed',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '8',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
+    department: '소화기내과',
     status: 'completed',
     registeredDate: '2025-11-25'
   }
@@ -110,19 +99,21 @@ export default function EConsultListPage() {
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 768 : false))
   const itemsPerPage = 5
 
-  // 태블릿 여부 확인
+  // 태블릿/모바일 여부 확인
   useEffect(() => {
-    const checkIsTablet = () => {
+    const checkViewport = () => {
       setIsTablet(window.innerWidth <= 1429)
+      setIsMobile(window.innerWidth <= 768)
     }
 
-    checkIsTablet()
-    window.addEventListener('resize', checkIsTablet)
+    checkViewport()
+    window.addEventListener('resize', checkViewport)
 
     return () => {
-      window.removeEventListener('resize', checkIsTablet)
+      window.removeEventListener('resize', checkViewport)
     }
   }, [])
 
@@ -246,7 +237,7 @@ export default function EConsultListPage() {
           {/* 테이블 또는 카드 리스트 */}
           <div className={styles.tableSection}>
             {isTablet ? (
-              /* 태블릿: 카드형 그리드 리스트 */
+              /* 태블릿/모바일: 카드형 리스트 */
               <CardList
                 cards={paginatedData.map(item => {
                   const statusLabels = {
@@ -254,6 +245,35 @@ export default function EConsultListPage() {
                     expired: '기간 만료',
                     completed: '답변 완료'
                   }
+
+                  // 모바일: 번호 없음, hospitalName 표시
+                  // 태블릿: 번호 있음, department 표시
+                  if (isMobile) {
+                    return [
+                      {
+                        id: 'title',
+                        leftContent: <span className={styles.cardTitle}>{item.title}</span>,
+                        rightContent: null
+                      },
+                      {
+                        id: 'hospitalName',
+                        leftContent: <span className={styles.cardHospital}>{item.hospitalName}</span>,
+                        rightContent: null
+                      },
+                      {
+                        id: 'applicant',
+                        leftContent: <span className={styles.cardApplicant}>{item.applicant}</span>,
+                        rightContent: null
+                      },
+                      {
+                        id: 'statusAndDate',
+                        leftContent: <StatusBadge variant={item.status}>{statusLabels[item.status]}</StatusBadge>,
+                        rightContent: <span className={styles.cardDate}>{item.registeredDate}</span>
+                      }
+                    ]
+                  }
+
+                  // 태블릿
                   return [
                     {
                       id: 'number',
@@ -266,13 +286,13 @@ export default function EConsultListPage() {
                       rightContent: null
                     },
                     {
-                      id: 'hospitalName',
-                      leftContent: <span className={styles.cardInfo}>{item.hospitalName}</span>,
+                      id: 'department',
+                      leftContent: <span className={styles.cardDepartment}>{item.department}</span>,
                       rightContent: null
                     },
                     {
                       id: 'applicant',
-                      leftContent: <span className={styles.cardInfo}>{item.applicant}</span>,
+                      leftContent: <span className={styles.cardApplicant}>{item.applicant}</span>,
                       rightContent: null
                     },
                     {
@@ -284,12 +304,12 @@ export default function EConsultListPage() {
                 })}
                 getCardKey={(card, index) => paginatedData[index].id}
                 getCardClassName={(card, index) => {
+                  // 상태 클래스 항상 추가 (CSS 미디어 쿼리로 배경색 제어)
                   const status = paginatedData[index].status
                   const statusClass = `cardStatus${status.charAt(0).toUpperCase() + status.slice(1)}`
-                  // 전역 클래스 이름으로 반환 (CSS 모듈이 아닌)
                   return statusClass
                 }}
-                columns={2}
+                columns={isMobile ? 1 : 2}
                 className={styles.eConsultCardList}
                 onCardClick={cardIndex => handleRowClick(paginatedData[cardIndex])}
               />

@@ -35,7 +35,7 @@
     overflow: visible;
 
     @include tablet {
-      gap: $spacing-3;
+      gap: 8px; // Figma 태블릿: 8px
     }
 
     @include mobile {
@@ -48,8 +48,13 @@
 .card {
   background-color: $color-white; // Figma 기준 - 흰색 배경
   border: 1px solid $gray-9;
+
+  // Figma 모바일: 모든 카드 흰색 배경 강제
+  @include mobile {
+    background-color: $color-white !important;
+  }
   border-radius: 10px;
-  padding: 15px; // Figma 태블릿 기준
+  padding: 20px; // Figma 태블릿 기준: 20px
   display: flex;
   flex-direction: column;
   gap: 16px; // Figma 기준

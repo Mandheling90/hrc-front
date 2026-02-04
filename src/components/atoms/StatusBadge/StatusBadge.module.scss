@@ -13,19 +13,21 @@
   white-space: nowrap;
 }
 
+// Figma 태블릿 기준 스타일
 .waiting {
-  background-color: #fdf8ee !important;
-  color: #202020;
-  border: 1px solid #e8e8e8;
+  background-color: #fdf9f4 !important; // Figma: Secondary BG bg-2
+  color: #816331; // Figma: Secondary Deep deep-hover
+  border: none;
 }
 
 .expired {
-  background-color: #e0e0e0 !important;
-  color: #202020;
-  border: 1px solid #d9d9d9;
+  background-color: #e8e8e8 !important; // Figma: Gray-4
+  color: #636363; // Figma: Gray-11
+  border: none;
 }
 
 .completed {
-  background-color: #a92f4a !important;
+  background-color: #9f1836 !important; // Figma: Primary Accent
   color: $color-white;
+  border: none;
 }

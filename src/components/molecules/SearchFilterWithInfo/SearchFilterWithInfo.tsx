@@ -85,7 +85,7 @@ export const SearchFilterWithInfo: React.FC<SearchFilterWithInfoProps> = ({
         </div>
       </div>
 
-      {hasInfo && <InfoNote message={infoMessage} />}
+      {hasInfo && <InfoNote message={infoMessage} className={styles.infoNote} />}
     </div>
   )
 }
