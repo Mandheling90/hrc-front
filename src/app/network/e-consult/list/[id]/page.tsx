@@ -1,13 +1,11 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { Button } from '@/components/atoms/Button/Button'
-import { ChevronUpIcon } from '@/components/icons/ChevronUpIcon'
-import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import styles from './page.module.scss'
 import { PrevNextNavigation } from '@/components/molecules/PrevNextNavigation/PrevNextNavigation'
 
@@ -28,16 +26,17 @@ interface EConsultDetailData {
 
 // 임시 데이터 (답변 완료 상태)
 const mockEConsultDetailCompleted: EConsultDetailData = {
-  id: '1',
-  number: 84,
+  id: '3',
+  number: 82,
   title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-  content: '진료의뢰-회송 시범사업 중계포털 의뢰서 작성 방법 리플릿을 첨부하오니 많은 이용 부탁드립니다. 감사합니다.',
+  content:
+    '진료의뢰-회송 시범사업 중계포털 의뢰서 작성 방법 리플릿을 첨부하오니 많은 이용 부탁드립니다.\n\n감사합니다.',
   applicant: '김철수',
   hospitalName: '소아청소년과',
   status: 'completed',
   registeredDate: '2025-11-25',
   replyContent:
-    '진료의뢰-회송 시범사업 중계포털 의뢰서 작성 방법 리플릿을 첨부하오니 많은 이용 부탁드립니다. 감사합니다.\n\n추가 답변 내용이 여기에 표시됩니다.',
+    '진료협력 운영 현황을 검토한 결과, \n현재 협력병원 대응 프로세스는 기본적인 절차는 갖추고 있으나 병원 내부 전산과의 연동 및 협력기관 관리 체계에서 일부 개선 여지가 확인되었습니다. \n특히 의뢰·회송 환자 처리 과정에서 수기 입력 비중이 높아 업무 효율성이 저하되고 있으며, 협력병원별 신청·계약 관리 기준이 부서마다 상이해 데이터 일관성 확보가 어려운 점이 주요 이슈로 파악됩니다. \n이에 따라 API 기반의 의뢰·회송 연동 표준화, 협력병원 계약·자격 관리의 단일화된 체계 구축이 필요합니다. \n또한 협력기관 의뢰 패턴 분석, 의사 간 커뮤니케이션 채널 개선, 회송 환자 추적관리 기능 도입을 통해 협력 성과를 체계적으로 관리할 수 있습니다. \n향후 단계별 개선 로드맵을 마련해 협력병원 접근성 강화와 환자 중심의 진료 연속성 확보를 목표로 추진하는 것이 바람직합니다.',
   replyDate: '2025-11-25, 06:48',
   replier: '김철수'
 }
@@ -56,14 +55,21 @@ const mockEConsultDetailWaiting: EConsultDetailData = {
 
 // 임시 데이터 (기간 만료 상태)
 const mockEConsultDetailExpired: EConsultDetailData = {
-  id: '1',
-  number: 84,
+  id: '2',
+  number: 83,
   title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
   content: '진료의뢰-회송 시범사업 중계포털 의뢰서 작성 방법 리플릿을 첨부하오니 많은 이용 부탁드립니다. 감사합니다.',
   applicant: '김철수',
   hospitalName: '소아청소년과',
   status: 'expired',
   registeredDate: '2025-11-25'
+}
+
+// ID별 mock 데이터 매핑
+const mockDataMap: Record<string, EConsultDetailData> = {
+  '1': mockEConsultDetailWaiting,
+  '2': mockEConsultDetailExpired,
+  '3': mockEConsultDetailCompleted
 }
 
 // 이전글/다음글 데이터
@@ -76,11 +82,12 @@ const mockNextPost: { id: string; title: string } | null = null // 다음 글이
 
 export default function EConsultDetailPage() {
   const router = useRouter()
+  const params = useParams()
   const [replyContent, setReplyContent] = useState('')
 
-  // 실제로는 params.id로 데이터를 가져와야 함
-  // 테스트를 위해 status에 따라 다른 데이터 사용
-  const eConsult = mockEConsultDetailExpired // 또는 mockEConsultDetailWaiting, mockEConsultDetailCompleted
+  // URL params에서 ID를 가져와 해당하는 mock 데이터 선택
+  const id = params.id as string
+  const eConsult = mockDataMap[id] || mockEConsultDetailWaiting
 
   const statusLabels = {
     waiting: '답변 대기',
@@ -88,8 +95,8 @@ export default function EConsultDetailPage() {
     completed: '답변 완료'
   }
 
-  const isCompleted = eConsult.status === 'waiting'
-  const isExpired = eConsult.status === 'waiting'
+  const isCompleted = eConsult.status === 'completed'
+  const isExpired = eConsult.status === 'expired'
 
   const maxLength = 1500
   const characterCount = replyContent.length
@@ -156,8 +163,22 @@ export default function EConsultDetailPage() {
 
           {/* 자문 요청 내용 */}
           <div className={styles.contentSection}>
-            <div className={styles.contentNumberBox}>
-              <span className={styles.contentNumber}>{eConsult.title}</span>
+            <div className={styles.contentTitleBox}>
+              {isCompleted || isExpired ? (
+                /* 답변 완료/기간 만료: 제목 | 날짜 형식 */
+                <>
+                  <span className={styles.contentTitle}>{eConsult.title}</span>
+                  <span className={styles.contentDivider} />
+                  <span className={styles.contentDate}>{eConsult.registeredDate}</span>
+                </>
+              ) : (
+                /* 답변 대기: 번호 | 제목 형식 */
+                <>
+                  <span className={styles.contentNumber}>{eConsult.number}</span>
+                  <span className={styles.contentDivider} />
+                  <span className={styles.contentTitle}>{eConsult.title}</span>
+                </>
+              )}
             </div>
 
             <div className={styles.contentBody}>
@@ -170,11 +191,12 @@ export default function EConsultDetailPage() {
             /* 답변 완료: 답변 내용 표시 */
             <div className={styles.replyDisplaySection}>
               <div className={styles.replyDisplayHeader}>
-                <h3 className={styles.replyDisplayTitle}>자문의 답변</h3>
+                <span className={styles.replyDisplayTitle}>자문의 답변</span>
               </div>
               <div className={styles.replyDisplayContent}>
                 <div className={styles.replyDisplayMeta}>
                   <span className={styles.replyDisplayName}>{eConsult.replier || eConsult.applicant}</span>
+                  <span className={styles.replyMetaDivider} />
                   {eConsult.replyDate && <span className={styles.replyDisplayDate}>{eConsult.replyDate}</span>}
                 </div>
                 <div className={styles.replyDisplayText}>{eConsult.replyContent || '답변 내용이 없습니다.'}</div>
@@ -183,7 +205,9 @@ export default function EConsultDetailPage() {
           ) : isExpired ? (
             /* 기간 만료: 만료 안내 메시지 */
             <div className={styles.expiredMessageSection}>
-              <p className={styles.expiredMessage}>답변기간이 만료되어 종료되었습니다.</p>
+              <div className={styles.expiredMessageBox}>
+                <p className={styles.expiredMessage}>답변기간이 만료되어 종료되었습니다.</p>
+              </div>
             </div>
           ) : (
             /* 답변 대기: 답변 입력 폼 */

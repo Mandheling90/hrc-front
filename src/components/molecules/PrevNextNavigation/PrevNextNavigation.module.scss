@@ -4,31 +4,32 @@
 .navigationSection {
   display: flex;
   flex-direction: column;
-  margin-bottom: $spacing-8;
+  margin-bottom: 80px; // Figma: gap 80px to button
 
   @include mobile {
-    margin-bottom: $spacing-6;
+    margin-bottom: $spacing-8;
   }
 }
 
 .navItem {
+  display: flex;
+  align-items: center;
+  gap: 16px; // Figma: gap 16px
   background-color: $color-white;
-  border-bottom: 1px solid $gray-8;
+  border-bottom: 1px solid $gray-8; // Figma: #BBBBBB
 
   &:first-child {
-    border-top: 1px solid $gray-8;
+    border-top: 1px solid $gray-8; // Figma: #BBBBBB
   }
 }
 
-.navHeader {
+.navLabelSection {
   display: flex;
   align-items: center;
-  gap: $spacing-2;
-  padding: $spacing-4 $spacing-6;
-
-  @include mobile {
-    padding: $spacing-3 $spacing-4;
-  }
+  gap: 8px;
+  padding: 15px 20px; // Figma: padding
+  background-color: $gray-2; // Figma: #F9F9F9
+  flex-shrink: 0;
 }
 
 .navIcon {
@@ -39,25 +40,37 @@
 }
 
 .navLabel {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $gray-12;
-  letter-spacing: -0.72px;
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $color-darken; // Figma: black (for prev), gray-11 (for next disabled)
+  line-height: 30px;
+  letter-spacing: -0.8px;
   flex-shrink: 0;
-  margin-right: $spacing-4;
+}
+
+// 다음 글 비활성화 상태
+.navLabelDisabled {
+  color: $gray-11; // Figma: #636363
+}
+
+.navContent {
+  flex: 1;
+  padding: 10px;
+  min-width: 0;
 }
 
 .navLink {
-  font-size: $font-size-lg;
-  color: $gray-12;
-  letter-spacing: -0.72px;
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $color-darken; // Figma: black
+  line-height: 30px;
+  letter-spacing: -0.8px;
   background: none;
   border: none;
   cursor: pointer;
   text-align: left;
   transition: color 0.2s;
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -68,10 +81,11 @@
 }
 
 .navEmpty {
-  font-size: $font-size-lg;
-  color: $gray-9;
-  letter-spacing: -0.72px;
-  flex: 1;
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $gray-11; // Figma: #636363
+  line-height: 30px;
+  letter-spacing: -0.8px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
