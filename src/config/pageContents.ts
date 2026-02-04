@@ -1381,7 +1381,7 @@ const ansanContent: HospitalPageContent = {
         {
           icon: 'OperationTimeIcon',
           title: '운영시간',
-          rows: [{ label: '평일', value: '08:30 - 17:30' }]
+          rows: [{ label: '평일', value: '08:30 ~ 17:30' }]
         },
         {
           icon: 'OperationPhoneFaxIcon',
@@ -1389,11 +1389,13 @@ const ansanContent: HospitalPageContent = {
           rows: [
             { label: 'Tel', value: '031-412-5103' },
             { label: 'Fax', value: '031-412-4266' }
-          ]
+          ],
+          rowLayout: 'vertical'
         },
         {
           icon: 'EmergencyNightIcon',
           title: '응급 및 야간',
+          subtitle: '(응급 교수 직통 핫라인)',
           rows: [{ label: 'Tel', value: '010-4768-5119' }]
         }
       ]

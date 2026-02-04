@@ -10,7 +10,7 @@ export interface InfoNoteProps {
 export const InfoNote: React.FC<InfoNoteProps> = ({ message, className = '' }) => {
   return (
     <div className={`${styles.infoNote} ${className}`}>
-      <InfoIcon width={24} height={24} fill='var(--gray-11)' />
+      <InfoIcon width={20} height={20} fill='var(--gray-11)' />
       <span>{message}</span>
     </div>
   )

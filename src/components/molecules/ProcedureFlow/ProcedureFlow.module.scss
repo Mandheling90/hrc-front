@@ -4,7 +4,7 @@
 .flowRow {
   display: flex;
   align-items: stretch;
-  gap: $spacing-3;
+  gap: $spacing-2; // Figma: 8px gap between cards
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 
@@ -54,20 +54,23 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
+  gap: $spacing-4; // Figma: 16px gap
   position: relative;
-  min-height: 340px;
+  height: 340px; // Figma: fixed height 340px
   flex: 1 0 0;
   max-width: 100%;
   min-width: 0; // flex item이 overflow 방지
+  overflow: hidden; // Figma: overflow clip
 
   @include tablet {
+    height: auto;
     min-height: auto;
     min-width: auto;
     flex-shrink: 0;
   }
 
   @include mobile {
+    height: auto;
     min-height: auto;
     min-width: auto;
   }
@@ -75,12 +78,16 @@
 
 .flowChip {
   align-self: flex-start;
-  padding: 4px 20px;
+  padding: 5px 20px; // Figma: py-5px
   border-radius: 50px;
   background-color: $color-primary;
   color: $color-white;
-  font-size: $font-size-xl;
+  font-size: $font-size-2xl; // Figma: 24px
   font-weight: $font-weight-semibold;
+  line-height: $line-height-normal; // Figma: 1.5
+  letter-spacing: -0.96px; // Figma: -4%
+  text-align: center;
+  min-width: 181px; // Figma: ~181.2px
 }
 
 .flowStepNumber {

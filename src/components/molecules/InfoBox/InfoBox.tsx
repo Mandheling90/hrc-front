@@ -76,7 +76,11 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           {hasIcon && <div className={styles.guideIcon}>{icon}</div>}
           <div className={styles.guideContent}>
             {hasTitle && (
-              <h3 className={`${styles.guideTitle} ${textColor === 'black' ? styles.textBlack : ''}`}>{title}</h3>
+              <h3
+                className={`${styles.guideTitle} ${textAlign === 'center' ? styles.textCenter : ''} ${textColor === 'black' ? styles.textBlack : ''}`}
+              >
+                {title}
+              </h3>
             )}
             <div className={styles.guideList}>
               {messages.map((message, index) => {

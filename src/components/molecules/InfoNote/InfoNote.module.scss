@@ -2,17 +2,17 @@
 @import '@/styles/mixins.scss';
 
 .infoNote {
-  // margin-top: $spacing-4;
+  margin-top: $spacing-2; // Figma: 8px gap from cards
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: $spacing-2;
-  font-size: $font-size-lg; // 18px
-  line-height: 27px;
-  color: $gray-10;
+  font-size: $font-size-lg; // 18px - Figma
+  line-height: $line-height-normal;
+  letter-spacing: -0.72px; // Figma: -4%
+  color: $gray-11; // Figma: #636363
 
   svg {
     flex-shrink: 0;
-    margin-top: 2px; // (27px - 24px) / 2 ≈ 2px
   }
 
   span {

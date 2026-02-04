@@ -7,11 +7,19 @@
   gap: $spacing-6;
   margin-top: $spacing-4;
 
-  // 3개 카드일 때 태블릿에서 3열로 표시
+  // 3개 카드일 때 데스크탑에서 3열로 표시
   &.threeCards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $spacing-6; // Figma: 24px
+
     @include tablet {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: $spacing-4;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: $spacing-2;
     }
   }
 
@@ -23,38 +31,48 @@
 
   @include mobile {
     grid-template-columns: 1fr;
+    gap: $spacing-2; // Figma mobile: 8px
   }
 }
 
 .infoCard {
-  border: 1px solid $gray-4;
-  border-radius: 12px;
+  border: 1px solid $gray-9; // Figma: #8c8c8c
+  border-radius: 10px; // Figma: 10px
   padding: 30px 50px;
-  display: flex;
-  gap: 50px;
-  align-items: center;
   background-color: $color-white;
+
+  // Desktop: CSS Grid layout
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'icon title'
+    'icon rows';
+  gap: $spacing-4 50px; // row gap 16px, column gap 50px
+  align-items: center;
 
   // 데스크탑에서도 태블릿 스타일 적용 옵션
   .tabletStyle & {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 60px 1fr;
     padding: 24px 32px;
-    gap: $spacing-4;
+    gap: $spacing-4 $spacing-4;
   }
 
   @include tablet {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 60px 1fr;
     padding: 24px 32px;
-    gap: $spacing-4;
+    gap: $spacing-4 $spacing-4;
   }
 
   @include mobile {
-    flex-direction: column;
-    align-items: stretch;
-    padding: $spacing-4;
-    gap: $spacing-4;
+    // Mobile: icon and title in header row, rows below full width
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'icon title'
+      'rows rows';
+    padding: 20px; // Figma mobile: 20px
+    gap: $spacing-4 $spacing-4; // Figma mobile: 16px
   }
 }
 
@@ -76,10 +94,11 @@
 }
 
 .infoIconCircle {
+  grid-area: icon;
   width: 100px;
   height: 100px;
-  border-radius: 50%;
-  background-color: #fff0f2;
+  border-radius: 70px; // Figma: 70px
+  background-color: #fcebeb; // Figma: light pink
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,8 +121,9 @@
   }
 
   @include mobile {
-    width: 72px;
-    height: 72px;
+    width: 40px; // Figma mobile: 40px
+    height: 40px;
+    border-radius: 28px; // Figma mobile: 28px
   }
 
   svg {
@@ -116,8 +136,8 @@
     }
 
     @include mobile {
-      width: 48px;
-      height: 48px;
+      width: 24px; // Figma mobile: 24px
+      height: 24px;
     }
   }
 }
@@ -126,24 +146,33 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
+  gap: $spacing-4; // Figma: 16px
 
   @include tablet {
     width: 100%;
-    gap: $spacing-2;
+    gap: $spacing-3;
   }
 
   @include mobile {
     width: 100%;
+    gap: $spacing-4; // Figma mobile: 16px
   }
 }
 
+.infoTitleGroup {
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+  gap: 0; // Figma: title and subtitle have no gap
+}
+
 .infoTitle {
-  font-size: $font-size-lg;
+  font-size: $font-size-2xl; // Figma: 24px
   font-weight: $font-weight-semibold;
   color: $gray-12;
   margin: 0;
   line-height: $line-height-normal;
+  letter-spacing: -0.96px; // Figma: -4%
 
   // 데스크탑에서도 태블릿 스타일 적용 옵션
   .tabletStyle & {
@@ -151,15 +180,39 @@
   }
 
   @include tablet {
-    font-size: $font-size-base;
+    font-size: $font-size-xl; // 20px for tablet
+    letter-spacing: -0.8px;
+  }
+}
+
+.infoSubtitle {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal;
+  color: $gray-11; // Figma: #636363
+  margin: 0;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+
+  @include tablet {
+    font-size: $font-size-lg; // 18px for tablet
+    letter-spacing: -0.72px;
   }
 }
 
 .infoRowGroup {
+  grid-area: rows;
   display: flex;
   align-items: center;
-  gap: $spacing-3;
-  flex-wrap: wrap;
+  gap: $spacing-4; // Figma: 16px
+  flex-wrap: nowrap;
+  width: 100%;
+
+  // Vertical rows layout (stacked)
+  &.verticalRows {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0; // Figma: no gap between vertical rows
+  }
 
   // 데스크탑에서도 태블릿 스타일 적용 옵션
   .tabletStyle & {
@@ -186,9 +239,12 @@
 .infoRow {
   display: flex;
   align-items: center;
+  justify-content: space-between; // Figma: space-between
   gap: $spacing-2;
-  font-size: $font-size-base;
+  font-size: $font-size-xl; // Figma: 20px
+  letter-spacing: -0.8px; // Figma: -4%
   white-space: nowrap;
+  flex: 1;
 
   // 데스크탑에서도 태블릿 스타일 적용 옵션
   .tabletStyle & {
@@ -206,13 +262,18 @@
     justify-content: space-between;
     gap: $spacing-2;
     width: 100%;
-    font-size: $font-size-sm;
+    font-size: $font-size-lg; // 18px for tablet
+    letter-spacing: -0.72px;
   }
 
   @include mobile {
-    flex-direction: column;
-    gap: $spacing-1;
+    flex-direction: row; // Figma mobile: label and value on same line
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-2;
     width: 100%;
+    font-size: $font-size-xl; // Figma mobile: 20px
+    letter-spacing: -0.8px;
   }
 }
 
@@ -222,16 +283,15 @@
 }
 
 .infoValue {
-  color: #666666;
+  color: $gray-11; // Figma: #636363
   font-weight: $font-weight-normal;
 }
 
 .infoDivider {
-  color: $gray-9;
-  font-size: $font-size-base;
-  font-weight: $font-weight-normal;
+  width: 1px; // Figma: vertical line
+  height: 12px; // Figma: 12px height
+  background-color: $gray-9; // Figma: #8c8c8c
   flex-shrink: 0;
-  padding: 0 $spacing-1;
 
   // 데스크탑에서도 태블릿 스타일 적용 옵션 (구분자 숨김)
   .tabletStyle & {

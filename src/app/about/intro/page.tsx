@@ -20,8 +20,8 @@ export default function AboutIntroPage() {
   const { pageContent, hospitalId } = useHospital()
   const aboutIntro = pageContent.aboutIntro
 
-  // 안산병원일 때 태블릿 스타일 적용
-  const applyTabletStyle = hospitalId === 'ansan'
+  // 안산병원일 때 태블릿 스타일 적용 (3개 카드 레이아웃은 threeCards 클래스로 자동 처리)
+  const applyTabletStyle = false
 
   // 운영 안내 카드 데이터 변환
   const operationCards = useMemo(() => {
@@ -29,7 +29,9 @@ export default function AboutIntroPage() {
     return aboutIntro.operationInfo.cards.map(card => ({
       icon: getIcon(card.icon),
       title: card.title,
-      rows: card.rows
+      subtitle: card.subtitle,
+      rows: card.rows,
+      rowLayout: card.rowLayout
     }))
   }, [aboutIntro])
 
@@ -62,6 +64,7 @@ export default function AboutIntroPage() {
             messages={aboutIntro.introBox.messages}
             showBullets={false}
             contentAlign='center'
+            textAlign='center'
             className={styles.introBox}
           />
 

@@ -272,11 +272,15 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #000; // Figma 디자인에 맞게 black으로 수정
-  text-align: left; // Figma 디자인에 맞게 left로 수정
+  color: #8c0028; // Figma: primary/deep color
+  text-align: left;
   line-height: 150%; /* 36px */
   letter-spacing: -0.96px;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0; // Figma: gap 16px
+
+  &.textCenter {
+    text-align: center;
+  }
 
   // 테블릿 (769px ~ 1429px) - 제목 20px/30px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {

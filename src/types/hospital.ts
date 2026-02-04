@@ -230,10 +230,12 @@ export interface SignupAgreementInfo {
 export interface OperationInfoCardData {
   icon: string // 아이콘 컴포넌트 이름
   title: string // 카드 제목
+  subtitle?: string // 카드 부제목 (선택) - 예: "(응급 교수 직통 핫라인)"
   rows: {
     label: string // 라벨 (예: "평일", "Tel")
     value: string // 값 (예: "08:30 ~ 17:30", "02-920-5892")
   }[]
+  rowLayout?: 'horizontal' | 'vertical' // 행 레이아웃 (기본값: horizontal)
 }
 
 // 진료의뢰 절차 단계 정보

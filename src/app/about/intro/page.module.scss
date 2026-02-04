@@ -33,12 +33,12 @@
 
 // 상단 소개 박스
 .introBox {
-  margin-bottom: $spacing-16;
+  margin-bottom: 0; // Figma: contents gap handles spacing
 }
 
 // 섹션 공통
 .section {
-  margin-top: $spacing-16;
+  margin-top: $spacing-20; // Figma: 80px gap between sections
 }
 
 .sectionTitleRow {

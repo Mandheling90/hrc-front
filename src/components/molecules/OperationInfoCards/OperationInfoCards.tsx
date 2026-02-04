@@ -9,7 +9,9 @@ export interface InfoRow {
 export interface OperationInfoCard {
   icon: React.ReactNode
   title: string
+  subtitle?: string
   rows: InfoRow[]
+  rowLayout?: 'horizontal' | 'vertical'
 }
 
 export interface OperationInfoCardsProps {
@@ -33,22 +35,25 @@ export const OperationInfoCards: React.FC<OperationInfoCardsProps> = ({
     >
       {cards.map((card, index) => (
         <div key={index} className={styles.infoCard}>
-          <div className={styles.infoHeader}>
-            <div className={styles.infoIconCircle}>{card.icon}</div>
+          <div className={styles.infoIconCircle}>{card.icon}</div>
+          <div className={styles.infoTitleGroup}>
             <p className={styles.infoTitle}>{card.title}</p>
+            {card.subtitle && <p className={styles.infoSubtitle}>{card.subtitle}</p>}
           </div>
-          <div className={styles.infoContent}>
-            <div className={styles.infoRowGroup}>
-              {card.rows.map((row, rowIndex) => (
-                <React.Fragment key={rowIndex}>
-                  <div className={styles.infoRow}>
-                    <span className={styles.infoLabel}>{row.label}</span>
-                    <span className={styles.infoValue}>{row.value}</span>
-                  </div>
-                  {rowIndex < card.rows.length - 1 && <span className={styles.infoDivider}>|</span>}
-                </React.Fragment>
-              ))}
-            </div>
+          <div
+            className={`${styles.infoRowGroup} ${card.rowLayout === 'vertical' ? styles.verticalRows : ''}`}
+          >
+            {card.rows.map((row, rowIndex) => (
+              <React.Fragment key={rowIndex}>
+                <div className={styles.infoRow}>
+                  <span className={styles.infoLabel}>{row.label}</span>
+                  <span className={styles.infoValue}>{row.value}</span>
+                </div>
+                {card.rowLayout !== 'vertical' && rowIndex < card.rows.length - 1 && (
+                  <div className={styles.infoDivider} />
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       ))}
