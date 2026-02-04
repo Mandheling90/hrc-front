@@ -14,11 +14,25 @@
   @include page-title-large;
   text-align: center;
   margin-bottom: $spacing-20;
-  font-size: $font-size-4xl;
+  font-size: 48px; // Figma 데스크톱 기준 48px
   font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
+  line-height: 72px; // Figma 기준 72px
   letter-spacing: -1.92px;
   color: $gray-12;
+
+  // 태블릿 (769px ~ 1429px) - Figma 기준 36px
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 36px;
+    line-height: 54px;
+    letter-spacing: -1.44px;
+  }
+
+  @include mobile {
+    font-size: 36px; // Figma 모바일 기준 36px
+    line-height: 54px;
+    letter-spacing: -1.44px;
+    margin-bottom: $spacing-8; // 32px - 모바일에서 간격 조정
+  }
 }
 
 .filterSection {
@@ -84,9 +98,10 @@
     min-width: 0;
   }
 
-  @include tablet {
-    flex: 1;
-    min-width: 0;
+  // 태블릿 (769px ~ 1429px) - Figma 기준 고정 너비
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    flex: none;
+    width: auto;
   }
 
   @include mobile {
@@ -105,7 +120,8 @@
     min-width: 0;
   }
 
-  @include tablet {
+  // 태블릿 (769px ~ 1429px) - Figma 기준 flex: 1
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     flex: 1;
     min-width: 0;
   }
@@ -126,9 +142,11 @@
     min-width: 0;
   }
 
-  @include tablet {
-    flex: 1;
-    min-width: 0;
+  // 태블릿 (769px ~ 1429px) - Figma 기준 156px
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 156px;
+    flex: none;
+    min-width: 156px;
   }
 
   @include mobile {
@@ -149,10 +167,11 @@
     flex: none;
   }
 
-  @include tablet {
+  // 태블릿 (769px ~ 1429px) - Figma 기준 flex: 1
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     flex: 1;
     min-width: 0;
-    width: 100%;
+    width: auto;
   }
 
   @include mobile {
@@ -177,6 +196,17 @@
 
     &::placeholder {
       color: $gray-9;
+    }
+
+    // 태블릿 (769px ~ 1429px) - Figma 기준 18px/27px
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      font-size: $font-size-lg; // 18px
+      line-height: 27px;
+
+      &::placeholder {
+        font-size: $font-size-lg; // 18px
+        line-height: 27px;
+      }
     }
   }
 
@@ -226,6 +256,7 @@
 .mapAndListContainer {
   display: flex;
   gap: $spacing-6;
+  align-self: stretch; // 전체 너비 유지
 
   @include tablet {
     flex-direction: column;
@@ -235,14 +266,20 @@
 .clinicListWrapper {
   display: flex;
   flex-direction: column;
-  width: 570px;
+  width: 600px; // Figma 기준 600px
   flex-shrink: 0;
 
   @include desktop {
-    width: 570px;
+    width: 600px; // Figma 기준 600px
   }
 
-  @include tablet {
+  // 태블릿 (769px ~ 1429px) - Figma 기준 전체 너비
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 100%;
+    flex-shrink: 1;
+  }
+
+  @include mobile {
     width: 100%;
   }
 }
@@ -250,17 +287,9 @@
 .contentSection {
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  align-items: flex-end; // Figma 기준 - InfoNote 오른쪽 정렬
+  gap: $spacing-4; // 16px
   margin-bottom: $spacing-10;
-}
-
-.mapAndListContainer {
-  display: flex;
-  gap: $spacing-6;
-
-  @include tablet {
-    flex-direction: column;
-  }
 }
 
 .mapContainer {
@@ -302,7 +331,7 @@
   }
 
   @include mobile {
-    min-height: 400px;
+    min-height: 160px; // Figma 모바일 기준
   }
 }
 
@@ -320,7 +349,8 @@
   }
 
   @include mobile {
-    display: none;
+    display: block; // Figma 모바일에서도 표시
+    max-width: 320px;
   }
 }
 

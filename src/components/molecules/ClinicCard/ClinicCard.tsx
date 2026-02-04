@@ -40,36 +40,36 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
   return (
     <div className={`${styles.card} ${highlighted ? styles.highlighted : ''} ${className}`}>
       <div className={styles.header}>
-        <div className={styles.headerTop}>
-          <span className={`${styles.badge} ${highlighted ? styles.badgeHighlighted : styles.badgeNormal}`}>
-            {type === 'hospital' ? '병원' : '의원'}
-          </span>
-          <div className={styles.buttonGroup}>
-            <button
-              type='button'
-              className={`${styles.iconButton} ${highlighted ? styles.iconButtonHighlighted : styles.iconButtonNormal}`}
-              onClick={onMapClick}
-              aria-label='지도 보기'
-            >
-              <MapIcon width={24} height={24} fill={highlighted ? '#fff' : '#9f1836'} className={styles.mapIcon} />
-            </button>
-            <button
-              type='button'
-              className={`${styles.iconButton} ${highlighted ? styles.iconButtonHomeHighlighted : styles.iconButtonHomeNormal}`}
-              onClick={onHomeClick}
-              aria-label='홈페이지 보기'
-            >
-              <HomeIcon width={24} height={24} fill={highlighted ? '#9f1836' : '#fff'} className={styles.homeIcon} />
-            </button>
-          </div>
-        </div>
+        <span className={`${styles.badge} ${highlighted ? styles.badgeHighlighted : styles.badgeNormal}`}>
+          {type === 'hospital' ? '병원' : '의원'}
+        </span>
         <h3 className={styles.name}>{name}</h3>
+        <div className={styles.buttonGroup}>
+          <button
+            type='button'
+            className={`${styles.iconButton} ${highlighted ? styles.iconButtonHighlighted : styles.iconButtonNormal}`}
+            onClick={onMapClick}
+            aria-label='지도 보기'
+          >
+            <MapIcon width={24} height={24} fill={highlighted ? '#fff' : '#9f1836'} className={styles.mapIcon} />
+          </button>
+          <button
+            type='button'
+            className={`${styles.iconButton} ${highlighted ? styles.iconButtonHomeHighlighted : styles.iconButtonHomeNormal}`}
+            onClick={onHomeClick}
+            aria-label='홈페이지 보기'
+          >
+            <HomeIcon width={24} height={24} fill={highlighted ? '#9f1836' : '#fff'} className={styles.homeIcon} />
+          </button>
+        </div>
       </div>
 
       <div className={styles.content}>
-        <div className={styles.infoRow}>
-          <span className={styles.label}>주소</span>
-          <span className={styles.separator}>|</span>
+        <div className={styles.addressRow}>
+          <div className={styles.addressLabelGroup}>
+            <span className={styles.label}>주소</span>
+            <span className={styles.separator}>|</span>
+          </div>
           <span className={`${styles.value} ${styles.addressValue}`}>{address}</span>
         </div>
         <div className={styles.infoGroup}>
@@ -81,7 +81,7 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
           <div className={styles.infoRow}>
             <span className={styles.label}>팩스번호</span>
             <span className={styles.separator}>|</span>
-            <span className={`${styles.value} ${styles.phoneValue}`}>{fax}</span>
+            <span className={`${styles.value} ${styles.faxValue}`}>{fax}</span>
           </div>
         </div>
       </div>
