@@ -12,30 +12,29 @@
 
   svg {
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 2px; // (27px - 24px) / 2 ≈ 2px
   }
 
   span {
-    display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 4px;
+    display: inline;
   }
 
   // 테블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: $font-size-base; // 16px
     line-height: 24px;
+
+    svg {
+      margin-top: 0; // 24px icon = 24px line-height
+    }
   }
 
   @include mobile {
     font-size: $font-size-base;
     line-height: 24px;
-    align-items: flex-start;
 
-    span {
-      flex-wrap: wrap;
-      align-items: flex-start;
+    svg {
+      margin-top: 0; // 24px icon = 24px line-height
     }
   }
 }

@@ -19,17 +19,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $spacing-10;
   padding-bottom: $spacing-10;
 }
 
 // 협력의원 신청 안내 섹션
 .guideSection {
   width: 100%;
-  max-width: 650px;
+  max-width: 630px; // Figma 기준 630px
   display: flex;
   flex-direction: column;
   gap: $spacing-6;
+  margin-bottom: $spacing-10; // 40px - InfoBox와 actionButtons 사이 간격
 }
 
 .sectionTitle {
@@ -42,18 +42,16 @@
   gap: 8px;
   justify-content: flex-end;
   width: 100%;
-  max-width: 650px;
-  margin-bottom: $spacing-4;
+  max-width: 630px; // Figma 기준 630px
+  margin-bottom: $spacing-4; // 16px - actionButtons와 폼 사이 간격
 
   // actionButtons 내부의 button만 스타일 적용 (formActions와 분리)
   > button {
-    width: 175px;
-    height: 37px;
-    padding: 5px 10px;
+    padding: 5px 10px; // Figma 기준
     font-size: $font-size-lg; // 18px
     font-weight: $font-weight-normal; // 400
-    letter-spacing: -0.72px;
-    line-height: 1.5;
+    letter-spacing: -0.72px; // -4%
+    line-height: 1.5; // 27px
     border-radius: 150px; // pill 형태
     display: flex;
     align-items: center;
@@ -69,12 +67,13 @@
 // 폼 액션 버튼
 .formActions {
   display: flex;
-  gap: $spacing-6;
+  gap: $spacing-6; // 24px
   justify-content: center;
   width: 100%;
-  max-width: 650px;
+  max-width: 630px; // Figma 기준 630px
   align-items: center;
   height: 66px;
+  margin-top: $spacing-20; // 80px - 폼과 버튼 사이 간격 (Figma 기준)
 
   // formActions 내부의 button만 스타일 적용 (actionButtons와 분리)
   > button {
@@ -95,12 +94,12 @@
 // 반응형
 @include tablet {
   .content {
-    gap: $spacing-8;
     padding-bottom: $spacing-8;
   }
 
   .guideSection {
     max-width: 100%;
+    margin-bottom: $spacing-8; // 32px
   }
 
   .actionButtons {
@@ -114,12 +113,19 @@
 
 @include mobile {
   .pageTitle {
-    font-size: $font-size-3xl;
+    font-size: $font-size-4xl; // 36px - Figma 모바일 기준
+    line-height: 54px;
     margin-bottom: $spacing-8;
   }
 
+  .guideSection {
+    gap: $spacing-6; // 24px 유지
+    margin-bottom: $spacing-10; // 40px
+  }
+
   .sectionTitle {
-    font-size: $font-size-xl;
+    font-size: $font-size-2xl; // 24px - Figma 모바일 기준
+    line-height: 36px;
   }
 
   .formActions {
@@ -130,6 +136,9 @@
     > button {
       width: 100%;
       height: 50px;
+      font-size: $font-size-2xl; // 24px - Figma 모바일 기준
+      line-height: 36px;
+      padding: 10px 20px;
     }
   }
 }

@@ -6,6 +6,7 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Button } from '@/components/atoms/Button/Button'
+import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import { SaveIcon } from '@/components/icons/SaveIcon'
 import { LoadIcon } from '@/components/icons/LoadIcon'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
@@ -81,7 +82,13 @@ export default function HospitalApplicationPage() {
                 {/* 협력병원 신청 안내 */}
                 <div className={styles.guideSection}>
                   <SectionTitle title='협력병원 신청 안내' className={styles.sectionTitle} />
-                  <InfoBox variant='guide' messages={guideMessages} showBullets={true} highlightLast={true} />
+                  <InfoBox
+                    variant='guide'
+                    messages={guideMessages}
+                    showBullets={true}
+                    highlightLast={true}
+                    contentAlign='center'
+                  />
                 </div>
 
                 {/* 저장/불러오기 버튼 */}
@@ -121,14 +128,19 @@ export default function HospitalApplicationPage() {
                 {currentStep === 8 && <HospitalCharacteristicsStep currentStep={8} totalSteps={8} />}
 
                 {/* 하단 버튼 */}
-                <div className={styles.formActions}>
-                  <Button variant='outline' size='large' onClick={handlePrevious} disabled={currentStep === 1}>
-                    이전 단계
-                  </Button>
-                  <Button variant='primary' size='large' onClick={handleNext}>
-                    {currentStep === totalSteps ? '협력병원 신청' : '다음 단계'}
-                  </Button>
-                </div>
+                <ConfirmButtons
+                  secondaryButton={{
+                    label: '이전 단계',
+                    onClick: handlePrevious,
+                    disabled: currentStep === 1
+                  }}
+                  primaryButton={{
+                    label: currentStep === totalSteps ? '협력병원 신청' : '다음 단계',
+                    onClick: handleNext
+                  }}
+                  className={styles.formActions}
+                  noMargin
+                />
               </>
             )}
           </div>

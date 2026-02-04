@@ -10,11 +10,11 @@
   letter-spacing: -0.6px;
   line-height: 1.5;
 
-  // 테블릿 (769px ~ 1429px)
+  // 테블릿 (769px ~ 1429px) - Figma 기준 20px/30px 유지
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: -0.72px;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.8px;
   }
 
   @media (max-width: $breakpoint-md) {

@@ -13,11 +13,11 @@
 // 공통 폼 섹션 스타일
 .formSection {
   width: 100%;
-  max-width: 650px;
+  max-width: 630px; // Figma 기준 630px
   background-color: $color-white;
-  border: 1px solid $gray-8;
-  border-radius: $radius-xl;
-  padding: $spacing-10;
+  border: 1px solid $gray-9; // Figma 기준 #8C8C8C
+  border-radius: 20px; // Figma 기준 20px
+  padding: $spacing-10; // 40px
 }
 
 .formHeader {
@@ -34,30 +34,30 @@
 }
 
 .formTitle {
-  font-size: $font-size-2xl;
-  font-weight: $font-weight-semibold;
-  color: $color-primary;
-  line-height: $line-height-normal;
-  letter-spacing: -0.02em;
+  font-size: 32px; // Figma 기준 32px
+  font-weight: $font-weight-semibold; // 600
+  color: $color-primary; // #9F1836
+  line-height: 48px; // Figma 기준 48px
+  letter-spacing: -1.28px; // -4%
 }
 
 .formSubtitle {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-normal;
-  color: $gray-10;
-  line-height: $line-height-normal;
-  letter-spacing: -0.01em;
+  font-size: $font-size-lg; // 18px
+  font-weight: $font-weight-normal; // 400
+  color: $gray-11; // Figma 기준 #636363
+  line-height: 27px; // Figma 기준 27px
+  letter-spacing: -0.72px; // -4%
 }
 
 .stepIndicator {
   display: flex;
   align-items: baseline;
   gap: 2px;
-  font-size: $font-size-2xl;
-  font-weight: $font-weight-semibold;
+  font-size: 32px; // Figma 기준 32px
+  font-weight: $font-weight-semibold; // 600
   color: $gray-12;
-  line-height: 0;
-  letter-spacing: -0.02em;
+  line-height: 48px; // Figma 기준 48px
+  letter-spacing: -1.28px; // -4%
 }
 
 .stepNumber {
@@ -71,8 +71,8 @@
 
 .formDivider {
   height: 2px;
-  background-color: $gray-7;
-  margin-bottom: $spacing-8;
+  background-color: $gray-8; // Figma 기준 #BBBBBB
+  margin-bottom: $spacing-8; // 32px
 }
 
 .formContent {
@@ -85,7 +85,7 @@
 .formField {
   display: flex;
   flex-direction: column;
-  gap: $spacing-4;
+  gap: $spacing-2; // Figma 기준 8px (label ↔ input)
 }
 
 // 체크박스 그룹 (공통)
@@ -183,11 +183,33 @@
   }
 
   .formSection {
-    padding: $spacing-4;
+    padding: $spacing-5; // 20px - Figma 모바일 기준
+  }
+
+  .formTitle {
+    font-size: $font-size-2xl; // 24px - Figma 모바일 기준
+    line-height: 36px;
+    letter-spacing: -0.96px;
+  }
+
+  .formSubtitle {
+    font-size: $font-size-base; // 16px - Figma 모바일 기준
+    line-height: 24px;
+    letter-spacing: -0.64px;
+  }
+
+  .stepIndicator {
+    font-size: $font-size-2xl; // 24px - Figma 모바일 기준
+    line-height: 36px;
+    letter-spacing: -0.96px;
+  }
+
+  .formDivider {
+    margin-bottom: $spacing-8; // 32px 유지
   }
 
   .formContent {
-    gap: $spacing-4;
+    gap: $spacing-6; // 24px - Figma 모바일 기준
   }
 
   .checkboxGroup {

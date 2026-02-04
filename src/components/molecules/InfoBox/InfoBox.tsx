@@ -69,7 +69,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
     return (
       <div
         className={`${styles.guide} ${contentAlign === 'center' ? styles.contentCenter : ''} ${
-          contentAlign === 'center' ? styles.centerText : ''
+          textAlign === 'center' ? styles.centerText : ''
         } ${className}`}
       >
         <div className={styles.guideInner}>

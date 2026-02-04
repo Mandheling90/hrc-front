@@ -60,10 +60,10 @@
     }
   }
 
-  // 태블릿 (769px ~ 1429px)
+  // 태블릿 (769px ~ 1429px) - Figma 기준 18px/27px 유지
   @media (min-width: 769px) and (max-width: 1429px) {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 27px;
   }
 
   // 모바일 (~768px)

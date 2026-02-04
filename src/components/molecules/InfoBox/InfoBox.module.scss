@@ -296,11 +296,7 @@
 .guideList {
   display: flex;
   flex-direction: column;
-  gap: 0; // Figma 디자인에 맞게 gap 제거
-
-  // @media (max-width: $breakpoint-md) {
-  //   align-items: center;
-  // }
+  gap: 8px; // Figma 기준 8px
 }
 
 .guideItem {
