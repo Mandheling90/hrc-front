@@ -5,8 +5,10 @@
   margin-top: -100px;
   min-height: 100vh;
 
-  @media (max-width: $breakpoint-md) {
-    margin-top: -90px;
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    margin-top: -100px;
+    min-height: 745px;
   }
 
   @media (max-width: $breakpoint-md) {
@@ -22,6 +24,17 @@
     padding: 0 20px;
     margin: 0 auto;
     z-index: 1;
+
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      height: 745px;
+      padding: 0 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 30px;
+      padding-bottom: 20px;
+    }
 
     @media (max-width: $breakpoint-md) {
       display: flex;
@@ -41,6 +54,11 @@
   z-index: 0;
   height: 100vh;
   overflow: hidden;
+
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    height: 745px;
+  }
 
   video {
     width: 100%;
@@ -144,6 +162,32 @@
     }
   }
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0;
+
+    span {
+      display: block;
+    }
+
+    strong {
+      font-size: 36px;
+      line-height: 54px;
+      letter-spacing: 1.08px;
+
+      br {
+        display: block;
+      }
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     position: relative;
     top: auto;
@@ -182,6 +226,19 @@
     bottom: 20px;
   }
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    bottom: 20px;
+    position: relative;
+    transform: none;
+    left: 0;
+    padding: 0;
+    margin-top: auto;
+  }
+
   @media (max-width: $breakpoint-md) {
     display: flex;
     flex-direction: column;
@@ -203,6 +260,11 @@
   transform: rotate(90deg);
   display: none;
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    display: block;
+  }
+
   @media (max-width: $breakpoint-md) {
     display: block;
   }
@@ -221,6 +283,17 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+    padding: 0;
+    overflow: visible;
+
+    &::after {
+      display: none;
+    }
+  }
 
   @media (max-width: $breakpoint-md) {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
@@ -254,6 +327,19 @@
       line-height: 36px;
     }
 
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: 0;
+      margin-bottom: 0;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
     @media (max-width: $breakpoint-md) {
       font-size: 18px;
       line-height: 27px;
@@ -273,6 +359,13 @@
     gap: 8px;
     flex: 1;
 
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      display: none;
+      padding: 10px;
+      gap: 8px;
+    }
+
     @media (max-width: $breakpoint-md) {
       display: none;
       padding: 10px;
@@ -282,6 +375,13 @@
 
   // 아코디언 열림 상태
   &.accordionOpen {
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      .linkList {
+        display: flex;
+      }
+    }
+
     @media (max-width: $breakpoint-md) {
       .linkList {
         display: flex;
@@ -316,6 +416,16 @@
     @media (max-width: $breakpoint-lg) {
       font-size: 16px;
       padding: 8px 14px;
+    }
+
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      flex: none;
+      min-height: auto;
+      font-size: 18px;
+      line-height: 27px;
+      padding: 10px 20px;
+      border-radius: 5px;
     }
 
     @media (max-width: $breakpoint-md) {
@@ -362,6 +472,27 @@
     min-height: 280px;
   }
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    flex: none;
+    height: auto;
+    min-height: auto;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+    border: 1px solid #fff;
+    border-radius: 10px;
+
+    // 아코디언 열림 상태 - 빨간 그라데이션
+    &.accordionOpen {
+      background: linear-gradient(180deg, rgba(159, 24, 54, 0.5) 4%, rgba(159, 24, 54, 0.85) 76%);
+
+      .boxTitle {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+        border: 1px solid #fff;
+        border-radius: 10px;
+      }
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     flex: none;
     height: auto;
@@ -402,6 +533,27 @@
   @media (max-width: $breakpoint-lg) {
     height: auto;
     min-height: 280px;
+  }
+
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    flex: none;
+    height: auto;
+    min-height: auto;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+    border: 1px solid #fff;
+    border-radius: 10px;
+
+    // 아코디언 열림 상태 - 빨간 그라데이션
+    &.accordionOpen {
+      background: linear-gradient(180deg, rgba(159, 24, 54, 0.5) 4%, rgba(159, 24, 54, 0.85) 76%);
+
+      .boxTitle {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+        border: 1px solid #fff;
+        border-radius: 10px;
+      }
+    }
   }
 
   @media (max-width: $breakpoint-md) {
@@ -461,6 +613,24 @@
     min-height: 280px;
   }
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    background: none;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+
+    // Hide dividers on tablet
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     flex: none;
     width: 100%;
@@ -511,6 +681,12 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
 
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      gap: 8px;
+      height: auto;
+    }
+
     @media (max-width: $breakpoint-md) {
       gap: 8px;
       height: auto;
@@ -520,6 +696,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
+      // 태블릿 (769px ~ 1429px)
+      @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
+        border-radius: 10px;
+        border: 1px solid #fff;
+        overflow: hidden;
+      }
 
       @media (max-width: $breakpoint-md) {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.25) 100%);
@@ -538,6 +722,16 @@
         padding: 20px;
         transition: all 0.3s;
         border-radius: 0;
+
+        // 태블릿 (769px ~ 1429px)
+        @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+          flex-direction: row;
+          gap: 0;
+          padding: 10px;
+          width: 100%;
+          justify-content: center;
+          border-radius: 10px;
+        }
 
         @media (max-width: $breakpoint-md) {
           flex-direction: row;
@@ -599,6 +793,16 @@
       line-height: 27px;
     }
 
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      width: 88px;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 27px;
+      letter-spacing: 0;
+      text-align: center;
+    }
+
     @media (max-width: $breakpoint-md) {
       width: 88px;
       font-size: 18px;
@@ -610,6 +814,13 @@
   }
 
   svg {
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
     @media (max-width: $breakpoint-md) {
       width: 24px;
       height: 24px;
@@ -641,6 +852,26 @@
     min-height: 280px;
   }
 
+  // 태블릿 (769px ~ 1429px)
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 10px 20px;
+    gap: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--color-primary, #9f1836);
+
+    &::after {
+      display: none;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     flex: none;
     width: 100%;
@@ -665,6 +896,13 @@
     flex-direction: column;
     align-items: center;
 
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
     @media (max-width: $breakpoint-md) {
       flex-direction: row;
       align-items: center;
@@ -673,6 +911,11 @@
 
     .phoneIconDesktop {
       display: block;
+
+      // 태블릿 (769px ~ 1429px)
+      @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+        display: none;
+      }
 
       @media (max-width: $breakpoint-md) {
         display: none;
@@ -692,6 +935,16 @@
     .phoneIconMobile {
       display: none;
 
+      // 태블릿 (769px ~ 1429px)
+      @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+        display: block;
+
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
       @media (max-width: $breakpoint-md) {
         display: block;
 
@@ -704,6 +957,16 @@
 
     .phoneLabel {
       display: none;
+
+      // 태블릿 (769px ~ 1429px)
+      @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+        display: block;
+        font-size: 20px;
+        font-weight: 600;
+        color: #fff;
+        line-height: 30px;
+        letter-spacing: 0;
+      }
 
       @media (max-width: $breakpoint-md) {
         display: block;
@@ -734,6 +997,15 @@
       line-height: 36px;
     }
 
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 36px;
+      letter-spacing: 0;
+      margin-top: 0;
+    }
+
     @media (max-width: $breakpoint-md) {
       font-size: 24px;
       font-weight: 600;
@@ -748,6 +1020,11 @@
     padding: 0;
     margin: 0;
     margin-top: 16px;
+
+    // 태블릿 (769px ~ 1429px)
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      display: none;
+    }
 
     @media (max-width: $breakpoint-md) {
       display: none;
