@@ -304,10 +304,10 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           </div>
         </div>
 
-        {/* 확인 버튼 */}
+        {/* 신청하기 버튼 */}
         <div className={styles.buttonSection}>
           <Button type='button' variant='primary' onClick={handleConfirm} className={styles.confirmButton}>
-            확인
+            신청하기
           </Button>
         </div>
       </div>

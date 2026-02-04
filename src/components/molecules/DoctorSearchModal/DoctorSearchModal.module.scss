@@ -58,8 +58,10 @@
     padding-bottom: 16px;
   }
 
+  // 모바일: 닫기 버튼 상단 정렬 - Figma 기준
   @include mobile {
-    padding-bottom: 12px;
+    padding-bottom: 20px;
+    align-items: flex-start;
   }
 }
 
@@ -69,8 +71,11 @@
   gap: 16px;
   flex-wrap: wrap;
 
+  // 모바일: 세로 배열 (뱃지 위, 타이틀 아래) - Figma 기준
   @include mobile {
-    gap: 12px;
+    flex-direction: column-reverse; // 뱃지가 위로, 타이틀이 아래로
+    align-items: flex-start;
+    gap: 8px;
   }
 }
 
@@ -83,12 +88,14 @@
   margin: 0;
 
   @include tablet {
-    font-size: 28px;
-    letter-spacing: -1.12px;
+    font-size: 24px; // Figma 태블릿 기준
+    line-height: 36px;
+    letter-spacing: -0.96px;
   }
 
   @include mobile {
     font-size: 24px;
+    line-height: 36px;
     letter-spacing: -0.96px;
   }
 }
@@ -196,16 +203,21 @@
 
   @include tablet {
     font-size: 18px;
+    line-height: 27px; // Figma 태블릿 기준
     letter-spacing: -0.72px;
+    width: 140px; // Figma 태블릿 기준 - 고정 너비
     min-width: 140px;
-    padding: 8px 16px;
+    padding: 10px;
   }
 
   @include mobile {
     font-size: 16px;
+    line-height: 24px;
     letter-spacing: -0.64px;
-    min-width: auto;
-    padding: 8px 16px;
+    // 2열 배치를 위한 고정 너비 (Figma 모바일 기준)
+    width: calc(50% - 4px); // gap 8px의 절반을 빼서 2열 배치
+    min-width: calc(50% - 4px);
+    padding: 10px;
   }
 
   &.active {
@@ -228,11 +240,14 @@
   box-sizing: border-box;
   flex-shrink: 0;
 
+  // 태블릿에서도 나란히 배치 (Figma 기준)
   @include tablet {
-    width: 100%;
+    width: auto;
+    flex-direction: row;
   }
 
   @include mobile {
+    width: 100%;
     flex-direction: column;
     align-items: stretch;
   }
@@ -250,13 +265,20 @@
     line-height: 27px;
   }
 
+  // 태블릿에서도 고정 너비 (Figma 기준)
   @include tablet {
-    width: 100%;
-    flex: 1;
+    width: 287px;
+    flex: none;
+
+    input {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
   @include mobile {
     width: 100%;
+    flex: 1;
   }
 }
 
@@ -644,11 +666,12 @@
   line-height: 36px; // Figma 기준
   letter-spacing: -0.96px;
 
+  // 태블릿에서도 동일한 스타일 유지 (Figma 태블릿 기준)
   @include tablet {
-    height: 56px;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: -0.8px;
+    height: 66px;
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: -0.96px;
   }
 
   @include mobile {
