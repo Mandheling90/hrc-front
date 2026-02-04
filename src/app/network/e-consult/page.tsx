@@ -14,6 +14,7 @@ import { DoctorSearchModal } from '@/components/molecules/DoctorSearchModal/Doct
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './page.module.scss'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import type { Doctor } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 
 export default function EConsultPage() {
@@ -239,7 +240,7 @@ export default function EConsultPage() {
                     maxLength={1500}
                   />
                   <div className={styles.byteCounter}>
-                    <span className={styles.required}>*</span>
+                    <span className={styles.required}></span>
                     <span>{contentByteCount} / 1500 bytes</span>
                   </div>
                 </div>
@@ -247,14 +248,17 @@ export default function EConsultPage() {
             </div>
 
             {/* 버튼 */}
-            <div className={styles.buttonGroup}>
-              <button type='button' onClick={handleCancel} className={styles.cancelButton}>
-                취소
-              </button>
-              <button type='submit' onClick={handleSubmit} className={styles.submitButton}>
-                등록
-              </button>
-            </div>
+            <ConfirmButtons
+              primaryButton={{
+                label: '컨설팅 등록',
+                onClick: () => {}
+              }}
+              secondaryButton={{
+                label: '취소',
+                onClick: handleCancel
+              }}
+              noMargin
+            />
           </div>
         </div>
       </main>
