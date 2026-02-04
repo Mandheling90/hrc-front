@@ -18,15 +18,15 @@
   overflow-x: hidden;
   flex: 1;
   min-height: 0;
-  // 스크롤바가 나타날 때를 대비해 공간 확보 (스크롤이 필요할 때만)
-  scrollbar-gutter: auto;
+  width: 100%;
+  padding-right: 8px; // Figma: 리스트와 스크롤바 사이 간격
 
   // 가로 스크롤 모드
   &.horizontalScroll {
     overflow-x: auto;
   }
 
-  // 스크롤바 스타일
+  // 스크롤바 스타일 - CardList와 동일
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -44,11 +44,12 @@
 
 .tableHeader {
   display: flex;
-  align-items: stretch;
+  align-items: center; // Figma 기준
   background-color: $gray-2;
   border: 1px solid $gray-9;
   border-radius: 10px;
   padding: 15px 20px;
+  gap: 8px; // Figma 기준
   flex-shrink: 0;
 
   @include mobile {
@@ -71,11 +72,11 @@
 
 .headerCell {
   flex: 1;
-  font-size: $font-size-xl;
+  font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
-  letter-spacing: -0.96px;
-  color: $gray-12;
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.8px; // Figma: -4%
+  color: $color-darken; // Figma: #000000
   text-align: center;
   display: flex;
   align-items: center;
@@ -121,9 +122,10 @@
 
 .separator {
   width: 0;
+  height: 18px; // Figma 기준
   flex-shrink: 0;
   position: relative;
-  align-self: stretch;
+  align-self: center;
 
   &::after {
     content: '';
@@ -133,7 +135,7 @@
     bottom: 0;
     transform: translateX(-50%);
     width: 1px;
-    background-color: $gray-9;
+    background-color: $gray-11; // Figma: #636363
   }
 }
 
@@ -148,26 +150,16 @@
   // 스크롤바가 나타날 때를 대비해 공간 확보 (스크롤이 필요할 때만)
   scrollbar-gutter: auto;
 
-  @include mobile {
-    display: none; // 모바일에서 숨김
-  }
-}
-
-// 태블릿 카드 리스트가 있을 때 본문 숨김
-.tableWrapper:has(.tabletCardList) .tableBody {
-  @include tablet {
-    display: none;
-  }
-
   // 가로 스크롤 모드
   &.horizontalScroll {
     overflow-x: auto;
   }
 
-  // scrollWithHeader일 때 스크롤 제거
+  // scrollWithHeader일 때 스크롤 제거 (헤더 포함 전체 스크롤)
   &.noScroll {
     overflow-y: visible;
     overflow-x: visible;
+    flex: none; // flex: 1 제거하여 콘텐츠 크기에 맞춤
     scrollbar-gutter: auto;
   }
 
@@ -184,16 +176,39 @@
   &::-webkit-scrollbar-thumb {
     background: $color-primary;
     border-radius: 60px;
+
+    &:hover {
+      background: darken($color-primary, 10%);
+    }
+  }
+
+  // 스크롤바 화살표 버튼 숨김
+  &::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  @include mobile {
+    display: none; // 모바일에서 숨김
+  }
+}
+
+// 태블릿 카드 리스트가 있을 때 본문 숨김
+.tableWrapper:has(.tabletCardList) .tableBody {
+  @include tablet {
+    display: none;
   }
 }
 
 .tableRow {
   display: flex;
-  align-items: stretch;
+  align-items: center; // Figma 기준
   background-color: $color-white;
   border: 1px solid $gray-9;
   border-radius: 10px;
   padding: 15px 20px;
+  gap: 8px; // Figma 기준
   transition: background-color 0.2s;
 
   &.clickable {
@@ -233,11 +248,11 @@
 
 .dataCell {
   flex: 1;
-  font-size: $font-size-xl;
+  font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
-  letter-spacing: -0.96px;
-  color: $gray-11;
+  line-height: $line-height-normal; // 1.5
+  letter-spacing: -0.8px; // Figma: -4%
+  color: $gray-11; // Figma: #636363
   text-align: center;
   display: flex;
   align-items: center;

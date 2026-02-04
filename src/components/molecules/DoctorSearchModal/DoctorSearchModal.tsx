@@ -3,10 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
+import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import styles from './DoctorSearchModal.module.scss'
-import { FormField } from '../FormField/FormField'
-import { SearchIcon } from '@/components/icons/SearchIcon'
 import { Table, TableColumn } from '../Table/Table'
 import { CardList, CardRow } from '../CardList/CardList'
 
@@ -232,22 +231,20 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           <div className={styles.searchContainer}>
             {/* 검색 영역 */}
             <div className={styles.searchWrapper}>
-              <FormField
+              <Input
                 id='doctor-search'
-                name='doctor-search'
                 type='text'
-                placeholder='의료진명을 입력해주세요'
+                placeholder='의료진명을 입력해주세요.'
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 onKeyDown={e => {
                   if (e.key === 'Enter') handleSearch()
                 }}
-                buttonText='의료진 검색'
-                onButtonClick={handleSearch}
-                buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
-                error=''
-                mobileStack
+                className={styles.searchInput}
               />
+              <button type='button' onClick={handleSearch} className={styles.searchButton}>
+                <span>의료진 검색</span>
+              </button>
             </div>
 
             {/* 리스트 영역 */}
@@ -310,7 +307,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
         {/* 확인 버튼 */}
         <div className={styles.buttonSection}>
           <Button type='button' variant='primary' onClick={handleConfirm} className={styles.confirmButton}>
-            신청하기
+            확인
           </Button>
         </div>
       </div>
