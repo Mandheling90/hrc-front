@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   gap: 5rem;
-  padding: 0 $spacing-8;
+  padding: 20px 40px;
   background-color: $color-primary;
   flex: 1;
 
@@ -63,7 +63,7 @@
 .addressTabGroup {
   display: flex;
   align-items: center;
-  gap: $spacing-8;
+  gap: $spacing-10; // 40px
   flex: 1;
 
   @include tablet {
@@ -131,7 +131,7 @@
 
 .addressTabText {
   font-size: $font-size-lg; // 18px
-  font-weight: $font-weight-normal;
+  font-weight: $font-weight-semibold; // 600
   color: $color-white;
   line-height: $line-height-normal;
 

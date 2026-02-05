@@ -4,10 +4,16 @@
 // 지도 서비스 링크
 .mapLinks {
   display: flex;
-  gap: $spacing-4;
+  gap: $spacing-6; // 24px
   flex-wrap: wrap;
   justify-content: center;
-  margin: $spacing-5;
+  padding: $spacing-5; // 20px
+  background-color: $gray-2; // #F9F9F9
+  // border-left: 1px solid $gray-8; // #BBBBBB
+  // border-right: 1px solid $gray-8;
+  // border-bottom: 1px solid $gray-8;
+  border-bottom-left-radius: $radius-lg; // 8px
+  border-bottom-right-radius: $radius-lg;
 
   @include tablet {
     gap: $spacing-3; // 12px - 버튼 사이 간격
@@ -17,8 +23,7 @@
     flex-direction: column;
     flex-wrap: nowrap; // 모바일에서 줄바꿈 방지
     gap: $spacing-3; // 12px - 버튼 사이 간격
-    margin: $spacing-4; // 모바일에서 마진 조정
-    width: calc(100% - #{$spacing-4 * 2}); // 양쪽 마진 고려
+    padding: $spacing-4; // 모바일에서 패딩 조정
   }
 }
 
@@ -26,10 +31,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-4; // 로고와 텍스트 사이 간격 증가
-  padding: $spacing-5 $spacing-6; // 수직/수평 패딩 증가
-  border: 1px solid $gray-9; // 테두리 색상 조정 (#8c8c8c)
-  border-radius: $radius-full; // 완전히 둥근 모서리 (pill shape)
+  gap: $spacing-8; // 32px - 로고와 텍스트 사이 간격
+  padding: 10px 0; // 수직 패딩만
+  border: 1px solid $gray-9; // 테두리 색상 (#8c8c8c)
+  border-radius: 78px; // pill shape
   background-color: $color-white;
   text-decoration: none;
   color: $gray-12;
@@ -38,8 +43,8 @@
   transition: all $transition-base;
   flex: 1;
   min-width: 0;
-  height: 64px; // 고정 높이
-  box-sizing: border-box; // 패딩 포함 계산
+  height: 75px; // 고정 높이
+  box-sizing: border-box;
 
   &:hover {
     border-color: $color-primary;
