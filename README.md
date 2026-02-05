@@ -182,7 +182,13 @@ src/
 **카드/리스트**
 
 - ServiceCard, HorizontalServiceCard, VerticalServiceCard, StepBadgeCard
-- IconTitleCard, ClinicCard, DoctorCard, CardList
+- IconTitleCard, ClinicCard, DoctorCard
+- **CardList** - 카드 목록 컴포넌트
+  - variant: 'default' | 'infoCard' (의뢰환자 조회 스타일)
+  - columns: 그리드 열 수 지정
+  - scrollableHeight: 스크롤 영역 높이 설정
+  - 스크롤바 자동 감지 기능
+  - InfoRowContent: 라벨-값 쌍 표시 컴포넌트
 - NoticeList, ProcedureList, BusStopList
 
 **네비게이션**
@@ -224,10 +230,15 @@ src/
 **레이아웃**
 
 - **Header** - 반응형 GNB 메가 드롭다운 메뉴
-  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴
-  - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴
-  - 모바일 (~768px): 우측 사이드 패널 메뉴
-- **Footer**
+  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴 + 장식 원형 배경
+  - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴 + 장식 원형 배경
+  - 모바일 (~768px): 우측 사이드 패널 메뉴 + 연락처 박스
+  - Breadcrumbs 자동 생성 (pathname 기반)
+- **Footer** - 반응형 푸터
+  - 파트너 슬라이더 (무한 루프, 자동 재생)
+  - 정책 링크, 주소 정보, 소셜 미디어 링크
+  - 인증마크 (EMR, ISMS) 표시
+  - 진료지원부서/패밀리사이트 드롭다운
 
 **인증**
 
@@ -358,7 +369,7 @@ $breakpoint-2xl: 1498px;
 $container-max-width: 1530px;
 
 // Header 전용 브레이크포인트 (mixins.scss)
-$header-bp-mobile: 768px;  // 모바일: ~768px
+$header-bp-mobile: 768px; // 모바일: ~768px
 $header-bp-tablet: 1429px; // 태블릿: 769px ~ 1429px
 // 데스크톱: 1430px~
 ```
@@ -424,14 +435,35 @@ const MyComponent = () => {
 ## 스크립트
 
 ```bash
-npm run dev          # 개발 서버 실행
-npm run build        # 프로덕션 빌드
+# 개발 서버
+npm run dev          # 개발 서버 실행 (기본)
+npm run dev:anam     # 안암병원 개발 서버
+npm run dev:guro     # 구로병원 개발 서버
+npm run dev:ansan    # 안산병원 개발 서버
+
+# 빌드
+npm run build        # 프로덕션 빌드 (기본)
+npm run build:anam   # 안암병원 빌드
+npm run build:guro   # 구로병원 빌드
+npm run build:ansan  # 안산병원 빌드
+
+# 기타
 npm start            # 프로덕션 서버 실행
 npm run lint         # ESLint 검사
 npm run lint:fix     # ESLint 자동 수정
 npm run format       # Prettier 포매팅
 npm run format:check # Prettier 검사
 ```
+
+### Vercel 배포 설정
+
+각 병원별로 별도 프로젝트를 생성하고 Build Command를 설정합니다:
+
+| 병원 | Build Command         | URL                                |
+| ---- | --------------------- | ---------------------------------- |
+| 안암 | `npm run build:anam`  | https://hrc-front.vercel.app       |
+| 구로 | `npm run build:guro`  | https://hrc-front-guro.vercel.app  |
+| 안산 | `npm run build:ansan` | https://hrc-front-ansan.vercel.app |
 
 ## 개발 현황
 
