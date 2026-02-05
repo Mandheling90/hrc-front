@@ -774,7 +774,7 @@ const guroContent: HospitalPageContent = {
     introBox: {
       title: 'KRC(Korea University Guro Hospital Referral Center)',
       messages: [
-        '고려대학교 구로병원 진료협력센터는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, 의료전달체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
+        '고려대학교 구로병원 진료협력센터는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, 의료전달 체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
         '지역사회와의 상생을 기반으로 협력 병의원 원장님들과 긴밀하고 활발한 협력네트워크를 구축하여, 환자분께 편리하고 친절한 고려대학교 병원의 최적의 의료서비스를 받으실 수 있도록 운영하고 있습니다.'
       ]
     },
@@ -793,7 +793,7 @@ const guroContent: HospitalPageContent = {
         {
           icon: 'OperationTimeIcon',
           title: '운영시간',
-          rows: [{ label: '평일', value: '08:30 - 17:30' }]
+          rows: [{ label: '평일', value: '08:30 ~ 17:30' }]
         },
         {
           icon: 'OperationPhoneFaxIcon',
@@ -1363,7 +1363,7 @@ const ansanContent: HospitalPageContent = {
       title: 'KRC(Korea University Ansan Hospital Referral Center)',
       messages: [
         '고려대학교안산병원 진료협력센터(KRC)는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, 의료전달 체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
-        '지역사회와의 상생을 기반으로 최적의 의료서비스를 제공하기 위해 협력 병·의원 원장님들과 긴밀하고 활발한 협력네트워크를 만들어 나가도록 하겠습니다.'
+        '지역사회와의 상생을 기반으로 협력 병의원 원장님들과 긴밀하고 활발한 협력네트워크를 구축하여, 환자분께 편리하고 친절한 고려대학교 병원의 최적의 의료서비스를 받으실수 있도록 운영하고 있습니다.'
       ]
     },
     mainTasks: [
@@ -1419,7 +1419,11 @@ const ansanContent: HospitalPageContent = {
         },
         {
           chip: '진료결과 회신',
-          items: [{ text: '우편발송' }, { text: '인터넷 결과 조회 : KRC 홈페이지(https://refer.kumc.or.kr)' }],
+          items: [
+            { text: '우편발송' },
+            { text: 'E-mail 발송' },
+            { text: '인터넷 결과 조회 : KRC 홈페이지(https://refer.kumc.or.kr)' }
+          ],
           stepIcon: 'FlowStep04Icon'
         },
         {

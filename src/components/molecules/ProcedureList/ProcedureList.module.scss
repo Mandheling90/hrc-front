@@ -53,7 +53,7 @@
   font-size: $font-size-xl; // 20px - Figma 기준
   font-weight: $font-weight-normal;
   color: $gray-11;
-  line-height: $line-height-relaxed;
+  line-height: $line-height-normal; // Figma: 30px (1.5 × 20px)
   letter-spacing: -0.8px;
   padding-left: 20px; // 8px 불렛 + 12px 간격
   position: relative;
@@ -62,7 +62,7 @@
     content: '';
     position: absolute;
     left: 0;
-    top: calc(1em * #{$line-height-relaxed} / 2);
+    top: calc(1em * #{$line-height-normal} / 2);
     width: 8px;
     height: 8px;
     background-color: $color-primary;
@@ -81,7 +81,7 @@
     padding-left: $spacing-4; // 16px - Figma 모바일
 
     &::before {
-      top: calc(1em * #{$line-height-relaxed} / 2);
+      top: calc(1em * #{$line-height-normal} / 2);
     }
   }
 }
@@ -91,7 +91,7 @@
   font-family: Pretendard;
   font-weight: $font-weight-normal;
   color: $gray-11;
-  line-height: $line-height-relaxed;
+  line-height: $line-height-normal; // Figma: 30px (1.5 × 20px)
   padding-left: 20px; // 8px 불렛 + 12px 간격
   position: relative;
 
@@ -99,7 +99,7 @@
     content: '';
     position: absolute;
     left: 0;
-    top: calc(1em * #{$line-height-relaxed} / 2);
+    top: calc(1em * #{$line-height-normal} / 2);
     width: 8px;
     height: 2px;
     background-color: $gray-11;
@@ -117,7 +117,7 @@
     padding-left: $spacing-4; // 16px - Figma 모바일
 
     &::before {
-      top: calc(1em * #{$line-height-relaxed} / 2);
+      top: calc(1em * #{$line-height-normal} / 2);
     }
   }
 }
@@ -127,7 +127,7 @@
   font-family: Pretendard;
   font-weight: $font-weight-normal;
   color: $color-primary;
-  line-height: $line-height-relaxed;
+  line-height: $line-height-normal; // Figma: 1.5
   padding-left: 20px; // 불렛과 동일한 들여쓰기
   margin: $spacing-2 0 0 0;
 

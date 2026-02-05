@@ -38,7 +38,11 @@
 
 // 섹션 공통
 .section {
-  margin-top: $spacing-20; // Figma: 80px gap between sections
+  margin-top: $spacing-20; // Figma 데스크탑: 80px gap between sections
+
+  @include tablet {
+    margin-top: $spacing-12; // Figma 태블릿: 48px
+  }
 }
 
 .sectionTitleRow {

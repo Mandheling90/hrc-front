@@ -56,11 +56,10 @@
   flex-direction: column;
   gap: $spacing-4; // Figma: 16px gap
   position: relative;
-  height: 340px; // Figma: fixed height 340px
+  min-height: 340px; // Figma: 340px, min-height로 변경하여 텍스트 잘림 방지
   flex: 1 0 0;
   max-width: 100%;
   min-width: 0; // flex item이 overflow 방지
-  overflow: hidden; // Figma: overflow clip
 
   @include tablet {
     height: auto;
@@ -82,12 +81,17 @@
   border-radius: 50px;
   background-color: $color-primary;
   color: $color-white;
-  font-size: $font-size-2xl; // Figma: 24px
+  font-size: $font-size-2xl; // Figma 데스크탑: 24px
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal; // Figma: 1.5
   letter-spacing: -0.96px; // Figma: -4%
   text-align: center;
   min-width: 181px; // Figma: ~181.2px
+
+  @include tablet {
+    font-size: $font-size-xl; // Figma 태블릿: 20px
+    letter-spacing: -0.8px;
+  }
 }
 
 .flowStepNumber {
