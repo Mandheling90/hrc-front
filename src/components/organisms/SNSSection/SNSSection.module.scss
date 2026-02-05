@@ -5,6 +5,7 @@
   margin-top: 80px;
   min-height: 682px;
   isolation: isolate;
+  overflow: hidden;
 
   // 태블릿 (769px ~ 1429px) - Figma: height 513px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
@@ -360,8 +361,6 @@
   // 태블릿 (769px ~ 1429px) - Figma: 100% width, height 358.5px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     width: 100%;
-    height: 358px;
-    aspect-ratio: auto;
   }
 
   @media (max-width: $breakpoint-lg) {

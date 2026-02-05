@@ -176,10 +176,6 @@
 .mainFooter {
   background-color: #f0f0f0;
   padding: 50px 0;
-
-  @media (max-width: $breakpoint-md) {
-    padding: 30px 0;
-  }
 }
 
 .footerContent {
@@ -190,7 +186,11 @@
 
   @media (max-width: $breakpoint-lg) {
     flex-direction: column;
-    gap: 30px;
+    gap: 40px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    gap: 0;
   }
 }
 
@@ -198,17 +198,16 @@
 .footerLogo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 3px;
   flex-shrink: 0;
+
+  @media (max-width: $breakpoint-sm) {
+    margin-bottom: 24px;
+  }
 
   img {
     width: 48px;
     height: 48px;
-
-    @media (max-width: $breakpoint-md) {
-      width: 40px;
-      height: 40px;
-    }
   }
 }
 
@@ -222,10 +221,6 @@
   font-size: 17px;
   font-family: 'Korea University Centennial OTF', sans-serif;
   color: #8c8c8c;
-
-  @media (max-width: $breakpoint-md) {
-    font-size: 15px;
-  }
 }
 
 .logoSubtitle {
@@ -239,15 +234,13 @@
 .footerInfo {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  flex: 1;
+  min-width: 0;
   max-width: 596px;
 
   @media (max-width: $breakpoint-lg) {
+    flex: initial;
     max-width: 100%;
-  }
-
-  @media (max-width: $breakpoint-md) {
-    gap: 16px;
   }
 }
 
@@ -257,8 +250,8 @@
   gap: 16px;
   flex-wrap: wrap;
 
-  @media (max-width: $breakpoint-md) {
-    gap: 12px;
+  @media (max-width: $breakpoint-sm) {
+    gap: 8px;
   }
 
   a {
@@ -273,8 +266,8 @@
     }
 
     @media (max-width: $breakpoint-md) {
-      font-size: 14px;
-      line-height: 21px;
+      font-size: 16px;
+      line-height: 24px;
     }
   }
 
@@ -283,11 +276,6 @@
     height: 10px;
     background-color: #8c8c8c;
     display: inline-block;
-    transform: rotate(90deg);
-
-    @media (max-width: $breakpoint-md) {
-      height: 8px;
-    }
   }
 }
 
@@ -295,6 +283,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 24px;
+
+  @media (max-width: $breakpoint-md) {
+    margin-top: 16px;
+  }
 
   p {
     font-size: 14px;
@@ -308,9 +301,15 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-top: 48px;
 
   @media (max-width: $breakpoint-md) {
-    gap: 12px;
+    margin-top: 24px;
+    gap: 8px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    margin-top: 16px;
   }
 }
 
@@ -323,11 +322,6 @@
   border: 1px solid #d9d9d9;
   text-decoration: none;
 
-  @media (max-width: $breakpoint-md) {
-    padding: 4px 16px 4px 4px;
-    gap: 6px;
-  }
-
   .socialIcon {
     width: 33px;
     height: 33px;
@@ -335,11 +329,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    @media (max-width: $breakpoint-md) {
-      width: 28px;
-      height: 28px;
-    }
   }
 
   span:last-child {
@@ -347,7 +336,8 @@
     color: #636363;
 
     @media (max-width: $breakpoint-md) {
-      font-size: 14px;
+      font-size: 16px;
+      line-height: 24px;
     }
   }
 }
@@ -356,7 +346,15 @@
   font-size: 14px;
   line-height: 21px;
   color: #636363;
-  margin: 0;
+  margin: 40px 0 0;
+
+  @media (max-width: $breakpoint-md) {
+    margin: 32px 0 0;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    margin: 24px 0 0;
+  }
 }
 
 // Right
@@ -365,15 +363,15 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
-  height: 100%;
-  gap: 24px;
+  align-self: stretch;
 
   @media (max-width: $breakpoint-lg) {
-    align-items: flex-start;
     width: 100%;
+    gap: 8px;
   }
 
-  @media (max-width: $breakpoint-md) {
+  @media (max-width: $breakpoint-sm) {
+    margin-top: 32px;
     gap: 16px;
   }
 }
@@ -384,9 +382,7 @@
   gap: 16px;
 
   @media (max-width: $breakpoint-md) {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
+    gap: 8px;
   }
 }
 
@@ -405,14 +401,23 @@
   line-height: 30px;
 
   @media (max-width: $breakpoint-md) {
-    font-size: 16px;
-    padding: 8px 16px;
+    padding: 5px 10px;
+    border-radius: 150px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    gap: 8px;
   }
 
   .plusIcon {
     width: 20px;
     height: 20px;
     position: relative;
+
+    @media (max-width: $breakpoint-md) {
+      width: 16px;
+      height: 16px;
+    }
 
     &::before,
     &::after {
@@ -427,6 +432,11 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+
+      @media (max-width: $breakpoint-md) {
+        width: 12px;
+        height: 1.6px;
+      }
     }
 
     &::after {
@@ -435,6 +445,11 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+
+      @media (max-width: $breakpoint-md) {
+        width: 1.6px;
+        height: 12px;
+      }
     }
   }
 }
@@ -447,9 +462,10 @@
   @media (max-width: $breakpoint-lg) {
     flex-direction: row;
     flex-wrap: wrap;
+    align-self: stretch;
   }
 
-  @media (max-width: $breakpoint-md) {
+  @media (max-width: $breakpoint-sm) {
     flex-direction: column;
   }
 }
@@ -460,7 +476,7 @@
   gap: 16px;
   padding: 10px;
   border: 1px solid #d9d9d9;
-  background-color: #fff;
+  background-color: transparent;
   max-width: 317px;
 
   @media (max-width: $breakpoint-lg) {
@@ -469,21 +485,10 @@
     min-width: 280px;
   }
 
-  @media (max-width: $breakpoint-md) {
-    gap: 12px;
-    padding: 8px;
-    min-width: auto;
-  }
-
   img {
     width: 50px;
     height: 50px;
     object-fit: contain;
-
-    @media (max-width: $breakpoint-md) {
-      width: 40px;
-      height: 40px;
-    }
   }
 }
 
@@ -496,10 +501,5 @@
     line-height: 21px;
     color: #636363;
     margin: 0;
-
-    @media (max-width: $breakpoint-md) {
-      font-size: 12px;
-      line-height: 18px;
-    }
   }
 }

@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { useHospital } from '@/hooks'
 import styles from './Footer.module.scss'
 
@@ -29,12 +30,12 @@ const socialLinks = [
 
 const certifications = [
   {
-    image: '/images/main/cert-emr.png',
+    image: '/images/img-footermark.png',
     scope: '[인증범위]전자의무기록시스템(EMR) 인증',
     period: '[유효기간]2022.11.01 ~ 2025.10.31'
   },
   {
-    image: '/images/main/cert-isms.png',
+    image: '/images/img-footermark2.png',
     scope: '[인증범위]의료정보시스템(EMR, OCS) 및 홈페이지 서비스 운영',
     period: '[유효기간]2023.10.18 ~ 2026.10.17'
   }
@@ -42,6 +43,8 @@ const certifications = [
 
 export const Footer: React.FC = () => {
   const { hospital } = useHospital()
+  const pathname = usePathname()
+  const isMainPage = pathname === '/'
   const [showDepartment, setShowDepartment] = useState(false)
   const [showFamily, setShowFamily] = useState(false)
   const [partnerIndex, setPartnerIndex] = useState(0)
@@ -79,81 +82,83 @@ export const Footer: React.FC = () => {
 
   return (
     <footer id='footer' className={styles.footer}>
-      {/* Partner Section */}
-      <div className={styles.partnerBar}>
-        <div className={styles.partnerContainer}>
-          <div className={styles.partnerContent}>
-            <div className={styles.partnerSlider}>
-              {/* 데스크탑용 트랙 (JS 기반 슬라이딩) */}
-              <div
-                className={`${styles.partnerTrack} ${styles.desktopTrack}`}
-                style={
-                  {
-                    '--offset': partnerIndex + 4,
-                    transform: `translateX(calc(-1 * var(--offset) * var(--step)))`,
-                    transition: isTransitioning ? 'transform 0.4s ease-in-out' : 'none'
-                  } as React.CSSProperties
-                }
-                onTransitionEnd={handleTransitionEnd}
-              >
-                {extendedLogos.map((partner, index) => (
-                  <div key={`desktop-${partner.id}-${index}`} className={styles.partnerItem}>
-                    <Image src={partner.image} alt={partner.alt} width={250} height={40} />
-                  </div>
-                ))}
+      {/* Partner Section - 메인 페이지에서만 표시 */}
+      {isMainPage && (
+        <div className={styles.partnerBar}>
+          <div className={styles.partnerContainer}>
+            <div className={styles.partnerContent}>
+              <div className={styles.partnerSlider}>
+                {/* 데스크탑용 트랙 (JS 기반 슬라이딩) */}
+                <div
+                  className={`${styles.partnerTrack} ${styles.desktopTrack}`}
+                  style={
+                    {
+                      '--offset': partnerIndex + 4,
+                      transform: `translateX(calc(-1 * var(--offset) * var(--step)))`,
+                      transition: isTransitioning ? 'transform 0.4s ease-in-out' : 'none'
+                    } as React.CSSProperties
+                  }
+                  onTransitionEnd={handleTransitionEnd}
+                >
+                  {extendedLogos.map((partner, index) => (
+                    <div key={`desktop-${partner.id}-${index}`} className={styles.partnerItem}>
+                      <Image src={partner.image} alt={partner.alt} width={250} height={40} />
+                    </div>
+                  ))}
+                </div>
+                {/* 모바일용 트랙 (CSS 애니메이션) */}
+                <div className={`${styles.partnerTrack} ${styles.mobileTrack}`}>
+                  {mobileLogos.map((partner, index) => (
+                    <div key={`mobile-${partner.id}-${index}`} className={styles.partnerItem}>
+                      <Image src={partner.image} alt={partner.alt} width={250} height={40} />
+                    </div>
+                  ))}
+                </div>
               </div>
-              {/* 모바일용 트랙 (CSS 애니메이션) */}
-              <div className={`${styles.partnerTrack} ${styles.mobileTrack}`}>
-                {mobileLogos.map((partner, index) => (
-                  <div key={`mobile-${partner.id}-${index}`} className={styles.partnerItem}>
-                    <Image src={partner.image} alt={partner.alt} width={250} height={40} />
-                  </div>
-                ))}
+              <div className={styles.partnerControl}>
+                <button className={styles.controlBtn} onClick={handlePartnerPrev} aria-label='이전'>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M15 4L7 12L15 20'
+                      stroke='#686868'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </button>
+                <button
+                  className={`${styles.controlBtn} ${styles.pauseBtn}`}
+                  onClick={() => setIsPartnerPaused(!isPartnerPaused)}
+                  aria-label={isPartnerPaused ? '재생' : '일시정지'}
+                >
+                  {isPartnerPaused ? (
+                    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <path d='M8 5V19L19 12L8 5Z' fill='#686868' />
+                    </svg>
+                  ) : (
+                    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <rect x='6' y='5' width='4' height='14' fill='#686868' />
+                      <rect x='14' y='5' width='4' height='14' fill='#686868' />
+                    </svg>
+                  )}
+                </button>
+                <button className={styles.controlBtn} onClick={handlePartnerNext} aria-label='다음'>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path
+                      d='M9 4L17 12L9 20'
+                      stroke='#686868'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </button>
               </div>
-            </div>
-            <div className={styles.partnerControl}>
-              <button className={styles.controlBtn} onClick={handlePartnerPrev} aria-label='이전'>
-                <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M15 4L7 12L15 20'
-                    stroke='#686868'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </button>
-              <button
-                className={`${styles.controlBtn} ${styles.pauseBtn}`}
-                onClick={() => setIsPartnerPaused(!isPartnerPaused)}
-                aria-label={isPartnerPaused ? '재생' : '일시정지'}
-              >
-                {isPartnerPaused ? (
-                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M8 5V19L19 12L8 5Z' fill='#686868' />
-                  </svg>
-                ) : (
-                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <rect x='6' y='5' width='4' height='14' fill='#686868' />
-                    <rect x='14' y='5' width='4' height='14' fill='#686868' />
-                  </svg>
-                )}
-              </button>
-              <button className={styles.controlBtn} onClick={handlePartnerNext} aria-label='다음'>
-                <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                  <path
-                    d='M9 4L17 12L9 20'
-                    stroke='#686868'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Footer */}
       <div className={styles.mainFooter}>
@@ -161,7 +166,7 @@ export const Footer: React.FC = () => {
           <div className={styles.footerContent}>
             {/* Logo */}
             <div className={styles.footerLogo}>
-              <Image src='/images/main/logo-footer.png' alt={hospital.name.full} width={48} height={48} />
+              <img src='/images/main/logo-footer.svg' alt={hospital.name.full} width={48} height={48} />
               <div className={styles.logoText}>
                 <span className={styles.logoTitle}>{hospital.name.full}</span>
                 <span className={styles.logoSubtitle}>{hospital.name.english}</span>
@@ -189,7 +194,21 @@ export const Footer: React.FC = () => {
               <div className={styles.socialLinks}>
                 {socialLinks.map(social => (
                   <Link key={social.label} href={social.href} className={styles.socialBtn} target='_blank'>
-                    <span className={styles.socialIcon} style={{ backgroundColor: social.color }}></span>
+                    <span className={styles.socialIcon} style={{ backgroundColor: social.color }}>
+                      {social.icon === 'naver' && (
+                        <svg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                          <path
+                            d='M8.81454 6.95771L3.99533 0H0V13H4.18492V6.04283L9.00467 13H13V0H8.81454V6.95771Z'
+                            fill='white'
+                          />
+                        </svg>
+                      )}
+                      {social.icon === 'youtube' && (
+                        <svg width='14' height='13' viewBox='0 0 14 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                          <path d='M13.2578 6.5L1.99948 13V-4.80825e-07L13.2578 6.5Z' fill='white' />
+                        </svg>
+                      )}
+                    </span>
                     <span>{social.label}</span>
                   </Link>
                 ))}
