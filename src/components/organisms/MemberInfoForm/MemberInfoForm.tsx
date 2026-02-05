@@ -139,7 +139,8 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   initialData,
   onSubmit,
   onCancel,
-  onPrev: _onPrev,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onPrev,
   submitButtonText,
   cancelButtonText,
   disabledFields = [],

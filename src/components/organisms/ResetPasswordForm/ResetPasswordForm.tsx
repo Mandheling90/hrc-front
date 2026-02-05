@@ -28,6 +28,10 @@ export const ResetPasswordForm: React.FC = () => {
     console.log('Reset password:', formData)
   }
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev)
+  }
+
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(prev => !prev)
   }
@@ -42,15 +46,25 @@ export const ResetPasswordForm: React.FC = () => {
       </div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <Input
-            type={showPassword ? 'text' : 'password'}
-            id='password'
-            name='password'
-            placeholder='비밀번호를 입력해주세요.'
-            value={formData.password}
-            onChange={handleChange}
-            className={styles.input}
-          />
+          <div className={styles.passwordInputWrapper}>
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              id='password'
+              name='password'
+              placeholder='비밀번호를 입력해주세요.'
+              value={formData.password}
+              onChange={handleChange}
+              className={styles.input}
+            />
+            <button
+              type='button'
+              className={styles.passwordToggle}
+              onClick={togglePasswordVisibility}
+              aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+            >
+              <EyeIcon width={24} height={24} showPassword={showPassword} stroke='#636363' />
+            </button>
+          </div>
           <div className={styles.passwordRules}>
             <p className={styles.rule}>영문, 숫자, 특수문자 조합 8~12자리 사용 가능, 연속번호는 사용금지</p>
             <p className={styles.rule}>특수문자 사용 가능 범위: ~!@#$%^&*_-</p>
