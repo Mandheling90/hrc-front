@@ -40,8 +40,8 @@ export const PersonalInfoOptionalContent: React.FC = () => {
         <p className={styles.privacySectionTitle}>4. 동의를 거부할 권리 / 동의거부에 따른 안내</p>
         <div className={styles.privacySectionContent}>
           <p>
-            고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해
-            거부할 경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.
+            고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해 거부할
+            경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.
           </p>
         </div>
       </div>
