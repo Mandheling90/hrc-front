@@ -139,7 +139,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   initialData,
   onSubmit,
   onCancel,
-  onPrev,
+  onPrev: _onPrev,
   submitButtonText,
   cancelButtonText,
   disabledFields = [],
