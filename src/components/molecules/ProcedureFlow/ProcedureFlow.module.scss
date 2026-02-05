@@ -42,9 +42,7 @@
   }
 
   @include mobile {
-    width: auto;
-    height: auto;
-    transform: rotate(90deg);
+    display: none;
   }
 }
 
@@ -91,6 +89,22 @@
   @include tablet {
     font-size: $font-size-xl; // Figma 태블릿: 20px
     letter-spacing: -0.8px;
+  }
+
+  @include mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-2;
+    min-width: 180px; // Figma 모바일: 180px
+  }
+}
+
+.flowChipStep {
+  display: none;
+
+  @include mobile {
+    display: inline;
   }
 }
 

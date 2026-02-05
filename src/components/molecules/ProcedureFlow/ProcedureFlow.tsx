@@ -20,7 +20,10 @@ export const ProcedureFlow: React.FC<ProcedureFlowProps> = ({ steps, className =
       {steps.map((step, index) => (
         <React.Fragment key={index}>
           <div className={styles.flowCard}>
-            <span className={styles.flowChip}>{step.chip}</span>
+            <span className={styles.flowChip}>
+              <span className={styles.flowChipStep}>{index + 1}.</span>
+              {step.chip}
+            </span>
             <ProcedureList items={step.items} />
             <div className={styles.flowStepNumber}>{step.stepIcon}</div>
           </div>
