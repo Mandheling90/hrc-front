@@ -99,47 +99,47 @@ export default function PatientResultPage() {
       <main className={styles.container}>
         <Breadcrumbs items={breadcrumbItems} />
 
-      <h1 className={styles.pageTitle}>의뢰환자 결과조회</h1>
+        <h1 className={styles.pageTitle}>의뢰환자 결과조회</h1>
 
-      <div className={styles.content}>
-        {/* 상단 카드 섹션 */}
-        <div className={styles.topSection}>
-          {/* 의뢰환자 목록 버튼 */}
-          <div className={styles.listButtonWrapper}>
-            <button type='button' className={styles.listButton}>
-              <ListIcon width={24} height={24} />
-              <span>의뢰환자 목록</span>
-            </button>
-          </div>
+        <div className={styles.content}>
+          {/* 상단 카드 섹션 */}
+          <div className={styles.topSection}>
+            {/* 의뢰환자 목록 버튼 */}
+            <div className={styles.listButtonWrapper}>
+              <button type='button' className={styles.listButton}>
+                <ListIcon width={24} height={24} />
+                <span>의뢰환자 목록</span>
+              </button>
+            </div>
 
-          {/* 카드 컨테이너 */}
-          <div className={styles.cardsContainer}>
-            <PatientInfoCard patientInfo={patientInfo} />
-            <SearchCard />
-          </div>
-        </div>
-
-        {/* 탭 네비게이션 */}
-        <TabNavigation tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
-
-        {/* 컨텐츠 섹션 */}
-        <div className={styles.historySection}>
-          <div className={styles.sectionHeader}>
-            <SectionTitle title={TAB_TITLES[activeTab] || '수진 이력'} />
-            <div className={styles.sortRadio}>
-              <Radio name='sortOrder' options={SORT_OPTIONS} value={sortOrder} onChange={setSortOrder} />
+            {/* 카드 컨테이너 */}
+            <div className={styles.cardsContainer}>
+              <PatientInfoCard patientInfo={patientInfo} />
+              <SearchCard />
             </div>
           </div>
 
-          {/* 탭 컨텐츠 */}
-          {renderTabContent()}
+          {/* 탭 네비게이션 */}
+          <TabNavigation tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
 
-          {/* 페이지네이션 */}
-          <div className={styles.paginationWrapper}>
-            <Pagination currentPage={currentPage} totalPages={5} onPageChange={setCurrentPage} />
+          {/* 컨텐츠 섹션 */}
+          <div className={styles.historySection}>
+            <div className={styles.sectionHeader}>
+              <SectionTitle title={TAB_TITLES[activeTab] || '수진 이력'} />
+              <div className={styles.sortRadio}>
+                <Radio name='sortOrder' options={SORT_OPTIONS} value={sortOrder} onChange={setSortOrder} />
+              </div>
+            </div>
+
+            {/* 탭 컨텐츠 */}
+            {renderTabContent()}
+
+            {/* 페이지네이션 */}
+            <div className={styles.paginationWrapper}>
+              <Pagination currentPage={currentPage} totalPages={5} onPageChange={setCurrentPage} />
+            </div>
           </div>
         </div>
-      </div>
       </main>
       <Footer />
     </>
