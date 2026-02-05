@@ -151,7 +151,8 @@ export default function PageListPage() {
   )
   const completedPages = pageData.reduce(
     (acc, category) =>
-      acc + category.subCategories.reduce((subAcc, sub) => subAcc + sub.pages.filter((p) => p.status === 'complete').length, 0),
+      acc +
+      category.subCategories.reduce((subAcc, sub) => subAcc + sub.pages.filter(p => p.status === 'complete').length, 0),
     0
   )
 
