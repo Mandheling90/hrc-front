@@ -86,13 +86,19 @@ const DoctorIcon = () => (
   </svg>
 )
 
-const inquiryLinksAnam = [
+interface InquiryLink {
+  href: string
+  label: string
+  icon?: string
+}
+
+const inquiryLinksAnam: InquiryLink[] = [
   { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
   { href: '/network/e-consult', label: 'E-consult 신청' },
   { href: '/network/hotline', label: '교수직통 핫라인' }
 ]
 
-const inquiryLinksGuro = [
+const inquiryLinksGuro: InquiryLink[] = [
   { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
   { href: '#', label: '진료협력센터 카카오톡', icon: 'kakao' }
 ]
