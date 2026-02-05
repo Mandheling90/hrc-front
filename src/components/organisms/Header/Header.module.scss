@@ -69,7 +69,7 @@ $header-height-mobile: 56px;
 
 .headerTop {
   background: #fff;
-  border-bottom: 1px solid $gray-4;
+  border-bottom: 1px solid $gray-5;
 }
 
 // ========================================
@@ -216,7 +216,7 @@ $header-height-mobile: 56px;
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 0 245px;
+  padding: 0 clamp(24px, calc((100vw - 1430px) / 2), 245px);
 
   @media (max-width: $bp-tablet) {
     padding: 0 24px;
@@ -409,7 +409,8 @@ $header-height-mobile: 56px;
   left: 0;
   width: 100%;
   background: #fff;
-  border-top: 1px solid $gray-3;
+  border-bottom: 1px solid $gray-7;
+  overflow: hidden;
   opacity: 0; // 1
   visibility: hidden; // visible
   transform: translateY(-10px);
@@ -430,30 +431,53 @@ $header-height-mobile: 56px;
 .dropdownInner {
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
   width: 100%;
   min-height: 329px;
-  background: #fff; // 기본 배경 흰색 (서브메뉴 영역)
-}
-
-// 좌측 이용안내 영역 - 카드 스타일 (로고와 우측 정렬)
-.dropdownInfo {
-  flex-shrink: 0;
-  width: 22%;
-  max-width: 518px;
-  min-height: 329px;
-  padding: 40px 40px 0 0; // 우측에 여백을 두어 로고와 정렬
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; // 우측 정렬
-  background-color: $gray-2;
-  background-image: url('/assets/images/building-bg.png');
-  background-repeat: no-repeat;
-  background-position: right bottom;
-  background-size: 518px 236px;
+  background: #fff;
   position: relative;
 
+  // 로고 너비와 동일한 좌측 스페이서 (GNB 정렬용)
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: 245px;
+  }
+}
+
+// 좌측 이용안내 영역 - absolute로 flex 레이아웃에서 분리
+.dropdownInfo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 18%;
+  max-width: 518px;
+  min-height: 329px;
+  padding: 40px 40px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 2;
+
+  // 배경+빌딩이미지를 왼쪽 뷰포트 끝까지 확장
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: -245px;
+    background-color: $gray-2;
+    background-image: url('/assets/images/building-bg.png');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 100% auto;
+    z-index: 0;
+  }
+
   h2 {
+    position: relative;
+    z-index: 1;
     margin: 0;
     font-family: 'Paperlogy', sans-serif;
     font-size: 32px;
@@ -465,6 +489,8 @@ $header-height-mobile: 56px;
   }
 
   p {
+    position: relative;
+    z-index: 1;
     margin: 0 0 24px;
     font-family: 'Pretendard', sans-serif;
     font-size: 18px;
@@ -491,7 +517,7 @@ $header-height-mobile: 56px;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 224px;
+  width: 244px;
   height: 30px;
   padding: 0 10px;
   background: #fff;
@@ -573,11 +599,7 @@ $header-height-mobile: 56px;
   }
 
   li {
-    margin-bottom: 12px;
-
-    &:first-child {
-      margin-bottom: 16px;
-    }
+    margin-bottom: 16px;
 
     &:last-child {
       margin-bottom: 0;
@@ -661,8 +683,18 @@ span.disabled {
 // 우측 여백 영역 - util 영역과 동일한 공간 확보
 .dropdownUtil {
   flex-shrink: 0;
-  width: 22%;
-  max-width: 518px;
+  width: 146px; // util 영역과 동일한 너비
+}
+
+// 장식 원형 배경
+.dropdownCircles {
+  position: absolute;
+  right: -230px;
+  top: 99px;
+  width: 566px;
+  height: 460px;
+  pointer-events: none;
+  z-index: 1;
 }
 
 // ========================================
@@ -712,8 +744,10 @@ span.disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid $gray-3;
+  height: 80px;
+  padding: 0 20px;
+  border-bottom: 1px solid $gray-5;
+  flex-shrink: 0;
 }
 
 .mobileLogo {
@@ -742,35 +776,41 @@ span.disabled {
   flex: 1;
   display: flex;
   overflow: hidden;
+  min-height: 0;
 }
 
 // 모바일 좌측 메인 메뉴 - 연한 핑크 배경
 .mobileMainMenu {
-  width: 120px;
+  width: 160px;
   margin: 0;
   padding: 0;
   list-style: none;
-  background: rgba($color-primary, 0.06);
+  background: #fcebeb;
   overflow-y: auto;
+  flex-shrink: 0;
 
   li {
     button {
       width: 100%;
-      padding: 16px 14px;
-      font-size: 14px;
+      padding: 10px;
+      font-size: 20px;
       font-weight: 600;
-      color: $gray-11;
-      text-align: left;
+      line-height: 1.5;
+      letter-spacing: -0.8px;
+      color: #000;
+      text-align: center;
       background: none;
       border: none;
+      border-left: 4px solid transparent;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    // 활성 메뉴 - 더 진한 핑크 배경
+    // 활성 메뉴 - 더 진한 핑크 배경 + 좌측 빨간 테두리
     &.active button {
-      background: rgba($color-primary, 0.12);
-      color: $color-primary;
+      background: #fad1d2;
+      border-left-color: $color-primary;
+      color: #000;
     }
   }
 }
@@ -778,22 +818,35 @@ span.disabled {
 // 모바일 우측 서브 메뉴
 .mobileSubMenu {
   flex: 1;
-  padding: 14px;
+  padding: 20px 15px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
   background: #fff;
+  min-width: 0;
+}
+
+// 서브 링크 목록
+.mobileSubLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   a,
   span.disabled {
-    display: block;
-    padding: 11px 14px;
-    font-size: 13px;
-    color: $gray-11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.64px;
+    color: #000;
     text-decoration: none;
-    border: 1px solid $gray-4;
-    border-radius: 6px;
+    border: 1px solid $gray-5;
+    border-radius: 40px;
     transition: all 0.2s;
   }
 
@@ -803,48 +856,54 @@ span.disabled {
       color: $color-primary;
     }
 
-    // 현재 페이지 - 빨간 테두리
+    // 현재 페이지
     &.highlight {
-      color: $color-primary;
-      border-color: $color-primary;
+      color: #8c0028;
+      background: #fef8f8;
+      border-color: #f3c2c4;
     }
   }
 
   // 비활성 링크 (미개발 페이지)
   span.disabled {
     color: #999;
-    border-color: $gray-4;
+    border-color: $gray-5;
     cursor: default;
   }
 }
 
-.mobileFooter {
-  padding: 14px 16px;
-  border-top: 1px solid $gray-3;
+// 모바일 연락처 컨테이너 (우측 패널 하단)
+.mobileContactBox {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 170px;
+  align-self: flex-end;
+  margin-top: 20px;
 }
 
 // 모바일 연락처
 .mobileContact {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 16px;
-  background: $gray-2;
-  border-radius: 8px;
-  font-size: 14px;
+  flex-direction: column;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid $gray-5;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
 
-  span:first-child {
+  .mobileContactLabel {
     display: flex;
     align-items: center;
-    gap: 6px;
-    color: $gray-10;
-    font-size: 13px;
+    gap: 8px;
+    width: 70px;
+    color: #000;
 
     svg {
-      color: $gray-8;
+      color: #000;
     }
   }
 
@@ -852,12 +911,13 @@ span.disabled {
     font-weight: 600;
     color: $color-primary;
     text-decoration: none;
-    font-size: 15px;
+    text-align: right;
   }
 
-  span:last-child:not(:first-child) {
+  > span {
     color: #000;
-    font-weight: 500;
+    font-weight: 600;
+    text-align: right;
   }
 }
 
@@ -874,7 +934,7 @@ span.disabled {
   z-index: $z-index-modal;
   display: none;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
   transform: translateY(-100%);
   transition: transform 0.3s ease;
 
@@ -891,15 +951,29 @@ span.disabled {
   }
 }
 
+// 태블릿 메뉴 장식 원형 배경
+.tabletCircles {
+  position: absolute;
+  right: -100px;
+  bottom: -200px;
+  width: 566px;
+  height: 460px;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .tabletHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 40px;
-  border-bottom: 1px solid $gray-3;
+  height: 100px;
+  padding: 0 50px;
+  border-bottom: 1px solid $gray-5;
+  flex-shrink: 0;
 
   @media (max-width: 900px) {
-    padding: 16px 24px;
+    height: 80px;
+    padding: 0 24px;
   }
 }
 
@@ -915,38 +989,44 @@ span.disabled {
 
 .tabletBody {
   flex: 1;
-  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px 50px;
   overflow-y: auto;
 
   @media (max-width: 900px) {
     padding: 28px 24px;
+    gap: 20px;
   }
 }
 
 // 태블릿 섹션
 .tabletSection {
-  margin-bottom: 28px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 
   h3 {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 0 0 14px;
-    font-size: 17px;
-    font-weight: 700;
+    gap: 8px;
+    height: 42px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.8px;
     color: #000;
   }
 
   // 빨간 사각형 불릿
   .bullet {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     background: $color-primary;
-    border-radius: 1px;
+    border: 1px solid $color-primary;
+    border-radius: 2px;
     flex-shrink: 0;
   }
 }
@@ -955,22 +1035,25 @@ span.disabled {
 .tabletLinks {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 16px;
 
   a,
   span.disabled {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 22px;
-    font-size: 14px;
-    color: $gray-11;
+    width: 170px;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.64px;
+    color: #000;
     text-decoration: none;
-    border: 1px solid $gray-4;
-    border-radius: 22px;
+    border: 1px solid $gray-5;
+    border-radius: 40px;
     transition: all 0.2s;
     white-space: nowrap;
-    min-height: 42px;
   }
 
   a {
@@ -979,53 +1062,58 @@ span.disabled {
       color: $color-primary;
     }
 
-    // 현재 페이지 - 빨간 테두리
+    // 현재 페이지 - 빨간 배경 + 테두리
     &.highlight {
-      color: $color-primary;
-      border-color: $color-primary;
+      color: #8c0028;
+      background: #fef8f8;
+      border-color: #f3c2c4;
     }
   }
 
   // 비활성 링크 (미개발 페이지)
   span.disabled {
     color: #999;
-    border-color: $gray-4;
+    border-color: $gray-5;
     cursor: default;
   }
 }
 
 .tabletFooter {
-  padding: 18px 40px;
-  border-top: 1px solid $gray-3;
+  padding: 0 50px 40px;
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  flex-shrink: 0;
 
   @media (max-width: 900px) {
-    padding: 16px 24px;
+    padding: 0 24px 28px;
     flex-direction: column;
     gap: 10px;
   }
 }
 
-// 태블릿 연락처 - 둥근 테두리 박스
+// 태블릿 연락처 - 둥근 사각형 박스
 .tabletContact {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
+  gap: 8px;
+  padding: 10px;
   background: #fff;
-  border: 1px solid $gray-4;
-  border-radius: 30px;
-  font-size: 14px;
+  border: 1px solid $gray-5;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
 
   span:first-child {
     display: flex;
     align-items: center;
-    gap: 6px;
-    color: $gray-10;
+    gap: 8px;
+    width: 70px;
+    color: #000;
 
     svg {
-      color: $gray-8;
+      color: #000;
     }
   }
 
@@ -1037,7 +1125,7 @@ span.disabled {
 
   span:last-child:not(:first-child) {
     color: #000;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   @media (max-width: 900px) {

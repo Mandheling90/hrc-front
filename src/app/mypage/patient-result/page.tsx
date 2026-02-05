@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import { Header } from '@/components/organisms/Header/Header'
+import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
@@ -92,8 +94,10 @@ export default function PatientResultPage() {
   }
 
   return (
-    <main className={styles.container}>
-      <Breadcrumbs items={breadcrumbItems} />
+    <>
+      <Header />
+      <main className={styles.container}>
+        <Breadcrumbs items={breadcrumbItems} />
 
       <h1 className={styles.pageTitle}>의뢰환자 결과조회</h1>
 
@@ -136,6 +140,8 @@ export default function PatientResultPage() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </>
   )
 }

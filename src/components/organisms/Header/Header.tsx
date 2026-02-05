@@ -85,10 +85,10 @@ const commonMenuItems: MenuItem[] = [
 const myPageMenu: MenuItem = {
   label: '마이페이지',
   subItems: [
-    { href: '/mypage/info', label: '회원정보 수정', disabled: true },
-    { href: '/mypage/hospital-info', label: '협력병원 정보수정', disabled: true },
-    { href: '/mypage/patients', label: '의뢰환자 조회', disabled: true },
-    { href: '/mypage/e-consult', label: 'e-Consult 조회', disabled: true }
+    { href: '/mypage/edit-profile', label: '회원정보 수정' },
+    { href: '/mypage/edit-clinic', label: '협력병의원 정보수정' },
+    { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
+    { href: '/mypage/patient-result', label: 'e-Consult 조회' }
   ]
 }
 
@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
   const isMainPage = pathname === '/'
 
   // 임시 로그인 상태
-  const isLoggedIn = false
+  const isLoggedIn = true
   const menuItems = useMemo(() => {
     return isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
   }, [isLoggedIn])
@@ -213,8 +213,8 @@ export const Header: React.FC = () => {
               {/* 데스크톱 GNB */}
               <nav
                 className={styles.gnb}
-                onMouseEnter={() => !isMainPage && setIsDropdownOpen(true)}
-                onMouseLeave={() => !isMainPage && setIsDropdownOpen(false)}
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
               >
                 <ul className={styles.gnbList}>
                   {menuItems.map((item, index) => (
@@ -279,10 +279,12 @@ export const Header: React.FC = () => {
 
         {/* 드롭다운 메뉴 */}
         <div
-          className={`${styles.dropdown} ${isDropdownOpen && !isMainPage ? styles.open : ''}`}
-          onMouseEnter={() => !isMainPage && setIsDropdownOpen(true)}
-          onMouseLeave={() => !isMainPage && setIsDropdownOpen(false)}
+          className={`${styles.dropdown} ${isDropdownOpen ? styles.open : ''}`}
+          onMouseEnter={() => setIsDropdownOpen(true)}
+          onMouseLeave={() => setIsDropdownOpen(false)}
         >
+          {/* 장식 원형 배경 */}
+          <img src='/assets/images/dropdown-circles.svg' alt='' className={styles.dropdownCircles} aria-hidden='true' />
           <div className={styles.container}>
             <div className={styles.dropdownInner}>
               {/* 좌측 안내 */}
@@ -422,45 +424,49 @@ export const Header: React.FC = () => {
           </ul>
 
           <div className={styles.mobileSubMenu}>
-            {menuItems[activeMobileMenu]?.subItems.map((sub, index) =>
-              sub.disabled ? (
-                <span key={index} className={styles.disabled}>
-                  {sub.label}
-                </span>
-              ) : (
-                <Link
-                  key={index}
-                  href={sub.href}
-                  className={isCurrentPage(sub.href) ? styles.highlight : ''}
-                  onClick={closeMobileMenu}
-                >
-                  {sub.label}
-                </Link>
-              )
-            )}
-          </div>
-        </div>
+            <div className={styles.mobileSubLinks}>
+              {menuItems[activeMobileMenu]?.subItems.map((sub, index) =>
+                sub.disabled ? (
+                  <span key={index} className={styles.disabled}>
+                    {sub.label}
+                  </span>
+                ) : (
+                  <Link
+                    key={index}
+                    href={sub.href}
+                    className={isCurrentPage(sub.href) ? styles.highlight : ''}
+                    onClick={closeMobileMenu}
+                  >
+                    {sub.label}
+                  </Link>
+                )
+              )}
+            </div>
 
-        <div className={styles.mobileFooter}>
-          <div className={styles.mobileContact}>
-            <span>
-              <PhoneIcon /> 문의
-            </span>
-            <a href={`tel:${hospital.contact.referralCenter.replace(/[^0-9]/g, '')}`}>
-              {hospital.contact.referralCenter}
-            </a>
-          </div>
-          <div className={styles.mobileContact}>
-            <span>
-              <FaxIcon /> FAX
-            </span>
-            <span>{hospital.contact.fax}</span>
+            <div className={styles.mobileContactBox}>
+              <div className={styles.mobileContact}>
+                <div className={styles.mobileContactLabel}>
+                  <PhoneIcon /> 문의
+                </div>
+                <a href={`tel:${hospital.contact.referralCenter.replace(/[^0-9]/g, '')}`}>
+                  {hospital.contact.referralCenter}
+                </a>
+              </div>
+              <div className={styles.mobileContact}>
+                <div className={styles.mobileContactLabel}>
+                  <FaxIcon /> FAX
+                </div>
+                <span>{hospital.contact.fax}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* 태블릿 메뉴 (769px ~ 1024px) */}
       <div className={`${styles.tabletMenu} ${isMenuOpen ? styles.open : ''}`}>
+        {/* 장식 원형 배경 */}
+        <img src='/assets/images/dropdown-circles.svg' alt='' className={styles.tabletCircles} aria-hidden='true' />
         <div className={styles.tabletHeader}>
           <Link href='/' className={styles.tabletLogo} onClick={closeMobileMenu}>
             {hospital.name.full}

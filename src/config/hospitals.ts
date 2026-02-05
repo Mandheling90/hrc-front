@@ -12,9 +12,9 @@ const anamConfig: HospitalConfig = {
   },
   contact: {
     phone: '1577-0083',
-    fax: '02-920-5844',
+    fax: '02-920-6523',
     reservation: '1577-0083',
-    referralCenter: '02-920-5114'
+    referralCenter: '02-920-5964'
   },
   address: {
     zipCode: '02841',
@@ -58,9 +58,9 @@ const guroConfig: HospitalConfig = {
   },
   contact: {
     phone: '1577-9966',
-    fax: '02-2626-1115',
+    fax: '02-2626-1691',
     reservation: '1577-9966',
-    referralCenter: '02-2626-3280'
+    referralCenter: '02-2626-8446'
   },
   address: {
     zipCode: '08308',
