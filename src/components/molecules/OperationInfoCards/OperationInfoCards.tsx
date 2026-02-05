@@ -40,9 +40,7 @@ export const OperationInfoCards: React.FC<OperationInfoCardsProps> = ({
             <p className={styles.infoTitle}>{card.title}</p>
             {card.subtitle && <p className={styles.infoSubtitle}>{card.subtitle}</p>}
           </div>
-          <div
-            className={`${styles.infoRowGroup} ${card.rowLayout === 'vertical' ? styles.verticalRows : ''}`}
-          >
+          <div className={`${styles.infoRowGroup} ${card.rowLayout === 'vertical' ? styles.verticalRows : ''}`}>
             {card.rows.map((row, rowIndex) => (
               <React.Fragment key={rowIndex}>
                 <div className={styles.infoRow}>

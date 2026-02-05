@@ -129,7 +129,11 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
       default:
         return (
           <div key={service.id} className={mobileSpanClass}>
-            <VerticalServiceCard {...commonProps} mobileSpan={service.mobileSpan} mobileAlign={service.mobileAlign || mobileAlign} />
+            <VerticalServiceCard
+              {...commonProps}
+              mobileSpan={service.mobileSpan}
+              mobileAlign={service.mobileAlign || mobileAlign}
+            />
           </div>
         )
     }

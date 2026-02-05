@@ -1,4 +1,4 @@
-import { HospitalId, HospitalPageContent, ReferralHiraInfo } from '@/types/hospital'
+import { HospitalId, HospitalPageContent } from '@/types/hospital'
 import { getCurrentHospitalId } from './hospitals'
 
 // 안암병원 페이지 콘텐츠

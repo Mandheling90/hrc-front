@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useMemo } from 'react'
-import { HospitalConfig, HospitalContextType, HospitalId, HospitalPageContent } from '@/types/hospital'
+import { HospitalContextType, HospitalId } from '@/types/hospital'
 import { getCurrentHospitalConfig, getCurrentHospitalId, getHospitalConfig } from '@/config/hospitals'
 import { getCurrentPageContent, getPageContent } from '@/config/pageContents'
 

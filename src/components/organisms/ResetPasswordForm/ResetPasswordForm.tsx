@@ -28,10 +28,6 @@ export const ResetPasswordForm: React.FC = () => {
     console.log('Reset password:', formData)
   }
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(prev => !prev)
-  }
-
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(prev => !prev)
   }
