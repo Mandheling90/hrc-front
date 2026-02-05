@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import styles from './CardList.module.scss'
 
 export interface CardRow {
@@ -64,10 +64,47 @@ export const CardList: React.FC<CardListProps> = ({
   variant = 'default'
 }) => {
   const isInfoCard = variant === 'infoCard'
+  const listRef = useRef<HTMLDivElement>(null)
+  const [hasScrollbar, setHasScrollbar] = useState(false)
+
+  useEffect(() => {
+    const checkScrollbar = () => {
+      if (listRef.current && scrollableHeight) {
+        // 스크롤바가 있는지 확인: scrollHeight > clientHeight
+        const hasScroll = listRef.current.scrollHeight > listRef.current.clientHeight
+        setHasScrollbar(hasScroll)
+      } else {
+        setHasScrollbar(false)
+      }
+    }
+
+    checkScrollbar()
+
+    // 리사이즈 이벤트와 내용 변경 시 재확인
+    const resizeObserver = new ResizeObserver(checkScrollbar)
+    if (listRef.current) {
+      resizeObserver.observe(listRef.current)
+    }
+
+    // MutationObserver로 내용 변경 감지
+    const mutationObserver = new MutationObserver(checkScrollbar)
+    if (listRef.current) {
+      mutationObserver.observe(listRef.current, {
+        childList: true,
+        subtree: true
+      })
+    }
+
+    return () => {
+      resizeObserver.disconnect()
+      mutationObserver.disconnect()
+    }
+  }, [scrollableHeight, cards])
 
   return (
     <div
-      className={`${styles.cardList} ${columns ? styles.grid : ''} ${className}`}
+      ref={listRef}
+      className={`${styles.cardList} ${columns ? styles.grid : ''} ${hasScrollbar ? styles.hasScrollbar : ''} ${className}`}
       style={
         scrollableHeight
           ? { maxHeight: scrollableHeight }

@@ -632,25 +632,16 @@
   }
 }
 
+// 두 컬럼 내부 세로 스택 (환자명/나이/진료과, 성별/진료일/진료의)
+.infoColumnStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
 // 태블릿/모바일 카드 리스트 스타일
 .patientCardList {
-  // 카드 내부 섹션 구분 (나이 뒤, 진료의 뒤, 약처방내역 뒤에 여백)
-  :global(.card) {
-    // 나이 행 뒤에 여백 (환자 기본 정보 섹션 끝)
-    > div:nth-child(4) {
-      margin-bottom: 8px;
-    }
-
-    // 진료의 행 뒤에 여백 (진료 정보 섹션 끝)
-    > div:nth-child(7) {
-      margin-bottom: 8px;
-    }
-
-    // 약처방내역 행 뒤에 여백 (동의 정보 섹션 끝)
-    > div:nth-child(9) {
-      margin-bottom: 8px;
-    }
-  }
 }
 
 // 태블릿/모바일 카드 스타일
@@ -770,13 +761,9 @@
 .cardViewBtn {
   width: 100px;
   padding: 5px 10px;
-  font-size: 20px;
-  font-weight: $font-weight-semibold;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
   line-height: 1.5;
-
-  @include mobile {
-    font-size: 18px;
-  }
 }
 
 // 만료된 카드 스타일
@@ -805,10 +792,10 @@
   &::after {
     content: '조회기간 만료';
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     right: 0;
-    height: 183px;
+    height: 91px;
     background-color: rgba(0, 0, 0, 0.6);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -820,22 +807,15 @@
     line-height: 1.5;
     color: $color-white;
     pointer-events: none;
-
-    @include tablet {
-      height: 163px;
-    }
-    @include mobile {
-      height: 153px;
-    }
   }
 }
 
 .cardExpiredOverlay {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   right: 0;
-  height: 183px;
+  height: 91px;
   background-color: rgba(0, 0, 0, 0.6);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;

@@ -10,7 +10,6 @@
   flex: 1;
   min-height: 0;
   width: 100%;
-  padding-right: 16px; // 스크롤바와 내용 사이 간격
 
   // 스크롤바 스타일
   &::-webkit-scrollbar {
@@ -25,6 +24,11 @@
   &::-webkit-scrollbar-thumb {
     background: $color-primary;
     border-radius: 60px;
+  }
+
+  // 스크롤바가 있을 때만 padding-right 적용
+  &.hasScrollbar {
+    padding-right: 16px; // 스크롤바와 내용 사이 간격
   }
 
   // 그리드 레이아웃

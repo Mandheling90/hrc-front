@@ -16,7 +16,13 @@
   }
 
   span {
-    display: inline;
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+
+    svg {
+      flex-shrink: 0;
+    }
   }
 
   // 테블릿 (769px ~ 1429px)

@@ -381,64 +381,46 @@ export default function PatientInquiryPage() {
                         highlighted: true
                       },
                       {
-                        id: 'patientName',
-                        leftContent: <InfoRowContent label='환자명' value={item.patientName} />,
-                        infoRow: true
-                      },
-                      {
-                        id: 'gender',
-                        leftContent: <InfoRowContent label='성별' value={item.gender} />,
-                        infoRow: true
-                      },
-                      {
-                        id: 'age',
-                        leftContent: <InfoRowContent label='나이' value={item.age} />,
-                        infoRow: true
-                      },
-                      {
-                        id: 'treatmentDate',
-                        leftContent: <InfoRowContent label='진료일' value={item.treatmentDate} />,
-                        infoRow: true
-                      },
-                      {
-                        id: 'department',
-                        leftContent: <InfoRowContent label='진료과' value={item.department} />,
-                        infoRow: true
-                      },
-                      {
-                        id: 'doctor',
+                        id: 'body',
                         leftContent: (
-                          <InfoRowContent
-                            label='진료의'
-                            value={
-                              item.doctorCanConsult ? (
-                                <span className={styles.doctorConsultable}>
-                                  {item.doctor}
-                                  <ConsultBadgeIcon />
-                                </span>
-                              ) : (
-                                item.doctor
-                              )
-                            }
-                            accent={item.doctorCanConsult}
-                          />
+                          <div className={styles.infoColumnStack}>
+                            <InfoRowContent label='환자명' value={item.patientName} />
+                            <InfoRowContent label='나이' value={item.age} />
+                            <InfoRowContent label='진료과' value={item.department} />
+                          </div>
+                        ),
+                        rightContent: (
+                          <div className={styles.infoColumnStack}>
+                            <InfoRowContent label='성별' value={item.gender} />
+                            <InfoRowContent label='진료일' value={item.treatmentDate} />
+                            <InfoRowContent
+                              label='진료의'
+                              value={
+                                item.doctorCanConsult ? (
+                                  <span className={styles.doctorConsultable}>
+                                    {item.doctor}
+                                    <ConsultBadgeIcon />
+                                  </span>
+                                ) : (
+                                  item.doctor
+                                )
+                              }
+                              accent={item.doctorCanConsult}
+                            />
+                          </div>
                         ),
                         infoRow: true
                       },
                       {
-                        id: 'consent',
+                        id: 'consent-prescription',
                         leftContent: (
                           <InfoRowContent
-                            label='정보공개 동의 여부'
+                            label='정보공개 공의 여부'
                             value={item.consentStatus || '-'}
                             accent={item.consentStatus === 'Y'}
                           />
                         ),
-                        infoRow: true
-                      },
-                      {
-                        id: 'prescription',
-                        leftContent: (
+                        rightContent: (
                           <InfoRowContent
                             label='약처방내역'
                             value={item.prescriptionStatus || '-'}
@@ -448,7 +430,7 @@ export default function PatientInquiryPage() {
                         infoRow: true
                       },
                       {
-                        id: 'resultBtn',
+                        id: 'buttons',
                         leftContent: (
                           <InfoRowContent
                             label='결과 조회'
@@ -463,11 +445,7 @@ export default function PatientInquiryPage() {
                             }
                           />
                         ),
-                        infoRow: true
-                      },
-                      {
-                        id: 'replyBtn',
-                        leftContent: (
+                        rightContent: (
                           <InfoRowContent
                             label='회신서 조회'
                             value={
