@@ -1546,7 +1546,7 @@ const ansanContent: HospitalPageContent = {
     // 지하철 정보 (간단한 구조)
     subway: [
       {
-        station: '고잔역',
+        station: '고잔역(고대안산병원) 1번출구 도보 10분',
         lines: '4호선, 수인분당선',
         destination: '고려대학교 안산병원'
       }
