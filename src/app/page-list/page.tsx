@@ -1,9 +1,20 @@
 'use client'
 
 import React from 'react'
+import { useHospital } from '@/hooks'
 import styles from './page.module.scss'
 
-const BASE_URL = 'https://hrc-front.vercel.app'
+const getBaseUrl = (hospitalId: string) => {
+  switch (hospitalId) {
+    case 'guro':
+      return 'https://hrc-front-guro.vercel.app'
+    case 'ansan':
+      return 'https://hrc-front-ansan.vercel.app'
+    case 'anam':
+    default:
+      return 'https://hrc-front.vercel.app'
+  }
+}
 
 interface PageItem {
   name: string
@@ -145,6 +156,9 @@ const getStatusLabel = (status: PageItem['status']) => {
 }
 
 export default function PageListPage() {
+  const { hospitalId, hospital } = useHospital()
+  const BASE_URL = getBaseUrl(hospitalId)
+
   const totalPages = pageData.reduce(
     (acc, category) => acc + category.subCategories.reduce((subAcc, sub) => subAcc + sub.pages.length, 0),
     0
@@ -158,7 +172,7 @@ export default function PageListPage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>2026 진료협력센터 프로젝트</h1>
+      <h1 className={styles.title}>2026 {hospital.name.short} 진료협력센터 프로젝트</h1>
       <p className={styles.subtitle}>
         진행률: {completedPages} / {totalPages} ({Math.round((completedPages / totalPages) * 100)}%)
       </p>
