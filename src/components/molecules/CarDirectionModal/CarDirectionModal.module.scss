@@ -107,17 +107,15 @@
   width: 100%;
   height: 3px;
   transform: translateY(-50%);
-  // 점선의 실선 길이를 더 길게 만들기 위해 background-image 사용
+  // Figma: 실선 9px, 간격 9px, 두께 3px, 색상 rgba(69,104,242,0.4)
   background-image: repeating-linear-gradient(
     to right,
-    $gray-8 0px,
-    $gray-8 20px,
-    // 실선: 0px ~ 20px
-    transparent 20px,
-    // 간격 시작: 20px
-    transparent 28px // 간격 끝: 28px (총 간격 8px)
+    rgba(69, 104, 242, 0.4) 0px,
+    rgba(69, 104, 242, 0.4) 9px,
+    transparent 9px,
+    transparent 18px
   );
-  background-size: 28px 3px;
+  background-size: 18px 3px;
   background-repeat: repeat-x;
 }
 

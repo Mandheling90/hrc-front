@@ -256,7 +256,6 @@
   }
 
   @include mobile {
-    width: 100%;
     padding: $spacing-2 $spacing-4;
   }
 }
@@ -297,7 +296,7 @@
 
   @include mobile {
     font-size: $font-size-xs;
-    align-self: flex-end;
+    // align-self: flex-end;
   }
 }
 
