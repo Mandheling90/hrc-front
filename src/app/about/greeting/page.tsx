@@ -8,7 +8,7 @@ import { useHospital } from '@/hooks'
 import styles from './page.module.scss'
 
 export default function GreetingPage() {
-  const { pageContent, hospitalId, isAnam } = useHospital()
+  const { pageContent, hospitalId, isAnam, isAnsan } = useHospital()
   const greetingInfo = pageContent.aboutGreeting
 
   // 병원별 배경 이미지 경로
@@ -97,8 +97,8 @@ export default function GreetingPage() {
                 ))}
               </div>
               <div className={styles.signature}>
-                <p className={styles.signatureName}>{greetingInfo.signature.name}</p>
                 <p className={styles.signatureTitle}>{greetingInfo.signature.title}</p>
+                <p className={styles.signatureName}>{greetingInfo.signature.name}</p>
               </div>
             </div>
           </div>
