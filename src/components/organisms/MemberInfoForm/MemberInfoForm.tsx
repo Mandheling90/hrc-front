@@ -312,16 +312,25 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               onButtonClick={handleIdCheck}
             />
 
-            <FormField
-              label='비밀번호'
-              required
-              id='password'
-              name='password'
-              type='password'
-              placeholder='비밀번호를 입력해주세요'
-              value={formData.password}
-              onChange={handleInputChange}
-            />
+            <div className={styles.passwordFieldWrapper}>
+              <FormField
+                label='비밀번호'
+                required
+                id='password'
+                name='password'
+                type='password'
+                placeholder='비밀번호를 입력해주세요'
+                value={formData.password}
+                onChange={handleInputChange}
+                labelExtra={<span className={styles.passwordStatus}>사용불가</span>}
+              />
+              <div className={styles.passwordRules}>
+                <p className={styles.rule}>영문, 숫자, 특수문자 조합 8~12자리 사용 가능, 연속번호는 사용금지</p>
+                <p className={styles.rule}>특수문자 사용 가능 범위: ~!@#$%^&*_-</p>
+                <p className={styles.rule}>동일문자 연속 4개 사용금지</p>
+                <p className={styles.rule}>아이디와 동일한 문구 사용금지</p>
+              </div>
+            </div>
 
             <FormField
               label='비밀번호 확인'
@@ -332,6 +341,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='비밀번호를 다시 입력해주세요'
               value={formData.passwordConfirm}
               onChange={handleInputChange}
+              labelExtra={<span className={styles.passwordStatus}>불일치</span>}
             />
 
             <FormField
