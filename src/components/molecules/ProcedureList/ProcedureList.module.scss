@@ -5,7 +5,7 @@
   padding-left: 32px; // Figma: 32px 왼쪽 마진
 
   @media (max-width: $breakpoint-md) {
-    padding-left: 20px; // 모바일: 20px
+    padding-left: $spacing-4; // 16px - Figma 모바일
   }
 }
 
@@ -55,7 +55,7 @@
   color: $gray-11;
   line-height: $line-height-normal; // Figma: 30px (1.5 × 20px)
   letter-spacing: -0.8px;
-  padding-left: 20px; // 8px 불렛 + 12px 간격
+  padding-left: $spacing-4; // 16px (8px 불렛 + 8px 간격) - Figma gap: 8px
   position: relative;
 
   &::before {
@@ -78,7 +78,7 @@
 
   @media (max-width: calc(#{$breakpoint-md} - 1px)) {
     font-size: $font-size-lg; // 18px - Figma 모바일
-    padding-left: $spacing-4; // 16px - Figma 모바일
+    letter-spacing: -0.72px;
 
     &::before {
       top: calc(1em * #{$line-height-normal} / 2);
@@ -92,7 +92,8 @@
   font-weight: $font-weight-normal;
   color: $gray-11;
   line-height: $line-height-normal; // Figma: 30px (1.5 × 20px)
-  padding-left: 20px; // 8px 불렛 + 12px 간격
+  letter-spacing: -0.8px;
+  padding-left: $spacing-4; // 16px (8px 불렛 + 8px 간격) - Figma gap: 8px
   position: relative;
 
   &::before {
@@ -114,7 +115,7 @@
 
   @media (max-width: calc(#{$breakpoint-md} - 1px)) {
     font-size: $font-size-lg; // 18px - Figma 모바일
-    padding-left: $spacing-4; // 16px - Figma 모바일
+    letter-spacing: -0.72px;
 
     &::before {
       top: calc(1em * #{$line-height-normal} / 2);
@@ -128,7 +129,8 @@
   font-weight: $font-weight-normal;
   color: $color-primary;
   line-height: $line-height-normal; // Figma: 1.5
-  padding-left: 20px; // 불렛과 동일한 들여쓰기
+  letter-spacing: -0.8px;
+  padding-left: $spacing-4; // 16px (불렛과 동일한 들여쓰기) - Figma gap: 8px
   margin: $spacing-2 0 0 0;
 
   // 태블릿 (769px ~ 1429px)
@@ -139,6 +141,6 @@
 
   @media (max-width: calc(#{$breakpoint-md} - 1px)) {
     font-size: $font-size-lg; // 18px - Figma 모바일
-    padding-left: $spacing-4; // 16px - Figma 모바일
+    letter-spacing: -0.72px;
   }
 }
