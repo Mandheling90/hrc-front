@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { SearchIcon } from '@/components/icons/SearchIcon'
@@ -14,6 +14,8 @@ export interface StaffInfoStepProps {
 }
 
 export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, totalSteps = 8 }) => {
+  const [medicalInstitutionType, setMedicalInstitutionType] = useState('')
+
   return (
     <div className={styles.stepContainer}>
       {/* 실무자 정보 섹션 */}
@@ -117,26 +119,26 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             <div className={styles.radioRow}>
               <Radio
                 name='medicalInstitutionType'
-                value='상급종합병원'
+                value={medicalInstitutionType}
                 options={[
                   { value: '상급종합병원', label: '상급종합병원' },
                   { value: '종합병원', label: '종합병원' },
                   { value: '병원', label: '병원' }
                 ]}
-                onChange={() => {}}
+                onChange={setMedicalInstitutionType}
                 className={styles.medicalInstitutionRadio}
               />
             </div>
             <div className={styles.radioRow}>
               <Radio
                 name='medicalInstitutionType'
-                value=''
+                value={medicalInstitutionType}
                 options={[
                   { value: '전문병원', label: '전문병원' },
                   { value: '요양병원', label: '요양병원' },
                   { value: '한방병원', label: '한방병원' }
                 ]}
-                onChange={() => {}}
+                onChange={setMedicalInstitutionType}
                 className={styles.medicalInstitutionRadio}
               />
             </div>
