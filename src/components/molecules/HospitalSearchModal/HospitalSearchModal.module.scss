@@ -1,0 +1,395 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+  padding: $spacing-4;
+}
+
+.modal {
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  box-shadow: 0px 0px 39px 0px rgba(0, 0, 0, 0.35);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 667px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+
+  @include mobile {
+    width: 320px;
+    max-width: 95vw;
+    max-height: 95vh;
+    padding: 20px;
+    gap: 40px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $gray-8;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5em;
+  letter-spacing: -1.28px;
+  color: $color-darken;
+  margin: 0;
+
+  @include mobile {
+    font-size: 24px;
+    line-height: 1.5em;
+    letter-spacing: -0.96px;
+  }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  @include mobile {
+    width: 32px;
+    height: 32px;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 56px;
+
+  @include mobile {
+    gap: 40px;
+  }
+}
+
+.formArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.inputField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 550px;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.inputLabel {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5em;
+  letter-spacing: -0.8px;
+  color: $color-darken;
+
+  @include mobile {
+    font-size: 18px;
+    line-height: 1.5em;
+    letter-spacing: -0.72px;
+  }
+}
+
+.inputWithButton {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+
+  input {
+    width: 100%;
+    height: 43px;
+    font-size: 20px;
+    line-height: 1.5em;
+    letter-spacing: -0.8px;
+
+    @include mobile {
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+  }
+}
+
+.fieldSearchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  height: 43px;
+  min-width: auto;
+  background-color: $color-primary;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+
+  span {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5em;
+    letter-spacing: -0.8px;
+    color: $color-white;
+    white-space: nowrap;
+
+    @include mobile {
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  @include mobile {
+    padding: 0 16px;
+  }
+}
+
+.infoNote {
+  margin-top: 0;
+  font-size: 14px;
+  line-height: 1.5em;
+  letter-spacing: -0.56px;
+}
+
+.searchButton {
+  width: 240px;
+  height: 66px;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5em;
+  letter-spacing: -0.96px;
+  border-radius: 5px;
+
+  @include mobile {
+    width: 100%;
+    height: 56px;
+    font-size: 20px;
+    line-height: 1.5em;
+    letter-spacing: -0.8px;
+  }
+}
+
+// ============================================
+// 검색 결과 뷰 스타일
+// ============================================
+
+.resultArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+}
+
+.resultTable {
+  width: 100%;
+
+  @include mobile {
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 8px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $gray-4;
+      border-radius: 40px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $color-primary;
+      border-radius: 60px;
+    }
+  }
+}
+
+// ============================================
+// 검색 결과 없음 뷰 스타일
+// ============================================
+
+.emptyResultContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.emptyResultHeader {
+  display: flex;
+  align-items: center;
+  background-color: $gray-2;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 15px 20px;
+  gap: 16px;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.emptyResultHeaderCell {
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5em;
+  letter-spacing: -0.8px;
+  color: $color-darken;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.emptyResultSeparator {
+  width: 0;
+  height: 18px;
+  flex-shrink: 0;
+  position: relative;
+  align-self: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 1px;
+    background-color: $gray-11;
+  }
+}
+
+.emptyResultBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $gray-4;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+
+  span {
+    font-size: 20px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5em;
+    letter-spacing: -0.8px;
+    color: $gray-11;
+    text-align: center;
+  }
+
+  @include mobile {
+    padding: 50px 20px;
+  }
+}
+
+.hospitalNameCell {
+  font-weight: $font-weight-semibold;
+}
+
+.mobileCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $gray-1;
+  }
+}
+
+.mobileHospitalName {
+  font-size: 18px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5em;
+  letter-spacing: -0.72px;
+  color: $gray-11;
+}
+
+.mobileAddress {
+  font-size: 16px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5em;
+  letter-spacing: -0.64px;
+  color: $gray-11;
+}
+
+// ============================================
+// 신규등록 뷰 스타일
+// ============================================
+
+.regFormGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}

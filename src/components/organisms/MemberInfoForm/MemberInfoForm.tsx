@@ -10,6 +10,10 @@ import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
+import {
+  HospitalSearchModal,
+  HospitalSearchResult
+} from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
 import React, { useState, useEffect } from 'react'
 import styles from './MemberInfoForm.module.scss'
 
@@ -153,6 +157,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     ...defaultFormData,
     ...initialData
   })
+  const [isHospitalSearchOpen, setIsHospitalSearchOpen] = useState(false)
 
   // 초기 데이터 변경 시 폼 데이터 업데이트
   useEffect(() => {
@@ -203,8 +208,16 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   }
 
   const handleHospitalSearch = () => {
-    // TODO: 병원 검색 로직
-    console.log('병원 검색')
+    setIsHospitalSearchOpen(true)
+  }
+
+  const handleHospitalSelect = (hospital: HospitalSearchResult) => {
+    setFormData(prev => ({
+      ...prev,
+      hospitalName: hospital.hospitalName,
+      careNumber: hospital.careNumber
+    }))
+    setIsHospitalSearchOpen(false)
   }
 
   const handleZipCodeSearch = () => {
@@ -295,7 +308,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               value={formData.userId}
               onChange={handleInputChange}
               disabled={isFieldDisabled('userId')}
-              buttonText='병원찾기'
+              buttonText='중복 확인'
               onButtonClick={handleIdCheck}
             />
 
@@ -438,7 +451,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='병원명을 입력해주세요'
               value={formData.hospitalName}
               onChange={handleInputChange}
-              disabled={isFieldDisabled('hospitalName')}
+              disabled={true}
               buttonText='병원 검색'
               onButtonClick={handleHospitalSearch}
               buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
@@ -453,7 +466,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='요양기관번호를 입력해주세요'
               value={formData.careNumber}
               onChange={handleInputChange}
-              disabled={isFieldDisabled('careNumber')}
+              disabled={true}
             />
 
             <FormField
@@ -465,7 +478,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='우편번호'
               value={formData.zipCode}
               onChange={handleInputChange}
-              disabled={isFieldDisabled('zipCode')}
+              disabled={true}
               buttonText='우편번호 검색'
               onButtonClick={handleZipCodeSearch}
               buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
@@ -478,7 +491,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 placeholder='주소'
                 value={formData.address}
                 onChange={handleInputChange}
-                disabled={isFieldDisabled('address')}
+                disabled={true}
               />
               <Input
                 type='text'
@@ -499,6 +512,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='-없이 입력해주세요'
               value={formData.hospitalPhone}
               onChange={handleInputChange}
+              disabled={true}
             />
 
             <FormField
@@ -518,6 +532,13 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       <ConfirmButtons
         secondaryButton={{ label: cancelButtonText || defaultCancelText, onClick: onCancel }}
         primaryButton={{ label: submitButtonText || defaultSubmitText, onClick: handleSubmit }}
+      />
+
+      {/* 병원 검색 팝업 */}
+      <HospitalSearchModal
+        isOpen={isHospitalSearchOpen}
+        onClose={() => setIsHospitalSearchOpen(false)}
+        onSelect={handleHospitalSelect}
       />
     </div>
   )
