@@ -22,6 +22,8 @@ export interface InfoBoxProps {
   highlightLast?: boolean
   /** 텍스트 색상 (기본값: 'default', 'black'로 설정 시 검정색) */
   textColor?: 'default' | 'black'
+  /** 제목 색상 (기본값: 'default', 'black'로 설정 시 검정색) */
+  titleColor?: 'default' | 'black'
   /** 추가 클래스명 */
   className?: string
 }
@@ -36,6 +38,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
   textAlign = 'left',
   highlightLast = false,
   textColor = 'default',
+  titleColor = 'default',
   className = ''
 }) => {
   const hasIcon = icon !== undefined
@@ -48,7 +51,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           <div className={styles.header}>
             {hasIcon && <div className={styles.icon}>{icon}</div>}
             {hasTitle && (
-              <h4 className={`${styles.title} ${textColor === 'black' ? styles.textBlack : ''}`}>{title}</h4>
+              <h4 className={`${styles.title} ${titleColor === 'black' ? styles.textBlack : ''}`}>{title}</h4>
             )}
           </div>
         )}
@@ -77,7 +80,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
           <div className={styles.guideContent}>
             {hasTitle && (
               <h3
-                className={`${styles.guideTitle} ${textAlign === 'center' ? styles.textCenter : ''} ${textColor === 'black' ? styles.textBlack : ''}`}
+                className={`${styles.guideTitle} ${textAlign === 'center' ? styles.textCenter : ''} ${titleColor === 'black' ? styles.textBlack : ''}`}
               >
                 {title}
               </h3>
@@ -117,7 +120,7 @@ export const InfoBox: React.FC<InfoBoxProps> = ({
     >
       {hasIcon && <div className={styles.icon}>{icon}</div>}
       <div className={styles.content}>
-        {hasTitle && <h4 className={`${styles.title} ${textColor === 'black' ? styles.textBlack : ''}`}>{title}</h4>}
+        {hasTitle && <h4 className={`${styles.title} ${titleColor === 'black' ? styles.textBlack : ''}`}>{title}</h4>}
         {messages.map((message, index) => (
           <p key={index} className={`${styles.message} ${textColor === 'black' ? styles.textBlack : ''}`}>
             {message}

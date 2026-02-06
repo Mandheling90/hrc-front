@@ -1,12 +1,10 @@
 'use client'
 
-import { Button } from '@/components/atoms/Button/Button'
-import { IPinIcon } from '@/components/icons/IPinIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
-import { PhoneIcon } from '@/components/icons/PhoneIcon'
 import { ShieldIcon } from '@/components/icons/ShieldIcon'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { NoticeList } from '@/components/molecules/NoticeList/NoticeList'
+import { VerificationCards } from '@/components/molecules/VerificationCards'
 import React from 'react'
 import styles from './VerificationStep.module.scss'
 
@@ -30,56 +28,11 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onNext }) =>
         ]}
         showBullets={true}
         contentAlign='center'
+        titleColor='black'
         className={styles.verificationGuideBox}
       />
 
-      <div className={styles.verificationCards}>
-        <div className={styles.verificationCard}>
-          <div className={styles.cardIcon}>
-            <PhoneIcon width={60} height={60} />
-          </div>
-          <div className={styles.cardContent}>
-            <div className={styles.cardTextGroup}>
-              <h4 className={styles.cardTitle}>본인 인증</h4>
-              <p className={styles.cardDescription}>본인명의 휴대폰, 공동인증서</p>
-            </div>
-            <Button
-              type='button'
-              variant='primary'
-              size='large'
-              onClick={() => {
-                onNext()
-              }}
-              className={styles.verifyButton}
-            >
-              인증하기
-            </Button>
-          </div>
-        </div>
-
-        <div className={styles.verificationCard}>
-          <div className={styles.cardIcon}>
-            <IPinIcon width={60} height={60} />
-          </div>
-          <div className={styles.cardContent}>
-            <div className={styles.cardTextGroup}>
-              <h4 className={styles.cardTitle}>아이핀(i-PIN) 인증</h4>
-              <p className={styles.cardDescription}>아이핀 ID / PW</p>
-            </div>
-            <Button
-              type='button'
-              variant='outline'
-              size='large'
-              onClick={() => {
-                onNext()
-              }}
-              className={styles.verifyButton}
-            >
-              인증하기
-            </Button>
-          </div>
-        </div>
-      </div>
+      <VerificationCards onPhoneVerify={onNext} onIpinVerify={onNext} className={styles.verificationCardsWrapper} />
 
       <NoticeList
         title='유의사항'
