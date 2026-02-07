@@ -64,10 +64,16 @@
   background-color: $color-primary;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 280px;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-white;
+  }
 
   @include tablet {
     padding: 20px;
@@ -140,6 +146,7 @@
 
 .userActions {
   display: flex;
+  align-items: stretch;
   gap: 14px;
 
   @include tablet {
@@ -155,6 +162,10 @@
 .userActionBtn,
 .userActionBtnPrimary {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 15px 30px;
   font-size: 24px;
   font-weight: $font-weight-semibold;
@@ -162,6 +173,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: all $transition-base;
+  text-decoration: none;
 
   @include mobile {
     font-size: 20px;
@@ -196,10 +208,15 @@
   background-color: $color-white;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  border: 1px solid $color-primary;
+  border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+  }
 
   @include tablet {
     padding: 20px;
@@ -354,9 +371,15 @@
   background-color: $color-white;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   gap: 40px;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+  }
 
   @include tablet {
     width: 100%;
@@ -547,9 +570,15 @@
   background-color: $color-white;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   gap: 40px;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+  }
 
   @include tablet {
     width: 100%;
@@ -751,6 +780,12 @@
   background-color: $color-white;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  border: 1px solid transparent;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-primary;
+  }
 
   @include tablet {
     width: 100%;

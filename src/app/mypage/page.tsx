@@ -172,14 +172,14 @@ export default function MyPage() {
             </div>
 
             {/* 회원탈퇴 카드 */}
-            <div className={styles.withdrawCard}>
+            {/* <div className={styles.withdrawCard}>
               <div className={styles.cardHeader}>
                 <SectionTitle title='회원탈퇴' noMargin />
                 <button type='button' className={styles.arrowBtn}>
                   <ArrowRightLargeIcon width={24} height={24} stroke='white' />
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>
