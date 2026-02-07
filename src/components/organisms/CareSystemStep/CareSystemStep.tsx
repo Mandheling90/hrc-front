@@ -202,28 +202,32 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
                   name: 'vre',
                   checked: isolationType.vre,
                   onChange: checked => setIsolationType(prev => ({ ...prev, vre: checked })),
-                  label: 'VRE'
+                  label: 'VRE',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'cre',
                   name: 'cre',
                   checked: isolationType.cre,
                   onChange: checked => setIsolationType(prev => ({ ...prev, cre: checked })),
-                  label: 'CRE'
+                  label: 'CRE',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'cpe',
                   name: 'cpe',
                   checked: isolationType.cpe,
                   onChange: checked => setIsolationType(prev => ({ ...prev, cpe: checked })),
-                  label: 'CPE'
+                  label: 'CPE',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'tb',
                   name: 'tb',
                   checked: isolationType.tb,
                   onChange: checked => setIsolationType(prev => ({ ...prev, tb: checked })),
-                  label: 'TB'
+                  label: 'TB',
+                  disabled: isolationWardOperation === '무'
                 }
               ]}
               keepSingleRow={true}
@@ -239,7 +243,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
               placeholder=''
               value={isolationTypeOther}
               onInputChange={e => setIsolationTypeOther(e.target.value)}
-              disabled={!isolationType.other}
+              disabled={isolationWardOperation === '무' || !isolationType.other}
             />
           </div>
 
@@ -256,21 +260,24 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
                   name: 'jointNursing',
                   checked: nursingDuringIsolation.joint,
                   onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, joint: checked })),
-                  label: '공동간병'
+                  label: '공동간병',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'individualNursing',
                   name: 'individualNursing',
                   checked: nursingDuringIsolation.individual,
                   onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, individual: checked })),
-                  label: '개인간병'
+                  label: '개인간병',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'guardianNursing',
                   name: 'guardianNursing',
                   checked: nursingDuringIsolation.guardian,
                   onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, guardian: checked })),
-                  label: '보호자간병'
+                  label: '보호자간병',
+                  disabled: isolationWardOperation === '무'
                 }
               ]}
               keepSingleRow={true}
@@ -290,21 +297,24 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
                   name: 'rehabNo',
                   checked: rehabilitationDuringIsolation.no,
                   onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, no: checked })),
-                  label: 'No'
+                  label: 'No',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'rehabBedside',
                   name: 'rehabBedside',
                   checked: rehabilitationDuringIsolation.bedside,
                   onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, bedside: checked })),
-                  label: '침상재활'
+                  label: '침상재활',
+                  disabled: isolationWardOperation === '무'
                 },
                 {
                   id: 'rehabIsolationWard',
                   name: 'rehabIsolationWard',
                   checked: rehabilitationDuringIsolation.isolationWard,
                   onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, isolationWard: checked })),
-                  label: '격리병동 재활실 운영'
+                  label: '격리병동 재활실 운영',
+                  disabled: isolationWardOperation === '무'
                 }
               ]}
               keepSingleRow={true}

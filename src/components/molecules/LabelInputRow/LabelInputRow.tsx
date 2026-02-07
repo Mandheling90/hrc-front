@@ -85,6 +85,7 @@ export const LabelInputRow: React.FC<LabelInputRowProps> = ({
           checked={checked || false}
           onChange={onCheckboxChange || (() => {})}
           label={checkboxLabel}
+          disabled={disabled}
         />
       ) : (
         <label className={styles.textLabel} htmlFor={inputId}>
