@@ -12,6 +12,16 @@
   // 호버 스타일 CSS 변수 (외부에서 오버라이드 가능)
   --table-row-hover-bg: #{$gray-1};
   --table-row-hover-title-color: inherit;
+
+  // 호버 스타일 활성화 시에만 적용
+  &.hoverEnabled {
+    .tableRow.clickable:hover {
+      background-color: var(--table-row-hover-bg);
+
+      // 호버 시 제목 컬럼 색상 변경 (CSS 변수 전달)
+      --notice-title-color: var(--table-row-hover-title-color);
+    }
+  }
 }
 
 .tableContainer {
@@ -217,13 +227,6 @@
 
   &.clickable {
     cursor: pointer;
-
-    &:hover {
-      background-color: var(--table-row-hover-bg);
-
-      // 호버 시 제목 컬럼 색상 변경 (CSS 변수 전달)
-      --notice-title-color: var(--table-row-hover-title-color);
-    }
   }
 
   // 하이라이트된 행 스타일

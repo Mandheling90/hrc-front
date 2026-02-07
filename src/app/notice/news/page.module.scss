@@ -152,10 +152,9 @@
   max-width: 1430px;
   margin: 0 auto;
 
-  // 행 호버 시 배경색 변경
-  :global(.tableRow.clickable):hover {
-    background-color: #f8efe2 !important;
-  }
+  // 행 호버 시 스타일 변경
+  --table-row-hover-bg: #f8efe2;
+  --table-row-hover-title-color: #816331;
 }
 
 // 공지 배지 스타일
@@ -189,7 +188,7 @@
   font-weight: $font-weight-semibold;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $color-darken; // black
+  color: var(--notice-title-color, $color-darken); // 기본: black, 호버 시 CSS 변수로 변경
   transition: color 0.2s;
   // 텍스트 오버플로우 처리
   display: block;
@@ -197,11 +196,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  // 행 호버 시 색상 변경
-  :global(.tableRow):hover & {
-    color: #816331;
-  }
 }
 
 // 날짜 텍스트 스타일

@@ -266,6 +266,7 @@ export default function NoticeListPage() {
                 getRowKey={item => item.id}
                 onRowClick={handleRowClick}
                 className={styles.noticeTable}
+                enableHoverStyle
               />
             ) : (
               <CardList

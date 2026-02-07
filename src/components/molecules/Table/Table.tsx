@@ -49,6 +49,8 @@ export interface TableProps<T = any> {
   highlightedClassName?: string
   /** 헤더 숨김 여부 (기본값: false) */
   hideHeader?: boolean
+  /** 행 호버 스타일 활성화 여부 (기본값: false) */
+  enableHoverStyle?: boolean
 }
 
 export function Table<T>({
@@ -64,7 +66,8 @@ export function Table<T>({
   scrollWithHeader = false,
   isHighlighted,
   highlightedClassName = '',
-  hideHeader = false
+  hideHeader = false,
+  enableHoverStyle = false
 }: TableProps<T>) {
   // 기본 셀 렌더링
   const renderCell = (column: TableColumn<T>, item: T, index: number) => {
@@ -80,7 +83,7 @@ export function Table<T>({
   const hasHorizontalScroll = columns.some(col => (col.textOverflow || defaultTextOverflow) === 'scroll')
 
   return (
-    <div className={`${styles.tableWrapper} ${className}`}>
+    <div className={`${styles.tableWrapper} ${enableHoverStyle ? styles.hoverEnabled : ''} ${className}`}>
       {scrollWithHeader ? (
         /* 헤더를 포함한 전체 영역 스크롤 */
         <div
