@@ -6,6 +6,8 @@ export interface FileRemoveIconProps {
   className?: string
   stroke?: string
   strokeWidth?: number
+  onClick?: React.MouseEventHandler<SVGSVGElement>
+  style?: React.CSSProperties
 }
 
 export const FileRemoveIcon: React.FC<FileRemoveIconProps> = ({
@@ -13,7 +15,9 @@ export const FileRemoveIcon: React.FC<FileRemoveIconProps> = ({
   height = 22,
   className = '',
   stroke = 'var(--gray-11)',
-  strokeWidth = 1.33333
+  strokeWidth = 1.33333,
+  onClick,
+  style
 }) => {
   return (
     <svg
@@ -23,6 +27,8 @@ export const FileRemoveIcon: React.FC<FileRemoveIconProps> = ({
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       className={className}
+      onClick={onClick}
+      style={style}
     >
       <path
         d='M5 5L17 17M5 17L17 5'

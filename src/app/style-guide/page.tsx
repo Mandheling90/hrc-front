@@ -741,7 +741,7 @@ export default function StyleGuidePage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>11. Organisms Components</h2>
 
-        <h3 className={styles.sectionSubtitle}>Header (작업중)</h3>
+        <h3 className={styles.sectionSubtitle}>Header</h3>
         <div className={styles.infoBoxGroup}>
           <div className={styles.componentItem}>
             <InfoBox
@@ -751,10 +751,51 @@ export default function StyleGuidePage() {
               showBullets
               messages={[
                 '반응형 GNB 메가 드롭다운 메뉴',
-                '데스크톱 (1430px+): 호버 시 메가 드롭다운',
-                '태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴',
-                '모바일 (768px 이하): 우측 사이드 패널 메뉴',
-                '메뉴: 진료의뢰, 협력네트워크, 공지/정보, 진료협력센터 소개, 마이페이지(로그인 시)'
+                '데스크톱 (1430px+): 호버 시 메가 드롭다운 + 장식 원형 배경',
+                '태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴 + 장식 원형 배경',
+                '모바일 (768px 이하): 우측 사이드 패널 메뉴 + 연락처 박스',
+                '메뉴: 진료의뢰, 협력네트워크, 공지/정보, 진료협력센터 소개, 마이페이지(로그인 시)',
+                'Breadcrumbs: pathname 기반 자동 생성'
+              ]}
+            />
+          </div>
+        </div>
+
+        <h3 className={styles.sectionSubtitle}>Footer</h3>
+        <div className={styles.infoBoxGroup}>
+          <div className={styles.componentItem}>
+            <InfoBox
+              variant='info'
+              title='Footer 컴포넌트'
+              icon={<InfoIcon width={24} height={24} />}
+              showBullets
+              messages={[
+                '파트너 슬라이더 (메인 페이지에서만 표시)',
+                '무한 루프 슬라이딩 + CSS 애니메이션 (모바일)',
+                '정책 링크: 인터넷이용약관, 개인정보처리방침, 환자권리장전, 이메일주소수집거부',
+                '소셜 미디어 링크: NAVER, YOUTUBE',
+                '인증마크: EMR 인증, ISMS 인증',
+                '진료지원부서/패밀리사이트 드롭다운 버튼'
+              ]}
+            />
+          </div>
+        </div>
+
+        <h3 className={styles.sectionSubtitle}>CardList</h3>
+        <div className={styles.infoBoxGroup}>
+          <div className={styles.componentItem}>
+            <InfoBox
+              variant='info'
+              title='CardList 컴포넌트'
+              icon={<InfoIcon width={24} height={24} />}
+              showBullets
+              messages={[
+                "variant: 'default' | 'infoCard' (의뢰환자 조회 스타일)",
+                'columns: 그리드 열 수 지정 (기본: 세로 나열)',
+                'scrollableHeight: 스크롤 영역 높이 설정',
+                '스크롤바 자동 감지 기능 (ResizeObserver, MutationObserver)',
+                'onCardClick: 카드 클릭 핸들러',
+                'InfoRowContent: 라벨-값 쌍 표시 서브컴포넌트'
               ]}
             />
           </div>

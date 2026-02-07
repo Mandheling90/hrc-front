@@ -15,6 +15,10 @@
     flex-shrink: 0;
   }
 
+  &.iconAlignTop {
+    align-items: flex-start;
+  }
+
   span {
     display: flex;
     align-items: center;

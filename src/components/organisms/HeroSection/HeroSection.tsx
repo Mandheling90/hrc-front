@@ -503,6 +503,7 @@ export const HeroSection: React.FC = () => {
             </div>
           </div>
           <div className={`${styles.box} ${styles.square}`}>
+            <div className={styles.hoverOverlay} aria-hidden='true' />
             <ul>
               {infoLinks.map((link, index) => {
                 const IconComponent = iconMap[link.icon]

@@ -60,9 +60,10 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
         return true
       })
       // 최대 2개까지만 허용
-      const newFiles = [...files, ...validFiles].slice(0, 2)
+      const totalFiles = [...files, ...validFiles]
+      const newFiles = totalFiles.slice(0, 2)
       setFiles(newFiles)
-      if (newFiles.length >= 2 && validFiles.length > 0) {
+      if (totalFiles.length > 2) {
         setAlertModal({
           isOpen: true,
           message: '첨부 파일 업로드 개수 초과입니다. (최대 2개)'
@@ -106,15 +107,21 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
         return true
       })
       // 최대 2개까지만 허용
-      const newFiles = [...files, ...validFiles].slice(0, 2)
+      const totalFiles = [...files, ...validFiles]
+      const newFiles = totalFiles.slice(0, 2)
       setFiles(newFiles)
-      if (newFiles.length >= 2 && validFiles.length > 0) {
+      if (totalFiles.length > 2) {
         setAlertModal({
           isOpen: true,
           message: '첨부 파일 업로드 개수 초과입니다. (최대 2개)'
         })
       }
     }
+  }
+
+  // 파일 삭제 핸들러
+  const handleFileRemove = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index))
   }
 
   // 파일 선택 버튼 클릭 핸들러
@@ -209,7 +216,13 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
                 <div className={styles.fileList}>
                   {files.map((file, index) => (
                     <div key={index} className={styles.fileItem}>
-                      <FileRemoveIcon width={22} height={22} stroke='var(--gray-11)' />
+                      <FileRemoveIcon
+                        width={22}
+                        height={22}
+                        stroke='var(--gray-11)'
+                        onClick={() => handleFileRemove(index)}
+                        style={{ cursor: 'pointer' }}
+                      />
                       <span className={styles.fileName}>{file.name}</span>
                       <span className={styles.fileSize}>{formatFileSize(file.size)}</span>
                     </div>

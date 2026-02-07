@@ -20,6 +20,12 @@ export interface DirectorInfoStepProps {
 }
 
 export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep = 2, totalSteps = 8 }) => {
+  const [gender, setGender] = React.useState('')
+  const [department, setDepartment] = React.useState('')
+  const [smsConsent, setSmsConsent] = React.useState('')
+  const [emailConsent, setEmailConsent] = React.useState('')
+  const [replyConsent, setReplyConsent] = React.useState('')
+
   return (
     <div className={styles.formSection}>
       <div className={styles.formHeader}>
@@ -101,12 +107,12 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           </InputLabel>
           <Radio
             name='gender'
-            value=''
+            value={gender}
             options={[
               { value: '남자', label: '남자' },
               { value: '여자', label: '여자' }
             ]}
-            onChange={() => {}}
+            onChange={setGender}
           />
         </div>
 
@@ -188,7 +194,7 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           <InputLabel htmlFor='department' required>
             진료과
           </InputLabel>
-          <Select id='department' name='department' options={DEPARTMENT_OPTIONS} value='' onChange={() => {}} />
+          <Select id='department' name='department' options={DEPARTMENT_OPTIONS} value={department} onChange={setDepartment} />
         </div>
 
         {/* 세부전공 */}
@@ -211,12 +217,12 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           </InputLabel>
           <Radio
             name='smsConsent'
-            value=''
+            value={smsConsent}
             options={[
               { value: '동의', label: '동의' },
               { value: '비동의', label: '비동의' }
             ]}
-            onChange={() => {}}
+            onChange={setSmsConsent}
           />
         </div>
 
@@ -227,12 +233,12 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           </InputLabel>
           <Radio
             name='emailConsent'
-            value=''
+            value={emailConsent}
             options={[
               { value: '동의', label: '동의' },
               { value: '비동의', label: '비동의' }
             ]}
-            onChange={() => {}}
+            onChange={setEmailConsent}
           />
         </div>
 
@@ -243,12 +249,12 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           </InputLabel>
           <Radio
             name='replyConsent'
-            value=''
+            value={replyConsent}
             options={[
               { value: '동의', label: '동의' },
               { value: '비동의', label: '비동의' }
             ]}
-            onChange={() => {}}
+            onChange={setReplyConsent}
           />
         </div>
       </div>

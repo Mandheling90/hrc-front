@@ -42,6 +42,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onPrev, 
         ]}
         showBullets={true}
         className={styles.infoGuideBox}
+        textColor='black'
       />
 
       <MemberInfoForm

@@ -66,7 +66,7 @@ const commonMenuItems: MenuItem[] = [
     label: '공지/정보',
     subItems: [
       { href: '/notice/list', label: '공지사항' },
-      { href: '/notice/news', label: '병원소식', disabled: true },
+      { href: '/notice/news', label: '병원소식' },
       { href: '/notice/event', label: '교육/행사' }
     ]
   },
@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
   const isMainPage = pathname === '/'
 
   // 임시 로그인 상태
-  const isLoggedIn = true
+  const isLoggedIn = false
   const menuItems = useMemo(() => {
     return isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
   }, [isLoggedIn])
