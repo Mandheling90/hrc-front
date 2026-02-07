@@ -22,6 +22,8 @@ export interface ClinicCardProps {
   onMapClick?: () => void
   /** 홈 버튼 클릭 핸들러 */
   onHomeClick?: () => void
+  /** 카드 클릭 핸들러 */
+  onClick?: () => void
   /** className */
   className?: string
 }
@@ -35,10 +37,15 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
   highlighted = false,
   onMapClick,
   onHomeClick,
+  onClick,
   className = ''
 }) => {
   return (
-    <div className={`${styles.card} ${highlighted ? styles.highlighted : ''} ${className}`}>
+    <div
+      className={`${styles.card} ${highlighted ? styles.highlighted : ''} ${className}`}
+      onClick={onClick}
+      style={{ cursor: onClick ? 'pointer' : undefined }}
+    >
       <div className={styles.header}>
         <span className={`${styles.badge} ${highlighted ? styles.badgeHighlighted : styles.badgeNormal}`}>
           {type === 'hospital' ? '병원' : '의원'}

@@ -113,6 +113,7 @@ export default function ClinicStatusPage() {
   const [selectedHospitalType, setSelectedHospitalType] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [selectedClinicId, setSelectedClinicId] = useState<string>(mockClinics[0]?.id || '')
   const itemsPerPage = 4
 
   // Breadcrumb 설정
@@ -259,7 +260,8 @@ export default function ClinicStatusPage() {
                           address={clinic.address}
                           phone={clinic.phone}
                           fax={clinic.fax}
-                          highlighted={index === 0}
+                          highlighted={selectedClinicId === clinic.id}
+                          onClick={() => setSelectedClinicId(clinic.id)}
                           onMapClick={() => handleMapClick(clinic.id)}
                           onHomeClick={() => handleHomeClick(clinic.id)}
                         />
