@@ -498,7 +498,7 @@
 
   :global(.headerCell) {
     font-weight: $font-weight-semibold;
-    color: $gray-12;
+    color: $color-darken;
   }
 
   :global(.dataCell) {
@@ -531,7 +531,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 450px;
+    width: 506px;
     background-color: rgba(0, 0, 0, 0.6);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -601,26 +601,25 @@
 // 조회 버튼
 .viewBtn {
   padding: 5px 10px;
-  font-size: 20px;
-  font-weight: $font-weight-semibold;
+  font-size: 18px;
+  font-weight: $font-weight-normal;
   line-height: 1.5;
-  min-width: 100px;
+  letter-spacing: -0.72px;
+  min-width: auto;
 
   @include tablet {
     font-size: 18px;
-    min-width: 80px;
   }
 
   @include mobile {
     font-size: 16px;
-    min-width: 70px;
     padding: 4px 8px;
   }
 }
 
 // 페이지네이션
 .pagination {
-  margin-top: 40px;
+  margin-top: 56px;
   justify-content: center;
 
   @include tablet {
