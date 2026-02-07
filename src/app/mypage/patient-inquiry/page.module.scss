@@ -598,22 +598,29 @@
   color: $color-primary;
 }
 
-// 조회 버튼
+// 조회 버튼 (Figma: Small BTN - px-10 py-5, 18px Regular)
+// 더블 셀렉터로 Button .small 기본 스타일 오버라이드
 .viewBtn {
-  padding: 5px 10px;
-  font-size: 18px;
-  font-weight: $font-weight-normal;
-  line-height: 1.5;
-  letter-spacing: -0.72px;
-  min-width: auto;
-
-  @include tablet {
+  &#{&} {
+    height: auto;
+    padding: 5px 10px;
     font-size: 18px;
-  }
+    font-weight: $font-weight-normal;
+    line-height: 1.5;
+    letter-spacing: -0.72px;
+    min-width: 100px;
 
-  @include mobile {
-    font-size: 16px;
-    padding: 4px 8px;
+    @include tablet {
+      font-size: 18px;
+      height: auto;
+      padding: 5px 10px;
+    }
+
+    @include mobile {
+      font-size: 16px;
+      height: auto;
+      padding: 4px 8px;
+    }
   }
 }
 
