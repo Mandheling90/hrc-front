@@ -45,13 +45,12 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
           {/* 실무자명 */}
           <FormField
             label='실무자명'
-            required
             id='staffName'
             name='staffName'
             type='text'
             placeholder='이름을 입력해주세요.'
             value={staffName}
-            onChange={(e) => setStaffName(e.target.value)}
+            onChange={e => setStaffName(e.target.value)}
             buttonText='병원찾기'
             onButtonClick={() => {}}
             buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
@@ -60,49 +59,45 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
           {/* 부서 */}
           <FormField
             label='부서'
-            required
             id='department'
             name='department'
             type='text'
             placeholder='부서명을 입력해주세요.'
             value={department}
-            onChange={(e) => setDepartment(e.target.value)}
+            onChange={e => setDepartment(e.target.value)}
           />
 
           {/* 직급 */}
           <FormField
             label='직급'
-            required
             id='position'
             name='position'
             type='text'
             placeholder='직급명을 입력해주세요.'
             value={position}
-            onChange={(e) => setPosition(e.target.value)}
+            onChange={e => setPosition(e.target.value)}
           />
 
           {/* 연락처 */}
           <FormField
             label='연락처'
-            required
             id='contactNumber'
             name='contactNumber'
             type='tel'
             placeholder='-없이 입력해주세요.'
             value={contactNumber}
-            onChange={(e) => setContactNumber(e.target.value)}
+            onChange={e => setContactNumber(e.target.value)}
           />
 
           {/* 휴대전화 */}
           <FormField
             label='휴대전화'
-            required
             id='mobilePhone'
             name='mobilePhone'
             type='tel'
             placeholder='-없이 입력해주세요.'
             value={mobilePhone}
-            onChange={(e) => setMobilePhone(e.target.value)}
+            onChange={e => setMobilePhone(e.target.value)}
           />
         </div>
       </div>
@@ -169,7 +164,7 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             type='text'
             placeholder='총 직원 수를 입력해주세요.'
             value={totalEmployees}
-            onChange={(e) => setTotalEmployees(e.target.value)}
+            onChange={e => setTotalEmployees(e.target.value)}
           />
 
           {/* 전문의 수 */}
@@ -181,7 +176,7 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             type='text'
             placeholder='전문의 수를 입력해주세요.'
             value={specialists}
-            onChange={(e) => setSpecialists(e.target.value)}
+            onChange={e => setSpecialists(e.target.value)}
           />
 
           {/* 간호사 수 */}
@@ -193,7 +188,7 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             type='text'
             placeholder='간호사 수를 입력해주세요.'
             value={nurses}
-            onChange={(e) => setNurses(e.target.value)}
+            onChange={e => setNurses(e.target.value)}
           />
         </div>
       </div>

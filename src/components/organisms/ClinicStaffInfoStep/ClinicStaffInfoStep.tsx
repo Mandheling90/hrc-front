@@ -80,7 +80,6 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
           <div className={styles.formField}>
             <FormField
               label='실무자명'
-              required
               id='staffName'
               name='staffName'
               type='text'
@@ -95,7 +94,6 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
           <div className={styles.formField}>
             <FormField
               label='부서'
-              required
               id='department'
               name='department'
               type='text'
@@ -110,7 +108,6 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
           <div className={styles.formField}>
             <FormField
               label='직급'
-              required
               id='position'
               name='position'
               type='text'
@@ -125,7 +122,6 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
           <div className={styles.formField}>
             <FormField
               label='연락처'
-              required
               id='contactNumber'
               name='contactNumber'
               type='tel'
@@ -140,7 +136,6 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
           <div className={styles.formField}>
             <FormField
               label='휴대전화'
-              required
               id='mobilePhone'
               name='mobilePhone'
               type='tel'
