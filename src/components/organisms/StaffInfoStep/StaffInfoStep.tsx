@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
+import { useHospital } from '@/hooks'
 import styles from './StaffInfoStep.module.scss'
 
 export interface StaffInfoStepProps {
@@ -16,7 +17,27 @@ export interface StaffInfoStepProps {
   totalSteps?: number
 }
 
+// 병원별 의료기관 유형 옵션
+const ANAM_INSTITUTION_OPTIONS = [
+  ['상급종합병원', '종합병원', '병원'],
+  ['요양병원', '한방']
+]
+
+const GURO_INSTITUTION_OPTIONS = [
+  ['상급종합병원', '종합병원', '병원'],
+  ['요양병원', '한방병원', '치과병원'],
+  ['정신병원', '보건기관', '기관']
+]
+
+const ANSAN_INSTITUTION_OPTIONS = [
+  ['상급종합병원', '종합병원', '병원'],
+  ['요양병원', '한방병원', '치과병원'],
+  ['정신병원', '보건기관']
+]
+
 export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, totalSteps = 8 }) => {
+  const { isGuro, isAnsan } = useHospital()
+
   const [staffName, setStaffName] = useState('')
   const [deptType, setDeptType] = useState<'부서' | '진료과'>('부서')
   const [department, setDepartment] = useState('')
@@ -27,6 +48,13 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
   const [totalEmployees, setTotalEmployees] = useState('')
   const [specialists, setSpecialists] = useState('')
   const [nurses, setNurses] = useState('')
+
+  // 병원별 의료기관 유형 옵션 선택
+  const institutionOptionRows = useMemo(() => {
+    if (isGuro) return GURO_INSTITUTION_OPTIONS
+    if (isAnsan) return ANSAN_INSTITUTION_OPTIONS
+    return ANAM_INSTITUTION_OPTIONS
+  }, [isGuro, isAnsan])
 
   return (
     <div className={styles.stepContainer}>
@@ -135,32 +163,17 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
 
         <div className={styles.formContent}>
           <div className={styles.radioGroupContainer}>
-            <div className={styles.radioRow}>
-              <Radio
-                name='medicalInstitutionType'
-                value={medicalInstitutionType}
-                options={[
-                  { value: '상급종합병원', label: '상급종합병원' },
-                  { value: '종합병원', label: '종합병원' },
-                  { value: '병원', label: '병원' }
-                ]}
-                onChange={setMedicalInstitutionType}
-                className={styles.medicalInstitutionRadio}
-              />
-            </div>
-            <div className={styles.radioRow}>
-              <Radio
-                name='medicalInstitutionType'
-                value={medicalInstitutionType}
-                options={[
-                  { value: '전문병원', label: '전문병원' },
-                  { value: '요양병원', label: '요양병원' },
-                  { value: '한방병원', label: '한방병원' }
-                ]}
-                onChange={setMedicalInstitutionType}
-                className={styles.medicalInstitutionRadio}
-              />
-            </div>
+            {institutionOptionRows.map((row, rowIndex) => (
+              <div key={rowIndex} className={styles.radioRow}>
+                <Radio
+                  name='medicalInstitutionType'
+                  value={medicalInstitutionType}
+                  options={row.map(value => ({ value, label: value }))}
+                  onChange={setMedicalInstitutionType}
+                  className={styles.medicalInstitutionRadio}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

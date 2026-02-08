@@ -171,6 +171,7 @@
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0;
+  white-space: pre-line;
 
   &:not(:last-child) {
     margin-bottom: 0;
@@ -334,6 +335,7 @@
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0;
+  white-space: pre-line;
 
   // 테블릿 (769px ~ 1429px) - 내용 18px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
