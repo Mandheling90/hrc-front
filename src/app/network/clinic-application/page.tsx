@@ -123,7 +123,6 @@ export default function ClinicApplicationPage() {
                     onClick: handleNext
                   }}
                   className={styles.formActions}
-                  noMargin
                 />
               </>
             )}
