@@ -203,7 +203,9 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
             <div className={styles.infoItem}>
               <span className={styles.bullet}></span>
               <p className={styles.infoText}>
-                파일 첨부가 어려우신 경우 사업자등록증, 차량등록증을 팩스 02-920-6523 로 보내주십시오.
+                파일 첨부가 어려우신 경우 사업자등록증, 차량등록증을
+                <br />
+                팩스 02-920-6523 로 보내주십시오.
               </p>
             </div>
           </div>
