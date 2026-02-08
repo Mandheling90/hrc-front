@@ -7,6 +7,7 @@ import { Radio } from '@/components/atoms/Radio/Radio'
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGroup'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/LabelInputRowGroup'
+import { useHospital } from '@/hooks'
 import styles from './ClinicStaffInfoStep.module.scss'
 
 export interface ClinicStaffInfoStepProps {
@@ -17,6 +18,12 @@ export interface ClinicStaffInfoStepProps {
 }
 
 export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ currentStep = 3, totalSteps = 4 }) => {
+  const { isGuro, isAnsan } = useHospital()
+  const showMedicalInstitutionType = isGuro || isAnsan
+
+  // 의료기관 유형 상태
+  const [medicalInstitutionType, setMedicalInstitutionType] = useState<string>('의원')
+
   // 실무자 정보 상태
   const [staffName, setStaffName] = useState<string>('')
   const [department, setDepartment] = useState<string>('')
@@ -147,6 +154,33 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
           </div>
         </div>
       </div>
+
+      {/* 의료기관 유형 섹션 (구로/안산만 표시) */}
+      {showMedicalInstitutionType && (
+        <div className={styles.formSection}>
+          <div className={styles.formHeader}>
+            <div className={styles.formHeaderLeft}>
+              <h3 className={styles.formTitle}>의료기관 유형</h3>
+              <p className={styles.formSubtitle}>필수 입력 항목을 모두 입력해주세요.</p>
+            </div>
+          </div>
+          <div className={styles.formDivider}></div>
+
+          <div className={styles.formContent}>
+            <Radio
+              name='medicalInstitutionType'
+              value={medicalInstitutionType}
+              options={[
+                { value: '의원', label: '의원' },
+                { value: '치과의원', label: '치과의원' },
+                { value: '한의원', label: '한의원' }
+              ]}
+              onChange={setMedicalInstitutionType}
+              minWidth='180px'
+            />
+          </div>
+        </div>
+      )}
 
       {/* 병상, 시설 및 장비 현황 섹션 */}
       <div className={styles.formSection}>
