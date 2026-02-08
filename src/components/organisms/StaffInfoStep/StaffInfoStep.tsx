@@ -2,8 +2,11 @@
 
 import React, { useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
+import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
+import { Select } from '@/components/atoms/Select/Select'
 import { SearchIcon } from '@/components/icons/SearchIcon'
+import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import styles from './StaffInfoStep.module.scss'
 
 export interface StaffInfoStepProps {
@@ -15,6 +18,7 @@ export interface StaffInfoStepProps {
 
 export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, totalSteps = 8 }) => {
   const [staffName, setStaffName] = useState('')
+  const [deptType, setDeptType] = useState<'부서' | '진료과'>('부서')
   const [department, setDepartment] = useState('')
   const [position, setPosition] = useState('')
   const [contactNumber, setContactNumber] = useState('')
@@ -56,16 +60,33 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
           />
 
-          {/* 부서 */}
-          <FormField
-            label='부서'
-            id='department'
-            name='department'
-            type='text'
-            placeholder='부서명을 입력해주세요.'
-            value={department}
-            onChange={e => setDepartment(e.target.value)}
-          />
+          {/* 부서/진료과 */}
+          <div className={styles.formField}>
+            <div className={styles.deptLabelRow}>
+              <InputLabel htmlFor='department'>부서/진료과</InputLabel>
+              <Radio
+                name='deptType'
+                value={deptType}
+                options={[
+                  { value: '부서', label: '부서' },
+                  { value: '진료과', label: '진료과' }
+                ]}
+                onChange={val => {
+                  setDeptType(val as '부서' | '진료과')
+                  setDepartment('')
+                }}
+                className={styles.deptTypeRadio}
+              />
+            </div>
+            <Select
+              id='department'
+              name='department'
+              placeholder='선택'
+              value={department}
+              onChange={setDepartment}
+              options={deptType === '부서' ? STAFF_DEPARTMENT_OPTIONS : MEDICAL_DEPARTMENT_OPTIONS}
+            />
+          </div>
 
           {/* 직급 */}
           <FormField

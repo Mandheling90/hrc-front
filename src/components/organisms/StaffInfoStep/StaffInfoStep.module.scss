@@ -6,6 +6,24 @@
 // stepContainer는 공통 스타일 사용
 // formHeader는 공통 스타일의 align-items: center 사용 (중앙 정렬)
 
+// 부서/진료과 라디오 + 셀렉트 레이아웃
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.deptLabelRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.deptTypeRadio {
+  display: flex !important;
+  gap: $spacing-4 !important;
+}
+
 // 의료기관 유형 라디오 버튼 레이아웃
 .radioGroupContainer {
   display: flex;

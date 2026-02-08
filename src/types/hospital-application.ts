@@ -52,6 +52,69 @@ export const DEPARTMENT_OPTIONS: DepartmentOption[] = [
   { value: '응급의학과', label: '응급의학과' }
 ]
 
+/** 부서 옵션 (실무자 정보용) */
+export const STAFF_DEPARTMENT_OPTIONS: DepartmentOption[] = [
+  { value: '01', label: 'ICU' },
+  { value: '02', label: '가정간호' },
+  { value: '03', label: '간호부' },
+  { value: '04', label: '건강의학센터' },
+  { value: '05', label: '국제진료소' },
+  { value: '06', label: '기획팀' },
+  { value: '07', label: '당뇨교육실' },
+  { value: '08', label: '물리치료실' },
+  { value: '09', label: '비서실' },
+  { value: '10', label: '사회사업실' },
+  { value: '11', label: '약제부' },
+  { value: '12', label: '예약실' },
+  { value: '13', label: '원무팀' },
+  { value: '14', label: '응급실' },
+  { value: '15', label: '임상병리과' },
+  { value: '16', label: '장례식장' },
+  { value: '17', label: '재활치료실' },
+  { value: '18', label: '진료협력센터' },
+  { value: '19', label: '총무팀' },
+  { value: '20', label: '투석실' },
+  { value: '21', label: '혈액은행' },
+  { value: '22', label: '호스피스' },
+  { value: '23', label: '기타' },
+  { value: '24', label: '수탁검사담당' },
+  { value: '25', label: '행정팀' }
+]
+
+/** 진료과 옵션 (실무자 정보용) */
+export const MEDICAL_DEPARTMENT_OPTIONS: DepartmentOption[] = [
+  { value: 'AN', label: '마취통증의학과' },
+  { value: 'AP', label: '병리과' },
+  { value: 'BL', label: '진단검사의학과' },
+  { value: 'DEN', label: '치과' },
+  { value: 'DER', label: '피부과' },
+  { value: 'DS', label: '구강외과' },
+  { value: 'ENT', label: '이비인후과' },
+  { value: 'ER', label: '응급의학과' },
+  { value: 'ETC', label: '일반의' },
+  { value: 'FM', label: '가정의학과' },
+  { value: 'GS', label: '외과' },
+  { value: 'HM', label: '건강관리과' },
+  { value: 'IM', label: '내과' },
+  { value: 'INM', label: '작업환경의학과' },
+  { value: 'KM', label: '한방' },
+  { value: 'NM', label: '핵의학과' },
+  { value: 'NR', label: '신경과' },
+  { value: 'NS', label: '신경외과' },
+  { value: 'OBGY', label: '산부인과' },
+  { value: 'OPH', label: '안과' },
+  { value: 'OS', label: '정형외과' },
+  { value: 'PED', label: '소아청소년과' },
+  { value: 'PS', label: '성형외과' },
+  { value: 'PSY', label: '정신건강의학과' },
+  { value: 'RAD', label: '영상의학과' },
+  { value: 'REH', label: '재활의학과' },
+  { value: 'RT', label: '방사선종양학과' },
+  { value: 'TB', label: '결핵학' },
+  { value: 'TS', label: '흉부외과' },
+  { value: 'URO', label: '비뇨기과' }
+]
+
 export interface StaffFormData {
   staffName: string
   department: string
