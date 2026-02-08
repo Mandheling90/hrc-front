@@ -194,7 +194,13 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           <InputLabel htmlFor='department' required>
             진료과
           </InputLabel>
-          <Select id='department' name='department' options={DEPARTMENT_OPTIONS} value={department} onChange={setDepartment} />
+          <Select
+            id='department'
+            name='department'
+            options={DEPARTMENT_OPTIONS}
+            value={department}
+            onChange={setDepartment}
+          />
         </div>
 
         {/* 세부전공 */}
@@ -256,6 +262,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
             ]}
             onChange={setReplyConsent}
           />
+
+          <InfoNote message='동의 여부 변경 시 진료협력센터로 연락 주시기 바랍니다.' />
         </div>
       </div>
     </div>
