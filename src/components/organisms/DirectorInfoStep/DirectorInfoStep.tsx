@@ -11,6 +11,7 @@ import { InfoIcon } from '@/components/icons/InfoIcon'
 import { DirectorFormData, DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import styles from './DirectorInfoStep.module.scss'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
+import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 
 export interface DirectorInfoStepProps {
   /** 현재 스텝 번호 */
@@ -20,8 +21,19 @@ export interface DirectorInfoStepProps {
 }
 
 export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep = 2, totalSteps = 8 }) => {
+  const [directorName, setDirectorName] = React.useState('')
+  const [birthDate, setBirthDate] = React.useState('')
+  const [licenseNumber, setLicenseNumber] = React.useState('')
+  const [isDirector, setIsDirector] = React.useState(false)
+  const [phone, setPhone] = React.useState('')
   const [gender, setGender] = React.useState('')
+  const [carNumber, setCarNumber] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [school, setSchool] = React.useState('')
+  const [graduationYear, setGraduationYear] = React.useState('')
+  const [trainingHospital, setTrainingHospital] = React.useState('')
   const [department, setDepartment] = React.useState('')
+  const [specialty, setSpecialty] = React.useState('')
   const [smsConsent, setSmsConsent] = React.useState('')
   const [emailConsent, setEmailConsent] = React.useState('')
   const [replyConsent, setReplyConsent] = React.useState('')
@@ -50,9 +62,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           name='directorName'
           type='text'
           placeholder='병원장명을 입력해주세요.'
-          value=''
-          onChange={() => {}}
-          error=''
+          value={directorName}
+          onChange={(e) => setDirectorName(e.target.value)}
         />
 
         {/* 생년월일 */}
@@ -66,9 +77,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
               id='birthDate'
               name='birthDate'
               placeholder='생년월일을 입력해주세요.'
-              value=''
-              onChange={() => {}}
-              error=''
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
             />
             <CalendarIcon width={24} height={24} stroke='var(--gray-11)' className={styles.calendarIcon} />
           </div>
@@ -81,10 +91,11 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           id='licenseNumber'
           name='licenseNumber'
           type='text'
-          placeholder='-없이 입력해주세요.'
-          value=''
-          onChange={() => {}}
-          error=''
+          placeholder='-없이 입력해주세요'
+          value={licenseNumber}
+          onChange={(e) => setLicenseNumber(e.target.value)}
+          rightElement={<Checkbox checked={isDirector} onChange={() => setIsDirector(!isDirector)} label='원장여부' />}
+          helperText='※ 원장여부 체크 시에만 협력병원 정보수정이 가능합니다.'
         />
 
         {/* 휴대전화 */}
@@ -95,9 +106,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           name='phone'
           type='tel'
           placeholder='-없이 입력해주세요.'
-          value=''
-          onChange={() => {}}
-          error=''
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
         />
 
         {/* 성별 */}
@@ -124,8 +134,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
             id='carNumber'
             name='carNumber'
             placeholder='차량번호를 입력해주세요.'
-            value=''
-            onChange={() => {}}
+            value={carNumber}
+            onChange={(e) => setCarNumber(e.target.value)}
           />
 
           <InfoNote message='무료 주차등록 희망시, 하단 차량등록증 첨부 필요.' />
@@ -139,9 +149,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           name='email'
           type='email'
           placeholder='이메일을 입력해주세요.'
-          value=''
-          onChange={() => {}}
-          error=''
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         {/* 출신학교 */}
@@ -152,9 +161,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           name='school'
           type='text'
           placeholder='출신학교를 입력해주세요.'
-          value=''
-          onChange={() => {}}
-          error=''
+          value={school}
+          onChange={(e) => setSchool(e.target.value)}
         />
 
         {/* 졸업년도 */}
@@ -168,9 +176,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
               id='graduationYear'
               name='graduationYear'
               placeholder='졸업년도를 입력해주세요.'
-              value=''
-              onChange={() => {}}
-              error=''
+              value={graduationYear}
+              onChange={(e) => setGraduationYear(e.target.value)}
             />
             <CalendarIcon width={24} height={24} stroke='var(--gray-11)' className={styles.calendarIcon} />
           </div>
@@ -184,9 +191,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           name='trainingHospital'
           type='text'
           placeholder='수련병원을 입력해주세요.'
-          value=''
-          onChange={() => {}}
-          error=''
+          value={trainingHospital}
+          onChange={(e) => setTrainingHospital(e.target.value)}
         />
 
         {/* 진료과 */}
@@ -211,9 +217,8 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           name='specialty'
           type='text'
           placeholder=''
-          value=''
-          onChange={() => {}}
-          error=''
+          value={specialty}
+          onChange={(e) => setSpecialty(e.target.value)}
         />
 
         {/* SMS 수신 동의여부 */}

@@ -139,7 +139,6 @@ export default function HospitalApplicationPage() {
                     onClick: handleNext
                   }}
                   className={styles.formActions}
-                  noMargin
                 />
               </>
             )}

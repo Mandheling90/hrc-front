@@ -221,7 +221,6 @@
   max-width: 630px; // Figma 기준 630px
   align-items: center;
   height: 66px;
-  margin-top: $spacing-20; // 80px - 폼과 버튼 사이 간격 (Figma 기준)
 
   // formActions 내부의 button만 스타일 적용 (actionButtons와 분리)
   > button {

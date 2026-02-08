@@ -14,7 +14,15 @@ export interface StaffInfoStepProps {
 }
 
 export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, totalSteps = 8 }) => {
+  const [staffName, setStaffName] = useState('')
+  const [department, setDepartment] = useState('')
+  const [position, setPosition] = useState('')
+  const [contactNumber, setContactNumber] = useState('')
+  const [mobilePhone, setMobilePhone] = useState('')
   const [medicalInstitutionType, setMedicalInstitutionType] = useState('')
+  const [totalEmployees, setTotalEmployees] = useState('')
+  const [specialists, setSpecialists] = useState('')
+  const [nurses, setNurses] = useState('')
 
   return (
     <div className={styles.stepContainer}>
@@ -42,9 +50,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='staffName'
             type='text'
             placeholder='이름을 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={staffName}
+            onChange={(e) => setStaffName(e.target.value)}
             buttonText='병원찾기'
             onButtonClick={() => {}}
             buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
@@ -58,9 +65,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='department'
             type='text'
             placeholder='부서명을 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
           />
 
           {/* 직급 */}
@@ -71,9 +77,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='position'
             type='text'
             placeholder='직급명을 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
           />
 
           {/* 연락처 */}
@@ -84,9 +89,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='contactNumber'
             type='tel'
             placeholder='-없이 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
           />
 
           {/* 휴대전화 */}
@@ -97,9 +101,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='mobilePhone'
             type='tel'
             placeholder='-없이 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={mobilePhone}
+            onChange={(e) => setMobilePhone(e.target.value)}
           />
         </div>
       </div>
@@ -165,9 +168,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='totalEmployees'
             type='text'
             placeholder='총 직원 수를 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={totalEmployees}
+            onChange={(e) => setTotalEmployees(e.target.value)}
           />
 
           {/* 전문의 수 */}
@@ -178,9 +180,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='specialists'
             type='text'
             placeholder='전문의 수를 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={specialists}
+            onChange={(e) => setSpecialists(e.target.value)}
           />
 
           {/* 간호사 수 */}
@@ -191,9 +192,8 @@ export const StaffInfoStep: React.FC<StaffInfoStepProps> = ({ currentStep = 3, t
             name='nurses'
             type='text'
             placeholder='간호사 수를 입력해주세요.'
-            value=''
-            onChange={() => {}}
-            error=''
+            value={nurses}
+            onChange={(e) => setNurses(e.target.value)}
           />
         </div>
       </div>

@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
   const isMainPage = pathname === '/'
 
   // 임시 로그인 상태
-  const isLoggedIn = true
+  const isLoggedIn = false
   const menuItems = useMemo(() => {
     return isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
   }, [isLoggedIn])

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
@@ -14,6 +14,15 @@ export interface HospitalInfoStepProps {
 }
 
 export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep = 1, totalSteps = 8 }) => {
+  const [hospitalName, setHospitalName] = useState('')
+  const [medicalInstitutionNumber, setMedicalInstitutionNumber] = useState('')
+  const [zipCode, setZipCode] = useState('')
+  const [address, setAddress] = useState('')
+  const [detailAddress, setDetailAddress] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [faxNumber, setFaxNumber] = useState('')
+  const [website, setWebsite] = useState('')
+
   return (
     <div className={styles.formSection}>
       <div className={styles.formHeader}>
@@ -38,9 +47,8 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='hospitalName'
           type='text'
           placeholder=''
-          value=''
-          onChange={() => {}}
-          error=''
+          value={hospitalName}
+          onChange={(e) => setHospitalName(e.target.value)}
         />
 
         {/* 요양기관번호 */}
@@ -51,9 +59,8 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='medicalInstitutionNumber'
           type='text'
           placeholder=' '
-          value=''
-          onChange={() => {}}
-          error=''
+          value={medicalInstitutionNumber}
+          onChange={(e) => setMedicalInstitutionNumber(e.target.value)}
         />
 
         {/* 병원주소 */}
@@ -64,21 +71,21 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='zipCode'
           type='text'
           placeholder='우편번호'
-          value=''
-          onChange={() => {}}
+          value={zipCode}
+          onChange={(e) => setZipCode(e.target.value)}
           disabled
           buttonText='우편번호 검색'
           onButtonClick={() => {}}
           buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
         >
-          <Input type='text' id='address' name='address' placeholder='주소' value='' onChange={() => {}} disabled />
+          <Input type='text' id='address' name='address' placeholder='주소' value={address} onChange={(e) => setAddress(e.target.value)} disabled />
           <Input
             type='text'
             id='detailAddress'
             name='detailAddress'
             placeholder='상세주소를 입력해 주세요.'
-            value=''
-            onChange={() => {}}
+            value={detailAddress}
+            onChange={(e) => setDetailAddress(e.target.value)}
           />
         </FormField>
 
@@ -90,9 +97,8 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='phoneNumber'
           type='tel'
           placeholder=' '
-          value=''
-          onChange={() => {}}
-          error=''
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
         />
 
         {/* 팩스번호 */}
@@ -103,9 +109,8 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='faxNumber'
           type='tel'
           placeholder=' '
-          value=''
-          onChange={() => {}}
-          error=''
+          value={faxNumber}
+          onChange={(e) => setFaxNumber(e.target.value)}
         />
 
         {/* 병원 홈페이지 주소 */}
@@ -115,8 +120,8 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='website'
           type='url'
           placeholder='ex) https://refer.kumc.or.kr/'
-          value=''
-          onChange={() => {}}
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
     </div>
