@@ -74,7 +74,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
             {hasEConsulting && (
               <button type='button' className={styles.eConsultButton} onClick={onEConsultingClick}>
                 <EConsultingIcon width={48} height={48} fill='white' />
-                <span>e-Consulting 신청</span>
+                <span>e-Consult 신청</span>
               </button>
             )}
             <button type='button' className={styles.doctorInfoButton} onClick={onDoctorInfoClick}>
