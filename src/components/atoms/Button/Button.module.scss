@@ -25,6 +25,7 @@
 .primary {
   background-color: $color-primary;
   color: #fff;
+  border: 2px solid $color-primary;
   font-weight: 600;
   letter-spacing: -0.96px; // Figma 디자인에 맞게 추가
 
@@ -55,6 +56,18 @@
   &:hover:not(:disabled) {
     background-color: $gray-2;
     border-color: $gray-6;
+  }
+}
+
+.primaryOutline {
+  background-color: #fff;
+  color: $color-primary;
+  border: 2px solid $color-primary;
+  font-weight: 600;
+
+  &:hover:not(:disabled) {
+    background-color: rgba($color-primary, 0.05);
+    border-color: darken($color-primary, 10%);
   }
 }
 

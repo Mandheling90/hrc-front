@@ -186,12 +186,14 @@ export default function NetworkPage() {
             <ConfirmButtons
               secondaryButton={{
                 label: '협력병원 온라인 신청',
-                onClick: () => router.push('/network/hospital-application')
+                onClick: () => router.push('/network/hospital-application'),
+                variant: 'primaryOutline'
               }}
               primaryButton={{
                 label: '협력의원 온라인 신청',
                 onClick: () => router.push('/network/clinic-application')
               }}
+              swapOnHover
             />
           </section>
         </div>
