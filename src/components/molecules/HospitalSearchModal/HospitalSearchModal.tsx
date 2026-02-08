@@ -205,7 +205,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                         type='text'
                         id='hospital-name'
                         name='hospitalName'
-                        placeholder=''
+                        placeholder='병원명을 입력해주세요'
                         value={hospitalName}
                         onChange={e => setHospitalName(e.target.value)}
                         onKeyDown={e => {
@@ -224,7 +224,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                         type='text'
                         id='care-number'
                         name='careNumber'
-                        placeholder=''
+                        placeholder='요양기관번호를 입력해주세요.'
                         value={careNumber}
                         onChange={e => setCareNumber(e.target.value)}
                         onKeyDown={e => {
@@ -349,9 +349,9 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       required
                       id='reg-hospital-name'
                       name='regHospitalName'
-                      placeholder=''
                       value={regHospitalName}
                       onChange={e => setRegHospitalName(e.target.value)}
+                      placeholder='병원명을 입력해주세요'
                     />
                   </div>
 
@@ -362,7 +362,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       required
                       id='reg-representative-name'
                       name='regRepresentativeName'
-                      placeholder=''
+                      placeholder='대표자명을 입력해주세요'
                       value={regRepresentativeName}
                       onChange={e => setRegRepresentativeName(e.target.value)}
                     />

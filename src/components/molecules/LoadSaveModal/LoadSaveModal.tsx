@@ -114,7 +114,7 @@ export const LoadSaveModal: React.FC<LoadSaveModalProps> = ({
                   type='text'
                   id='doctorLicense'
                   name='doctorLicense'
-                  placeholder=''
+                  placeholder='-없이 입력해주세요.'
                   value={doctorLicense}
                   onChange={e => setDoctorLicense(e.target.value)}
                   className={styles.input}
@@ -132,7 +132,7 @@ export const LoadSaveModal: React.FC<LoadSaveModalProps> = ({
                   type='text'
                   id='medicalInstitutionNumber'
                   name='medicalInstitutionNumber'
-                  placeholder=''
+                  placeholder='요양 기관번호를 입력해주세요.'
                   value={medicalInstitutionNumber}
                   onChange={e => setMedicalInstitutionNumber(e.target.value)}
                   className={styles.input}

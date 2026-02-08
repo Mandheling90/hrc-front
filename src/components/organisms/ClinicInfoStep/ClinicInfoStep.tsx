@@ -55,7 +55,7 @@ export const ClinicInfoStep: React.FC = () => {
               id='hospitalName'
               name='hospitalName'
               type='text'
-              placeholder='Input Text'
+              placeholder='병원명을 입력해주세요'
               value={hospitalName}
               onChange={e => setHospitalName(e.target.value)}
               error=''
