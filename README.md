@@ -6,7 +6,7 @@
 
 | 항목        | 버전/기술                           |
 | ----------- | ----------------------------------- |
-| Framework   | Next.js 15.5.9 (App Router)         |
+| Framework   | Next.js 15.5.12 (App Router)        |
 | React       | 19.2.3                              |
 | 언어        | TypeScript (strict mode)            |
 | 스타일링    | SCSS + CSS Modules                  |
@@ -24,63 +24,39 @@
 src/
 ├── app/                 # 페이지 (Next.js App Router)
 │   ├── layout.tsx       # 루트 레이아웃
-│   ├── page.tsx         # 홈페이지
-│   ├── login/           # 로그인 페이지
-│   ├── signup/          # 회원가입 페이지
+│   ├── page.tsx         # 메인 페이지
+│   ├── login/           # 로그인
+│   ├── signup/          # 회원가입
 │   ├── find-user/       # 아이디/비밀번호 찾기
 │   ├── reset-password/  # 비밀번호 재설정
-│   ├── referral/        # 진료의뢰 페이지
-│   │   ├── department/  # 진료과 안내
-│   │   └── request/     # 진료협력센터 의뢰
-│   │       ├── exchange/ # 진료정보교류 의뢰
-│   │       └── hira/     # 심평원중계시스템 의뢰
+│   ├── referral/        # 진료의뢰
 │   ├── network/         # 협력네트워크
-│   │   ├── hospital-application/ # 협력병원 신청
-│   │   ├── clinic-application/   # 협력병의원 신청
-│   │   ├── status/      # 협력병의원 현황
-│   │   ├── hotline/     # 교수직통 핫라인
-│   │   └── e-consult/   # e-Consult
 │   ├── notice/          # 공지/정보
-│   │   ├── list/        # 공지사항
-│   │   └── event/       # 교육/행사
-│   ├── about/           # 진료협력센터 소개
-│   │   ├── intro/       # 센터 소개
-│   │   ├── greeting/    # 센터장 인사말
-│   │   ├── organization/ # 조직도/연락처
-│   │   └── location/    # 오시는 길
+│   ├── about/           # 센터 소개
 │   ├── mypage/          # 마이페이지
-│   │   ├── edit-profile/ # 회원정보 수정
-│   │   ├── edit-hospital/ # 협력병원 정보수정
-│   │   ├── edit-clinic/  # 협력병의원 정보수정
-│   │   ├── patient-inquiry/ # 의뢰환자 조회
-│   │   ├── patient-result/  # 의뢰환자 결과조회
-│   │   └── withdraw/     # 회원탈퇴
-│   └── style-guide/     # 스타일 가이드 페이지
-│
-├── components/          # Atomic Design 패턴
-│   ├── atoms/           # Button, Input, Checkbox, Radio, Select 등
-│   ├── molecules/       # ServiceCard, AlertModal, ProgressSteps 등
-│   ├── organisms/       # Header, Footer, LoginForm, SignupForm 등
-│   ├── templates/       # MainTemplate
-│   ├── icons/           # SVG 아이콘 컴포넌트 (99개)
-│   └── providers/       # 전역 Provider 컴포넌트
-│
+│   └── style-guide/     # 스타일 가이드
+├── components/          # 컴포넌트 (Atomic Design)
+│   ├── atoms/           # 기본 UI 컴포넌트 (10개)
+│   ├── molecules/       # 복합 컴포넌트 (53개)
+│   ├── organisms/       # 대형 컴포넌트 (35개)
+│   ├── icons/           # SVG 아이콘 (99개)
+│   ├── templates/       # 페이지 템플릿
+│   └── providers/       # Context Provider
 ├── config/              # 설정 파일
-│   ├── hospitals.ts     # 병원별 설정 (연락처, 주소, 링크 등)
-│   └── pageContents.ts  # 병원별 페이지 콘텐츠
-│
+│   ├── hospitals.ts     # 병원별 설정
+│   ├── pageContents.ts  # 병원별 페이지 콘텐츠
+│   └── iconRegistry.tsx # 아이콘 레지스트리
 ├── contexts/            # React Context
-│   └── HospitalContext.tsx  # 병원 정보 Context 및 useHospital 훅
-│
-├── styles/              # 전역 스타일
-│   ├── globals.scss     # 전역 스타일 (CSS 변수, 리셋)
-│   ├── variables.scss   # 색상, 타이포그래피, 간격 변수
-│   └── mixins.scss      # 유틸리티 믹스인
-│
-├── hooks/               # Custom React Hooks
-├── lib/                 # 유틸리티 함수 및 라이브러리
+│   └── HospitalContext.tsx
+├── hooks/               # 커스텀 훅
+│   └── index.ts         # useHospital
+├── styles/              # 스타일
+│   ├── variables.scss   # 디자인 토큰
+│   ├── mixins.scss      # SCSS 믹스인
+│   └── globals.scss     # 전역 스타일
 ├── types/               # TypeScript 타입 정의
-│   └── hospital.ts      # 병원 관련 타입 정의
+│   ├── hospital.ts      # 병원 관련 타입
+│   └── hospital-application.ts  # 신청 폼 타입/상수
 └── utils/               # 헬퍼 함수
 ```
 
@@ -204,7 +180,7 @@ src/
 **모달/알림**
 
 - AlertModal, LoadSaveModal
-- CarDirectionModal
+- CarDirectionModal, HospitalSearchModal
 
 **섹션**
 
@@ -223,46 +199,31 @@ src/
 
 - AgreementContent, PrivacyConsentContent
 - OperationInfoCards, ProcedureFlow
-- SearchFilterWithInfo
+- SearchFilterWithInfo, VerificationCards
 
 ### Organisms (35개)
 
 **레이아웃**
 
 - **Header** - 반응형 GNB 메가 드롭다운 메뉴
-  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴 + 장식 원형 배경
-  - 태블릿 (769px~1429px): 전체화면 슬라이드 다운 메뉴 + 장식 원형 배경
-  - 모바일 (~768px): 우측 사이드 패널 메뉴 + 연락처 박스
-  - Breadcrumbs 자동 생성 (pathname 기반)
-- **Footer** - 반응형 푸터
-  - 파트너 슬라이더 (무한 루프, 자동 재생)
-  - 정책 링크, 주소 정보, 소셜 미디어 링크
-  - 인증마크 (EMR, ISMS) 표시
-  - 진료지원부서/패밀리사이트 드롭다운
+  - 데스크톱 (1430px+): 호버 시 메가 드롭다운 메뉴
+  - 태블릿 (769px~1429px): 풀스크린 슬라이드 다운 메뉴
+  - 모바일 (~768px): 사이드 패널 메뉴
+- **Footer** - 파트너 슬라이더, 소셜 링크
 
 **인증**
 
-- LoginForm, SignupForm
-- FindUserForm, ResetPasswordForm
+- LoginForm, SignupForm, FindUserForm, ResetPasswordForm
 
 **회원가입 단계**
 
-- AgreementStep, VerificationStep
-- MemberInfoStep, MemberInfoForm, CompleteStep
+- AgreementStep, VerificationStep, MemberInfoStep, MemberInfoForm, CompleteStep
 
-**약관/동의 콘텐츠**
+**협력병원 신청 단계**
 
-- TermsOfUseContent (이용약관)
-- PersonalInfoRequiredContent (필수 개인정보 수집)
-- PersonalInfoOptionalContent (선택 개인정보 수집)
-- ThirdPartyInfoContent (제3자 정보제공)
-
-**병원 신청 단계**
-
-- HospitalInfoStep, StaffInfoStep
-- BasicTreatmentStep, BedAndFacilityStep
-- CareSystemStep, HospitalCharacteristicsStep
-- MedicalDepartmentStep
+- HospitalInfoStep, StaffInfoStep, BasicTreatmentStep
+- BedAndFacilityStep, CareSystemStep
+- HospitalCharacteristicsStep, MedicalDepartmentStep
 
 **병의원 신청 단계**
 
@@ -455,19 +416,9 @@ npm run format       # Prettier 포매팅
 npm run format:check # Prettier 검사
 ```
 
-### Vercel 배포 설정
-
-각 병원별로 별도 프로젝트를 생성하고 Build Command를 설정합니다:
-
-| 병원 | Build Command         | URL                                |
-| ---- | --------------------- | ---------------------------------- |
-| 안암 | `npm run build:anam`  | https://hrc-front.vercel.app       |
-| 구로 | `npm run build:guro`  | https://hrc-front-guro.vercel.app  |
-| 안산 | `npm run build:ansan` | https://hrc-front-ansan.vercel.app |
-
 ## 개발 현황
 
-### 퍼블리싱 완료 (전체 35개 페이지)
+### 퍼블리싱 완료 (전체 36개 페이지)
 
 **메인/인증 (5개)**
 
@@ -484,7 +435,7 @@ npm run format:check # Prettier 검사
 
 **공지/정보 (3개)**
 
-- 공지사항 목록/상세, 교육/행사
+- 공지사항 목록/상세, 교육/행사, 병원소식
 
 **진료협력센터 소개 (4개)**
 
