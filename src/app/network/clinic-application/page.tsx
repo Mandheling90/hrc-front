@@ -103,7 +103,7 @@ export default function ClinicApplicationPage() {
                 {currentStep === 1 && <HospitalInfoStep currentStep={1} totalSteps={4} />}
 
                 {/* 2단계: 병원장 정보 */}
-                {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={4} />}
+                {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={4} institutionType='의원' />}
 
                 {/* 3단계: 실무자 정보 */}
                 {currentStep === 3 && <ClinicStaffInfoStep currentStep={3} totalSteps={4} />}

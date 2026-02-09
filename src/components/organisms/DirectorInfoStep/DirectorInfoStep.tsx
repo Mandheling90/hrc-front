@@ -18,9 +18,11 @@ export interface DirectorInfoStepProps {
   currentStep?: number
   /** 전체 스텝 수 */
   totalSteps?: number
+  /** 기관 유형: '병원' 또는 '의원' */
+  institutionType?: '병원' | '의원'
 }
 
-export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep = 2, totalSteps = 8 }) => {
+export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep = 2, totalSteps = 8, institutionType = '병원' }) => {
   const [directorName, setDirectorName] = React.useState('')
   const [birthDate, setBirthDate] = React.useState('')
   const [licenseNumber, setLicenseNumber] = React.useState('')
@@ -95,7 +97,7 @@ export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep 
           value={licenseNumber}
           onChange={e => setLicenseNumber(e.target.value)}
           rightElement={<Checkbox checked={isDirector} onChange={() => setIsDirector(!isDirector)} label='원장여부' />}
-          helperText='※ 원장여부 체크 시에만 협력병원 정보수정이 가능합니다.'
+          helperText={`※ 원장여부 체크 시에만 협력${institutionType} 신청/정보수정이 가능합니다.`}
         />
 
         {/* 휴대전화 */}
