@@ -730,7 +730,7 @@ const guroContent: HospitalPageContent = {
     ],
     contact: {
       phone: '02-2626-8446',
-      fax: '02-2626-1691'
+      fax: '02-2626-1681'
     },
     downloadLink: '#',
     applicationLinks: {

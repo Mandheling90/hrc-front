@@ -6,6 +6,7 @@ import { Button } from '@/components/atoms/Button/Button'
 import { FileUploadIcon } from '@/components/icons/FileUploadIcon'
 import { FileRemoveIcon } from '@/components/icons/FileRemoveIcon'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { useHospital } from '@/hooks'
 import styles from './HospitalCharacteristicsStep.module.scss'
 
 export interface HospitalCharacteristicsStepProps {
@@ -19,6 +20,8 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
   currentStep = 8,
   totalSteps = 8
 }) => {
+  const { hospital } = useHospital()
+
   // 병원 특성 및 기타사항 상태
   const [hospitalCharacteristics, setHospitalCharacteristics] = useState<string>('')
 
@@ -205,7 +208,7 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
               <p className={styles.infoText}>
                 파일 첨부가 어려우신 경우 사업자등록증, 차량등록증을
                 <br />
-                팩스 02-920-6523 로 보내주십시오.
+                팩스 {hospital.contact.fax} 로 보내주십시오.
               </p>
             </div>
           </div>
