@@ -4,9 +4,9 @@
 
 ## 기술 스택
 
-| 항목        | 버전/기술                           |
-| ----------- | ----------------------------------- |
-| Framework   | Next.js 15.5.12 (App Router)        |
+| 항목        | 버전/기술                               |
+| ----------- |-------------------------------------|
+| Framework   | Next.js 15.5.9 (App Router)         |
 | React       | 19.2.3                              |
 | 언어        | TypeScript (strict mode)            |
 | 스타일링    | SCSS + CSS Modules                  |
@@ -14,9 +14,9 @@
 | 코드 스타일 | EditorConfig + ESLint + Prettier    |
 | 렌더링      | SSR (Server-Side Rendering)         |
 | 디자인 패턴 | Atomic Design Pattern               |
-| 반응형      | 미디어쿼리 (반응형 + 적응형)        |
-| 테마        | 라이트/다크모드 지원                |
-| 멀티테넌트  | 병원별 환경변수 기반 설정           |
+| 반응형      | 미디어쿼리 (반응형 + 적응형)                   |
+| 테마        | 라이트/다크모드 지원                         |
+| 멀티테넌트  | 병원별 환경변수 기반 설정                      |
 
 ## 프로젝트 구조
 
