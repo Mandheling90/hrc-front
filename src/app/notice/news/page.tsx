@@ -91,6 +91,146 @@ const mockNotices: NoticeData[] = [
       'Norem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
     registeredDate: '2025-05-01',
     isNotice: false
+  },
+  {
+    id: '11',
+    number: 76,
+    title: '2025년 5월 외래진료 시간표입니다.',
+    registeredDate: '2025-04-01',
+    isNotice: false
+  },
+  {
+    id: '12',
+    number: 75,
+    title: '2025년 4월 외래진료 시간표입니다.',
+    registeredDate: '2025-03-01',
+    isNotice: false
+  },
+  {
+    id: '13',
+    number: 74,
+    title: '2025년 3월 외래진료 시간표입니다.',
+    registeredDate: '2025-02-01',
+    isNotice: false
+  },
+  {
+    id: '14',
+    number: 73,
+    title: '2025년 2월 외래진료 시간표입니다.',
+    registeredDate: '2025-01-01',
+    isNotice: false
+  },
+  {
+    id: '15',
+    number: 72,
+    title: '2025년 1월 외래진료 시간표입니다.',
+    registeredDate: '2024-12-01',
+    isNotice: false
+  },
+  {
+    id: '16',
+    number: 71,
+    title: '2024년 12월 외래진료 시간표입니다.',
+    registeredDate: '2024-11-01',
+    isNotice: false
+  },
+  {
+    id: '17',
+    number: 70,
+    title: '2024년 11월 외래진료 시간표입니다.',
+    registeredDate: '2024-10-01',
+    isNotice: false
+  },
+  {
+    id: '18',
+    number: 69,
+    title: '2024년 10월 외래진료 시간표입니다.',
+    registeredDate: '2024-09-01',
+    isNotice: false
+  },
+  {
+    id: '19',
+    number: 68,
+    title: '2024년 9월 외래진료 시간표입니다.',
+    registeredDate: '2024-08-01',
+    isNotice: false
+  },
+  {
+    id: '20',
+    number: 67,
+    title: '2024년 8월 외래진료 시간표입니다.',
+    registeredDate: '2024-07-01',
+    isNotice: false
+  },
+  {
+    id: '21',
+    number: 66,
+    title: '2024년 7월 외래진료 시간표입니다.',
+    registeredDate: '2024-06-01',
+    isNotice: false
+  },
+  {
+    id: '22',
+    number: 65,
+    title: '2024년 6월 외래진료 시간표입니다.',
+    registeredDate: '2024-05-01',
+    isNotice: false
+  },
+  {
+    id: '23',
+    number: 64,
+    title: '2024년 5월 외래진료 시간표입니다.',
+    registeredDate: '2024-04-01',
+    isNotice: false
+  },
+  {
+    id: '24',
+    number: 63,
+    title: '2024년 4월 외래진료 시간표입니다.',
+    registeredDate: '2024-03-01',
+    isNotice: false
+  },
+  {
+    id: '25',
+    number: 62,
+    title: '2024년 3월 외래진료 시간표입니다.',
+    registeredDate: '2024-02-01',
+    isNotice: false
+  },
+  {
+    id: '26',
+    number: 61,
+    title: '2024년 2월 외래진료 시간표입니다.',
+    registeredDate: '2024-01-01',
+    isNotice: false
+  },
+  {
+    id: '27',
+    number: 60,
+    title: '2024년 1월 외래진료 시간표입니다.',
+    registeredDate: '2023-12-01',
+    isNotice: false
+  },
+  {
+    id: '28',
+    number: 59,
+    title: '2023년 12월 외래진료 시간표입니다.',
+    registeredDate: '2023-11-01',
+    isNotice: false
+  },
+  {
+    id: '29',
+    number: 58,
+    title: '2023년 11월 외래진료 시간표입니다.',
+    registeredDate: '2023-10-01',
+    isNotice: false
+  },
+  {
+    id: '30',
+    number: 57,
+    title: '2023년 10월 외래진료 시간표입니다.',
+    registeredDate: '2023-09-01',
+    isNotice: false
   }
 ]
 
