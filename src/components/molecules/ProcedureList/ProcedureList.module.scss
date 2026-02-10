@@ -2,11 +2,6 @@
 
 .procedureInfo {
   padding: 0;
-  padding-left: 32px; // Figma: 32px 왼쪽 마진
-
-  @media (max-width: $breakpoint-md) {
-    padding-left: $spacing-4; // 16px - Figma 모바일
-  }
 }
 
 .label {
