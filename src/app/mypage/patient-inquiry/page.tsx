@@ -252,103 +252,106 @@ export default function PatientInquiryPage() {
           <h1 className={styles.pageTitle}>의뢰환자 조회</h1>
 
           <div className={styles.content}>
-            {/* 안내 문구 */}
-            <div className={styles.noticeSection}>
-              <div className={styles.noticeItem}>
-                <span className={styles.noticeBadge}>1</span>
-                <span className={styles.noticeText}>{mockUserName} 선생님께서 의뢰하신 의뢰환자정보입니다.</span>
-              </div>
-              <div className={styles.noticeItem}>
-                <span className={styles.noticeBadge}>2</span>
-                <span className={styles.noticeText}>
-                  의뢰환자정보는 의뢰일자로부터 3년, 결과조회 및 회신서 조회는 1년 이내의 자료만 조회가 가능합니다.
-                </span>
-              </div>
-            </div>
-
-            {/* 검색/조회 카드 */}
-            <div className={styles.searchCard}>
-              <div className={styles.searchCardHeader}>
-                <div className={styles.searchTitleWrapper}>
-                  <h2 className={styles.searchTitle}>검색/조회</h2>
-                  <p className={styles.searchSubtitle}>의뢰하신 날짜를 기준으로 1년 동안 조회가 가능합니다.</p>
+            {/* 안내 문구 + 검색/조회 그룹 */}
+            <div className={styles.searchGroup}>
+              {/* 안내 문구 */}
+              <div className={styles.noticeSection}>
+                <div className={styles.noticeItem}>
+                  <span className={styles.noticeBadge}>1</span>
+                  <span className={styles.noticeText}>{mockUserName} 선생님께서 의뢰하신 의뢰환자정보입니다.</span>
                 </div>
-                <div className={styles.dividerLine} />
+                <div className={styles.noticeItem}>
+                  <span className={styles.noticeBadge}>2</span>
+                  <span className={styles.noticeText}>
+                    의뢰환자정보는 의뢰일자로부터 3년, 결과조회 및 회신서 조회는 1년 이내의 자료만 조회가 가능합니다.
+                  </span>
+                </div>
               </div>
 
-              <div className={styles.searchContent}>
-                {/* 조회기간 */}
-                <div className={styles.filterRow}>
-                  <span className={styles.filterLabel}>조회기간</span>
-                  <div className={styles.filterRowContent}>
-                    {/* 모바일: 라디오 버튼이 먼저, 데스크톱: 날짜가 먼저 */}
-                    <Radio
-                      name='period'
-                      value={period}
-                      options={periodOptions}
-                      onChange={setPeriod}
-                      className={styles.periodRadio}
-                    />
-                    <div className={styles.dateRangeGroup}>
-                      <div className={styles.dateInputWrapper}>
-                        <Input
-                          type='date'
-                          value={startDate}
-                          onChange={e => setStartDate(e.target.value)}
-                          className={styles.dateInput}
-                        />
-                        <CalendarIcon width={24} height={24} className={styles.calendarIcon} />
-                      </div>
-                      <span className={styles.dateSeparator}>~</span>
-                      <div className={styles.dateInputWrapper}>
-                        <Input
-                          type='date'
-                          value={endDate}
-                          onChange={e => setEndDate(e.target.value)}
-                          className={styles.dateInput}
-                        />
-                        <CalendarIcon width={24} height={24} className={styles.calendarIcon} />
+              {/* 검색/조회 카드 */}
+              <div className={styles.searchCard}>
+                <div className={styles.searchCardHeader}>
+                  <div className={styles.searchTitleWrapper}>
+                    <h2 className={styles.searchTitle}>검색/조회</h2>
+                    <p className={styles.searchSubtitle}>의뢰하신 날짜를 기준으로 1년 동안 조회가 가능합니다.</p>
+                  </div>
+                  <div className={styles.dividerLine} />
+                </div>
+
+                <div className={styles.searchContent}>
+                  {/* 조회기간 */}
+                  <div className={styles.filterRow}>
+                    <span className={styles.filterLabel}>조회기간</span>
+                    <div className={styles.filterRowContent}>
+                      {/* 모바일: 라디오 버튼이 먼저, 데스크톱: 날짜가 먼저 */}
+                      <Radio
+                        name='period'
+                        value={period}
+                        options={periodOptions}
+                        onChange={setPeriod}
+                        className={styles.periodRadio}
+                      />
+                      <div className={styles.dateRangeGroup}>
+                        <div className={styles.dateInputWrapper}>
+                          <Input
+                            type='date'
+                            value={startDate}
+                            onChange={e => setStartDate(e.target.value)}
+                            className={styles.dateInput}
+                          />
+                          <CalendarIcon width={24} height={24} className={styles.calendarIcon} />
+                        </div>
+                        <span className={styles.dateSeparator}>~</span>
+                        <div className={styles.dateInputWrapper}>
+                          <Input
+                            type='date'
+                            value={endDate}
+                            onChange={e => setEndDate(e.target.value)}
+                            className={styles.dateInput}
+                          />
+                          <CalendarIcon width={24} height={24} className={styles.calendarIcon} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* 정렬기준 */}
-                <div className={styles.filterRow}>
-                  <span className={styles.filterLabel}>정렬기준</span>
-                  <Radio
-                    name='sortBy'
-                    value={sortBy}
-                    options={sortOptions}
-                    onChange={setSortBy}
-                    className={styles.sortRadio}
-                  />
-                </div>
-
-                {/* 상세검색 */}
-                <div className={styles.filterRow}>
-                  <span className={styles.filterLabel}>상세검색</span>
-                  <div className={styles.searchInputGroup}>
-                    <Select
-                      options={searchTypeOptions}
-                      value={searchType}
-                      onChange={setSearchType}
-                      className={styles.searchTypeSelect}
-                      width={230}
+                  {/* 정렬기준 */}
+                  <div className={styles.filterRow}>
+                    <span className={styles.filterLabel}>정렬기준</span>
+                    <Radio
+                      name='sortBy'
+                      value={sortBy}
+                      options={sortOptions}
+                      onChange={setSortBy}
+                      className={styles.sortRadio}
                     />
-                    <div className={styles.searchFieldWrapper}>
-                      <Input
-                        type='text'
-                        value={searchKeyword}
-                        onChange={e => setSearchKeyword(e.target.value)}
-                        placeholder='진료과, 진료의, 진단명으로 검색하세요.'
-                        className={styles.searchInput}
-                        onKeyDown={e => e.key === 'Enter' && handleSearch()}
+                  </div>
+
+                  {/* 상세검색 */}
+                  <div className={styles.filterRow}>
+                    <span className={styles.filterLabel}>상세검색</span>
+                    <div className={styles.searchInputGroup}>
+                      <Select
+                        options={searchTypeOptions}
+                        value={searchType}
+                        onChange={setSearchType}
+                        className={styles.searchTypeSelect}
+                        width={230}
                       />
-                      <Button variant='primary' onClick={handleSearch} className={styles.searchBtn}>
-                        <span>검색</span>
-                        <SearchIcon width={22} height={22} fill='white' />
-                      </Button>
+                      <div className={styles.searchFieldWrapper}>
+                        <Input
+                          type='text'
+                          value={searchKeyword}
+                          onChange={e => setSearchKeyword(e.target.value)}
+                          placeholder='진료과, 진료의, 진단명으로 검색하세요.'
+                          className={styles.searchInput}
+                          onKeyDown={e => e.key === 'Enter' && handleSearch()}
+                        />
+                        <Button variant='primary' onClick={handleSearch} className={styles.searchBtn}>
+                          <span>검색</span>
+                          <SearchIcon width={22} height={22} fill='white' />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
