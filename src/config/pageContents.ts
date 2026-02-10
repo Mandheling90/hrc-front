@@ -423,7 +423,7 @@ const anamContent: HospitalPageContent = {
         name: '고려대이공대 고대병원 하차',
         directions: [
           {
-            label: '고려대이공대 고대병원 방면',
+            label: '안암동 주민센터 방면',
             routes: [
               { number: '273', type: 'blue' },
               { number: '2115', type: 'blue' },
@@ -446,7 +446,7 @@ const anamContent: HospitalPageContent = {
         name: '고대병원 하차',
         directions: [
           {
-            label: '고려대이공대 고대병원 방면',
+            label: '안암동 주민센터 방면',
             routes: [{ number: '성북 04', type: 'green' }]
           },
           {
@@ -459,7 +459,7 @@ const anamContent: HospitalPageContent = {
         name: '안암오거리 하차',
         directions: [
           {
-            label: '대중교통 방면',
+            label: '대광초교 방면',
             routes: [
               { number: '101', type: 'blue' },
               { number: '111', type: 'blue' },
@@ -469,7 +469,7 @@ const anamContent: HospitalPageContent = {
             ]
           },
           {
-            label: '무신병원 방면',
+            label: '우신향병원 방면',
             routes: [
               { number: '101', type: 'blue' },
               { number: '111', type: 'blue' },
