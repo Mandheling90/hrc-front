@@ -10,8 +10,8 @@
   min-height: 0;
 
   // 호버 스타일 CSS 변수 (외부에서 오버라이드 가능)
-  --table-row-hover-bg: #{$gray-1};
-  --table-row-hover-title-color: inherit;
+  --table-row-hover-bg: #f8efe2;
+  --table-row-hover-title-color: #816331;
 
   // 호버 스타일 활성화 시에만 적용
   &.hoverEnabled {

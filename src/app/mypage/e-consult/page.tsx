@@ -94,7 +94,7 @@ const statusOptions = [
   { value: 'completed', label: '답변 완료' }
 ]
 
-export default function EConsultListPage() {
+export default function MypageEConsultListPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -210,7 +210,7 @@ export default function EConsultListPage() {
 
   const handleRowClick = (item: EConsultData) => {
     // 상세 페이지로 이동
-    window.location.href = `/network/e-consult/list/${item.id}`
+    window.location.href = `/mypage/e-consult/${item.id}`
   }
 
   return (
@@ -218,7 +218,7 @@ export default function EConsultListPage() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          <h1 className={styles.pageTitle}>자문의 e-Consult 조회</h1>
+          <h1 className={styles.pageTitle}>e-Consult 조회</h1>
 
           {/* 안내 메시지 및 검색 필터 영역 */}
           <SearchFilterWithInfo

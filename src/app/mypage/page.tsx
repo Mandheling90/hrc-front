@@ -135,9 +135,9 @@ export default function MyPage() {
               <div className={styles.consultCard}>
                 <div className={styles.cardHeader}>
                   <SectionTitle title='e-Consult 조회' noMargin />
-                  <button type='button' className={styles.arrowBtn}>
+                  <Link href='/mypage/e-consult' className={styles.arrowBtn}>
                     <ArrowRightLargeIcon width={24} height={24} stroke='white' />
-                  </button>
+                  </Link>
                 </div>
                 <div className={styles.consultContent}>
                   <div className={styles.consultStats}>

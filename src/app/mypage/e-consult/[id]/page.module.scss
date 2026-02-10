@@ -1,0 +1,578 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+}
+
+// 신청자 정보 섹션
+.applicantSection {
+  background-color: #fdf9f4;
+  border: 1px solid $gray-9;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 56px; // Figma: gap 56px
+
+  @include mobile {
+    padding: 20px;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.applicantHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  letter-spacing: -1.28px;
+  margin: 0;
+
+  @include mobile {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+}
+
+.sectionDivider {
+  width: 100%;
+  height: 2px; // Figma: 2px
+  background-color: $gray-8; // Figma: #BBBBBB
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: $color-white;
+  border: 1px solid #e9b0b2;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.infoCardLabel {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.8px;
+  text-align: center;
+}
+
+.infoCardDivider {
+  width: 100%;
+  height: 1px;
+  background-color: #e9b0b2;
+}
+
+.infoCardValue {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  letter-spacing: -0.8px;
+  text-align: center;
+
+  @include mobile {
+    font-size: $font-size-lg; // 18px
+    letter-spacing: -0.72px;
+  }
+}
+
+// 자문 요청 내용 섹션
+.contentSection {
+  margin-bottom: 56px; // Figma: gap 56px
+
+  @include mobile {
+    margin-bottom: $spacing-8;
+  }
+}
+
+// Figma: 제목 박스 - "84 | 소아청소년과..."
+.contentTitleBox {
+  background-color: $color-white;
+  border: 1px solid $gray-9; // Figma: #8C8C8C
+  border-radius: 10px;
+  padding: 30px; // Figma: 30px
+  margin-bottom: 80px; // Figma: gap 80px to content
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include mobile {
+    padding: 20px;
+    margin-bottom: $spacing-8;
+    flex-wrap: wrap;
+  }
+}
+
+.contentNumber {
+  width: 50px;
+  text-align: center;
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $gray-11; // Figma: #636363
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  flex-shrink: 0;
+
+  @include mobile {
+    width: auto;
+    font-size: $font-size-lg;
+  }
+}
+
+.contentDivider {
+  width: 1px;
+  height: 24px; // Figma: height 18px in design but 24px icon size
+  background-color: $gray-8; // Figma: #BBBBBB
+  flex-shrink: 0;
+  margin: 0 4px;
+
+  @include mobile {
+    height: 18px;
+  }
+}
+
+.contentTitle {
+  flex: 1;
+  padding: 0 10px;
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
+  line-height: 36px;
+  letter-spacing: -0.96px;
+
+  @include mobile {
+    font-size: $font-size-lg;
+    padding: 0;
+    line-height: 27px;
+  }
+}
+
+// 답변 완료 상태: 제목 박스의 날짜
+.contentDate {
+  width: 150px;
+  text-align: center;
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $gray-11; // Figma: #636363
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  flex-shrink: 0;
+
+  @include mobile {
+    width: auto;
+    font-size: $font-size-lg;
+    line-height: 27px;
+  }
+}
+
+.contentBody {
+  padding: 0 40px; // Figma: padding-left/right 40px
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal; // Figma: 400
+  line-height: 30px; // Figma: line-height 30px
+  color: $gray-11; // Figma: #636363
+  letter-spacing: -0.8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  @include mobile {
+    padding: 0 16px;
+    font-size: $font-size-base;
+  }
+}
+
+// 답변 입력 섹션
+.replySection {
+  background-color: #fdf9f4;
+  border: 1px solid #c09c63;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 56px; // Figma: gap 56px
+  position: relative;
+
+  @include mobile {
+    padding: 20px;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.replyTop {
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 10px 10px 0 0;
+  padding: 5px;
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.replyHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 20px 0;
+
+  @include mobile {
+    padding: 10px 16px 0;
+  }
+}
+
+.replierName {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
+  line-height: 30px;
+  letter-spacing: -0.8px;
+}
+
+.replyLabel {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal; // Figma: 400
+  color: $gray-11; // Figma: #636363
+  line-height: 30px;
+  letter-spacing: -0.8px;
+}
+
+.replyTextarea {
+  flex: 1;
+
+  :global(.textareaWrapper) {
+    height: 100%;
+  }
+
+  :global(textarea) {
+    height: 100%;
+    min-height: 0;
+    padding-top: 10px; // 헤더 아래 자연스럽게 시작
+    resize: none;
+  }
+}
+
+.replyBottom {
+  background-color: $color-white;
+  border-left: 1px solid $gray-9;
+  border-right: 1px solid $gray-9;
+  border-bottom: 1px solid $gray-9;
+  border-radius: 0 0 10px 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-4;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.characterCount {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
+  line-height: 30px;
+  letter-spacing: -0.8px;
+}
+
+.replyActions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.replyButton {
+  width: 160px; // Figma: 160px
+  padding: 10px 20px; // Figma
+  font-size: $font-size-xl !important; // Figma: 20px
+  font-weight: $font-weight-semibold !important; // Figma: 600
+  line-height: 30px !important;
+  border-radius: 5px !important; // Figma: 5px
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+// 기간 만료 상태: 만료 안내 메시지 섹션
+.expiredMessageSection {
+  padding: 0 10px; // Figma: paddingLeft/Right 10px
+  margin-bottom: 56px; // Figma: gap 56px to navigation
+
+  @include mobile {
+    padding: 0;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.expiredMessageBox {
+  height: 59px; // Figma: 59px
+  padding: 20px 40px; // Figma: padding
+  background-color: $gray-4; // Figma: #E8E8E8
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include mobile {
+    height: auto;
+    padding: 15px 20px;
+  }
+}
+
+.expiredMessage {
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-primary; // Figma: #9F1836
+  line-height: 36px;
+  letter-spacing: -0.96px;
+  margin: 0;
+  text-align: center;
+
+  @include mobile {
+    font-size: $font-size-xl;
+    line-height: 30px;
+  }
+}
+
+// 답변 완료 상태: 답변 내용 표시 섹션
+.replyDisplaySection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; // Figma: gap 8px
+  margin-bottom: 56px; // Figma: gap 56px to navigation
+
+  @include mobile {
+    margin-bottom: $spacing-8;
+  }
+}
+
+.replyDisplayHeader {
+  height: 59px; // Figma: 59px
+  padding: 20px 40px; // Figma: padding
+  background-color: #f8efe2; // Figma: Secondary Light
+  border-radius: 10px; // Figma: 10px top radius
+  border-bottom: 1px solid #dbbf93; // Figma: Secondary Normal hover
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include mobile {
+    height: auto;
+    padding: 15px 20px;
+  }
+}
+
+.replyDisplayTitle {
+  font-size: 24px; // Figma: 24px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: #816331; // Figma: Secondary Deep hover
+  line-height: 36px;
+  letter-spacing: -0.96px;
+
+  @include mobile {
+    font-size: $font-size-xl;
+    line-height: 30px;
+  }
+}
+
+.replyDisplayContent {
+  background-color: $color-white;
+  border: 1px solid $gray-9; // Figma: #8C8C8C
+  border-radius: 10px;
+  padding: 40px 40px 80px 40px; // Figma: 40px top/left/right, 80px bottom
+
+  @include mobile {
+    padding: 20px 20px 40px 20px;
+  }
+}
+
+.replyDisplayMeta {
+  display: flex;
+  align-items: center;
+  gap: 16px; // Figma: gap 16px
+  margin-bottom: 16px; // Figma: gap 16px to text
+}
+
+.replyDisplayName {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $color-darken; // Figma: black
+  line-height: 30px;
+  letter-spacing: -0.8px;
+}
+
+.replyMetaDivider {
+  width: 1px;
+  height: 14px;
+  background-color: $gray-8; // Figma: #BBBBBB
+  flex-shrink: 0;
+}
+
+.replyDisplayDate {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-semibold; // Figma: 600
+  color: $gray-11; // Figma: #636363
+  line-height: 30px;
+  letter-spacing: -0.8px;
+}
+
+.replyDisplayText {
+  font-size: $font-size-xl; // Figma: 20px
+  font-weight: $font-weight-normal; // Figma: 400
+  line-height: 30px; // Figma: line-height 30px
+  color: $gray-11; // Figma: #636363
+  letter-spacing: -0.8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  @include mobile {
+    font-size: $font-size-base;
+    line-height: 24px;
+  }
+}
+
+// 이전글/다음글 네비게이션
+.navigationSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-bottom: $spacing-8;
+
+  @include mobile {
+    margin-bottom: $spacing-6;
+  }
+}
+
+.navItem {
+  background-color: $color-white;
+  border-bottom: 1px solid $gray-6;
+
+  &:first-child {
+    border-top: 1px solid $gray-6;
+  }
+}
+
+.navHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-6;
+
+  @include mobile {
+    padding: $spacing-3 $spacing-4;
+  }
+}
+
+.navIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLabel {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.72px;
+  flex-shrink: 0;
+  margin-right: auto;
+}
+
+.navLink {
+  font-size: $font-size-lg;
+  color: $gray-12;
+  letter-spacing: -0.72px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+  flex: 1;
+  min-width: 0;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.navEmpty {
+  font-size: $font-size-lg;
+  color: $gray-9;
+  letter-spacing: -0.72px;
+  flex: 1;
+  text-align: left;
+}
+
+// 목록 버튼 섹션
+.backButtonSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $spacing-10;
+
+  @include mobile {
+    margin-bottom: $spacing-8;
+  }
+
+  // Figma 스타일 오버라이드
+  button {
+    width: 260px; // Figma: 260px
+    height: 66px; // Figma: 66px
+    padding: 15px 30px; // Figma
+    background-color: $color-white !important;
+    border: 2px solid $gray-4 !important; // Figma: #E8E8E8
+    border-radius: 5px !important; // Figma: 5px
+    font-size: $font-size-xl !important; // Figma: 20px
+    font-weight: $font-weight-semibold !important; // Figma: 600
+    line-height: 30px !important;
+    color: $color-darken !important; // Figma: black
+
+    @include mobile {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
