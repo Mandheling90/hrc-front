@@ -237,8 +237,8 @@ const mockNotices: NoticeData[] = [
 // 카테고리 옵션
 const categoryOptions = [
   { value: 'all', label: '전체' },
-  { value: 'center', label: '진료협력센터' },
-  { value: 'hospital', label: '고대안암병원' }
+  { value: 'title', label: '제목' },
+  { value: 'content', label: '내용' }
 ]
 
 export default function NoticeListPage() {
@@ -263,15 +263,18 @@ export default function NoticeListPage() {
   const filteredData = useMemo(() => {
     let filtered = mockNotices
 
-    // 카테고리 필터 (현재는 전체만 사용)
-    if (selectedCategory !== 'all') {
-      // TODO: 카테고리 필터링 로직 추가
-    }
-
-    // 검색어 필터
+    // 검색어 필터 (카테고리별 검색 범위)
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(item => item.title.toLowerCase().includes(query))
+      if (selectedCategory === 'title') {
+        filtered = filtered.filter(item => item.title.toLowerCase().includes(query))
+      } else if (selectedCategory === 'content') {
+        // TODO: content 필드 추가 후 내용 검색 구현
+        filtered = filtered.filter(item => item.title.toLowerCase().includes(query))
+      } else {
+        // 전체: 제목 + 내용 모두 검색
+        filtered = filtered.filter(item => item.title.toLowerCase().includes(query))
+      }
     }
 
     return filtered
