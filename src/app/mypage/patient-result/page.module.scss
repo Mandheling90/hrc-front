@@ -540,17 +540,24 @@
   gap: 16px;
 }
 
-.sectionHeader {
+.sectionSubHeader {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
   gap: 16px;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }
 
 .sortRadio {
   display: flex;
   justify-content: flex-end;
-  align-self: flex-end;
+  flex-shrink: 0;
 }
 
 // 태블릿 카드 스타일
@@ -858,11 +865,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 16px;
-  font-size: 16px;
+  margin: 0;
+  font-size: 18px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: $gray-10;
 
   @include mobile {
     font-size: 14px;

@@ -58,6 +58,13 @@ const TAB_TITLES: Record<string, string> = {
   prescription: '약 처방 내역'
 }
 
+// 탭별 안내 문구 (영상검사, 내시경검사, 기타검사)
+const TAB_NOTICES: Record<string, string> = {
+  imaging: '등록된 이미지는 3개월만 열람이 가능합니다.',
+  endoscopy: '등록된 이미지는 3개월만 열람이 가능합니다.',
+  other: '등록된 이미지는 3개월만 열람이 가능합니다.'
+}
+
 export default function PatientResultPage() {
   const [activeTab, setActiveTab] = useState('history')
   const [sortOrder, setSortOrder] = useState('newest')
@@ -124,8 +131,16 @@ export default function PatientResultPage() {
 
           {/* 컨텐츠 섹션 */}
           <div className={styles.historySection}>
-            <div className={styles.sectionHeader}>
-              <SectionTitle title={TAB_TITLES[activeTab] || '수진 이력'} />
+            <SectionTitle title={TAB_TITLES[activeTab] || '수진 이력'} noMargin />
+            <div className={styles.sectionSubHeader}>
+              {TAB_NOTICES[activeTab] ? (
+                <p className={styles.tabNotice}>
+                  <span className={styles.noticeIcon}>i</span>
+                  {TAB_NOTICES[activeTab]}
+                </p>
+              ) : (
+                <div />
+              )}
               <div className={styles.sortRadio}>
                 <Radio name='sortOrder' options={SORT_OPTIONS} value={sortOrder} onChange={setSortOrder} />
               </div>

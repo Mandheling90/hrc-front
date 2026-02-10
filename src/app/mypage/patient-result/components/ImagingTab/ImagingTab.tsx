@@ -236,12 +236,6 @@ export const ImagingTab: React.FC = () => {
 
   return (
     <>
-      {/* 안내 문구 */}
-      <p className={styles.tabNotice}>
-        <span className={styles.noticeIcon}>i</span>
-        등록된 이미지는 3개월만 열람이 가능합니다.
-      </p>
-
       <Table
         columns={getImagingColumns(handleImageClick, handleViewImageClick, handleViewResultClick)}
         data={mockImagingData}
