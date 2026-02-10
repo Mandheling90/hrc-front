@@ -31,7 +31,6 @@ $spacing-14: 3.5rem; // 56px
 }
 
 .procedureListWrapper {
-  margin-left: 32px;
   margin-top: $spacing-2;
 }
 
@@ -307,9 +306,6 @@ $spacing-14: 3.5rem; // 56px
     margin-top: 4px;
   }
 
-  .procedureListWrapper {
-    margin-left: 32px;
-  }
 }
 
 // 모바일 반응형 스타일 (768px 이하)
@@ -396,7 +392,4 @@ $spacing-14: 3.5rem; // 56px
     margin-top: 4px;
   }
 
-  .procedureListWrapper {
-    margin-left: $spacing-4; // 16px (모바일)
-  }
 }
