@@ -315,11 +315,5 @@
 }
 
 .paginationWrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: $spacing-10;
-
-  @include mobile {
-    margin-top: $spacing-8;
-  }
+  @include pagination-wrapper;
 }

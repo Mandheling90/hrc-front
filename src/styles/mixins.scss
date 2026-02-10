@@ -352,3 +352,17 @@ $header-bp-mobile: 768px;
     @content;
   }
 }
+
+// ========================================
+// 페이지네이션 래퍼 믹스인
+// ========================================
+
+@mixin pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-20; // 80px
+
+  @include mobile {
+    margin-top: $spacing-10; // 40px
+  }
+}
