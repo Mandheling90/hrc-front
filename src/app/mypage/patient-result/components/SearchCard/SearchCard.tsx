@@ -82,7 +82,13 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onSearch }) => {
         <div className={styles.searchField}>
           <span className={styles.fieldLabel}>조회기간</span>
           <div className={styles.periodWrapper}>
-            <Radio name='period' options={PERIOD_OPTIONS} value={period} onChange={setPeriod} className={styles.searchPeriodRadio} />
+            <Radio
+              name='period'
+              options={PERIOD_OPTIONS}
+              value={period}
+              onChange={setPeriod}
+              className={styles.searchPeriodRadio}
+            />
             <div className={styles.dateRangeGroup}>
               <div className={styles.dateInput}>
                 <input type='text' value={startDate} onChange={e => setStartDate(e.target.value)} readOnly />

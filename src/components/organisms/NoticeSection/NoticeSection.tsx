@@ -238,10 +238,10 @@ export const NoticeSection: React.FC = () => {
             <div className={styles.titleWrap}>
               <h3 className={styles.sectionTitle}>공지사항</h3>
               <Link href='/notice/list' className={styles.moreBtn} aria-label='더보기'>
-                  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M8 3V13M3 8H13' stroke='#000' strokeWidth='1.5' strokeLinecap='round' />
-                  </svg>
-                </Link>
+                <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M8 3V13M3 8H13' stroke='#000' strokeWidth='1.5' strokeLinecap='round' />
+                </svg>
+              </Link>
             </div>
             <ul className={styles.noticeList}>
               {filteredNotices.map(notice => (

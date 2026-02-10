@@ -22,7 +22,11 @@ export interface DirectorInfoStepProps {
   institutionType?: '병원' | '의원'
 }
 
-export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({ currentStep = 2, totalSteps = 8, institutionType = '병원' }) => {
+export const DirectorInfoStep: React.FC<DirectorInfoStepProps> = ({
+  currentStep = 2,
+  totalSteps = 8,
+  institutionType = '병원'
+}) => {
   const [directorName, setDirectorName] = React.useState('')
   const [birthDate, setBirthDate] = React.useState('')
   const [licenseNumber, setLicenseNumber] = React.useState('')

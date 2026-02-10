@@ -312,9 +312,7 @@ export const PrescriptionTab: React.FC = () => {
         renderTabletCard={renderPrescriptionTabletCard}
         renderMobileCard={renderPrescriptionMobileCard}
       />
-      {selectedDrug && (
-        <MedicationDetailModal isOpen={isModalOpen} onClose={handleCloseModal} data={selectedDrug} />
-      )}
+      {selectedDrug && <MedicationDetailModal isOpen={isModalOpen} onClose={handleCloseModal} data={selectedDrug} />}
     </>
   )
 }
