@@ -319,11 +319,10 @@ export default function DepartmentPage() {
                 selectedDepartmentId={selectedDepartmentId}
                 onDepartmentSelect={() => {}}
                 onAllSelect={() => {}}
-                height={600}
               />
             </aside>
 
-            <div ref={mainContentRef} className={styles.mainContent} style={{ height: '600px' }}>
+            <div ref={mainContentRef} className={styles.mainContent}>
               <ScheduleTitle title='진료 일정표 확인' />
               <SectionContainer
                 header={
