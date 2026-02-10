@@ -258,8 +258,9 @@ $header-height-mobile: 56px;
     display: block;
     width: 245px;
     height: 40px;
-    background: url('/assets/images/logo-top.png') no-repeat left center;
-    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 100% auto;
     text-indent: -9999px;
     overflow: hidden;
 
@@ -761,8 +762,9 @@ span.disabled {
   display: block;
   width: 180px;
   height: 32px;
-  background: url('/assets/images/logo-top.png') no-repeat left center;
-  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 100% auto;
   text-indent: -9999px;
   overflow: hidden;
 }
@@ -988,8 +990,9 @@ span.disabled {
   display: block;
   width: 200px;
   height: 36px;
-  background: url('/assets/images/logo-top.png') no-repeat left center;
-  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 100% auto;
   text-indent: -9999px;
   overflow: hidden;
 }

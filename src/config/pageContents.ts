@@ -5,8 +5,7 @@ import { getCurrentHospitalId } from './hospitals'
 const anamContent: HospitalPageContent = {
   referral: {
     intro: [
-      '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,',
-      '의뢰하신 환자의 진료정보를 확인할 수 있는 시스템입니다.'
+      '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,\n의뢰하신 환자 및 회송된 환자의 진료정보를 확인할 수 있는 시스템입니다.'
     ],
     services: [
       {
@@ -508,8 +507,7 @@ const anamContent: HospitalPageContent = {
 const guroContent: HospitalPageContent = {
   referral: {
     intro: [
-      '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,',
-      '의뢰하신 환자 및 회송된 환자의 진료정보를 확인할 수 있는 시스템입니다.'
+      '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,\n의뢰하신 환자 및 회송된 환자의 진료정보를 확인할 수 있는 시스템입니다.'
     ],
     services: [
       {
@@ -1083,8 +1081,7 @@ const guroContent: HospitalPageContent = {
 const ansanContent: HospitalPageContent = {
   referral: {
     intro: [
-      '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,',
-      '의뢰하신 환자 및 회송된 환자의 진료정보를 확인할 수 있는 시스템입니다.'
+      '진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,\n의뢰하신 환자 및 회송된 환자의 진료정보를 확인할 수 있는 시스템입니다.'
     ],
     services: [
       {
@@ -1098,7 +1095,7 @@ const ansanContent: HospitalPageContent = {
         id: 'patient-query',
         icon: 'PatientIcon',
         title: '의뢰 환자 조회',
-        description: '의뢰해주신 환자의 진료정보 조회가 가능합니다.',
+        description: '의뢰해주신 환자의 \n 진료정보 조회가 가능합니다.',
         href: '#'
       },
       {
@@ -1278,8 +1275,8 @@ const ansanContent: HospitalPageContent = {
   },
   network: {
     intro: [
-      '고려대학교 안산병원은 국민 의료 환경 및 의료의 질 향상을 위해 의료전달체계 확립에 힘쓰며,',
-      '진료의뢰 및 회송 체계 활성화를 위해 협력 병·의원 체결을 진행하고 있습니다.'
+      '진료, 교육, 연구에 관한 사항을 상호 협력함으로써 국민의료환경 및 의료의 질을 향상시키고',
+      '의료전달체계를 확립하여 의료계의 발전을  도모하고자 협력네트워크를 운영하고 있습니다.'
     ],
     introStyle: 'withIcon',
     breadcrumbs: [
@@ -1289,25 +1286,23 @@ const ansanContent: HospitalPageContent = {
       { label: '협력네트워크 소개 & 신청', icon: 'ChevronDownIcon', iconAfter: true }
     ],
     benefits: [
-      { text: '협약서(협력병원), 협력증서(협력병의원) 제공' },
+      { text: '협약서, 협력증서 제공' },
       { text: '병원 주차장 무료 이용' },
       {
-        text: '종합검진 20% 감면(기본검진에 한함) 및 고대안산병원 장례식장 빈소사용료 20% 감면 (감면 대상: 원장님 본인, 배우자, 본인의 직계존비속)'
+        text: '종합검진 20% 감면(기본검진에 한함) 및 고대안산병원 장례식장 빈소사용료 30% 감면\n감면 대상 : 원장님 본인, 배우자 본인의 직계 존비속'
       },
-      { text: '병원 및 진료가 주최 각종 연수강좌 안내' },
-      { text: '응급환자 신속 대처를 위한 교수 직통 핫라인 제공' },
-      { text: '직원 직무교육 및 서비스교육 제공' },
+      { text: '병원 및 진료과 주최 각종 연수강좌 안내' },
+      { text: '간담회 초청' },
       { text: '상호교류가 활발한 병·의원장 외래교수 위촉' },
-      { text: '초진환자 의뢰 시 빠른 예약 서비스 제공' },
-      { text: '협력병·의원 의료진에 대한 상하반기 일요일 종합검진 실시(약 40% 감면)' }
+      { text: '초진 환자 의뢰 시 빠른 예약 서비스 제공' }
     ],
     target: {
-      hospital: [{ text: '협력병원: 상호협력이 우수한 병원급 이상의 의료기관을 대상으로 매월 선정' }],
-      clinic: [{ text: '협력의원: 진료의뢰 및 회송을 통한 상호협력이 우수한 의원을 대상으로 매월 선정' }]
+      hospital: [{ text: '협력병원 : 상호협력(진료의뢰 및 회송)을 위한 병원급 이상의 의료기관' }],
+      clinic: [{ text: '협력의원 : 상호협력(진료의뢰 및 회송)을 위한 의원' }]
     },
     applicationMethod: [
-      { text: '홈페이지 신청: 온라인 신청하기에서 협력병의원 체결 신청서를 작성하여 저장' },
-      { text: '팩스 신청: 홈페이지에서 협력의원 체결 신청서를 다운로드하여 작성 후 진료협력센터로 팩스 접수' }
+      { text: '홈페이지 신청 : 온라인신청하기 에서 협력병·의원 체결 신청서를 작성하여 저장' },
+      { text: '팩스 신청 : 홈페이지에서 협력병·의원 체결 신청서를 다운로드 하여 작성 후 진료협력센터로 팩스 접수' }
     ],
     processSteps: [
       { stepNumber: '01', title: '신청서 접수', icon: 'DocumentIcon' },
@@ -1317,7 +1312,7 @@ const ansanContent: HospitalPageContent = {
       { stepNumber: '05', title: '협력증서 전달', icon: 'CertificateIcon' }
     ],
     contact: {
-      phone: '031-412-5103',
+      phone: '031-412-3211',
       fax: '031-412-4266'
     },
     downloadLink: '#',

@@ -97,7 +97,8 @@ export const Header: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<number>(0)
   const [activeMobileMenu, setActiveMobileMenu] = useState(0)
-  const { hospital } = useHospital()
+  const { hospital, hospitalId } = useHospital()
+  const logoUrl = `/images/${hospitalId}/logo-top.png`
   const pathname = usePathname()
 
   // 메인페이지 여부 (투명 헤더)
@@ -217,7 +218,7 @@ export const Header: React.FC = () => {
             <div className={styles.headerInner}>
               {/* 로고 */}
               <h1 className={styles.logo}>
-                <Link href='/' aria-label={`${hospital.name.full} 홈`}>
+                <Link href='/' aria-label={`${hospital.name.full} 홈`} style={{ backgroundImage: `url(${logoUrl})` }}>
                   {hospital.name.full}
                 </Link>
               </h1>
@@ -411,7 +412,12 @@ export const Header: React.FC = () => {
       {/* 모바일 메뉴 (~768px) */}
       <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}>
         <div className={styles.mobileHeader}>
-          <Link href='/' className={styles.mobileLogo} onClick={closeMobileMenu}>
+          <Link
+            href='/'
+            className={styles.mobileLogo}
+            onClick={closeMobileMenu}
+            style={{ backgroundImage: `url(${logoUrl})` }}
+          >
             {hospital.name.full}
           </Link>
           <button type='button' className={styles.closeBtn} onClick={closeMobileMenu} aria-label='닫기'>
@@ -480,7 +486,12 @@ export const Header: React.FC = () => {
         {/* 장식 원형 배경 */}
         <img src='/assets/images/dropdown-circles.svg' alt='' className={styles.tabletCircles} aria-hidden='true' />
         <div className={styles.tabletHeader}>
-          <Link href='/' className={styles.tabletLogo} onClick={closeMobileMenu}>
+          <Link
+            href='/'
+            className={styles.tabletLogo}
+            onClick={closeMobileMenu}
+            style={{ backgroundImage: `url(${logoUrl})` }}
+          >
             {hospital.name.full}
           </Link>
           <button type='button' className={styles.closeBtn} onClick={closeMobileMenu} aria-label='닫기'>
