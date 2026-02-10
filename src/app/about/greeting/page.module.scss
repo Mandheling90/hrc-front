@@ -10,23 +10,7 @@
 }
 
 .pageTitle {
-  font-size: 48px;
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
-  letter-spacing: -1.92px;
-  color: #000000;
-  text-align: center;
-  margin: 0 0 80px;
-
-  @include tablet {
-    font-size: 36px;
-    letter-spacing: -1.44px;
-    margin-bottom: $spacing-10;
-  }
-
-  @include mobile {
-    margin-bottom: $spacing-8;
-  }
+  @include page-title-large;
 }
 
 // 우측 블록 내 슬로건 (Figma: 데스크톱 중앙 정렬, 태블릿 오버레이)

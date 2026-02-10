@@ -10,28 +10,7 @@
 }
 
 .pageTitle {
-  font-size: 48px;
-  font-weight: $font-weight-semibold;
-  line-height: 72px; // Figma 기준
-  letter-spacing: -1.92px;
-  color: $color-darken; // Figma: black
-  text-align: center;
-  margin: 0 0 $spacing-20;
-  padding: 0;
-
-  @include tablet {
-    font-size: 36px;
-    line-height: 54px; // Figma 태블릿 기준
-    letter-spacing: -1.44px;
-    margin-bottom: $spacing-12; // gap 48px
-  }
-
-  @include mobile {
-    font-size: 36px;
-    line-height: 54px;
-    letter-spacing: -1.44px;
-    margin-bottom: $spacing-8;
-  }
+  @include page-title-large;
 }
 
 // 제목 영역

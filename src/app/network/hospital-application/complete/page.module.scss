@@ -13,13 +13,7 @@
 }
 
 .pageTitle {
-  font-size: $font-size-5xl; // 48px
-  font-weight: $font-weight-semibold; // 600
-  color: #000000;
-  line-height: 1.5;
-  letter-spacing: -1.92px;
-  text-align: center;
-  margin: 0 0 $spacing-10; // 80px
+  @include page-title-large;
 }
 
 @include tablet {

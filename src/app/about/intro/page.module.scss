@@ -10,25 +10,7 @@
 }
 
 .pageTitle {
-  font-size: 48px;
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
-  letter-spacing: -1.92px;
-  color: $gray-12;
-  text-align: center;
-  margin: 0 0 $spacing-20;
-
-  @include tablet {
-    font-size: 36px;
-    letter-spacing: -1.44px;
-    margin-bottom: $spacing-16;
-  }
-
-  @include mobile {
-    font-size: 32px;
-    letter-spacing: -1.28px;
-    margin-bottom: $spacing-12;
-  }
+  @include page-title-large;
 }
 
 // 상단 소개 박스

@@ -10,29 +10,7 @@
 }
 
 .pageTitle {
-  font-size: 48px; // size-48
-  font-weight: $font-weight-semibold;
-  line-height: 72px; // Figma 기준 72px
-  letter-spacing: -1.92px;
-  color: $gray-12;
-  text-align: center;
-  margin: 0 0 $spacing-20; // 80px - Figma gap: 80px
-  padding: 0;
-
-  // 태블릿 - Figma 기준 48px 유지, gap: 48px
-  @include tablet {
-    font-size: 48px;
-    line-height: 72px;
-    letter-spacing: -1.92px;
-    margin-bottom: 48px; // Figma gap: 48px
-  }
-
-  @include mobile {
-    font-size: 36px; // 모바일: size-48 (36px)
-    line-height: 54px;
-    letter-spacing: -1.44px;
-    margin-bottom: $spacing-8;
-  }
+  @include page-title-large;
 }
 
 .hotlineList {

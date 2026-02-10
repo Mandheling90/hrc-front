@@ -11,25 +11,7 @@
 }
 
 .pageTitle {
-  font-size: 48px;
-  font-weight: $font-weight-semibold;
-  line-height: 1.5;
-  letter-spacing: -1.92px;
-  color: $gray-12;
-  text-align: center;
-  margin: 0 0 80px;
-
-  @include tablet {
-    font-size: 36px;
-    letter-spacing: -1.44px;
-    margin-bottom: 48px;
-  }
-
-  @include mobile {
-    font-size: 36px;
-    letter-spacing: -1.44px;
-    margin-bottom: 32px;
-  }
+  @include page-title-large;
 }
 
 .content {
