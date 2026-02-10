@@ -114,6 +114,18 @@ export const Header: React.FC = () => {
     return pathname === href
   }
 
+  // 현재 경로가 속한 메뉴 섹션 인덱스
+  const currentMenuIndex = useMemo(() => {
+    for (let i = 0; i < menuItems.length; i++) {
+      for (const sub of menuItems[i].subItems) {
+        if (pathname === sub.href || pathname.startsWith(sub.href + '/')) {
+          return i
+        }
+      }
+    }
+    return -1
+  }, [pathname, menuItems])
+
   // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기, 비밀번호 재설정, 자문의 로그인 제외)
   const shouldShowBreadcrumbs = useMemo(() => {
     const excludedPaths = ['/', '/login', '/signup', '/find-user', '/reset-password', '/network/e-consult/login']
@@ -171,7 +183,7 @@ export const Header: React.FC = () => {
   // 모바일 메뉴 열기
   const openMobileMenu = () => {
     setIsMenuOpen(true)
-    setActiveMobileMenu(0)
+    setActiveMobileMenu(currentMenuIndex >= 0 ? currentMenuIndex : 0)
     document.body.style.overflow = 'hidden'
   }
 
@@ -220,7 +232,7 @@ export const Header: React.FC = () => {
                   {menuItems.map((item, index) => (
                     <li
                       key={index}
-                      className={`${styles.gnbItem} ${isDropdownOpen && activeMenu === index ? styles.active : ''}`}
+                      className={`${styles.gnbItem} ${isDropdownOpen && activeMenu === index ? styles.active : ''} ${currentMenuIndex === index ? styles.current : ''}`}
                       onMouseEnter={() => setActiveMenu(index)}
                     >
                       <span>{item.label}</span>

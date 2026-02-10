@@ -45,8 +45,10 @@ $header-height-mobile: 56px;
       }
     }
 
-    .gnbItem.active span {
+    .gnbItem.active span,
+    .gnbItem.current span {
       color: #fff;
+      border-bottom-color: #fff;
     }
 
     .textLink {
@@ -321,6 +323,11 @@ $header-height-mobile: 56px;
 
   &.active span {
     color: $color-primary;
+  }
+
+  &.current span {
+    color: $color-primary;
+    border-bottom: 3px solid $color-primary;
   }
 }
 
