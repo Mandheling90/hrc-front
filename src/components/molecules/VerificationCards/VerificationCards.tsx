@@ -39,7 +39,7 @@ export const VerificationCards: React.FC<VerificationCardsProps> = ({
         <div className={styles.cardIcon}>
           <PhoneIcon width={60} height={60} />
         </div>
-        <div className={styles.cardContent}>
+        <div className={`${styles.cardContent} ${showIdInput ? styles.withInput : ''}`}>
           <div className={styles.cardTextGroup}>
             <h4 className={styles.cardTitle}>본인 인증</h4>
             <p className={styles.cardDescription}>본인명의 휴대폰, 공동인증서</p>
@@ -66,7 +66,7 @@ export const VerificationCards: React.FC<VerificationCardsProps> = ({
         <div className={styles.cardIcon}>
           <IPinIcon width={60} height={60} />
         </div>
-        <div className={styles.cardContent}>
+        <div className={`${styles.cardContent} ${showIdInput ? styles.withInput : ''}`}>
           <div className={styles.cardTextGroup}>
             <h4 className={styles.cardTitle}>아이핀(i-PIN) 인증</h4>
             <p className={styles.cardDescription}>아이핀 ID / PW</p>

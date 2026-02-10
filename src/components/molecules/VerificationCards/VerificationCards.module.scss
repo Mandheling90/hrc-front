@@ -94,6 +94,10 @@
   @media (max-width: $breakpoint-md) {
     gap: 24px;
   }
+
+  &.withInput {
+    gap: 24px;
+  }
 }
 
 .cardTextGroup {
@@ -157,11 +161,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 220px;
+  width: 287px;
 
   @media (max-width: $breakpoint-md) {
     width: 100%;
-    max-width: 220px;
+    max-width: 287px;
   }
 }
 
@@ -208,12 +212,12 @@
 }
 
 .verifyButton {
-  width: 220px;
+  width: 287px;
   height: 66px;
 
   @media (max-width: $breakpoint-md) {
     width: 100%;
-    max-width: 220px;
+    max-width: 287px;
     height: 50px;
   }
 }
