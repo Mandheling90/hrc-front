@@ -212,7 +212,7 @@ export const DepartmentPageTablet: React.FC<DepartmentPageTabletProps> = ({
                             onClick={() => onEConsultingClick(doctor.id)}
                           >
                             <EConsultingIcon width={48} height={48} fill='white' />
-                            <span>e-Consulting 신청</span>
+                            <span>e-Consult 신청</span>
                           </button>
                         )}
                         <button
