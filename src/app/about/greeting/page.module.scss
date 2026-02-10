@@ -11,6 +11,7 @@
 
 .pageTitle {
   @include page-title-large;
+  margin-bottom: $spacing-16; // 64px
 }
 
 // 우측 블록 내 슬로건 (Figma: 데스크톱 중앙 정렬, 태블릿 오버레이)
