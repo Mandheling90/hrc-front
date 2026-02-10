@@ -7,14 +7,20 @@ import { usePathname } from 'next/navigation'
 import { useHospital } from '@/hooks'
 import styles from './Footer.module.scss'
 
-const partnerLogos = [
+const commonPartnerLogos = [
   { id: 1, image: '/images/img-section4-1.png', alt: '건강보험심사평가원' },
   { id: 2, image: '/images/img-section4-2.png', alt: '마이차트' },
-  { id: 3, image: '/images/img-section4-3.png', alt: '한국보건의료정보원' },
-  { id: 4, image: '/images/img-section4-4.png', alt: '안암병원 진료협력센터' },
-  { id: 5, image: '/images/img-section4-5.png', alt: '파트너5' },
-  { id: 6, image: '/images/img-section4-6.png', alt: '파트너6' }
+  { id: 3, image: '/images/img-section4-3.png', alt: '한국보건의료정보원' }
+  // { id: 4, image: '/images/img-section4-4.png', alt: '안암병원 진료협력센터' },
+  // { id: 5, image: '/images/img-section4-5.png', alt: '파트너5' },
+  // { id: 6, image: '/images/img-section4-6.png', alt: '파트너6' }
 ]
+
+const hospitalPartnerLogos: Record<string, { id: number; image: string; alt: string }[]> = {
+  anam: [{ id: 7, image: '/images/anam/Component 4.png', alt: '안암병원 파트너' }],
+  guro: [{ id: 7, image: '/images/guro/Component 4.png', alt: '구로병원 파트너' }],
+  ansan: [{ id: 7, image: '/images/ansan/Component 4.png', alt: '안산병원 파트너' }]
+}
 
 const policyLinks = [
   { href: '#', label: '인터넷이용약관' },
@@ -42,7 +48,7 @@ const certifications = [
 ]
 
 export const Footer: React.FC = () => {
-  const { hospital } = useHospital()
+  const { hospital, hospitalId } = useHospital()
   const pathname = usePathname()
   const isMainPage = pathname === '/'
   const [showDepartment, setShowDepartment] = useState(false)
@@ -50,6 +56,7 @@ export const Footer: React.FC = () => {
   const [partnerIndex, setPartnerIndex] = useState(0)
   const [isPartnerPaused, setIsPartnerPaused] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(true)
+  const partnerLogos = [...commonPartnerLogos, ...(hospitalPartnerLogos[hospitalId] || [])]
   const totalLogos = partnerLogos.length
 
   const currentYear = new Date().getFullYear()
