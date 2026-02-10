@@ -714,9 +714,8 @@
   color: #000;
   margin: 0;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @media (max-width: $breakpoint-2xl) {
     font-size: 20px;
@@ -726,7 +725,6 @@
   @media (max-width: $breakpoint-xl) {
     font-size: 18px;
     line-height: 27px;
-    -webkit-line-clamp: 2;
   }
 }
 
