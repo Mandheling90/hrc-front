@@ -2,6 +2,24 @@
 @import '@/styles/mixins.scss';
 @import '@/components/organisms/StepFormCommon.module.scss';
 
+// 부서/진료과 라디오 + 셀렉트 레이아웃
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.deptLabelRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.deptTypeRadio {
+  display: flex !important;
+  gap: $spacing-4 !important;
+}
+
 // 실무자명 입력 필드
 .staffNameInput {
   flex: 0 0 287px;

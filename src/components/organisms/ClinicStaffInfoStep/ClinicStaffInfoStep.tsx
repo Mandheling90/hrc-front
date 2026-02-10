@@ -4,9 +4,12 @@ import React, { useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
+import { Select } from '@/components/atoms/Select/Select'
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGroup'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/LabelInputRowGroup'
+import { SearchIcon } from '@/components/icons/SearchIcon'
+import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import { useHospital } from '@/hooks'
 import styles from './ClinicStaffInfoStep.module.scss'
 
@@ -26,6 +29,7 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
 
   // 실무자 정보 상태
   const [staffName, setStaffName] = useState<string>('')
+  const [deptType, setDeptType] = useState<'부서' | '진료과'>('부서')
   const [department, setDepartment] = useState<string>('')
   const [position, setPosition] = useState<string>('')
   const [contactNumber, setContactNumber] = useState<string>('')
@@ -84,74 +88,79 @@ export const ClinicStaffInfoStep: React.FC<ClinicStaffInfoStepProps> = ({ curren
 
         <div className={styles.formContent}>
           {/* 실무자명 */}
-          <div className={styles.formField}>
-            <FormField
-              label='실무자명'
-              id='staffName'
-              name='staffName'
-              type='text'
-              placeholder='이름을 입력해주세요.'
-              value={staffName}
-              onChange={e => setStaffName(e.target.value)}
-              error=''
-            />
-          </div>
+          <FormField
+            label='실무자명'
+            id='staffName'
+            name='staffName'
+            type='text'
+            placeholder='이름을 입력해주세요.'
+            value={staffName}
+            onChange={e => setStaffName(e.target.value)}
+            buttonText='병원찾기'
+            onButtonClick={() => {}}
+            buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
+          />
 
-          {/* 부서 */}
+          {/* 부서/진료과 */}
           <div className={styles.formField}>
-            <FormField
-              label='부서'
+            <div className={styles.deptLabelRow}>
+              <InputLabel htmlFor='department'>부서/진료과</InputLabel>
+              <Radio
+                name='deptType'
+                value={deptType}
+                options={[
+                  { value: '부서', label: '부서' },
+                  { value: '진료과', label: '진료과' }
+                ]}
+                onChange={val => {
+                  setDeptType(val as '부서' | '진료과')
+                  setDepartment('')
+                }}
+                className={styles.deptTypeRadio}
+              />
+            </div>
+            <Select
               id='department'
               name='department'
-              type='text'
-              placeholder='부서명을 입력해주세요.'
+              placeholder='선택'
               value={department}
-              onChange={e => setDepartment(e.target.value)}
-              error=''
+              onChange={setDepartment}
+              options={deptType === '부서' ? STAFF_DEPARTMENT_OPTIONS : MEDICAL_DEPARTMENT_OPTIONS}
             />
           </div>
 
           {/* 직급 */}
-          <div className={styles.formField}>
-            <FormField
-              label='직급'
-              id='position'
-              name='position'
-              type='text'
-              placeholder='직급명을 입력해주세요.'
-              value={position}
-              onChange={e => setPosition(e.target.value)}
-              error=''
-            />
-          </div>
+          <FormField
+            label='직급'
+            id='position'
+            name='position'
+            type='text'
+            placeholder='직급명을 입력해주세요.'
+            value={position}
+            onChange={e => setPosition(e.target.value)}
+          />
 
           {/* 연락처 */}
-          <div className={styles.formField}>
-            <FormField
-              label='연락처'
-              id='contactNumber'
-              name='contactNumber'
-              type='tel'
-              placeholder='-없이 입력해주세요.'
-              value={contactNumber}
-              onChange={e => setContactNumber(e.target.value)}
-              error=''
-            />
-          </div>
+          <FormField
+            label='연락처'
+            id='contactNumber'
+            name='contactNumber'
+            type='tel'
+            placeholder='-없이 입력해주세요.'
+            value={contactNumber}
+            onChange={e => setContactNumber(e.target.value)}
+          />
 
           {/* 휴대전화 */}
-          <div className={styles.formField}>
-            <FormField
-              label='휴대전화'
-              id='mobilePhone'
-              name='mobilePhone'
-              type='tel'
-              placeholder='-없이 입력해주세요.'
-              value={mobilePhone}
-              onChange={e => setMobilePhone(e.target.value)}
-              error=''
-            />
-          </div>
+          <FormField
+            label='휴대전화'
+            id='mobilePhone'
+            name='mobilePhone'
+            type='tel'
+            placeholder='-없이 입력해주세요.'
+            value={mobilePhone}
+            onChange={e => setMobilePhone(e.target.value)}
+          />
         </div>
       </div>
 
