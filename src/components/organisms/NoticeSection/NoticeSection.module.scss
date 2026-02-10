@@ -91,9 +91,9 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 16px;
   }
 }
@@ -128,137 +128,53 @@
   }
 }
 
-.tabs {
+.moreBtn {
+  width: 48px;
+  height: 48px;
+  min-width: 40px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  background: #fff;
-  border-radius: 32px;
-  height: 48px;
-  // padding: 0 15px 0 20px;
-  gap: 0;
-  border: 1px solid #e0e0e0;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  padding: 0;
+  color: #666;
 
   @media (max-width: $breakpoint-2xl) {
-    height: 56px;
-    // padding: 0 12px 0 16px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
   }
 
   @media (max-width: $breakpoint-xl) {
-    height: 50px;
-    // padding: 0 10px 0 14px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
   }
 
-  // 태블릿 (769px ~ 1429px) - 데스크톱 사이즈 유지
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 48px;
     height: 48px;
-    border-radius: 32px;
+    min-width: 48px;
   }
 
   @media (max-width: $breakpoint-md) {
-    height: auto;
-    border-radius: 32px;
-    overflow: hidden;
-  }
-
-  button {
-    font-size: 18px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 600;
-    line-height: 1.5;
-    letter-spacing: -0.72px;
-    height: 48px;
-    padding: 0 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    color: #888;
-    border: none;
-    border-radius: 55px;
-    cursor: pointer;
-    transition: all 0.3s;
-    white-space: nowrap;
-
-    @media (max-width: $breakpoint-2xl) {
-      font-size: 16px;
-      padding: 0 12px;
-    }
-
-    @media (max-width: $breakpoint-xl) {
-      font-size: 14px;
-      padding: 0 10px;
-    }
-
-    // 태블릿 (769px ~ 1429px) - 데스크톱 사이즈 유지
-    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-      font-size: 18px;
-      height: 48px;
-      padding: 0 25px;
-    }
-
-    @media (max-width: $breakpoint-md) {
-      font-size: 16px;
-      line-height: 24px;
-      height: 40px;
-      padding: 0 16px;
-    }
-
-    &.on {
-      background-color: #000;
-      color: #fff;
-    }
-  }
-
-  .moreBtn {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     min-width: 40px;
-    background: #f0f0f0;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    flex-shrink: 0;
-    padding: 0;
-    // margin-left: 10px;
-    color: #666;
+  }
 
-    @media (max-width: $breakpoint-2xl) {
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
-    }
+  &:hover {
+    background: #e5e5e5;
+  }
 
-    @media (max-width: $breakpoint-xl) {
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-    }
-
-    // 태블릿 (769px ~ 1429px) - 데스크톱 사이즈 유지
-    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-    }
-
-    @media (max-width: $breakpoint-md) {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-    }
-
-    &:hover {
-      background: #e5e5e5;
-    }
-
-    svg {
-      width: 16px;
-      height: 16px;
-    }
+  svg {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -656,6 +572,13 @@
   @media (max-width: $breakpoint-lg) {
     flex-direction: column;
     gap: 40px;
+    align-items: stretch;
+  }
+
+  // 태블릿 (769px ~ 1429px) - column 전환
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    flex-direction: column;
+    gap: 32px;
     align-items: stretch;
   }
 

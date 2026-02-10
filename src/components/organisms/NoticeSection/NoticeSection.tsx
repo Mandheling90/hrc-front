@@ -133,22 +133,11 @@ export const NoticeSection: React.FC = () => {
             <div className={styles.education}>
               <div className={styles.titleWrap}>
                 <h3 className={styles.sectionTitle}>교육/행사</h3>
-                <div className={styles.tabs}>
-                  {categories.map((category, index) => (
-                    <button
-                      key={category.id}
-                      className={activeCategory === index ? styles.on : ''}
-                      onClick={() => setActiveCategory(index)}
-                    >
-                      {category.label}
-                    </button>
-                  ))}
-                  <button className={styles.moreBtn} aria-label='더보기'>
-                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                      <path d='M8 3V13M3 8H13' stroke='#000' strokeWidth='1.5' strokeLinecap='round' />
-                    </svg>
-                  </button>
-                </div>
+                <Link href='/notice/event' className={styles.moreBtn} aria-label='더보기'>
+                  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path d='M8 3V13M3 8H13' stroke='#000' strokeWidth='1.5' strokeLinecap='round' />
+                  </svg>
+                </Link>
               </div>
               <div className={styles.eventCards}>
                 {filteredEvents.slice(0, 3).map(event => (
@@ -248,22 +237,11 @@ export const NoticeSection: React.FC = () => {
           <div className={styles.notice}>
             <div className={styles.titleWrap}>
               <h3 className={styles.sectionTitle}>공지사항</h3>
-              <div className={styles.tabs}>
-                {categories.map((category, index) => (
-                  <button
-                    key={category.id}
-                    className={activeCategory === index ? styles.on : ''}
-                    onClick={() => setActiveCategory(index)}
-                  >
-                    {category.label}
-                  </button>
-                ))}
-                <button className={styles.moreBtn} aria-label='더보기'>
+              <Link href='/notice/list' className={styles.moreBtn} aria-label='더보기'>
                   <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path d='M8 3V13M3 8H13' stroke='#000' strokeWidth='1.5' strokeLinecap='round' />
                   </svg>
-                </button>
-              </div>
+                </Link>
             </div>
             <ul className={styles.noticeList}>
               {filteredNotices.map(notice => (
