@@ -58,7 +58,7 @@ export default function EditProfilePage() {
   return (
     <div className={styles.wrap}>
       <Header />
-      <Breadcrumbs items={breadcrumbItems} />
+      {/* <Breadcrumbs items={breadcrumbItems} /> */}
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.pageTitle}>회원정보 수정</h1>

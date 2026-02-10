@@ -52,7 +52,7 @@ export default function EditHospitalPage() {
   return (
     <div className={styles.wrap}>
       <Header />
-      <Breadcrumbs items={breadcrumbItems} />
+      {/* <Breadcrumbs items={breadcrumbItems} /> */}
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.pageTitle}>협력병원 정보수정</h1>

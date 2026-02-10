@@ -6,14 +6,17 @@
   max-width: 1430px;
   margin: 0 auto;
   padding: 0 20px 80px;
+  padding-top: $header-height-desktop + $breadcrumbs-height-desktop + 64px; // 100+71+64 = 235px
 
   @include tablet {
     max-width: 100%;
     padding: 0 40px 60px;
+    padding-top: $header-height-tablet + $breadcrumbs-height-tablet + 48px; // 64+71+48 = 183px
   }
 
   @include mobile {
     padding: 0 20px 40px;
+    padding-top: $header-height-mobile + $breadcrumbs-height-mobile + 32px; // 56+50+32 = 138px
   }
 }
 
@@ -96,7 +99,8 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  justify-content: space-between;
+  gap: 32px;
 
   @include tablet {
     padding: 20px;
@@ -124,6 +128,15 @@
       .cardDivider {
         display: block;
       }
+    }
+  }
+
+  // 검색/조회 카드의 제목+부제(66px)와 구분선 높이를 맞추기 위해
+  .cardTitleRow {
+    min-height: 66px;
+
+    @include tablet {
+      min-height: auto;
     }
   }
 }
@@ -200,10 +213,11 @@
 
 .infoItem {
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 9px;
+  padding: 10px 20px;
   background-color: $color-white;
   border: 1px solid #e9b0b2;
   border-radius: 10px;
@@ -215,21 +229,28 @@
 
 .infoLabel {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
   padding: 10px;
   text-align: center;
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-12;
+  color: $color-darken;
   white-space: nowrap;
 
   @include tablet {
     font-size: 18px;
+    height: auto;
     padding: 5px;
   }
 
   @include mobile {
     font-size: 16px;
+    height: auto;
     padding: 5px;
   }
 }
@@ -246,6 +267,11 @@
 
 .infoValue {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
   padding: 10px;
   text-align: center;
   font-size: 20px;
@@ -256,11 +282,13 @@
 
   @include tablet {
     font-size: 18px;
+    height: auto;
     padding: 5px;
   }
 
   @include mobile {
     font-size: 16px;
+    height: auto;
     padding: 5px;
   }
 }
@@ -274,7 +302,7 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 24px;
 
   @include tablet {
     padding: 20px;
@@ -360,7 +388,7 @@
   font-size: 18px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-12;
+  color: $color-darken;
 
   @include mobile {
     font-size: 16px;
@@ -377,8 +405,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  max-width: 461px;
+
+  @include tablet {
+    max-width: 100%;
+  }
 
   @include mobile {
+    max-width: 100%;
     flex-direction: column;
     align-items: stretch;
   }
@@ -426,17 +460,45 @@
   }
 }
 
+// Radio 오버라이드 (검색카드 전용 - Figma 1920/1440 기준)
+.searchPeriodRadio {
+  gap: 24px !important;
+
+  > label {
+    width: 80px;
+
+    > input[type='radio'] {
+      width: 24px;
+      height: 24px;
+      border-width: 1.5px;
+
+      &:checked {
+        border-width: 1.5px;
+
+        &::after {
+          width: 12px;
+          height: 12px;
+        }
+      }
+
+      &:not(:checked) {
+        border-color: $gray-10;
+        border-width: 1.5px;
+      }
+    }
+
+    > span {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}
+
 .searchCategorySelect {
-  display: none !important;
-  width: 120px !important;
+  width: 160px !important;
   flex-shrink: 0;
 
-  @include tablet {
-    display: block !important;
-  }
-
   @include mobile {
-    display: block !important;
     width: 100% !important;
   }
 }

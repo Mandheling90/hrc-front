@@ -97,7 +97,7 @@ export default function PatientResultPage() {
     <>
       <Header />
       <main className={styles.container}>
-        <Breadcrumbs items={breadcrumbItems} />
+        {/* <Breadcrumbs items={breadcrumbItems} /> */}
 
         <h1 className={styles.pageTitle}>의뢰환자 결과조회</h1>
 

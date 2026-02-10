@@ -14,9 +14,9 @@ import styles from '../../page.module.scss'
 // 조회기간 옵션
 const PERIOD_OPTIONS = [
   { value: '1month', label: '1개월' },
-  { value: '3month', label: '3개월' },
   { value: '6month', label: '6개월' },
-  { value: '1year', label: '1년' }
+  { value: '1year', label: '1년' },
+  { value: '3year', label: '3년' }
 ]
 
 // 검색 카테고리 옵션
@@ -82,7 +82,7 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onSearch }) => {
         <div className={styles.searchField}>
           <span className={styles.fieldLabel}>조회기간</span>
           <div className={styles.periodWrapper}>
-            <Radio name='period' options={PERIOD_OPTIONS} value={period} onChange={setPeriod} />
+            <Radio name='period' options={PERIOD_OPTIONS} value={period} onChange={setPeriod} className={styles.searchPeriodRadio} />
             <div className={styles.dateRangeGroup}>
               <div className={styles.dateInput}>
                 <input type='text' value={startDate} onChange={e => setStartDate(e.target.value)} readOnly />

@@ -720,9 +720,7 @@ export default function StyleGuidePage() {
         </div>
 
         <h3 className={styles.sectionSubtitle}>Breadcrumbs</h3>
-        <div className={styles.breadcrumbsDemo}>
-          <Breadcrumbs items={breadcrumbItems} />
-        </div>
+        <div className={styles.breadcrumbsDemo}>{/* <Breadcrumbs items={breadcrumbItems} /> */}</div>
 
         <h3 className={styles.sectionSubtitle}>SectionTitle</h3>
         <div className={styles.componentGrid}>
