@@ -14,6 +14,7 @@ import {
   HospitalSearchModal,
   HospitalSearchResult
 } from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import React, { useState, useEffect } from 'react'
 import styles from './MemberInfoForm.module.scss'
 
@@ -158,6 +159,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     ...initialData
   })
   const [isHospitalSearchOpen, setIsHospitalSearchOpen] = useState(false)
+  const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
+    isOpen: false,
+    message: ''
+  })
 
   // 초기 데이터 변경 시 폼 데이터 업데이트
   useEffect(() => {
@@ -215,7 +220,8 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     setFormData(prev => ({
       ...prev,
       hospitalName: hospital.hospitalName,
-      careNumber: hospital.careNumber
+      careNumber: hospital.careNumber,
+      address: hospital.address || ''
     }))
     setIsHospitalSearchOpen(false)
   }
@@ -226,6 +232,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   }
 
   const handleSubmit = () => {
+    if (!formData.hospitalName) {
+      setAlertModal({ isOpen: true, message: '병원명을 검색하여 입력해주세요.' })
+      return
+    }
     onSubmit(formData)
   }
 
@@ -549,6 +559,13 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
         isOpen={isHospitalSearchOpen}
         onClose={() => setIsHospitalSearchOpen(false)}
         onSelect={handleHospitalSelect}
+      />
+
+      {/* 알림 모달 */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        message={alertModal.message}
+        onClose={() => setAlertModal({ isOpen: false, message: '' })}
       />
     </div>
   )

@@ -7,6 +7,7 @@ import { CloseIcon } from '@/components/icons/CloseIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import styles from './HospitalSearchModal.module.scss'
 
 export interface HospitalSearchResult {
@@ -61,6 +62,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   const [regAddress, setRegAddress] = useState('')
   const [regDetailAddress, setRegDetailAddress] = useState('')
   const [regPhone, setRegPhone] = useState('')
+  const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
+    isOpen: false,
+    message: ''
+  })
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -125,12 +130,12 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   }
 
   const handleSearch = () => {
-    // TODO: 실제 검색 API 호출
     if (!hospitalName.trim() && !careNumber.trim()) {
-      setSearchResults([])
-    } else {
-      setSearchResults(MOCK_RESULTS)
+      setAlertModal({ isOpen: true, message: '병원명 또는 요양기관번호를 기입해주세요.' })
+      return
     }
+    // TODO: 실제 검색 API 호출
+    setSearchResults(MOCK_RESULTS)
     setView('results')
   }
 
@@ -226,7 +231,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                         name='careNumber'
                         placeholder='요양기관번호를 입력해주세요.'
                         value={careNumber}
-                        onChange={e => setCareNumber(e.target.value)}
+                        onChange={e => {
+                          const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+                          setCareNumber(filtered)
+                        }}
                         onKeyDown={e => {
                           if (e.key === 'Enter') handleSearch()
                         }}
@@ -350,7 +358,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       id='reg-hospital-name'
                       name='regHospitalName'
                       value={regHospitalName}
-                      onChange={e => setRegHospitalName(e.target.value)}
+                      onChange={e => {
+                        const filtered = e.target.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s]/g, '').slice(0, 50)
+                        setRegHospitalName(filtered)
+                      }}
                       placeholder='병원명을 입력해주세요'
                     />
                   </div>
@@ -377,7 +388,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       name='regCareNumber'
                       placeholder='요양기관번호를 입력해주세요.'
                       value={regCareNumber}
-                      onChange={e => setRegCareNumber(e.target.value)}
+                      onChange={e => {
+                        const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+                        setRegCareNumber(filtered)
+                      }}
                     />
                   </div>
 
@@ -455,6 +469,12 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
           )}
         </div>
       </div>
+
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        message={alertModal.message}
+        onClose={() => setAlertModal({ isOpen: false, message: '' })}
+      />
     </div>
   )
 }

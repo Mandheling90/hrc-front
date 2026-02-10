@@ -48,7 +48,10 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           type='text'
           placeholder='병원명을 입력해주세요'
           value={hospitalName}
-          onChange={e => setHospitalName(e.target.value)}
+          onChange={e => {
+            const filtered = e.target.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s]/g, '').slice(0, 50)
+            setHospitalName(filtered)
+          }}
         />
 
         {/* 요양기관번호 */}
@@ -59,7 +62,10 @@ export const HospitalInfoStep: React.FC<HospitalInfoStepProps> = ({ currentStep 
           name='medicalInstitutionNumber'
           type='text'
           value={medicalInstitutionNumber}
-          onChange={e => setMedicalInstitutionNumber(e.target.value)}
+          onChange={e => {
+            const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+            setMedicalInstitutionNumber(filtered)
+          }}
           placeholder='요양기관번호를 입력해주세요.'
         />
 

@@ -134,7 +134,10 @@ export const LoadSaveModal: React.FC<LoadSaveModalProps> = ({
                   name='medicalInstitutionNumber'
                   placeholder='요양 기관번호를 입력해주세요.'
                   value={medicalInstitutionNumber}
-                  onChange={e => setMedicalInstitutionNumber(e.target.value)}
+                  onChange={e => {
+                    const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+                    setMedicalInstitutionNumber(filtered)
+                  }}
                   className={styles.input}
                 />
               </div>
