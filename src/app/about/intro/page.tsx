@@ -72,9 +72,11 @@ export default function AboutIntroPage() {
           <section className={styles.section}>
             <SectionTitle title='주요업무' />
 
-            {aboutIntro.mainTasks.map((task, index) => (
-              <ProcedureList key={index} label={MAIN_TASK_LABELS[index]} items={[task]} />
-            ))}
+            <div className={styles.mainTasksContent}>
+              {aboutIntro.mainTasks.map((task, index) => (
+                <ProcedureList key={index} label={MAIN_TASK_LABELS[index]} items={[task]} />
+              ))}
+            </div>
           </section>
 
           {/* 운영 안내 */}

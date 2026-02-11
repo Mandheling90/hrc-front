@@ -11,20 +11,41 @@
 
 .pageTitle {
   @include page-title-large;
+  margin-bottom: $spacing-16; // Figma: 64px (contents-gap)
+
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    margin-bottom: $spacing-12; // 48px
+  }
+
+  @media (max-width: $breakpoint-md) {
+    margin-bottom: $spacing-6; // 24px
+  }
 }
 
 // 상단 소개 박스
 .introBox {
-  margin-bottom: 0; // Figma: contents gap handles spacing
+  margin-bottom: 0; // Figma: section gap handles spacing
 }
 
 // 섹션 공통
 .section {
-  margin-top: $spacing-20; // Figma 데스크탑: 80px gap between sections
+  margin-top: 56px; // Figma 데스크탑: 56px gap between sections
 
   @include tablet {
-    margin-top: $spacing-12; // Figma 태블릿: 48px
+    margin-top: $spacing-10; // 40px
   }
+
+  @include mobile {
+    margin-top: $spacing-8; // 32px
+  }
+}
+
+// 주요업무 하위 항목 간격
+.mainTasksContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6; // Figma: 24px between sub-items
+  padding-left: $spacing-8; // Figma: 32px
 }
 
 .sectionTitleRow {

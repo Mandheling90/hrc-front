@@ -1,80 +1,88 @@
 @import '@/styles/variables.scss';
 @import '@/styles/mixins.scss';
 
+// ========================================
+// 카드 컨테이너
+// ========================================
 .card {
   display: flex;
   flex-direction: column;
-  gap: $spacing-8;
-  padding: 30px; // Figma 기준 30px
-  min-height: 214px; // 데스크톱
+  gap: $spacing-8; // Figma: 32px
+  padding: 30px;
   background-color: $color-white;
-  border-bottom: 1px solid $gray-9; // Figma 기준 #8C8C8C
+  border: none;
+  border-bottom: 1px solid $gray-9;
+  border-radius: 0;
   box-sizing: border-box;
 
-  // 태블릿 (769px ~ 1429px) - Figma 기준 208px
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    min-height: 208px;
-  }
-
   @include mobile {
-    padding: $spacing-5; // 20px - Figma 모바일 기준
-    gap: $spacing-4; // 16px - Figma 모바일 기준
-    min-height: auto;
-    border-bottom-color: $gray-8; // #BBBBBB - Figma 모바일 기준
+    padding: $spacing-5;
+    gap: $spacing-4;
+    border-bottom-color: $gray-8;
   }
 
-  &:first-child {
-    border-top-left-radius: $radius-md;
-    border-top-right-radius: $radius-md;
-  }
-
-  &:last-child {
-    border-bottom-left-radius: $radius-md;
-    border-bottom-right-radius: $radius-md;
+  // 선택된 카드 바로 위 카드의 하단 라인 숨김
+  &:has(+ .highlighted) {
     border-bottom: none;
   }
 
+  // 선택된 카드 (위치 버튼 클릭 시)
   &.highlighted {
-    background-color: $color-primary;
-    color: $color-white;
-    border-bottom: none;
+    background-color: #fef8f8; // Figma: primary/bg/bg--2
+    border: 3px solid $color-primary;
+    border-radius: 10px;
+
+    .label {
+      font-weight: $font-weight-semibold;
+    }
   }
 }
 
+// ========================================
+// 헤더 (이름 + 뱃지 + 버튼)
+// ========================================
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  gap: $spacing-4; // 16px - 데스크톱에서 name과 badge 사이
 
   @include mobile {
-    flex-wrap: wrap;
-    gap: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: $spacing-2;
+  }
+}
+
+.nameGroup {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+
+  @include mobile {
+    display: contents;
   }
 }
 
 .name {
-  font-size: 32px; // 데스크톱: size-32
+  font-size: 32px;
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   letter-spacing: -1.28px;
-  color: inherit;
+  color: $gray-12;
   margin: 0;
-  order: 0; // 데스크톱/태블릿: 첫 번째 (badge보다 앞)
 
-  // 태블릿 (769px ~ 1429px) - Figma 기준 24px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 24px;
-    line-height: 36px;
     letter-spacing: -0.96px;
   }
 
   @include mobile {
-    font-size: 24px; // 모바일: size-32 (24px)
-    line-height: 36px;
+    font-size: 24px;
     letter-spacing: -0.96px;
-    order: 3; // 모바일: 맨 아래로 이동
-    width: 100%;
+    order: 3;
+    grid-column: 1 / -1;
   }
 }
 
@@ -83,38 +91,27 @@
   align-items: center;
   justify-content: center;
   padding: 4px $spacing-5;
-  border-radius: 20px; // Figma 기준 20px
+  border-radius: 20px;
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
   white-space: nowrap;
-  order: 1; // 데스크톱/태블릿: 두 번째 (name 다음)
-
-  @include mobile {
-    order: 1; // 모바일: 첫 번째 (왼쪽, name이 order: 3으로 맨 뒤로 감)
-  }
-
-  &.badgeNormal {
-    background-color: $color-primary;
-    color: $color-white;
-  }
-
-  &.badgeHighlighted {
-    background-color: $color-white;
-    color: $color-primary;
-    border: 1px solid $color-primary;
-  }
+  background-color: $color-primary;
+  color: $color-white;
 }
 
+// ========================================
+// 버튼 그룹
+// ========================================
 .buttonGroup {
   display: flex;
-  gap: $spacing-2; // 8px - Figma 기준
-  margin-left: auto; // 오른쪽 정렬
-  order: 2; // 데스크톱/태블릿: 세 번째 (오른쪽 끝)
+  gap: $spacing-2;
+  margin-left: auto;
 
   @include mobile {
-    order: 2; // 모바일: 두 번째 (badge 옆, 오른쪽)
+    order: 2;
+    justify-self: end;
   }
 }
 
@@ -122,61 +119,99 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 54px; // 데스크톱/태블릿
-  height: 54px; // 데스크톱/태블릿
-  padding: 15px; // Figma 기준 15px
+  width: 54px;
+  height: 54px;
+  padding: 15px;
   border-radius: $radius-full;
-  border: 1.5px solid;
   cursor: pointer;
   transition: all $transition-base;
-  background-color: transparent;
 
   @include mobile {
-    width: 35px; // 모바일: 약 35px (p-[9.722px] * 2 + 15.556px)
-    height: 35px; // 모바일
-    padding: 9.722px; // 모바일
+    width: 35px;
+    height: 35px;
+    padding: 9.722px;
+  }
+}
+
+// 지도 버튼 - 기본 (회색 테두리)
+.mapButtonNormal {
+  background-color: $color-white;
+  border: 1.5px solid $gray-6;
+
+  @include mobile {
+    border-width: 1px;
+  }
+
+  // Figma: hover 시 테두리 + 아이콘 primary 변경
+  &:hover {
+    border-color: $color-primary;
+
+    svg path {
+      fill: $color-primary;
+    }
+  }
+}
+
+// 지도 버튼 - 활성 (빨간 배경)
+.mapButtonActive {
+  background-color: $color-primary;
+  border: 1.5px solid $color-primary;
+
+  @include mobile {
+    border-width: 1px;
   }
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.85;
+  }
+}
+
+// 홈 버튼 - 기본 (회색 테두리)
+.homeButtonNormal {
+  background-color: $color-white;
+  border: 1.5px solid $gray-6;
+
+  @include mobile {
+    border-width: 1px;
   }
 
-  &.iconButtonNormal {
+  &:hover {
     border-color: $color-primary;
-    background-color: transparent;
-    color: $color-primary;
+
+    svg path {
+      fill: $color-primary;
+    }
+  }
+}
+
+// 홈 버튼 - 활성 (빨간 배경)
+.homeButtonActive {
+  background-color: $color-primary;
+  border: 1.5px solid $color-primary;
+
+  @include mobile {
+    border-width: 1px;
   }
 
-  &.iconButtonHighlighted {
-    border-color: $color-white;
-    background-color: transparent;
-    color: $color-white;
-  }
-
-  &.iconButtonHomeNormal {
-    border-color: $color-primary;
-    background-color: $color-primary;
-    color: $color-white;
-  }
-
-  &.iconButtonHomeHighlighted {
-    border-color: $color-white;
-    background-color: $color-white;
-    color: $color-primary;
+  &:hover {
+    opacity: 0.85;
   }
 }
 
 .mapIcon,
 .homeIcon {
-  width: 24px; // 데스크톱/태블릿
-  height: 24px; // 데스크톱/태블릿
+  width: 24px;
+  height: 24px;
 
   @include mobile {
-    width: 16px; // 모바일: 15.556px
-    height: 16px; // 모바일: 15.556px
+    width: 16px;
+    height: 16px;
   }
 }
 
+// ========================================
+// 콘텐츠 영역
+// ========================================
 .content {
   display: flex;
   flex-direction: column;
@@ -189,15 +224,76 @@
   gap: $spacing-4;
 
   @include mobile {
-    gap: $spacing-4;
+    flex-direction: column;
+    gap: 0;
   }
 }
 
-// 주소 행 - 모바일에서 세로 배치
-.addressRow {
+.labelGroup {
   display: flex;
-  align-items: flex-start;
-  gap: $spacing-4;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 49px;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal; // Figma 기본: Regular
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-12;
+
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.separator {
+  font-size: $font-size-xl;
+  color: $gray-9;
+  margin: 0 0 0 auto;
+
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+.addressValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.phoneRow {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: $spacing-10; // Figma: 40px
+  row-gap: $spacing-2;
 
   @include mobile {
     flex-direction: column;
@@ -205,136 +301,48 @@
   }
 }
 
-// 주소 라벨 + 구분자 묶음 (모바일용)
-.addressLabelGroup {
-  display: contents; // 데스크톱에서는 구조에 영향 없음
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
 
   @include mobile {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    width: 46px; // Figma 기준
-    justify-content: space-between;
-  }
-}
-
-.addressValue {
-  white-space: pre-wrap;
-  word-break: break-word;
-
-  // 모바일 강조 카드에서 주소 값 색상
-  @include mobile {
-    .highlighted & {
-      color: $gray-4 !important; // #E8E8E8 - Figma 모바일 기준
-    }
-  }
-}
-
-.label {
-  font-size: $font-size-xl; // 데스크톱: size-20 (20px)
-  font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
-  letter-spacing: -0.8px;
-  color: inherit;
-  min-width: 49px;
-
-  // Highlighted 상태에서는 600 (Figma 기준)
-  .highlighted & {
-    font-weight: $font-weight-semibold;
-  }
-
-  // 태블릿 (769px ~ 1429px) - Figma 기준 18px
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: -0.72px;
-  }
-
-  @include mobile {
-    font-size: 18px; // 모바일: size-20 (18px)
-    letter-spacing: -0.72px;
-  }
-}
-
-.separator {
-  font-size: $font-size-xl; // 데스크톱: size-20 (20px)
-  color: inherit;
-
-  // 태블릿 (769px ~ 1429px) - Figma 기준 18px
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 18px;
-    line-height: 27px;
-  }
-
-  @include mobile {
-    font-size: 18px; // 모바일: size-20 (18px)
-  }
-}
-
-.value {
-  font-size: $font-size-xl; // 데스크톱: size-20 (20px)
-  font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
-  letter-spacing: -0.8px;
-  color: inherit;
-
-  // 태블릿 (769px ~ 1429px) - Figma 기준 18px
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: -0.72px;
-  }
-
-  @include mobile {
-    font-size: 18px; // 모바일: size-20 (18px)
-    letter-spacing: -0.72px;
-  }
-
-  .card:not(.highlighted) & {
-    color: $gray-11;
-  }
-
-  .highlighted & {
-    color: $color-white;
+    gap: $spacing-4;
   }
 }
 
 .phoneValue {
+  font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  color: inherit;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $color-primary;
 
-  .card:not(.highlighted) & {
-    color: $color-primary;
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
 
-  .highlighted & {
-    color: $color-white;
+  @include mobile {
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
 }
 
 .faxValue {
+  font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  color: inherit;
+  line-height: $line-height-normal;
+  letter-spacing: -0.8px;
+  color: $gray-12;
 
-  .card:not(.highlighted) & {
-    color: $gray-12; // Figma 기준 black
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
-
-  .highlighted & {
-    color: $color-white;
-  }
-}
-
-.infoGroup {
-  display: flex;
-  flex-direction: row;
-  column-gap: $spacing-10; // 가로 간격 (한 줄일 때)
-  row-gap: $spacing-2; // 세로 간격 (줄바꿈될 때)
-  flex-wrap: wrap;
-  width: 100%;
 
   @include mobile {
-    flex-direction: column; // 모바일: 전화번호/팩스번호 세로 배치
-    gap: 0; // Figma 모바일 기준 - gap 없음
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
 }

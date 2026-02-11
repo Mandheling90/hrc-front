@@ -43,12 +43,14 @@ export default function ClinicApplicationPage() {
       // 마지막 단계에서 신청 버튼 클릭 시 완료 상태로 전환
       setIsComplete(true)
     }
+    window.scrollTo(0, 0)
   }
 
   // 이전 단계 핸들러
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
+      window.scrollTo(0, 0)
     }
   }
 

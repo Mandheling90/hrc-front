@@ -16,7 +16,7 @@ export interface ClinicCardProps {
   phone: string
   /** 팩스번호 */
   fax: string
-  /** 강조 표시 여부 (첫 번째 카드 등) */
+  /** 강조 표시 여부 (위치 버튼 클릭 시) */
   highlighted?: boolean
   /** 지도 버튼 클릭 핸들러 */
   onMapClick?: () => void
@@ -47,48 +47,54 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
       style={{ cursor: onClick ? 'pointer' : undefined }}
     >
       <div className={styles.header}>
-        <span className={`${styles.badge} ${highlighted ? styles.badgeHighlighted : styles.badgeNormal}`}>
-          {type === 'hospital' ? '병원' : '의원'}
-        </span>
-        <h3 className={styles.name}>{name}</h3>
+        <div className={styles.nameGroup}>
+          <h3 className={styles.name}>{name}</h3>
+          <span className={styles.badge}>{type === 'hospital' ? '병원' : '의원'}</span>
+        </div>
         <div className={styles.buttonGroup}>
           <button
             type='button'
-            className={`${styles.iconButton} ${highlighted ? styles.iconButtonHighlighted : styles.iconButtonNormal}`}
-            onClick={onMapClick}
+            className={`${styles.iconButton} ${highlighted ? styles.mapButtonActive : styles.mapButtonNormal}`}
+            onClick={e => {
+              e.stopPropagation()
+              onMapClick?.()
+            }}
             aria-label='지도 보기'
           >
-            <MapIcon width={24} height={24} fill={highlighted ? '#fff' : '#9f1836'} className={styles.mapIcon} />
+            <MapIcon width={24} height={24} fill={highlighted ? '#fff' : '#636363'} className={styles.mapIcon} />
           </button>
           <button
             type='button'
-            className={`${styles.iconButton} ${highlighted ? styles.iconButtonHomeHighlighted : styles.iconButtonHomeNormal}`}
-            onClick={onHomeClick}
+            className={`${styles.iconButton} ${highlighted ? styles.homeButtonActive : styles.homeButtonNormal}`}
+            onClick={e => {
+              e.stopPropagation()
+              onHomeClick?.()
+            }}
             aria-label='홈페이지 보기'
           >
-            <HomeIcon width={24} height={24} fill={highlighted ? '#9f1836' : '#fff'} className={styles.homeIcon} />
+            <HomeIcon width={24} height={24} fill={highlighted ? '#fff' : '#636363'} className={styles.homeIcon} />
           </button>
         </div>
       </div>
 
       <div className={styles.content}>
-        <div className={styles.addressRow}>
-          <div className={styles.addressLabelGroup}>
+        <div className={styles.infoRow}>
+          <div className={styles.labelGroup}>
             <span className={styles.label}>주소</span>
             <span className={styles.separator}>|</span>
           </div>
-          <span className={`${styles.value} ${styles.addressValue}`}>{address}</span>
+          <span className={styles.addressValue}>{address}</span>
         </div>
-        <div className={styles.infoGroup}>
-          <div className={styles.infoRow}>
+        <div className={styles.phoneRow}>
+          <div className={styles.infoItem}>
             <span className={styles.label}>전화번호</span>
             <span className={styles.separator}>|</span>
-            <span className={`${styles.value} ${styles.phoneValue}`}>{phone}</span>
+            <span className={styles.phoneValue}>{phone}</span>
           </div>
-          <div className={styles.infoRow}>
+          <div className={styles.infoItem}>
             <span className={styles.label}>팩스번호</span>
             <span className={styles.separator}>|</span>
-            <span className={`${styles.value} ${styles.faxValue}`}>{fax}</span>
+            <span className={styles.faxValue}>{fax}</span>
           </div>
         </div>
       </div>

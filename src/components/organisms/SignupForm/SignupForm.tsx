@@ -65,11 +65,13 @@ export const SignupForm: React.FC = () => {
       // TODO: 회원정보 입력 검증 후 다음 단계로 이동
       setCurrentStep(4)
     }
+    window.scrollTo(0, 0)
   }
 
   const handlePrev = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
+      window.scrollTo(0, 0)
     }
   }
 

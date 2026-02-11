@@ -499,10 +499,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               value={formData.zipCode}
               onChange={handleInputChange}
               disabled={true}
-              buttonText='우편번호 검색'
-              onButtonClick={handleZipCodeSearch}
-              buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
-              buttonClassName={styles.searchButton}
+              // buttonText='우편번호 검색'
+              // onButtonClick={handleZipCodeSearch}
+              // buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
+              // buttonClassName={styles.searchButton}
             >
               <Input
                 type='text'

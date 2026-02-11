@@ -148,6 +148,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
         </div>
         <div className={styles.formDivider}></div>
 
+        {isolationWardOperation === '유' && (
         <div className={styles.formContent}>
           {/* 격리병상 운영 현황 입력 필드들 */}
           <div className={styles.formField}>
@@ -321,6 +322,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
             />
           </div>
         </div>
+        )}
       </div>
     </div>
   )

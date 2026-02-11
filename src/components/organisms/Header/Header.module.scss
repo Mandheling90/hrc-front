@@ -31,14 +31,19 @@ $header-height-mobile: 56px;
   &.transparent {
     position: absolute;
     background: transparent;
+    transition: background 0.1s;
 
     .headerTop {
       background: transparent;
       border-bottom: none;
+      transition:
+        background 0.1s,
+        border-bottom 0.1s;
     }
 
     .gnbItem span {
       color: #fff;
+      transition: color 0.1s;
 
       &:hover {
         color: rgba(255, 255, 255, 0.8);
@@ -53,6 +58,7 @@ $header-height-mobile: 56px;
 
     .textLink {
       color: #fff;
+      transition: color 0.3s;
 
       &:hover {
         color: rgba(255, 255, 255, 0.8);
@@ -61,10 +67,56 @@ $header-height-mobile: 56px;
 
     .divider {
       background-color: #fff;
+      transition: background-color 0.3s;
     }
 
     .iconBtn {
       color: #fff;
+      transition: color 0.3s;
+    }
+
+    // 호버 시 상세 페이지와 동일한 헤더 스타일
+    &:hover,
+    &.headerActive {
+      background: #fff;
+
+      .headerTop {
+        background: #fff;
+        border-bottom: 1px solid $gray-5;
+      }
+
+      .gnbItem span {
+        color: #000;
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
+
+      .gnbItem.active span {
+        color: $color-primary;
+      }
+
+      .gnbItem.current span {
+        color: $color-primary;
+        border-bottom-color: $color-primary;
+      }
+
+      .textLink {
+        color: #000;
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
+
+      .divider {
+        background-color: #000;
+      }
+
+      .iconBtn {
+        color: #000;
+      }
     }
   }
 }

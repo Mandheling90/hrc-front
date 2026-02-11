@@ -1,6 +1,9 @@
 @import '@/styles/variables.scss';
 
 .procedureInfo {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2; // Figma: 8px between label and list
   padding: 0;
 }
 

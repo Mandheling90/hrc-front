@@ -169,6 +169,7 @@ export default function ClinicStatusPage() {
 
   // 지도 버튼 클릭 핸들러
   const handleMapClick = (clinicId: string) => {
+    setSelectedClinicId(clinicId)
     // TODO: 지도 표시 또는 지도 페이지로 이동
     console.log('지도 보기:', clinicId)
   }
@@ -261,7 +262,6 @@ export default function ClinicStatusPage() {
                           phone={clinic.phone}
                           fax={clinic.fax}
                           highlighted={selectedClinicId === clinic.id}
-                          onClick={() => setSelectedClinicId(clinic.id)}
                           onMapClick={() => handleMapClick(clinic.id)}
                           onHomeClick={() => handleHomeClick(clinic.id)}
                         />

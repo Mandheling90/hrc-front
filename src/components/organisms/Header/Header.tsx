@@ -212,7 +212,7 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* 헤더 */}
-      <header className={`${styles.header} ${isMainPage ? styles.transparent : ''}`}>
+      <header className={`${styles.header} ${isMainPage ? styles.transparent : ''} ${isMainPage && isDropdownOpen ? styles.headerActive : ''}`}>
         <div className={styles.headerTop}>
           <div className={styles.container}>
             <div className={styles.headerInner}>
