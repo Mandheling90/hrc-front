@@ -1,40 +1,85 @@
-enum UserRole {
-  DOCTOR
-  STAFF
+enum UserType {
   ADMIN
+  DOCTOR
+  HOSPITAL
+  MEMBER
+  CONSULTANT
+}
+
+enum HospitalCode {
+  ANAM
+  GURO
+  ANSAN
+}
+
+enum Gender {
+  M
+  F
+}
+
+enum UserStatus {
+  ACTIVE
+  PENDING
+  REJECTED
+  WITHDRAWN
+}
+
+type UserProfile {
+  birthDate: String
+  department: String
+  gender: Gender
+  hospAddress: String
+  hospCode: String
+  hospName: String
+  licenseNo: String
+  representative: String
+  specialty: String
 }
 
 type User {
   id: ID!
+  userId: String!
   email: String!
-  name: String!
-  role: UserRole!
-  hospitalId: String!
-  department: String
+  userName: String!
+  userType: UserType!
+  hospitalCode: HospitalCode!
   phone: String
+  status: UserStatus!
+  mustChangePw: Boolean!
+  profile: UserProfile
   createdAt: String!
   updatedAt: String!
 }
 
 type AuthPayload {
-  token: String!
+  accessToken: String!
   refreshToken: String!
+  mustChangePw: Boolean!
   user: User!
 }
 
 input LoginInput {
-  email: String!
+  userId: String!
   password: String!
 }
 
 input SignupInput {
+  userId: String!
+  userName: String!
   email: String!
   password: String!
-  name: String!
-  role: UserRole!
-  hospitalId: String!
-  department: String
+  hospitalCode: HospitalCode!
+  userType: UserType!
   phone: String
+  department: String
+  birthDate: String
+  gender: Gender
+  licenseNo: String
+  specialty: String
+  hospName: String
+  hospCode: String
+  hospAddress: String
+  representative: String
 }
 
 type Query {
@@ -45,5 +90,5 @@ type Mutation {
   login(input: LoginInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
   logout: Boolean!
-  refreshToken(token: String!): AuthPayload!
+  refreshToken(refreshToken: String!): AuthPayload!
 }

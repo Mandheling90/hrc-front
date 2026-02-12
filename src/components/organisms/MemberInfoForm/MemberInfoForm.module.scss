@@ -142,6 +142,19 @@
   }
 }
 
+.passwordStatusValid {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5em;
+  letter-spacing: -0.72px;
+  color: #2e7d32;
+
+  @include mobile {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+}
+
 // 비밀번호 규칙 텍스트
 .passwordRules {
   display: flex;

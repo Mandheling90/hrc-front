@@ -5,23 +5,33 @@ import { ME_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
 
 interface LoginInput {
-  email: string
+  userId: string
   password: string
 }
 
 interface SignupInput {
+  userId: string
+  userName: string
   email: string
   password: string
-  name: string
-  role: string
-  hospitalId: string
-  department?: string
+  hospitalCode: string
+  userType: string
   phone?: string
+  department?: string
+  birthDate?: string
+  gender?: string
+  licenseNo?: string
+  specialty?: string
+  hospName?: string
+  hospCode?: string
+  hospAddress?: string
+  representative?: string
 }
 
 interface AuthPayload {
-  token: string
+  accessToken: string
   refreshToken: string
+  mustChangePw: boolean
   user: AuthUser
 }
 
@@ -33,7 +43,7 @@ export function useLogin() {
     const { data } = await loginMutation({ variables: { input } })
 
     if (data?.login) {
-      setAuth(data.login.token, data.login.user)
+      setAuth(data.login.accessToken, data.login.user)
       return data.login
     }
 
@@ -51,7 +61,7 @@ export function useSignup() {
     const { data } = await signupMutation({ variables: { input } })
 
     if (data?.signup) {
-      setAuth(data.signup.token, data.signup.user)
+      setAuth(data.signup.accessToken, data.signup.user)
       return data.signup
     }
 

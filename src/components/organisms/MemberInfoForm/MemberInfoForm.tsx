@@ -15,7 +15,7 @@ import {
   HospitalSearchResult
 } from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import styles from './MemberInfoForm.module.scss'
 
 // 폼 데이터 타입
@@ -231,9 +231,60 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     console.log('우편번호 검색')
   }
 
+  // 비밀번호 유효성 검사
+  const passwordValidation = useMemo(() => {
+    const pw = formData.password
+    if (!pw) return { valid: false, status: '' }
+
+    const allowedSpecial = '~!@#$%^&*_-'
+    const hasLetter = /[a-zA-Z]/.test(pw)
+    const hasDigit = /\d/.test(pw)
+    const hasSpecial = new RegExp(`[${allowedSpecial.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&')}]`).test(pw)
+    const validLength = pw.length >= 8 && pw.length <= 12
+    const validChars = /^[a-zA-Z0-9~!@#$%^&*_-]+$/.test(pw)
+    const hasAllTypes = hasLetter && hasDigit && hasSpecial
+
+    // 연속번호 체크 (1234, 4321 등)
+    const hasSequential = (() => {
+      for (let i = 0; i < pw.length - 2; i++) {
+        const c1 = pw.charCodeAt(i)
+        const c2 = pw.charCodeAt(i + 1)
+        const c3 = pw.charCodeAt(i + 2)
+        if (c2 - c1 === 1 && c3 - c2 === 1) return true
+        if (c1 - c2 === 1 && c2 - c3 === 1) return true
+      }
+      return false
+    })()
+
+    // 동일문자 연속 4개 체크
+    const hasRepeated = /(.)\1{3,}/.test(pw)
+
+    // 아이디와 동일한 문구 체크
+    const containsUserId = formData.userId.length >= 2 && pw.toLowerCase().includes(formData.userId.toLowerCase())
+
+    const valid = validLength && validChars && hasAllTypes && !hasSequential && !hasRepeated && !containsUserId
+
+    return { valid, status: valid ? '사용가능' : '사용불가' }
+  }, [formData.password, formData.userId])
+
+  // 비밀번호 확인 일치 여부
+  const passwordConfirmStatus = useMemo(() => {
+    if (!formData.passwordConfirm) return { match: false, status: '' }
+    const match = formData.password === formData.passwordConfirm
+    return { match, status: match ? '일치' : '불일치' }
+  }, [formData.password, formData.passwordConfirm])
+
   const handleSubmit = () => {
     if (!formData.hospitalName) {
       setAlertModal({ isOpen: true, message: '병원명을 검색하여 입력해주세요.' })
+      return
+    }
+    if (!passwordValidation.valid) {
+      setAlertModal({ isOpen: true, message: '비밀번호 조건을 확인해주세요.' })
+      return
+    }
+    if (!passwordConfirmStatus.match) {
+      setAlertModal({ isOpen: true, message: '비밀번호가 일치하지 않습니다.' })
       return
     }
     onSubmit(formData)
@@ -332,7 +383,17 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 placeholder='비밀번호를 입력해주세요'
                 value={formData.password}
                 onChange={handleInputChange}
-                labelExtra={<span className={styles.passwordStatus}>사용불가</span>}
+                labelExtra={
+                  passwordValidation.status ? (
+                    <span
+                      className={
+                        passwordValidation.valid ? styles.passwordStatusValid : styles.passwordStatus
+                      }
+                    >
+                      {passwordValidation.status}
+                    </span>
+                  ) : null
+                }
               />
               <div className={styles.passwordRules}>
                 <p className={styles.rule}>영문, 숫자, 특수문자 조합 8~12자리 사용 가능, 연속번호는 사용금지</p>
@@ -351,7 +412,17 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='비밀번호를 다시 입력해주세요'
               value={formData.passwordConfirm}
               onChange={handleInputChange}
-              labelExtra={<span className={styles.passwordStatus}>불일치</span>}
+              labelExtra={
+                passwordConfirmStatus.status ? (
+                  <span
+                    className={
+                      passwordConfirmStatus.match ? styles.passwordStatusValid : styles.passwordStatus
+                    }
+                  >
+                    {passwordConfirmStatus.status}
+                  </span>
+                ) : null
+              }
             />
 
             <FormField

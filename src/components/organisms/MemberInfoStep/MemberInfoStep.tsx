@@ -6,17 +6,25 @@ import React from 'react'
 import styles from './MemberInfoStep.module.scss'
 
 export interface MemberInfoStepProps {
-  /** 다음 단계 핸들러 */
-  onNext: () => void
+  /** 회원가입 API 호출 핸들러 */
+  onSignup: (data: MemberInfoFormData) => Promise<void>
   /** 이전 단계 핸들러 */
   onPrev: () => void
   /** 취소 핸들러 */
   onCancel: () => void
+  /** API 로딩 상태 */
+  signupLoading?: boolean
   /** 초기 데이터 (본인 인증에서 넘어온 데이터) */
   initialData?: Partial<MemberInfoFormData>
 }
 
-export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onPrev, onCancel, initialData }) => {
+export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({
+  onSignup,
+  onPrev,
+  onCancel,
+  signupLoading,
+  initialData
+}) => {
   // 본인 인증에서 넘어온 기본 데이터 (예시)
   const defaultInitialData: Partial<MemberInfoFormData> = {
     name: '홍길동',
@@ -25,10 +33,8 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onPrev, 
     ...initialData
   }
 
-  const handleSubmit = (data: MemberInfoFormData) => {
-    // TODO: 회원가입 데이터 검증 및 처리
-    console.log('회원가입 데이터:', data)
-    onNext()
+  const handleSubmit = async (data: MemberInfoFormData) => {
+    await onSignup(data)
   }
 
   return (
@@ -51,7 +57,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({ onNext, onPrev, 
         onSubmit={handleSubmit}
         onCancel={onCancel}
         onPrev={onPrev}
-        submitButtonText='다음 단계'
+        submitButtonText={signupLoading ? '처리 중...' : '다음 단계'}
         cancelButtonText='취소'
         disabledFields={['name', 'birthDate', 'phone']}
       />

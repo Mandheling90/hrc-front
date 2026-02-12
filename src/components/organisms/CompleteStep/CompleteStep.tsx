@@ -22,10 +22,10 @@ export interface CompleteStepProps {
 }
 
 export const CompleteStep: React.FC<CompleteStepProps> = ({
-  userId = 'test******',
-  email = 'lee*******@naver.com',
-  title = '고려대학교 안암병원 진료협력센터 회원가입 신청이 완료되었습니다.',
-  description = '담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 회원가입이 최종 완료됩니다. 승인 결과는 등록하신 이메일로 안내드릴 예정입니다.',
+  userId = '',
+  email = '',
+  title = '회원가입 신청이 완료되었습니다.',
+  description = '담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 회원가입이 최종 완료됩니다.\n승인 결과는 등록하신 이메일로 안내드릴 예정입니다.',
   buttonText = '메인으로 이동',
   onGoToMain
 }) => {

@@ -3,7 +3,9 @@
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { EyeIcon } from '@/components/icons/EyeIcon'
+import { useLogin } from '@/hooks/useAuth'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import styles from './LoginForm.module.scss'
 
@@ -18,8 +20,8 @@ export interface LoginFormProps {
   highlightText?: string
   /** 하단 링크 표시 여부 */
   showLinks?: boolean
-  /** 로그인 제출 핸들러 */
-  onSubmit?: (formData: { [key: string]: string }) => void
+  /** 로그인 성공 후 이동할 경로 */
+  redirectTo?: string
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
@@ -28,21 +30,35 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   description,
   highlightText,
   showLinks = true,
-  onSubmit
+  redirectTo = '/'
 }) => {
+  const router = useRouter()
+  const { login, loading } = useLogin()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     [usernameName]: '',
     password: ''
   })
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (onSubmit) {
-      onSubmit(formData)
-    } else {
-      // 기본 동작: 콘솔에 로그 출력
-      console.log('Login attempt:', formData)
+    setErrorMessage('')
+
+    const userId = formData[usernameName]
+    if (!userId || !formData.password) {
+      setErrorMessage('아이디와 비밀번호를 입력해주세요.')
+      return
+    }
+
+    try {
+      const result = await login({ userId, password: formData.password })
+      if (result) {
+        router.push(redirectTo)
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : '로그인에 실패했습니다.'
+      setErrorMessage(message)
     }
   }
 
@@ -52,6 +68,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       ...prev,
       [name]: value
     }))
+    if (errorMessage) setErrorMessage('')
   }
 
   const togglePasswordVisibility = () => {
@@ -108,8 +125,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <EyeIcon width={24} height={24} showPassword={showPassword} />
           </button>
         </div>
-        <Button type='submit' variant='primary' size='medium' fullWidth className={styles.loginButton}>
-          로그인
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+        <Button
+          type='submit'
+          variant='primary'
+          size='medium'
+          fullWidth
+          className={styles.loginButton}
+          disabled={loading}
+        >
+          {loading ? '로그인 중...' : '로그인'}
         </Button>
       </form>
       {showLinks && (
