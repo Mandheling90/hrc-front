@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
@@ -97,6 +97,9 @@ export const Header: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<number>(0)
   const [activeMobileMenu, setActiveMobileMenu] = useState(0)
+  const [openBreadcrumbDropdown, setOpenBreadcrumbDropdown] = useState<number | null>(null)
+  const breadcrumbRef = useRef<HTMLElement>(null)
+  const mobileBreadcrumbRef = useRef<HTMLDivElement>(null)
   const { hospital, hospitalId } = useHospital()
   const logoUrl = `/images/${hospitalId}/logo-top.png`
   const pathname = usePathname()
@@ -133,53 +136,95 @@ export const Header: React.FC = () => {
     return !excludedPaths.includes(pathname)
   }, [pathname])
 
-  // pathname 기반으로 Breadcrumbs 아이템 자동 생성
+  // pathname 기반으로 Breadcrumbs 아이템 자동 생성 (드롭다운 옵션 포함)
   const breadcrumbItems = useMemo(() => {
     if (!shouldShowBreadcrumbs) return []
 
-    const items: Array<{ label: string; href?: string; hasDropdown?: boolean }> = []
+    interface DropdownOption {
+      label: string
+      href: string
+      isActive: boolean
+    }
+
+    interface BreadcrumbItem {
+      label: string
+      href?: string
+      isHome?: boolean
+      dropdownItems?: DropdownOption[]
+    }
+
+    const items: BreadcrumbItem[] = []
 
     // 홈 아이콘
-    items.push({ label: '', href: '/' })
+    items.push({ label: '', href: '/', isHome: true })
 
-    // pathname을 분할하여 각 경로에 대한 Breadcrumb 생성
-    const pathSegments = pathname.split('/').filter(Boolean)
+    // 현재 경로가 속한 메뉴 카테고리 찾기
+    let currentCategory: MenuItem | null = null
+    let currentSubItem: SubMenuItem | null = null
 
-    // network로 시작하는 경로는 referral을 건너뛰고 network부터 시작
-    const networkIndex = pathSegments.indexOf('network')
-    const startIndex = networkIndex >= 0 ? networkIndex : 0
-    const relevantSegments = pathSegments.slice(startIndex)
-
-    relevantSegments.forEach((segment, index) => {
-      const actualIndex = startIndex + index
-      const currentPath = '/' + pathSegments.slice(0, actualIndex + 1).join('/')
-
-      // 메뉴에서 해당 경로 찾기
-      let foundLabel = segment
-      let hasDropdown = false
-
-      // 모든 메뉴 아이템을 순회하며 경로 매칭
-      for (const menu of menuItems) {
-        for (const subItem of menu.subItems) {
-          if (subItem.href === currentPath) {
-            foundLabel = subItem.label
-            hasDropdown = true // 서브메뉴가 있는 경우
-            break
-          }
+    for (const menu of menuItems) {
+      for (const sub of menu.subItems) {
+        if (pathname === sub.href || pathname.startsWith(sub.href + '/')) {
+          currentCategory = menu
+          currentSubItem = sub
+          break
         }
-        if (foundLabel !== segment) break
       }
+      if (currentCategory) break
+    }
 
-      // 마지막 항목은 href 없음 (현재 페이지)
-      if (index === relevantSegments.length - 1) {
-        items.push({ label: foundLabel, hasDropdown })
-      } else {
-        items.push({ label: foundLabel, href: currentPath, hasDropdown })
-      }
-    })
+    if (currentCategory && currentSubItem) {
+      // 레벨 1: 대분류 (메뉴 카테고리) - 드롭다운: 모든 카테고리
+      items.push({
+        label: currentCategory.label,
+        dropdownItems: menuItems.map(menu => ({
+          label: menu.label,
+          href: menu.subItems[0].href,
+          isActive: menu.label === currentCategory!.label
+        }))
+      })
+
+      // 레벨 2: 소분류 (서브페이지) - 드롭다운: 현재 카테고리의 모든 서브페이지
+      items.push({
+        label: currentSubItem.label,
+        dropdownItems: currentCategory.subItems
+          .filter(sub => !sub.disabled)
+          .map(sub => ({
+            label: sub.label,
+            href: sub.href,
+            isActive: sub.href === currentSubItem!.href
+          }))
+      })
+    }
 
     return items
   }, [pathname, shouldShowBreadcrumbs, menuItems])
+
+  // 브래드크럼 드롭다운 토글
+  const handleBreadcrumbToggle = useCallback((index: number) => {
+    setOpenBreadcrumbDropdown(prev => (prev === index ? null : index))
+  }, [])
+
+  // 브래드크럼 드롭다운 외부 클릭 감지
+  useEffect(() => {
+    if (openBreadcrumbDropdown === null) return
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node
+      const isInsideBreadcrumb = breadcrumbRef.current?.contains(target) || mobileBreadcrumbRef.current?.contains(target)
+      if (!isInsideBreadcrumb) {
+        setOpenBreadcrumbDropdown(null)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [openBreadcrumbDropdown])
+
+  // 경로 변경 시 드롭다운 닫기
+  useEffect(() => {
+    setOpenBreadcrumbDropdown(null)
+  }, [pathname])
 
   // 모바일 메뉴 열기
   const openMobileMenu = () => {
@@ -199,6 +244,7 @@ export const Header: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsDropdownOpen(false)
+        setOpenBreadcrumbDropdown(null)
         closeMobileMenu()
       }
     }
@@ -356,50 +402,78 @@ export const Header: React.FC = () => {
           <div className={styles.breadcrumbsSection}>
             <div className={styles.container}>
               {/* 데스크톱/태블릿: 전체 Breadcrumbs */}
-              <nav className={styles.breadcrumbsNav} aria-label='Breadcrumb'>
+              <nav className={styles.breadcrumbsNav} aria-label='Breadcrumb' ref={breadcrumbRef}>
                 {breadcrumbItems.map((item, index) => (
                   <React.Fragment key={index}>
                     {index > 0 && (
-                      <span className={styles.breadcrumbSeparator} aria-hidden='true'>
-                        |
-                      </span>
+                      <span className={styles.breadcrumbSeparator} aria-hidden='true' />
                     )}
-                    <div className={styles.breadcrumbItem}>
-                      {index === 0 ? (
-                        <Link href={item.href || '/'} className={styles.breadcrumbHomeIcon}>
-                          <HomeIcon width={20} height={20} fill='var(--gray-11)' />
-                        </Link>
-                      ) : (
-                        <>
-                          {item.href ? (
-                            <Link href={item.href} className={styles.breadcrumbLink}>
-                              {item.label}
-                            </Link>
-                          ) : (
-                            <span className={styles.breadcrumbCurrent}>{item.label}</span>
-                          )}
-                          {item.hasDropdown && (
-                            <span className={styles.breadcrumbDropdownIcon}>
-                              <ChevronDownIcon width={14} height={14} fill='var(--gray-8)' />
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </div>
+                    {item.isHome ? (
+                      <Link href='/' className={styles.breadcrumbHomeIcon}>
+                        <HomeIcon width={20} height={20} fill='var(--gray-11)' />
+                      </Link>
+                    ) : (
+                      <div className={styles.breadcrumbItemWrapper}>
+                        <button
+                          type='button'
+                          className={`${styles.breadcrumbButton} ${openBreadcrumbDropdown === index ? styles.breadcrumbButtonActive : ''}`}
+                          onClick={() => handleBreadcrumbToggle(index)}
+                          aria-expanded={openBreadcrumbDropdown === index}
+                        >
+                          <span className={styles.breadcrumbText}>{item.label}</span>
+                          <span className={`${styles.breadcrumbChevron} ${openBreadcrumbDropdown === index ? styles.breadcrumbChevronOpen : ''}`}>
+                            <ChevronDownIcon width={14} height={14} fill='#000' />
+                          </span>
+                        </button>
+                        {openBreadcrumbDropdown === index && item.dropdownItems && (
+                          <div className={styles.breadcrumbDropdown}>
+                            {item.dropdownItems.map((dropItem, dropIndex) => (
+                              <Link
+                                key={dropIndex}
+                                href={dropItem.href}
+                                className={`${styles.breadcrumbDropdownItem} ${dropItem.isActive ? styles.breadcrumbDropdownItemActive : ''}`}
+                                onClick={() => setOpenBreadcrumbDropdown(null)}
+                              >
+                                {dropItem.label}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </React.Fragment>
                 ))}
               </nav>
 
-              {/* 모바일: 현재 페이지만 표시 */}
-              <div className={styles.breadcrumbsMobile}>
-                <div className={styles.breadcrumbsMobileInner}>
+              {/* 모바일: 현재 페이지만 표시 + 드롭다운 */}
+              <div className={styles.breadcrumbsMobile} ref={mobileBreadcrumbRef}>
+                <button
+                  type='button'
+                  className={styles.breadcrumbMobileButton}
+                  onClick={() => handleBreadcrumbToggle(-1)}
+                  aria-expanded={openBreadcrumbDropdown === -1}
+                >
                   <span className={styles.breadcrumbMobileText}>
-                    {breadcrumbItems.length > 0 ? breadcrumbItems[breadcrumbItems.length - 1]?.label || '' : ''}
+                    {breadcrumbItems.length > 1 ? breadcrumbItems[breadcrumbItems.length - 1]?.label || '' : ''}
                   </span>
-                  <div className={styles.breadcrumbMobileIcon}>
-                    <ChevronDownIcon width={20} height={20} fill='var(--gray-11)' />
+                  <span className={`${styles.breadcrumbMobileChevron} ${openBreadcrumbDropdown === -1 ? styles.breadcrumbMobileChevronOpen : ''}`}>
+                    <ChevronDownIcon width={12} height={12} fill='#000' />
+                  </span>
+                </button>
+                {openBreadcrumbDropdown === -1 && breadcrumbItems.length > 1 && (
+                  <div className={styles.breadcrumbMobileDropdown}>
+                    {breadcrumbItems[breadcrumbItems.length - 1]?.dropdownItems?.map((dropItem, dropIndex) => (
+                      <Link
+                        key={dropIndex}
+                        href={dropItem.href}
+                        className={`${styles.breadcrumbDropdownItem} ${dropItem.isActive ? styles.breadcrumbDropdownItemActive : ''}`}
+                        onClick={() => setOpenBreadcrumbDropdown(null)}
+                      >
+                        {dropItem.label}
+                      </Link>
+                    ))}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
