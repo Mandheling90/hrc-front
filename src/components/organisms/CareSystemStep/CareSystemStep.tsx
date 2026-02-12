@@ -22,7 +22,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
   const [jointNursingCare, setJointNursingCare] = useState('유')
 
   // 격리병상 운영 현황 상태
-  const [isolationWardOperation, setIsolationWardOperation] = useState<string>('유')
+  const [isolationWardOperation, setIsolationWardOperation] = useState('유')
   const [singleRoom, setSingleRoom] = useState('')
   const [doubleRoom, setDoubleRoom] = useState('')
   const [tripleRoom, setTripleRoom] = useState('')
@@ -163,8 +163,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
                   inputName: 'singleRoom',
                   placeholder: '',
                   value: singleRoom,
-                  onInputChange: e => handleNumberChange(e.target.value, setSingleRoom),
-                  disabled: isolationWardOperation === '무'
+                  onInputChange: e => handleNumberChange(e.target.value, setSingleRoom)
                 },
                 {
                   textLabel: '2인실',
@@ -172,8 +171,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
                   inputName: 'doubleRoom',
                   placeholder: '',
                   value: doubleRoom,
-                  onInputChange: e => handleNumberChange(e.target.value, setDoubleRoom),
-                  disabled: isolationWardOperation === '무'
+                  onInputChange: e => handleNumberChange(e.target.value, setDoubleRoom)
                 },
                 {
                   textLabel: '3인실',
@@ -181,8 +179,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
                   inputName: 'tripleRoom',
                   placeholder: '',
                   value: tripleRoom,
-                  onInputChange: e => handleNumberChange(e.target.value, setTripleRoom),
-                  disabled: isolationWardOperation === '무'
+                  onInputChange: e => handleNumberChange(e.target.value, setTripleRoom)
                 }
               ]}
               labelMinWidth='45px'
