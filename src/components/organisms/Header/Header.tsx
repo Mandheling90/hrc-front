@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { useLogout } from '@/hooks/useAuth'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import styles from './Header.module.scss'
@@ -101,14 +103,15 @@ export const Header: React.FC = () => {
   const breadcrumbRef = useRef<HTMLElement>(null)
   const mobileBreadcrumbRef = useRef<HTMLDivElement>(null)
   const { hospital, hospitalId } = useHospital()
+  const { isAuthenticated } = useAuthContext()
+  const { logout } = useLogout()
   const logoUrl = `/images/${hospitalId}/logo-top.png`
   const pathname = usePathname()
 
   // 메인페이지 여부 (투명 헤더)
   const isMainPage = pathname === '/'
 
-  // 임시 로그인 상태
-  const isLoggedIn = false
+  const isLoggedIn = isAuthenticated
   const menuItems = useMemo(() => {
     return isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
   }, [isLoggedIn])
@@ -294,11 +297,11 @@ export const Header: React.FC = () => {
                 <div className={styles.utilDesktop}>
                   {isLoggedIn ? (
                     <>
-                      <button type='button' className={styles.textLink}>
+                      <button type='button' className={styles.textLink} onClick={() => logout()}>
                         로그아웃
                       </button>
                       <span className={styles.divider}>|</span>
-                      <Link href='/mypage/info' className={styles.textLink}>
+                      <Link href='/mypage/edit-profile' className={styles.textLink}>
                         정보수정
                       </Link>
                     </>
@@ -317,14 +320,25 @@ export const Header: React.FC = () => {
 
                 {/* 모바일/태블릿 */}
                 <div className={styles.utilMobile}>
-                  <Link href='/login' className={styles.iconBtn} aria-label='로그인'>
-                    <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                      <path
-                        d='M12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12ZM12 14C8.67 14 2 15.67 2 19V22H22V19C22 15.67 15.33 14 12 14Z'
-                        fill='currentColor'
-                      />
-                    </svg>
-                  </Link>
+                  {isLoggedIn ? (
+                    <button type='button' className={styles.iconBtn} aria-label='로그아웃' onClick={() => logout()}>
+                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                        <path
+                          d='M12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12ZM12 14C8.67 14 2 15.67 2 19V22H22V19C22 15.67 15.33 14 12 14Z'
+                          fill='currentColor'
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <Link href='/login' className={styles.iconBtn} aria-label='로그인'>
+                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                        <path
+                          d='M12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12ZM12 14C8.67 14 2 15.67 2 19V22H22V19C22 15.67 15.33 14 12 14Z'
+                          fill='currentColor'
+                        />
+                      </svg>
+                    </Link>
+                  )}
                   <button type='button' className={styles.iconBtn} onClick={openMobileMenu} aria-label='메뉴'>
                     <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
                       <path d='M3 6H21V8H3V6ZM3 11H21V13H3V11ZM3 16H21V18H3V16Z' fill='currentColor' />
