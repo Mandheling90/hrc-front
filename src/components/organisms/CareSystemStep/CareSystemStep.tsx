@@ -22,7 +22,7 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
   const [jointNursingCare, setJointNursingCare] = useState('유')
 
   // 격리병상 운영 현황 상태
-  const [isolationWardOperation, setIsolationWardOperation] = useState('유')
+  const [isolationWardOperation, setIsolationWardOperation] = useState<string>('유')
   const [singleRoom, setSingleRoom] = useState('')
   const [doubleRoom, setDoubleRoom] = useState('')
   const [tripleRoom, setTripleRoom] = useState('')

@@ -3,6 +3,8 @@
 ## Tech Stack
 
 - **Framework**: Next.js 15 (App Router) + React 19 + TypeScript
+- **GraphQL**: Apollo Client 4 + `@apollo/client-integration-nextjs`
+- **Code Generation**: GraphQL Code Generator (codegen.ts → `src/graphql/__generated__/types.ts`)
 - **Styling**: SCSS Modules + Sass 1.97
 - **Linting/Formatting**: ESLint + Prettier
 - **Testing**: Playwright (설정 완료, 테스트 미작성)
@@ -12,7 +14,8 @@
 - 멀티테넌트 SaaS: 고려대학교 3개 병원(안암/구로/안산)을 단일 코드베이스로 운영
 - 병원별 환경 변수(`.env.anam`, `.env.guro`, `.env.ansan`)로 구분
 - `HospitalContext` + `useHospital` 훅으로 병원별 설정/콘텐츠 주입
-- 백엔드 미연동 상태 (UI/프론트엔드만 구현됨)
+- `AuthContext` + `useAuth` 훅으로 인증 상태 관리 (JWT 토큰 기반)
+- Apollo Client로 GraphQL 백엔드 연동 (인증 API 구현 완료)
 
 ## Project Structure
 
@@ -36,15 +39,26 @@ src/
 │   ├── organisms/          # 도메인별 대형 컴포넌트 (Header, Footer, *Step 등 35종)
 │   ├── icons/              # SVG 아이콘 컴포넌트 (99종)
 │   ├── templates/          # 페이지 템플릿 (MainTemplate)
-│   └── providers/          # Context Provider (HospitalProvider)
+│   └── providers/          # Context Provider (ApolloWrapper, AuthProvider, HospitalProvider)
 ├── config/                 # 병원별 설정 (hospitals.ts, pageContents.ts, iconRegistry.tsx)
-├── contexts/               # React Context (HospitalContext)
-├── hooks/                  # 커스텀 훅 (useHospital)
+├── contexts/               # React Context (HospitalContext, AuthContext)
+├── graphql/                # GraphQL 스키마 및 오퍼레이션
+│   ├── schema.graphql      # GraphQL 스키마 정의
+│   ├── auth/               # 인증 관련 쿼리/뮤테이션
+│   │   ├── mutations.ts    # LOGIN, SIGNUP, LOGOUT 뮤테이션
+│   │   └── queries.ts      # ME 쿼리
+│   └── __generated__/      # GraphQL Code Generator 자동 생성 타입
+├── hooks/                  # 커스텀 훅 (useHospital, useLogin, useSignup, useMe, useLogout)
+├── lib/
+│   └── apollo/             # Apollo Client 설정
+│       ├── client.ts       # Apollo Client 인스턴스 생성 (인증 헤더 주입)
+│       └── ApolloWrapper.tsx  # Apollo Provider 래퍼 컴포넌트
 ├── styles/                 # 글로벌 스타일
 │   ├── variables.scss      # 디자인 토큰 (색상, 타이포, 간격, 브레이크포인트)
 │   ├── mixins.scss         # SCSS 믹스인 (반응형, 레이아웃, 타이틀)
 │   └── globals.scss        # 전역 리셋 + CSS 변수 + 유틸리티 클래스
 ├── types/                  # 공용 타입 및 상수
+│   ├── auth.ts             # 인증 타입 (AuthUser, LoginFormData, SignupFormData)
 │   ├── hospital.ts         # 병원 설정/페이지 콘텐츠 타입
 │   └── hospital-application.ts  # 폼 데이터 타입 + Select 옵션 상수
 └── utils/                  # 유틸리티 함수
@@ -96,7 +110,21 @@ src/
 ## State Management
 
 - **전역 상태**: React Context (`HospitalContext`) — 병원 설정/콘텐츠
+- **인증 상태**: React Context (`AuthContext`) — JWT 토큰, 사용자 정보 (localStorage 기반 영속화)
+- **서버 상태**: Apollo Client — GraphQL 쿼리/뮤테이션 캐싱
 - **로컬 상태**: `useState` — 폼 필드별 개별 상태
 - **파생 값**: `useMemo` — 조건부 옵션 목록 등
 - **DOM 참조**: `useRef` — 파일 입력, 모달 포커스 등
 - **외부 상태 라이브러리 없음** (Redux, Zustand 등 미사용)
+
+## GraphQL
+
+- **스키마**: `src/graphql/schema.graphql` — 백엔드 API 계약 정의
+- **오퍼레이션 파일**: 도메인별 디렉토리에 `mutations.ts`, `queries.ts`로 분리
+  - 예: `src/graphql/auth/mutations.ts`, `src/graphql/auth/queries.ts`
+- **코드 생성**: `codegen.ts` 설정 → `npm run codegen`으로 타입 자동 생성
+  - 출력: `src/graphql/__generated__/types.ts`
+- **Apollo Client**: `src/lib/apollo/client.ts`에서 인증 헤더(Bearer 토큰) 자동 주입
+- **커스텀 훅**: GraphQL 오퍼레이션을 래핑한 훅 사용
+  - `useLogin()`, `useSignup()`, `useLogout()`, `useMe()` — 인증 관련
+- **새 GraphQL 오퍼레이션 추가 시**: 해당 도메인 디렉토리에 파일 생성 후 `codegen` 실행
