@@ -214,7 +214,8 @@ export const Header: React.FC = () => {
 
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node
-      const isInsideBreadcrumb = breadcrumbRef.current?.contains(target) || mobileBreadcrumbRef.current?.contains(target)
+      const isInsideBreadcrumb =
+        breadcrumbRef.current?.contains(target) || mobileBreadcrumbRef.current?.contains(target)
       if (!isInsideBreadcrumb) {
         setOpenBreadcrumbDropdown(null)
       }
@@ -261,7 +262,9 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* 헤더 */}
-      <header className={`${styles.header} ${isMainPage ? styles.transparent : ''} ${isMainPage && isDropdownOpen ? styles.headerActive : ''}`}>
+      <header
+        className={`${styles.header} ${isMainPage ? styles.transparent : ''} ${isMainPage && isDropdownOpen ? styles.headerActive : ''}`}
+      >
         <div className={styles.headerTop}>
           <div className={styles.container}>
             <div className={styles.headerInner}>
@@ -419,9 +422,7 @@ export const Header: React.FC = () => {
               <nav className={styles.breadcrumbsNav} aria-label='Breadcrumb' ref={breadcrumbRef}>
                 {breadcrumbItems.map((item, index) => (
                   <React.Fragment key={index}>
-                    {index > 0 && (
-                      <span className={styles.breadcrumbSeparator} aria-hidden='true' />
-                    )}
+                    {index > 0 && <span className={styles.breadcrumbSeparator} aria-hidden='true' />}
                     {item.isHome ? (
                       <Link href='/' className={styles.breadcrumbHomeIcon}>
                         <HomeIcon width={20} height={20} fill='var(--gray-11)' />
@@ -435,7 +436,9 @@ export const Header: React.FC = () => {
                           aria-expanded={openBreadcrumbDropdown === index}
                         >
                           <span className={styles.breadcrumbText}>{item.label}</span>
-                          <span className={`${styles.breadcrumbChevron} ${openBreadcrumbDropdown === index ? styles.breadcrumbChevronOpen : ''}`}>
+                          <span
+                            className={`${styles.breadcrumbChevron} ${openBreadcrumbDropdown === index ? styles.breadcrumbChevronOpen : ''}`}
+                          >
                             <ChevronDownIcon width={14} height={14} fill='#000' />
                           </span>
                         </button>
@@ -470,7 +473,9 @@ export const Header: React.FC = () => {
                   <span className={styles.breadcrumbMobileText}>
                     {breadcrumbItems.length > 1 ? breadcrumbItems[breadcrumbItems.length - 1]?.label || '' : ''}
                   </span>
-                  <span className={`${styles.breadcrumbMobileChevron} ${openBreadcrumbDropdown === -1 ? styles.breadcrumbMobileChevronOpen : ''}`}>
+                  <span
+                    className={`${styles.breadcrumbMobileChevron} ${openBreadcrumbDropdown === -1 ? styles.breadcrumbMobileChevronOpen : ''}`}
+                  >
                     <ChevronDownIcon width={12} height={12} fill='#000' />
                   </span>
                 </button>

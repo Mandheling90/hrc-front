@@ -149,166 +149,167 @@ export const CareSystemStep: React.FC<CareSystemStepProps> = ({ currentStep = 5,
         <div className={styles.formDivider}></div>
 
         {isolationWardOperation === '유' && (
-        <div className={styles.formContent}>
-          {/* 격리병상 운영 현황 입력 필드들 */}
-          <div className={styles.formField}>
-            <InputLabel htmlFor='isolationRoomStatus' required>
-              격리병상 운영 현황
-            </InputLabel>
-            <LabelInputRowGroup
-              options={[
-                {
-                  textLabel: '1인실',
-                  inputId: 'singleRoom',
-                  inputName: 'singleRoom',
-                  placeholder: '',
-                  value: singleRoom,
-                  onInputChange: e => handleNumberChange(e.target.value, setSingleRoom)
-                },
-                {
-                  textLabel: '2인실',
-                  inputId: 'doubleRoom',
-                  inputName: 'doubleRoom',
-                  placeholder: '',
-                  value: doubleRoom,
-                  onInputChange: e => handleNumberChange(e.target.value, setDoubleRoom)
-                },
-                {
-                  textLabel: '3인실',
-                  inputId: 'tripleRoom',
-                  inputName: 'tripleRoom',
-                  placeholder: '',
-                  value: tripleRoom,
-                  onInputChange: e => handleNumberChange(e.target.value, setTripleRoom)
-                }
-              ]}
-              labelMinWidth='45px'
-              textLabelAlign='left'
-            />
-          </div>
+          <div className={styles.formContent}>
+            {/* 격리병상 운영 현황 입력 필드들 */}
+            <div className={styles.formField}>
+              <InputLabel htmlFor='isolationRoomStatus' required>
+                격리병상 운영 현황
+              </InputLabel>
+              <LabelInputRowGroup
+                options={[
+                  {
+                    textLabel: '1인실',
+                    inputId: 'singleRoom',
+                    inputName: 'singleRoom',
+                    placeholder: '',
+                    value: singleRoom,
+                    onInputChange: e => handleNumberChange(e.target.value, setSingleRoom)
+                  },
+                  {
+                    textLabel: '2인실',
+                    inputId: 'doubleRoom',
+                    inputName: 'doubleRoom',
+                    placeholder: '',
+                    value: doubleRoom,
+                    onInputChange: e => handleNumberChange(e.target.value, setDoubleRoom)
+                  },
+                  {
+                    textLabel: '3인실',
+                    inputId: 'tripleRoom',
+                    inputName: 'tripleRoom',
+                    placeholder: '',
+                    value: tripleRoom,
+                    onInputChange: e => handleNumberChange(e.target.value, setTripleRoom)
+                  }
+                ]}
+                labelMinWidth='45px'
+                textLabelAlign='left'
+              />
+            </div>
 
-          {/* 격리유형 */}
-          <div className={styles.formField}>
-            <InputLabel htmlFor='isolationType' required>
-              격리유형
-            </InputLabel>
-            <CheckboxGroup
-              minWidth='124px'
-              options={[
-                {
-                  id: 'vre',
-                  name: 'vre',
-                  checked: isolationType.vre,
-                  onChange: checked => setIsolationType(prev => ({ ...prev, vre: checked })),
-                  label: 'VRE'
-                },
-                {
-                  id: 'cre',
-                  name: 'cre',
-                  checked: isolationType.cre,
-                  onChange: checked => setIsolationType(prev => ({ ...prev, cre: checked })),
-                  label: 'CRE'
-                },
-                {
-                  id: 'cpe',
-                  name: 'cpe',
-                  checked: isolationType.cpe,
-                  onChange: checked => setIsolationType(prev => ({ ...prev, cpe: checked })),
-                  label: 'CPE'
-                },
-                {
-                  id: 'tb',
-                  name: 'tb',
-                  checked: isolationType.tb,
-                  onChange: checked => setIsolationType(prev => ({ ...prev, tb: checked })),
-                  label: 'TB'
-                }
-              ]}
-              keepSingleRow={true}
-            />
-            <LabelInputRow
-              checkboxId='isolationTypeOther'
-              checkboxName='isolationTypeOther'
-              checked={isolationType.other}
-              onCheckboxChange={checked => setIsolationType(prev => ({ ...prev, other: checked }))}
-              checkboxLabel='기타'
-              inputId='isolationTypeOtherInput'
-              inputName='isolationTypeOtherInput'
-              placeholder=''
-              value={isolationTypeOther}
-              onInputChange={e => setIsolationTypeOther(e.target.value)}
-              disabled={!isolationType.other}
-            />
-          </div>
+            {/* 격리유형 */}
+            <div className={styles.formField}>
+              <InputLabel htmlFor='isolationType' required>
+                격리유형
+              </InputLabel>
+              <CheckboxGroup
+                minWidth='124px'
+                options={[
+                  {
+                    id: 'vre',
+                    name: 'vre',
+                    checked: isolationType.vre,
+                    onChange: checked => setIsolationType(prev => ({ ...prev, vre: checked })),
+                    label: 'VRE'
+                  },
+                  {
+                    id: 'cre',
+                    name: 'cre',
+                    checked: isolationType.cre,
+                    onChange: checked => setIsolationType(prev => ({ ...prev, cre: checked })),
+                    label: 'CRE'
+                  },
+                  {
+                    id: 'cpe',
+                    name: 'cpe',
+                    checked: isolationType.cpe,
+                    onChange: checked => setIsolationType(prev => ({ ...prev, cpe: checked })),
+                    label: 'CPE'
+                  },
+                  {
+                    id: 'tb',
+                    name: 'tb',
+                    checked: isolationType.tb,
+                    onChange: checked => setIsolationType(prev => ({ ...prev, tb: checked })),
+                    label: 'TB'
+                  }
+                ]}
+                keepSingleRow={true}
+              />
+              <LabelInputRow
+                checkboxId='isolationTypeOther'
+                checkboxName='isolationTypeOther'
+                checked={isolationType.other}
+                onCheckboxChange={checked => setIsolationType(prev => ({ ...prev, other: checked }))}
+                checkboxLabel='기타'
+                inputId='isolationTypeOtherInput'
+                inputName='isolationTypeOtherInput'
+                placeholder=''
+                value={isolationTypeOther}
+                onInputChange={e => setIsolationTypeOther(e.target.value)}
+                disabled={!isolationType.other}
+              />
+            </div>
 
-          {/* 격리 중 간병 */}
-          <div className={styles.formField}>
-            <InputLabel htmlFor='nursingDuringIsolation' required>
-              격리 중 간병
-            </InputLabel>
-            <CheckboxGroup
-              minWidth='124px'
-              options={[
-                {
-                  id: 'jointNursing',
-                  name: 'jointNursing',
-                  checked: nursingDuringIsolation.joint,
-                  onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, joint: checked })),
-                  label: '공동간병'
-                },
-                {
-                  id: 'individualNursing',
-                  name: 'individualNursing',
-                  checked: nursingDuringIsolation.individual,
-                  onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, individual: checked })),
-                  label: '개인간병'
-                },
-                {
-                  id: 'guardianNursing',
-                  name: 'guardianNursing',
-                  checked: nursingDuringIsolation.guardian,
-                  onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, guardian: checked })),
-                  label: '보호자간병'
-                }
-              ]}
-              keepSingleRow={true}
-            />
-          </div>
+            {/* 격리 중 간병 */}
+            <div className={styles.formField}>
+              <InputLabel htmlFor='nursingDuringIsolation' required>
+                격리 중 간병
+              </InputLabel>
+              <CheckboxGroup
+                minWidth='124px'
+                options={[
+                  {
+                    id: 'jointNursing',
+                    name: 'jointNursing',
+                    checked: nursingDuringIsolation.joint,
+                    onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, joint: checked })),
+                    label: '공동간병'
+                  },
+                  {
+                    id: 'individualNursing',
+                    name: 'individualNursing',
+                    checked: nursingDuringIsolation.individual,
+                    onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, individual: checked })),
+                    label: '개인간병'
+                  },
+                  {
+                    id: 'guardianNursing',
+                    name: 'guardianNursing',
+                    checked: nursingDuringIsolation.guardian,
+                    onChange: checked => setNursingDuringIsolation(prev => ({ ...prev, guardian: checked })),
+                    label: '보호자간병'
+                  }
+                ]}
+                keepSingleRow={true}
+              />
+            </div>
 
-          {/* 격리 중 재활 */}
-          <div className={styles.formField}>
-            <InputLabel htmlFor='rehabilitationDuringIsolation' required>
-              격리 중 재활
-            </InputLabel>
-            <CheckboxGroup
-              minWidth='124px'
-              options={[
-                {
-                  id: 'rehabNo',
-                  name: 'rehabNo',
-                  checked: rehabilitationDuringIsolation.no,
-                  onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, no: checked })),
-                  label: 'No'
-                },
-                {
-                  id: 'rehabBedside',
-                  name: 'rehabBedside',
-                  checked: rehabilitationDuringIsolation.bedside,
-                  onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, bedside: checked })),
-                  label: '침상재활'
-                },
-                {
-                  id: 'rehabIsolationWard',
-                  name: 'rehabIsolationWard',
-                  checked: rehabilitationDuringIsolation.isolationWard,
-                  onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, isolationWard: checked })),
-                  label: '격리병동 재활실 운영'
-                }
-              ]}
-              keepSingleRow={true}
-            />
+            {/* 격리 중 재활 */}
+            <div className={styles.formField}>
+              <InputLabel htmlFor='rehabilitationDuringIsolation' required>
+                격리 중 재활
+              </InputLabel>
+              <CheckboxGroup
+                minWidth='124px'
+                options={[
+                  {
+                    id: 'rehabNo',
+                    name: 'rehabNo',
+                    checked: rehabilitationDuringIsolation.no,
+                    onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, no: checked })),
+                    label: 'No'
+                  },
+                  {
+                    id: 'rehabBedside',
+                    name: 'rehabBedside',
+                    checked: rehabilitationDuringIsolation.bedside,
+                    onChange: checked => setRehabilitationDuringIsolation(prev => ({ ...prev, bedside: checked })),
+                    label: '침상재활'
+                  },
+                  {
+                    id: 'rehabIsolationWard',
+                    name: 'rehabIsolationWard',
+                    checked: rehabilitationDuringIsolation.isolationWard,
+                    onChange: checked =>
+                      setRehabilitationDuringIsolation(prev => ({ ...prev, isolationWard: checked })),
+                    label: '격리병동 재활실 운영'
+                  }
+                ]}
+                keepSingleRow={true}
+              />
+            </div>
           </div>
-        </div>
         )}
       </div>
     </div>

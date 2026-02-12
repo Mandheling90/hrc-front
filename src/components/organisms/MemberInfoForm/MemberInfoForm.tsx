@@ -226,6 +226,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     setIsHospitalSearchOpen(false)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleZipCodeSearch = () => {
     // TODO: 우편번호 검색 로직
     console.log('우편번호 검색')
@@ -385,11 +386,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 onChange={handleInputChange}
                 labelExtra={
                   passwordValidation.status ? (
-                    <span
-                      className={
-                        passwordValidation.valid ? styles.passwordStatusValid : styles.passwordStatus
-                      }
-                    >
+                    <span className={passwordValidation.valid ? styles.passwordStatusValid : styles.passwordStatus}>
                       {passwordValidation.status}
                     </span>
                   ) : null
@@ -414,11 +411,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               onChange={handleInputChange}
               labelExtra={
                 passwordConfirmStatus.status ? (
-                  <span
-                    className={
-                      passwordConfirmStatus.match ? styles.passwordStatusValid : styles.passwordStatus
-                    }
-                  >
+                  <span className={passwordConfirmStatus.match ? styles.passwordStatusValid : styles.passwordStatus}>
                     {passwordConfirmStatus.status}
                   </span>
                 ) : null
