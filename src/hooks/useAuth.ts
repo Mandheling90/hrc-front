@@ -43,7 +43,7 @@ export function useLogin() {
     const { data } = await loginMutation({ variables: { input } })
 
     if (data?.login) {
-      setAuth(data.login.accessToken, data.login.user)
+      setAuth(data.login.accessToken, data.login.refreshToken, data.login.user)
       return data.login
     }
 
@@ -61,7 +61,7 @@ export function useSignup() {
     const { data } = await signupMutation({ variables: { input } })
 
     if (data?.signup) {
-      setAuth(data.signup.accessToken, data.signup.user)
+      setAuth(data.signup.accessToken, data.signup.refreshToken, data.signup.user)
       return data.signup
     }
 

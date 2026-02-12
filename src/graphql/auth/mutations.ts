@@ -69,3 +69,35 @@ export const LOGOUT_MUTATION = gql`
     logout
   }
 `
+
+export const REFRESH_TOKEN_MUTATION = gql`
+  mutation RefreshToken($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
+      accessToken
+      refreshToken
+      mustChangePw
+      user {
+        id
+        userId
+        email
+        userName
+        userType
+        hospitalCode
+        phone
+        status
+        mustChangePw
+        profile {
+          birthDate
+          department
+          gender
+          hospAddress
+          hospCode
+          hospName
+          licenseNo
+          representative
+          specialty
+        }
+      }
+    }
+  }
+`
