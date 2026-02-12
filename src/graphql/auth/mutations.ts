@@ -3,16 +3,30 @@ import { gql } from '@apollo/client'
 export const LOGIN_MUTATION = gql`
   mutation Login($input: LoginInput!) {
     login(input: $input) {
-      token
+      accessToken
       refreshToken
+      mustChangePw
       user {
         id
+        userId
         email
-        name
-        role
-        hospitalId
-        department
+        userName
+        userType
+        hospitalCode
         phone
+        status
+        mustChangePw
+        profile {
+          birthDate
+          department
+          gender
+          hospAddress
+          hospCode
+          hospName
+          licenseNo
+          representative
+          specialty
+        }
       }
     }
   }
@@ -21,16 +35,30 @@ export const LOGIN_MUTATION = gql`
 export const SIGNUP_MUTATION = gql`
   mutation Signup($input: SignupInput!) {
     signup(input: $input) {
-      token
+      accessToken
       refreshToken
+      mustChangePw
       user {
         id
+        userId
         email
-        name
-        role
-        hospitalId
-        department
+        userName
+        userType
+        hospitalCode
         phone
+        status
+        mustChangePw
+        profile {
+          birthDate
+          department
+          gender
+          hospAddress
+          hospCode
+          hospName
+          licenseNo
+          representative
+          specialty
+        }
       }
     }
   }
@@ -39,5 +67,37 @@ export const SIGNUP_MUTATION = gql`
 export const LOGOUT_MUTATION = gql`
   mutation Logout {
     logout
+  }
+`
+
+export const REFRESH_TOKEN_MUTATION = gql`
+  mutation RefreshToken($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
+      accessToken
+      refreshToken
+      mustChangePw
+      user {
+        id
+        userId
+        email
+        userName
+        userType
+        hospitalCode
+        phone
+        status
+        mustChangePw
+        profile {
+          birthDate
+          department
+          gender
+          hospAddress
+          hospCode
+          hospName
+          licenseNo
+          representative
+          specialty
+        }
+      }
+    }
   }
 `

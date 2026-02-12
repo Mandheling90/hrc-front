@@ -8,13 +8,14 @@ interface AuthContextType {
   token: string | null
   isAuthenticated: boolean
   isLoading: boolean
-  setAuth: (token: string, user: AuthUser) => void
+  setAuth: (token: string, refreshToken: string, user: AuthUser) => void
   clearAuth: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const AUTH_TOKEN_KEY = 'auth_token'
+const AUTH_REFRESH_TOKEN_KEY = 'auth_refresh_token'
 const AUTH_USER_KEY = 'auth_user'
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -32,6 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(JSON.parse(storedUser))
       } catch {
         localStorage.removeItem(AUTH_TOKEN_KEY)
+        localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY)
         localStorage.removeItem(AUTH_USER_KEY)
       }
     }
@@ -39,8 +41,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false)
   }, [])
 
-  const setAuth = useCallback((newToken: string, newUser: AuthUser) => {
+  const setAuth = useCallback((newToken: string, newRefreshToken: string, newUser: AuthUser) => {
     localStorage.setItem(AUTH_TOKEN_KEY, newToken)
+    localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, newRefreshToken)
     localStorage.setItem(AUTH_USER_KEY, JSON.stringify(newUser))
     setToken(newToken)
     setUser(newUser)
@@ -48,6 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearAuth = useCallback(() => {
     localStorage.removeItem(AUTH_TOKEN_KEY)
+    localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY)
     localStorage.removeItem(AUTH_USER_KEY)
     setToken(null)
     setUser(null)
