@@ -36,6 +36,9 @@ Thumbs.db
 coverage
 .nyc_output
 
+# GraphQL codegen
+src/graphql/__generated__/
+
 # Other
 *.min.js
 *.min.css

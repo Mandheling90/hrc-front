@@ -1,0 +1,49 @@
+enum UserRole {
+  DOCTOR
+  STAFF
+  ADMIN
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  role: UserRole!
+  hospitalId: String!
+  department: String
+  phone: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+type AuthPayload {
+  token: String!
+  refreshToken: String!
+  user: User!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input SignupInput {
+  email: String!
+  password: String!
+  name: String!
+  role: UserRole!
+  hospitalId: String!
+  department: String
+  phone: String
+}
+
+type Query {
+  me: User!
+}
+
+type Mutation {
+  login(input: LoginInput!): AuthPayload!
+  signup(input: SignupInput!): AuthPayload!
+  logout: Boolean!
+  refreshToken(token: String!): AuthPayload!
+}

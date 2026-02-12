@@ -9,15 +9,24 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "codegen:watch": "graphql-codegen --config codegen.ts --watch"
   },
   "dependencies": {
+    "@apollo/client": "^4.1.4",
+    "@apollo/client-integration-nextjs": "^0.14.4",
+    "graphql": "^16.12.0",
     "next": "15.5.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "sass": "^1.97.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^6.1.1",
+    "@graphql-codegen/typed-document-node": "^6.1.5",
+    "@graphql-codegen/typescript": "^5.0.7",
+    "@graphql-codegen/typescript-operations": "^5.0.7",
     "@playwright/test": "^1.58.1",
     "@types/node": "^20",
     "@types/react": "^19",
