@@ -88,9 +88,34 @@ type UserIdAvailability {
   existsInEhr: Boolean!
 }
 
+input SearchCollaboratingHospitalsInput {
+  hospitalCode: HospitalCode!
+  hsptNm: String
+  adrsNm: String
+  hsptClsfCd: String
+}
+
+type CollaboratingHospital {
+  name: String
+  address: String
+  addressDetail: String
+  careInstitutionNo: String
+  classificationCode: String
+  phone: String
+  representative: String
+  website: String
+  zipCode: String
+}
+
+type CollaboratingHospitalSearchResult {
+  hospitals: [CollaboratingHospital!]!
+  totalCount: Float!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
+  ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): CollaboratingHospitalSearchResult!
 }
 
 type Mutation {

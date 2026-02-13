@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
+import { useLazyQuery } from '@apollo/client/react'
 import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
 import { CloseIcon } from '@/components/icons/CloseIcon'
@@ -9,6 +10,13 @@ import { FormField } from '@/components/molecules/FormField/FormField'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useDaumPostcode } from '@/hooks/useDaumPostcode'
+import { useHospital } from '@/contexts/HospitalContext'
+import { EHR_HOSPITAL_SEARCH_QUERY } from '@/graphql/auth/queries'
+import type {
+  EhrGetCollaboratingHospitalsQuery,
+  EhrGetCollaboratingHospitalsQueryVariables
+} from '@/graphql/__generated__/types'
+import { HospitalCode } from '@/graphql/__generated__/types'
 import styles from './HospitalSearchModal.module.scss'
 
 export interface HospitalSearchResult {
@@ -33,14 +41,11 @@ export interface HospitalSearchModalProps {
   className?: string
 }
 
-// 테스트용 Mock 데이터
-const MOCK_RESULTS: HospitalSearchResult[] = [
-  { hospitalName: '고대협력병원', careNumber: '11100001', address: '서울특별시 성북구 안암로 145' },
-  { hospitalName: '고대안산병원', careNumber: '11100002', address: '경기도 안산시 단원구 적금로 123' },
-  { hospitalName: '고대구로병원', careNumber: '11100003', address: '서울특별시 구로구 구로동로 148' },
-  { hospitalName: '고대의료원', careNumber: '11100004', address: '서울특별시 성북구 고려대로 73' },
-  { hospitalName: '고대안암병원', careNumber: '11100005', address: '서울특별시 성북구 안암동5가 126-1' }
-]
+const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
+  anam: HospitalCode.Anam,
+  guro: HospitalCode.Guro,
+  ansan: HospitalCode.Ansan
+}
 
 export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   isOpen,
@@ -49,6 +54,14 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   closeOnBackdropClick = false,
   className = ''
 }) => {
+  const { hospitalId } = useHospital()
+  const [searchHospitals, { loading: searchLoading }] = useLazyQuery<
+    EhrGetCollaboratingHospitalsQuery,
+    EhrGetCollaboratingHospitalsQueryVariables
+  >(EHR_HOSPITAL_SEARCH_QUERY, {
+    fetchPolicy: 'network-only'
+  })
+
   const [hospitalName, setHospitalName] = useState('')
   const [careNumber, setCareNumber] = useState('')
   const [view, setView] = useState<'search' | 'results' | 'registration'>('search')
@@ -137,13 +150,40 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
     }
   }
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!hospitalName.trim() && !careNumber.trim()) {
       setAlertModal({ isOpen: true, message: '병원명 또는 요양기관번호를 기입해주세요.' })
       return
     }
-    // TODO: 실제 검색 API 호출
-    setSearchResults(MOCK_RESULTS)
+
+    const hospitalCodeEnum = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
+    try {
+      const { data } = await searchHospitals({
+        variables: {
+          input: {
+            hospitalCode: hospitalCodeEnum,
+            ...(hospitalName.trim() && { hsptNm: hospitalName.trim() }),
+            ...(careNumber.trim() && { hsptClsfCd: careNumber.trim() })
+          }
+        }
+      })
+
+      const hospitals = data?.ehrGetCollaboratingHospitals?.hospitals
+      if (hospitals && hospitals.length > 0) {
+        setSearchResults(
+          hospitals.map(h => ({
+            hospitalName: h.name || '',
+            careNumber: h.careInstitutionNo || '',
+            address: h.address || ''
+          }))
+        )
+      } else {
+        setSearchResults([])
+      }
+    } catch (err) {
+      console.error('병원 검색 오류:', err)
+      setSearchResults([])
+    }
     setView('results')
   }
 
@@ -269,10 +309,11 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                 type='button'
                 variant='primary'
                 onClick={handleSearch}
+                disabled={searchLoading}
                 className={styles.searchButton}
                 data-testid='hospital-search-submit-button'
               >
-                검색
+                {searchLoading ? '검색 중...' : '검색'}
               </Button>
             </>
           )}
