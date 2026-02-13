@@ -63,23 +63,36 @@ input LoginInput {
   password: String!
 }
 
+enum DoctorType {
+  DOCTOR
+  DENTIST
+  ORIENTAL_DOCTOR
+}
+
 input SignupInput {
-  userId: String!
   userName: String!
-  email: String!
+  birthDate: String!
+  phone: String!
+  doctorType: DoctorType!
+  userId: String!
   password: String!
-  hospitalCode: HospitalCode!
-  userType: UserType!
-  phone: String
-  department: String
-  birthDate: String
-  gender: Gender
-  licenseNo: String
+  passwordConfirm: String!
+  email: String!
+  licenseNo: String!
+  isDirector: Boolean!
+  school: String!
+  department: String!
   specialty: String
-  hospName: String
-  hospCode: String
-  hospAddress: String
-  representative: String
+  smsConsent: Boolean!
+  emailConsent: Boolean!
+  replyConsent: Boolean!
+  hospName: String!
+  careInstitutionNo: String!
+  hospZipCode: String!
+  hospAddress: String!
+  hospAddressDetail: String
+  hospPhone: String!
+  hospWebsite: String
 }
 
 type UserIdAvailability {

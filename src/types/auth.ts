@@ -38,21 +38,30 @@ export interface LoginFormData {
   password: string
 }
 
+export type DoctorType = 'DOCTOR' | 'DENTIST' | 'ORIENTAL_DOCTOR'
+
 export interface SignupFormData {
-  userId: string
   userName: string
-  email: string
+  birthDate: string
+  phone: string
+  doctorType: DoctorType
+  userId: string
   password: string
-  hospitalCode: HospitalCode
-  userType: UserType
-  phone?: string
-  department?: string
-  birthDate?: string
-  gender?: Gender
-  licenseNo?: string
+  passwordConfirm: string
+  email: string
+  licenseNo: string
+  isDirector: boolean
+  school: string
+  department: string
   specialty?: string
-  hospName?: string
-  hospCode?: string
-  hospAddress?: string
-  representative?: string
+  smsConsent: boolean
+  emailConsent: boolean
+  replyConsent: boolean
+  hospName: string
+  careInstitutionNo: string
+  hospZipCode: string
+  hospAddress: string
+  hospAddressDetail?: string
+  hospPhone: string
+  hospWebsite?: string
 }

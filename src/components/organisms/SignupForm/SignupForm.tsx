@@ -9,16 +9,16 @@ import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useSignup } from '@/hooks/useAuth'
 import { useHospital } from '@/contexts/HospitalContext'
 import { MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
-import { HospitalCode, UserType } from '@/types/auth'
+import { DoctorType } from '@/types/auth'
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useRouter } from 'next/navigation'
 
-// MemberInfoForm의 memberType → 백엔드 UserType 매핑
-const MEMBER_TYPE_MAP: Record<string, UserType> = {
+// MemberInfoForm의 memberType → 백엔드 DoctorType 매핑
+const DOCTOR_TYPE_MAP: Record<string, DoctorType> = {
   의사: 'DOCTOR',
-  치과의사: 'DOCTOR',
-  한의사: 'DOCTOR'
+  치과의사: 'DENTIST',
+  한의사: 'ORIENTAL_DOCTOR'
 }
 
 export const SignupForm: React.FC = () => {
@@ -79,26 +79,33 @@ export const SignupForm: React.FC = () => {
   }
 
   const handleSignup = async (formData: MemberInfoFormData) => {
-    const hospitalCode = hospitalId.toUpperCase() as HospitalCode
-    const userType = MEMBER_TYPE_MAP[formData.memberType] || 'DOCTOR'
+    const doctorType = DOCTOR_TYPE_MAP[formData.memberType] || 'DOCTOR'
 
     try {
       const result = await signup({
-        userId: formData.userId,
         userName: formData.name,
-        email: formData.email,
+        birthDate: formData.birthDate,
+        phone: formData.phone,
+        doctorType,
+        userId: formData.userId,
         password: formData.password,
-        hospitalCode,
-        userType,
-        phone: formData.phone || undefined,
-        department: formData.department !== '전체' ? formData.department : undefined,
-        birthDate: formData.birthDate || undefined,
-        licenseNo: formData.licenseNumber || undefined,
+        passwordConfirm: formData.passwordConfirm,
+        email: formData.email,
+        licenseNo: formData.licenseNumber,
+        isDirector: formData.isDirector,
+        school: formData.school,
+        department: formData.department,
         specialty: formData.specialty || undefined,
-        hospName: formData.hospitalName || undefined,
-        hospCode: formData.careNumber || undefined,
-        hospAddress: [formData.address, formData.addressDetail].filter(Boolean).join(' ') || undefined,
-        representative: formData.isDirector ? formData.name : undefined
+        smsConsent: formData.smsConsent === 'Y',
+        emailConsent: formData.emailConsent === 'Y',
+        replyConsent: formData.replyConsent === 'Y',
+        hospName: formData.hospitalName,
+        careInstitutionNo: formData.careNumber,
+        hospZipCode: formData.zipCode,
+        hospAddress: formData.address,
+        hospAddressDetail: formData.addressDetail || undefined,
+        hospPhone: formData.hospitalPhone,
+        hospWebsite: formData.hospitalWebsite || undefined
       })
 
       if (result) {

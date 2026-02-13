@@ -48,17 +48,6 @@ export const SIGNUP_MUTATION = gql`
         phone
         status
         mustChangePw
-        profile {
-          birthDate
-          department
-          gender
-          hospAddress
-          hospCode
-          hospName
-          licenseNo
-          representative
-          specialty
-        }
       }
     }
   }

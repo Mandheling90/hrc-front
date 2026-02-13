@@ -10,22 +10,29 @@ interface LoginInput {
 }
 
 interface SignupInput {
-  userId: string
   userName: string
-  email: string
+  birthDate: string
+  phone: string
+  doctorType: string
+  userId: string
   password: string
-  hospitalCode: string
-  userType: string
-  phone?: string
-  department?: string
-  birthDate?: string
-  gender?: string
-  licenseNo?: string
+  passwordConfirm: string
+  email: string
+  licenseNo: string
+  isDirector: boolean
+  school: string
+  department: string
   specialty?: string
-  hospName?: string
-  hospCode?: string
-  hospAddress?: string
-  representative?: string
+  smsConsent: boolean
+  emailConsent: boolean
+  replyConsent: boolean
+  hospName: string
+  careInstitutionNo: string
+  hospZipCode: string
+  hospAddress: string
+  hospAddressDetail?: string
+  hospPhone: string
+  hospWebsite?: string
 }
 
 interface AuthPayload {
