@@ -130,6 +130,8 @@ $header-height-mobile: 56px;
 // Breadcrumbs 영역
 // ========================================
 .breadcrumbsSection {
+  position: relative;
+  z-index: -1;
   background: #fff;
   border-bottom: 1px solid $gray-8;
   border-radius: 0 0 20px 20px;

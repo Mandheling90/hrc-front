@@ -161,19 +161,21 @@ export const Header: React.FC = () => {
     // 홈 아이콘
     items.push({ label: '', href: '/', isHome: true })
 
-    // 현재 경로가 속한 메뉴 카테고리 찾기
+    // 현재 경로가 속한 메뉴 카테고리 찾기 (가장 구체적인 매치 우선)
     let currentCategory: MenuItem | null = null
     let currentSubItem: SubMenuItem | null = null
+    let bestMatchLength = -1
 
     for (const menu of menuItems) {
       for (const sub of menu.subItems) {
         if (pathname === sub.href || pathname.startsWith(sub.href + '/')) {
-          currentCategory = menu
-          currentSubItem = sub
-          break
+          if (sub.href.length > bestMatchLength) {
+            bestMatchLength = sub.href.length
+            currentCategory = menu
+            currentSubItem = sub
+          }
         }
       }
-      if (currentCategory) break
     }
 
     if (currentCategory && currentSubItem) {
