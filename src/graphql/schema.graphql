@@ -82,8 +82,15 @@ input SignupInput {
   representative: String
 }
 
+type UserIdAvailability {
+  available: Boolean!
+  existsInDb: Boolean!
+  existsInEhr: Boolean!
+}
+
 type Query {
   me: User!
+  checkUserIdAvailable(userId: String!): UserIdAvailability!
 }
 
 type Mutation {

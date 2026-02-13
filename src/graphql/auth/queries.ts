@@ -1,5 +1,15 @@
 import { gql } from '@apollo/client'
 
+export const CHECK_USER_ID_QUERY = gql`
+  query CheckUserIdAvailable($userId: String!) {
+    checkUserIdAvailable(userId: $userId) {
+      available
+      existsInDb
+      existsInEhr
+    }
+  }
+`
+
 export const ME_QUERY = gql`
   query Me {
     me {

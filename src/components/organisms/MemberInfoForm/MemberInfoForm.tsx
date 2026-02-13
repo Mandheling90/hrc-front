@@ -15,6 +15,8 @@ import {
   HospitalSearchResult
 } from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { useLazyQuery } from '@apollo/client/react'
+import { CHECK_USER_ID_QUERY } from '@/graphql/auth/queries'
 import React, { useState, useEffect, useMemo } from 'react'
 import styles from './MemberInfoForm.module.scss'
 
@@ -163,6 +165,11 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     isOpen: false,
     message: ''
   })
+  const [userIdChecked, setUserIdChecked] = useState(false)
+  const [userIdAvailable, setUserIdAvailable] = useState(false)
+  const [checkUserIdQuery, { loading: checkingUserId }] = useLazyQuery<{
+    checkUserIdAvailable: { available: boolean; existsInDb: boolean; existsInEhr: boolean }
+  }>(CHECK_USER_ID_QUERY, { fetchPolicy: 'network-only' })
 
   // 초기 데이터 변경 시 폼 데이터 업데이트
   useEffect(() => {
@@ -184,6 +191,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       ...prev,
       [name]: value
     }))
+    if (name === 'userId') {
+      setUserIdChecked(false)
+      setUserIdAvailable(false)
+    }
   }
 
   const handleSelectChange = (name: string) => (value: string) => {
@@ -207,9 +218,33 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     }))
   }
 
-  const handleIdCheck = () => {
-    // TODO: 아이디 중복 확인 / 병원 찾기 로직
-    console.log('아이디 확인 / 병원 찾기:', formData.userId)
+  const handleIdCheck = async () => {
+    if (!formData.userId.trim()) {
+      setAlertModal({ isOpen: true, message: '아이디를 입력해주세요.' })
+      return
+    }
+
+    try {
+      const { data } = await checkUserIdQuery({ variables: { userId: formData.userId } })
+      const result = data?.checkUserIdAvailable
+      setUserIdChecked(true)
+
+      if (result?.available) {
+        setUserIdAvailable(true)
+        setAlertModal({ isOpen: true, message: '사용 가능한 아이디입니다.' })
+      } else {
+        setUserIdAvailable(false)
+        if (result?.existsInDb) {
+          setAlertModal({ isOpen: true, message: '이미 등록된 아이디입니다.' })
+        } else if (result?.existsInEhr) {
+          setAlertModal({ isOpen: true, message: 'EHR에 이미 존재하는 아이디입니다.' })
+        } else {
+          setAlertModal({ isOpen: true, message: '사용할 수 없는 아이디입니다.' })
+        }
+      }
+    } catch {
+      setAlertModal({ isOpen: true, message: '아이디 확인 중 오류가 발생했습니다.' })
+    }
   }
 
   const handleHospitalSearch = () => {
@@ -270,6 +305,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   }, [formData.password, formData.passwordConfirm])
 
   const handleSubmit = () => {
+    if (mode === 'signup' && (!userIdChecked || !userIdAvailable)) {
+      setAlertModal({ isOpen: true, message: '아이디 중복 확인을 해주세요.' })
+      return
+    }
     if (!formData.hospitalName) {
       setAlertModal({ isOpen: true, message: '병원명을 검색하여 입력해주세요.' })
       return
@@ -364,8 +403,15 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               value={formData.userId}
               onChange={handleInputChange}
               disabled={isFieldDisabled('userId')}
-              buttonText='중복 확인'
+              buttonText={checkingUserId ? '확인 중...' : '중복 확인'}
               onButtonClick={handleIdCheck}
+              labelExtra={
+                userIdChecked ? (
+                  <span className={userIdAvailable ? styles.passwordStatusValid : styles.passwordStatus}>
+                    {userIdAvailable ? '사용가능' : '사용불가'}
+                  </span>
+                ) : null
+              }
             />
 
             <div className={styles.passwordFieldWrapper}>
