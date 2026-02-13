@@ -31,9 +31,7 @@
   }
 
   @include mobile {
-    font-size: 36px; // Figma mobile: 36px
     margin-bottom: 32px; // Figma mobile: 32px gap
-    letter-spacing: -1.44px;
   }
 }
 

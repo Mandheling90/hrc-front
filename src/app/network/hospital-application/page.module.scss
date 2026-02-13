@@ -288,8 +288,6 @@
 
 @include mobile {
   .pageTitle {
-    font-size: $font-size-4xl; // 36px - Figma 모바일 기준
-    line-height: 54px;
     margin-bottom: $spacing-8;
   }
 

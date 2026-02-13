@@ -311,9 +311,7 @@ $spacing-14: 3.5rem; // 56px
 // 모바일 반응형 스타일 (768px 이하)
 @media (max-width: $breakpoint-md) {
   .pageTitle {
-    font-size: 36px; // 모바일: 36px (Figma)
     margin-bottom: $spacing-8; // 32px
-    letter-spacing: -1.44px;
   }
 
   .introBox {
