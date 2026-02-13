@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { useLazyQuery } from '@apollo/client/react'
+import { useLazyQuery, useMutation } from '@apollo/client/react'
 import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
 import { CloseIcon } from '@/components/icons/CloseIcon'
@@ -12,9 +12,12 @@ import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useDaumPostcode } from '@/hooks/useDaumPostcode'
 import { useHospital } from '@/contexts/HospitalContext'
 import { EHR_HOSPITAL_SEARCH_QUERY } from '@/graphql/auth/queries'
+import { REGISTER_HOSPITAL_MUTATION } from '@/graphql/auth/mutations'
 import type {
   EhrGetCollaboratingHospitalsQuery,
-  EhrGetCollaboratingHospitalsQueryVariables
+  EhrGetCollaboratingHospitalsQueryVariables,
+  RegisterHospitalMutation,
+  RegisterHospitalMutationVariables
 } from '@/graphql/__generated__/types'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import styles from './HospitalSearchModal.module.scss'
@@ -61,6 +64,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   >(EHR_HOSPITAL_SEARCH_QUERY, {
     fetchPolicy: 'network-only'
   })
+  const [registerHospital, { loading: registerLoading }] = useMutation<
+    RegisterHospitalMutation,
+    RegisterHospitalMutationVariables
+  >(REGISTER_HOSPITAL_MUTATION)
 
   const [hospitalName, setHospitalName] = useState('')
   const [careNumber, setCareNumber] = useState('')
@@ -195,17 +202,48 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
     setView('registration')
   }
 
-  const handleRegistrationSubmit = () => {
-    // TODO: 실제 등록 API 호출
-    console.log('신규등록 제출', {
-      regHospitalName,
-      regRepresentativeName,
-      regCareNumber,
-      regZipCode,
-      regAddress,
-      regDetailAddress,
-      regPhone
-    })
+  const handleRegistrationSubmit = async () => {
+    if (
+      !regHospitalName.trim() ||
+      !regRepresentativeName.trim() ||
+      !regCareNumber.trim() ||
+      !regZipCode.trim() ||
+      !regAddress.trim() ||
+      !regPhone.trim()
+    ) {
+      setAlertModal({ isOpen: true, message: '필수 항목을 모두 입력해주세요.' })
+      return
+    }
+
+    const hospitalCode = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
+    try {
+      const { data } = await registerHospital({
+        variables: {
+          input: {
+            hospitalCode,
+            hospitalName: regHospitalName.trim(),
+            representative: regRepresentativeName.trim(),
+            careInstitutionNo: regCareNumber.trim(),
+            zipCode: regZipCode.trim(),
+            address: regAddress.trim(),
+            addressDetail: regDetailAddress.trim() || undefined,
+            phone: regPhone.trim()
+          }
+        }
+      })
+
+      if (data?.registerHospital) {
+        onSelect({
+          hospitalName: data.registerHospital.name,
+          careNumber: data.registerHospital.phisCode,
+          address: data.registerHospital.address || ''
+        })
+      }
+    } catch (err) {
+      console.error('병원 등록 오류:', err)
+      const message = err instanceof Error ? err.message : '병원 등록에 실패했습니다.'
+      setAlertModal({ isOpen: true, message })
+    }
   }
 
   // 검색 결과 테이블 컬럼 정의
@@ -504,10 +542,11 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                 type='button'
                 variant='primary'
                 onClick={handleRegistrationSubmit}
+                disabled={registerLoading}
                 className={styles.searchButton}
                 data-testid='hospital-registration-submit-button'
               >
-                신규등록
+                {registerLoading ? '등록 중...' : '신규등록'}
               </Button>
             </>
           )}

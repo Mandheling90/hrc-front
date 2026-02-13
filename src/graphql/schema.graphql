@@ -112,6 +112,27 @@ type CollaboratingHospitalSearchResult {
   totalCount: Float!
 }
 
+input RegisterHospitalInput {
+  hospitalCode: HospitalCode!
+  hospitalName: String!
+  representative: String!
+  careInstitutionNo: String!
+  zipCode: String!
+  address: String!
+  addressDetail: String
+  phone: String!
+}
+
+type RegisteredHospital {
+  id: ID!
+  name: String!
+  representative: String!
+  phisCode: String!
+  address: String
+  phone: String
+  createdAt: String!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
@@ -123,4 +144,5 @@ type Mutation {
   signup(input: SignupInput!): AuthPayload!
   logout: Boolean!
   refreshToken(refreshToken: String!): AuthPayload!
+  registerHospital(input: RegisterHospitalInput!): RegisteredHospital!
 }

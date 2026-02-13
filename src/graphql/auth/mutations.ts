@@ -70,6 +70,19 @@ export const LOGOUT_MUTATION = gql`
   }
 `
 
+export const REGISTER_HOSPITAL_MUTATION = gql`
+  mutation RegisterHospital($input: RegisterHospitalInput!) {
+    registerHospital(input: $input) {
+      id
+      name
+      representative
+      phisCode
+      address
+      phone
+    }
+  }
+`
+
 export const REFRESH_TOKEN_MUTATION = gql`
   mutation RefreshToken($refreshToken: String!) {
     refreshToken(refreshToken: $refreshToken) {
