@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
 import { CloseIcon } from '@/components/icons/CloseIcon'
@@ -8,6 +8,7 @@ import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { useDaumPostcode } from '@/hooks/useDaumPostcode'
 import styles from './HospitalSearchModal.module.scss'
 
 export interface HospitalSearchResult {
@@ -121,6 +122,13 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
     }
   }, [isOpen])
 
+  const handlePostcodeComplete = useCallback((result: { zipCode: string; address: string }) => {
+    setRegZipCode(result.zipCode)
+    setRegAddress(result.address)
+  }, [])
+
+  const { openPostcode } = useDaumPostcode(handlePostcodeComplete)
+
   if (!isOpen) return null
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -158,11 +166,6 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       regDetailAddress,
       regPhone
     })
-  }
-
-  const handleZipCodeSearch = () => {
-    // TODO: 우편번호 검색 API 연동
-    console.log('우편번호 검색')
   }
 
   // 검색 결과 테이블 컬럼 정의
@@ -407,7 +410,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       onChange={e => setRegZipCode(e.target.value)}
                       disabled
                       buttonText='우편번호 검색'
-                      onButtonClick={handleZipCodeSearch}
+                      onButtonClick={openPostcode}
                       mobileStack
                     >
                       <Input

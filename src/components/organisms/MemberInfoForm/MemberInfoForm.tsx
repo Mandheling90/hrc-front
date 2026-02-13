@@ -226,12 +226,6 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     setIsHospitalSearchOpen(false)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleZipCodeSearch = () => {
-    // TODO: 우편번호 검색 로직
-    console.log('우편번호 검색')
-  }
-
   // 비밀번호 유효성 검사
   const passwordValidation = useMemo(() => {
     const pw = formData.password
@@ -563,10 +557,6 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               value={formData.zipCode}
               onChange={handleInputChange}
               disabled={true}
-              // buttonText='우편번호 검색'
-              // onButtonClick={handleZipCodeSearch}
-              // buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
-              // buttonClassName={styles.searchButton}
             >
               <Input
                 type='text'

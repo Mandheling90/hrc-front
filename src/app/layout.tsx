@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import '@/styles/globals.scss'
 import { Providers } from '@/components/providers/Providers'
 import { getCurrentHospitalConfig } from '@/config/hospitals'
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body>
+        <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' strategy='lazyOnload' />
         <Providers>{children}</Providers>
       </body>
     </html>
