@@ -29,6 +29,16 @@ export interface HospitalSearchResult {
   careNumber: string
   /** 주소 */
   address?: string
+  /** 상세주소 */
+  addressDetail?: string
+  /** 우편번호 */
+  zipCode?: string
+  /** 대표전화 */
+  phone?: string
+  /** 대표자명 */
+  representative?: string
+  /** 홈페이지 */
+  website?: string
 }
 
 export interface HospitalSearchModalProps {
@@ -180,8 +190,13 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
         setSearchResults(
           hospitals.map(h => ({
             hospitalName: h.name || '',
-            careNumber: h.careInstitutionNo || '',
-            address: h.address || ''
+            careNumber: h.phisCode || '',
+            address: h.address || '',
+            addressDetail: h.addressDetail || '',
+            zipCode: h.zipCode || '',
+            phone: h.phone || '',
+            representative: h.representative || '',
+            website: h.website || ''
           }))
         )
       } else {
@@ -233,10 +248,16 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       })
 
       if (data?.registerHospital) {
+        const h = data.registerHospital
         onSelect({
-          hospitalName: data.registerHospital.name,
-          careNumber: data.registerHospital.phisCode,
-          address: data.registerHospital.address || ''
+          hospitalName: h.name,
+          careNumber: h.phisCode || '',
+          address: h.address || '',
+          addressDetail: h.addressDetail || '',
+          zipCode: h.zipCode || '',
+          phone: h.phone || '',
+          representative: h.representative || '',
+          website: h.website || ''
         })
       }
     } catch (err) {

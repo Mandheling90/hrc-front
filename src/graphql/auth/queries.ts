@@ -18,7 +18,7 @@ export const EHR_HOSPITAL_SEARCH_QUERY = gql`
         name
         address
         addressDetail
-        careInstitutionNo
+        phisCode
         classificationCode
         phone
         representative

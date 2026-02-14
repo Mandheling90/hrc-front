@@ -256,7 +256,11 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       ...prev,
       hospitalName: hospital.hospitalName,
       careNumber: hospital.careNumber,
-      address: hospital.address || ''
+      zipCode: hospital.zipCode || prev.zipCode,
+      address: hospital.address || prev.address,
+      addressDetail: hospital.addressDetail || prev.addressDetail,
+      hospitalPhone: hospital.phone || prev.hospitalPhone,
+      hospitalWebsite: hospital.website || prev.hospitalWebsite
     }))
     setIsHospitalSearchOpen(false)
   }

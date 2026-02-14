@@ -67,7 +67,11 @@ export const REGISTER_HOSPITAL_MUTATION = gql`
       representative
       phisCode
       address
+      addressDetail
       phone
+      zipCode
+      website
+      classificationCode
     }
   }
 `

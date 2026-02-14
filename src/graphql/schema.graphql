@@ -86,6 +86,7 @@ input SignupInput {
   smsConsent: Boolean!
   emailConsent: Boolean!
   replyConsent: Boolean!
+  hospitalCode: HospitalCode!
   hospName: String!
   careInstitutionNo: String!
   hospZipCode: String!
@@ -108,21 +109,28 @@ input SearchCollaboratingHospitalsInput {
   hsptClsfCd: String
 }
 
-type CollaboratingHospital {
-  name: String
+type HospitalModel {
+  id: ID
+  name: String!
   address: String
   addressDetail: String
-  careInstitutionNo: String
+  phisCode: String
   classificationCode: String
   phone: String
   representative: String
   website: String
   zipCode: String
+  hospitalCode: HospitalCode
+  partnerType: String
+  region: String
+  specialties: String
+  createdAt: String
+  updatedAt: String
 }
 
-type CollaboratingHospitalSearchResult {
-  hospitals: [CollaboratingHospital!]!
-  totalCount: Float!
+type HospitalSearchResult {
+  hospitals: [HospitalModel!]!
+  totalCount: Int!
 }
 
 input RegisterHospitalInput {
@@ -136,20 +144,11 @@ input RegisterHospitalInput {
   phone: String!
 }
 
-type RegisteredHospital {
-  id: ID!
-  name: String!
-  representative: String!
-  phisCode: String!
-  address: String
-  phone: String
-  createdAt: String!
-}
 
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
-  ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): CollaboratingHospitalSearchResult!
+  ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): HospitalSearchResult!
 }
 
 type Mutation {
@@ -157,5 +156,5 @@ type Mutation {
   signup(input: SignupInput!): AuthPayload!
   logout: Boolean!
   refreshToken(refreshToken: String!): AuthPayload!
-  registerHospital(input: RegisterHospitalInput!): RegisteredHospital!
+  registerHospital(input: RegisterHospitalInput!): HospitalModel!
 }

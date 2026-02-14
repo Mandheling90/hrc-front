@@ -26,6 +26,7 @@ interface SignupInput {
   smsConsent: boolean
   emailConsent: boolean
   replyConsent: boolean
+  hospitalCode: string
   hospName: string
   careInstitutionNo: string
   hospZipCode: string
@@ -61,14 +62,12 @@ export function useLogin() {
 }
 
 export function useSignup() {
-  const { setAuth } = useAuthContext()
   const [signupMutation, { loading, error }] = useMutation<{ signup: AuthPayload }>(SIGNUP_MUTATION)
 
   const signup = async (input: SignupInput) => {
     const { data } = await signupMutation({ variables: { input } })
 
     if (data?.signup) {
-      setAuth(data.signup.accessToken, data.signup.refreshToken, data.signup.user)
       return data.signup
     }
 

@@ -10,6 +10,13 @@ import { useSignup } from '@/hooks/useAuth'
 import { useHospital } from '@/contexts/HospitalContext'
 import { MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
 import { DoctorType } from '@/types/auth'
+import { HospitalCode } from '@/graphql/__generated__/types'
+
+const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
+  anam: HospitalCode.Anam,
+  guro: HospitalCode.Guro,
+  ansan: HospitalCode.Ansan
+}
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useRouter } from 'next/navigation'
@@ -82,6 +89,7 @@ export const SignupForm: React.FC = () => {
     const doctorType = DOCTOR_TYPE_MAP[formData.memberType] || 'DOCTOR'
 
     try {
+      const hospitalCodeEnum = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
       const result = await signup({
         userName: formData.name,
         birthDate: formData.birthDate,
@@ -99,6 +107,7 @@ export const SignupForm: React.FC = () => {
         smsConsent: formData.smsConsent === 'Y',
         emailConsent: formData.emailConsent === 'Y',
         replyConsent: formData.replyConsent === 'Y',
+        hospitalCode: hospitalCodeEnum,
         hospName: formData.hospitalName,
         careInstitutionNo: formData.careNumber,
         hospZipCode: formData.zipCode,
@@ -177,7 +186,8 @@ export const SignupForm: React.FC = () => {
             userId={signupResult?.userId}
             email={signupResult?.email}
             title={`${hospital.name.full} 회원가입 신청이 완료되었습니다.`}
-            onGoToMain={() => router.push('/')}
+            buttonText='로그인으로 이동'
+            onGoToMain={() => router.push('/login')}
           />
         )}
       </div>
