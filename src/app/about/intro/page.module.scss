@@ -79,6 +79,12 @@
   }
 }
 
+// 주요업무 (ProcedureList 래퍼)
+.procedureListWrapper {
+  margin-left: 32px;
+  margin-top: $spacing-4;
+}
+
 // 운영 안내 카드
 .infoCards {
   display: grid;

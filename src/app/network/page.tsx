@@ -87,7 +87,9 @@ export default function NetworkPage() {
           {networkInfo.cooperationContent && networkInfo.cooperationContent.length > 0 && (
             <section className={styles.section}>
               <SectionTitle title='상호협력내용' />
-              <ProcedureList items={networkInfo.cooperationContent} />
+              <div className={styles.procedureListWrapper}>
+                <ProcedureList items={networkInfo.cooperationContent} />
+              </div>
             </section>
           )}
 
@@ -95,7 +97,9 @@ export default function NetworkPage() {
           {networkInfo.benefits && networkInfo.benefits.length > 0 && (
             <section className={styles.section}>
               <SectionTitle title='협력병·의원 혜택안내' />
-              <ProcedureList items={networkInfo.benefits} />
+              <div className={styles.procedureListWrapper}>
+                <ProcedureList items={networkInfo.benefits} />
+              </div>
             </section>
           )}
 
@@ -108,12 +112,16 @@ export default function NetworkPage() {
               <div className={styles.targetSection}>
                 {networkInfo.target.hospital && networkInfo.target.hospital.length > 0 && (
                   <div className={styles.targetItem}>
-                    <ProcedureList label='대상' items={networkInfo.target.hospital} />
+                    <div className={styles.procedureListWrapper}>
+                      <ProcedureList label='대상' items={networkInfo.target.hospital} />
+                    </div>
                   </div>
                 )}
                 {networkInfo.target.clinic && networkInfo.target.clinic.length > 0 && (
                   <div className={styles.targetItem}>
-                    <ProcedureList items={networkInfo.target.clinic} />
+                    <div className={styles.procedureListWrapper}>
+                      <ProcedureList items={networkInfo.target.clinic} />
+                    </div>
                   </div>
                 )}
               </div>
@@ -122,7 +130,9 @@ export default function NetworkPage() {
             {/* 신청방법 */}
             {networkInfo.applicationMethod && networkInfo.applicationMethod.length > 0 && (
               <div className={styles.applicationMethodSection}>
-                <ProcedureList label='신청방법' items={networkInfo.applicationMethod} />
+                <div className={styles.procedureListWrapper}>
+                  <ProcedureList label='신청방법' items={networkInfo.applicationMethod} />
+                </div>
               </div>
             )}
 

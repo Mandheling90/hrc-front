@@ -29,6 +29,7 @@
 }
 
 .procedureListWrapper {
+  margin-left: 32px;
 }
 
 // 플로우차트 이미지
@@ -67,6 +68,12 @@
 
 .methodSteps {
   flex: 1;
+  margin-left: 32px; // Figma 데스크톱: 32px
+
+  // 모바일 (768px 이하)
+  @media (max-width: $breakpoint-md) {
+    margin-left: $spacing-4; // 16px - Figma 모바일
+  }
 }
 
 .mychartLink {
