@@ -461,3 +461,4 @@ npm run format:check # Prettier 검사
 - HospitalContext 및 useHospital 훅
 - 병원별 페이지 콘텐츠 관리
 - Header 컴포넌트 (반응형 GNB)
+- 로그인 기능
