@@ -14,6 +14,7 @@ import {
   HospitalSearchModal,
   HospitalSearchResult
 } from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
+import { SCHOOL_OPTIONS } from '@/types/hospital-application'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useLazyQuery } from '@apollo/client/react'
 import { CHECK_USER_ID_QUERY } from '@/graphql/auth/queries'
@@ -492,15 +493,16 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               helperText='※ 원장여부 체크 시에만 협력병원 정보수정이 가능합니다.'
             />
 
-            <FormField
-              label='출신학교'
-              id='school'
-              name='school'
-              type='text'
-              placeholder='출신학교를 입력해주세요'
-              value={formData.school}
-              onChange={handleInputChange}
-            />
+            <div className={styles.formField}>
+              <InputLabel htmlFor='school'>출신학교</InputLabel>
+              <Select
+                id='school'
+                name='school'
+                options={SCHOOL_OPTIONS}
+                value={formData.school}
+                onChange={handleSelectChange('school')}
+              />
+            </div>
 
             <div className={styles.formField}>
               <InputLabel htmlFor='department'>진료과</InputLabel>

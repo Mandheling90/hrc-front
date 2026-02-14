@@ -3,19 +3,46 @@
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import { ShieldIcon } from '@/components/icons/ShieldIcon'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { NoticeList } from '@/components/molecules/NoticeList/NoticeList'
 import { VerificationCards } from '@/components/molecules/VerificationCards'
-import React from 'react'
+import { useNiceVerification } from '@/hooks/useNiceVerification'
+import type { NiceVerifiedData } from '@/lib/nice/types'
+import React, { useEffect, useState } from 'react'
 import styles from './VerificationStep.module.scss'
 
 export interface VerificationStepProps {
-  /** 다음 단계 핸들러 */
-  onNext: () => void
+  /** 본인인증 완료 콜백 */
+  onVerified: (data: NiceVerifiedData) => void
   /** 이전 단계 핸들러 */
   onPrev: () => void
 }
 
-export const VerificationStep: React.FC<VerificationStepProps> = ({ onNext }) => {
+export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }) => {
+  const { requestVerification, isVerified, verifiedData, isLoading, error } = useNiceVerification()
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+
+  // 인증 완료 시 부모에게 알림
+  useEffect(() => {
+    if (isVerified && verifiedData) {
+      onVerified(verifiedData)
+    }
+  }, [isVerified, verifiedData, onVerified])
+
+  // 에러 발생 시 AlertModal 표시
+  useEffect(() => {
+    if (error) {
+      setAlertMessage(error)
+      setShowAlert(true)
+    }
+  }, [error])
+
+  const handleIpinVerify = () => {
+    setAlertMessage('아이핀(i-PIN) 인증은 현재 준비 중입니다.')
+    setShowAlert(true)
+  }
+
   return (
     <>
       <InfoBox
@@ -32,7 +59,13 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onNext }) =>
         className={styles.verificationGuideBox}
       />
 
-      <VerificationCards onPhoneVerify={onNext} onIpinVerify={onNext} className={styles.verificationCardsWrapper} />
+      <VerificationCards
+        onPhoneVerify={requestVerification}
+        onIpinVerify={handleIpinVerify}
+        phoneVerified={isVerified}
+        phoneLoading={isLoading}
+        className={styles.verificationCardsWrapper}
+      />
 
       <NoticeList
         title='유의사항'
@@ -49,6 +82,8 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onNext }) =>
           }
         ]}
       />
+
+      <AlertModal isOpen={showAlert} message={alertMessage} onClose={() => setShowAlert(false)} />
     </>
   )
 }

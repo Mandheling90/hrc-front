@@ -11,6 +11,10 @@ export interface VerificationCardsProps {
   onPhoneVerify: () => void
   /** 아이핀 인증 버튼 클릭 핸들러 */
   onIpinVerify: () => void
+  /** 휴대폰 인증 완료 여부 */
+  phoneVerified?: boolean
+  /** 휴대폰 인증 로딩 상태 */
+  phoneLoading?: boolean
   /** 아이디 입력 필드 표시 여부 (비밀번호 찾기용) */
   showIdInput?: boolean
   /** 아이디 값 */
@@ -24,6 +28,8 @@ export interface VerificationCardsProps {
 export const VerificationCards: React.FC<VerificationCardsProps> = ({
   onPhoneVerify,
   onIpinVerify,
+  phoneVerified = false,
+  phoneLoading = false,
   showIdInput = false,
   userId = '',
   onUserIdChange,
@@ -56,8 +62,15 @@ export const VerificationCards: React.FC<VerificationCardsProps> = ({
               />
             </div>
           )}
-          <Button type='button' variant='primary' size='large' onClick={onPhoneVerify} className={styles.verifyButton}>
-            인증하기
+          <Button
+            type='button'
+            variant={phoneVerified ? 'gray' : 'primary'}
+            size='large'
+            onClick={onPhoneVerify}
+            disabled={phoneVerified || phoneLoading}
+            className={styles.verifyButton}
+          >
+            {phoneLoading ? '인증 중...' : phoneVerified ? '인증완료' : '인증하기'}
           </Button>
         </div>
       </div>

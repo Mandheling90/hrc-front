@@ -25,11 +25,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({
   signupLoading,
   initialData
 }) => {
-  // 본인 인증에서 넘어온 기본 데이터 (예시)
   const defaultInitialData: Partial<MemberInfoFormData> = {
-    name: '홍길동',
-    birthDate: '1990-01-01',
-    phone: '010-1234-5678',
     ...initialData
   }
 

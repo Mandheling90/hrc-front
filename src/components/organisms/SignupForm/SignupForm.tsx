@@ -11,6 +11,7 @@ import { useHospital } from '@/contexts/HospitalContext'
 import { MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
 import { DoctorType } from '@/types/auth'
 import { HospitalCode } from '@/graphql/__generated__/types'
+import type { NiceVerifiedData } from '@/lib/nice/types'
 
 const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
   anam: HospitalCode.Anam,
@@ -36,6 +37,7 @@ export const SignupForm: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('필수사항을 체크해주세요.')
   const [signupResult, setSignupResult] = useState<{ userId: string; email: string } | null>(null)
+  const [verifiedData, setVerifiedData] = useState<NiceVerifiedData | null>(null)
   const [agreements, setAgreements] = useState({
     termsOfUse: false,
     personalInfoRequired: false,
@@ -79,9 +81,13 @@ export const SignupForm: React.FC = () => {
       }
       // 다음 단계로 이동
       setCurrentStep(2)
-    } else if (currentStep === 2) {
-      setCurrentStep(3)
     }
+    window.scrollTo(0, 0)
+  }
+
+  const handleVerified = (data: NiceVerifiedData) => {
+    setVerifiedData(data)
+    setCurrentStep(3)
     window.scrollTo(0, 0)
   }
 
@@ -170,7 +176,7 @@ export const SignupForm: React.FC = () => {
           />
         )}
 
-        {currentStep === 2 && <VerificationStep onNext={handleNext} onPrev={handlePrev} />}
+        {currentStep === 2 && <VerificationStep onVerified={handleVerified} onPrev={handlePrev} />}
 
         {currentStep === 3 && (
           <MemberInfoStep
@@ -178,6 +184,15 @@ export const SignupForm: React.FC = () => {
             onPrev={handlePrev}
             onCancel={handleCancel}
             signupLoading={signupLoading}
+            initialData={
+              verifiedData
+                ? {
+                    name: verifiedData.name,
+                    birthDate: verifiedData.birthDate,
+                    phone: verifiedData.phone
+                  }
+                : undefined
+            }
           />
         )}
 
