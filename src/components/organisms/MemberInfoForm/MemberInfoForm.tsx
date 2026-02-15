@@ -65,9 +65,9 @@ export const defaultFormData: MemberInfoFormData = {
   school: '',
   department: '전체',
   specialty: '',
-  smsConsent: '동의',
-  emailConsent: '동의',
-  replyConsent: '동의',
+  smsConsent: 'Y',
+  emailConsent: 'Y',
+  replyConsent: 'Y',
   hospitalName: '',
   careNumber: '',
   zipCode: '',
@@ -138,8 +138,8 @@ const memberTypeOptions = [
 
 // 동의 옵션
 const consentOptions = [
-  { value: '동의', label: '동의' },
-  { value: '비동의', label: '비동의' }
+  { value: 'Y', label: '동의' },
+  { value: 'N', label: '비동의' }
 ]
 
 export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
