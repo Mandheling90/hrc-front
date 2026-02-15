@@ -128,3 +128,9 @@ src/
 - **커스텀 훅**: GraphQL 오퍼레이션을 래핑한 훅 사용
   - `useLogin()`, `useSignup()`, `useLogout()`, `useMe()` — 인증 관련
 - **새 GraphQL 오퍼레이션 추가 시**: 해당 도메인 디렉토리에 파일 생성 후 `codegen` 실행
+- **GraphQL 엔드포인트**: `NEXT_PUBLIC_GRAPHQL_URL` 환경 변수로 설정 (테스트: `https://refer-front-test.vercel.app/api/graphql`)
+- **백엔드 스키마 확인 규칙**: 프론트에서 API로 데이터를 보내거나 받을 때, 필드 값의 포맷이 애매한 경우(enum 코드값 vs 표시 텍스트, 날짜 형식 등) 반드시 백엔드 introspection으로 실제 타입/enum 값을 확인할 것
+  - `curl -s -X POST $GRAPHQL_URL -H "Content-Type: application/json" -d '{"query":"{ __type(name: \"타입명\") { fields { name type { name kind ofType { name } } } enumValues { name } } }"}'`
+  - 예: `directorGender`가 `String` 타입이더라도, 관련 enum(`Gender`)이 `M`/`F`이면 코드값으로 변환하여 전송
+  - 예: `DateTime` 스칼라로 내려오는 값(`2000-01-01T00:00:00.000Z`)은 `YYYY-MM-DD`로 정규화 후 전송
+  - **UI 표시값과 API 전송값이 다를 수 있음**: 폼에서는 `"남자"/"여자"`, `"동의"/"비동의"` 등 한글로 표시하지만 API에는 `"M"/"F"`, `true/false` 등 코드값으로 변환해서 보내야 함. mapper(`partnerApplicationMapper.ts`)에서 변환 처리

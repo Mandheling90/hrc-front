@@ -10,25 +10,6 @@ export const CHECK_USER_ID_QUERY = gql`
   }
 `
 
-export const EHR_HOSPITAL_SEARCH_QUERY = gql`
-  query EhrGetCollaboratingHospitals($input: SearchCollaboratingHospitalsInput!) {
-    ehrGetCollaboratingHospitals(input: $input) {
-      totalCount
-      hospitals {
-        name
-        address
-        addressDetail
-        phisCode
-        classificationCode
-        phone
-        representative
-        website
-        zipCode
-      }
-    }
-  }
-`
-
 export const ME_QUERY = gql`
   query Me {
     me {
@@ -38,6 +19,7 @@ export const ME_QUERY = gql`
       userName
       userType
       hospitalCode
+      hospitalId
       phone
       status
       mustChangePw
@@ -46,10 +28,19 @@ export const ME_QUERY = gql`
         department
         gender
         hospAddress
+        hospAddressDetail
         hospCode
         hospName
+        hospPhone
+        hospWebsite
+        hospZipCode
+        careInstitutionNo
         licenseNo
         representative
+        school
+        smsConsent
+        emailConsent
+        replyConsent
         specialty
       }
       createdAt

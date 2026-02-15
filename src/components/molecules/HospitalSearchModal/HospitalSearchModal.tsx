@@ -11,8 +11,8 @@ import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useDaumPostcode } from '@/hooks/useDaumPostcode'
 import { useHospital } from '@/contexts/HospitalContext'
-import { EHR_HOSPITAL_SEARCH_QUERY } from '@/graphql/auth/queries'
-import { REGISTER_HOSPITAL_MUTATION } from '@/graphql/auth/mutations'
+import { EHR_HOSPITAL_SEARCH_QUERY } from '@/graphql/hospital/queries'
+import { REGISTER_HOSPITAL_MUTATION } from '@/graphql/hospital/mutations'
 import type {
   EhrGetCollaboratingHospitalsQuery,
   EhrGetCollaboratingHospitalsQueryVariables,

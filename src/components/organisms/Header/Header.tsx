@@ -58,7 +58,6 @@ const commonMenuItems: MenuItem[] = [
     label: '협력네트워크',
     subItems: [
       { href: '/network', label: '협력네트워크 소개&신청' },
-      { href: '/network/hospital-application', label: '협력병원 신청' },
       { href: '/network/status', label: '협력병의원 현황' },
       { href: '/network/hotline', label: '교수직통 핫라인' },
       { href: '/network/e-consult', label: 'e-Consult 신청' }

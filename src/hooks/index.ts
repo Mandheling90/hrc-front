@@ -7,5 +7,19 @@ export { useHospital } from '@/contexts/HospitalContext'
 export { useLogin, useSignup, useMe, useLogout } from '@/hooks/useAuth'
 export { useAuthContext } from '@/contexts/AuthContext'
 
+// Hospital Hooks - 협력 병·의원 관련
+export { useSearchCollaboratingHospitals, useRegisterHospital } from '@/hooks/useCollaboratingHospital'
+
+// Partner Application Hooks - 협력 병·의원 신청
+export {
+  useApplyPartnerHospital,
+  useSaveDraftPartnerApplication,
+  useSubmitPartnerApplication,
+  useCancelPartnerApplication,
+  useMyPartnerApplication,
+  useMyPartnerApplications,
+  usePartnerApplicationById
+} from '@/hooks/usePartnerApplication'
+
 // NICE 본인인증
 export { useNiceVerification } from '@/hooks/useNiceVerification'

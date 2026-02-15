@@ -29,10 +29,19 @@ type UserProfile {
   department: String
   gender: Gender
   hospAddress: String
+  hospAddressDetail: String
   hospCode: String
   hospName: String
+  hospPhone: String
+  hospWebsite: String
+  hospZipCode: String
+  careInstitutionNo: String
   licenseNo: String
   representative: String
+  school: String
+  smsConsent: Boolean!
+  emailConsent: Boolean!
+  replyConsent: Boolean!
   specialty: String
 }
 
@@ -43,6 +52,7 @@ type User {
   userName: String!
   userType: UserType!
   hospitalCode: HospitalCode!
+  hospitalId: String
   phone: String
   status: UserStatus!
   mustChangePw: Boolean!
@@ -117,6 +127,7 @@ type HospitalModel {
   phisCode: String
   classificationCode: String
   phone: String
+  faxNumber: String
   representative: String
   website: String
   zipCode: String
@@ -144,11 +155,319 @@ input RegisterHospitalInput {
   phone: String!
 }
 
+# ── 협력 병·의원 신청 ──
+
+enum PartnerStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  TERMINATED
+}
+
+scalar DateTime
+scalar JSON
+
+input ApplyPartnerHospitalInput {
+  hospitalCode: HospitalCode!
+  hospitalId: String!
+  institutionType: String
+  # 병원 정보
+  hospitalName: String
+  hospitalAddress: String
+  hospitalAddressDetail: String
+  hospitalZipCode: String
+  hospitalPhone: String
+  hospitalFaxNumber: String
+  hospitalWebsite: String
+  # 병원장 정보
+  isDirector: Boolean
+  directorName: String
+  directorBirthDate: String
+  directorGender: String
+  directorLicenseNo: String
+  directorSchool: String
+  directorGraduationYear: String
+  directorTrainingHospital: String
+  directorDepartment: String
+  directorSubSpecialty: String
+  directorCarNo: String
+  directorPhone: String
+  directorEmail: String
+  directorSmsConsent: Boolean
+  directorEmailConsent: Boolean
+  directorReplyConsent: Boolean
+  # 실무자 정보
+  staffName: String
+  staffPosition: String
+  staffDeptType: String
+  staffDeptValue: String
+  staffPhone: String
+  staffTel: String
+  staffEmail: String
+  # 병상 및 시설
+  totalBedCount: Int
+  activeBedCount: Int
+  icuCount: Int
+  premiumRoomCount: Int
+  multiRoomCount: Int
+  erCount: Int
+  totalStaffCount: Int
+  specialistCount: Int
+  nurseCount: Int
+  # 시설 보유
+  hasIcu: Boolean
+  hasEr: Boolean
+  hasOperatingRoom: Boolean
+  hasPhysicalTherapy: Boolean
+  hasDialysisRoom: Boolean
+  hasHospice: Boolean
+  hasPsychGeneral: Boolean
+  hasPsychClosed: Boolean
+  # 간병 시스템
+  hasIntegratedNursing: Boolean
+  hasGuardianCare: Boolean
+  hasSharedCare: Boolean
+  # 격리실
+  isolationRoomCount: Int
+  isolationSingleCount: Int
+  isolationDoubleCount: Int
+  isolationTripleCount: Int
+  isolationTypes: JSON
+  isolationCareType: String
+  isolationRehabType: String
+  # 재활
+  hasRehabPt: Boolean
+  hasRehabOt: Boolean
+  hasRehabSt: Boolean
+  hasRehabSwallow: Boolean
+  hasRehabIsolation: Boolean
+  # 진료과 / 처치
+  departmentSpecialists: JSON
+  availableTreatments: JSON
+  # 의원 전용
+  clinicMedicationType: String
+  clinicHasHemodialysis: Boolean
+  clinicHasPeritoneal: Boolean
+  clinicHasPhototherapy: Boolean
+  clinicHasExcimerLaser: Boolean
+  # 기타
+  majorEquipment: String
+  remarks: String
+  attachments: JSON
+}
+
+input SaveDraftPartnerInput {
+  hospitalId: String!
+  hospitalCode: HospitalCode
+  institutionType: String
+  # 병원 정보
+  hospitalName: String
+  hospitalAddress: String
+  hospitalAddressDetail: String
+  hospitalZipCode: String
+  hospitalPhone: String
+  hospitalFaxNumber: String
+  hospitalWebsite: String
+  # 병원장 정보
+  isDirector: Boolean
+  directorName: String
+  directorBirthDate: String
+  directorGender: String
+  directorLicenseNo: String
+  directorSchool: String
+  directorGraduationYear: String
+  directorTrainingHospital: String
+  directorDepartment: String
+  directorSubSpecialty: String
+  directorCarNo: String
+  directorPhone: String
+  directorEmail: String
+  directorSmsConsent: Boolean
+  directorEmailConsent: Boolean
+  directorReplyConsent: Boolean
+  # 실무자 정보
+  staffName: String
+  staffPosition: String
+  staffDeptType: String
+  staffDeptValue: String
+  staffPhone: String
+  staffTel: String
+  staffEmail: String
+  # 병상 및 시설
+  totalBedCount: Int
+  activeBedCount: Int
+  icuCount: Int
+  premiumRoomCount: Int
+  multiRoomCount: Int
+  erCount: Int
+  totalStaffCount: Int
+  specialistCount: Int
+  nurseCount: Int
+  # 시설 보유
+  hasIcu: Boolean
+  hasEr: Boolean
+  hasOperatingRoom: Boolean
+  hasPhysicalTherapy: Boolean
+  hasDialysisRoom: Boolean
+  hasHospice: Boolean
+  hasPsychGeneral: Boolean
+  hasPsychClosed: Boolean
+  # 간병 시스템
+  hasIntegratedNursing: Boolean
+  hasGuardianCare: Boolean
+  hasSharedCare: Boolean
+  # 격리실
+  isolationRoomCount: Int
+  isolationSingleCount: Int
+  isolationDoubleCount: Int
+  isolationTripleCount: Int
+  isolationTypes: JSON
+  isolationCareType: String
+  isolationRehabType: String
+  # 재활
+  hasRehabPt: Boolean
+  hasRehabOt: Boolean
+  hasRehabSt: Boolean
+  hasRehabSwallow: Boolean
+  hasRehabIsolation: Boolean
+  # 진료과 / 처치
+  departmentSpecialists: JSON
+  availableTreatments: JSON
+  # 의원 전용
+  clinicMedicationType: String
+  clinicHasHemodialysis: Boolean
+  clinicHasPeritoneal: Boolean
+  clinicHasPhototherapy: Boolean
+  clinicHasExcimerLaser: Boolean
+  # 기타
+  majorEquipment: String
+  remarks: String
+  attachments: JSON
+}
+
+type PartnerHospitalModel {
+  id: ID!
+  applicantId: String!
+  hospitalCode: HospitalCode!
+  hospitalId: String!
+  hospital: HospitalModel!
+  institutionType: String
+  status: PartnerStatus!
+  # 병원 정보
+  hospitalName: String
+  hospitalAddress: String
+  hospitalAddressDetail: String
+  hospitalZipCode: String
+  hospitalPhone: String
+  hospitalFaxNumber: String
+  hospitalWebsite: String
+  # 병원장 정보
+  isDirector: Boolean
+  directorName: String
+  directorBirthDate: String
+  directorGender: String
+  directorLicenseNo: String
+  directorSchool: String
+  directorGraduationYear: String
+  directorTrainingHospital: String
+  directorDepartment: String
+  directorSubSpecialty: String
+  directorCarNo: String
+  directorPhone: String
+  directorEmail: String
+  directorSmsConsent: Boolean
+  directorEmailConsent: Boolean
+  directorReplyConsent: Boolean
+  # 실무자 정보
+  staffName: String
+  staffPosition: String
+  staffDeptType: String
+  staffDeptValue: String
+  staffPhone: String
+  staffTel: String
+  staffEmail: String
+  # 병상 및 시설
+  totalBedCount: Int
+  activeBedCount: Int
+  icuCount: Int
+  premiumRoomCount: Int
+  multiRoomCount: Int
+  erCount: Int
+  totalStaffCount: Int
+  specialistCount: Int
+  nurseCount: Int
+  # 시설 보유
+  hasIcu: Boolean
+  hasEr: Boolean
+  hasOperatingRoom: Boolean
+  hasPhysicalTherapy: Boolean
+  hasDialysisRoom: Boolean
+  hasHospice: Boolean
+  hasPsychGeneral: Boolean
+  hasPsychClosed: Boolean
+  # 간병 시스템
+  hasIntegratedNursing: Boolean
+  hasGuardianCare: Boolean
+  hasSharedCare: Boolean
+  # 격리실
+  isolationRoomCount: Int
+  isolationSingleCount: Int
+  isolationDoubleCount: Int
+  isolationTripleCount: Int
+  isolationTypes: JSON
+  isolationCareType: String
+  isolationRehabType: String
+  # 재활
+  hasRehabPt: Boolean
+  hasRehabOt: Boolean
+  hasRehabSt: Boolean
+  hasRehabSwallow: Boolean
+  hasRehabIsolation: Boolean
+  # 진료과 / 처치
+  departmentSpecialists: JSON
+  availableTreatments: JSON
+  # 의원 전용
+  clinicMedicationType: String
+  clinicHasHemodialysis: Boolean
+  clinicHasPeritoneal: Boolean
+  clinicHasPhototherapy: Boolean
+  clinicHasExcimerLaser: Boolean
+  # 기타
+  majorEquipment: String
+  remarks: String
+  attachments: JSON
+  # 심사
+  rejectReason: String
+  reviewedAt: DateTime
+  reviewedById: String
+  approvedAt: DateTime
+  terminatedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input PaginationInput {
+  page: Int
+  limit: Int
+  cursor: String
+}
+
+type PaginatedPartnerHospitalResponse {
+  items: [PartnerHospitalModel!]!
+  totalCount: Int!
+  hasNextPage: Boolean!
+  cursor: String
+}
 
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
   ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): HospitalSearchResult!
+  # 협력 병·의원 신청 조회
+  myPartnerApplication(hospitalCode: HospitalCode!): PartnerHospitalModel
+  myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!
+  partnerApplicationById(id: ID!): PartnerHospitalModel!
 }
 
 type Mutation {
@@ -157,4 +476,9 @@ type Mutation {
   logout: Boolean!
   refreshToken(refreshToken: String!): AuthPayload!
   registerHospital(input: RegisterHospitalInput!): HospitalModel!
+  # 협력 병·의원 신청
+  applyPartnerHospital(input: ApplyPartnerHospitalInput!): PartnerHospitalModel!
+  saveDraftPartnerApplication(input: SaveDraftPartnerInput!): PartnerHospitalModel!
+  submitPartnerApplication(id: ID!): PartnerHospitalModel!
+  cancelPartnerApplication(id: ID!): Boolean!
 }

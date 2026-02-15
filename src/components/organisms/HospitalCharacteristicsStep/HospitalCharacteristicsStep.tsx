@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { forwardRef, useImperativeHandle, useState, useRef } from 'react'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { Button } from '@/components/atoms/Button/Button'
 import { FileUploadIcon } from '@/components/icons/FileUploadIcon'
 import { FileRemoveIcon } from '@/components/icons/FileRemoveIcon'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useHospital } from '@/hooks'
+import type { HospitalCharacteristicsStepData, StepRef } from '@/types/partner-application'
 import styles from './HospitalCharacteristicsStep.module.scss'
 
 export interface HospitalCharacteristicsStepProps {
@@ -14,19 +15,23 @@ export interface HospitalCharacteristicsStepProps {
   currentStep?: number
   /** 전체 스텝 수 */
   totalSteps?: number
+  /** 초기값 (임시저장 불러오기용) */
+  defaultValues?: Partial<HospitalCharacteristicsStepData>
 }
 
-export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepProps> = ({
-  currentStep = 8,
-  totalSteps = 8
-}) => {
+export const HospitalCharacteristicsStep = forwardRef<
+  StepRef<HospitalCharacteristicsStepData>,
+  HospitalCharacteristicsStepProps
+>(({ currentStep = 8, totalSteps = 8, defaultValues }, ref) => {
   const { hospital } = useHospital()
 
   // 병원 특성 및 기타사항 상태
-  const [hospitalCharacteristics, setHospitalCharacteristics] = useState<string>('')
+  const [hospitalCharacteristics, setHospitalCharacteristics] = useState<string>(
+    defaultValues?.hospitalCharacteristics ?? ''
+  )
 
   // 첨부파일 상태
-  const [files, setFiles] = useState<File[]>([])
+  const [files, setFiles] = useState<File[]>(defaultValues?.files ?? [])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // AlertModal 상태
@@ -34,6 +39,13 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
     isOpen: false,
     message: ''
   })
+
+  useImperativeHandle(ref, () => ({
+    getData: () => ({
+      hospitalCharacteristics,
+      files
+    })
+  }))
 
   // 텍스트 영역 변경 핸들러
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -272,4 +284,5 @@ export const HospitalCharacteristicsStep: React.FC<HospitalCharacteristicsStepPr
       />
     </div>
   )
-}
+})
+HospitalCharacteristicsStep.displayName = 'HospitalCharacteristicsStep'

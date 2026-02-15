@@ -11,10 +11,19 @@ export interface UserProfile {
   department: string | null
   gender: Gender | null
   hospAddress: string | null
+  hospAddressDetail: string | null
   hospCode: string | null
   hospName: string | null
+  hospPhone: string | null
+  hospWebsite: string | null
+  hospZipCode: string | null
+  careInstitutionNo: string | null
   licenseNo: string | null
   representative: string | null
+  school: string | null
+  smsConsent: boolean
+  emailConsent: boolean
+  replyConsent: boolean
   specialty: string | null
 }
 
@@ -25,6 +34,7 @@ export interface AuthUser {
   userName: string
   userType: UserType
   hospitalCode: HospitalCode
+  hospitalId: string | null
   phone: string | null
   status: UserStatus
   mustChangePw: boolean

@@ -13,6 +13,7 @@ export const LOGIN_MUTATION = gql`
         userName
         userType
         hospitalCode
+        hospitalId
         phone
         status
         mustChangePw
@@ -21,10 +22,19 @@ export const LOGIN_MUTATION = gql`
           department
           gender
           hospAddress
+          hospAddressDetail
           hospCode
           hospName
+          hospPhone
+          hospWebsite
+          hospZipCode
+          careInstitutionNo
           licenseNo
           representative
+          school
+          smsConsent
+          emailConsent
+          replyConsent
           specialty
         }
       }
@@ -59,23 +69,6 @@ export const LOGOUT_MUTATION = gql`
   }
 `
 
-export const REGISTER_HOSPITAL_MUTATION = gql`
-  mutation RegisterHospital($input: RegisterHospitalInput!) {
-    registerHospital(input: $input) {
-      id
-      name
-      representative
-      phisCode
-      address
-      addressDetail
-      phone
-      zipCode
-      website
-      classificationCode
-    }
-  }
-`
-
 export const REFRESH_TOKEN_MUTATION = gql`
   mutation RefreshToken($refreshToken: String!) {
     refreshToken(refreshToken: $refreshToken) {
@@ -89,6 +82,7 @@ export const REFRESH_TOKEN_MUTATION = gql`
         userName
         userType
         hospitalCode
+        hospitalId
         phone
         status
         mustChangePw
@@ -97,10 +91,19 @@ export const REFRESH_TOKEN_MUTATION = gql`
           department
           gender
           hospAddress
+          hospAddressDetail
           hospCode
           hospName
+          hospPhone
+          hospWebsite
+          hospZipCode
+          careInstitutionNo
           licenseNo
           representative
+          school
+          smsConsent
+          emailConsent
+          replyConsent
           specialty
         }
       }

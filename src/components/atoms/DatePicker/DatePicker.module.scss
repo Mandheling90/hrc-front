@@ -1,0 +1,110 @@
+@import '@/styles/variables.scss';
+
+.datePicker {
+  width: 100% !important;
+  height: 43px !important;
+  font-size: 18px !important;
+  line-height: 27px !important;
+  border: 1px solid $gray-9 !important;
+  border-radius: 5px !important;
+  background-color: #fff !important;
+  font-family: $font-family-base !important;
+  box-shadow: none !important;
+  padding: 0 10px !important;
+
+  &:hover {
+    border-color: $gray-9 !important;
+  }
+
+  &:focus,
+  &:global(.ant-picker-focused) {
+    border-color: $color-primary !important;
+    box-shadow: none !important;
+  }
+
+  :global {
+    .ant-picker-input > input {
+      font-size: 18px;
+      line-height: 27px;
+      color: #000;
+      font-family: $font-family-base;
+
+      &::placeholder {
+        color: $gray-9;
+      }
+    }
+
+    .ant-picker-suffix {
+      display: flex;
+      align-items: center;
+      color: $gray-11;
+    }
+
+    .ant-picker-clear {
+      display: none;
+    }
+  }
+
+  &:global(.ant-picker-disabled) {
+    background-color: $gray-4 !important;
+    border-color: $gray-9 !important;
+    color: $gray-11 !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    height: 43px !important;
+
+    :global {
+      .ant-picker-input > input {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+.popup {
+  z-index: $z-index-dropdown !important;
+  font-family: $font-family-base;
+
+  :global {
+    .ant-picker-panel-container {
+      border-radius: $radius-md;
+      box-shadow: $shadow-lg;
+    }
+
+    .ant-picker-header {
+      border-bottom: 1px solid $gray-5;
+    }
+
+    .ant-picker-header-view button {
+      font-weight: 600;
+      color: $gray-12;
+    }
+
+    .ant-picker-cell-in-view .ant-picker-cell-inner {
+      border-radius: $radius-sm;
+    }
+
+    .ant-picker-cell-selected .ant-picker-cell-inner,
+    .ant-picker-cell-range-start .ant-picker-cell-inner,
+    .ant-picker-cell-range-end .ant-picker-cell-inner {
+      background-color: $color-primary !important;
+      color: #fff !important;
+    }
+
+    .ant-picker-cell:hover .ant-picker-cell-inner {
+      background-color: rgba($color-primary, 0.1) !important;
+    }
+
+    .ant-picker-today-btn {
+      color: $color-primary;
+    }
+
+    .ant-picker-cell-today .ant-picker-cell-inner::before {
+      border-color: $color-primary !important;
+    }
+  }
+}
