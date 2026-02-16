@@ -7,7 +7,8 @@ import type {
   CareSystemStepData,
   MedicalDepartmentStepData,
   BasicTreatmentStepData,
-  HospitalCharacteristicsStepData
+  HospitalCharacteristicsStepData,
+  ClinicStaffInfoStepData
 } from '@/types/partner-application'
 
 /** 8개 Step 데이터를 모아놓은 타입 */
@@ -315,6 +316,171 @@ export function mapApiToStepData(api: any): AllStepData {
       otherItems: api.availableTreatments?.otherItems ?? ['', '']
     },
     step8: {
+      hospitalCharacteristics: api.remarks ?? '',
+      files: []
+    }
+  }
+}
+
+// ─── 협력의원 전용 매퍼 ───
+
+/** 의원 4개 Step 데이터를 모아놓은 타입 */
+export interface ClinicAllStepData {
+  step1?: Partial<HospitalInfoStepData>
+  step2?: Partial<DirectorInfoStepData>
+  step3?: Partial<ClinicStaffInfoStepData>
+  step4?: Partial<HospitalCharacteristicsStepData>
+}
+
+/**
+ * 의원 4개 Step 데이터 → ApplyPartnerHospitalInput 변환
+ */
+export function mapClinicStepsToApiInput(
+  data: ClinicAllStepData,
+  hospitalId: string,
+  hospitalCode: HospitalCode
+): ApplyPartnerHospitalInput {
+  const { step1, step2, step3, step4 } = data
+
+  return {
+    hospitalId,
+    hospitalCode,
+    institutionType: emptyToUndef(step3?.medicalInstitutionType),
+
+    // Step 1: 병원 정보
+    hospitalName: emptyToUndef(step1?.hospitalName),
+    hospitalZipCode: emptyToUndef(step1?.zipCode),
+    hospitalAddress: emptyToUndef(step1?.address),
+    hospitalAddressDetail: emptyToUndef(step1?.detailAddress),
+    hospitalPhone: emptyToUndef(step1?.phoneNumber),
+    hospitalFaxNumber: emptyToUndef(step1?.faxNumber),
+    hospitalWebsite: emptyToUndef(step1?.website),
+
+    // Step 2: 병원장 정보
+    directorName: emptyToUndef(step2?.directorName),
+    directorBirthDate: toDateString(step2?.birthDate),
+    directorLicenseNo: emptyToUndef(step2?.licenseNumber),
+    isDirector: step2?.isDirector ?? false,
+    directorPhone: emptyToUndef(step2?.phone),
+    directorGender: toGenderCode(step2?.gender),
+    directorCarNo: emptyToUndef(step2?.carNumber),
+    directorEmail: emptyToUndef(step2?.email),
+    directorSchool: emptyToUndef(step2?.school),
+    directorGraduationYear: emptyToUndef(step2?.graduationYear),
+    directorTrainingHospital: emptyToUndef(step2?.trainingHospital),
+    directorDepartment: emptyToUndef(step2?.department),
+    directorSubSpecialty: emptyToUndef(step2?.specialty),
+    directorSmsConsent: step2 ? toConsent(step2.smsConsent) : undefined,
+    directorEmailConsent: step2 ? toConsent(step2.emailConsent) : undefined,
+    directorReplyConsent: step2 ? toConsent(step2.replyConsent) : undefined,
+
+    // Step 3: 실무자 정보
+    staffName: emptyToUndef(step3?.staffName),
+    staffDeptType: emptyToUndef(step3?.deptType),
+    staffDeptValue: emptyToUndef(step3?.department),
+    staffPosition: emptyToUndef(step3?.position),
+    staffTel: emptyToUndef(step3?.contactNumber),
+    staffPhone: emptyToUndef(step3?.mobilePhone),
+
+    // Step 3: 병상/직원
+    totalBedCount: toInt(step3?.totalBeds),
+    totalStaffCount: toInt(step3?.totalStaff),
+    specialistCount: toInt(step3?.specialists),
+    nurseCount: toInt(step3?.nurses),
+
+    // Step 3: 장비 (의원은 텍스트 그대로)
+    majorEquipment: emptyToUndef(step3?.mainEquipment),
+
+    // Step 3: 세부정보
+    hasPhysicalTherapy: toBool(step3?.physicalTherapyRoom),
+    clinicHasHemodialysis: step3?.dialysis?.blood ?? false,
+    clinicHasPeritoneal: step3?.dialysis?.peritoneal ?? false,
+    clinicMedicationType: emptyToUndef(step3?.medication),
+    clinicHasPhototherapy: step3?.dermatology?.phototherapy ?? false,
+    clinicHasExcimerLaser: step3?.dermatology?.excimerLaser ?? false,
+
+    // Step 3: 이비인후과 + 기타 → availableTreatments JSON
+    availableTreatments: step3
+      ? {
+          otolaryngology: step3.otolaryngology,
+          other: step3.other
+        }
+      : undefined,
+
+    // Step 4: 병원특성 및 기타사항
+    remarks: emptyToUndef(step4?.hospitalCharacteristics),
+    attachments: undefined
+  }
+}
+
+/**
+ * API 응답 → ClinicAllStepData 변환 (의원 임시저장 불러오기용)
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function mapApiToClinicStepData(api: any): ClinicAllStepData {
+  return {
+    step1: {
+      hospitalName: api.hospitalName ?? api.hospital?.name ?? '',
+      medicalInstitutionNumber: api.hospital?.phisCode ?? '',
+      zipCode: api.hospitalZipCode ?? api.hospital?.zipCode ?? '',
+      address: api.hospitalAddress ?? api.hospital?.address ?? '',
+      detailAddress: api.hospitalAddressDetail ?? api.hospital?.addressDetail ?? '',
+      phoneNumber: api.hospitalPhone ?? api.hospital?.phone ?? '',
+      faxNumber: api.hospitalFaxNumber ?? api.hospital?.faxNumber ?? '',
+      website: api.hospitalWebsite ?? api.hospital?.website ?? ''
+    },
+    step2: {
+      directorName: api.directorName ?? '',
+      birthDate: api.directorBirthDate?.slice(0, 10) ?? '',
+      licenseNumber: api.directorLicenseNo ?? '',
+      isDirector: api.isDirector ?? false,
+      phone: api.directorPhone ?? '',
+      gender: api.directorGender === 'M' ? '남자' : api.directorGender === 'F' ? '여자' : (api.directorGender ?? ''),
+      carNumber: api.directorCarNo ?? '',
+      email: api.directorEmail ?? '',
+      school: api.directorSchool ?? '',
+      graduationYear: api.directorGraduationYear ?? '',
+      trainingHospital: api.directorTrainingHospital ?? '',
+      department: api.directorDepartment ?? '',
+      specialty: api.directorSubSpecialty ?? '',
+      smsConsent: api.directorSmsConsent ? '동의' : '비동의',
+      emailConsent: api.directorEmailConsent ? '동의' : '비동의',
+      replyConsent: api.directorReplyConsent ? '동의' : '비동의'
+    },
+    step3: {
+      staffName: api.staffName ?? '',
+      deptType: (api.staffDeptType as '부서' | '진료과') ?? '부서',
+      department: api.staffDeptValue ?? '',
+      position: api.staffPosition ?? '',
+      contactNumber: api.staffTel ?? '',
+      mobilePhone: api.staffPhone ?? '',
+      medicalInstitutionType: api.institutionType ?? '의원',
+      totalBeds: api.totalBedCount?.toString() ?? '',
+      totalStaff: api.totalStaffCount?.toString() ?? '',
+      specialists: api.specialistCount?.toString() ?? '',
+      nurses: api.nurseCount?.toString() ?? '',
+      mainEquipment: api.majorEquipment ?? '',
+      physicalTherapyRoom: api.hasPhysicalTherapy ? '유' : '무',
+      dialysis: {
+        blood: api.clinicHasHemodialysis ?? false,
+        peritoneal: api.clinicHasPeritoneal ?? false
+      },
+      medication: api.clinicMedicationType ?? '',
+      dermatology: {
+        phototherapy: api.clinicHasPhototherapy ?? false,
+        excimerLaser: api.clinicHasExcimerLaser ?? false
+      },
+      otolaryngology: api.availableTreatments?.otolaryngology ?? {
+        earSurgeryDisinfection: false,
+        betadineSoaking: false
+      },
+      other: api.availableTreatments?.other ?? {
+        surgicalSiteDisinfection: false,
+        stitchOut: false,
+        chemoportNeedleOut: false
+      }
+    },
+    step4: {
       hospitalCharacteristics: api.remarks ?? '',
       files: []
     }

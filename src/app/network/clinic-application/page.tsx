@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useRef, useMemo, useCallback } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
@@ -10,21 +10,108 @@ import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmBut
 import { SaveIcon } from '@/components/icons/SaveIcon'
 import { LoadIcon } from '@/components/icons/LoadIcon'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
-import { LoadSaveModal } from '@/components/molecules/LoadSaveModal/LoadSaveModal'
 import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { ClinicStaffInfoStep } from '@/components/organisms/ClinicStaffInfoStep/ClinicStaffInfoStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
+import { LoadSaveModal } from '@/components/molecules/LoadSaveModal/LoadSaveModal'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
+import { useHospital } from '@/hooks'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { useDraftApplication } from '@/contexts/DraftApplicationContext'
+import {
+  useApplyPartnerHospital,
+  useSaveDraftPartnerApplication,
+  usePartnerApplicationById
+} from '@/hooks'
+import type { StepRef } from '@/types/partner-application'
+import type {
+  HospitalInfoStepData,
+  DirectorInfoStepData,
+  ClinicStaffInfoStepData,
+  HospitalCharacteristicsStepData
+} from '@/types/partner-application'
+import { HospitalCode } from '@/graphql/__generated__/types'
+import { mapClinicStepsToApiInput, mapApiToClinicStepData, type ClinicAllStepData } from '@/utils/partnerApplicationMapper'
 import styles from './page.module.scss'
 
+/** HospitalId → HospitalCode 변환 */
+const toHospitalCode = (id: string): HospitalCode => {
+  const map: Record<string, HospitalCode> = {
+    anam: HospitalCode.Anam,
+    guro: HospitalCode.Guro,
+    ansan: HospitalCode.Ansan
+  }
+  return map[id] ?? HospitalCode.Anam
+}
+
 export default function ClinicApplicationPage() {
+  const { hospital } = useHospital()
+  const { user, isAuthenticated } = useAuthContext()
+  const { getDraftId, setDraftId } = useDraftApplication()
+
   // 현재 단계 상태
   const [currentStep, setCurrentStep] = useState(1)
   const totalSteps = 4
+  // Step 리마운트 키 (불러오기 시 강제 리마운트용)
+  const [reloadKey, setReloadKey] = useState(0)
   // 임시저장 불러오기 모달 상태
   const [isLoadModalOpen, setIsLoadModalOpen] = useState(false)
   // 완료 상태
   const [isComplete, setIsComplete] = useState(false)
+  // AlertModal 상태
+  const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
+    isOpen: false,
+    message: ''
+  })
+
+  // Step별 ref
+  const step1Ref = useRef<StepRef<HospitalInfoStepData>>(null)
+  const step2Ref = useRef<StepRef<DirectorInfoStepData>>(null)
+  const step3Ref = useRef<StepRef<ClinicStaffInfoStepData>>(null)
+  const step4Ref = useRef<StepRef<HospitalCharacteristicsStepData>>(null)
+
+  // 로그인 시 유저 프로필에서 병원 정보 초기값 생성
+  const userHospitalDefaults = useMemo<Partial<HospitalInfoStepData> | undefined>(() => {
+    if (!user?.profile) return undefined
+    return {
+      hospitalName: user.profile.hospName ?? '',
+      medicalInstitutionNumber: user.profile.careInstitutionNo ?? '',
+      zipCode: user.profile.hospZipCode ?? '',
+      address: user.profile.hospAddress ?? '',
+      detailAddress: user.profile.hospAddressDetail ?? '',
+      phoneNumber: user.profile.hospPhone ?? '',
+      website: user.profile.hospWebsite ?? ''
+    }
+  }, [user])
+
+  // 로그인 시 유저 프로필에서 병원장 정보 초기값 생성
+  const userDirectorDefaults = useMemo<Partial<DirectorInfoStepData> | undefined>(() => {
+    if (!user) return undefined
+    const genderMap: Record<string, string> = { M: '남자', F: '여자' }
+    return {
+      directorName: user.userName ?? '',
+      birthDate: user.profile?.birthDate?.slice(0, 10) ?? '',
+      licenseNumber: user.profile?.licenseNo ?? '',
+      phone: user.phone ?? '',
+      gender: user.profile?.gender ? (genderMap[user.profile.gender] ?? '') : '',
+      email: user.email ?? '',
+      school: user.profile?.school ?? '',
+      department: user.profile?.department ?? '',
+      specialty: user.profile?.specialty ?? '',
+      smsConsent: user.profile ? (user.profile.smsConsent ? '동의' : '비동의') : '',
+      emailConsent: user.profile ? (user.profile.emailConsent ? '동의' : '비동의') : '',
+      replyConsent: user.profile ? (user.profile.replyConsent ? '동의' : '비동의') : ''
+    }
+  }, [user])
+
+  // Step 데이터 캐시 (조건부 렌더링으로 언마운트되는 Step 데이터 보존)
+  const [stepDataCache, setStepDataCache] = useState<ClinicAllStepData>({})
+
+  // GraphQL 훅
+  const { applyPartnerHospital, loading: applyLoading } = useApplyPartnerHospital()
+  const { saveDraft, loading: saveDraftLoading } = useSaveDraftPartnerApplication()
+  const { getPartnerApplication } = usePartnerApplicationById()
 
   // 안내 메시지
   const guideMessages = useMemo(() => {
@@ -35,24 +122,129 @@ export default function ClinicApplicationPage() {
     ]
   }, [])
 
+  /** 현재 Step ref에서 데이터를 추출하여 캐시 갱신 */
+  const saveCurrentStepData = useCallback(() => {
+    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const ref = refs[currentStep - 1]
+    const data = ref.current?.getData()
+    if (data) {
+      setStepDataCache(prev => ({
+        ...prev,
+        [`step${currentStep}`]: data
+      }))
+    }
+  }, [currentStep])
+
+  /** 모든 Step 데이터 수집 (캐시 + 현재 Step) */
+  const collectAllData = useCallback((): ClinicAllStepData => {
+    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const currentRef = refs[currentStep - 1]
+    const currentData = currentRef.current?.getData()
+    return {
+      ...stepDataCache,
+      [`step${currentStep}`]: currentData ?? stepDataCache[`step${currentStep}` as keyof ClinicAllStepData]
+    }
+  }, [currentStep, stepDataCache])
+
   // 다음 단계 핸들러
-  const handleNext = () => {
+  const handleNext = async () => {
+    // 필수값 검증
+    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const currentRef = refs[currentStep - 1]
+    const validationError = currentRef.current?.validate?.()
+    if (validationError) {
+      setAlertModal({ isOpen: true, message: validationError })
+      return
+    }
+
+    saveCurrentStepData()
+
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
     } else if (currentStep === totalSteps) {
-      // 마지막 단계에서 신청 버튼 클릭 시 완료 상태로 전환
-      setIsComplete(true)
+      // 마지막 단계 → 신청 제출
+      const allData = collectAllData()
+      const hospitalId = user?.hospitalId ?? user?.id ?? ''
+      const input = mapClinicStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
+
+      try {
+        await applyPartnerHospital(input)
+        setIsComplete(true)
+      } catch (error) {
+        console.error('협력의원 신청 실패:', error)
+      }
     }
     window.scrollTo(0, 0)
   }
 
   // 이전 단계 핸들러
   const handlePrevious = () => {
+    saveCurrentStepData()
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
       window.scrollTo(0, 0)
     }
   }
+
+  // 임시저장 핸들러
+  const handleSaveDraft = async () => {
+    const allData = collectAllData()
+    const hospitalId = user?.hospitalId ?? user?.id ?? ''
+    const input = mapClinicStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
+
+    try {
+      const result = await saveDraft({
+        ...input,
+        hospitalCode: toHospitalCode(hospital.id)
+      })
+      if (result?.id) {
+        setDraftId(hospital.id, result.id)
+      }
+      setAlertModal({ isOpen: true, message: '임시저장이 완료되었습니다.' })
+    } catch (error) {
+      console.error('임시저장 실패:', error)
+    }
+  }
+
+  // partnerApplicationById로 임시저장 데이터 불러오기
+  const loadById = async (id: string) => {
+    const application = await getPartnerApplication(id)
+    if (application) {
+      const loaded = mapApiToClinicStepData(application)
+      setStepDataCache(loaded)
+      setIsLoadModalOpen(false)
+      // key 변경으로 현재 스텝 컴포넌트 강제 리마운트
+      setReloadKey(prev => prev + 1)
+    } else {
+      setAlertModal({ isOpen: true, message: '임시저장된 데이터가 없습니다.' })
+    }
+  }
+
+  // 임시저장 불러오기 핸들러 (로그인 시 바로 불러오기, 비로그인 시 모달에서 호출)
+  const handleLoadButtonClick = async () => {
+    if (isAuthenticated) {
+      const id = getDraftId(hospital.id)
+      if (id) {
+        try {
+          await loadById(id)
+        } catch {
+          setAlertModal({ isOpen: true, message: '임시저장 불러오기에 실패했습니다.' })
+        }
+      } else {
+        setAlertModal({ isOpen: true, message: '임시저장된 데이터가 없습니다.' })
+      }
+    } else {
+      // 비로그인 상태: 모달 열기
+      setIsLoadModalOpen(true)
+    }
+  }
+
+  const handleLoadDraft = async (_doctorLicense: string, _medicalInstitutionNumber: string) => {
+    // TODO: 비로그인 시 면허번호/기관번호로 조회하는 API 연동
+    setIsLoadModalOpen(false)
+  }
+
+  const isSubmitting = applyLoading || saveDraftLoading
 
   return (
     <div className={styles.wrap}>
@@ -65,13 +257,12 @@ export default function ClinicApplicationPage() {
             {isComplete ? (
               /* 완료 컴포넌트 */
               <CompleteStep
-                userId='test******'
-                email='lee*******@naver.com'
+                userId={user?.userId ?? ''}
+                email={user?.email ?? ''}
                 title='고려대학교 안암병원 진료협력센터 협력의원 신청이 완료되었습니다.'
                 description={`담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 협력의원 체결이 최종 완료됩니다.\n승인 결과는 등록하신 이메일 및 문자로 안내드릴 예정입니다.`}
                 buttonText='메인으로 이동'
                 onGoToMain={() => {
-                  // TODO: 메인으로 이동 로직
                   window.location.href = '/'
                 }}
               />
@@ -89,29 +280,64 @@ export default function ClinicApplicationPage() {
                   />
                 </div>
 
-                {/* 저장/불러오기 버튼 */}
-                <div className={styles.actionButtons}>
-                  <Button variant='primary' size='small' pill onClick={() => {}}>
-                    임시저장
-                    <LoadIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
-                  </Button>
-                  <Button variant='outline' size='small' pill onClick={() => setIsLoadModalOpen(true)}>
-                    임시저장 불러오기
-                    <SaveIcon width={16} height={16} stroke='#000' strokeWidth={1.25} />
-                  </Button>
-                </div>
+                {/* 저장/불러오기 버튼 (2단계부터 노출) */}
+                {currentStep >= 2 && (
+                  <div className={styles.actionButtons}>
+                    <Button variant='primary' size='small' pill onClick={handleSaveDraft} disabled={isSubmitting}>
+                      임시저장
+                      <LoadIcon width={16} height={16} stroke='#fff' strokeWidth={1.25} />
+                    </Button>
+                    <Button variant='outline' size='small' pill onClick={handleLoadButtonClick}>
+                      임시저장 불러오기
+                      <SaveIcon width={16} height={16} stroke='#000' strokeWidth={1.25} />
+                    </Button>
+                  </div>
+                )}
 
                 {/* 1단계: 병원 정보 */}
-                {currentStep === 1 && <HospitalInfoStep currentStep={1} totalSteps={4} />}
+                {currentStep === 1 && (
+                  <HospitalInfoStep
+                    key={`step1-${reloadKey}`}
+                    ref={step1Ref}
+                    currentStep={1}
+                    totalSteps={4}
+                    defaultValues={stepDataCache.step1 ?? userHospitalDefaults}
+                  />
+                )}
 
                 {/* 2단계: 병원장 정보 */}
-                {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={4} institutionType='의원' />}
+                {currentStep === 2 && (
+                  <DirectorInfoStep
+                    key={`step2-${reloadKey}`}
+                    ref={step2Ref}
+                    currentStep={2}
+                    totalSteps={4}
+                    defaultValues={stepDataCache.step2 ?? userDirectorDefaults}
+                    institutionType='의원'
+                  />
+                )}
 
                 {/* 3단계: 실무자 정보 */}
-                {currentStep === 3 && <ClinicStaffInfoStep currentStep={3} totalSteps={4} />}
+                {currentStep === 3 && (
+                  <ClinicStaffInfoStep
+                    key={`step3-${reloadKey}`}
+                    ref={step3Ref}
+                    currentStep={3}
+                    totalSteps={4}
+                    defaultValues={stepDataCache.step3}
+                  />
+                )}
 
                 {/* 4단계: 병원특성 및 기타사항, 첨부파일 */}
-                {currentStep === 4 && <HospitalCharacteristicsStep currentStep={4} totalSteps={4} />}
+                {currentStep === 4 && (
+                  <HospitalCharacteristicsStep
+                    key={`step4-${reloadKey}`}
+                    ref={step4Ref}
+                    currentStep={4}
+                    totalSteps={4}
+                    defaultValues={stepDataCache.step4}
+                  />
+                )}
 
                 {/* 하단 버튼 */}
                 <ConfirmButtons
@@ -122,7 +348,8 @@ export default function ClinicApplicationPage() {
                   }}
                   primaryButton={{
                     label: currentStep === totalSteps ? '협력의원 신청' : '다음 단계',
-                    onClick: handleNext
+                    onClick: handleNext,
+                    disabled: isSubmitting
                   }}
                   className={styles.formActions}
                 />
@@ -137,10 +364,16 @@ export default function ClinicApplicationPage() {
       <LoadSaveModal
         isOpen={isLoadModalOpen}
         onClose={() => setIsLoadModalOpen(false)}
-        onLoad={(doctorLicense, medicalInstitutionNumber) => {
-          // TODO: 임시저장 데이터 불러오기 로직 구현
-          console.log('불러오기:', { doctorLicense, medicalInstitutionNumber })
-        }}
+        onLoad={handleLoadDraft}
+        closeOnBackdropClick={true}
+      />
+
+      {/* 알림 모달 */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        message={alertModal.message}
+        closeButtonText='확인'
+        onClose={() => setAlertModal({ isOpen: false, message: '' })}
         closeOnBackdropClick={true}
       />
     </div>

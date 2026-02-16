@@ -124,6 +124,28 @@ export interface BasicTreatmentStepData {
   otherItems: string[]
 }
 
+/** 의원 Step 3: 실무자 정보 + 병상/시설/장비 + 세부정보 */
+export interface ClinicStaffInfoStepData {
+  staffName: string
+  deptType: '부서' | '진료과'
+  department: string
+  position: string
+  contactNumber: string
+  mobilePhone: string
+  medicalInstitutionType: string
+  totalBeds: string
+  totalStaff: string
+  specialists: string
+  nurses: string
+  mainEquipment: string
+  physicalTherapyRoom: string
+  dialysis: { blood: boolean; peritoneal: boolean }
+  medication: string
+  dermatology: { phototherapy: boolean; excimerLaser: boolean }
+  otolaryngology: { earSurgeryDisinfection: boolean; betadineSoaking: boolean }
+  other: { surgicalSiteDisinfection: boolean; stitchOut: boolean; chemoportNeedleOut: boolean }
+}
+
 /** Step 8: 병원특성 및 기타사항 */
 export interface HospitalCharacteristicsStepData {
   hospitalCharacteristics: string
