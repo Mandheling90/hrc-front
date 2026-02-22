@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useHospital } from '@/hooks'
+import { useHospital, useMiniBanners } from '@/hooks'
 import styles from './NoticeSection.module.scss'
 
 // 교육/행사 데이터 (구로병원용)
@@ -100,28 +100,67 @@ const categoriesGuro = [
   { id: 'hospital', label: '고대구로병원' }
 ]
 
-const slides = [
-  { id: 1, image: '/images/img-section2-1.jpg', alt: '의료진 1' },
-  { id: 2, image: '/images/img-section2-1.jpg', alt: '의료진 2' }
+const fallbackSlides = [
+  { id: '1', image: '/images/img-section2-1.jpg', alt: '의료진 1' },
+  { id: '2', image: '/images/img-section2-1.jpg', alt: '의료진 2' }
 ]
+
+const MINI_BANNER_INTERVAL = 4000
 
 export const NoticeSection: React.FC = () => {
   const { isGuro } = useHospital()
+  const { banners: miniBanners, loading: miniBannersLoading } = useMiniBanners()
   const [activeCategory, setActiveCategory] = useState(1)
   const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = slides.length
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const hasMiniBanners = miniBanners.length > 0
+  const totalSlides = hasMiniBanners ? miniBanners.length : fallbackSlides.length
 
   const categories = isGuro ? categoriesGuro : categoriesAnam
   const filteredNotices = notices.filter(notice => notice.category === categories[activeCategory].id)
   const filteredEvents = educationEvents.filter(event => event.category === categories[activeCategory].id)
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setCurrentSlide(prev => (prev > 0 ? prev - 1 : totalSlides - 1))
-  }
+  }, [totalSlides])
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentSlide(prev => (prev < totalSlides - 1 ? prev + 1 : 0))
-  }
+  }, [totalSlides])
+
+  const toggleAutoPlay = useCallback(() => {
+    setIsAutoPlaying(prev => !prev)
+  }, [])
+
+  // 미니배너 자동 재생
+  useEffect(() => {
+    if (!isAutoPlaying || totalSlides <= 1) {
+      if (autoplayRef.current) clearInterval(autoplayRef.current)
+      return
+    }
+    autoplayRef.current = setInterval(() => {
+      setCurrentSlide(prev => (prev < totalSlides - 1 ? prev + 1 : 0))
+    }, MINI_BANNER_INTERVAL)
+    return () => {
+      if (autoplayRef.current) clearInterval(autoplayRef.current)
+    }
+  }, [isAutoPlaying, totalSlides, currentSlide])
+
+  // 미니배너 클릭 핸들러
+  const handleBannerClick = useCallback(
+    (banner: (typeof miniBanners)[number]) => {
+      if (!banner.linkUrl) return
+      const url = /^https?:\/\//.test(banner.linkUrl) ? banner.linkUrl : `https://${banner.linkUrl}`
+      if (banner.targetBlank) {
+        window.open(url, '_blank', 'noopener,noreferrer')
+      } else {
+        window.location.href = url
+      }
+    },
+    []
+  )
 
   // 구로병원 레이아웃
   if (isGuro) {
@@ -178,11 +217,28 @@ export const NoticeSection: React.FC = () => {
               </Link>
               <div className={styles.slideContainer}>
                 <div className={styles.slideTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                  {slides.map(slide => (
-                    <div key={slide.id} className={styles.slide}>
-                      <Image src={slide.image} alt={slide.alt} fill sizes='600px' className={styles.doctorImg} />
-                    </div>
-                  ))}
+                  {hasMiniBanners
+                    ? miniBanners.map(banner => (
+                        <div
+                          key={banner.id}
+                          className={styles.slide}
+                          onClick={() => handleBannerClick(banner)}
+                          style={{ cursor: banner.linkUrl ? 'pointer' : 'default' }}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={banner.imageUrl || ''}
+                            alt={banner.altText || '미니배너'}
+                            className={styles.doctorImg}
+                          />
+                        </div>
+                      ))
+                    : !miniBannersLoading &&
+                      fallbackSlides.map(slide => (
+                        <div key={slide.id} className={styles.slide}>
+                          <Image src={slide.image} alt={slide.alt} fill sizes='600px' className={styles.doctorImg} />
+                        </div>
+                      ))}
                 </div>
               </div>
               <div className={styles.hotlineControl}>
@@ -202,11 +258,17 @@ export const NoticeSection: React.FC = () => {
                       />
                     </svg>
                   </button>
-                  <button className={styles.pauseBtn} aria-label='일시정지'>
-                    <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                      <rect x='1' y='1' width='2' height='8' fill='#fff' />
-                      <rect x='7' y='1' width='2' height='8' fill='#fff' />
-                    </svg>
+                  <button className={styles.pauseBtn} onClick={toggleAutoPlay} aria-label={isAutoPlaying ? '일시정지' : '재생'}>
+                    {isAutoPlaying ? (
+                      <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <rect x='1' y='1' width='2' height='8' fill='#fff' />
+                        <rect x='7' y='1' width='2' height='8' fill='#fff' />
+                      </svg>
+                    ) : (
+                      <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <path d='M2 1L9 5L2 9V1Z' fill='#fff' />
+                      </svg>
+                    )}
                   </button>
                   <button onClick={handleNext} aria-label='다음'>
                     <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -274,11 +336,28 @@ export const NoticeSection: React.FC = () => {
             </Link>
             <div className={styles.slideContainer}>
               <div className={styles.slideTrack} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                {slides.map(slide => (
-                  <div key={slide.id} className={styles.slide}>
-                    <Image src={slide.image} alt={slide.alt} fill sizes='600px' className={styles.doctorImg} />
-                  </div>
-                ))}
+                {hasMiniBanners
+                  ? miniBanners.map(banner => (
+                      <div
+                        key={banner.id}
+                        className={styles.slide}
+                        onClick={() => handleBannerClick(banner)}
+                        style={{ cursor: banner.linkUrl ? 'pointer' : 'default' }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={banner.imageUrl || ''}
+                          alt={banner.altText || '미니배너'}
+                          className={styles.doctorImg}
+                        />
+                      </div>
+                    ))
+                  : !miniBannersLoading &&
+                    fallbackSlides.map(slide => (
+                      <div key={slide.id} className={styles.slide}>
+                        <Image src={slide.image} alt={slide.alt} fill sizes='600px' className={styles.doctorImg} />
+                      </div>
+                    ))}
               </div>
             </div>
             <div className={styles.hotlineControl}>
@@ -298,11 +377,17 @@ export const NoticeSection: React.FC = () => {
                     />
                   </svg>
                 </button>
-                <button className={styles.pauseBtn} aria-label='일시정지'>
-                  <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <rect x='1' y='1' width='2' height='8' fill='#fff' />
-                    <rect x='7' y='1' width='2' height='8' fill='#fff' />
-                  </svg>
+                <button className={styles.pauseBtn} onClick={toggleAutoPlay} aria-label={isAutoPlaying ? '일시정지' : '재생'}>
+                  {isAutoPlaying ? (
+                    <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <rect x='1' y='1' width='2' height='8' fill='#fff' />
+                      <rect x='7' y='1' width='2' height='8' fill='#fff' />
+                    </svg>
+                  ) : (
+                    <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                      <path d='M2 1L9 5L2 9V1Z' fill='#fff' />
+                    </svg>
+                  )}
                 </button>
                 <button onClick={handleNext} aria-label='다음'>
                   <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>

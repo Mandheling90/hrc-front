@@ -26,3 +26,4 @@ export { useNiceVerification } from '@/hooks/useNiceVerification'
 
 // Popup/Banner Hooks - 팝업/배너 관련
 export { useSlideBanners } from '@/hooks/useSlideBanners'
+export { useMiniBanners } from '@/hooks/useMiniBanners'

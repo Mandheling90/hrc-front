@@ -438,13 +438,41 @@ function getEmbedUrl(url: string): string {
   return url
 }
 
+// 모바일 여부 감지 훅
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint}px)`)
+    setIsMobile(mql.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
+  }, [breakpoint])
+
+  return isMobile
+}
+
 // 슬라이드 배너 미디어 렌더러
 const BannerMedia: React.FC<{
   banner: SlideBanner
   isActive: boolean
+  isMobile: boolean
   videoRef?: React.RefObject<HTMLVideoElement | null>
-}> = ({ banner, isActive, videoRef }) => {
+}> = ({ banner, isActive, isMobile, videoRef }) => {
   const isVideo = banner.mediaType === 'VIDEO' && banner.videoUrl
+
+  // 모바일에서는 영상 대신 모바일 이미지 표시
+  if (isMobile) {
+    const mobileImg = banner.mobileImageUrl || banner.imageUrl
+    if (mobileImg) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={mobileImg} alt={banner.altText || '배너 이미지'} className={styles.bannerImage} />
+      )
+    }
+    return null
+  }
 
   if (isVideo) {
     const videoUrl = banner.videoUrl!
@@ -508,7 +536,7 @@ const PlayIcon = () => (
 
 export const HeroSection: React.FC = () => {
   const { isGuro, hospital } = useHospital()
-  const { banners } = useSlideBanners()
+  const { banners, loading: bannersLoading } = useSlideBanners()
   const videoRef = useRef<HTMLVideoElement>(null)
   const fallbackVideoRef = useRef<HTMLVideoElement>(null)
   const autoplayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -523,6 +551,7 @@ export const HeroSection: React.FC = () => {
   const [isInquiryOpen, setIsInquiryOpen] = useState(false)
   const [isDownloadOpen, setIsDownloadOpen] = useState(false)
 
+  const isMobile = useIsMobile()
   const hasBanners = banners.length > 0
   const totalSlides = banners.length
 
@@ -635,27 +664,35 @@ export const HeroSection: React.FC = () => {
       {/* 배너 배경 영역 */}
       <div className={styles.videoWrap}>
         {hasBanners ? (
-          <>
-            {banners.map((banner, index) => (
-              <div
-                key={banner.id}
-                className={`${styles.bannerSlide} ${index === currentIndex ? styles.active : ''}`}
-                onClick={banner.linkUrl ? handleBannerClick : undefined}
-                style={{ cursor: banner.linkUrl ? 'pointer' : 'default' }}
-              >
-                <BannerMedia
-                  banner={banner}
-                  isActive={index === currentIndex}
-                  videoRef={index === currentIndex ? videoRef : undefined}
-                />
-              </div>
-            ))}
-          </>
-        ) : (
-          <video ref={fallbackVideoRef} key={fallbackVideoSrc} autoPlay muted loop playsInline preload='auto'>
-            <source src={fallbackVideoSrc} type='video/mp4' />
-          </video>
-        )}
+          banners.map((banner, index) => (
+            <div
+              key={banner.id}
+              className={`${styles.bannerSlide} ${index === currentIndex ? styles.active : ''}`}
+              onClick={banner.linkUrl ? handleBannerClick : undefined}
+              style={{ cursor: banner.linkUrl ? 'pointer' : 'default' }}
+            >
+              <BannerMedia
+                banner={banner}
+                isActive={index === currentIndex}
+                isMobile={isMobile}
+                videoRef={index === currentIndex ? videoRef : undefined}
+              />
+            </div>
+          ))
+        ) : !bannersLoading ? (
+          isMobile ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={isGuro ? '/images/main-visual-gu-mobile.jpg' : '/images/main-visual-an-mobile.jpg'}
+              alt='메인 비주얼'
+              className={styles.bannerImage}
+            />
+          ) : (
+            <video ref={fallbackVideoRef} key={fallbackVideoSrc} autoPlay muted loop playsInline preload='auto'>
+              <source src={fallbackVideoSrc} type='video/mp4' />
+            </video>
+          )
+        ) : null}
       </div>
 
       <div className='container'>
