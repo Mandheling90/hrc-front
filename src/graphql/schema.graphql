@@ -501,9 +501,9 @@ type Query {
   myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!
   partnerApplicationById(id: ID!): PartnerHospitalModel!
   # 팝업/배너 조회
-  slideBanners(hospitalCode: HospitalCode!): [PopupModel!]!
-  activePopups(hospitalCode: HospitalCode!): [PopupModel!]!
-  miniBanners(hospitalCode: HospitalCode!): [PopupModel!]!
+  slideBanners: [PopupModel!]!
+  activePopups: [PopupModel!]!
+  miniBanners: [PopupModel!]!
 }
 
 type Mutation {

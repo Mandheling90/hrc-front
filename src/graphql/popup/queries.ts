@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const SLIDE_BANNERS_QUERY = gql`
-  query SlideBanners($hospitalCode: HospitalCode!) {
-    slideBanners(hospitalCode: $hospitalCode) {
+  query SlideBanners {
+    slideBanners {
       id
       hospitalCode
       popupType
@@ -25,8 +25,8 @@ export const SLIDE_BANNERS_QUERY = gql`
 `
 
 export const MINI_BANNERS_QUERY = gql`
-  query MiniBanners($hospitalCode: HospitalCode!) {
-    miniBanners(hospitalCode: $hospitalCode) {
+  query MiniBanners {
+    miniBanners {
       id
       hospitalCode
       popupType
@@ -42,8 +42,8 @@ export const MINI_BANNERS_QUERY = gql`
 `
 
 export const ACTIVE_POPUPS_QUERY = gql`
-  query ActivePopups($hospitalCode: HospitalCode!) {
-    activePopups(hospitalCode: $hospitalCode) {
+  query ActivePopups {
+    activePopups {
       id
       hospitalCode
       popupType

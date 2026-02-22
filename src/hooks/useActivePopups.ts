@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client/react'
-import { useHospital } from '@/contexts/HospitalContext'
 import { ACTIVE_POPUPS_QUERY } from '@/graphql/popup/queries'
 
 export interface ActivePopup {
@@ -27,11 +26,7 @@ interface ActivePopupsData {
 }
 
 export function useActivePopups() {
-  const { hospitalId } = useHospital()
-  const hospitalCode = hospitalId.toUpperCase()
-
   const { data, loading, error } = useQuery<ActivePopupsData>(ACTIVE_POPUPS_QUERY, {
-    variables: { hospitalCode },
     fetchPolicy: 'cache-and-network'
   })
 

@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client/react'
-import { useHospital } from '@/contexts/HospitalContext'
 import { MINI_BANNERS_QUERY } from '@/graphql/popup/queries'
 
 export interface MiniBanner {
@@ -20,11 +19,7 @@ interface MiniBannersData {
 }
 
 export function useMiniBanners() {
-  const { hospitalId } = useHospital()
-  const hospitalCode = hospitalId.toUpperCase()
-
   const { data, loading, error } = useQuery<MiniBannersData>(MINI_BANNERS_QUERY, {
-    variables: { hospitalCode },
     fetchPolicy: 'cache-and-network'
   })
 

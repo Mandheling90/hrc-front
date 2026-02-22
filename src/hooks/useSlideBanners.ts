@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client/react'
-import { useHospital } from '@/contexts/HospitalContext'
 import { SLIDE_BANNERS_QUERY } from '@/graphql/popup/queries'
 
 export interface SlideBanner {
@@ -27,11 +26,7 @@ interface SlideBannersData {
 }
 
 export function useSlideBanners() {
-  const { hospitalId } = useHospital()
-  const hospitalCode = hospitalId.toUpperCase()
-
   const { data, loading, error } = useQuery<SlideBannersData>(SLIDE_BANNERS_QUERY, {
-    variables: { hospitalCode },
     fetchPolicy: 'cache-and-network'
   })
 
