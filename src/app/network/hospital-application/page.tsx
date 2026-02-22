@@ -23,11 +23,7 @@ import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useHospital } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useDraftApplication } from '@/contexts/DraftApplicationContext'
-import {
-  useApplyPartnerHospital,
-  useSaveDraftPartnerApplication,
-  usePartnerApplicationById
-} from '@/hooks'
+import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,

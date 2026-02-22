@@ -202,13 +202,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             <InputLabel htmlFor='school' required>
               출신학교
             </InputLabel>
-            <Select
-              id='school'
-              name='school'
-              options={SCHOOL_OPTIONS}
-              value={school}
-              onChange={setSchool}
-            />
+            <Select id='school' name='school' options={SCHOOL_OPTIONS} value={school} onChange={setSchool} />
           </div>
 
           {/* 졸업년도 */}

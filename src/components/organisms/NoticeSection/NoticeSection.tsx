@@ -149,18 +149,15 @@ export const NoticeSection: React.FC = () => {
   }, [isAutoPlaying, totalSlides, currentSlide])
 
   // 미니배너 클릭 핸들러
-  const handleBannerClick = useCallback(
-    (banner: (typeof miniBanners)[number]) => {
-      if (!banner.linkUrl) return
-      const url = /^https?:\/\//.test(banner.linkUrl) ? banner.linkUrl : `https://${banner.linkUrl}`
-      if (banner.targetBlank) {
-        window.open(url, '_blank', 'noopener,noreferrer')
-      } else {
-        window.location.href = url
-      }
-    },
-    []
-  )
+  const handleBannerClick = useCallback((banner: (typeof miniBanners)[number]) => {
+    if (!banner.linkUrl) return
+    const url = /^https?:\/\//.test(banner.linkUrl) ? banner.linkUrl : `https://${banner.linkUrl}`
+    if (banner.targetBlank) {
+      window.open(url, '_blank', 'noopener,noreferrer')
+    } else {
+      window.location.href = url
+    }
+  }, [])
 
   // 구로병원 레이아웃
   if (isGuro) {
@@ -258,7 +255,11 @@ export const NoticeSection: React.FC = () => {
                       />
                     </svg>
                   </button>
-                  <button className={styles.pauseBtn} onClick={toggleAutoPlay} aria-label={isAutoPlaying ? '일시정지' : '재생'}>
+                  <button
+                    className={styles.pauseBtn}
+                    onClick={toggleAutoPlay}
+                    aria-label={isAutoPlaying ? '일시정지' : '재생'}
+                  >
                     {isAutoPlaying ? (
                       <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <rect x='1' y='1' width='2' height='8' fill='#fff' />
@@ -377,7 +378,11 @@ export const NoticeSection: React.FC = () => {
                     />
                   </svg>
                 </button>
-                <button className={styles.pauseBtn} onClick={toggleAutoPlay} aria-label={isAutoPlaying ? '일시정지' : '재생'}>
+                <button
+                  className={styles.pauseBtn}
+                  onClick={toggleAutoPlay}
+                  aria-label={isAutoPlaying ? '일시정지' : '재생'}
+                >
                   {isAutoPlaying ? (
                     <svg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
                       <rect x='1' y='1' width='2' height='8' fill='#fff' />

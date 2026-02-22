@@ -70,7 +70,7 @@ export const PopupZone: React.FC = () => {
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   // 스크롤 방지
@@ -179,7 +179,13 @@ export const PopupZone: React.FC = () => {
             </label>
             <button type='button' className={styles.closeBtn} onClick={handleClose} aria-label='닫기'>
               <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                <path d='M18 6L6 18M6 6L18 18' stroke='#fff' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+                <path
+                  d='M18 6L6 18M6 6L18 18'
+                  stroke='#fff'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
               </svg>
             </button>
           </div>

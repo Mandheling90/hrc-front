@@ -19,11 +19,7 @@ import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useHospital } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useDraftApplication } from '@/contexts/DraftApplicationContext'
-import {
-  useApplyPartnerHospital,
-  useSaveDraftPartnerApplication,
-  usePartnerApplicationById
-} from '@/hooks'
+import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,
@@ -32,7 +28,11 @@ import type {
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
 import { HospitalCode } from '@/graphql/__generated__/types'
-import { mapClinicStepsToApiInput, mapApiToClinicStepData, type ClinicAllStepData } from '@/utils/partnerApplicationMapper'
+import {
+  mapClinicStepsToApiInput,
+  mapApiToClinicStepData,
+  type ClinicAllStepData
+} from '@/utils/partnerApplicationMapper'
 import styles from './page.module.scss'
 
 /** HospitalId → HospitalCode 변환 */

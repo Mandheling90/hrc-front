@@ -29,7 +29,9 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
     const showMedicalInstitutionType = isGuro || isAnsan
 
     // 의료기관 유형 상태
-    const [medicalInstitutionType, setMedicalInstitutionType] = useState<string>(defaultValues?.medicalInstitutionType ?? '의원')
+    const [medicalInstitutionType, setMedicalInstitutionType] = useState<string>(
+      defaultValues?.medicalInstitutionType ?? '의원'
+    )
 
     // 실무자 정보 상태
     const [staffName, setStaffName] = useState<string>(defaultValues?.staffName ?? '')
@@ -57,11 +59,17 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
       phototherapy: defaultValues?.dermatology?.phototherapy ?? false,
       excimerLaser: defaultValues?.dermatology?.excimerLaser ?? false
     })
-    const [otolaryngology, setOtolaryngology] = useState<{ earSurgeryDisinfection: boolean; betadineSoaking: boolean }>({
-      earSurgeryDisinfection: defaultValues?.otolaryngology?.earSurgeryDisinfection ?? false,
-      betadineSoaking: defaultValues?.otolaryngology?.betadineSoaking ?? false
-    })
-    const [other, setOther] = useState<{ surgicalSiteDisinfection: boolean; stitchOut: boolean; chemoportNeedleOut: boolean }>({
+    const [otolaryngology, setOtolaryngology] = useState<{ earSurgeryDisinfection: boolean; betadineSoaking: boolean }>(
+      {
+        earSurgeryDisinfection: defaultValues?.otolaryngology?.earSurgeryDisinfection ?? false,
+        betadineSoaking: defaultValues?.otolaryngology?.betadineSoaking ?? false
+      }
+    )
+    const [other, setOther] = useState<{
+      surgicalSiteDisinfection: boolean
+      stitchOut: boolean
+      chemoportNeedleOut: boolean
+    }>({
       surgicalSiteDisinfection: defaultValues?.other?.surgicalSiteDisinfection ?? false,
       stitchOut: defaultValues?.other?.stitchOut ?? false,
       chemoportNeedleOut: defaultValues?.other?.chemoportNeedleOut ?? false

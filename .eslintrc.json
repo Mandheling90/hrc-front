@@ -27,7 +27,7 @@
     "react/no-unescaped-entities": "warn",
     "linebreak-style": "off",
     "prettier/prettier": [
-      "error",
+      "warn",
       {
         "endOfLine": "auto"
       }

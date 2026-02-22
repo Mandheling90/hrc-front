@@ -58,9 +58,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     return false
   }
 
-  const suffixIcon = (
-    <CalendarIcon width={24} height={24} stroke='var(--gray-11)' />
-  )
+  const suffixIcon = <CalendarIcon width={24} height={24} stroke='var(--gray-11)' />
 
   if (showYearPicker) {
     return (
