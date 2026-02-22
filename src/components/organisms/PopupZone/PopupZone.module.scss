@@ -1,0 +1,373 @@
+@import '@/styles/variables.scss';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: $z-index-modal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.content {
+  width: 100%;
+  max-width: 1430px;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: $breakpoint-xl) {
+    padding: 0 60px;
+  }
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 0 40px;
+    gap: 16px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 0 20px;
+    gap: 16px;
+  }
+}
+
+// 상단 헤더
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 74px;
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 0;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.title {
+  font-family: $font-family-base;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.5;
+  letter-spacing: -1.6px;
+  color: #fff;
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 24px;
+  }
+}
+
+.hospitalLogo {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+
+  img {
+    width: 48px;
+    height: 48px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    img {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.logoTitle {
+  font-size: 17px;
+  font-family: 'Korea University Centennial OTF', sans-serif;
+  color: #8c8c8c;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 13px;
+  }
+}
+
+.logoSubtitle {
+  font-size: 9px;
+  font-family: 'Korea University Centennial OTF', sans-serif;
+  color: #8c8c8c;
+  text-align: center;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 7px;
+  }
+}
+
+// 캐러셀
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 440px;
+
+  // 태블릿: 카드 2개, 높이 유지
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    height: 440px;
+  }
+
+  // 모바일: 카드 1개, 카드가 세로로 크게
+  @media (max-width: $breakpoint-md) {
+    height: auto;
+  }
+}
+
+.navBtn {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 2px solid $gray-4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+
+  &:hover {
+    background: $gray-3;
+  }
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    width: 48px;
+    height: 48px;
+  }
+
+  // 모바일: 좌우 화살표 카드 양쪽에 표시
+  @media (max-width: $breakpoint-md) {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.cards {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  height: 100%;
+  min-width: 0;
+  padding: 0 16px;
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    gap: 20px;
+    padding: 0 16px;
+  }
+
+  // 모바일
+  @media (max-width: $breakpoint-md) {
+    gap: 0;
+    padding: 0 8px;
+    height: auto;
+  }
+}
+
+.card {
+  flex: 1 1 0;
+  max-width: 408px;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    max-width: none;
+    border-radius: 16px;
+  }
+
+  // 모바일: 카드 1개, 정사각형에 가까운 비율
+  @media (max-width: $breakpoint-md) {
+    flex: 1;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 12px;
+  }
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cardPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: $gray-7;
+
+  @media (max-width: $breakpoint-md) {
+    aspect-ratio: 1;
+  }
+}
+
+// 하단
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 74px;
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    padding: 0;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 0;
+  }
+}
+
+.count {
+  font-family: $font-family-base;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  color: #fff;
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 16px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  @media (max-width: $breakpoint-md) {
+    gap: 16px;
+  }
+}
+
+// 체크박스
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.checkboxBox {
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid $gray-10;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+
+  input:checked + & {
+    background: $color-primary;
+    border-color: $color-primary;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 12px;
+      height: 8px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.checkboxLabel {
+  font-family: $font-family-base;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 14px;
+  }
+}
+
+.closeBtn {
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
