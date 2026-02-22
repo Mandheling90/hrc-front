@@ -33,7 +33,7 @@ export function makeClient() {
       headers: {
         ...prevContext.headers,
         authorization: token ? `Bearer ${token}` : '',
-        'x-hospital-id': process.env.NEXT_PUBLIC_HOSPITAL_ID || ''
+        'x-hospital-code': (process.env.NEXT_PUBLIC_HOSPITAL_ID || '').toUpperCase()
       }
     }
   })
