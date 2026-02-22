@@ -460,6 +460,38 @@ type PaginatedPartnerHospitalResponse {
   cursor: String
 }
 
+# ── 팝업/배너 ──
+
+enum PopupType {
+  POPUP
+  MINI_BANNER
+  SLIDE_BANNER
+}
+
+type PopupModel {
+  id: ID!
+  hospitalCode: HospitalCode!
+  popupType: PopupType!
+  isActive: Boolean!
+  alwaysVisible: Boolean!
+  targetBlank: Boolean!
+  imageUrl: String
+  imageDarkUrl: String
+  mobileImageUrl: String
+  mobileDarkImageUrl: String
+  linkUrl: String
+  altText: String
+  mainSlogan: String
+  subSlogan: String
+  mediaType: String
+  videoUrl: String
+  sortOrder: Int
+  startDate: DateTime
+  endDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
@@ -468,6 +500,10 @@ type Query {
   myPartnerApplication(hospitalCode: HospitalCode!): PartnerHospitalModel
   myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!
   partnerApplicationById(id: ID!): PartnerHospitalModel!
+  # 팝업/배너 조회
+  slideBanners(hospitalCode: HospitalCode!): [PopupModel!]!
+  activePopups(hospitalCode: HospitalCode!): [PopupModel!]!
+  miniBanners(hospitalCode: HospitalCode!): [PopupModel!]!
 }
 
 type Mutation {

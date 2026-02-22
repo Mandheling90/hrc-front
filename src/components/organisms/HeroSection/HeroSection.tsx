@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useRef, useEffect, useMemo, useState } from 'react'
+import React, { useRef, useEffect, useMemo, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { useHospital } from '@/hooks'
+import { useHospital, useSlideBanners } from '@/hooks'
+import type { SlideBanner } from '@/hooks/useSlideBanners'
 import styles from './HeroSection.module.scss'
 
 // 전화 아이콘
@@ -394,20 +395,140 @@ const contactInfoGuro = {
   callCenter: '1577-9966'
 }
 
+// 슬라이드 자동 재생 간격 (ms)
+const AUTOPLAY_INTERVAL = 30000
+
+// 임베드 URL 판별 (Vimeo, YouTube 등)
+function isEmbedUrl(url: string): boolean {
+  return (
+    url.includes('player.vimeo.com') ||
+    url.includes('vimeo.com') ||
+    url.includes('youtube.com') ||
+    url.includes('youtu.be')
+  )
+}
+
+// YouTube URL → embed 형식으로 변환
+function toYouTubeEmbedUrl(url: string): string {
+  // 이미 embed 형식이면 그대로
+  if (url.includes('youtube.com/embed/')) return url
+
+  // https://youtu.be/VIDEO_ID 형식
+  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/)
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`
+
+  // https://www.youtube.com/watch?v=VIDEO_ID 형식
+  const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]+)/)
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`
+
+  return url
+}
+
+// 임베드 URL에 자동재생/음소거 파라미터 추가
+function getEmbedUrl(url: string): string {
+  if (url.includes('vimeo.com')) {
+    const separator = url.includes('?') ? '&' : '?'
+    return `${url}${separator}autoplay=1&muted=1&loop=1&background=1`
+  }
+  if (url.includes('youtube.com') || url.includes('youtu.be')) {
+    const embedUrl = toYouTubeEmbedUrl(url)
+    const separator = embedUrl.includes('?') ? '&' : '?'
+    return `${embedUrl}${separator}autoplay=1&mute=1&loop=1&controls=0&rel=0&showinfo=0&playlist=${embedUrl.split('/embed/')[1]?.split(/[?&]/)[0] || ''}`
+  }
+  return url
+}
+
+// 슬라이드 배너 미디어 렌더러
+const BannerMedia: React.FC<{
+  banner: SlideBanner
+  isActive: boolean
+  videoRef?: React.RefObject<HTMLVideoElement | null>
+}> = ({ banner, isActive, videoRef }) => {
+  const isVideo = banner.mediaType === 'VIDEO' && banner.videoUrl
+
+  if (isVideo) {
+    const videoUrl = banner.videoUrl!
+
+    // Vimeo/YouTube 임베드 URL
+    if (isEmbedUrl(videoUrl)) {
+      return (
+        <iframe
+          src={isActive ? getEmbedUrl(videoUrl) : undefined}
+          className={styles.bannerIframe}
+          allow='autoplay; fullscreen'
+          allowFullScreen
+          title={banner.altText || '배너 영상'}
+        />
+      )
+    }
+
+    // 직접 비디오 파일 (.mp4 등)
+    return (
+      <video ref={videoRef} autoPlay={isActive} muted loop playsInline preload='auto' className={styles.bannerVideo}>
+        <source src={videoUrl} type='video/mp4' />
+      </video>
+    )
+  }
+
+  if (banner.imageUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={banner.imageUrl} alt={banner.altText || '배너 이미지'} className={styles.bannerImage} />
+    )
+  }
+
+  return null
+}
+
+// 슬라이드 컨트롤 아이콘들
+const PrevArrowIcon = () => (
+  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path d='M10 3L5 8L10 13' stroke='white' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+  </svg>
+)
+
+const NextArrowIcon = () => (
+  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path d='M6 3L11 8L6 13' stroke='white' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+  </svg>
+)
+
+const PauseIcon = () => (
+  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <rect x='4' y='3' width='3' height='10' rx='0.5' fill='white' />
+    <rect x='9' y='3' width='3' height='10' rx='0.5' fill='white' />
+  </svg>
+)
+
+const PlayIcon = () => (
+  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path d='M5 3L12 8L5 13V3Z' fill='white' />
+  </svg>
+)
+
 export const HeroSection: React.FC = () => {
   const { isGuro, hospital } = useHospital()
+  const { banners } = useSlideBanners()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const fallbackVideoRef = useRef<HTMLVideoElement>(null)
+  const autoplayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // 슬라이더 상태
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [progress, setProgress] = useState(0)
 
   // 모바일 아코디언 상태
   const [isInquiryOpen, setIsInquiryOpen] = useState(false)
   const [isDownloadOpen, setIsDownloadOpen] = useState(false)
 
-  // 병원별 비디오 소스
-  const videoSrc = useMemo(() => {
-    if (isGuro) {
-      return '/assets/video/main-visual-gu.mp4'
-    }
-    // 안암 (기본)
+  const hasBanners = banners.length > 0
+  const totalSlides = banners.length
+
+  // 병원별 비디오 소스 (배너가 없을 때 폴백)
+  const fallbackVideoSrc = useMemo(() => {
+    if (isGuro) return '/assets/video/main-visual-gu.mp4'
     return '/assets/video/main-visual-an.mp4'
   }, [isGuro])
 
@@ -417,48 +538,174 @@ export const HeroSection: React.FC = () => {
   // 병원별 연락처 정보
   const contactInfo = isGuro ? contactInfoGuro : contactInfoAnam
 
+  // 현재 활성 배너
+  const currentBanner = hasBanners ? banners[currentIndex] : null
+
+  // 슬라이드 이동
+  const goToSlide = useCallback(
+    (index: number) => {
+      if (totalSlides === 0) return
+      const nextIndex = ((index % totalSlides) + totalSlides) % totalSlides
+      setCurrentIndex(nextIndex)
+      setProgress(0)
+    },
+    [totalSlides]
+  )
+
+  const goNext = useCallback(() => {
+    goToSlide(currentIndex + 1)
+  }, [currentIndex, goToSlide])
+
+  const goPrev = useCallback(() => {
+    goToSlide(currentIndex - 1)
+  }, [currentIndex, goToSlide])
+
+  const togglePlay = useCallback(() => {
+    setIsPlaying(prev => !prev)
+  }, [])
+
+  // 자동 재생 및 프로그레스 바
   useEffect(() => {
+    if (!hasBanners || !isPlaying) {
+      if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current)
+      if (progressTimerRef.current) clearInterval(progressTimerRef.current)
+      return
+    }
+
+    setProgress(0)
+
+    const progressInterval = 50
+    const steps = AUTOPLAY_INTERVAL / progressInterval
+
+    progressTimerRef.current = setInterval(() => {
+      setProgress(prev => {
+        const next = prev + 100 / steps
+        return next >= 100 ? 100 : next
+      })
+    }, progressInterval)
+
+    autoplayTimerRef.current = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % totalSlides)
+      setProgress(0)
+    }, AUTOPLAY_INTERVAL)
+
+    return () => {
+      if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current)
+      if (progressTimerRef.current) clearInterval(progressTimerRef.current)
+    }
+  }, [hasBanners, isPlaying, totalSlides, currentIndex])
+
+  // 비디오 배너일 때 재생/정지 제어
+  useEffect(() => {
+    if (!currentBanner || currentBanner.mediaType !== 'VIDEO') return
+
     if (videoRef.current) {
-      videoRef.current.play().catch(error => {
+      if (isPlaying) {
+        videoRef.current.play().catch(() => {})
+      } else {
+        videoRef.current.pause()
+      }
+    }
+  }, [currentBanner, isPlaying])
+
+  // 폴백 비디오 재생
+  useEffect(() => {
+    if (!hasBanners && fallbackVideoRef.current) {
+      fallbackVideoRef.current.play().catch(error => {
         console.error('Video play error:', error)
       })
     }
-  }, [videoSrc])
+  }, [hasBanners, fallbackVideoSrc])
+
+  // 배너 클릭 핸들러
+  const handleBannerClick = useCallback(() => {
+    if (!currentBanner?.linkUrl) return
+    if (currentBanner.targetBlank) {
+      window.open(currentBanner.linkUrl, '_blank', 'noopener,noreferrer')
+    } else {
+      window.location.href = currentBanner.linkUrl
+    }
+  }, [currentBanner])
+
+  // 현재 슬라이드 번호 포맷 (01, 02 ...)
+  const formatSlideNumber = (num: number) => String(num).padStart(2, '0')
 
   return (
     <section className={`section ${styles.section1}`}>
+      {/* 배너 배경 영역 */}
       <div className={styles.videoWrap}>
-        <video
-          ref={videoRef}
-          key={videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload='auto'
-          onLoadedData={() => {
-            console.log('Video loaded successfully')
-          }}
-          onError={e => {
-            console.error('Video load error:', e)
-          }}
-          onCanPlay={() => {
-            console.log('Video can play')
-          }}
-        >
-          <source src={videoSrc} type='video/mp4' />
-          Your browser does not support the video tag.
-        </video>
+        {hasBanners ? (
+          <>
+            {banners.map((banner, index) => (
+              <div
+                key={banner.id}
+                className={`${styles.bannerSlide} ${index === currentIndex ? styles.active : ''}`}
+                onClick={banner.linkUrl ? handleBannerClick : undefined}
+                style={{ cursor: banner.linkUrl ? 'pointer' : 'default' }}
+              >
+                <BannerMedia
+                  banner={banner}
+                  isActive={index === currentIndex}
+                  videoRef={index === currentIndex ? videoRef : undefined}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <video ref={fallbackVideoRef} key={fallbackVideoSrc} autoPlay muted loop playsInline preload='auto'>
+            <source src={fallbackVideoSrc} type='video/mp4' />
+          </video>
+        )}
       </div>
+
       <div className='container'>
-        <h2 className={styles.title}>
-          <span>의료네트워크의 중심,</span>
-          <strong>
-            고려대학교 {hospital.name.short}
-            <br />
-            진료협력센터
-          </strong>
-        </h2>
+        {/* 타이틀 + 슬라이더 컨트롤 */}
+        <div className={styles.titleArea}>
+          {currentBanner?.mainSlogan || currentBanner?.subSlogan ? (
+            <h2 className={styles.title}>
+              {currentBanner.subSlogan && <span>{currentBanner.subSlogan}</span>}
+              {currentBanner.mainSlogan && <strong>{currentBanner.mainSlogan}</strong>}
+            </h2>
+          ) : (
+            <h2 className={styles.title}>
+              <span>의료네트워크의 중심,</span>
+              <strong>
+                고려대학교 {hospital.name.short}
+                <br />
+                진료협력센터
+              </strong>
+            </h2>
+          )}
+
+          {/* 슬라이더 네비게이션 */}
+          {hasBanners && totalSlides > 1 && (
+            <div className={styles.sliderNav}>
+              <button type='button' className={styles.sliderBtn} onClick={goPrev} aria-label='이전 슬라이드'>
+                <PrevArrowIcon />
+              </button>
+              <div className={styles.sliderProgress}>
+                <span className={styles.slideNumber}>{formatSlideNumber(currentIndex + 1)}</span>
+                <div className={styles.progressBar}>
+                  <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+                </div>
+                <span className={styles.slideNumber}>{formatSlideNumber(totalSlides)}</span>
+              </div>
+              <button
+                type='button'
+                className={styles.sliderBtn}
+                onClick={togglePlay}
+                aria-label={isPlaying ? '일시정지' : '재생'}
+              >
+                {isPlaying ? <PauseIcon /> : <PlayIcon />}
+              </button>
+              <button type='button' className={styles.sliderBtn} onClick={goNext} aria-label='다음 슬라이드'>
+                <NextArrowIcon />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* 퀵 메뉴 박스 */}
         <div className={styles.quickBox}>
           <div className={`${styles.box} ${styles.inquiry} ${isInquiryOpen ? styles.accordionOpen : ''}`}>
             <button

@@ -23,3 +23,6 @@ export {
 
 // NICE 본인인증
 export { useNiceVerification } from '@/hooks/useNiceVerification'
+
+// Popup/Banner Hooks - 팝업/배너 관련
+export { useSlideBanners } from '@/hooks/useSlideBanners'
