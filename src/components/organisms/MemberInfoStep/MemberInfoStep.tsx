@@ -55,7 +55,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({
         onPrev={onPrev}
         submitButtonText={signupLoading ? '처리 중...' : '다음 단계'}
         cancelButtonText='취소'
-        disabledFields={['name', 'birthDate', 'phone']}
+        // TODO: NICE 본인인증 연동 후 복원 → disabledFields={['name', 'birthDate', 'phone']}
       />
     </>
   )
