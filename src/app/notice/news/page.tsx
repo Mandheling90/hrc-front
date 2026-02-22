@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo, useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
@@ -242,7 +242,7 @@ const categoryOptions = [
 ]
 
 export default function NoticeListPage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')

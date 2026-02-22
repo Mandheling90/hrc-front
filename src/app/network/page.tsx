@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -25,7 +25,7 @@ import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
 import { NetworkIntroIcon } from '@/components/icons/NetworkIntroIcon'
 
 export default function NetworkPage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const { pageContent } = useHospital()
 
   // pageContent에서 network 페이지 정보 가져오기

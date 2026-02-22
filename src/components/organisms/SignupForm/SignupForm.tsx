@@ -20,7 +20,7 @@ const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
 }
 import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 
 // MemberInfoForm의 memberType → 백엔드 DoctorType 매핑
 const DOCTOR_TYPE_MAP: Record<string, DoctorType> = {
@@ -30,7 +30,7 @@ const DOCTOR_TYPE_MAP: Record<string, DoctorType> = {
 }
 
 export const SignupForm: React.FC = () => {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const { signup, loading: signupLoading } = useSignup()
   const { hospitalId, hospital } = useHospital()
   const [currentStep, setCurrentStep] = useState(1)

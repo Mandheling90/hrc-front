@@ -4,8 +4,8 @@ import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { EyeIcon } from '@/components/icons/EyeIcon'
 import { useLogin } from '@/hooks/useAuth'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import Link from '@/components/atoms/HospitalLink'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import React, { useState } from 'react'
 import styles from './LoginForm.module.scss'
 
@@ -32,7 +32,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   showLinks = true,
   redirectTo = '/'
 }) => {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const { login, loading } = useLogin()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({

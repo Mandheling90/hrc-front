@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
+import Link from '@/components/atoms/HospitalLink'
 import styles from './Breadcrumbs.module.scss'
 
 export interface BreadcrumbItem {

@@ -20,8 +20,8 @@ export default function HospitalApplicationCompletePage() {
             description={`담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 협력병원 체결이 최종 완료됩니다.\n승인 결과는 등록하신 이메일 및 문자로 안내드릴 예정입니다.`}
             buttonText='Button'
             onGoToMain={() => {
-              // TODO: 메인으로 이동 로직
-              window.location.href = '/'
+              const hospitalId = window.location.pathname.split('/')[1]
+              window.location.href = ['anam', 'guro', 'ansan'].includes(hospitalId) ? `/${hospitalId}` : '/'
             }}
           />
         </div>

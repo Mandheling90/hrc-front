@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect, useMemo, useState, useCallback } from 'react'
-import Link from 'next/link'
+import Link from '@/components/atoms/HospitalLink'
 import { useHospital, useSlideBanners } from '@/hooks'
 import type { SlideBanner } from '@/hooks/useSlideBanners'
 import styles from './HeroSection.module.scss'

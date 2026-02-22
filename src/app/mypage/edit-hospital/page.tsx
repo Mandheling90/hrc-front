@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -21,7 +21,7 @@ import styles from './page.module.scss'
 const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '협력병원 정보수정' }]
 
 export default function EditHospitalPage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const totalSteps = 8
 

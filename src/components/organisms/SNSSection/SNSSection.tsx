@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
+import Link from '@/components/atoms/HospitalLink'
 import Image from 'next/image'
 import { useHospital } from '@/hooks'
 import styles from './SNSSection.module.scss'

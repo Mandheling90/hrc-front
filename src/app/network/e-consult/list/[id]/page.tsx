@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
@@ -81,7 +82,7 @@ const mockPrevPost = {
 const mockNextPost: { id: string; title: string } | null = null // 다음 글이 없는 경우
 
 export default function EConsultDetailPage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const params = useParams()
   const [replyContent, setReplyContent] = useState('')
 

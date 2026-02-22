@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
@@ -129,7 +129,7 @@ const mockEducationEvents: EducationEventNotice[] = [
 ]
 
 export default function NoticeEducationEventPage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const itemsPerPage = 9 // 데스크톱 기준 한 페이지 3 x 3 카드

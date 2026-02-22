@@ -210,7 +210,9 @@ export default function MypageEConsultListPage() {
 
   const handleRowClick = (item: EConsultData) => {
     // 상세 페이지로 이동
-    window.location.href = `/mypage/e-consult/${item.id}`
+    const hospitalId = window.location.pathname.split('/')[1]
+    const prefix = ['anam', 'guro', 'ansan'].includes(hospitalId) ? `/${hospitalId}` : ''
+    window.location.href = `${prefix}/mypage/e-consult/${item.id}`
   }
 
   return (

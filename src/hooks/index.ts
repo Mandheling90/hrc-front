@@ -24,6 +24,10 @@ export {
 // NICE 본인인증
 export { useNiceVerification } from '@/hooks/useNiceVerification'
 
+// Hospital Router Hooks - URL 경로 기반 병원 라우팅
+export { useHospitalRouter } from '@/hooks/useHospitalRouter'
+export { useHospitalPathname } from '@/hooks/useHospitalPathname'
+
 // Popup/Banner Hooks - 팝업/배너 관련
 export { useSlideBanners } from '@/hooks/useSlideBanners'
 export { useMiniBanners } from '@/hooks/useMiniBanners'

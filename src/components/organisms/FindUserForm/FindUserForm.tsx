@@ -1,6 +1,7 @@
 'use client'
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import React, { useState, useEffect } from 'react'
 import styles from './FindUserForm.module.scss'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
@@ -10,7 +11,7 @@ type TabType = 'findId' | 'findPassword'
 
 export const FindUserForm: React.FC = () => {
   const searchParams = useSearchParams()
-  const router = useRouter()
+  const router = useHospitalRouter()
   const pathname = usePathname()
   const tabParam = searchParams.get('tab') as TabType | null
   const [activeTab, setActiveTab] = useState<TabType>(tabParam === 'findPassword' ? 'findPassword' : 'findId')

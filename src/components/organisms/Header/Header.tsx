@@ -1,9 +1,10 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/atoms/HospitalLink'
 import { usePathname } from 'next/navigation'
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
+import { stripHospitalPrefix } from '@/utils/hospital'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useLogout } from '@/hooks/useAuth'
 import { HomeIcon } from '@/components/icons/HomeIcon'
@@ -105,7 +106,9 @@ export const Header: React.FC = () => {
   const { isAuthenticated } = useAuthContext()
   const { logout } = useLogout()
   const logoUrl = `/images/${hospitalId}/logo-top.png`
-  const pathname = usePathname()
+  const rawPathname = usePathname()
+  // 병원 prefix를 제거한 순수 경로 (예: /anam/login → /login)
+  const pathname = stripHospitalPrefix(rawPathname)
 
   // 메인페이지 여부 (투명 헤더)
   const isMainPage = pathname === '/'

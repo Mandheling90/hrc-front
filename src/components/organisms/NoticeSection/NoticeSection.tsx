@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import Link from 'next/link'
+import Link from '@/components/atoms/HospitalLink'
 import Image from 'next/image'
 import { useHospital, useMiniBanners } from '@/hooks'
 import styles from './NoticeSection.module.scss'

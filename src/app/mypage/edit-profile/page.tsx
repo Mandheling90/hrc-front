@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -38,7 +38,7 @@ const mockUserData: Partial<MemberInfoFormData> = {
 const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '회원정보 수정' }]
 
 export default function EditProfilePage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
 
   const handleCancel = () => {
     router.back()

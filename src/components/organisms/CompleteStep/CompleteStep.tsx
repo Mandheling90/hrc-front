@@ -4,7 +4,7 @@ import { CheckIcon } from '@/components/icons/CheckIcon'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import React from 'react'
 import styles from './CompleteStep.module.scss'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 
 export interface CompleteStepProps {
   /** 사용자 아이디 */
@@ -29,7 +29,7 @@ export const CompleteStep: React.FC<CompleteStepProps> = ({
   buttonText = '메인으로 이동',
   onGoToMain
 }) => {
-  const router = useRouter()
+  const router = useHospitalRouter()
 
   const handleGoToMain = () => {
     if (onGoToMain) {

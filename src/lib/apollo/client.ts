@@ -11,6 +11,19 @@ import { CombinedGraphQLErrors, ServerError } from '@apollo/client/errors'
 import { print } from 'graphql'
 import { REFRESH_TOKEN_MUTATION } from '@/graphql/auth/mutations'
 
+const VALID_HOSPITALS = ['anam', 'guro', 'ansan']
+
+function getHospitalIdFromURL(): string | null {
+  if (typeof window === 'undefined') return null
+  const firstSegment = window.location.pathname.split('/')[1]
+  return VALID_HOSPITALS.includes(firstSegment) ? firstSegment : null
+}
+
+function getHospitalCodeFromURL(): string {
+  const hospitalId = getHospitalIdFromURL()
+  return (hospitalId || process.env.NEXT_PUBLIC_HOSPITAL_ID || '').toUpperCase()
+}
+
 const AUTH_TOKEN_KEY = 'auth_token'
 const AUTH_REFRESH_TOKEN_KEY = 'auth_refresh_token'
 const AUTH_USER_KEY = 'auth_user'
@@ -33,7 +46,7 @@ export function makeClient() {
       headers: {
         ...prevContext.headers,
         authorization: token ? `Bearer ${token}` : '',
-        'x-hospital-code': (process.env.NEXT_PUBLIC_HOSPITAL_ID || '').toUpperCase()
+        'x-hospital-code': getHospitalCodeFromURL()
       }
     }
   })
@@ -139,5 +152,7 @@ function clearStoredAuth() {
   localStorage.removeItem(AUTH_TOKEN_KEY)
   localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY)
   localStorage.removeItem(AUTH_USER_KEY)
-  window.location.href = '/login'
+  // URL에서 병원 ID를 추출하여 해당 병원 로그인 페이지로 리다이렉트
+  const hospitalId = getHospitalIdFromURL()
+  window.location.href = hospitalId ? `/${hospitalId}/login` : '/login'
 }

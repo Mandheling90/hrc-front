@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { PaperclipIcon } from '@/components/icons/PaperclipIcon'
@@ -48,7 +49,7 @@ const mockNoticeDetails: NoticeDetail[] = [
 
 export default function NoticeDetailPage() {
   const params = useParams<{ id: string }>()
-  const router = useRouter()
+  const router = useHospitalRouter()
 
   const currentIndex = mockNoticeDetails.findIndex(notice => notice.id === params.id)
   const notice = currentIndex >= 0 ? mockNoticeDetails[currentIndex] : mockNoticeDetails[0]

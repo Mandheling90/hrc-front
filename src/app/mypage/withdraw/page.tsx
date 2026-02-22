@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -23,7 +23,7 @@ const mockUserId = 'ID1234TEST'
 const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '회원탈퇴' }]
 
 export default function WithdrawPage() {
-  const router = useRouter()
+  const router = useHospitalRouter()
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 

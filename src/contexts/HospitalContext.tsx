@@ -1,9 +1,11 @@
 'use client'
 
 import React, { createContext, useContext, useMemo } from 'react'
+import { usePathname } from 'next/navigation'
 import { HospitalContextType, HospitalId } from '@/types/hospital'
-import { getCurrentHospitalConfig, getCurrentHospitalId, getHospitalConfig } from '@/config/hospitals'
-import { getCurrentPageContent, getPageContent } from '@/config/pageContents'
+import { getCurrentHospitalId, getHospitalConfig } from '@/config/hospitals'
+import { getPageContent } from '@/config/pageContents'
+import { getHospitalFromPath } from '@/utils/hospital'
 
 // Context 생성
 const HospitalContext = createContext<HospitalContextType | undefined>(undefined)
@@ -17,10 +19,13 @@ interface HospitalProviderProps {
 
 // Hospital Provider 컴포넌트
 export const HospitalProvider: React.FC<HospitalProviderProps> = ({ children, hospitalId: overrideHospitalId }) => {
+  const pathname = usePathname()
+
   const value = useMemo<HospitalContextType>(() => {
-    const hospitalId = overrideHospitalId || getCurrentHospitalId()
-    const hospital = overrideHospitalId ? getHospitalConfig(overrideHospitalId) : getCurrentHospitalConfig()
-    const pageContent = overrideHospitalId ? getPageContent(overrideHospitalId) : getCurrentPageContent()
+    // 우선순위: prop override > URL pathname > 환경변수
+    const hospitalId = overrideHospitalId || getHospitalFromPath(pathname) || getCurrentHospitalId()
+    const hospital = getHospitalConfig(hospitalId)
+    const pageContent = getPageContent(hospitalId)
 
     return {
       hospital,
@@ -30,7 +35,7 @@ export const HospitalProvider: React.FC<HospitalProviderProps> = ({ children, ho
       isGuro: hospitalId === 'guro',
       isAnsan: hospitalId === 'ansan'
     }
-  }, [overrideHospitalId])
+  }, [overrideHospitalId, pathname])
 
   return <HospitalContext.Provider value={value}>{children}</HospitalContext.Provider>
 }
