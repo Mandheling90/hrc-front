@@ -20,12 +20,16 @@
 .container {
   width: 100%;
   max-width: $container-max-width;
-  padding: 0 20px;
+  padding: 0 50px;
   margin: 0 auto;
 
   // 태블릿 (769px ~ 1429px) - Figma: padding 0 50px
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     padding: 0 50px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 0 20px;
   }
 }
 

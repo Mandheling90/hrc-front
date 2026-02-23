@@ -197,6 +197,45 @@
   }
 }
 
+// 팝업 1개: 가운데 정렬
+.cardsSingle {
+  justify-content: center;
+
+  .card {
+    flex: 0 0 auto;
+    width: 408px;
+
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      width: 380px;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      width: 100%;
+    }
+  }
+}
+
+// 팝업 2개: 양쪽 정렬
+.cardsPair {
+  justify-content: space-between;
+
+  .card {
+    flex: 0 0 auto;
+    width: calc(50% - 12px);
+    max-width: 408px;
+
+    @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+      width: calc(50% - 10px);
+      max-width: none;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      width: 100%;
+      max-width: none;
+    }
+  }
+}
+
 .card {
   flex: 1 1 0;
   max-width: 408px;

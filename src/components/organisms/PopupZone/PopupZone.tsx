@@ -44,16 +44,17 @@ export const PopupZone: React.FC = () => {
   const { hospital } = useHospital()
   const { popups, loading } = useActivePopups()
   const [isOpen, setIsOpen] = useState(false)
-  const [currentPage, setCurrentPage] = useState(0)
+  const [startIndex, setStartIndex] = useState(0)
   const [hideToday, setHideToday] = useState(false)
   const cardsPerPage = useCardsPerPage()
 
-  const totalPages = Math.ceil(popups.length / cardsPerPage)
+  const showArrows = popups.length > cardsPerPage
+  const maxIndex = Math.max(0, popups.length - cardsPerPage)
 
-  // cardsPerPage 변경 시 페이지 보정
+  // cardsPerPage 변경 시 인덱스 보정
   useEffect(() => {
-    setCurrentPage(prev => Math.min(prev, Math.max(0, totalPages - 1)))
-  }, [totalPages])
+    setStartIndex(prev => Math.min(prev, maxIndex))
+  }, [maxIndex])
 
   // 팝업이 로드되면 표시 (오늘 하루 보지않기가 아닌 경우)
   useEffect(() => {
@@ -101,14 +102,25 @@ export const PopupZone: React.FC = () => {
   }, [])
 
   const handlePrev = useCallback(() => {
-    setCurrentPage(prev => (prev > 0 ? prev - 1 : totalPages - 1))
-  }, [totalPages])
+    setStartIndex(prev => (prev > 0 ? prev - 1 : maxIndex))
+  }, [maxIndex])
 
   const handleNext = useCallback(() => {
-    setCurrentPage(prev => (prev < totalPages - 1 ? prev + 1 : 0))
-  }, [totalPages])
+    setStartIndex(prev => (prev < maxIndex ? prev + 1 : 0))
+  }, [maxIndex])
 
-  const visiblePopups = popups.slice(currentPage * cardsPerPage, (currentPage + 1) * cardsPerPage)
+  const visiblePopups = showArrows
+    ? popups.slice(startIndex, startIndex + cardsPerPage)
+    : popups
+
+  // 팝업 개수에 따른 카드 정렬 클래스
+  const cardsClassName = [
+    styles.cards,
+    !showArrows && popups.length === 1 && styles.cardsSingle,
+    !showArrows && popups.length === 2 && styles.cardsPair,
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   if (!isOpen || popups.length === 0) return null
 
@@ -130,13 +142,15 @@ export const PopupZone: React.FC = () => {
 
         {/* 팝업 카드 캐러셀 */}
         <div className={styles.carousel}>
-          <button type='button' className={styles.navBtn} onClick={handlePrev} aria-label='이전'>
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-              <path d='M14 4L6 12L14 20' stroke='#333' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
-            </svg>
-          </button>
+          {showArrows && (
+            <button type='button' className={styles.navBtn} onClick={handlePrev} aria-label='이전'>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <path d='M14 4L6 12L14 20' stroke='#333' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+              </svg>
+            </button>
+          )}
 
-          <div className={styles.cards}>
+          <div className={cardsClassName}>
             {visiblePopups.map(popup => (
               <div
                 key={popup.id}
@@ -152,20 +166,15 @@ export const PopupZone: React.FC = () => {
                 )}
               </div>
             ))}
-            {/* 빈 카드 채우기 */}
-            {visiblePopups.length < cardsPerPage &&
-              Array.from({ length: cardsPerPage - visiblePopups.length }).map((_, i) => (
-                <div key={`empty-${i}`} className={styles.card}>
-                  <div className={styles.cardPlaceholder} />
-                </div>
-              ))}
           </div>
 
-          <button type='button' className={styles.navBtn} onClick={handleNext} aria-label='다음'>
-            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-              <path d='M10 4L18 12L10 20' stroke='#333' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
-            </svg>
-          </button>
+          {showArrows && (
+            <button type='button' className={styles.navBtn} onClick={handleNext} aria-label='다음'>
+              <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <path d='M10 4L18 12L10 20' stroke='#333' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+              </svg>
+            </button>
+          )}
         </div>
 
         {/* 하단 정보 */}
