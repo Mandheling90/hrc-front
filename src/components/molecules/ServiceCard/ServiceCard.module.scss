@@ -364,12 +364,12 @@
 }
 
 .description {
-  font-size: $font-size-xl; // 20px - Figma 디자인에 맞게 수정
+  font-size: $font-size-lg; // 18px - Figma 디자인
   font-weight: $font-weight-normal; // 400
   line-height: 1.5;
   color: $gray-9;
   margin: 0;
-  letter-spacing: -0.8px; // Figma: -4% of 20px
+  letter-spacing: -0.72px; // Figma: -4% of 18px
   text-align: center;
   word-break: keep-all; // 한글 단어 단위로 줄바꿈
   overflow-wrap: break-word; // 긴 단어 줄바꿈

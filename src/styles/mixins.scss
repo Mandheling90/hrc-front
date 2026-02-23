@@ -262,12 +262,12 @@ $header-bp-mobile: 768px;
 // 페이지 타이틀 (대형 - 40px)
 @mixin page-title-large {
   font-size: 40px;
-  font-weight: $font-weight-semibold;
+  font-weight: $font-weight-bold;
   color: $gray-12;
   text-align: center;
   margin: 0 0 $spacing-20;
   line-height: 1.5;
-  letter-spacing: -1.92px;
+  letter-spacing: -1.6px;
 
   // 태블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {

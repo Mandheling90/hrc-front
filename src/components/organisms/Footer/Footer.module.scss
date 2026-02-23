@@ -258,6 +258,7 @@
     font-size: 18px;
     font-weight: 600;
     line-height: 27px;
+    letter-spacing: -0.72px;
     color: var(--color-darken, #000);
     text-decoration: none;
 
@@ -268,6 +269,7 @@
     @media (max-width: $breakpoint-md) {
       font-size: 16px;
       line-height: 24px;
+      letter-spacing: -0.64px;
     }
   }
 
@@ -292,6 +294,7 @@
   p {
     font-size: 14px;
     line-height: 21px;
+    letter-spacing: -0.56px;
     color: #636363;
     margin: 0;
   }
@@ -333,11 +336,13 @@
 
   span:last-child {
     font-size: 18px;
+    letter-spacing: -0.72px;
     color: #636363;
 
     @media (max-width: $breakpoint-md) {
       font-size: 16px;
       line-height: 24px;
+      letter-spacing: -0.64px;
     }
   }
 }
@@ -345,6 +350,7 @@
 .copyright {
   font-size: 14px;
   line-height: 21px;
+  letter-spacing: -0.56px;
   color: #636363;
   margin: 40px 0 0;
 
@@ -399,6 +405,7 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 30px;
+  letter-spacing: -0.8px;
 
   @media (max-width: $breakpoint-md) {
     padding: 5px 10px;
@@ -499,6 +506,7 @@
   p {
     font-size: 14px;
     line-height: 21px;
+    letter-spacing: -0.56px;
     color: #636363;
     margin: 0;
   }

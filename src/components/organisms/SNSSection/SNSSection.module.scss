@@ -80,6 +80,7 @@
     font-weight: 600;
     font-family: 'Paperlogy', sans-serif;
     line-height: 48px;
+    letter-spacing: -0.32px;
     color: var(--color-darken, #000);
 
     @media (max-width: $breakpoint-2xl) {
@@ -151,7 +152,7 @@
     font-style: normal;
     font-weight: 800;
     line-height: 180px;
-    letter-spacing: -2.4px;
+    letter-spacing: -3.6px;
 
     @media (max-width: $breakpoint-2xl) {
       font-size: 100px;
@@ -320,6 +321,7 @@
     font-size: 18px;
     font-weight: 600;
     line-height: 27px;
+    letter-spacing: -0.72px;
     color: var(--color-darken, #000);
     overflow: hidden;
     display: -webkit-box;
@@ -428,6 +430,7 @@
     font-size: 18px;
     font-weight: 600;
     line-height: 27px;
+    letter-spacing: -0.72px;
     color: var(--color-darken, #000);
 
     // 태블릿 (769px ~ 1429px) - Figma: 16px

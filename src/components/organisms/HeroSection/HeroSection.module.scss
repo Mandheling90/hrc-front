@@ -479,6 +479,7 @@
     font-size: 32px;
     font-weight: 600;
     line-height: 48px;
+    letter-spacing: -1.28px;
     margin-bottom: 16px;
     background: transparent;
     border: none;
@@ -567,6 +568,7 @@
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;
+    letter-spacing: -0.8px;
     display: flex;
     align-items: center;
     padding: 10px 20px;
@@ -991,6 +993,7 @@
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;
+    letter-spacing: -0.8px;
     text-align: center;
 
     @media (max-width: $breakpoint-2xl) {
@@ -1190,6 +1193,7 @@
     font-family: 'Paperlogy', sans-serif;
     color: #fff;
     line-height: 48px;
+    letter-spacing: -0.32px;
     margin-top: 8px;
 
     @media (max-width: $breakpoint-2xl) {
@@ -1240,6 +1244,7 @@
       font-weight: 600;
       color: #fff;
       line-height: 30px;
+      letter-spacing: -0.8px;
 
       @media (max-width: $breakpoint-2xl) {
         font-size: 18px;
