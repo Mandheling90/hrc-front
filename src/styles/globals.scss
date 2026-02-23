@@ -383,6 +383,37 @@ em {
   font-family: $font-family-paperozi;
 }
 
+// ========================================
+// 스크롤 Reveal 애니메이션
+// ========================================
+[data-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal='hidden'] {
+  opacity: 0;
+  transform: translateY(80px);
+}
+
+[data-reveal='visible'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// 모션 감소 설정 시 애니메이션 비활성화
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+  }
+
+  [data-reveal='hidden'] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 // 다크모드 지원
 @media (prefers-color-scheme: dark) {
   body {
