@@ -186,6 +186,7 @@ export default function NetworkPage() {
             )}
 
             <ConfirmButtons
+              className={styles.networkConfirmButtons}
               secondaryButton={{
                 label: '협력병원 온라인 신청',
                 onClick: () => router.push('/network/hospital-application'),

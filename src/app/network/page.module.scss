@@ -316,6 +316,16 @@
   }
 }
 
+.networkConfirmButtons {
+  button {
+    width: 360px;
+
+    @include mobile {
+      width: 100%;
+    }
+  }
+}
+
 .buttonGroup {
   display: flex;
   justify-content: center;
