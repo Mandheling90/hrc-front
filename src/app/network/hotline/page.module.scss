@@ -118,13 +118,13 @@
 }
 
 .hotlineCell {
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
 }
 
 .hotlineLink {
   color: $gray-11;
   text-decoration: none;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   pointer-events: none;
 
   @include mobile {
@@ -187,7 +187,7 @@
 
 .mobileCardHotline {
   font-size: 20px; // Figma 모바일 기준
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
   color: $gray-11; // #636363
