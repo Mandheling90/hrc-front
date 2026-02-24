@@ -799,14 +799,10 @@ $header-height-mobile: 56px;
     }
   }
 
-  // 현재 메뉴 (첫 번째 서브 아이템) - pill 스타일
+  // 현재 메뉴 (활성 상태) - 텍스트 색상만 변경
   .highlight {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    gap: 10px;
-    padding: 5px 10px;
+    display: inline-block;
+    padding: 4px 0;
     font-family: 'Pretendard', sans-serif;
     font-size: 18px;
     font-weight: 600;
@@ -814,14 +810,11 @@ $header-height-mobile: 56px;
     letter-spacing: -0.72px;
     color: #8c0028;
     text-decoration: none;
-    border: 1px solid #f3c2c4;
-    border-radius: 40px;
-    background: #fef8f8;
-    transition: background 0.2s;
+    transition: color 0.2s;
     white-space: nowrap;
 
     &:hover {
-      background: #fef0f0;
+      color: #8c0028;
     }
   }
 
@@ -852,11 +845,6 @@ $header-height-mobile: 56px;
         color: #999;
       }
     }
-  }
-
-  // 활성 컬럼 표시 (선택적)
-  &.active .highlight {
-    background: #fef0f0;
   }
 }
 
@@ -1053,8 +1041,6 @@ span.disabled {
     // 현재 페이지
     &.highlight {
       color: #8c0028;
-      background: #fef8f8;
-      border-color: #f3c2c4;
     }
   }
 
@@ -1257,11 +1243,9 @@ span.disabled {
       color: $color-primary;
     }
 
-    // 현재 페이지 - 빨간 배경 + 테두리
+    // 현재 페이지
     &.highlight {
       color: #8c0028;
-      background: #fef8f8;
-      border-color: #f3c2c4;
     }
   }
 
