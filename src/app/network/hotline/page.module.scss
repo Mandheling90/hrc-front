@@ -117,6 +117,21 @@
   }
 }
 
+.hotlineCell {
+  font-weight: $font-weight-bold;
+}
+
+.hotlineLink {
+  color: $gray-11;
+  text-decoration: none;
+  font-weight: $font-weight-bold;
+  pointer-events: none;
+
+  @include mobile {
+    pointer-events: auto;
+  }
+}
+
 // 모바일 카드 리스트
 .mobileCardList {
   display: none; // 데스크톱/태블릿에서 숨김
@@ -172,8 +187,9 @@
 
 .mobileCardHotline {
   font-size: 20px; // Figma 모바일 기준
-  font-weight: $font-weight-normal; // 400
+  font-weight: $font-weight-bold;
   line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
   color: $gray-11; // #636363
+  text-decoration: none;
 }

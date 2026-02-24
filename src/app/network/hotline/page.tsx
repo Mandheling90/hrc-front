@@ -138,7 +138,11 @@ export default function ProfessorHotlinePage() {
                   <div className={styles.separator}></div>
                   <div className={styles.dataCell}>{hotline.professorName}</div>
                   <div className={styles.separator}></div>
-                  <div className={styles.dataCell}>{hotline.hotline}</div>
+                  <div className={`${styles.dataCell} ${styles.hotlineCell}`}>
+                    <a href={`tel:${hotline.hotline.replace(/-/g, '')}`} className={styles.hotlineLink}>
+                      {hotline.hotline}
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
@@ -151,7 +155,9 @@ export default function ProfessorHotlinePage() {
                   <div className={styles.mobileCardInfo}>
                     <span className={styles.mobileCardName}>{hotline.professorName}</span>
                     <span className={styles.mobileCardSeparator}>|</span>
-                    <span className={styles.mobileCardHotline}>{hotline.hotline}</span>
+                    <a href={`tel:${hotline.hotline.replace(/-/g, '')}`} className={styles.mobileCardHotline}>
+                      {hotline.hotline}
+                    </a>
                   </div>
                 </div>
               ))}
