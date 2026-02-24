@@ -274,16 +274,45 @@
   }
 }
 
-.downloadButton {
-  display: inline-flex;
+.downloadBox {
+  display: flex;
   align-items: center;
-  gap: $spacing-2;
-  margin: $spacing-4 0;
+  gap: $spacing-6;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid $gray-9;
+  border-radius: 5px;
+  background: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
 
-  span {
-    font-size: 20px; // Figma: 20px
-    font-weight: $font-weight-semibold; // Figma: 600
-    letter-spacing: -0.8px;
+  &:hover {
+    background-color: $gray-1;
+  }
+}
+
+.downloadInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+}
+
+.downloadFileName {
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 30px;
+  color: $gray-11;
+  word-wrap: break-word;
+
+  @include tablet {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  @include mobile {
+    font-size: 18px;
+    line-height: 27px;
   }
 }
 

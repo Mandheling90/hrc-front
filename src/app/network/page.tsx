@@ -12,7 +12,7 @@ import { ServiceSection, ServiceItem } from '@/components/organisms/ServiceSecti
 import { Button } from '@/components/atoms/Button/Button'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import { FaxIcon } from '@/components/icons/FaxIcon'
-import { DownloadIcon } from '@/components/icons/DownloadIcon'
+import { FileDownloadIcon } from '@/components/icons/FileDownloadIcon'
 import { DocumentIcon } from '@/components/icons/DocumentIcon'
 import { ReviewIcon } from '@/components/icons/ReviewIcon'
 import { ApprovalIcon } from '@/components/icons/ApprovalIcon'
@@ -179,18 +179,10 @@ export default function NetworkPage() {
             </div>
 
             {networkInfo.downloadLink && (
-              <Button
-                variant='outline'
-                size='small'
-                pill
-                className={styles.downloadButton}
-                onClick={() => {
-                  window.location.href = networkInfo.downloadLink || '#'
-                }}
-              >
-                <span>협력병의원 신청서 다운로드</span>
-                <DownloadIcon width={16} height={16} stroke='#000' />
-              </Button>
+              <a href={networkInfo.downloadLink} className={styles.downloadBox} download>
+                <span className={styles.downloadFileName}>협력병의원 신청서 다운로드.zip</span>
+                <FileDownloadIcon width={24} height={24} fill='#636363' />
+              </a>
             )}
 
             <ConfirmButtons
