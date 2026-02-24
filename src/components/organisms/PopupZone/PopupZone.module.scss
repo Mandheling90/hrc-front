@@ -76,46 +76,16 @@
 .hospitalLogo {
   display: flex;
   align-items: center;
-  gap: 3px;
   flex-shrink: 0;
-
-  img {
-    width: 48px;
-    height: 48px;
-  }
-
-  @media (max-width: $breakpoint-md) {
-    img {
-      width: 36px;
-      height: 36px;
-    }
-  }
 }
 
-.logoText {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.logoTitle {
-  font-size: 17px;
-  font-family: 'Korea University Centennial OTF', sans-serif;
-  color: #8c8c8c;
+.hospitalLogoImg {
+  width: 297px;
+  height: auto;
+  object-fit: contain;
 
   @media (max-width: $breakpoint-md) {
-    font-size: 13px;
-  }
-}
-
-.logoSubtitle {
-  font-size: 9px;
-  font-family: 'Korea University Centennial OTF', sans-serif;
-  color: #8c8c8c;
-  text-align: center;
-
-  @media (max-width: $breakpoint-md) {
-    font-size: 7px;
+    width: 220px;
   }
 }
 

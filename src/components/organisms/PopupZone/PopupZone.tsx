@@ -132,11 +132,7 @@ export const PopupZone: React.FC = () => {
           <h2 className={styles.title}>POP-UP ZONE</h2>
           <div className={styles.hospitalLogo}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src='/images/main/logo-footer.svg' alt={hospital.name.full} width={48} height={48} />
-            <div className={styles.logoText}>
-              <span className={styles.logoTitle}>{hospital.name.full}</span>
-              <span className={styles.logoSubtitle}>{hospital.name.english}</span>
-            </div>
+            <img src={hospital.logo.footer} alt={hospital.name.full} className={styles.hospitalLogoImg} />
           </div>
         </div>
 
