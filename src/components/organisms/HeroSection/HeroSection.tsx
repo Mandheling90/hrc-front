@@ -535,7 +535,7 @@ const PlayIcon = () => (
 )
 
 export const HeroSection: React.FC = () => {
-  const { isGuro, hospital } = useHospital()
+  const { isAnam, isGuro, hospital } = useHospital()
   const { banners, loading: bannersLoading } = useSlideBanners()
   const videoRef = useRef<HTMLVideoElement>(null)
   const fallbackVideoRef = useRef<HTMLVideoElement>(null)
@@ -566,6 +566,11 @@ export const HeroSection: React.FC = () => {
 
   // 병원별 연락처 정보
   const contactInfo = isGuro ? contactInfoGuro : contactInfoAnam
+
+  // 병원별 서식 다운로드 링크 (구로/안산: 진료정보공개동의서 제외)
+  const filteredDownloadLinks = isAnam
+    ? downloadLinks
+    : downloadLinks.filter(link => link.label !== '진료정보공개동의서')
 
   // 현재 활성 배너
   const currentBanner = hasBanners ? banners[currentIndex] : null
@@ -778,7 +783,7 @@ export const HeroSection: React.FC = () => {
               <ChevronIcon isOpen={isDownloadOpen} />
             </button>
             <div className={styles.linkList}>
-              {downloadLinks.map((link, index) => (
+              {filteredDownloadLinks.map((link, index) => (
                 <Link key={index} href={link.href} className={styles.line}>
                   <span>{link.label}</span>
                   <DownloadIcon />
