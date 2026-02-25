@@ -434,6 +434,10 @@ export interface AboutLocationInfo {
     jibun: string // 지번 주소
     road: string // 도로명 주소
   }
+  coordinates: {
+    latitude: number // 위도
+    longitude: number // 경도
+  }
   mapLinks: {
     naver?: string // 네이버 지도 링크
     daum?: string // 다음 지도 링크

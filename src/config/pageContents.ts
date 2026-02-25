@@ -405,6 +405,10 @@ const anamContent: HospitalPageContent = {
       jibun: '안암동5가 126-1',
       road: '서울 성북구 고려대로 73 고대병원'
     },
+    coordinates: {
+      latitude: 37.5870,
+      longitude: 127.0268
+    },
     mapLinks: {
       naver: 'https://map.naver.com/v5/entry/place/11583195',
       daum: 'https://map.daum.net/link/map/고려대학교안암병원,37.5865,127.0297',
@@ -898,6 +902,10 @@ const guroContent: HospitalPageContent = {
     address: {
       jibun: '구로동 80',
       road: '서울시 구로구 구로동로 148 (구로동)'
+    },
+    coordinates: {
+      latitude: 37.4920,
+      longitude: 126.8847
     },
     mapLinks: {
       naver: 'https://map.naver.com/v5/entry/place/11710215',
@@ -1500,6 +1508,10 @@ const ansanContent: HospitalPageContent = {
     address: {
       jibun: '고잔동',
       road: '경기도 안산시 단원구 적금로 123 (고잔동)'
+    },
+    coordinates: {
+      latitude: 37.3191,
+      longitude: 126.8252
     },
     mapLinks: {
       naver: 'https://map.naver.com/v5/entry/place/11664050',

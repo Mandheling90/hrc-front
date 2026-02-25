@@ -3,7 +3,7 @@
 
 // 버스 정보
 .busStop {
-  margin-bottom: $spacing-6;
+  margin-bottom: 56px;
 
   &:last-child {
     margin-bottom: 0;
@@ -13,16 +13,12 @@
 .busDirections {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-4;
+  gap: $spacing-4; // 16px
   margin-top: $spacing-2;
 
-  @include tablet {
-    gap: $spacing-3;
-  }
-
   @include mobile {
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-2;
+    grid-template-columns: 1fr;
+    gap: $spacing-3;
   }
 }
 
@@ -34,22 +30,18 @@
 .busDirection {
   display: flex;
   flex-direction: column;
-  gap: $spacing-3;
-  padding: 20px;
-  border: 1px solid $gray-9;
-  background-color: $color-white;
-
-  @include mobile {
-    padding: $spacing-3;
-  }
+  gap: $spacing-4; // 16px
 }
 
 .busDirectionLabel {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2; // 8px
   font-size: $font-size-xl; // 20px
-  font-weight: $font-weight-semibold; // 600
+  font-weight: $font-weight-semibold;
   color: $gray-12;
-  margin-bottom: 0;
   line-height: $line-height-normal;
+  letter-spacing: -0.8px;
 
   @include tablet {
     font-size: $font-size-lg; // 18px
@@ -60,8 +52,16 @@
   }
 }
 
+.dashBullet {
+  display: inline-block;
+  width: 8px;
+  height: 2px;
+  background-color: $gray-11;
+  flex-shrink: 0;
+}
+
 .busRoutes {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-2;
+  gap: $spacing-2; // 8px
 }

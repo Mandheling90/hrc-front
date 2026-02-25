@@ -8,7 +8,7 @@ import { useHospital } from '@/hooks'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import styles from './page.module.scss'
 import { TransportAccordion } from '@/components/molecules/TransportAccordion/TransportAccordion'
-import { MapPlaceholder } from '@/components/molecules/MapPlaceholder/MapPlaceholder'
+import { KakaoMap } from '@/components/molecules/KakaoMap/KakaoMap'
 import { AddressSearchBar } from '@/components/molecules/AddressSearchBar/AddressSearchBar'
 import { MapServiceLinks } from '@/components/molecules/MapServiceLinks/MapServiceLinks'
 import { BusStopList } from '@/components/molecules/BusStopList/BusStopList'
@@ -32,7 +32,10 @@ export function LocationPageAnam() {
 
           {/* 지도 영역 */}
           <section className={styles.mapSection}>
-            <MapPlaceholder />
+            <KakaoMap
+              latitude={locationInfo.coordinates.latitude}
+              longitude={locationInfo.coordinates.longitude}
+            />
 
             {/* 주소 정보 및 검색 */}
             <AddressSearchBar jibun={locationInfo.address.jibun} road={locationInfo.address.road} />

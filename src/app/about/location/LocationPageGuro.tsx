@@ -10,7 +10,7 @@ import styles from './page.module.scss'
 import { TransportAccordion } from '@/components/molecules/TransportAccordion/TransportAccordion'
 import { BusStopList } from '@/components/molecules/BusStopList/BusStopList'
 import { AirportBusTable } from '@/components/molecules/AirportBusTable'
-import { MapPlaceholder } from '@/components/molecules/MapPlaceholder/MapPlaceholder'
+import { KakaoMap } from '@/components/molecules/KakaoMap/KakaoMap'
 import { AddressSearchBar } from '@/components/molecules/AddressSearchBar/AddressSearchBar'
 import { MapServiceLinks } from '@/components/molecules/MapServiceLinks/MapServiceLinks'
 import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureList'
@@ -55,7 +55,10 @@ export function LocationPageGuro() {
 
           {/* 지도 영역 */}
           <section className={styles.mapSection}>
-            <MapPlaceholder />
+            <KakaoMap
+              latitude={locationInfo.coordinates.latitude}
+              longitude={locationInfo.coordinates.longitude}
+            />
 
             {/* 주소 정보 및 검색 */}
             <AddressSearchBar jibun={locationInfo.address.jibun} road={locationInfo.address.road} />

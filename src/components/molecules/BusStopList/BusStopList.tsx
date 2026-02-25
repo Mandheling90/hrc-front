@@ -22,7 +22,12 @@ export const BusStopList: React.FC<BusStopListProps> = ({ stops, className = '' 
           <div className={`${styles.busDirections} ${stop.directions.length === 1 ? styles.busDirectionsSingle : ''}`}>
             {stop.directions.map((direction, dirIndex) => (
               <div key={dirIndex} className={styles.busDirection}>
-                {direction.label && <div className={styles.busDirectionLabel}>{direction.label}</div>}
+                {direction.label && (
+                  <div className={styles.busDirectionLabel}>
+                    <span className={styles.dashBullet} />
+                    {direction.label}
+                  </div>
+                )}
                 <div className={styles.busRoutes}>
                   {direction.routes.map((route, routeIndex) => (
                     <RouteChip key={routeIndex} variant={route.type} size='small'>
