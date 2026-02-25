@@ -3,7 +3,6 @@
 import React from 'react'
 import Image from 'next/image'
 import { ScheduleTable, ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
-import { DoctorIcon } from '@/components/icons/DoctorIcon'
 import { EConsultingIcon } from '@/components/icons/EConsultingIcon'
 import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
 import styles from './DoctorCard.module.scss'
@@ -48,7 +47,14 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
             </div>
           ) : (
             <div className={styles.placeholderImage}>
-              <DoctorIcon width={60} height={60} stroke='#9f1836' />
+              <Image
+                src='/images/doctor-placeholder.svg'
+                alt='의료진 사진 없음'
+                width={188}
+                height={200}
+                className={styles.placeholderImg}
+                unoptimized
+              />
             </div>
           )}
         </div>
