@@ -719,3 +719,13 @@
   width: 100%;
   height: 100%;
 }
+
+.radio {
+  -webkit-appearance: radio;
+  -moz-appearance: radio;
+  appearance: radio;
+  width: 20px;
+  height: 20px;
+  accent-color: $color-primary;
+  cursor: pointer;
+}

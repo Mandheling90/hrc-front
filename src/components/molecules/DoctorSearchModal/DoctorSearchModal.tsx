@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Button } from '@/components/atoms/Button/Button'
-import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import styles from './DoctorSearchModal.module.scss'
@@ -143,10 +142,12 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     console.log('검색:', searchQuery)
   }
 
-  const handleDoctorToggle = (doctor: Doctor) => {
+  const handleDoctorSelect = (doctor: Doctor) => {
     setDoctors(prev =>
       prev.map(d =>
-        d.name === doctor.name && d.department === doctor.department ? { ...d, selected: !d.selected } : d
+        d.name === doctor.name && d.department === doctor.department
+          ? { ...d, selected: true }
+          : { ...d, selected: false }
       )
     )
   }
@@ -189,10 +190,13 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       width: '160px',
       align: 'center',
       renderCell: doctor => (
-        <Checkbox
+        <input
+          type='radio'
+          name='doctor-select'
           checked={doctor.selected}
-          onChange={() => handleDoctorToggle(doctor)}
+          onChange={() => handleDoctorSelect(doctor)}
           aria-label={`${doctor.name} 선택`}
+          className={styles.radio}
         />
       )
     }
@@ -258,10 +262,13 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                       id: 'selected',
                       leftContent: <span>선택</span>,
                       rightContent: (
-                        <Checkbox
+                        <input
+                          type='radio'
+                          name='doctor-select-card'
                           checked={doctor.selected}
-                          onChange={() => handleDoctorToggle(doctor)}
+                          onChange={() => handleDoctorSelect(doctor)}
                           aria-label={`${doctor.name} 선택`}
+                          className={styles.radio}
                         />
                       ),
                       highlighted: true
@@ -305,10 +312,10 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           </div>
         </div>
 
-        {/* 신청하기 버튼 */}
+        {/* 확인 버튼 */}
         <div className={styles.buttonSection}>
           <Button type='button' variant='primary' onClick={handleConfirm} className={styles.confirmButton}>
-            신청하기
+            확인
           </Button>
         </div>
       </div>
