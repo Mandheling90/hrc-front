@@ -4,19 +4,45 @@
 
 ## 기술 스택
 
-| 항목        | 버전/기술                               |
-| ----------- |-------------------------------------|
-| Framework   | Next.js 15.5.9 (App Router)         |
-| React       | 19.2.3                              |
-| 언어        | TypeScript (strict mode)            |
-| 스타일링    | SCSS + CSS Modules                  |
-| 상태 관리   | React Context API (HospitalContext) |
-| 코드 스타일 | EditorConfig + ESLint + Prettier    |
-| 렌더링      | SSR (Server-Side Rendering)         |
-| 디자인 패턴 | Atomic Design Pattern               |
-| 반응형      | 미디어쿼리 (반응형 + 적응형)                   |
-| 테마        | 라이트/다크모드 지원                         |
-| 멀티테넌트  | 병원별 환경변수 기반 설정                      |
+### 1. Core Framework & Runtime
+- **Next.js 15** (App Router, SSR)
+- **React 19**
+- **Node.js 20 LTS** / npm 10
+
+### 2. Language
+- **TypeScript 5** (strict mode)
+
+### 3. API & Data
+- **GraphQL** (Apollo Client 4 + @apollo/client-integration-nextjs)
+- **GraphQL Code Generator** (codegen.ts → 타입 자동 생성)
+
+### 4. Styling
+- **SCSS Modules** + Sass 1.97
+- **Atomic Design Pattern** (Atoms → Molecules → Organisms → Templates)
+- **반응형 3단계** (Desktop 1430px+ / Tablet 769~1429px / Mobile ~768px)
+- **다크모드** (CSS 변수 기반, `[data-theme='dark']`)
+
+### 5. State Management
+- **React Context** (HospitalContext, AuthContext)
+- **Apollo Client Cache** (서버 상태)
+
+### 6. Authentication
+- **JWT** (Access Token, localStorage 기반 영속화)
+
+### 7. UI Library
+- **antd 6** (일부 컴포넌트 활용)
+- **카카오맵 JavaScript SDK** (오시는 길 지도)
+
+### 8. Testing
+- **Playwright 1.58** (E2E, 설정 완료 / 테스트 미작성)
+
+### 9. Tooling
+- **npm**
+- **ESLint 8** + **Prettier 3.8**
+
+### 10. Multi-tenant
+- **URL 프리픽스 라우팅** (`/anam/...`, `/guro/...`, `/ansan/...`)
+- 하나의 빌드로 3개 병원(안암/구로/안산) 서빙
 
 ## 프로젝트 구조
 
@@ -112,7 +138,7 @@ src/
 | `/about/intro`        | 센터 소개     | SectionTitle, InfoBox                             |
 | `/about/greeting`     | 센터장 인사말 | SectionTitle                                      |
 | `/about/organization` | 조직도/연락처 | OperationInfoCards, ScheduleTitle                 |
-| `/about/location`     | 오시는 길     | TabNavigation, TransportAccordion, MapPlaceholder |
+| `/about/location`     | 오시는 길     | TabNavigation, TransportAccordion, KakaoMap       |
 
 ### 마이페이지
 
@@ -189,7 +215,7 @@ src/
 
 **교통/지도**
 
-- MapPlaceholder, MapServiceLinks, ShuttleRouteMap
+- KakaoMap, MapServiceLinks, ShuttleRouteMap
 - TransportAccordion, AirportRoute
 - AirportBusTable, AirportBusTableAnsan
 - SubwayInfoAnsan, CarDirectionButtons
@@ -335,35 +361,66 @@ $header-bp-tablet: 1429px; // 태블릿: 769px ~ 1429px
 // 데스크톱: 1430px~
 ```
 
-## 병원별 환경 설정
+## 병원별 라우팅
 
-이 프로젝트는 하나의 코드베이스로 안암/구로/안산 3개 병원을 지원합니다.
+이 프로젝트는 **URL 프리픽스 방식**으로 하나의 빌드에서 3개 병원을 모두 서빙합니다.
+
+### 라우팅 구조
+
+| URL | 결과 |
+| --- | --- |
+| `/` | 병원 선택 페이지 |
+| `/anam/login` | 안암병원 로그인 |
+| `/guro/about/location` | 구로병원 오시는 길 |
+| `/ansan/network` | 안산병원 협력네트워크 |
+| `/login` (프리픽스 없음) | `/anam/login`으로 리다이렉트 (폴백) |
+
+### 동작 방식
+
+1. **미들웨어** (`src/middleware.ts`) — URL에서 병원 프리픽스 추출 후 `x-hospital-id` 헤더 주입
+2. **HospitalContext** — URL 경로 > 환경변수 순으로 병원 ID 결정
+3. **Apollo Client** — `x-hospital-code` 헤더로 백엔드에 병원 정보 전달
+4. **HospitalLink / useHospitalRouter** — 내부 링크에 자동으로 병원 프리픽스 추가
 
 ### 지원 병원
 
-| 병원 ID | 병원명              | 환경 파일    |
-| ------- | ------------------- | ------------ |
-| `anam`  | 고려대학교 안암병원 | `.env.anam`  |
-| `guro`  | 고려대학교 구로병원 | `.env.guro`  |
-| `ansan` | 고려대학교 안산병원 | `.env.ansan` |
+| 병원 ID | 병원명 | URL 프리픽스 |
+| --- | --- | --- |
+| `anam` | 고려대학교 안암병원 | `/anam/...` |
+| `guro` | 고려대학교 구로병원 | `/guro/...` |
+| `ansan` | 고려대학교 안산병원 | `/ansan/...` |
 
-### 환경 변수 설정
+## 환경 변수
+
+### 설정 방법
 
 ```bash
-# .env.example 파일을 복사하여 사용
+# 개발 환경
 cp .env.example .env.local
 
-# 또는 병원별 환경 파일 사용
-cp .env.anam .env.local   # 안암병원
-cp .env.guro .env.local   # 구로병원
-cp .env.ansan .env.local  # 안산병원
+# 운영 환경 (.env.production은 next build/start 시 자동 로드)
+# NICE 키 등 실제 값을 채워넣은 후 사용
 ```
 
-### 환경 변수
+### 클라이언트 (브라우저 노출)
 
-| 변수명                    | 설명        | 값                      |
-| ------------------------- | ----------- | ----------------------- |
-| `NEXT_PUBLIC_HOSPITAL_ID` | 병원 식별자 | `anam`, `guro`, `ansan` |
+| 변수명 | 설명 | 필수 | 예시 |
+| --- | --- | --- | --- |
+| `NEXT_PUBLIC_HOSPITAL_ID` | 기본 병원 (URL 프리픽스 없을 때 폴백) | O | `anam` |
+| `NEXT_PUBLIC_GRAPHQL_URL` | GraphQL API 엔드포인트 | O | `http://localhost:4000/graphql` |
+| `NEXT_PUBLIC_KAKAO_MAP_KEY` | 카카오맵 JavaScript 키 | - | Kakao Developers에서 발급 |
+| `NEXT_PUBLIC_NICE_DEV_MODE` | NICE 본인인증 개발모드 | - | `true` (더미 데이터 사용) |
+
+### 서버 전용
+
+| 변수명 | 설명 | 필수 | 예시 |
+| --- | --- | --- | --- |
+| `NICE_CLIENT_ID` | NICE CheckPlus 클라이언트 ID | - | (운영 시 필요) |
+| `NICE_CLIENT_SECRET` | NICE CheckPlus 시크릿 | - | (운영 시 필요) |
+| `NICE_PRODUCT_ID` | NICE 상품 ID | - | `2101979031` |
+
+> **참고**: URL 프리픽스로 병원을 구분하므로 병원별 환경파일(`.env.anam` 등)은 불필요합니다.
+> `NEXT_PUBLIC_HOSPITAL_ID`는 프리픽스 없는 URL 접근 시 폴백 용도로만 사용됩니다.
 
 ### 병원별 설정 구조
 
@@ -384,36 +441,48 @@ HospitalConfig {
 ### 사용법
 
 ```typescript
-import { useHospital } from '@/contexts/HospitalContext'
+// 병원 정보 접근
+import { useHospital } from '@/hooks'
 
 const MyComponent = () => {
-  const { hospital, hospitalId, isAnam, isGuro, isAnsan } = useHospital()
-
+  const { hospital, hospitalId, isAnam, isGuro, isAnsan, pageContent } = useHospital()
   return <div>{hospital.name.full}</div>
 }
+
+// 병원 프리픽스 자동 적용 링크
+import { HospitalLink } from '@/components/atoms/HospitalLink/HospitalLink'
+
+<HospitalLink href="/login">로그인</HospitalLink>
+// 안암병원일 때 → /anam/login
+
+// 병원 프리픽스 자동 적용 라우터
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+
+const router = useHospitalRouter()
+router.push('/login') // → /anam/login
 ```
 
 ## 스크립트
 
+| 명령어 | 설명 |
+| --- | --- |
+| `npm run dev` | 개발 서버 실행 (localhost:3000) |
+| `npm run build` | 프로덕션 빌드 (빌드 전 `codegen` 자동 실행) |
+| `npm start` | 프로덕션 서버 실행 |
+| `npm run lint` | ESLint 검사 |
+| `npm run lint:fix` | ESLint 자동 수정 |
+| `npm run format` | Prettier 포맷팅 |
+| `npm run format:check` | Prettier 포맷 검사 |
+| `npm run codegen` | GraphQL 타입 생성 (`src/graphql/__generated__/types.ts`) |
+| `npm run codegen:watch` | GraphQL 타입 생성 (watch 모드) |
+
+### 운영 배포
+
+하나의 빌드로 3개 병원을 모두 서빙하므로 병원별 빌드가 필요 없습니다.
+
 ```bash
-# 개발 서버
-npm run dev          # 개발 서버 실행 (기본)
-npm run dev:anam     # 안암병원 개발 서버
-npm run dev:guro     # 구로병원 개발 서버
-npm run dev:ansan    # 안산병원 개발 서버
-
-# 빌드
-npm run build        # 프로덕션 빌드 (기본)
-npm run build:anam   # 안암병원 빌드
-npm run build:guro   # 구로병원 빌드
-npm run build:ansan  # 안산병원 빌드
-
-# 기타
-npm start            # 프로덕션 서버 실행
-npm run lint         # ESLint 검사
-npm run lint:fix     # ESLint 자동 수정
-npm run format       # Prettier 포매팅
-npm run format:check # Prettier 검사
+# 빌드 후 실행
+npm run build && npm start
 ```
 
 ## 개발 현황
