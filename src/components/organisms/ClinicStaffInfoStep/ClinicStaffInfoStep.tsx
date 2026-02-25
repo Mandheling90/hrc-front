@@ -21,10 +21,12 @@ export interface ClinicStaffInfoStepProps {
   totalSteps?: number
   /** 임시저장 불러오기용 초기값 */
   defaultValues?: Partial<ClinicStaffInfoStepData>
+  /** 병원 세부 정보 섹션 표시 여부 (기본값: true) */
+  showHospitalDetail?: boolean
 }
 
 export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, ClinicStaffInfoStepProps>(
-  ({ currentStep = 3, totalSteps = 4, defaultValues }, ref) => {
+  ({ currentStep = 3, totalSteps = 4, defaultValues, showHospitalDetail = true }, ref) => {
     const { isGuro, isAnsan } = useHospital()
     const showMedicalInstitutionType = isGuro || isAnsan
 
@@ -310,6 +312,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
         </div>
 
         {/* 병원 세부 정보 섹션 */}
+        {showHospitalDetail && (
         <div className={styles.formSection}>
           <div className={styles.formHeader}>
             <div className={styles.formHeaderLeft}>
@@ -453,6 +456,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
             </div>
           </div>
         </div>
+        )}
       </div>
     )
   }

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import styles from './MedicationDetailModal.module.scss'
@@ -77,7 +78,7 @@ export const MedicationDetailModal: React.FC<MedicationDetailModalProps> = ({ is
     }
   }
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
         {/* 헤더 */}
@@ -121,6 +122,7 @@ export const MedicationDetailModal: React.FC<MedicationDetailModalProps> = ({ is
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { useHospital, useActivePopups } from '@/hooks'
 import type { ActivePopup } from '@/hooks/useActivePopups'
 import styles from './PopupZone.module.scss'
@@ -124,7 +125,7 @@ export const PopupZone: React.FC = () => {
 
   if (!isOpen || popups.length === 0) return null
 
-  return (
+  return createPortal(
     <div className={styles.overlay}>
       <div className={styles.content}>
         {/* 상단 헤더 */}
@@ -196,6 +197,7 @@ export const PopupZone: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

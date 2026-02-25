@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { ServiceTitleIcon } from '@/components/icons/ServiceTitleIcon'
@@ -99,7 +100,7 @@ export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, on
     }
   }
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={`${styles.modal} ${className}`}>
         {/* 헤더 */}
@@ -180,6 +181,7 @@ export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, on
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

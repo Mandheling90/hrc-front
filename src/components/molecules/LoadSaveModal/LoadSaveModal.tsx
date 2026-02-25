@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
@@ -90,7 +91,7 @@ export const LoadSaveModal: React.FC<LoadSaveModalProps> = ({
     onClose()
   }
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
         {/* 헤더 */}
@@ -150,6 +151,7 @@ export const LoadSaveModal: React.FC<LoadSaveModalProps> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

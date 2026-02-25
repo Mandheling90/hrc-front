@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { ArrowRightIcon } from '@/components/icons/ArrowRightIcon'
 import { CarIcon } from '@/components/icons/CarIcon'
@@ -67,7 +68,7 @@ export const CarDirectionModal: React.FC<CarDirectionModalProps> = ({
     }
   }
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
         {/* 헤더 */}
@@ -126,6 +127,7 @@ export const CarDirectionModal: React.FC<CarDirectionModalProps> = ({
           ))}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

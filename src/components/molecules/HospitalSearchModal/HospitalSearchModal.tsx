@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLazyQuery, useMutation } from '@apollo/client/react'
 import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
@@ -285,7 +286,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
     }
   ]
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick} data-testid='hospital-search-modal-backdrop'>
       <div className={`${styles.modal} ${className}`} data-testid='hospital-search-modal'>
         {/* 헤더 */}
@@ -579,6 +580,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
         message={alertModal.message}
         onClose={() => setAlertModal({ isOpen: false, message: '' })}
       />
-    </div>
+    </div>,
+    document.body
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { ChevronLeftIcon } from '@/components/icons/ChevronLeftIcon'
@@ -119,7 +120,7 @@ export const ImageViewerModal: React.FC<ImageViewerModalProps> = ({
     setViewMode('grid')
   }
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={`${styles.modal} ${viewMode === 'detail' ? styles.detailMode : ''}`}>
         {/* 헤더 */}
@@ -199,6 +200,7 @@ export const ImageViewerModal: React.FC<ImageViewerModalProps> = ({
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

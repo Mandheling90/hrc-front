@@ -15,6 +15,8 @@ export interface MedicalDepartmentStepProps {
   totalSteps?: number
   /** 초기값 (임시저장 불러오기용) */
   defaultValues?: Partial<MedicalDepartmentStepData>
+  /** 주요 보유 장비 섹션 표시 여부 (기본값: true) */
+  showEquipment?: boolean
 }
 
 const DEFAULT_DEPARTMENTS: Record<string, { checked: boolean; count: string }> = {
@@ -70,7 +72,7 @@ const DEFAULT_EQUIPMENT: Record<string, boolean> = {
 }
 
 export const MedicalDepartmentStep = forwardRef<StepRef<MedicalDepartmentStepData>, MedicalDepartmentStepProps>(
-  ({ currentStep = 6, totalSteps = 8, defaultValues }, ref) => {
+  ({ currentStep = 6, totalSteps = 8, defaultValues, showEquipment = true }, ref) => {
     // 진료과 운영 현황 상태
     const [departments, setDepartments] = useState<Record<string, { checked: boolean; count: string }>>(
       defaultValues?.departments ?? DEFAULT_DEPARTMENTS
@@ -223,6 +225,7 @@ export const MedicalDepartmentStep = forwardRef<StepRef<MedicalDepartmentStepDat
         </div>
 
         {/* 주요 보유 장비 섹션 */}
+        {showEquipment && (
         <div className={styles.formSection}>
           <div className={styles.formHeader}>
             <div className={styles.formHeaderLeft}>
@@ -273,6 +276,7 @@ export const MedicalDepartmentStep = forwardRef<StepRef<MedicalDepartmentStepDat
             </div>
           </div>
         </div>
+        )}
       </div>
     )
   }

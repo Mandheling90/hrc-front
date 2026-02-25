@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Button } from '@/components/atoms/Button/Button'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { Input } from '@/components/atoms/Input/Input'
@@ -197,7 +198,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   ]
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={`${styles.modal} ${className}`}>
         {/* 헤더 */}
@@ -311,6 +312,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

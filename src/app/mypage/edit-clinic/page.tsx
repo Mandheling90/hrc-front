@@ -67,7 +67,7 @@ export default function EditClinicPage() {
             {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={totalSteps} institutionType='의원' />}
 
             {/* 3단계: 실무자 정보 */}
-            {currentStep === 3 && <ClinicStaffInfoStep currentStep={3} totalSteps={totalSteps} />}
+            {currentStep === 3 && <ClinicStaffInfoStep currentStep={3} totalSteps={totalSteps} showHospitalDetail={false} />}
 
             {/* 4단계: 병원특성 및 기타사항 */}
             {currentStep === 4 && <HospitalCharacteristicsStep currentStep={4} totalSteps={totalSteps} />}

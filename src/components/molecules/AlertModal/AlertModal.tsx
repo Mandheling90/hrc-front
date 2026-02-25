@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import styles from './AlertModal.module.scss'
 
 export interface AlertModalProps {
@@ -63,7 +64,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
     }
   }
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={`${styles.modal} ${className}`}>
         <p className={styles.message}>{message}</p>
@@ -71,6 +72,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
           {closeButtonText}
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

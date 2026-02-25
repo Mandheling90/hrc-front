@@ -4,6 +4,10 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Input } from '@/components/atoms/Input/Input'
 import { SearchIcon } from '@/components/icons/SearchIcon'
+import {
+  HospitalSearchModal,
+  HospitalSearchResult
+} from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
 import type { HospitalInfoStepData, StepRef } from '@/types/partner-application'
 import styles from './HospitalInfoStep.module.scss'
 
@@ -28,6 +32,22 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
     const [phoneNumber, setPhoneNumber] = useState(defaultValues?.phoneNumber ?? '')
     const [faxNumber, setFaxNumber] = useState(defaultValues?.faxNumber ?? '')
     const [website, setWebsite] = useState(defaultValues?.website ?? '')
+    const [isHospitalSearchOpen, setIsHospitalSearchOpen] = useState(false)
+
+    const handleHospitalSearch = () => {
+      setIsHospitalSearchOpen(true)
+    }
+
+    const handleHospitalSelect = (hospital: HospitalSearchResult) => {
+      setHospitalName(hospital.hospitalName)
+      setMedicalInstitutionNumber(hospital.careNumber)
+      if (hospital.zipCode) setZipCode(hospital.zipCode)
+      if (hospital.address) setAddress(hospital.address)
+      if (hospital.addressDetail) setDetailAddress(hospital.addressDetail)
+      if (hospital.phone) setPhoneNumber(hospital.phone)
+      if (hospital.website) setWebsite(hospital.website)
+      setIsHospitalSearchOpen(false)
+    }
 
     useImperativeHandle(ref, () => ({
       getData: () => ({
@@ -77,10 +97,11 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             type='text'
             placeholder='병원명을 입력해주세요'
             value={hospitalName}
-            onChange={e => {
-              const filtered = e.target.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s]/g, '').slice(0, 50)
-              setHospitalName(filtered)
-            }}
+            onChange={e => setHospitalName(e.target.value)}
+            disabled
+            buttonText='병원 검색'
+            onButtonClick={handleHospitalSearch}
+            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
           />
 
           {/* 요양기관번호 */}
@@ -96,6 +117,7 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
               setMedicalInstitutionNumber(filtered)
             }}
             placeholder='요양기관번호를 입력해주세요.'
+            disabled
           />
 
           {/* 병원주소 */}
@@ -109,9 +131,6 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             value={zipCode}
             onChange={e => setZipCode(e.target.value)}
             disabled
-            buttonText='우편번호 검색'
-            onButtonClick={() => {}}
-            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
           >
             <Input
               type='text'
@@ -142,6 +161,7 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             placeholder='-없이 입력해주세요.'
             value={phoneNumber}
             onChange={e => setPhoneNumber(e.target.value)}
+            disabled
           />
 
           {/* 팩스번호 */}
@@ -167,6 +187,13 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             onChange={e => setWebsite(e.target.value)}
           />
         </div>
+
+        {/* 병원 검색 팝업 */}
+        <HospitalSearchModal
+          isOpen={isHospitalSearchOpen}
+          onClose={() => setIsHospitalSearchOpen(false)}
+          onSelect={handleHospitalSelect}
+        />
       </div>
     )
   }

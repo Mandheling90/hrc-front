@@ -4,26 +4,21 @@ import React, { useState, useMemo } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
-import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Button } from '@/components/atoms/Button/Button'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
 import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
-import { BedAndFacilityStep } from '@/components/organisms/BedAndFacilityStep/BedAndFacilityStep'
-import { CareSystemStep } from '@/components/organisms/CareSystemStep/CareSystemStep'
 import { MedicalDepartmentStep } from '@/components/organisms/MedicalDepartmentStep/MedicalDepartmentStep'
-import { BasicTreatmentStep } from '@/components/organisms/BasicTreatmentStep/BasicTreatmentStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import styles from './page.module.scss'
 
-const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '협력병원 정보수정' }]
 
 export default function EditHospitalPage() {
   const router = useHospitalRouter()
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 8
+  const totalSteps = 5
 
   const guideMessages = useMemo(() => {
     return [
@@ -52,7 +47,6 @@ export default function EditHospitalPage() {
   return (
     <div className={styles.wrap}>
       <Header />
-      {/* <Breadcrumbs items={breadcrumbItems} /> */}
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.pageTitle}>협력병원 정보수정</h1>
@@ -70,23 +64,14 @@ export default function EditHospitalPage() {
             {/* 2단계: 병원장 정보 */}
             {currentStep === 2 && <DirectorInfoStep currentStep={2} totalSteps={totalSteps} />}
 
-            {/* 3단계: 실무자 정보 */}
+            {/* 3단계: 실무자 정보 + 의료기관 유형 + 인력현황 */}
             {currentStep === 3 && <StaffInfoStep currentStep={3} totalSteps={totalSteps} />}
 
-            {/* 4단계: 병상 및 시설 운영 현황 */}
-            {currentStep === 4 && <BedAndFacilityStep currentStep={4} totalSteps={totalSteps} />}
+            {/* 4단계: 진료과 운영 현황(전문의 수) */}
+            {currentStep === 4 && <MedicalDepartmentStep currentStep={4} totalSteps={totalSteps} showEquipment={false} />}
 
-            {/* 5단계: 간병 시스템 */}
-            {currentStep === 5 && <CareSystemStep currentStep={5} totalSteps={totalSteps} />}
-
-            {/* 6단계: 진료과 운영 현황 및 주요 보유 장비 */}
-            {currentStep === 6 && <MedicalDepartmentStep currentStep={6} totalSteps={totalSteps} />}
-
-            {/* 7단계: 기본 처치 가능 항목 */}
-            {currentStep === 7 && <BasicTreatmentStep currentStep={7} totalSteps={totalSteps} />}
-
-            {/* 8단계: 병원특성 및 기타사항 */}
-            {currentStep === 8 && <HospitalCharacteristicsStep currentStep={8} totalSteps={totalSteps} />}
+            {/* 5단계: 병원특성 및 기타사항 + 첨부파일 */}
+            {currentStep === 5 && <HospitalCharacteristicsStep currentStep={5} totalSteps={totalSteps} />}
 
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
