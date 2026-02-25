@@ -190,11 +190,9 @@ export default function NoticeEducationEventPage() {
           <section className={styles.cardGrid} aria-label='교육 및 행사 목록'>
             {paginatedData.map(item => (
               <button key={item.id} type='button' className={styles.card} onClick={() => handleCardClick(item)}>
-                <div
-                  className={styles.thumbnail}
-                  style={{ backgroundImage: `url(${item.thumbnail})` }}
-                  aria-hidden='true'
-                />
+                <div className={styles.thumbnailWrapper}>
+                  <img src={item.thumbnail} alt={item.title} className={styles.thumbnail} />
+                </div>
                 <div className={styles.cardContent}>
                   <p className={styles.cardTitle}>{item.title}</p>
                   <p className={styles.cardDate}>{item.registeredDate}</p>

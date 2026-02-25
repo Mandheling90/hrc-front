@@ -55,10 +55,7 @@ export function LocationPageGuro() {
 
           {/* 지도 영역 */}
           <section className={styles.mapSection}>
-            <KakaoMap
-              latitude={locationInfo.coordinates.latitude}
-              longitude={locationInfo.coordinates.longitude}
-            />
+            <KakaoMap latitude={locationInfo.coordinates.latitude} longitude={locationInfo.coordinates.longitude} />
 
             {/* 주소 정보 및 검색 */}
             <AddressSearchBar jibun={locationInfo.address.jibun} road={locationInfo.address.road} />
