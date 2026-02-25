@@ -13,7 +13,7 @@
   @include page-title-large;
 }
 
-// 검색 영역 (교육 / 행사 전용)
+// 검색 영역 (썸네일형 - 구로)
 .searchSection {
   display: flex;
   align-items: center;
@@ -106,6 +106,9 @@
   }
 }
 
+// ========================================
+// 썸네일 카드 그리드 (구로)
+// ========================================
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -209,6 +212,100 @@
   line-height: $line-height-normal;
 }
 
+// ========================================
+// 게시판형 테이블/카드 (안암/안산)
+// ========================================
+.tableSection {
+  margin-bottom: $spacing-10;
+
+  @include mobile {
+    margin-bottom: $spacing-8;
+  }
+}
+
+.boardTable {
+  max-width: 1430px;
+  margin: 0 auto;
+}
+
+// 번호 텍스트 스타일
+.numberText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-normal;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+}
+
+// 제목 텍스트 스타일
+.titleText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-semibold;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: var(--notice-title-color, $color-darken);
+  transition: color 0.2s;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 날짜 텍스트 스타일
+.dateText {
+  font-size: $font-size-xl; // 20px
+  font-weight: $font-weight-normal;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+}
+
+// 게시판형 모바일 카드
+.boardCardList {
+  @include mobile {
+    display: block;
+
+    :global(.card) {
+      margin-bottom: $spacing-4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.boardCardTitleWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.boardCardTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.72px;
+  line-height: $line-height-normal;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
+}
+
+.boardCardDate {
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.56px;
+  text-align: right;
+}
+
+// ========================================
+// 공통
+// ========================================
 .paginationWrapper {
   margin-top: 80px;
   display: flex;
