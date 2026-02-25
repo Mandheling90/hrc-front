@@ -5,7 +5,6 @@ import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import { ServiceSection } from '@/components/organisms/ServiceSection/ServiceSection'
-import { SystemIcon } from '@/components/icons/SystemIcon'
 import { useHospital } from '@/hooks'
 import { mapServiceItems } from '@/utils'
 import styles from './page.module.scss'
@@ -27,7 +26,6 @@ export default function ReferralPage() {
 
           <InfoBox
             variant='guide'
-            icon={<SystemIcon width={48} height={48} fill='#8b6f47' />}
             messages={pageContent.referral.intro}
             showBullets={false}
             contentAlign='center'

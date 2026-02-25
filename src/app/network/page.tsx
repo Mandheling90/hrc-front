@@ -22,7 +22,6 @@ import { useHospital } from '@/hooks'
 import { mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
 import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
-import { NetworkIntroIcon } from '@/components/icons/NetworkIntroIcon'
 
 export default function NetworkPage() {
   const router = useHospitalRouter()
@@ -72,10 +71,9 @@ export default function NetworkPage() {
         <div className='container'>
           <h1 className={styles.pageTitle}>협력네트워크 소개 & 신청</h1>
 
-          {/* Intro Box - 병원별 스타일 분기 */}
+          {/* Intro Box */}
           <InfoBox
             variant='guide'
-            icon={networkInfo.introStyle === 'withIcon' ? <NetworkIntroIcon width={110} height={110} /> : undefined}
             messages={networkInfo.intro || []}
             showBullets={false}
             contentAlign='center'
