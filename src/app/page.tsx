@@ -13,8 +13,8 @@ const hospitals = [
     fullName: '고려대학교 안암병원 진료협력센터',
     fullNameEn: 'KOREA UNIVERSITY ANAM HOSPITAL REFERRAL CENTER',
     description: '서울시 성북구 고려대로 73',
-    logo: '/images/anam/logo-top.png',
-    bgImage: '/images/anam/Component 4.png'
+    logo: '/images/anam/logo.png',
+    bgImage: '/images/building-anam.png'
   },
   {
     id: 'guro',
@@ -22,8 +22,8 @@ const hospitals = [
     fullName: '고려대학교 구로병원 진료협력센터',
     fullNameEn: 'KOREA UNIVERSITY GURO HOSPITAL REFERRAL CENTER',
     description: '서울시 구로구 구로동로 148',
-    logo: '/images/guro/logo-top.png',
-    bgImage: '/images/guro/Component 4.png'
+    logo: '/images/guro/logo.png',
+    bgImage: '/images/building-guro.png'
   },
   {
     id: 'ansan',
@@ -31,8 +31,8 @@ const hospitals = [
     fullName: '고려대학교 안산병원 진료협력센터',
     fullNameEn: 'KOREA UNIVERSITY ANSAN HOSPITAL REFERRAL CENTER',
     description: '경기도 안산시 단원구 적금로 123',
-    logo: '/images/ansan/logo-top.png',
-    bgImage: '/images/ansan/Component 4.png'
+    logo: '/images/ansan/logo.png',
+    bgImage: '/images/building-ansan.png'
   }
 ]
 
@@ -57,7 +57,7 @@ export default function Home() {
           {hospitals.map(hospital => (
             <a key={hospital.id} href={`/${hospital.id}`} className={styles.card}>
               <div
-                className={styles.cardBg}
+                className={`${styles.cardBg}${hospital.id === 'anam' ? ` ${styles.cardBgAnam}` : ''}`}
                 style={{ backgroundImage: `url(${hospital.bgImage})` }}
               />
               <div className={styles.cardBgOverlay} />
@@ -72,10 +72,6 @@ export default function Home() {
                 </div>
                 <div className={styles.cardBottom}>
                   <img src={hospital.logo} alt={hospital.fullName} className={styles.logo} />
-                  <div className={styles.logoText}>
-                    <span className={styles.logoTitle}>{hospital.fullName}</span>
-                    <span className={styles.logoSubtitle}>{hospital.fullNameEn}</span>
-                  </div>
                 </div>
               </div>
             </a>
