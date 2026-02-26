@@ -34,6 +34,8 @@ interface SignupInput {
   hospAddressDetail?: string
   hospPhone: string
   hospWebsite?: string
+  ci?: string
+  di?: string
 }
 
 interface AuthPayload {

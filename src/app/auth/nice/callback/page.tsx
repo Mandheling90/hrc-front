@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import type { NicePostMessageData } from '@/lib/nice/types'
+import type { NiceCallbackData } from '@/lib/nice/types'
 
 function NiceCallbackContent() {
   const searchParams = useSearchParams()
@@ -10,56 +10,25 @@ function NiceCallbackContent() {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    const processCallback = async () => {
-      const encData = searchParams.get('enc_data')
-      const tokenVersionId = searchParams.get('token_version_id')
-      const integrityValue = searchParams.get('integrity_value')
+    const webTransactionId = searchParams.get('web_transaction_id')
 
-      if (!encData || !tokenVersionId || !integrityValue) {
-        sendResult({ type: 'NICE_VERIFICATION_RESULT', success: false, error: '인증 응답 데이터가 없습니다.' })
-        setErrorMessage('인증 응답 데이터가 없습니다.')
-        setStatus('error')
-        return
-      }
-
-      try {
-        const response = await fetch('/api/nice/decrypt', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tokenVersionId, encData, integrityValue })
-        })
-
-        if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.error || '인증 결과 처리에 실패했습니다.')
-        }
-
-        const data = await response.json()
-
-        sendResult({
-          type: 'NICE_VERIFICATION_RESULT',
-          success: true,
-          data: {
-            name: data.name,
-            phone: data.phone,
-            birthDate: data.birthDate,
-            gender: data.gender,
-            di: data.di,
-            ci: data.ci
-          }
-        })
-        setStatus('success')
-
-        setTimeout(() => window.close(), 1000)
-      } catch (err) {
-        const message = err instanceof Error ? err.message : '본인인증 처리 중 오류가 발생했습니다.'
-        sendResult({ type: 'NICE_VERIFICATION_RESULT', success: false, error: message })
-        setErrorMessage(message)
-        setStatus('error')
-      }
+    if (!webTransactionId) {
+      setErrorMessage('인증 응답 데이터가 없습니다.')
+      setStatus('error')
+      return
     }
 
-    processCallback()
+    // 부모 창에 webTransactionId 전달
+    if (window.opener) {
+      const data: NiceCallbackData = {
+        type: 'NICE_CALLBACK',
+        webTransactionId
+      }
+      window.opener.postMessage(data, window.location.origin)
+    }
+
+    setStatus('success')
+    setTimeout(() => window.close(), 1000)
   }, [searchParams])
 
   return (
@@ -108,10 +77,4 @@ export default function NiceCallbackPage() {
       <NiceCallbackContent />
     </Suspense>
   )
-}
-
-function sendResult(data: NicePostMessageData) {
-  if (window.opener) {
-    window.opener.postMessage(data, window.location.origin)
-  }
 }

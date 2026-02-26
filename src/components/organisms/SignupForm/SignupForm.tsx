@@ -120,7 +120,9 @@ export const SignupForm: React.FC = () => {
         hospAddress: formData.address,
         hospAddressDetail: formData.addressDetail || undefined,
         hospPhone: formData.hospitalPhone,
-        hospWebsite: formData.hospitalWebsite || undefined
+        hospWebsite: formData.hospitalWebsite || undefined,
+        ci: verifiedData?.ci || undefined,
+        di: verifiedData?.di || undefined
       })
 
       if (result) {
@@ -189,7 +191,7 @@ export const SignupForm: React.FC = () => {
                 ? {
                     name: verifiedData.name,
                     birthDate: verifiedData.birthDate,
-                    phone: verifiedData.phone
+                    phone: verifiedData.phone || ''
                   }
                 : undefined
             }

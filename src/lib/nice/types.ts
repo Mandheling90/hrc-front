@@ -1,38 +1,25 @@
-/** NICE CheckPlus 본인인증 결과 데이터 */
+/** NICE 본인인증 결과 데이터 */
 export interface NiceVerifiedData {
   name: string
-  phone: string
+  phone: string | null
   birthDate: string
-  gender: 'M' | 'F'
+  gender: string
   /** 중복가입 확인값 (Duplication Information) */
   di: string
   /** 연계정보 확인값 (Connecting Information) */
   ci: string
-}
-
-/** POST /api/nice/request 응답 */
-export interface NiceRequestResponse {
-  tokenVersionId: string
-  encData: string
-  integrityValue: string
-}
-
-/** POST /api/nice/decrypt 응답 */
-export interface NiceDecryptResponse {
-  name: string
-  phone: string
-  birthDate: string
-  gender: 'M' | 'F'
-  di: string
-  ci: string
+  /** 인증 방법 */
+  authMethod: string
+  /** 국적 정보 */
+  nationalInfo: string | null
+  /** 후속 작업용 토큰 (아이디 찾기, 비밀번호 재설정 등) */
+  verificationToken: string | null
 }
 
 /** NICE 콜백 팝업 → 부모 창 postMessage 데이터 */
-export interface NicePostMessageData {
-  type: 'NICE_VERIFICATION_RESULT'
-  success: boolean
-  data?: NiceVerifiedData
-  error?: string
+export interface NiceCallbackData {
+  type: 'NICE_CALLBACK'
+  webTransactionId: string
 }
 
 /** useNiceVerification 훅 반환 타입 */

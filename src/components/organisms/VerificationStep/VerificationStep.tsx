@@ -38,11 +38,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }
     }
   }, [error])
 
-  const handleIpinVerify = () => {
-    setAlertMessage('아이핀(i-PIN) 인증은 현재 준비 중입니다.')
-    setShowAlert(true)
-  }
-
   return (
     <>
       <InfoBox
@@ -51,7 +46,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }
         icon={<ShieldIcon width={110} height={110} />}
         messages={[
           '개인정보 보호법에 근거하여, 회원가입을 위해서는 본인인증이 필요합니다.',
-          '본인확인은 아이핀(i-PIN)과 휴대폰 문자인증으로 확인합니다.'
+          '본인확인은 휴대폰 문자인증으로 확인합니다.'
         ]}
         showBullets={true}
         contentAlign='center'
@@ -61,7 +56,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }
 
       <VerificationCards
         onPhoneVerify={requestVerification}
-        onIpinVerify={handleIpinVerify}
         phoneVerified={isVerified}
         phoneLoading={isLoading}
         className={styles.verificationCardsWrapper}
@@ -76,7 +70,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }
           },
           {
             paragraphs: [
-              '아이핀(I-PIN) 인증 또는 휴대폰 인증시 장애가 있으신 경우는 나이스평가정보 실명확인 서비스 기관에 문의하시기 바랍니다.',
+              '휴대폰 인증시 장애가 있으신 경우는 나이스평가정보 실명확인 서비스 기관에 문의하시기 바랍니다.',
               '나이스평가정보 본인 인증 콜센터 : 1600-1522'
             ]
           }

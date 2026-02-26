@@ -57,5 +57,6 @@ nul
 # Figma env
 *.env.figma
 
-# Claude Code local settings
-.claude/settings.local.json
+# Claude Code
+.claude/
+CLAUDE.md

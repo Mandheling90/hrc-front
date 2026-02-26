@@ -104,6 +104,8 @@ input SignupInput {
   hospAddressDetail: String
   hospPhone: String!
   hospWebsite: String
+  ci: String
+  di: String
 }
 
 type UserIdAvailability {
@@ -506,6 +508,54 @@ type Query {
   miniBanners: [PopupModel!]!
 }
 
+# ── NICE 본인인증 ──
+
+input InitiateVerificationInput {
+  returnUrl: String!
+}
+
+type InitiateVerificationOutput {
+  authUrl: String!
+  sessionId: String!
+}
+
+input CompleteVerificationInput {
+  sessionId: String!
+  webTransactionId: String!
+}
+
+type VerificationResultOutput {
+  authMethod: String!
+  birthDate: String!
+  ci: String!
+  di: String!
+  gender: String!
+  name: String!
+  nationalInfo: String
+  phone: String
+  verificationToken: String
+}
+
+input FindUserIdByVerificationInput {
+  verificationToken: String!
+}
+
+type FindUserIdPayload {
+  userId: String
+  message: String
+}
+
+input ResetPasswordByVerificationInput {
+  verificationToken: String!
+  userId: String!
+  newPassword: String!
+  newPasswordConfirm: String!
+}
+
+type MessageResponse {
+  message: String!
+}
+
 type Mutation {
   login(input: LoginInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
@@ -517,4 +567,9 @@ type Mutation {
   saveDraftPartnerApplication(input: SaveDraftPartnerInput!): PartnerHospitalModel!
   submitPartnerApplication(id: ID!): PartnerHospitalModel!
   cancelPartnerApplication(id: ID!): Boolean!
+  # NICE 본인인증
+  initiateVerification(input: InitiateVerificationInput!): InitiateVerificationOutput!
+  completeVerification(input: CompleteVerificationInput!): VerificationResultOutput!
+  findUserIdByVerification(input: FindUserIdByVerificationInput!): FindUserIdPayload!
+  resetPasswordByVerification(input: ResetPasswordByVerificationInput!): MessageResponse!
 }

@@ -36,11 +36,6 @@ export const FindUserForm: React.FC = () => {
     console.log('본인 인증 시작', activeTab === 'findPassword' ? `아이디: ${userId}` : '')
   }
 
-  const handleIpinVerify = () => {
-    // TODO: 아이핀 인증 로직 구현
-    console.log('아이핀 인증 시작', activeTab === 'findPassword' ? `아이디: ${userId}` : '')
-  }
-
   return (
     <div className={styles.findForm}>
       <h2 className={styles.title}>{activeTab === 'findId' ? '아이디 찾기' : '비밀번호 찾기'}</h2>
@@ -67,24 +62,16 @@ export const FindUserForm: React.FC = () => {
           {activeTab === 'findId' && (
             <InfoBox
               contentAlign='center'
-              messages={
-                activeTab === 'findId'
-                  ? [
-                      '회원 가입 시와 동일하게 본인 인증 후 아이디를 찾아주세요.',
-                      '휴대전화 본인 인증이나 아이핀 인증으로 아이디를 찾을 수 있습니다.'
-                    ]
-                  : [
-                      '회원 가입 시와 동일하게 본인 인증 후 비밀번호를 재설정해주세요.',
-                      '휴대전화 본인 인증이나 아이핀 인증으로 비밀번호를 찾을 수 있습니다.'
-                    ]
-              }
+              messages={[
+                '회원 가입 시와 동일하게 본인 인증 후 아이디를 찾아주세요.',
+                '휴대전화 본인 인증으로 아이디를 찾을 수 있습니다.'
+              ]}
               textColor='black'
             />
           )}
 
           <VerificationCards
             onPhoneVerify={handlePhoneVerify}
-            onIpinVerify={handleIpinVerify}
             showIdInput={activeTab === 'findPassword'}
             userId={userId}
             onUserIdChange={setUserId}
