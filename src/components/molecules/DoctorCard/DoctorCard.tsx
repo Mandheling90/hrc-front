@@ -39,21 +39,19 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
               <Image
                 src={imageUrl}
                 alt={`${name} ${department}`}
-                width={200}
-                height={200}
+                width={188}
+                height={274}
                 className={styles.image}
                 unoptimized
               />
             </div>
           ) : (
             <div className={styles.placeholderImage}>
-              <Image
-                src='/images/doctor-placeholder.svg'
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src='/images/icon/hospital_signature_kr 4.svg'
                 alt='의료진 사진 없음'
-                width={188}
-                height={200}
                 className={styles.placeholderImg}
-                unoptimized
               />
             </div>
           )}
