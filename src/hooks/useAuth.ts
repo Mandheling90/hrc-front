@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION } from '@/graphql/auth/mutations'
+import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_PROFILE_MUTATION } from '@/graphql/auth/mutations'
 import { ME_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
 
@@ -77,6 +77,42 @@ export function useSignup() {
   }
 
   return { signup, loading, error }
+}
+
+export interface UpdateProfileInput {
+  password?: string
+  passwordConfirm?: string
+  email?: string
+  phone?: string
+  licenseNo?: string
+  isDirector?: boolean
+  school?: string
+  department?: string
+  specialty?: string
+  smsConsent?: boolean
+  emailConsent?: boolean
+  replyConsent?: boolean
+  hospName?: string
+  careInstitutionNo?: string
+  hospZipCode?: string
+  hospAddress?: string
+  hospAddressDetail?: string
+  hospPhone?: string
+  hospWebsite?: string
+}
+
+export function useUpdateProfile() {
+  const [updateProfileMutation, { loading, error }] = useMutation<{ updateProfile: AuthUser }>(
+    UPDATE_PROFILE_MUTATION,
+    { refetchQueries: [{ query: ME_QUERY }] }
+  )
+
+  const updateProfile = async (input: UpdateProfileInput) => {
+    const { data } = await updateProfileMutation({ variables: { input } })
+    return data?.updateProfile ?? null
+  }
+
+  return { updateProfile, loading, error }
 }
 
 export function useMe() {

@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { ResetPasswordForm } from '@/components/organisms/ResetPasswordForm/ResetPasswordForm'
@@ -12,7 +13,9 @@ export default function ResetPasswordPage() {
       <main className={styles.main}>
         <div className='container'>
           <div className={styles.resetPasswordContainer}>
-            <ResetPasswordForm />
+            <Suspense fallback={<div>로딩 중...</div>}>
+              <ResetPasswordForm />
+            </Suspense>
           </div>
         </div>
       </main>

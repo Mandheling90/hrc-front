@@ -52,6 +52,10 @@ export function makeClient() {
   })
 
   const errorLink = new ErrorLink(({ error, operation, forward }) => {
+    // 인증이 불필요한 mutation은 토큰 리프레시/리다이렉트 스킵
+    const publicOperations = ['Login', 'Signup', 'FindUserIdByVerification', 'ResetPasswordByVerification', 'InitiateVerification', 'CompleteVerification']
+    if (publicOperations.includes(operation.operationName)) return
+
     // 401 감지: GraphQL UNAUTHENTICATED 에러 또는 네트워크 401
     const is401 =
       (CombinedGraphQLErrors.is(error) &&

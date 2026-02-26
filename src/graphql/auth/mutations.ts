@@ -69,6 +69,43 @@ export const LOGOUT_MUTATION = gql`
   }
 `
 
+export const UPDATE_PROFILE_MUTATION = gql`
+  mutation UpdateProfile($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      id
+      userId
+      email
+      userName
+      userType
+      hospitalCode
+      hospitalId
+      phone
+      status
+      mustChangePw
+      profile {
+        birthDate
+        department
+        gender
+        hospAddress
+        hospAddressDetail
+        hospCode
+        hospName
+        hospPhone
+        hospWebsite
+        hospZipCode
+        careInstitutionNo
+        licenseNo
+        representative
+        school
+        smsConsent
+        emailConsent
+        replyConsent
+        specialty
+      }
+    }
+  }
+`
+
 export const REFRESH_TOKEN_MUTATION = gql`
   mutation RefreshToken($refreshToken: String!) {
     refreshToken(refreshToken: $refreshToken) {

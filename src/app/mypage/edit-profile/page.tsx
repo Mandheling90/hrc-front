@@ -1,44 +1,97 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { useMe, useUpdateProfile } from '@/hooks/useAuth'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
-import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { MemberInfoForm, MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { AuthUser } from '@/types/auth'
+import { UpdateProfileInput } from '@/hooks/useAuth'
 import styles from './page.module.scss'
 
-// 더미 데이터 - 실제로는 API에서 가져와야 함
-const mockUserData: Partial<MemberInfoFormData> = {
-  name: '홍길동',
-  birthDate: '1999-08-16',
-  memberType: '의사',
-  phone: '010-0000-0000',
-  userId: 'ID1234TEST',
-  password: '****************',
-  passwordConfirm: '****************',
-  email: 'asdtest@naver.com',
-  licenseNumber: '12345678',
-  isDirector: true,
-  school: '서울성모병원',
-  department: '소화기내과',
-  specialty: '위 내시경, OOOOOOO, OOOO',
-  smsConsent: '동의',
-  emailConsent: '동의',
-  replyConsent: '동의',
-  hospitalName: '고대진료협력병원',
-  careNumber: '1234567890',
-  zipCode: '02841',
-  address: '서울특별시 성북구 고려대로 73(안암동 5가)',
-  addressDetail: '404호',
-  hospitalPhone: '021234567',
-  hospitalWebsite: 'https://anam.kumc.or.kr/'
+/** API에서 받은 사용자 정보를 폼 데이터 형식으로 변환 */
+const mapUserToFormData = (user: AuthUser): Partial<MemberInfoFormData> => {
+  const profile = user.profile
+
+  const memberTypeMap: Record<string, string> = {
+    DOCTOR: '의사',
+    DENTIST: '치과의사',
+    ORIENTAL_DOCTOR: '한의사'
+  }
+
+  return {
+    name: user.userName || '',
+    birthDate: profile?.birthDate ? profile.birthDate.split('T')[0] : '',
+    memberType: memberTypeMap[user.userType] || '의사',
+    phone: user.phone || '',
+    userId: user.userId || '',
+    password: '',
+    passwordConfirm: '',
+    email: user.email || '',
+    licenseNumber: profile?.licenseNo || '',
+    isDirector: !!profile?.representative,
+    school: profile?.school || '',
+    department: profile?.department || '전체',
+    specialty: profile?.specialty || '',
+    smsConsent: profile?.smsConsent ? 'Y' : 'N',
+    emailConsent: profile?.emailConsent ? 'Y' : 'N',
+    replyConsent: profile?.replyConsent ? 'Y' : 'N',
+    hospitalName: profile?.hospName || '',
+    careNumber: profile?.careInstitutionNo || '',
+    zipCode: profile?.hospZipCode || '',
+    address: profile?.hospAddress || '',
+    addressDetail: profile?.hospAddressDetail || '',
+    hospitalPhone: profile?.hospPhone || '',
+    hospitalWebsite: profile?.hospWebsite || ''
+  }
 }
 
-const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '회원정보 수정' }]
+/** 폼 데이터를 API 입력 형식으로 변환 */
+const mapFormDataToInput = (data: MemberInfoFormData): UpdateProfileInput => {
+  const input: UpdateProfileInput = {
+    email: data.email,
+    phone: data.phone,
+    licenseNo: data.licenseNumber,
+    isDirector: data.isDirector,
+    school: data.school,
+    department: data.department,
+    specialty: data.specialty,
+    smsConsent: data.smsConsent === 'Y',
+    emailConsent: data.emailConsent === 'Y',
+    replyConsent: data.replyConsent === 'Y',
+    hospName: data.hospitalName,
+    careInstitutionNo: data.careNumber,
+    hospZipCode: data.zipCode,
+    hospAddress: data.address,
+    hospAddressDetail: data.addressDetail,
+    hospPhone: data.hospitalPhone,
+    hospWebsite: data.hospitalWebsite
+  }
+
+  // 비밀번호가 입력된 경우에만 포함
+  if (data.password) {
+    input.password = data.password
+    input.passwordConfirm = data.passwordConfirm
+  }
+
+  return input
+}
 
 export default function EditProfilePage() {
   const router = useHospitalRouter()
+  const { user, loading } = useMe()
+  const { updateProfile, loading: updating } = useUpdateProfile()
+  const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
+    isOpen: false,
+    message: ''
+  })
+
+  const userData = useMemo(() => {
+    if (!user) return undefined
+    return mapUserToFormData(user)
+  }, [user])
 
   const handleCancel = () => {
     router.back()
@@ -48,17 +101,43 @@ export default function EditProfilePage() {
     router.push('/mypage/withdraw')
   }
 
-  const handleSubmit = (data: MemberInfoFormData) => {
-    // TODO: API 호출하여 회원정보 저장
-    console.log('저장할 데이터:', data)
-    // 저장 완료 후 마이페이지로 이동
-    // router.push('/mypage')
+  const handleSubmit = async (data: MemberInfoFormData) => {
+    try {
+      const input = mapFormDataToInput(data)
+      await updateProfile(input)
+      setAlertModal({ isOpen: true, message: '회원정보가 수정되었습니다.' })
+    } catch {
+      setAlertModal({ isOpen: true, message: '회원정보 수정 중 오류가 발생했습니다.' })
+    }
+  }
+
+  const handleAlertClose = () => {
+    setAlertModal({ isOpen: false, message: '' })
+    if (alertModal.message === '회원정보가 수정되었습니다.') {
+      router.push('/mypage')
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className={styles.wrap}>
+        <Header />
+        <main className={styles.main}>
+          <div className={styles.container}>
+            <h1 className={styles.pageTitle}>회원정보 수정</h1>
+            <div className={styles.content}>
+              <p>회원 정보를 불러오는 중입니다...</p>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
   }
 
   return (
     <div className={styles.wrap}>
       <Header />
-      {/* <Breadcrumbs items={breadcrumbItems} /> */}
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.pageTitle}>회원정보 수정</h1>
@@ -66,10 +145,10 @@ export default function EditProfilePage() {
           <div className={styles.content}>
             <MemberInfoForm
               mode='edit'
-              initialData={mockUserData}
+              initialData={userData}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
-              submitButtonText='저장'
+              submitButtonText={updating ? '저장 중...' : '저장'}
               cancelButtonText='취소'
               disabledFields={['userId', 'careNumber']}
               showWithdrawButton={true}
@@ -79,6 +158,12 @@ export default function EditProfilePage() {
         </div>
       </main>
       <Footer />
+
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        message={alertModal.message}
+        onClose={handleAlertClose}
+      />
     </div>
   )
 }

@@ -125,7 +125,7 @@ export function useNiceVerification(): UseNiceVerificationReturn {
     }
 
     try {
-      const returnUrl = `${window.location.origin}/auth/nice/callback`
+      const returnUrl = `${window.location.origin}/nice/callback`
 
       // 1) initiateVerification GraphQL mutation 호출
       const { data } = await initiateVerification({

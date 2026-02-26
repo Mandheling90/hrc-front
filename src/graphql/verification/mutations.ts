@@ -28,8 +28,7 @@ export const COMPLETE_VERIFICATION_MUTATION = gql`
 export const FIND_USER_ID_BY_VERIFICATION_MUTATION = gql`
   mutation FindUserIdByVerification($input: FindUserIdByVerificationInput!) {
     findUserIdByVerification(input: $input) {
-      userId
-      message
+      maskedUserId
     }
   }
 `
@@ -38,6 +37,7 @@ export const RESET_PASSWORD_BY_VERIFICATION_MUTATION = gql`
   mutation ResetPasswordByVerification($input: ResetPasswordByVerificationInput!) {
     resetPasswordByVerification(input: $input) {
       message
+      success
     }
   }
 `
