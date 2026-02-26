@@ -23,11 +23,11 @@ const hospitalPartnerLogos: Record<string, { id: number; image: string; alt: str
   ansan: [{ id: 7, image: '/images/ansan/Component 4.png', alt: '안산병원 파트너' }]
 }
 
-const policyLinks = [
-  { href: '#', label: '인터넷이용약관' },
-  { href: '#', label: '개인정보처리방침', primary: true },
-  { href: '#', label: '환자권리장전' },
-  { href: '#', label: '이메일주소수집거부' }
+const getPolicyLinks = (homepage: string) => [
+  { href: `${homepage}/kr/service/rull-internet.do`, label: '인터넷이용약관' },
+  { href: `${homepage}/kr/service/privacy.do`, label: '개인정보처리방침', primary: true },
+  { href: `${homepage}/kr/service/patient-right.do`, label: '환자권리장전' },
+  { href: `${homepage}/kr/service/refusal-collection.do`, label: '이메일주소수집거부' }
 ]
 
 const socialLinks = [
@@ -62,6 +62,7 @@ export const Footer: React.FC = () => {
   const totalLogos = partnerLogos.length
 
   const currentYear = new Date().getFullYear()
+  const policyLinks = getPolicyLinks(hospital.links.homepage)
 
   // 무한 루프를 위해 앞뒤로 아이템 복제 (앞에 4개, 뒤에 4개 추가)
   // 모바일 CSS 애니메이션을 위해 전체 배열을 2번 반복
@@ -184,7 +185,7 @@ export const Footer: React.FC = () => {
                 {policyLinks.map((link, index) => (
                   <React.Fragment key={link.label}>
                     {index > 0 && <span className={styles.separator}></span>}
-                    <Link href={link.href} className={link.primary ? styles.primary : ''}>
+                    <Link href={link.href} className={link.primary ? styles.primary : ''} target='_blank'>
                       {link.label}
                     </Link>
                   </React.Fragment>
