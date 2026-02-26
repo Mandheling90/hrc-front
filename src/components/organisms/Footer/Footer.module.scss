@@ -36,10 +36,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 300px;
+  gap: 40px;
 
   @media (max-width: $breakpoint-lg) {
-    gap: 100px;
+    gap: 24px;
   }
 
   @media (max-width: $breakpoint-md) {
@@ -51,10 +51,10 @@
   flex: 1;
   overflow: hidden;
   // CSS 변수: 이동 단위 (아이템 너비 + 갭)
-  --step: calc(25% + 10px);
+  --step: calc(20% + 8px);
 
   @media (max-width: $breakpoint-lg) {
-    --step: calc(25% + 6px);
+    --step: calc(20% + 4.8px);
   }
 
   @media (max-width: $breakpoint-md) {
@@ -104,17 +104,17 @@
 }
 
 .partnerItem {
-  // 4개가 보이도록: (100% - gap*3) / 4
-  flex: 0 0 calc(25% - 30px);
-  min-width: calc(25% - 30px);
+  // 5개가 보이도록
+  flex: 0 0 calc(20% - 32px);
+  min-width: calc(20% - 32px);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
 
   @media (max-width: $breakpoint-lg) {
-    flex: 0 0 calc(25% - 18px);
-    min-width: calc(25% - 18px);
+    flex: 0 0 calc(20% - 19.2px);
+    min-width: calc(20% - 19.2px);
     height: 32px;
   }
 
@@ -439,6 +439,43 @@
         height: 12px;
       }
     }
+  }
+}
+
+.dropdownWrapper {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  background-color: #4a4a4a;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.6px;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #5a5a5a;
+  }
+
+  & + & {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 

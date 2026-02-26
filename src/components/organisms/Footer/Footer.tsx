@@ -9,18 +9,16 @@ import { stripHospitalPrefix } from '@/utils/hospital'
 import styles from './Footer.module.scss'
 
 const commonPartnerLogos = [
-  { id: 1, image: '/images/img-section4-1.png', alt: '건강보험심사평가원' },
-  { id: 2, image: '/images/img-section4-2.png', alt: '마이차트' },
-  { id: 3, image: '/images/img-section4-3.png', alt: '한국보건의료정보원' }
-  // { id: 4, image: '/images/img-section4-4.png', alt: '안암병원 진료협력센터' },
-  // { id: 5, image: '/images/img-section4-5.png', alt: '파트너5' },
-  // { id: 6, image: '/images/img-section4-6.png', alt: '파트너6' }
+  { id: 1, image: '/images/img-section4-1.png', alt: '건강보험심사평가원', href: 'https://www.hira.or.kr/main.do' },
+  { id: 2, image: '/images/img-section4-2.png', alt: '보건복지부 마이차트', href: 'https://mychart.kr/portal/main/main.do' },
+  { id: 3, image: '/images/img-section4-3.png', alt: '한국보건의료정보원', href: 'https://www.khis.kr/' }
 ]
 
-const hospitalPartnerLogos: Record<string, { id: number; image: string; alt: string }[]> = {
-  anam: [{ id: 7, image: '/images/anam/Component 4.png', alt: '안암병원 파트너' }],
-  guro: [{ id: 7, image: '/images/guro/Component 4.png', alt: '구로병원 파트너' }],
-  ansan: [{ id: 7, image: '/images/ansan/Component 4.png', alt: '안산병원 파트너' }]
+// TODO: 리뉴얼 배포 후 각 병원 진료협력센터 실제 URL로 교체
+const allHospitalLogos: Record<string, { id: number; image: string; alt: string; href: string }> = {
+  anam: { id: 7, image: '/images/anam/Component 4.png', alt: '안암병원 진료협력센터', href: '/anam' },
+  guro: { id: 8, image: '/images/guro/Component 4.png', alt: '구로병원 진료협력센터', href: '/guro' },
+  ansan: { id: 9, image: '/images/ansan/Component 4.png', alt: '안산병원 진료협력센터', href: '/ansan' }
 }
 
 const getPolicyLinks = (homepage: string) => [
@@ -30,10 +28,20 @@ const getPolicyLinks = (homepage: string) => [
   { href: `${homepage}/kr/service/refusal-collection.do`, label: '이메일주소수집거부' }
 ]
 
-const socialLinks = [
-  { href: 'https://blog.naver.com/kuanamhospital', label: 'NAVER', icon: 'naver', color: '#3BAE37' },
-  { href: 'https://www.youtube.com/@user-gj6oo4jx5u', label: 'YOUTUBE', icon: 'youtube', color: '#FF0000' }
-]
+const socialLinksMap: Record<string, { href: string; label: string; icon: string; color: string }[]> = {
+  anam: [
+    { href: 'https://blog.naver.com/kuanam', label: 'NAVER', icon: 'naver', color: '#3BAE37' },
+    { href: 'https://www.youtube.com/channel/UCRNjgqCeun9fAf3ifbEE4kw', label: 'YOUTUBE', icon: 'youtube', color: '#FF0000' }
+  ],
+  guro: [
+    { href: 'https://blog.naver.com/guro_kumc', label: 'NAVER', icon: 'naver', color: '#3BAE37' },
+    { href: 'https://www.youtube.com/channel/UCak6pwzECH_c-SPeXj5BulQ', label: 'YOUTUBE', icon: 'youtube', color: '#FF0000' }
+  ],
+  ansan: [
+    { href: 'https://blog.naver.com/kumcasb', label: 'NAVER', icon: 'naver', color: '#3BAE37' },
+    { href: 'https://www.youtube.com/@ansanhospital', label: 'YOUTUBE', icon: 'youtube', color: '#FF0000' }
+  ]
+}
 
 const certifications = [
   {
@@ -48,6 +56,29 @@ const certifications = [
   }
 ]
 
+const departmentLinks: Record<string, { label: string; href: string }[]> = {
+  anam: [
+    { label: '간호부', href: 'https://anam.kumc.or.kr/kr/department/center/quickMenu/kumaanr.do?deptCd=202715' },
+    { label: '안암 e-IRB', href: 'https://irb.kumc.or.kr/Login.aspx?ReturnUrl=/' }
+  ],
+  guro: [
+    { label: '진료과', href: 'https://guro.kumc.or.kr/kr/doctor-department/department.do' },
+    { label: '센터', href: 'https://guro.kumc.or.kr/kr/doctor-department/center.do' }
+  ],
+  ansan: [
+    { label: '진료과', href: 'https://ansan.kumc.or.kr/kr/doctor-department/department.do' },
+    { label: '센터', href: 'https://ansan.kumc.or.kr/kr/doctor-department/center.do' }
+  ]
+}
+
+const familyLinks = [
+  { label: '고려대학교 의료원', href: 'https://www.kumc.or.kr/kr/index.do' },
+  { label: '고려대학교 안암병원', href: 'https://anam.kumc.or.kr/kr/index.do' },
+  { label: '고려대학교 구로병원', href: 'https://guro.kumc.or.kr/kr/index.do' },
+  { label: '고려대학교 안산병원', href: 'https://ansan.kumc.or.kr/kr/index.do' },
+  { label: '의료발전기금위원회', href: 'http://donation.kumc.or.kr/' }
+]
+
 export const Footer: React.FC = () => {
   const { hospital, hospitalId } = useHospital()
   const rawPathname = usePathname()
@@ -58,15 +89,19 @@ export const Footer: React.FC = () => {
   const [partnerIndex, setPartnerIndex] = useState(0)
   const [isPartnerPaused, setIsPartnerPaused] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(true)
-  const partnerLogos = [...commonPartnerLogos, ...(hospitalPartnerLogos[hospitalId] || [])]
+  const otherHospitalLogos = Object.entries(allHospitalLogos)
+    .filter(([id]) => id !== hospitalId)
+    .map(([, logo]) => logo)
+  const partnerLogos = [...commonPartnerLogos, ...otherHospitalLogos]
   const totalLogos = partnerLogos.length
 
   const currentYear = new Date().getFullYear()
   const policyLinks = getPolicyLinks(hospital.links.homepage)
+  const socialLinks = socialLinksMap[hospitalId] || socialLinksMap.anam
 
-  // 무한 루프를 위해 앞뒤로 아이템 복제 (앞에 4개, 뒤에 4개 추가)
+  // 무한 루프를 위해 앞뒤로 아이템 복제 (앞에 5개, 뒤에 5개 추가)
   // 모바일 CSS 애니메이션을 위해 전체 배열을 2번 반복
-  const extendedLogos = [...partnerLogos.slice(-4), ...partnerLogos, ...partnerLogos.slice(0, 4)]
+  const extendedLogos = [...partnerLogos.slice(-5), ...partnerLogos, ...partnerLogos.slice(0, 5)]
   const mobileLogos = [...partnerLogos, ...partnerLogos]
 
   const handlePartnerPrev = () => {
@@ -103,7 +138,7 @@ export const Footer: React.FC = () => {
                   className={`${styles.partnerTrack} ${styles.desktopTrack}`}
                   style={
                     {
-                      '--offset': partnerIndex + 4,
+                      '--offset': partnerIndex + 5,
                       transform: `translateX(calc(-1 * var(--offset) * var(--step)))`,
                       transition: isTransitioning ? 'transform 0.4s ease-in-out' : 'none'
                     } as React.CSSProperties
@@ -111,17 +146,29 @@ export const Footer: React.FC = () => {
                   onTransitionEnd={handleTransitionEnd}
                 >
                   {extendedLogos.map((partner, index) => (
-                    <div key={`desktop-${partner.id}-${index}`} className={styles.partnerItem}>
+                    <a
+                      key={`desktop-${partner.id}-${index}`}
+                      className={styles.partnerItem}
+                      href={partner.href}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
                       <Image src={partner.image} alt={partner.alt} width={250} height={40} />
-                    </div>
+                    </a>
                   ))}
                 </div>
                 {/* 모바일용 트랙 (CSS 애니메이션) */}
                 <div className={`${styles.partnerTrack} ${styles.mobileTrack}`}>
                   {mobileLogos.map((partner, index) => (
-                    <div key={`mobile-${partner.id}-${index}`} className={styles.partnerItem}>
+                    <a
+                      key={`mobile-${partner.id}-${index}`}
+                      className={styles.partnerItem}
+                      href={partner.href}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
                       <Image src={partner.image} alt={partner.alt} width={250} height={40} />
-                    </div>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -227,20 +274,60 @@ export const Footer: React.FC = () => {
             {/* Right */}
             <div className={styles.footerRight}>
               <div className={styles.dropdownBtns}>
-                <button
-                  className={`${styles.dropdownBtn} ${showDepartment ? styles.active : ''}`}
-                  onClick={() => setShowDepartment(!showDepartment)}
-                >
-                  진료지원부서
-                  <span className={styles.plusIcon}></span>
-                </button>
-                <button
-                  className={`${styles.dropdownBtn} ${showFamily ? styles.active : ''}`}
-                  onClick={() => setShowFamily(!showFamily)}
-                >
-                  패밀리사이트
-                  <span className={styles.plusIcon}></span>
-                </button>
+                <div className={styles.dropdownWrapper}>
+                  <button
+                    className={`${styles.dropdownBtn} ${showDepartment ? styles.active : ''}`}
+                    onClick={() => {
+                      setShowDepartment(!showDepartment)
+                      setShowFamily(false)
+                    }}
+                  >
+                    진료지원부서
+                    <span className={styles.plusIcon}></span>
+                  </button>
+                  {showDepartment && (
+                    <div className={styles.dropdownMenu}>
+                      {(departmentLinks[hospitalId] || []).map(link => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className={styles.dropdownItem}
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className={styles.dropdownWrapper}>
+                  <button
+                    className={`${styles.dropdownBtn} ${showFamily ? styles.active : ''}`}
+                    onClick={() => {
+                      setShowFamily(!showFamily)
+                      setShowDepartment(false)
+                    }}
+                  >
+                    패밀리사이트
+                    <span className={styles.plusIcon}></span>
+                  </button>
+                  {showFamily && (
+                    <div className={styles.dropdownMenu}>
+                      {familyLinks.map(link => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className={styles.dropdownItem}
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               <div className={styles.certifications}>
                 {certifications.map((cert, index) => (
