@@ -80,6 +80,11 @@ $spacing-14: 3.5rem; // 56px
 
 .linkText {
   color: $color-primary;
+  text-decoration: underline;
+
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .stepDivider {

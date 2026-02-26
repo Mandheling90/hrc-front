@@ -86,7 +86,7 @@ export default function HiraReferralPage() {
                     {step.linkText ? (
                       <>
                         {step.title.split(step.linkText)[0]}
-                        <span className={styles.linkText}>{step.linkText}</span>
+                        <a href={step.linkText} target='_blank' rel='noopener noreferrer' className={styles.linkText}>{step.linkText}</a>
                         {step.title.split(step.linkText)[1]}
                       </>
                     ) : (
