@@ -80,7 +80,7 @@ export const FindUserForm: React.FC = () => {
         }
         const params = new URLSearchParams({
           userId: userId.trim(),
-          verificationToken: verifiedData.verificationToken
+          verificationToken: verifiedData.verificationToken!
         })
         router.push(`/reset-password?${params.toString()}`)
       }
