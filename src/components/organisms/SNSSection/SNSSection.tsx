@@ -2,43 +2,59 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from '@/components/atoms/HospitalLink'
-import Image from 'next/image'
-import { useHospital } from '@/hooks'
+import { useHospital, useHospitalSns } from '@/hooks'
+import type { HospitalId } from '@/types/hospital'
 import styles from './SNSSection.module.scss'
 
-const snsPosts = [
-  {
-    id: 1,
-    image: '/images/img-section3-1.jpg',
-    title: '고려대학교 안암병원의 새로운 도약, 메디컴플렉스 신관 오픈(다큐멘터리)'
-  },
-  {
-    id: 2,
-    image: '/images/img-section3-2.jpg',
-    title:
-      '[안암인싸] 고려대안암병원 l 산부인과 브이로그 1화 l 안암병원 신관? l 노티? 회진? 바로 알려준다! l 로봇수술은 처음이지?'
-  },
-  {
-    id: 3,
-    image: '/images/img-section3-3.jpg',
-    title: '고대병원 간호사 이야기 들어볼래?'
-  },
-  {
-    id: 4,
-    image: '/images/img-section3-4.jpg',
-    title: '고대안암병원 SNS'
+const HOSPITAL_CODE_MAP: Record<HospitalId, string> = {
+  anam: 'ANAM',
+  guro: 'GURO',
+  ansan: 'ANSAN'
+}
+
+function extractYouTubeVideoId(url: string): string | null {
+  const patterns = [
+    /youtu\.be\/([a-zA-Z0-9_-]+)/,
+    /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
+    /youtube\.com\/live\/([a-zA-Z0-9_-]+)/,
+    /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/
+  ]
+  for (const pattern of patterns) {
+    const match = url.match(pattern)
+    if (match) return match[1]
   }
-]
+  return null
+}
+
+function getThumbnailUrl(article: { linkUrl: string | null }): string {
+  if (article.linkUrl) {
+    const videoId = extractYouTubeVideoId(article.linkUrl)
+    if (videoId) return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+  }
+  return '/images/img-section3-1.jpg'
+}
 
 export const SNSSection: React.FC = () => {
   const { hospital } = useHospital()
+  const hospitalCode = HOSPITAL_CODE_MAP[hospital.id]
+  const { articles, loading } = useHospitalSns(hospitalCode, 4)
+
+  const posts = articles.map(article => ({
+    id: article.articleNo,
+    image: getThumbnailUrl(article),
+    title: article.title,
+    linkUrl: article.linkUrl || '#'
+  }))
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(true)
-  const totalSlides = snsPosts.length
+  const totalSlides = posts.length
   const visibleItems = 2
 
   // 무한 루프를 위해 앞뒤로 아이템 복제
-  const extendedPosts = [...snsPosts.slice(-visibleItems), ...snsPosts, ...snsPosts.slice(0, visibleItems)]
+  const extendedPosts = totalSlides > 0
+    ? [...posts.slice(-visibleItems), ...posts, ...posts.slice(0, visibleItems)]
+    : []
 
   const handlePrev = () => {
     setIsTransitioning(true)
@@ -77,6 +93,8 @@ export const SNSSection: React.FC = () => {
     return () => clearTimeout(timer)
   }, [displayIndex])
 
+  if (loading || totalSlides === 0) return null
+
   return (
     <section className={`section ${styles.section3}`}>
       <div className={styles.verticalText}>
@@ -103,9 +121,9 @@ export const SNSSection: React.FC = () => {
                 onTransitionEnd={handleTransitionEnd}
               >
                 {extendedPosts.map((post, index) => (
-                  <div key={`${post.id}-${index}`} className={styles.thumbItem}>
+                  <Link key={`${post.id}-${index}`} href={post.linkUrl} target='_blank' className={styles.thumbItem}>
                     <div className={styles.thumbImg}>
-                      <Image
+                      <img
                         src={post.image}
                         alt={post.title}
                         width={270}
@@ -114,7 +132,7 @@ export const SNSSection: React.FC = () => {
                       />
                     </div>
                     <p className={styles.thumbTitle}>{post.title}</p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -153,10 +171,10 @@ export const SNSSection: React.FC = () => {
             </div>
           </div>
           <div className={`${styles.mainImage} ${isFading ? styles.fading : ''}`}>
-            <Link href='#'>
-              <Image
-                src={snsPosts[mainImageIndex].image}
-                alt={snsPosts[mainImageIndex].title}
+            <Link href={posts[mainImageIndex].linkUrl} target='_blank'>
+              <img
+                src={posts[mainImageIndex].image}
+                alt={posts[mainImageIndex].title}
                 width={738}
                 height={415}
                 style={{ borderBottomLeftRadius: '40px', borderBottomRightRadius: '40px', objectFit: 'cover' }}

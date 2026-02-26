@@ -1,7 +1,14 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'anam.kumc.or.kr' },
+      { protocol: 'https', hostname: 'guro.kumc.or.kr' },
+      { protocol: 'https', hostname: 'ansan.kumc.or.kr' },
+      { protocol: 'https', hostname: 'img.youtube.com' }
+    ]
+  }
 }
 
 export default nextConfig

@@ -494,6 +494,22 @@ type PopupModel {
   updatedAt: DateTime!
 }
 
+type HospitalArticle {
+  articleNo: Int!
+  title: String!
+  linkUrl: String
+  thumbnailUrl: String
+  category: String
+  createdDt: String!
+  hospitalName: String!
+  writer: String!
+}
+
+type HospitalArticleList {
+  articles: [HospitalArticle!]!
+  totalCount: Int!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
@@ -506,6 +522,8 @@ type Query {
   slideBanners: [PopupModel!]!
   activePopups: [PopupModel!]!
   miniBanners: [PopupModel!]!
+  # 병원 SNS
+  hospitalSns(hospitalCode: HospitalCode!, pageRow: Int): HospitalArticleList!
 }
 
 # ── NICE 본인인증 ──

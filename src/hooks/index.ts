@@ -28,6 +28,9 @@ export { useNiceVerification } from '@/hooks/useNiceVerification'
 export { useHospitalRouter } from '@/hooks/useHospitalRouter'
 export { useHospitalPathname } from '@/hooks/useHospitalPathname'
 
+// Hospital SNS
+export { useHospitalSns } from '@/hooks/useHospitalSns'
+
 // Popup/Banner Hooks - 팝업/배너 관련
 export { useSlideBanners } from '@/hooks/useSlideBanners'
 export { useMiniBanners } from '@/hooks/useMiniBanners'
