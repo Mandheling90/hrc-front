@@ -708,10 +708,10 @@ export const HeroSection: React.FC = () => {
             <img
               src={
                 isGuro
-                  ? '/images/main-visual-gu-mobile.jpg'
+                  ? '/assets/video/main-visual-gu-img.png'
                   : isAnsan
-                    ? '/images/main-visual-ansan-mobile.jpg'
-                    : '/images/main-visual-an-mobile.jpg'
+                    ? '/assets/video/main-visual-ansan-img.png'
+                    : '/assets/video/main-visual-an-img.png'
               }
               alt='메인 비주얼'
               className={styles.bannerImage}
