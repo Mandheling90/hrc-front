@@ -1,3 +1,4 @@
+import { InstitutionType } from '@/graphql/__generated__/types'
 import type { HospitalCode, ApplyPartnerHospitalInput } from '@/graphql/__generated__/types'
 import type {
   HospitalInfoStepData,
@@ -52,6 +53,66 @@ const toInt = (v?: string): number | undefined => {
   return isNaN(n) ? undefined : n
 }
 
+/** 의료기관 유형 한글 → 백엔드 InstitutionType enum 변환 */
+const INSTITUTION_TYPE_MAP: Record<string, InstitutionType> = {
+  '상급종합병원': InstitutionType.TertiaryHospital,
+  '종합병원': InstitutionType.GeneralHospital,
+  '병원': InstitutionType.Hospital,
+  '요양병원': InstitutionType.NursingHospital,
+  '한방': InstitutionType.Oriental,
+  '한방병원': InstitutionType.OrientalHospital,
+  '치과병원': InstitutionType.DentalHospital,
+  '정신병원': InstitutionType.MentalHospital,
+  '보건기관': InstitutionType.PublicHealth,
+  '기관': InstitutionType.Institution,
+  '의원': InstitutionType.Clinic,
+  '치과의원': InstitutionType.DentalClinic,
+  '한의원': InstitutionType.Oriental
+}
+
+/** 백엔드 코드 → 의료기관 유형 한글 역변환 */
+const INSTITUTION_TYPE_REVERSE: Record<string, string> = Object.fromEntries(
+  Object.entries(INSTITUTION_TYPE_MAP).map(([k, v]) => [v, k])
+)
+
+/** 의료기관 유형 한글 → 백엔드 InstitutionType enum */
+const toInstitutionTypeCode = (v?: string): InstitutionType | undefined => {
+  if (!v || !v.trim()) return undefined
+  return INSTITUTION_TYPE_MAP[v] ?? undefined
+}
+
+/** 백엔드 코드 → 의료기관 유형 한글 */
+const fromInstitutionTypeCode = (v?: string): string => {
+  if (!v) return ''
+  return INSTITUTION_TYPE_REVERSE[v] ?? v
+}
+
+/** 격리 중 간병: 영문 key → 한글 라벨 */
+const ISOLATION_CARE_LABEL: Record<string, string> = {
+  joint: '공동',
+  individual: '개인',
+  guardian: '보호자'
+}
+
+/** 격리 중 재활: 영문 key → 한글 라벨 */
+const ISOLATION_REHAB_LABEL: Record<string, string> = {
+  no: '불가',
+  bedside: '침상',
+  isolationWard: '격리병동'
+}
+
+/** 체크된 항목의 key를 한글 라벨로 변환 후 comma-join */
+const toKoreanLabels = (
+  obj: Record<string, boolean> | undefined,
+  labelMap: Record<string, string>
+): string | undefined => {
+  if (!obj) return undefined
+  const labels = Object.entries(obj)
+    .filter(([, v]) => v)
+    .map(([k]) => labelMap[k] ?? k)
+  return labels.length > 0 ? labels.join(',') : undefined
+}
+
 /**
  * 8개 Step 데이터 → ApplyPartnerHospitalInput 변환
  */
@@ -65,7 +126,7 @@ export function mapStepsToApiInput(
   return {
     hospitalId,
     hospitalCode,
-    institutionType: 'H',
+    institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
 
     // Step 1: 병원 정보
     hospitalName: emptyToUndef(step1?.hospitalName),
@@ -101,11 +162,13 @@ export function mapStepsToApiInput(
     staffPosition: emptyToUndef(step3?.position),
     staffTel: emptyToUndef(step3?.contactNumber),
     staffPhone: emptyToUndef(step3?.mobilePhone),
+    staffEmail: emptyToUndef(step3?.staffEmail),
     totalStaffCount: toInt(step3?.totalEmployees),
     specialistCount: toInt(step3?.specialists),
     nurseCount: toInt(step3?.nurses),
 
     // Step 4: 병상 및 시설 운영 현황
+    totalBedCount: toInt(step4?.totalBedCount),
     activeBedCount: toInt(step4?.operatingBeds),
     premiumRoomCount: step4?.premiumRoomChecked ? toInt(step4?.premiumRoomCount) : undefined,
     multiRoomCount: step4?.multiPersonRoomChecked ? toInt(step4?.multiPersonRoomCount) : undefined,
@@ -143,18 +206,8 @@ export function mapStepsToApiInput(
           otherValue: step5.isolationTypeOther
         }
       : undefined,
-    isolationCareType: step5?.nursingDuringIsolation
-      ? Object.entries(step5.nursingDuringIsolation)
-          .filter(([, v]) => v)
-          .map(([k]) => k)
-          .join(',')
-      : undefined,
-    isolationRehabType: step5?.rehabilitationDuringIsolation
-      ? Object.entries(step5.rehabilitationDuringIsolation)
-          .filter(([, v]) => v)
-          .map(([k]) => k)
-          .join(',')
-      : undefined,
+    isolationCareType: toKoreanLabels(step5?.nursingDuringIsolation, ISOLATION_CARE_LABEL),
+    isolationRehabType: toKoreanLabels(step5?.rehabilitationDuringIsolation, ISOLATION_REHAB_LABEL),
 
     // Step 6: 진료과 운영 현황 및 주요 보유 장비
     departmentSpecialists: step6?.departments,
@@ -195,14 +248,14 @@ export function mapStepsToApiInput(
 export function mapApiToStepData(api: any): AllStepData {
   return {
     step1: {
-      hospitalName: api.hospitalName ?? api.hospital?.name ?? '',
+      hospitalName: api.hospital?.name ?? '',
       medicalInstitutionNumber: api.hospital?.phisCode ?? '',
-      zipCode: api.hospitalZipCode ?? api.hospital?.zipCode ?? '',
-      address: api.hospitalAddress ?? api.hospital?.address ?? '',
-      detailAddress: api.hospitalAddressDetail ?? api.hospital?.addressDetail ?? '',
-      phoneNumber: api.hospitalPhone ?? api.hospital?.phone ?? '',
-      faxNumber: api.hospitalFaxNumber ?? api.hospital?.faxNumber ?? '',
-      website: api.hospitalWebsite ?? api.hospital?.website ?? ''
+      zipCode: api.hospital?.zipCode ?? '',
+      address: api.hospital?.address ?? '',
+      detailAddress: api.hospital?.addressDetail ?? '',
+      phoneNumber: api.hospital?.phone ?? '',
+      faxNumber: api.hospital?.faxNumber ?? '',
+      website: api.hospital?.website ?? ''
     },
     step2: {
       directorName: api.directorName ?? '',
@@ -229,12 +282,14 @@ export function mapApiToStepData(api: any): AllStepData {
       position: api.staffPosition ?? '',
       contactNumber: api.staffTel ?? '',
       mobilePhone: api.staffPhone ?? '',
-      medicalInstitutionType: '',
+      staffEmail: api.staffEmail ?? '',
+      medicalInstitutionType: fromInstitutionTypeCode(api.institutionType),
       totalEmployees: api.totalStaffCount?.toString() ?? '',
       specialists: api.specialistCount?.toString() ?? '',
       nurses: api.nurseCount?.toString() ?? ''
     },
     step4: {
+      totalBedCount: api.totalBedCount?.toString() ?? '',
       operatingBeds: api.activeBedCount?.toString() ?? '',
       premiumRoomChecked: (api.premiumRoomCount ?? 0) > 0,
       premiumRoomCount: api.premiumRoomCount?.toString() ?? '',
@@ -277,14 +332,14 @@ export function mapApiToStepData(api: any): AllStepData {
       isolationType: api.isolationTypes ?? { vre: false, cre: false, cpe: false, tb: false, other: false },
       isolationTypeOther: api.isolationTypes?.otherValue ?? '',
       nursingDuringIsolation: {
-        joint: api.isolationCareType?.includes('joint') ?? false,
-        individual: api.isolationCareType?.includes('individual') ?? false,
-        guardian: api.isolationCareType?.includes('guardian') ?? false
+        joint: api.isolationCareType?.includes('공동') ?? false,
+        individual: api.isolationCareType?.includes('개인') ?? false,
+        guardian: api.isolationCareType?.includes('보호자') ?? false
       },
       rehabilitationDuringIsolation: {
-        no: api.isolationRehabType?.includes('no') ?? false,
-        bedside: api.isolationRehabType?.includes('bedside') ?? false,
-        isolationWard: api.isolationRehabType?.includes('isolationWard') ?? false
+        no: api.isolationRehabType?.includes('불가') ?? false,
+        bedside: api.isolationRehabType?.includes('침상') ?? false,
+        isolationWard: api.isolationRehabType?.includes('격리병동') ?? false
       }
     },
     step6: {
@@ -345,7 +400,7 @@ export function mapClinicStepsToApiInput(
   return {
     hospitalId,
     hospitalCode,
-    institutionType: emptyToUndef(step3?.medicalInstitutionType),
+    institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
 
     // Step 1: 병원 정보
     hospitalName: emptyToUndef(step1?.hospitalName),
@@ -381,6 +436,7 @@ export function mapClinicStepsToApiInput(
     staffPosition: emptyToUndef(step3?.position),
     staffTel: emptyToUndef(step3?.contactNumber),
     staffPhone: emptyToUndef(step3?.mobilePhone),
+    staffEmail: emptyToUndef(step3?.staffEmail),
 
     // Step 3: 병상/직원
     totalBedCount: toInt(step3?.totalBeds),
@@ -420,14 +476,14 @@ export function mapClinicStepsToApiInput(
 export function mapApiToClinicStepData(api: any): ClinicAllStepData {
   return {
     step1: {
-      hospitalName: api.hospitalName ?? api.hospital?.name ?? '',
+      hospitalName: api.hospital?.name ?? '',
       medicalInstitutionNumber: api.hospital?.phisCode ?? '',
-      zipCode: api.hospitalZipCode ?? api.hospital?.zipCode ?? '',
-      address: api.hospitalAddress ?? api.hospital?.address ?? '',
-      detailAddress: api.hospitalAddressDetail ?? api.hospital?.addressDetail ?? '',
-      phoneNumber: api.hospitalPhone ?? api.hospital?.phone ?? '',
-      faxNumber: api.hospitalFaxNumber ?? api.hospital?.faxNumber ?? '',
-      website: api.hospitalWebsite ?? api.hospital?.website ?? ''
+      zipCode: api.hospital?.zipCode ?? '',
+      address: api.hospital?.address ?? '',
+      detailAddress: api.hospital?.addressDetail ?? '',
+      phoneNumber: api.hospital?.phone ?? '',
+      faxNumber: api.hospital?.faxNumber ?? '',
+      website: api.hospital?.website ?? ''
     },
     step2: {
       directorName: api.directorName ?? '',
@@ -454,7 +510,8 @@ export function mapApiToClinicStepData(api: any): ClinicAllStepData {
       position: api.staffPosition ?? '',
       contactNumber: api.staffTel ?? '',
       mobilePhone: api.staffPhone ?? '',
-      medicalInstitutionType: api.institutionType ?? '의원',
+      staffEmail: api.staffEmail ?? '',
+      medicalInstitutionType: fromInstitutionTypeCode(api.institutionType) || '의원',
       totalBeds: api.totalBedCount?.toString() ?? '',
       totalStaff: api.totalStaffCount?.toString() ?? '',
       specialists: api.specialistCount?.toString() ?? '',

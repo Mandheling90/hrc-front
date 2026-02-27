@@ -24,6 +24,22 @@ enum UserStatus {
   WITHDRAWN
 }
 
+enum InstitutionType {
+  TERTIARY_HOSPITAL
+  GENERAL_HOSPITAL
+  HOSPITAL
+  DENTAL_HOSPITAL
+  MENTAL_HOSPITAL
+  NURSING_HOSPITAL
+  CLINIC
+  DENTAL_CLINIC
+  PUBLIC_HEALTH
+  INSTITUTION
+  UNCLASSIFIED
+  ORIENTAL
+  ORIENTAL_HOSPITAL
+}
+
 type UserProfile {
   birthDate: String
   department: String
@@ -122,6 +138,20 @@ input SearchCollaboratingHospitalsInput {
   hsptClsfCd: String
 }
 
+enum PartnerType {
+  H
+  M
+}
+
+type AttachmentModel {
+  id: ID!
+  originalName: String!
+  storedPath: String!
+  mimeType: String!
+  fileSize: Int!
+  createdAt: DateTime
+}
+
 type HospitalModel {
   id: ID
   name: String!
@@ -135,11 +165,10 @@ type HospitalModel {
   website: String
   zipCode: String
   hospitalCode: HospitalCode
-  partnerType: String
-  region: String
+  partnerType: PartnerType
   specialties: String
-  createdAt: String
-  updatedAt: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type HospitalSearchResult {
@@ -174,7 +203,7 @@ scalar JSON
 input ApplyPartnerHospitalInput {
   hospitalCode: HospitalCode!
   hospitalId: String!
-  institutionType: String
+  institutionType: InstitutionType
   # 병원 정보
   hospitalName: String
   hospitalAddress: String
@@ -263,7 +292,7 @@ input ApplyPartnerHospitalInput {
 input SaveDraftPartnerInput {
   hospitalId: String!
   hospitalCode: HospitalCode
-  institutionType: String
+  institutionType: InstitutionType
   # 병원 정보
   hospitalName: String
   hospitalAddress: String
@@ -355,16 +384,8 @@ type PartnerHospitalModel {
   hospitalCode: HospitalCode!
   hospitalId: String!
   hospital: HospitalModel!
-  institutionType: String
+  institutionType: InstitutionType
   status: PartnerStatus!
-  # 병원 정보
-  hospitalName: String
-  hospitalAddress: String
-  hospitalAddressDetail: String
-  hospitalZipCode: String
-  hospitalPhone: String
-  hospitalFaxNumber: String
-  hospitalWebsite: String
   # 병원장 정보
   isDirector: Boolean
   directorName: String
@@ -440,6 +461,7 @@ type PartnerHospitalModel {
   majorEquipment: String
   remarks: String
   attachments: JSON
+  attachmentRows: [AttachmentModel!]
   # 심사
   rejectReason: String
   reviewedAt: DateTime

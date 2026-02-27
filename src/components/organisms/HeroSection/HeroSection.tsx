@@ -453,6 +453,21 @@ function useIsMobile(breakpoint = 768) {
   return isMobile
 }
 
+// 다크모드 감지 훅
+function useIsDark() {
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-color-scheme: dark)')
+    setIsDark(mql.matches)
+    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
+  }, [])
+
+  return isDark
+}
+
 // 슬라이드 배너 미디어 렌더러
 const BannerMedia: React.FC<{
   banner: SlideBanner
@@ -535,7 +550,7 @@ const PlayIcon = () => (
 )
 
 export const HeroSection: React.FC = () => {
-  const { isAnam, isGuro, hospital } = useHospital()
+  const { isAnam, isGuro, isAnsan, hospital } = useHospital()
   const { banners, loading: bannersLoading } = useSlideBanners()
   const videoRef = useRef<HTMLVideoElement>(null)
   const fallbackVideoRef = useRef<HTMLVideoElement>(null)
@@ -552,14 +567,17 @@ export const HeroSection: React.FC = () => {
   const [isDownloadOpen, setIsDownloadOpen] = useState(false)
 
   const isMobile = useIsMobile()
+  const isDark = useIsDark()
   const hasBanners = banners.length > 0
   const totalSlides = banners.length
 
   // 병원별 비디오 소스 (배너가 없을 때 폴백)
   const fallbackVideoSrc = useMemo(() => {
-    if (isGuro) return '/assets/video/main-visual-gu.mp4'
-    return '/assets/video/main-visual-an.mp4'
-  }, [isGuro])
+    const suffix = isDark ? '-dark' : ''
+    if (isGuro) return `/assets/video/main-visual-gu${suffix}.mp4`
+    if (isAnsan) return `/assets/video/main-visual-ansan${suffix}.mp4`
+    return `/assets/video/main-visual-an${suffix}.mp4`
+  }, [isGuro, isAnsan, isDark])
 
   // 병원별 조회 서비스 링크
   const inquiryLinks = isGuro ? inquiryLinksGuro : inquiryLinksAnam
@@ -688,7 +706,13 @@ export const HeroSection: React.FC = () => {
           isMobile ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={isGuro ? '/images/main-visual-gu-mobile.jpg' : '/images/main-visual-an-mobile.jpg'}
+              src={
+                isGuro
+                  ? '/images/main-visual-gu-mobile.jpg'
+                  : isAnsan
+                    ? '/images/main-visual-ansan-mobile.jpg'
+                    : '/images/main-visual-an-mobile.jpg'
+              }
               alt='메인 비주얼'
               className={styles.bannerImage}
             />

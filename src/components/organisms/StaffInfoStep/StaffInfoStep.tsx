@@ -52,6 +52,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
     const [position, setPosition] = useState(defaultValues?.position ?? '')
     const [contactNumber, setContactNumber] = useState(defaultValues?.contactNumber ?? '')
     const [mobilePhone, setMobilePhone] = useState(defaultValues?.mobilePhone ?? '')
+    const [staffEmail, setStaffEmail] = useState(defaultValues?.staffEmail ?? '')
     const [medicalInstitutionType, setMedicalInstitutionType] = useState(defaultValues?.medicalInstitutionType ?? '')
     const [totalEmployees, setTotalEmployees] = useState(defaultValues?.totalEmployees ?? '')
     const [specialists, setSpecialists] = useState(defaultValues?.specialists ?? '')
@@ -66,6 +67,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
         position,
         contactNumber,
         mobilePhone,
+        staffEmail,
         medicalInstitutionType,
         totalEmployees,
         specialists,
@@ -179,6 +181,17 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               placeholder='-없이 입력해주세요.'
               value={mobilePhone}
               onChange={e => setMobilePhone(e.target.value)}
+            />
+
+            {/* 이메일 */}
+            <FormField
+              label='이메일'
+              id='staffEmail'
+              name='staffEmail'
+              type='email'
+              placeholder='이메일을 입력해주세요.'
+              value={staffEmail}
+              onChange={e => setStaffEmail(e.target.value)}
             />
           </div>
         </div>

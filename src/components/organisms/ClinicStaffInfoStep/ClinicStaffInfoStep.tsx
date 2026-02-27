@@ -42,6 +42,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
     const [position, setPosition] = useState<string>(defaultValues?.position ?? '')
     const [contactNumber, setContactNumber] = useState<string>(defaultValues?.contactNumber ?? '')
     const [mobilePhone, setMobilePhone] = useState<string>(defaultValues?.mobilePhone ?? '')
+    const [staffEmail, setStaffEmail] = useState<string>(defaultValues?.staffEmail ?? '')
 
     // 병상 및 직원 수 상태
     const [totalBeds, setTotalBeds] = useState<string>(defaultValues?.totalBeds ?? '')
@@ -85,6 +86,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
         position,
         contactNumber,
         mobilePhone,
+        staffEmail,
         medicalInstitutionType,
         totalBeds,
         totalStaff,
@@ -203,6 +205,17 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
               placeholder='-없이 입력해주세요.'
               value={mobilePhone}
               onChange={e => setMobilePhone(e.target.value)}
+            />
+
+            {/* 이메일 */}
+            <FormField
+              label='이메일'
+              id='staffEmail'
+              name='staffEmail'
+              type='email'
+              placeholder='이메일을 입력해주세요.'
+              value={staffEmail}
+              onChange={e => setStaffEmail(e.target.value)}
             />
           </div>
         </div>

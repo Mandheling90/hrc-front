@@ -18,15 +18,9 @@ export const MY_PARTNER_APPLICATION_QUERY = gql`
         website
         zipCode
         phisCode
+        faxNumber
         representative
       }
-      hospitalName
-      hospitalAddress
-      hospitalAddressDetail
-      hospitalZipCode
-      hospitalPhone
-      hospitalFaxNumber
-      hospitalWebsite
       isDirector
       directorName
       directorBirthDate
@@ -92,6 +86,14 @@ export const MY_PARTNER_APPLICATION_QUERY = gql`
       majorEquipment
       remarks
       attachments
+      attachmentRows {
+        id
+        originalName
+        storedPath
+        mimeType
+        fileSize
+        createdAt
+      }
       rejectReason
       approvedAt
       createdAt
@@ -147,6 +149,7 @@ export const PARTNER_APPLICATION_BY_ID_QUERY = gql`
         zipCode
         faxNumber
         website
+        representative
       }
       isDirector
       directorName
@@ -213,6 +216,14 @@ export const PARTNER_APPLICATION_BY_ID_QUERY = gql`
       majorEquipment
       remarks
       attachments
+      attachmentRows {
+        id
+        originalName
+        storedPath
+        mimeType
+        fileSize
+        createdAt
+      }
       rejectReason
       reviewedAt
       reviewedById
