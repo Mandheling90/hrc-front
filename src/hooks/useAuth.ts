@@ -36,6 +36,7 @@ interface SignupInput {
   hospWebsite?: string
   ci?: string
   di?: string
+  verificationToken: string
 }
 
 interface AuthPayload {

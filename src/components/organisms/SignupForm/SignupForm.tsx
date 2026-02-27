@@ -122,7 +122,8 @@ export const SignupForm: React.FC = () => {
         hospPhone: formData.hospitalPhone,
         hospWebsite: formData.hospitalWebsite || undefined,
         ci: verifiedData?.ci || undefined,
-        di: verifiedData?.di || undefined
+        di: verifiedData?.di || undefined,
+        verificationToken: verifiedData?.verificationToken || ''
       })
 
       if (result) {
