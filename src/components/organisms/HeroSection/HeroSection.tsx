@@ -734,12 +734,14 @@ export const HeroSection: React.FC = () => {
             </h2>
           ) : (
             <h2 className={styles.title}>
-              <span>의료네트워크의 중심,</span>
-              <strong>
-                고려대학교 {hospital.name.short}
-                <br />
-                진료협력센터
-              </strong>
+              <span>
+                {isGuro
+                  ? 'Fast Link, Better Care'
+                  : isAnsan
+                    ? '함께하는 진료, 더 넓은 세상으로'
+                    : '의료네트워크의 중심,'}
+              </span>
+              <strong>고려대학교 {hospital.name.short} 진료협력센터</strong>
             </h2>
           )}
 
