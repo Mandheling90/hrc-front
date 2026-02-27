@@ -351,7 +351,7 @@ export default function DepartmentPage() {
                   ))
                 ) : (
                   <div className={styles.emptyState}>
-                    <p>선택한 진료과의 의료진 정보가 없습니다.</p>
+                    <p>선택한 진료과의 의료진 정보가 없습니다 .</p>
                   </div>
                 )}
               </SectionContainer>
