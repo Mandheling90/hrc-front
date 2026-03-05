@@ -1,0 +1,248 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+.pageTitle {
+  @include page-title-large;
+}
+
+// ========================================
+// 리스트형 테이블/카드
+// ========================================
+.tableSection {
+  margin-bottom: $spacing-10;
+
+  @include mobile {
+    margin-bottom: $spacing-8;
+  }
+}
+
+.boardTable {
+  max-width: 1430px;
+  margin: 0 auto;
+}
+
+.noticeBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  padding: 4px 12px;
+  background-color: $color-primary;
+  color: $color-white;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  line-height: 30px;
+  border-radius: 5px;
+  letter-spacing: -0.8px;
+}
+
+.numberText {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+}
+
+.titleText {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: var(--notice-title-color, $color-darken);
+  transition: color 0.2s;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dateText {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+}
+
+// 모바일 카드
+.cardList {
+  @include mobile {
+    display: block;
+
+    :global(.card) {
+      margin-bottom: $spacing-4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.noticeCard {
+  background-color: #f8efe2 !important;
+}
+
+.cardTitleWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.cardTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.72px;
+  line-height: $line-height-normal;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
+}
+
+.cardDate {
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.56px;
+  text-align: right;
+}
+
+// ========================================
+// 썸네일형 카드 그리드
+// ========================================
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 40px;
+  row-gap: 56px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+    row-gap: 40px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+}
+
+.thumbnailCard {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+
+  &:hover .thumbnailWrapper,
+  &:focus .thumbnailWrapper {
+    border-color: $color-primary;
+    border-width: 3px;
+  }
+
+  &:hover .thumbnailTitle,
+  &:focus .thumbnailTitle {
+    color: black;
+  }
+}
+
+.thumbnailWrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 10px;
+  border: 1px solid $gray-5;
+  overflow: hidden;
+  background-color: $gray-3;
+  display: flex;
+  align-items: center;
+
+  @include tablet {
+    height: 300px;
+  }
+
+  @include mobile {
+    height: 320px;
+  }
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.thumbnailPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: $gray-3;
+}
+
+.thumbnailContent {
+  padding: 0 $spacing-2;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.thumbnailTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-11;
+  letter-spacing: -0.8px;
+  line-height: $line-height-normal;
+  @include text-ellipsis;
+  word-break: break-word;
+
+  @include mobile {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.thumbnailDate {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.72px;
+  line-height: $line-height-normal;
+}
+
+// ========================================
+// 공통
+// ========================================
+.paginationWrapper {
+  @include pagination-wrapper;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: $spacing-16 0;
+  color: $gray-10;
+  font-size: $font-size-base;
+}

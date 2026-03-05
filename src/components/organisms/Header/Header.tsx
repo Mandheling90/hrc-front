@@ -1,12 +1,13 @@
 'use client'
 
 import Link from '@/components/atoms/HospitalLink'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
 import { stripHospitalPrefix } from '@/utils/hospital'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useLogout } from '@/hooks/useAuth'
+import { useMenus } from '@/hooks/useMenus'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 import styles from './Header.module.scss'
@@ -107,33 +108,76 @@ export const Header: React.FC = () => {
   const { logout } = useLogout()
   const logoUrl = `/images/${hospitalId}/logo-top.png`
   const rawPathname = usePathname()
+  const searchParams = useSearchParams()
   // 병원 prefix를 제거한 순수 경로 (예: /anam/login → /login)
   const pathname = stripHospitalPrefix(rawPathname)
+  // 쿼리스트링 포함 경로 (예: /content?id=xxx) - API 메뉴 매칭용
+  const fullPath = useMemo(() => {
+    const qs = searchParams.toString()
+    return qs ? `${pathname}?${qs}` : pathname
+  }, [pathname, searchParams])
 
   // 메인페이지 여부 (투명 헤더)
   const isMainPage = pathname === '/'
 
   const isLoggedIn = isAuthenticated
-  const menuItems = useMemo(() => {
-    return isLoggedIn ? [...commonMenuItems, myPageMenu] : commonMenuItems
-  }, [isLoggedIn])
+  const { menus: apiMenus } = useMenus()
 
-  // 현재 경로가 메뉴 href와 정확히 일치하는지 확인
+  // API 메뉴 데이터를 MenuItem 형식으로 변환 (안암병원)
+  const apiMenuItems: MenuItem[] = useMemo(() => {
+    if (hospitalId !== 'anam' || apiMenus.length === 0) return []
+    return apiMenus
+      .filter(menu => menu.gnbExposure)
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map(menu => ({
+        label: menu.name,
+        subItems: menu.children
+          .filter(child => child.gnbExposure)
+          .sort((a, b) => a.sortOrder - b.sortOrder)
+          .map(child => ({
+            href: child.path || '#',
+            label: child.name
+          }))
+      }))
+      .filter(menu => menu.subItems.length > 0)
+  }, [hospitalId, apiMenus])
+
+  // GNB 표시용 메뉴 (안암: API 데이터, 그 외: 하드코딩)
+  const menuItems = useMemo(() => {
+    const baseMenus = hospitalId === 'anam' && apiMenuItems.length > 0 ? apiMenuItems : commonMenuItems
+    return isLoggedIn ? [...baseMenus, myPageMenu] : baseMenus
+  }, [isLoggedIn, hospitalId, apiMenuItems])
+
+  // Breadcrumb 매칭용 메뉴 (API 메뉴 + 하드코딩 메뉴 모두 포함)
+  const breadcrumbMenuItems = useMemo(() => {
+    if (hospitalId === 'anam' && apiMenuItems.length > 0) {
+      const base = [...apiMenuItems, ...commonMenuItems]
+      return isLoggedIn ? [...base, myPageMenu] : base
+    }
+    return menuItems
+  }, [hospitalId, apiMenuItems, isLoggedIn, menuItems])
+
+  // 현재 경로가 메뉴 href와 일치하는지 확인 (쿼리스트링 포함)
   const isCurrentPage = (href: string) => {
-    return pathname === href
+    return pathname === href || fullPath === href
   }
 
-  // 현재 경로가 속한 메뉴 섹션 인덱스
+  // 메뉴 href가 현재 경로에 매칭되는지 확인
+  const isMatchingHref = useCallback((href: string) => {
+    return pathname === href || pathname.startsWith(href + '/') || fullPath === href
+  }, [pathname, fullPath])
+
+  // 현재 경로가 속한 메뉴 섹션 인덱스 (GNB 활성 표시용)
   const currentMenuIndex = useMemo(() => {
     for (let i = 0; i < menuItems.length; i++) {
       for (const sub of menuItems[i].subItems) {
-        if (pathname === sub.href || pathname.startsWith(sub.href + '/')) {
+        if (isMatchingHref(sub.href)) {
           return i
         }
       }
     }
     return -1
-  }, [pathname, menuItems])
+  }, [menuItems, isMatchingHref])
 
   // Breadcrumbs 표시 여부 (메인, 로그인, 회원가입, 아이디 비밀번호 찾기, 비밀번호 재설정, 자문의 로그인 제외)
   const shouldShowBreadcrumbs = useMemo(() => {
@@ -168,9 +212,9 @@ export const Header: React.FC = () => {
     let currentSubItem: SubMenuItem | null = null
     let bestMatchLength = -1
 
-    for (const menu of menuItems) {
+    for (const menu of breadcrumbMenuItems) {
       for (const sub of menu.subItems) {
-        if (pathname === sub.href || pathname.startsWith(sub.href + '/')) {
+        if (isMatchingHref(sub.href)) {
           if (sub.href.length > bestMatchLength) {
             bestMatchLength = sub.href.length
             currentCategory = menu
@@ -192,9 +236,12 @@ export const Header: React.FC = () => {
       })
 
       // 레벨 2: 소분류 (서브페이지) - 드롭다운: 현재 카테고리의 모든 서브페이지
+      // 매칭된 카테고리에서 서브아이템 목록 가져오기 (API/하드코딩 모두 확인)
+      const matchedCategory = breadcrumbMenuItems.find(m => m.label === currentCategory!.label)
+      const subItems = matchedCategory?.subItems ?? currentCategory.subItems
       items.push({
         label: currentSubItem.label,
-        dropdownItems: currentCategory.subItems
+        dropdownItems: subItems
           .filter(sub => !sub.disabled)
           .map(sub => ({
             label: sub.label,
@@ -205,7 +252,7 @@ export const Header: React.FC = () => {
     }
 
     return items
-  }, [pathname, shouldShowBreadcrumbs, menuItems])
+  }, [pathname, fullPath, shouldShowBreadcrumbs, menuItems, breadcrumbMenuItems, isMatchingHref])
 
   // 브래드크럼 드롭다운 토글
   const handleBreadcrumbToggle = useCallback((index: number) => {

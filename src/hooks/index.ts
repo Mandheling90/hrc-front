@@ -31,6 +31,9 @@ export { useHospitalPathname } from '@/hooks/useHospitalPathname'
 // Hospital SNS
 export { useHospitalSns } from '@/hooks/useHospitalSns'
 
+// Menu Hooks - GNB 메뉴
+export { useMenus } from '@/hooks/useMenus'
+
 // Popup/Banner Hooks - 팝업/배너 관련
 export { useSlideBanners } from '@/hooks/useSlideBanners'
 export { useMiniBanners } from '@/hooks/useMiniBanners'

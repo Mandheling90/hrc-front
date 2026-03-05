@@ -1,0 +1,266 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+
+.wrap {
+  @include page-wrap;
+}
+
+.main {
+  @include page-main;
+}
+
+// 제목 영역
+.headerSection {
+  margin-bottom: $spacing-6;
+}
+
+.headerBox {
+  background-color: #fdf9f4;
+  border: 1px solid $gray-8;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include mobile {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-3;
+  }
+}
+
+.headerDivider {
+  width: 1px;
+  height: 18px;
+  background-color: $gray-8;
+  flex-shrink: 0;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.titleArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.postTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  color: $gray-12;
+  letter-spacing: -0.96px;
+  line-height: 36px;
+  word-break: break-word;
+
+  @include tablet {
+    font-size: $font-size-xl;
+    letter-spacing: -0.8px;
+    line-height: 30px;
+  }
+
+  @include mobile {
+    font-size: $font-size-xl;
+    letter-spacing: -0.8px;
+    line-height: 30px;
+  }
+}
+
+.dateArea {
+  flex-shrink: 0;
+  width: 150px;
+  text-align: center;
+
+  @include mobile {
+    width: auto;
+    text-align: left;
+  }
+}
+
+.postDate {
+  font-size: 24px;
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  letter-spacing: -0.96px;
+  line-height: 36px;
+
+  @include tablet {
+    font-size: $font-size-xl;
+    letter-spacing: -0.8px;
+    line-height: 30px;
+  }
+
+  @include mobile {
+    font-size: $font-size-xl;
+    letter-spacing: -0.8px;
+    line-height: 30px;
+  }
+}
+
+// 첨부파일 영역
+.attachmentSection {
+  margin-bottom: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.attachmentBox {
+  background-color: $color-white;
+  border: 1px solid $gray-9;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1430px;
+
+  @include mobile {
+    padding: 20px;
+    gap: 24px;
+    border-color: $gray-6;
+  }
+}
+
+.attachmentIcon {
+  flex-shrink: 0;
+  color: $gray-11;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.attachmentInfo {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+  min-width: 0;
+
+  @include mobile {
+    gap: 16px;
+  }
+}
+
+.attachmentName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $gray-11;
+  letter-spacing: -0.8px;
+  line-height: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @include tablet {
+    font-size: $font-size-lg;
+    letter-spacing: -0.72px;
+    line-height: 27px;
+  }
+
+  @include mobile {
+    font-size: $font-size-lg;
+    letter-spacing: -0.72px;
+    line-height: 27px;
+  }
+}
+
+.attachmentDownloadButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.attachmentDownloadIcon {
+  display: block;
+}
+
+// 본문 내용
+.contentSection {
+  padding: 32px;
+  min-height: 300px;
+  margin-bottom: $spacing-10;
+
+  @include mobile {
+    padding: 20px;
+    min-height: 300px;
+    margin-bottom: $spacing-6;
+  }
+}
+
+.contentBody {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  color: #555555;
+  letter-spacing: -0.8px;
+  line-height: 30px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @include tablet {
+    font-size: $font-size-lg;
+    letter-spacing: -0.72px;
+    line-height: 27px;
+  }
+
+  @include mobile {
+    font-size: $font-size-lg;
+    letter-spacing: -0.72px;
+    line-height: 27px;
+  }
+}
+
+// 목록 버튼
+.backButtonSection {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-20;
+  margin-bottom: $spacing-10;
+
+  @include mobile {
+    margin-top: $spacing-8;
+    margin-bottom: $spacing-8;
+  }
+}
+
+.listButton {
+  width: 260px;
+  padding: 15px 30px;
+  background-color: $color-white;
+  border: 2px solid $gray-4;
+  border-radius: 5px;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  line-height: 36px;
+  color: $color-darken;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+
+  &:hover {
+    background-color: $gray-2;
+    border-color: $gray-8;
+  }
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--gray-8);
+  font-size: 16px;
+}
