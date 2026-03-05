@@ -27,7 +27,6 @@
   width: 1280px;
   max-width: 90vw;
   max-height: 90vh;
-  height: 90vh;
   position: relative;
   overflow: hidden;
 
@@ -35,20 +34,19 @@
     width: 90vw;
     padding: 30px;
     gap: 30px;
-    height: 90vh;
   }
 
   @include mobile {
     width: 95vw;
     padding: 20px;
     gap: 24px;
-    height: auto;
     max-height: 90vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 }
 
+// ========== 헤더 ==========
 .header {
   display: flex;
   align-items: center;
@@ -61,7 +59,6 @@
     padding-bottom: 16px;
   }
 
-  // 모바일: 닫기 버튼 상단 정렬 - Figma 기준
   @include mobile {
     padding-bottom: 20px;
     align-items: flex-start;
@@ -74,9 +71,8 @@
   gap: 16px;
   flex-wrap: wrap;
 
-  // 모바일: 세로 배열 (뱃지 위, 타이틀 아래) - Figma 기준
   @include mobile {
-    flex-direction: column-reverse; // 뱃지가 위로, 타이틀이 아래로
+    flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
@@ -85,27 +81,30 @@
 .title {
   font-size: 32px;
   font-weight: $font-weight-semibold;
-  line-height: 48px; // Figma 기준
+  line-height: 1.5;
   letter-spacing: -1.28px;
   color: $color-darken;
   margin: 0;
 
   @include tablet {
-    font-size: 24px; // Figma 태블릿 기준
-    line-height: 36px;
+    font-size: 24px;
     letter-spacing: -0.96px;
   }
 
   @include mobile {
     font-size: 24px;
-    line-height: 36px;
     letter-spacing: -0.96px;
   }
 }
 
+.titleDepartment {
+  color: $color-primary;
+  text-decoration: underline;
+}
+
 .eConsultingBadge {
   background-color: $color-primary;
-  padding: 4px 20px; // Figma 기준
+  padding: 4px 20px;
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
@@ -113,9 +112,9 @@
   flex-shrink: 0;
 
   span {
-    font-size: 20px; // Figma 기준
+    font-size: 20px;
     font-weight: $font-weight-semibold;
-    line-height: 30px; // Figma 기준
+    line-height: 1.5;
     letter-spacing: -0.8px;
     color: $color-white;
     white-space: nowrap;
@@ -126,7 +125,6 @@
 
     span {
       font-size: 18px;
-      line-height: 27px;
       letter-spacing: -0.72px;
     }
   }
@@ -136,7 +134,6 @@
 
     span {
       font-size: 14px;
-      line-height: 21px;
       letter-spacing: -0.56px;
     }
   }
@@ -164,66 +161,79 @@
   }
 }
 
-.categorySection {
+// ========== 1뎁스: 진료과 선택 ==========
+.departmentSection {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   width: 100%;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-
-  @include tablet {
-    gap: 20px;
-  }
+  overflow-y: auto;
 
   @include mobile {
-    gap: 16px;
-    flex: none;
-    overflow: visible;
+    gap: 12px;
   }
 }
 
-.categoryChips {
+.infoRow {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
-  justify-content: center;
   flex-shrink: 0;
-
 }
 
-.categoryChip {
-  padding: 10px;
-  border-radius: 50px;
-  border: none;
-  background: none;
-  cursor: pointer;
+.infoText {
   font-size: 20px;
-  font-weight: $font-weight-normal;
-  line-height: 30px; // Figma 기준
+  font-weight: 400;
+  line-height: 1.5;
   letter-spacing: -0.8px;
   color: $gray-11;
-  min-width: 180px;
-  transition: all 0.2s;
+  margin: 0;
 
   @include tablet {
     font-size: 18px;
-    line-height: 27px; // Figma 태블릿 기준
     letter-spacing: -0.72px;
-    width: 140px; // Figma 태블릿 기준 - 고정 너비
-    min-width: 140px;
-    padding: 10px;
   }
 
   @include mobile {
     font-size: 16px;
-    line-height: 24px;
     letter-spacing: -0.64px;
-    // 2열 배치를 위한 고정 너비 (Figma 모바일 기준)
-    width: calc(50% - 4px); // gap 8px의 절반을 빼서 2열 배치
-    min-width: calc(50% - 4px);
-    padding: 10px;
+  }
+}
+
+.departmentChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  @include tablet {
+    gap: 12px;
+  }
+
+  @include mobile {
+    gap: 8px;
+  }
+}
+
+.departmentChip {
+  width: 186px;
+  padding: 15px 10px;
+  border: 1px solid $gray-8;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+  font-family: $font-family-base;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s, font-weight 0.2s;
+
+  &:hover {
+    background-color: #f8efe2;
+    color: #816331;
   }
 
   &.active {
@@ -232,21 +242,46 @@
     font-weight: $font-weight-semibold;
   }
 
-  &:hover {
-    opacity: 0.8;
+  @include tablet {
+    width: calc((100% - 12px * 5) / 6);
+    min-width: 120px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    padding: 12px 8px;
+  }
+
+  @include mobile {
+    width: calc(50% - 4px);
+    font-size: 16px;
+    letter-spacing: -0.64px;
+    padding: 12px 8px;
+  }
+}
+
+// ========== 2뎁스: 의사 검색 ==========
+.doctorSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
+  @include mobile {
+    flex: none;
+    overflow: visible;
   }
 }
 
 .searchWrapper {
   display: flex;
-  gap: 8px; // Figma 기준
+  gap: 8px;
   align-items: flex-start;
   padding: 0;
   margin: 0 auto;
   box-sizing: border-box;
   flex-shrink: 0;
 
-  // 태블릿에서도 나란히 배치 (Figma 기준)
   @include tablet {
     width: auto;
     flex-direction: row;
@@ -259,9 +294,8 @@
   }
 }
 
-// 검색 입력 필드 스타일
 .searchInput {
-  width: 287px; // Figma 기준
+  width: 287px;
   flex: none;
 
   input {
@@ -271,7 +305,6 @@
     line-height: 27px;
   }
 
-  // 태블릿에서도 고정 너비 (Figma 기준)
   @include tablet {
     width: 287px;
     flex: none;
@@ -288,9 +321,8 @@
   }
 }
 
-// 검색 버튼 스타일
 .searchButton {
-  padding: 0 30px; // Figma 기준
+  padding: 0 30px;
   height: 43px;
   min-width: auto;
   gap: 16px;
@@ -304,7 +336,7 @@
   transition: opacity 0.2s;
 
   span {
-    font-size: 20px; // Figma 기준
+    font-size: 20px;
     font-weight: $font-weight-semibold;
     line-height: 30px;
     letter-spacing: -0.8px;
@@ -341,20 +373,11 @@
   min-height: 0;
   align-items: stretch;
   justify-content: center;
-  gap: 8px; // Figma 기준 - 리스트와 스크롤바 사이 간격
+  gap: 8px;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
 
-  @include tablet {
-    width: 100%;
-  }
-
-  @include mobile {
-    width: 100%;
-  }
-
-  // Table 컴포넌트가 listContainer를 채우도록
   .table {
     width: 100%;
     height: 100%;
@@ -362,7 +385,6 @@
     flex-direction: column;
     min-height: 0;
 
-    // 체크박스 크기 32x32로 오버라이드 (Figma 기준)
     input[type='checkbox'] {
       width: 32px;
       height: 32px;
@@ -372,332 +394,15 @@
   }
 }
 
-.listContent {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-height: 0;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: 100%;
-
-  // Firefox 스크롤바 스타일
-  scrollbar-width: thin;
-  scrollbar-color: $color-primary $gray-4;
-
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $gray-4;
-    border-radius: 40px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $color-primary;
-    border-radius: 60px;
-
-    &:hover {
-      background: darken($color-primary, 10%);
-    }
-  }
-
-  // 스크롤바 화살표 버튼 숨김
-  &::-webkit-scrollbar-button {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-
-  @include mobile {
-    width: 100%;
-  }
-}
-
-.listHeader {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: $gray-2;
-  border: 1px solid $gray-9;
-  border-radius: 10px;
-  gap: 8px;
-  position: relative;
-
-  @include tablet {
-    padding: 12px 16px;
-    gap: 6px;
-  }
-
-  @include mobile {
-    padding: 10px 12px;
-    gap: 4px;
-  }
-}
-
-.headerCell {
-  font-size: 20px;
-  font-weight: $font-weight-semibold;
-  line-height: $line-height-normal;
-  letter-spacing: -0.8px;
-  color: $color-darken;
-  text-align: center;
-
-  &:nth-child(1) {
-    width: 280px;
-    flex-shrink: 0;
-  }
-
-  &:nth-child(3) {
-    width: 130px;
-    flex-shrink: 0;
-  }
-
-  &:nth-child(5) {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &:nth-child(7) {
-    width: 160px;
-    flex-shrink: 0;
-  }
-
-  @include tablet {
-    font-size: 18px;
-    letter-spacing: -0.72px;
-
-    &:nth-child(1) {
-      width: 200px;
-    }
-
-    &:nth-child(3) {
-      width: 100px;
-    }
-
-    &:nth-child(7) {
-      width: 120px;
-    }
-  }
-
-  @include mobile {
-    font-size: 14px;
-    letter-spacing: -0.56px;
-
-    &:nth-child(1) {
-      width: 80px;
-    }
-
-    &:nth-child(3) {
-      width: 70px;
-    }
-
-    &:nth-child(7) {
-      width: 60px;
-    }
-  }
-}
-
-.headerSeparator {
-  width: 0;
-  height: 18px;
-  flex-shrink: 0;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    width: 18px;
-    height: 1px;
-    background-color: $gray-11;
-  }
-}
-
-.listItems {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.listItem {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
-  border-radius: 10px;
-  gap: 8px;
-  position: relative;
-
-  @include tablet {
-    padding: 12px 16px;
-    gap: 6px;
-  }
-
-  @include mobile {
-    padding: 10px 12px;
-    gap: 4px;
-  }
-}
-
-.itemCell {
-  font-size: 20px;
-  font-weight: $font-weight-normal;
-  line-height: $line-height-normal;
-  letter-spacing: -0.8px;
-  color: $gray-11;
-  text-align: center;
-
-  &:nth-child(1) {
-    width: 280px;
-    flex-shrink: 0;
-  }
-
-  &:nth-child(3) {
-    width: 130px;
-    flex-shrink: 0;
-  }
-
-  &:nth-child(5) {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &:nth-child(7) {
-    width: 160px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @include tablet {
-    font-size: 18px;
-    letter-spacing: -0.72px;
-
-    &:nth-child(1) {
-      width: 200px;
-    }
-
-    &:nth-child(3) {
-      width: 100px;
-    }
-
-    &:nth-child(7) {
-      width: 120px;
-    }
-  }
-
-  @include mobile {
-    font-size: 14px;
-    letter-spacing: -0.56px;
-
-    &:nth-child(1) {
-      width: 80px;
-    }
-
-    &:nth-child(3) {
-      width: 70px;
-    }
-
-    &:nth-child(7) {
-      width: 60px;
-    }
-  }
-}
-
-.itemSeparator {
-  width: 0;
-  height: 18px;
-  flex-shrink: 0;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    width: 18px;
-    height: 1px;
-    background-color: $gray-11;
-  }
-}
-
-.scrollbar {
-  width: 10px;
-  height: 100%;
-  background-color: $gray-4;
-  border-radius: 40px;
-  flex-shrink: 0;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 33.33%;
-    background-color: $color-primary;
-    border-radius: 60px;
-  }
-}
-
-.buttonSection {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 240px;
-  margin: 0 auto;
-  flex-shrink: 0;
-
-  @include mobile {
-    width: 100%;
-  }
-}
-
-.confirmButton {
-  width: 100%;
-  height: 66px; // Figma 기준
-  padding: 10px 20px;
-  font-size: 24px; // Figma 기준
-  font-weight: $font-weight-semibold;
-  line-height: 36px; // Figma 기준
-  letter-spacing: -0.96px;
-
-  // 태블릿에서도 동일한 스타일 유지 (Figma 태블릿 기준)
-  @include tablet {
-    height: 66px;
-    font-size: 24px;
-    line-height: 36px;
-    letter-spacing: -0.96px;
-  }
-
-  @include mobile {
-    height: 50px;
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: -0.72px;
-  }
-}
-
 .searchContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px; // Figma 기준 - 검색영역과 리스트 사이 간격
+  gap: 24px;
   border: 1px solid $gray-6;
   border-radius: 10px;
   padding: 30px;
   flex: 1;
   min-height: 0;
-  // overflow: hidden 제거 - 스크롤바가 보이도록
 
   @include tablet {
     padding: 24px;
@@ -714,10 +419,52 @@
   }
 }
 
-// 태블릿 카드형 리스트 (CardList 컴포넌트 사용)
 .cardList {
   width: 100%;
   height: 100%;
+}
+
+// ========== 하단 버튼 ==========
+.buttonRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-shrink: 0;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+}
+
+.actionButton {
+  width: 240px;
+  height: 66px;
+  padding: 15px 30px;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  border-radius: 5px;
+  border: 2px solid $color-primary !important;
+  background-color: #fff !important;
+  color: $color-primary !important;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: $color-primary !important;
+    color: #fff !important;
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
 }
 
 .radio {

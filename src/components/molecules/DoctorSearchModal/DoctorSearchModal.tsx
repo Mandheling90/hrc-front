@@ -5,9 +5,10 @@ import { createPortal } from 'react-dom'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
+import { InfoIcon } from '@/components/icons/InfoIcon'
 import styles from './DoctorSearchModal.module.scss'
 import { Table, TableColumn } from '../Table/Table'
-import { CardList, CardRow } from '../CardList/CardList'
+import { CardList } from '../CardList/CardList'
 
 export interface Doctor {
   /** 진료과 */
@@ -33,19 +34,41 @@ export interface DoctorSearchModalProps {
   className?: string
 }
 
-const categories = [
-  '전체',
+const departments = [
   '가정의학과',
+  '간담췌외과',
   '감염내과',
-  '비뇨의학과',
-  '신장내과',
-  '산부인과',
-  '심장혈관흉부외과',
-  '성형외과',
   '내분비내과',
+  '대장항문외과',
+  '류마티스내과',
+  '마취통증의학과',
+  '방사선종양학과',
+  '비뇨의학과',
+  '산부인과',
+  '성형외과',
+  '소아외과',
+  '소아청소년과',
   '소화기내과',
-  '구강악안면외과',
-  '순환기내과'
+  '순환기내과',
+  '신경과',
+  '신경외과',
+  '신장내과',
+  '심장혈관흉부외과',
+  '안과',
+  '영상의학과',
+  '유방내분비외과',
+  '위장관외과',
+  '이비인후과',
+  '이식혈관외과',
+  '재활의학과',
+  '정신건강의학과',
+  '정형외과',
+  '종양내과',
+  '중환자외상외과',
+  '치과',
+  '피부과',
+  '혈액내과',
+  '호흡기알레르기내과'
 ]
 
 // 임시 데이터
@@ -60,6 +83,8 @@ const mockDoctors: Doctor[] = [
   { department: '감염내과', name: '김선용', email: 'Gastrofiberscopy [G]', selected: false }
 ]
 
+type ModalStep = 'department' | 'doctor'
+
 export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   isOpen,
   onClose,
@@ -67,7 +92,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   closeOnBackdropClick = false,
   className = ''
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState('전체')
+  const [step, setStep] = useState<ModalStep>('department')
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors)
   const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
@@ -102,26 +128,27 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }, [isOpen])
 
-  // 모달이 닫힐 때 검색어 초기화
+  // 모달이 닫힐 때 초기화
   useEffect(() => {
     if (!isOpen) {
+      setStep('department')
+      setSelectedDepartment(null)
       setSearchQuery('')
-      setSelectedCategory('전체')
     }
   }, [isOpen])
 
-  // 태블릿 여부 확인
+  // 반응형 체크
   useEffect(() => {
-    const checkIsTablet = () => {
+    const checkSize = () => {
       setIsTablet(window.innerWidth <= 1429)
       setIsMobile(window.innerWidth <= 768)
     }
 
-    checkIsTablet()
-    window.addEventListener('resize', checkIsTablet)
+    checkSize()
+    window.addEventListener('resize', checkSize)
 
     return () => {
-      window.removeEventListener('resize', checkIsTablet)
+      window.removeEventListener('resize', checkSize)
     }
   }, [])
 
@@ -133,8 +160,15 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }
 
-  const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category)
+  const handleDepartmentClick = (department: string) => {
+    setSelectedDepartment(department)
+    setStep('doctor')
+  }
+
+  const handleBackToDepartment = () => {
+    setStep('department')
+    setSelectedDepartment(null)
+    setSearchQuery('')
   }
 
   const handleSearch = () => {
@@ -158,8 +192,9 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     onClose()
   }
 
-  const filteredDoctors =
-    selectedCategory === '전체' ? doctors : doctors.filter(doctor => doctor.department === selectedCategory)
+  const filteredDoctors = selectedDepartment
+    ? doctors.filter(doctor => doctor.department === selectedDepartment)
+    : doctors
 
   // Table 컬럼 정의
   const columns: TableColumn<Doctor>[] = [
@@ -208,116 +243,144 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
         {/* 헤더 */}
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <h2 className={styles.title}>자문의 검색</h2>
             <div className={styles.eConsultingBadge}>
               <span>e-Consulting</span>
             </div>
+            <h2 className={styles.title}>
+              {step === 'doctor' && selectedDepartment ? (
+                <>
+                  {'자문의 검색 > '}
+                  <span className={styles.titleDepartment}>{selectedDepartment}</span>
+                </>
+              ) : (
+                '자문의 검색'
+              )}
+            </h2>
           </div>
           <button type='button' onClick={onClose} className={styles.closeButton} aria-label='닫기'>
             <CloseIcon width={40} height={40} />
           </button>
         </div>
 
-        {/* 카테고리 및 검색 영역 */}
-        <div className={styles.categorySection}>
-          <div className={styles.categoryChips}>
-            {categories.map(category => (
-              <button
-                key={category}
+        {step === 'department' ? (
+          /* 1뎁스: 진료과 선택 */
+          <div className={styles.departmentSection}>
+            <div className={styles.infoRow}>
+              <InfoIcon width={24} height={24} fill='#636363' />
+              <p className={styles.infoText}>신청하실 진료과를 선택해주세요.</p>
+            </div>
+            <div className={styles.departmentChips}>
+              {departments.map(dept => (
+                <button
+                  key={dept}
+                  type='button'
+                  onClick={() => handleDepartmentClick(dept)}
+                  className={`${styles.departmentChip} ${selectedDepartment === dept ? styles.active : ''}`}
+                >
+                  {dept}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* 2뎁스: 의사 검색/선택 */
+          <>
+            <div className={styles.doctorSection}>
+              <div className={styles.searchContainer}>
+                <div className={styles.searchWrapper}>
+                  <Input
+                    id='doctor-search'
+                    type='text'
+                    placeholder='의료진명을 입력해주세요.'
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') handleSearch()
+                    }}
+                    className={styles.searchInput}
+                  />
+                  <button type='button' onClick={handleSearch} className={styles.searchButton}>
+                    <span>의료진 검색</span>
+                  </button>
+                </div>
+
+                <div className={styles.listContainer}>
+                  {isTablet ? (
+                    <CardList
+                      cards={filteredDoctors.map(doctor => [
+                        {
+                          id: 'selected',
+                          leftContent: <span>선택</span>,
+                          rightContent: (
+                            <input
+                              type='radio'
+                              name='doctor-select-card'
+                              checked={doctor.selected}
+                              onChange={() => handleDoctorSelect(doctor)}
+                              aria-label={`${doctor.name} 선택`}
+                              className={styles.radio}
+                            />
+                          ),
+                          highlighted: true
+                        },
+                        {
+                          id: 'department',
+                          leftContent: <span>진료과</span>,
+                          rightContent: <span>{doctor.department}</span>,
+                          twoLine: isMobile
+                        },
+                        {
+                          id: 'name',
+                          leftContent: <span>자문의</span>,
+                          rightContent: <span>{doctor.name}</span>,
+                          twoLine: isMobile
+                        },
+                        {
+                          id: 'email',
+                          leftContent: <span>이메일</span>,
+                          rightContent: <span>{doctor.email}</span>,
+                          twoLine: isMobile
+                        }
+                      ])}
+                      getCardKey={(card, index) => `${filteredDoctors[index].name}-${index}`}
+                      scrollableHeight='100%'
+                      className={styles.cardList}
+                    />
+                  ) : (
+                    <Table
+                      columns={columns}
+                      data={filteredDoctors}
+                      getRowKey={(doctor, index) => `${doctor.name}-${index}`}
+                      className={styles.table}
+                      scrollableHeight='100%'
+                      defaultTextOverflow='ellipsis'
+                      scrollWithHeader
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.buttonRow}>
+              <Button
                 type='button'
-                onClick={() => handleCategoryClick(category)}
-                className={`${styles.categoryChip} ${selectedCategory === category ? styles.active : ''}`}
+                variant='primaryOutline'
+                onClick={handleBackToDepartment}
+                className={styles.actionButton}
               >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          <div className={styles.searchContainer}>
-            {/* 검색 영역 */}
-            <div className={styles.searchWrapper}>
-              <Input
-                id='doctor-search'
-                type='text'
-                placeholder='의료진명을 입력해주세요.'
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') handleSearch()
-                }}
-                className={styles.searchInput}
-              />
-              <button type='button' onClick={handleSearch} className={styles.searchButton}>
-                <span>의료진 검색</span>
-              </button>
+                진료과 변경
+              </Button>
+              <Button
+                type='button'
+                variant='primaryOutline'
+                onClick={handleConfirm}
+                className={styles.actionButton}
+              >
+                자문의 선택
+              </Button>
             </div>
-
-            {/* 리스트 영역 */}
-            <div className={styles.listContainer}>
-              {isTablet ? (
-                /* 태블릿: 카드형 리스트 */
-                <CardList
-                  cards={filteredDoctors.map(doctor => [
-                    {
-                      id: 'selected',
-                      leftContent: <span>선택</span>,
-                      rightContent: (
-                        <input
-                          type='radio'
-                          name='doctor-select-card'
-                          checked={doctor.selected}
-                          onChange={() => handleDoctorSelect(doctor)}
-                          aria-label={`${doctor.name} 선택`}
-                          className={styles.radio}
-                        />
-                      ),
-                      highlighted: true
-                    },
-                    {
-                      id: 'department',
-                      leftContent: <span>진료과</span>,
-                      rightContent: <span>{doctor.department}</span>,
-                      twoLine: isMobile
-                    },
-                    {
-                      id: 'name',
-                      leftContent: <span>자문의</span>,
-                      rightContent: <span>{doctor.name}</span>,
-                      twoLine: isMobile
-                    },
-                    {
-                      id: 'email',
-                      leftContent: <span>이메일</span>,
-                      rightContent: <span>{doctor.email}</span>,
-                      twoLine: isMobile
-                    }
-                  ])}
-                  getCardKey={(card, index) => `${filteredDoctors[index].name}-${index}`}
-                  scrollableHeight='100%'
-                  className={styles.cardList}
-                />
-              ) : (
-                /* 데스크톱: 테이블 */
-                <Table
-                  columns={columns}
-                  data={filteredDoctors}
-                  getRowKey={(doctor, index) => `${doctor.name}-${index}`}
-                  className={styles.table}
-                  scrollableHeight='100%'
-                  defaultTextOverflow='ellipsis'
-                  scrollWithHeader
-                />
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* 확인 버튼 */}
-        <div className={styles.buttonSection}>
-          <Button type='button' variant='primary' onClick={handleConfirm} className={styles.confirmButton}>
-            확인
-          </Button>
-        </div>
+          </>
+        )}
       </div>
     </div>,
     document.body
