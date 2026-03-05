@@ -96,17 +96,23 @@ export default function BoardDetailPage() {
     }
   }, [listData, params.id])
 
-  const handleDownload = useCallback((attachment: Attachment) => {
+  const handleDownload = useCallback(async (attachment: Attachment) => {
     const storageBase = process.env.NEXT_PUBLIC_STORAGE_BASE_URL || ''
     const url = attachment.storedPath.startsWith('http')
       ? attachment.storedPath
       : `${storageBase}/${attachment.storedPath}`
-    const link = document.createElement('a')
-    link.href = url
-    link.download = attachment.originalName
-    link.target = '_blank'
-    link.rel = 'noopener noreferrer'
-    link.click()
+    try {
+      const res = await fetch(url)
+      const blob = await res.blob()
+      const blobUrl = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = blobUrl
+      link.download = attachment.originalName
+      link.click()
+      URL.revokeObjectURL(blobUrl)
+    } catch {
+      window.open(url, '_blank')
+    }
   }, [])
 
   const handleBackToList = () => {
