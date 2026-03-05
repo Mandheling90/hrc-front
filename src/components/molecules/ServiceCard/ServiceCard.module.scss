@@ -11,7 +11,6 @@
   border: 1px solid $gray-9;
   border-radius: 10px;
   box-shadow: $shadow-sm;
-  transition: all $transition-base;
   text-align: center;
   text-decoration: none;
   color: inherit;
@@ -19,12 +18,6 @@
   width: 100%; // 그리드 아이템이 전체 공간을 차지
   box-sizing: border-box; // padding 포함한 너비 계산
   position: relative; // stepBadge 위치 지정을 위해
-
-  &:hover {
-    border-color: $color-primary;
-    box-shadow: $shadow-md;
-    transform: translateY(-2px);
-  }
 }
 
 // 스텝 배지 스타일 (Figma 디자인에 맞춤)
@@ -53,12 +46,6 @@
   padding-bottom: 30px;
   padding-left: 30px;
   padding-right: 30px;
-
-  &:hover {
-    border-color: $gray-9 !important; // hover 시에도 회색 유지
-    transform: none !important; // hover 효과 제거
-    box-shadow: $shadow-sm !important; // 기본 그림자 유지
-  }
 
   .iconWrapper {
     margin-top: 0;
@@ -215,11 +202,6 @@
     overflow-wrap: break-word; // 긴 단어 줄바꿈
   }
 
-  &:hover {
-    transform: none !important;
-    box-shadow: $shadow-md !important;
-  }
-
   // 데스크톱(1024px 이상)에서 카드 내부 컨텐츠 중앙 정렬
   @include desktop {
     justify-content: center !important;
@@ -311,16 +293,11 @@
 }
 
 .linkCard {
-  cursor: pointer;
+  cursor: default;
 }
 
 .clickable {
-  cursor: pointer;
-
-  &:focus {
-    outline: 2px solid $color-primary;
-    outline-offset: 2px;
-  }
+  cursor: default;
 }
 
 .iconWrapper {
@@ -412,11 +389,6 @@
     padding: $spacing-4;
     border-radius: $radius-md;
     box-shadow: none;
-
-    &:hover {
-      transform: none;
-      box-shadow: none;
-    }
   }
 
   .iconWrapper {

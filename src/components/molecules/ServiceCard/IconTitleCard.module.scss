@@ -11,32 +11,20 @@
   border: 1px solid $gray-9;
   border-radius: 10px;
   box-shadow: $shadow-sm;
-  transition: all $transition-base;
   text-decoration: none;
   color: inherit;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   text-align: center;
-
-  &:hover {
-    border-color: $color-primary;
-    box-shadow: $shadow-md;
-    transform: translateY(-2px);
-  }
 }
 
 .linkCard {
-  cursor: pointer;
+  cursor: default;
 }
 
 .clickable {
-  cursor: pointer;
-
-  &:focus {
-    outline: 2px solid $color-primary;
-    outline-offset: 2px;
-  }
+  cursor: default;
 }
 
 // 데스크톱: leftSection은 아이콘만 표시 (title은 숨김)
@@ -144,11 +132,6 @@
     padding: 20px;
     gap: 24px;
     box-shadow: none;
-
-    &:hover {
-      transform: none;
-      box-shadow: none;
-    }
   }
 
   .leftSection {

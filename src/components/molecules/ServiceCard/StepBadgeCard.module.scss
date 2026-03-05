@@ -18,24 +18,14 @@
   width: 100%;
   box-sizing: border-box;
 
-  // hover 효과 제거 (스텝 카드는 정적)
-  &:hover {
-    border-color: $gray-9;
-    box-shadow: $shadow-sm;
-  }
 }
 
 .linkCard {
-  cursor: pointer;
+  cursor: default;
 }
 
 .clickable {
-  cursor: pointer;
-
-  &:focus {
-    outline: 2px solid $color-primary;
-    outline-offset: 2px;
-  }
+  cursor: default;
 }
 
 .stepBadge {
