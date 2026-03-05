@@ -139,12 +139,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </form>
       {showLinks && (
         <div className={styles.links}>
-          <Link href='/find-user?tab=findId' className={styles.link}>
-            아이디 찾기
-          </Link>
-          <span className={styles.separator} />
-          <Link href='/find-user?tab=findPassword' className={styles.link}>
-            비밀번호 찾기
+          <Link href='/find-user' className={styles.link}>
+            아이디 찾기/비밀번호 찾기
           </Link>
           <span className={styles.separator} />
           <Link href='/signup' className={styles.link}>
