@@ -229,7 +229,7 @@ const anamContent: HospitalPageContent = {
       { stepNumber: '05', title: '협력증서 전달', icon: 'CertificateIcon' }
     ],
     contact: {
-      phone: '02-920-5964',
+      phone: '02-920-5892',
       fax: '02-920-6523'
     },
     downloadLink: '#',
@@ -384,7 +384,7 @@ const anamContent: HospitalPageContent = {
                       },
                       {
                         title: '입원회송',
-                        phone: '02-920-5964'
+                        phone: '02-920-5892'
                       },
                       {
                         title: '외래회송',
@@ -406,7 +406,7 @@ const anamContent: HospitalPageContent = {
       road: '서울 성북구 고려대로 73 고대병원'
     },
     coordinates: {
-      latitude: 37.5870,
+      latitude: 37.587,
       longitude: 127.0268
     },
     mapLinks: {
@@ -904,7 +904,7 @@ const guroContent: HospitalPageContent = {
       road: '서울시 구로구 구로동로 148 (구로동)'
     },
     coordinates: {
-      latitude: 37.4920,
+      latitude: 37.492,
       longitude: 126.8847
     },
     mapLinks: {

@@ -14,7 +14,7 @@ const anamConfig: HospitalConfig = {
     phone: '1577-0083',
     fax: '02-920-6523',
     reservation: '1577-0083',
-    referralCenter: '02-920-5964'
+    referralCenter: '02-920-5892'
   },
   address: {
     zipCode: '02841',
