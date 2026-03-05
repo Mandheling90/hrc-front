@@ -33,7 +33,15 @@ import {
   mapApiToClinicStepData,
   type ClinicAllStepData
 } from '@/utils/partnerApplicationMapper'
+import { uploadFile } from '@/lib/upload'
+import {
+  DEV_HOSPITAL_EXTRA,
+  DEV_DIRECTOR_EXTRA,
+  DEV_CLINIC_STAFF_INFO
+} from '@/utils/devDefaultData'
 import styles from './page.module.scss'
+
+const isDev = process.env.NODE_ENV === 'development'
 
 /** HospitalId → HospitalCode 변환 */
 const toHospitalCode = (id: string): HospitalCode => {
@@ -75,6 +83,7 @@ export default function ClinicApplicationPage() {
   const userHospitalDefaults = useMemo<Partial<HospitalInfoStepData> | undefined>(() => {
     if (!user?.profile) return undefined
     return {
+      ...(isDev ? DEV_HOSPITAL_EXTRA : {}),
       hospitalName: user.profile.hospName ?? '',
       medicalInstitutionNumber: user.profile.careInstitutionNo ?? '',
       zipCode: user.profile.hospZipCode ?? '',
@@ -89,7 +98,7 @@ export default function ClinicApplicationPage() {
   const userDirectorDefaults = useMemo<Partial<DirectorInfoStepData> | undefined>(() => {
     if (!user) return undefined
     const genderMap: Record<string, string> = { M: '남자', F: '여자' }
-    return {
+    const defaults: Partial<DirectorInfoStepData> = {
       directorName: user.userName ?? '',
       birthDate: user.profile?.birthDate?.slice(0, 10) ?? '',
       licenseNumber: user.profile?.licenseNo ?? '',
@@ -103,6 +112,13 @@ export default function ClinicApplicationPage() {
       emailConsent: user.profile ? (user.profile.emailConsent ? '동의' : '비동의') : '',
       replyConsent: user.profile ? (user.profile.replyConsent ? '동의' : '비동의') : ''
     }
+    if (isDev) {
+      for (const [key, val] of Object.entries(DEV_DIRECTOR_EXTRA)) {
+        const k = key as keyof DirectorInfoStepData
+        if (!defaults[k]) defaults[k] = val as never
+      }
+    }
+    return defaults
   }, [user])
 
   // Step 데이터 캐시 (조건부 렌더링으로 언마운트되는 Step 데이터 보존)
@@ -168,10 +184,23 @@ export default function ClinicApplicationPage() {
       const input = mapClinicStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
 
       try {
+        // 첨부파일 업로드
+        const files = allData.step4?.files ?? []
+        if (files.length > 0) {
+          const uploadResults = await Promise.all(files.map(f => uploadFile(f)))
+          input.attachments = uploadResults.map(r => ({
+            originalName: r.originalName,
+            storedPath: r.storedPath,
+            mimeType: r.mimeType,
+            fileSize: r.fileSize
+          }))
+        }
+
         await applyPartnerHospital(input)
         setIsComplete(true)
       } catch (error) {
         console.error('협력의원 신청 실패:', error)
+        setAlertModal({ isOpen: true, message: '신청 중 오류가 발생했습니다.' })
       }
     }
     window.scrollTo(0, 0)
@@ -193,6 +222,18 @@ export default function ClinicApplicationPage() {
     const input = mapClinicStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
 
     try {
+      // 첨부파일 업로드
+      const files = allData.step4?.files ?? []
+      if (files.length > 0) {
+        const uploadResults = await Promise.all(files.map(f => uploadFile(f)))
+        input.attachments = uploadResults.map(r => ({
+          originalName: r.originalName,
+          storedPath: r.storedPath,
+          mimeType: r.mimeType,
+          fileSize: r.fileSize
+        }))
+      }
+
       const result = await saveDraft({
         ...input,
         hospitalCode: toHospitalCode(hospital.id)
@@ -325,7 +366,7 @@ export default function ClinicApplicationPage() {
                     ref={step3Ref}
                     currentStep={3}
                     totalSteps={4}
-                    defaultValues={stepDataCache.step3}
+                    defaultValues={stepDataCache.step3 ?? (isDev ? DEV_CLINIC_STAFF_INFO : undefined)}
                   />
                 )}
 

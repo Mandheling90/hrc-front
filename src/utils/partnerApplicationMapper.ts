@@ -59,7 +59,6 @@ const INSTITUTION_TYPE_MAP: Record<string, InstitutionType> = {
   '종합병원': InstitutionType.GeneralHospital,
   '병원': InstitutionType.Hospital,
   '요양병원': InstitutionType.NursingHospital,
-  '한방': InstitutionType.Oriental,
   '한방병원': InstitutionType.OrientalHospital,
   '치과병원': InstitutionType.DentalHospital,
   '정신병원': InstitutionType.MentalHospital,
@@ -67,13 +66,26 @@ const INSTITUTION_TYPE_MAP: Record<string, InstitutionType> = {
   '기관': InstitutionType.Institution,
   '의원': InstitutionType.Clinic,
   '치과의원': InstitutionType.DentalClinic,
-  '한의원': InstitutionType.Oriental
+  '한의원': InstitutionType.Oriental,
+  '미분류': InstitutionType.Unclassified
 }
 
-/** 백엔드 코드 → 의료기관 유형 한글 역변환 */
-const INSTITUTION_TYPE_REVERSE: Record<string, string> = Object.fromEntries(
-  Object.entries(INSTITUTION_TYPE_MAP).map(([k, v]) => [v, k])
-)
+/** 백엔드 코드 → 의료기관 유형 한글 역변환 (ORIENTAL 중복 방지를 위해 수동 정의) */
+const INSTITUTION_TYPE_REVERSE: Record<string, string> = {
+  [InstitutionType.TertiaryHospital]: '상급종합병원',
+  [InstitutionType.GeneralHospital]: '종합병원',
+  [InstitutionType.Hospital]: '병원',
+  [InstitutionType.NursingHospital]: '요양병원',
+  [InstitutionType.OrientalHospital]: '한방병원',
+  [InstitutionType.DentalHospital]: '치과병원',
+  [InstitutionType.MentalHospital]: '정신병원',
+  [InstitutionType.PublicHealth]: '보건기관',
+  [InstitutionType.Institution]: '기관',
+  [InstitutionType.Clinic]: '의원',
+  [InstitutionType.DentalClinic]: '치과의원',
+  [InstitutionType.Oriental]: '한의원',
+  [InstitutionType.Unclassified]: '미분류'
+}
 
 /** 의료기관 유형 한글 → 백엔드 InstitutionType enum */
 const toInstitutionTypeCode = (v?: string): InstitutionType | undefined => {
@@ -231,7 +243,6 @@ export function mapStepsToApiInput(
 
     // Step 8: 병원특성 및 기타사항
     remarks: emptyToUndef(step8?.hospitalCharacteristics),
-    attachments: undefined, // 파일 업로드는 별도 처리 필요
 
     // 의원 전용 (병원 신청에서는 기본 false)
     clinicHasHemodialysis: false,
@@ -440,6 +451,7 @@ export function mapClinicStepsToApiInput(
 
     // Step 3: 병상/직원
     totalBedCount: toInt(step3?.totalBeds),
+    activeBedCount: toInt(step3?.totalBeds),
     totalStaffCount: toInt(step3?.totalStaff),
     specialistCount: toInt(step3?.specialists),
     nurseCount: toInt(step3?.nurses),
@@ -464,8 +476,7 @@ export function mapClinicStepsToApiInput(
       : undefined,
 
     // Step 4: 병원특성 및 기타사항
-    remarks: emptyToUndef(step4?.hospitalCharacteristics),
-    attachments: undefined
+    remarks: emptyToUndef(step4?.hospitalCharacteristics)
   }
 }
 
