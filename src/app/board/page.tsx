@@ -11,6 +11,7 @@ import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
 import { SearchFilterWithInfo } from '@/components/molecules/SearchFilterWithInfo/SearchFilterWithInfo'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { BOARD_POSTS_QUERY } from '@/graphql/menu/queries'
+import { useMenus } from '@/hooks/useMenus'
 import styles from './page.module.scss'
 
 interface BoardPost {
@@ -57,6 +58,18 @@ export default function BoardPage() {
 
 function BoardContent({ boardId }: { boardId: string }) {
   const router = useHospitalRouter()
+  const { menus } = useMenus()
+
+  // 메뉴에서 boardId에 해당하는 게시판 이름 찾기
+  const boardTitle = useMemo(() => {
+    for (const menu of menus) {
+      if (menu.targetBoardId === boardId) return menu.name
+      for (const child of menu.children ?? []) {
+        if (child.targetBoardId === boardId) return child.name
+      }
+    }
+    return ''
+  }, [menus, boardId])
 
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
@@ -237,6 +250,8 @@ function BoardContent({ boardId }: { boardId: string }) {
       <Header />
       <main className={styles.main}>
         <div className='container'>
+          {boardTitle && <h1 className={styles.pageTitle}>{boardTitle}</h1>}
+
           {/* 검색 영역 */}
           <SearchFilterWithInfo
             selectOptions={categoryOptions}
