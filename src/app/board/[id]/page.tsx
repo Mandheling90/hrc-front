@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useMemo } from 'react'
+import React, { Suspense, useCallback, useMemo } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useQuery } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
@@ -52,6 +52,14 @@ interface AttachmentsData {
 }
 
 export default function BoardDetailPage() {
+  return (
+    <Suspense>
+      <BoardDetailPageInner />
+    </Suspense>
+  )
+}
+
+function BoardDetailPageInner() {
   const params = useParams<{ id: string }>()
   const searchParams = useSearchParams()
   const boardId = searchParams.get('boardId')

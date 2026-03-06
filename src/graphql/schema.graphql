@@ -493,6 +493,98 @@ enum PopupType {
   SLIDE_BANNER
 }
 
+# ── 메뉴 ──
+
+enum MenuType {
+  ADMIN
+  USER
+}
+
+enum MenuTargetType {
+  BOARD
+  CONTENT
+  LINK
+  PARENT
+}
+
+enum BoardType {
+  CONSULT
+  EVENT
+  FREE
+  NEWS
+  NOTICE
+  STUDY
+}
+
+enum AttachmentEntityType {
+  BANNER
+  BOARD
+  ECONSULT
+  EXAM_IMAGE
+  PARTNER_APPLICATION
+  POPUP
+  PROFILE
+  REFERRAL
+}
+
+type MenuModel {
+  id: ID!
+  name: String!
+  path: String
+  sortOrder: Int!
+  menuType: MenuType!
+  menuTargetType: MenuTargetType
+  targetBoardType: BoardType
+  targetBoardId: String
+  targetContentId: String
+  externalUrl: String
+  gnbExposure: Boolean!
+  iconName: String
+  isActive: Boolean!
+  hospitalCode: HospitalCode!
+  parentId: String
+  firstChildPath: String
+  children: [MenuModel!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type BoardPost {
+  id: ID!
+  boardId: String!
+  title: String!
+  content: String!
+  authorId: String!
+  hospitalCode: HospitalCode!
+  thumbnailUrl: String
+  isPinned: Boolean!
+  isDeleted: Boolean!
+  viewCount: Int!
+  parentId: String
+  startDate: DateTime
+  endDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PaginatedBoardPostResponse {
+  items: [BoardPost!]!
+  totalCount: Int!
+  hasNextPage: Boolean!
+  cursor: String
+}
+
+type Content {
+  id: ID!
+  title: String!
+  body: String!
+  hospitalCode: HospitalCode!
+  contentGroupId: String
+  contentGroupName: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type PopupModel {
   id: ID!
   hospitalCode: HospitalCode!
@@ -547,6 +639,17 @@ type Query {
   miniBanners: [PopupModel!]!
   # 병원 SNS
   hospitalSns(hospitalCode: HospitalCode!, pageRow: Int): HospitalArticleList!
+  # 메뉴
+  menus(menuType: MenuType!): [MenuModel!]!
+  # 게시판
+  boardPosts(boardId: String!, pagination: PaginationInput, search: String): PaginatedBoardPostResponse!
+  pinnedPosts(boardId: String!): [BoardPost!]!
+  boardPostById(boardId: String!, id: String!): BoardPost!
+  # 첨부파일
+  attachments(entityId: ID!, entityType: AttachmentEntityType!): [AttachmentModel!]!
+  presignedDownloadUrl(attachmentId: ID!): String!
+  # 콘텐츠
+  contentById(id: String!): Content
 }
 
 # ── NICE 본인인증 ──

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@apollo/client/react'
 import { Header } from '@/components/organisms/Header/Header'
@@ -20,6 +20,14 @@ interface ContentData {
 }
 
 export default function ContentPage() {
+  return (
+    <Suspense>
+      <ContentPageInner />
+    </Suspense>
+  )
+}
+
+function ContentPageInner() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 

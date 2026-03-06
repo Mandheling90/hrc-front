@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState, useEffect, useCallback } from 'react'
+import React, { Suspense, useMemo, useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
@@ -36,6 +36,14 @@ const ITEMS_PER_PAGE = 10
 
 // boardId가 바뀌면 key가 바뀌어 컴포넌트가 리마운트 → state 자동 초기화, 쿼리 1회만 실행
 export default function BoardPage() {
+  return (
+    <Suspense>
+      <BoardPageInner />
+    </Suspense>
+  )
+}
+
+function BoardPageInner() {
   const searchParams = useSearchParams()
   const boardId = searchParams.get('boardId')
 

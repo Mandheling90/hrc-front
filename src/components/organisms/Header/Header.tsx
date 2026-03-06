@@ -2,7 +2,7 @@
 
 import Link from '@/components/atoms/HospitalLink'
 import { usePathname, useSearchParams } from 'next/navigation'
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import React, { Suspense, useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
 import { stripHospitalPrefix } from '@/utils/hospital'
 import { useAuthContext } from '@/contexts/AuthContext'
@@ -95,7 +95,7 @@ const myPageMenu: MenuItem = {
   ]
 }
 
-export const Header: React.FC = () => {
+const HeaderInner: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<number>(0)
@@ -701,3 +701,9 @@ export const Header: React.FC = () => {
     </>
   )
 }
+
+export const Header: React.FC = () => (
+  <Suspense>
+    <HeaderInner />
+  </Suspense>
+)
