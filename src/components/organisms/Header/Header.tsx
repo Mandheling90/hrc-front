@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import React, { Suspense, useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
 import { stripHospitalPrefix } from '@/utils/hospital'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useLogout } from '@/hooks/useAuth'
 import { useMenus } from '@/hooks/useMenus'
@@ -104,6 +105,7 @@ const HeaderInner: React.FC = () => {
   const breadcrumbRef = useRef<HTMLElement>(null)
   const mobileBreadcrumbRef = useRef<HTMLDivElement>(null)
   const { hospital, hospitalId } = useHospital()
+  const router = useHospitalRouter()
   const { isAuthenticated } = useAuthContext()
   const { logout } = useLogout()
   const logoUrl = `/images/${hospitalId}/logo-top.png`
@@ -343,7 +345,13 @@ const HeaderInner: React.FC = () => {
                       className={`${styles.gnbItem} ${isDropdownOpen && activeMenu === index ? styles.active : ''} ${currentMenuIndex === index ? styles.current : ''}`}
                       onMouseEnter={() => setActiveMenu(index)}
                     >
-                      <span>{item.label}</span>
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          const firstSub = item.subItems.find(sub => !sub.disabled)
+                          if (firstSub) router.push(firstSub.href)
+                        }}
+                      >{item.label}</span>
                     </li>
                   ))}
                 </ul>
