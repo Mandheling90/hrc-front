@@ -157,23 +157,27 @@ export const Header: React.FC = () => {
     return menuItems
   }, [hospitalId, apiMenuItems, isLoggedIn, menuItems])
 
-  // 현재 경로가 메뉴 href와 일치하는지 확인 (쿼리스트링 포함)
+  // 현재 경로가 메뉴 href와 일치하는지 확인 (쿼리스트링 포함, 병원 prefix 제거)
   const isCurrentPage = (href: string) => {
-    return pathname === href || fullPath === href
+    const strippedHref = stripHospitalPrefix(href)
+    return pathname === strippedHref || fullPath === strippedHref
   }
 
   // 메뉴 href가 현재 경로에 매칭되는지 확인
   const isMatchingHref = useCallback((href: string) => {
-    return pathname === href || pathname.startsWith(href + '/') || fullPath === href
+    // href에서 병원 prefix 제거 + 쿼리스트링 분리
+    const strippedHref = stripHospitalPrefix(href)
+    const hrefPath = strippedHref.split('?')[0]
+
+    if (pathname === strippedHref || fullPath === strippedHref) return true
+    return pathname === hrefPath || pathname.startsWith(hrefPath + '/')
   }, [pathname, fullPath])
 
   // 현재 경로가 속한 메뉴 섹션 인덱스 (GNB 활성 표시용)
   const currentMenuIndex = useMemo(() => {
     for (let i = 0; i < menuItems.length; i++) {
-      for (const sub of menuItems[i].subItems) {
-        if (isMatchingHref(sub.href)) {
-          return i
-        }
+      if (menuItems[i].subItems.some(sub => isMatchingHref(sub.href))) {
+        return i
       }
     }
     return -1
