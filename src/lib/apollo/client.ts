@@ -67,7 +67,12 @@ export function makeClient() {
     const refreshToken = typeof window !== 'undefined' ? localStorage.getItem(AUTH_REFRESH_TOKEN_KEY) : null
 
     if (!refreshToken) {
-      clearStoredAuth()
+      // 저장된 토큰이 있을 때만 인증 초기화 및 로그인 리다이렉트
+      // (비로그인 상태에서 401 응답은 무시 — 공개 페이지에서 불필요한 리다이렉트 방지)
+      const storedToken = typeof window !== 'undefined' ? localStorage.getItem(AUTH_TOKEN_KEY) : null
+      if (storedToken) {
+        clearStoredAuth()
+      }
       return
     }
 
