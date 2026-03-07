@@ -125,9 +125,9 @@ const HeaderInner: React.FC = () => {
   const isLoggedIn = isAuthenticated
   const { menus: apiMenus } = useMenus()
 
-  // API 메뉴 데이터를 MenuItem 형식으로 변환 (안암병원)
+  // API 메뉴 데이터를 MenuItem 형식으로 변환
   const apiMenuItems: MenuItem[] = useMemo(() => {
-    if (hospitalId !== 'anam' || apiMenus.length === 0) return []
+    if (apiMenus.length === 0) return []
     return apiMenus
       .filter(menu => menu.gnbExposure)
       .sort((a, b) => a.sortOrder - b.sortOrder)
@@ -142,22 +142,22 @@ const HeaderInner: React.FC = () => {
           }))
       }))
       .filter(menu => menu.subItems.length > 0)
-  }, [hospitalId, apiMenus])
+  }, [apiMenus])
 
-  // GNB 표시용 메뉴 (안암: API 데이터, 그 외: 하드코딩)
+  // GNB 표시용 메뉴 (API 데이터 우선, 없으면 하드코딩 fallback)
   const menuItems = useMemo(() => {
-    const baseMenus = hospitalId === 'anam' && apiMenuItems.length > 0 ? apiMenuItems : commonMenuItems
+    const baseMenus = apiMenuItems.length > 0 ? apiMenuItems : commonMenuItems
     return isLoggedIn ? [...baseMenus, myPageMenu] : baseMenus
-  }, [isLoggedIn, hospitalId, apiMenuItems])
+  }, [isLoggedIn, apiMenuItems])
 
   // Breadcrumb 매칭용 메뉴 (API 메뉴 + 하드코딩 메뉴 모두 포함)
   const breadcrumbMenuItems = useMemo(() => {
-    if (hospitalId === 'anam' && apiMenuItems.length > 0) {
+    if (apiMenuItems.length > 0) {
       const base = [...apiMenuItems, ...commonMenuItems]
       return isLoggedIn ? [...base, myPageMenu] : base
     }
     return menuItems
-  }, [hospitalId, apiMenuItems, isLoggedIn, menuItems])
+  }, [apiMenuItems, isLoggedIn, menuItems])
 
   // 현재 경로가 메뉴 href와 일치하는지 확인 (쿼리스트링 포함, 병원 prefix 제거)
   const isCurrentPage = (href: string) => {
