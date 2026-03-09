@@ -657,12 +657,42 @@ type ReferralPatientResponse {
   totalCount: Int!
 }
 
+# ── 진료회신서 조회 (EHR 프록시) ──
+
+input ReferralReplyQueryInput {
+  hospitalCode: HospitalCode!
+  mcdpCd: String!
+  mdcrYmd: String!
+  mddrId: String!
+  ptntNo: String!
+}
+
+type ReferralReplyItem {
+  patientNo: String
+  patientName: String
+  departmentName: String
+  doctorName: String
+  diagnosisName: String
+  replyContent: String
+  replyDate: String
+  replyDepartmentName: String
+  replyDoctorName: String
+  visitDate: String
+}
+
+type ReferralReplyResponse {
+  items: [ReferralReplyItem!]!
+  totalCount: Float!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
   ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): HospitalSearchResult!
   # 의뢰환자 조회
   ehrGetReferralPatients(input: ReferralPatientQueryInput!): ReferralPatientResponse!
+  # 진료회신서 조회
+  ehrGetReferralReply(input: ReferralReplyQueryInput!): ReferralReplyResponse!
   # 협력 병·의원 신청 조회
   myPartnerApplication(hospitalCode: HospitalCode!): PartnerHospitalModel
   myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!

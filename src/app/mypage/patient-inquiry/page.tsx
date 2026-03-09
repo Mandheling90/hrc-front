@@ -17,12 +17,12 @@ import { ConsultBadgeIcon } from '@/components/icons/ConsultBadgeIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { MedicalReplyModal, MedicalReplyData } from '@/components/organisms/MedicalReplyModal/MedicalReplyModal'
 import { useReferralPatients, ReferralPatientItem } from '@/hooks/useReferralPatients'
+import { useReferralReply } from '@/hooks/useReferralReply'
 import { useHospital, useHospitalRouter } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import styles from './page.module.scss'
 
-// 회신서 더미 데이터 (회신서 상세는 별도 API 필요)
-const mockReplyData: MedicalReplyData = {
+const emptyReplyData: MedicalReplyData = {
   referralHospital: '',
   referralDoctor: '',
   referralDate: '',
@@ -57,6 +57,10 @@ interface PatientData {
   referralDepartmentName: string
   referralDoctorName: string
   hospitalName: string
+  // 회신서 조회용 원본 값
+  departmentCode: string
+  doctorId: string
+  rawReferralDate: string
 }
 
 // YYYYMMDD → YYYY-MM-DD 변환
@@ -84,15 +88,18 @@ function mapApiToPatientData(item: ReferralPatientItem): PatientData {
     department: item.departmentName || '',
     doctor: item.doctorName || '',
     doctorCanConsult: false,
-    consentStatus: item.infoConsentYn === 'Y' ? 'Y' : item.infoConsentYn === 'N' ? 'N' : null,
-    prescriptionStatus: item.drugOrderExists ? 'Y' : 'N',
-    hasResult: !!item.visitDate,
-    hasReply: !!item.replyDate,
+    consentStatus: 'Y',
+    prescriptionStatus: item.drugOrderExists === 'Y' || item.drugOrderExists === true ? 'Y' : item.drugOrderExists === 'N' || item.drugOrderExists === false ? 'N' : null,
+    hasResult: !!item.visitDate && !!item.patientNo,
+    hasReply: !!item.replyDate && !!item.patientNo,
     isExpired,
     patientNo: item.patientNo || '',
     referralDepartmentName: item.referralDepartmentName || '',
     referralDoctorName: item.referralDoctorName || '',
-    hospitalName: item.hospitalName || ''
+    hospitalName: item.hospitalName || '',
+    departmentCode: item.departmentCode || '',
+    doctorId: item.doctorId || '',
+    rawReferralDate: item.referralDate || ''
   }
 }
 
@@ -152,7 +159,9 @@ export default function PatientInquiryPage() {
   const { hospitalId } = useHospital()
   const { user } = useAuthContext()
   const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
+  const { fetchReferralReply, replyItems } = useReferralReply()
   const router = useHospitalRouter()
+  const [replyData, setReplyData] = useState<MedicalReplyData>(emptyReplyData)
 
   // 클라이언트 마운트 시 초기값 설정 (hydration mismatch 방지)
   useEffect(() => {
@@ -286,12 +295,43 @@ export default function PatientInquiryPage() {
       width: '120px',
       renderCell: item =>
         item.hasReply && !item.isExpired ? (
-          <Button variant='primary' size='small' className={styles.viewBtn} onClick={() => setIsReplyModalOpen(true)}>
+          <Button variant='primary' size='small' className={styles.viewBtn} onClick={() => handleReplyView(item)}>
             조회
           </Button>
         ) : null
     }
   ]
+
+  const handleReplyView = async (item: PatientData) => {
+    const result = await fetchReferralReply({
+      hospitalCode: hospitalId.toUpperCase(),
+      mcdpCd: item.departmentCode,
+      mdcrYmd: item.rawReferralDate,
+      mddrId: item.doctorId,
+      ptntNo: item.patientNo
+    })
+    if (result && result.items.length > 0) {
+      const reply = result.items[0]
+      setReplyData({
+        referralHospital: item.hospitalName || '',
+        referralDoctor: item.referralDoctorName || '',
+        referralDate: formatApiDate(reply.replyDate),
+        patientName: reply.patientName || item.patientName,
+        gender: item.gender,
+        birthDate: '',
+        department: reply.replyDepartmentName || reply.departmentName || '',
+        doctor: reply.replyDoctorName || reply.doctorName || '',
+        treatmentPeriod: formatApiDate(reply.visitDate),
+        registrationNumber: reply.patientNo || item.patientNo,
+        diagnosis: reply.diagnosisName || '',
+        medicalOpinion: reply.replyContent || '',
+        createdDate: formatApiDate(reply.replyDate)
+      })
+    } else {
+      setReplyData(emptyReplyData)
+    }
+    setIsReplyModalOpen(true)
+  }
 
   const handleSearch = () => {
     setAppliedStartDate(startDate)
@@ -517,7 +557,7 @@ export default function PatientInquiryPage() {
                                   variant='primary'
                                   size='small'
                                   className={styles.cardViewBtn}
-                                  onClick={() => setIsReplyModalOpen(true)}
+                                  onClick={() => handleReplyView(item)}
                                 >
                                   조회
                                 </Button>
@@ -563,7 +603,7 @@ export default function PatientInquiryPage() {
       <Footer />
 
       {/* 회신서 조회 모달 */}
-      <MedicalReplyModal isOpen={isReplyModalOpen} onClose={() => setIsReplyModalOpen(false)} data={mockReplyData} />
+      <MedicalReplyModal isOpen={isReplyModalOpen} onClose={() => setIsReplyModalOpen(false)} data={replyData} />
     </div>
   )
 }

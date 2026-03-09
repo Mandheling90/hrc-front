@@ -13,6 +13,9 @@ export { useSearchCollaboratingHospitals, useRegisterHospital } from '@/hooks/us
 // Referral Patient Hooks - 의뢰환자 조회
 export { useReferralPatients } from '@/hooks/useReferralPatients'
 
+// Referral Reply Hooks - 진료회신서 조회
+export { useReferralReply } from '@/hooks/useReferralReply'
+
 // Partner Application Hooks - 협력 병·의원 신청
 export {
   useApplyPartnerHospital,

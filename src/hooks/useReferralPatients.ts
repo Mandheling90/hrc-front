@@ -15,7 +15,7 @@ export interface ReferralPatientItem {
   referralDepartmentCode: string
   referralDepartmentName: string
   referralDoctorName: string
-  drugOrderExists: boolean
+  drugOrderExists: string | boolean | null
   infoConsentYn: string
   replyDate: string | null
   referralDate: string
