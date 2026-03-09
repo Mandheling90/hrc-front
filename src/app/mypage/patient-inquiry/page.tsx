@@ -17,7 +17,7 @@ import { ConsultBadgeIcon } from '@/components/icons/ConsultBadgeIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { MedicalReplyModal, MedicalReplyData } from '@/components/organisms/MedicalReplyModal/MedicalReplyModal'
 import { useReferralPatients, ReferralPatientItem } from '@/hooks/useReferralPatients'
-import { useHospital } from '@/hooks'
+import { useHospital, useHospitalRouter } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import styles from './page.module.scss'
 
@@ -152,6 +152,7 @@ export default function PatientInquiryPage() {
   const { hospitalId } = useHospital()
   const { user } = useAuthContext()
   const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
+  const router = useHospitalRouter()
 
   // 클라이언트 마운트 시 초기값 설정 (hydration mismatch 방지)
   useEffect(() => {
@@ -269,7 +270,12 @@ export default function PatientInquiryPage() {
       width: '120px',
       renderCell: item =>
         item.hasResult && !item.isExpired ? (
-          <Button variant='primary' size='small' className={styles.viewBtn}>
+          <Button
+            variant='primary'
+            size='small'
+            className={styles.viewBtn}
+            onClick={() => router.push(`/mypage/patient-result?patientNo=${item.patientNo}&visitDate=${item.treatmentDate}`)}
+          >
             조회
           </Button>
         ) : null
@@ -488,7 +494,12 @@ export default function PatientInquiryPage() {
                             label='결과 조회'
                             value={
                               item.hasResult && !item.isExpired ? (
-                                <Button variant='primary' size='small' className={styles.cardViewBtn}>
+                                <Button
+                                  variant='primary'
+                                  size='small'
+                                  className={styles.cardViewBtn}
+                                  onClick={() => router.push(`/mypage/patient-result?patientNo=${item.patientNo}&visitDate=${item.treatmentDate}`)}
+                                >
                                   조회
                                 </Button>
                               ) : (
