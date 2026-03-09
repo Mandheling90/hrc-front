@@ -625,10 +625,44 @@ type HospitalArticleList {
   totalCount: Int!
 }
 
+# ── 의뢰환자 조회 (EHR 프록시) ──
+
+input ReferralPatientQueryInput {
+  hospitalCode: HospitalCode!
+}
+
+type ReferralPatientItem {
+  patientNo: String
+  patientName: String
+  genderCode: String
+  age: String
+  visitDate: String
+  departmentCode: String
+  departmentName: String
+  doctorId: String
+  doctorName: String
+  referralDepartmentCode: String
+  referralDepartmentName: String
+  referralDoctorName: String
+  drugOrderExists: Boolean
+  infoConsentYn: String
+  replyDate: String
+  referralDate: String
+  careInstitutionNo: String
+  hospitalName: String
+}
+
+type ReferralPatientResponse {
+  items: [ReferralPatientItem!]!
+  totalCount: Int!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
   ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): HospitalSearchResult!
+  # 의뢰환자 조회
+  ehrGetReferralPatients(input: ReferralPatientQueryInput!): ReferralPatientResponse!
   # 협력 병·의원 신청 조회
   myPartnerApplication(hospitalCode: HospitalCode!): PartnerHospitalModel
   myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!
