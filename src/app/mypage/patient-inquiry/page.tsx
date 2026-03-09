@@ -9,42 +9,36 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Input } from '@/components/atoms/Input/Input'
+import { DatePicker } from '@/components/atoms/DatePicker/DatePicker'
 import { Select } from '@/components/atoms/Select/Select'
 import { Button } from '@/components/atoms/Button/Button'
-import { CalendarIcon } from '@/components/icons/CalendarIcon'
 import { SearchIcon } from '@/components/icons/SearchIcon'
 import { ConsultBadgeIcon } from '@/components/icons/ConsultBadgeIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { MedicalReplyModal, MedicalReplyData } from '@/components/organisms/MedicalReplyModal/MedicalReplyModal'
+import { useReferralPatients, ReferralPatientItem } from '@/hooks/useReferralPatients'
+import { useHospital } from '@/hooks'
+import { useAuthContext } from '@/contexts/AuthContext'
 import styles from './page.module.scss'
 
-// 더미 데이터
-const mockUserName = '김지성'
-
-// 회신서 더미 데이터
+// 회신서 더미 데이터 (회신서 상세는 별도 API 필요)
 const mockReplyData: MedicalReplyData = {
-  referralHospital: '고대협력의뢰병원',
-  referralDoctor: '이협력',
-  referralDate: '2025-08-27',
-  patientName: '김레브',
-  gender: '남',
-  birthDate: '1979.02.13',
-  department: '소화기내과',
-  doctor: '김정후',
-  treatmentPeriod: '2025.08.27 ~ 2025.11.23',
-  registrationNumber: '12345678',
-  diagnosis: 'Anemia',
-  medicalOpinion: `환자는 3개월 이상 지속된 만성 기침과 간헐적 호흡곤란을 주소로 내원하였습니다.
-흉부 X-ray 및 흉부 CT 검사에서 경도의 기관지확장증 소견이 확인되었으며,
-폐기능 검사에서는 경도 폐쇄성 환기 장애가 관찰되었습니다.
-
-1. 급성 감염 소견은 없으나, 알레르기 기전이 일부 관여한 것으로 판단됩니다. 현재 상태는 경도 기관지확장증 + 알레르기성 기도 과민반응에 의한 만성 기침으로 판단됩니다.
-2. 폐렴, 결핵 등 중증 감염의 증거는 없으며, 급성 악화 소견도 관찰되지 않습니다.
-3. 장기간 지속된 만성 증상으로 생활 불편도가 높아 흡입형 스테로이드 + 기관지확장제 병합요법을 권고합니다.
-4. 환경 요인(미세먼지, 찬 공기, 흡연 노출)이 악화 요인이므로 회피 교육이 필요합니다.`,
-  createdDate: '2025-11-23'
+  referralHospital: '',
+  referralDoctor: '',
+  referralDate: '',
+  patientName: '',
+  gender: '',
+  birthDate: '',
+  department: '',
+  doctor: '',
+  treatmentPeriod: '',
+  registrationNumber: '',
+  diagnosis: '',
+  medicalOpinion: '',
+  createdDate: ''
 }
 
+// API 응답을 테이블 표시용으로 변환
 interface PatientData {
   referralDate: string
   patientName: string
@@ -59,81 +53,48 @@ interface PatientData {
   hasResult: boolean
   hasReply: boolean
   isExpired?: boolean
+  patientNo: string
+  referralDepartmentName: string
+  referralDoctorName: string
+  hospitalName: string
 }
 
-const mockPatientData: PatientData[] = [
-  {
-    referralDate: '2025-08-21',
-    patientName: '송*지',
-    gender: '남',
-    age: 52,
-    treatmentDate: '2025-11-25',
-    department: '감염내과',
-    doctor: '김선용',
-    doctorCanConsult: false,
-    consentStatus: 'Y',
-    prescriptionStatus: 'Y',
-    hasResult: true,
-    hasReply: true
-  },
-  {
-    referralDate: '2025-08-21',
-    patientName: '송*지',
-    gender: '남',
-    age: 52,
-    treatmentDate: '2025-11-25',
-    department: '감염내과',
-    doctor: '김선용',
-    doctorCanConsult: false,
-    consentStatus: 'Y',
-    prescriptionStatus: 'Y',
-    hasResult: true,
-    hasReply: true
-  },
-  {
-    referralDate: '2025-08-05',
-    patientName: '이*상',
-    gender: '여',
-    age: 83,
-    treatmentDate: '2025-08-14',
-    department: '소화기내과',
-    doctor: '박인구',
-    doctorCanConsult: true,
-    consentStatus: 'N',
-    prescriptionStatus: null,
-    hasResult: false,
-    hasReply: false
-  },
-  {
-    referralDate: '2025-07-24',
-    patientName: '김*철',
-    gender: '남',
-    age: 21,
-    treatmentDate: '2025-07-21',
-    department: '치과',
-    doctor: '황순철',
-    doctorCanConsult: false,
-    consentStatus: 'Y',
-    prescriptionStatus: 'Y',
-    hasResult: true,
-    hasReply: true
-  },
-  {
-    referralDate: '2022-09-13',
-    patientName: '우*우',
-    gender: '여',
-    age: 62,
-    treatmentDate: '2022-09-14',
-    department: '호흡기내과',
-    doctor: '홍상우',
-    doctorCanConsult: true,
-    consentStatus: 'Y',
-    prescriptionStatus: 'Y',
-    hasResult: true,
-    hasReply: true,
-    isExpired: true
+// YYYYMMDD → YYYY-MM-DD 변환
+function formatApiDate(dateStr: string | null): string {
+  if (!dateStr) return ''
+  if (dateStr.length === 8) {
+    return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`
   }
-]
+  return dateStr
+}
+
+function mapApiToPatientData(item: ReferralPatientItem): PatientData {
+  const referralDate = formatApiDate(item.referralDate)
+  // 의뢰일로부터 1년 이상 경과시 만료 처리
+  const isExpired = referralDate
+    ? new Date().getTime() - new Date(referralDate).getTime() > 365 * 24 * 60 * 60 * 1000
+    : false
+
+  return {
+    referralDate,
+    patientName: item.patientName || '',
+    gender: item.genderCode === 'M' ? '남' : item.genderCode === 'F' ? '여' : item.genderCode || '',
+    age: Number(item.age) || 0,
+    treatmentDate: formatApiDate(item.visitDate),
+    department: item.departmentName || '',
+    doctor: item.doctorName || '',
+    doctorCanConsult: false,
+    consentStatus: item.infoConsentYn === 'Y' ? 'Y' : item.infoConsentYn === 'N' ? 'N' : null,
+    prescriptionStatus: item.drugOrderExists ? 'Y' : 'N',
+    hasResult: !!item.visitDate,
+    hasReply: !!item.replyDate,
+    isExpired,
+    patientNo: item.patientNo || '',
+    referralDepartmentName: item.referralDepartmentName || '',
+    referralDoctorName: item.referralDoctorName || '',
+    hospitalName: item.hospitalName || ''
+  }
+}
 
 const periodOptions = [
   { value: '1month', label: '1개월' },
@@ -155,17 +116,104 @@ const searchTypeOptions = [
   { value: 'diagnosis', label: '진단명' }
 ]
 
+const PAGE_SIZE = 10
+
+function calcDateRange(periodValue: string) {
+  const now = new Date()
+  const from = new Date(now)
+  switch (periodValue) {
+    case '1month': from.setMonth(from.getMonth() - 1); break
+    case '6months': from.setMonth(from.getMonth() - 6); break
+    case '1year': from.setFullYear(from.getFullYear() - 1); break
+    case '3years': from.setFullYear(from.getFullYear() - 3); break
+  }
+  const fmt = (d: Date) => d.toISOString().split('T')[0]
+  return { start: fmt(from), end: fmt(now) }
+}
+
 export default function PatientInquiryPage() {
-  const [startDate, setStartDate] = useState('2025-04-21')
-  const [endDate, setEndDate] = useState('2025-05-21')
-  const [period, setPeriod] = useState('1month')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [period, setPeriod] = useState('3years')
   const [sortBy, setSortBy] = useState('latest')
   const [searchType, setSearchType] = useState('all')
   const [searchKeyword, setSearchKeyword] = useState('')
+  const [appliedKeyword, setAppliedKeyword] = useState('')
+  const [appliedSearchType, setAppliedSearchType] = useState('all')
+  const [appliedStartDate, setAppliedStartDate] = useState('')
+  const [appliedEndDate, setAppliedEndDate] = useState('')
+  const [appliedSortBy, setAppliedSortBy] = useState('latest')
   const [currentPage, setCurrentPage] = useState(1)
-  const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
+  const [searchTrigger, setSearchTrigger] = useState(0)
+  const [isTablet, setIsTablet] = useState(false)
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false)
-  const totalPages = 5
+  const [isMounted, setIsMounted] = useState(false)
+
+  const { hospitalId } = useHospital()
+  const { user } = useAuthContext()
+  const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
+
+  // 클라이언트 마운트 시 초기값 설정 (hydration mismatch 방지)
+  useEffect(() => {
+    const { start, end } = calcDateRange('3years')
+    setStartDate(start)
+    setEndDate(end)
+    setAppliedStartDate(start)
+    setAppliedEndDate(end)
+    setIsTablet(window.innerWidth <= 1429)
+    setIsMounted(true)
+  }, [])
+
+  // 전체 데이터를 매핑 후 클라이언트에서 필터/정렬/페이징
+  const allPatientData: PatientData[] = patients.map(mapApiToPatientData)
+
+  const filteredData = allPatientData
+    .filter(item => {
+      // 날짜 필터
+      const refDate = item.referralDate
+      if (refDate && appliedStartDate && refDate < appliedStartDate) return false
+      if (refDate && appliedEndDate && refDate > appliedEndDate) return false
+      // 키워드 검색
+      if (appliedKeyword) {
+        const kw = appliedKeyword.toLowerCase()
+        switch (appliedSearchType) {
+          case 'department': return item.department.toLowerCase().includes(kw)
+          case 'doctor': return item.doctor.toLowerCase().includes(kw)
+          case 'diagnosis': return false // API에 진단명 필드 없음
+          default: return (
+            item.department.toLowerCase().includes(kw) ||
+            item.doctor.toLowerCase().includes(kw) ||
+            item.patientName.toLowerCase().includes(kw)
+          )
+        }
+      }
+      return true
+    })
+    .sort((a, b) => {
+      switch (appliedSortBy) {
+        case 'oldest': return a.referralDate.localeCompare(b.referralDate)
+        case 'name': return a.patientName.localeCompare(b.patientName)
+        default: return b.referralDate.localeCompare(a.referralDate) // latest
+      }
+    })
+
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / PAGE_SIZE))
+  const patientData = filteredData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+
+  // 기간 라디오 변경 시 날짜 자동 계산 (마운트 초기화 이후에만)
+  useEffect(() => {
+    if (!isMounted) return
+    const { start, end } = calcDateRange(period)
+    setStartDate(start)
+    setEndDate(end)
+  }, [period, isMounted])
+
+  // 데이터 조회 (마운트 후 1회 + 검색 시)
+  useEffect(() => {
+    if (!isMounted) return
+    searchReferralPatients({ hospitalCode: hospitalId.toUpperCase() })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMounted, hospitalId, searchTrigger])
 
   // 태블릿 여부 확인
   useEffect(() => {
@@ -240,8 +288,13 @@ export default function PatientInquiryPage() {
   ]
 
   const handleSearch = () => {
-    // 검색 로직
-    console.log('검색:', { searchType, searchKeyword, startDate, endDate, period, sortBy })
+    setAppliedStartDate(startDate)
+    setAppliedEndDate(endDate)
+    setAppliedSortBy(sortBy)
+    setAppliedKeyword(searchKeyword)
+    setAppliedSearchType(searchType)
+    setCurrentPage(1)
+    setSearchTrigger(prev => prev + 1)
   }
 
   return (
@@ -258,7 +311,7 @@ export default function PatientInquiryPage() {
               <div className={styles.noticeSection}>
                 <div className={styles.noticeItem}>
                   <span className={styles.noticeBadge}>1</span>
-                  <span className={styles.noticeText}>{mockUserName} 선생님께서 의뢰하신 의뢰환자정보입니다.</span>
+                  <span className={styles.noticeText}>{user?.userName || ''} 선생님께서 의뢰하신 의뢰환자정보입니다.</span>
                 </div>
                 <div className={styles.noticeItem}>
                   <span className={styles.noticeBadge}>2</span>
@@ -293,23 +346,19 @@ export default function PatientInquiryPage() {
                       />
                       <div className={styles.dateRangeGroup}>
                         <div className={styles.dateInputWrapper}>
-                          <Input
-                            type='date'
+                          <DatePicker
                             value={startDate}
-                            onChange={e => setStartDate(e.target.value)}
-                            className={styles.dateInput}
+                            onChange={val => setStartDate(val)}
+                            maxDate={new Date(endDate)}
                           />
-                          <CalendarIcon width={24} height={24} className={styles.calendarIcon} />
                         </div>
                         <span className={styles.dateSeparator}>~</span>
                         <div className={styles.dateInputWrapper}>
-                          <Input
-                            type='date'
+                          <DatePicker
                             value={endDate}
-                            onChange={e => setEndDate(e.target.value)}
-                            className={styles.dateInput}
+                            onChange={val => setEndDate(val)}
+                            minDate={new Date(startDate)}
                           />
-                          <CalendarIcon width={24} height={24} className={styles.calendarIcon} />
                         </div>
                       </div>
                     </div>
@@ -377,7 +426,7 @@ export default function PatientInquiryPage() {
                   /* 태블릿/모바일: 카드형 그리드 리스트 */
                   <CardList
                     variant='infoCard'
-                    cards={mockPatientData.map(item => [
+                    cards={patientData.map(item => [
                       {
                         id: 'referralDate',
                         leftContent: <InfoRowContent label='의뢰일자' value={item.referralDate} />,
@@ -472,7 +521,7 @@ export default function PatientInquiryPage() {
                     ])}
                     getCardKey={(_, index) => index}
                     getCardClassName={(_, index) => {
-                      const item = mockPatientData[index]
+                      const item = patientData[index]
                       return item.isExpired ? styles.expiredCard : ''
                     }}
                     className={styles.patientCardList}
@@ -481,7 +530,7 @@ export default function PatientInquiryPage() {
                   /* 데스크톱: 테이블 */
                   <Table
                     columns={patientColumns}
-                    data={mockPatientData}
+                    data={patientData}
                     getRowKey={(_, index) => index}
                     className={styles.patientTable}
                     isHighlighted={item => item.isExpired === true}

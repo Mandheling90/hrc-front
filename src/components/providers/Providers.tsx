@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { ApolloWrapper } from '@/lib/apollo'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { HospitalProvider } from '@/contexts/HospitalContext'
@@ -13,14 +14,16 @@ interface ProvidersProps {
 
 export const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
-    <ApolloWrapper>
-      <AuthProvider>
-        <HospitalProvider>
-          <DraftApplicationProvider>
-            <ScrollRevealProvider>{children}</ScrollRevealProvider>
-          </DraftApplicationProvider>
-        </HospitalProvider>
-      </AuthProvider>
-    </ApolloWrapper>
+    <AntdRegistry>
+      <ApolloWrapper>
+        <AuthProvider>
+          <HospitalProvider>
+            <DraftApplicationProvider>
+              <ScrollRevealProvider>{children}</ScrollRevealProvider>
+            </DraftApplicationProvider>
+          </HospitalProvider>
+        </AuthProvider>
+      </ApolloWrapper>
+    </AntdRegistry>
   )
 }

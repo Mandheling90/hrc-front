@@ -239,7 +239,6 @@
 }
 
 .dateInputWrapper {
-  position: relative;
   flex: 1;
   min-width: 220px;
   max-width: 220px;
@@ -251,24 +250,6 @@
   @include mobile {
     max-width: 100%;
   }
-
-  input {
-    padding-right: 40px;
-
-    &::-webkit-calendar-picker-indicator {
-      display: none;
-      -webkit-appearance: none;
-    }
-  }
-}
-
-.calendarIcon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: $gray-9;
 }
 
 .dateSeparator {
