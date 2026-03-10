@@ -3,14 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from '@/components/atoms/HospitalLink'
 import { useHospital, useHospitalSns } from '@/hooks'
-import type { HospitalId } from '@/types/hospital'
 import styles from './SNSSection.module.scss'
-
-const HOSPITAL_CODE_MAP: Record<HospitalId, string> = {
-  anam: 'ANAM',
-  guro: 'GURO',
-  ansan: 'ANSAN'
-}
 
 function extractYouTubeVideoId(url: string): string | null {
   const patterns = [
@@ -36,8 +29,7 @@ function getThumbnailUrl(article: { linkUrl: string | null }): string {
 
 export const SNSSection: React.FC = () => {
   const { hospital } = useHospital()
-  const hospitalCode = HOSPITAL_CODE_MAP[hospital.id]
-  const { articles, loading } = useHospitalSns(hospitalCode, 4)
+  const { articles, loading } = useHospitalSns(4)
 
   const posts = articles.map(article => ({
     id: article.articleNo,
