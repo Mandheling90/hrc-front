@@ -461,7 +461,7 @@ export default function PatientInquiryPage() {
                 message={
                   <>
                     <ConsultBadgeIcon />
-                    표시가 있는 진료의만 의료자문 요청이 가능합니다.
+                    표시가 있는 진료의는 의료자문 요청이 가능합니다.
                   </>
                 }
                 className={styles.listInfo}
