@@ -176,12 +176,21 @@ export default function NetworkPage() {
               </div>
             </div>
 
-            {networkInfo.downloadLink && (
+            {networkInfo.downloadLinks && networkInfo.downloadLinks.length > 0 ? (
+              <div className={styles.downloadList}>
+                {networkInfo.downloadLinks.map((link, index) => (
+                  <a key={index} href={link.href} className={styles.downloadBox} download>
+                    <span className={styles.downloadFileName}>{link.label}</span>
+                    <FileDownloadIcon width={24} height={24} fill='#636363' />
+                  </a>
+                ))}
+              </div>
+            ) : networkInfo.downloadLink ? (
               <a href={networkInfo.downloadLink} className={styles.downloadBox} download>
                 <span className={styles.downloadFileName}>협력병의원 신청서 다운로드.zip</span>
                 <FileDownloadIcon width={24} height={24} fill='#636363' />
               </a>
-            )}
+            ) : null}
 
             <ConfirmButtons
               className={styles.networkConfirmButtons}

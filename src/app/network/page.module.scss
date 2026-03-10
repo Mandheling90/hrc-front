@@ -274,6 +274,12 @@
   }
 }
 
+.downloadList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .downloadBox {
   display: flex;
   align-items: center;

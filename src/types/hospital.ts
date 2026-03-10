@@ -196,7 +196,8 @@ export interface NetworkInfo {
     phone?: string // 전화번호
     fax?: string // 팩스번호
   }
-  downloadLink?: string // 신청서 다운로드 링크
+  downloadLink?: string // 신청서 다운로드 링크 (단일)
+  downloadLinks?: { label: string; href: string }[] // 신청서 다운로드 링크 (복수)
   applicationLinks?: {
     hospital?: string // 협력병원 온라인 신청 링크
     clinic?: string // 협력의원 온라인 신청 링크

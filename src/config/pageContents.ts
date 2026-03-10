@@ -232,7 +232,10 @@ const anamContent: HospitalPageContent = {
       phone: '02-920-5892',
       fax: '02-920-6523'
     },
-    downloadLink: '#',
+    downloadLinks: [
+      { label: '협력병원 신청서 다운로드', href: '#' },
+      { label: '협력의원 신청서 다운로드', href: '#' }
+    ],
     applicationLinks: {
       hospital: '#',
       clinic: '#'
