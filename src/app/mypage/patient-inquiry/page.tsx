@@ -61,6 +61,7 @@ interface PatientData {
   departmentCode: string
   doctorId: string
   rawReferralDate: string
+  referralSeqNo: string
 }
 
 // YYYYMMDD → YYYY-MM-DD 변환
@@ -99,7 +100,8 @@ function mapApiToPatientData(item: ReferralPatientItem): PatientData {
     hospitalName: item.hospitalName || '',
     departmentCode: item.departmentCode || '',
     doctorId: item.doctorId || '',
-    rawReferralDate: item.referralDate || ''
+    rawReferralDate: item.referralDate || '',
+    referralSeqNo: item.referralSeqNo || ''
   }
 }
 
@@ -159,7 +161,7 @@ export default function PatientInquiryPage() {
   const { hospitalId } = useHospital()
   const { user } = useAuthContext()
   const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
-  const { fetchReferralReply, replyItems } = useReferralReply()
+  const { fetchReferralReply } = useReferralReply()
   const router = useHospitalRouter()
   const [replyData, setReplyData] = useState<MedicalReplyData>(emptyReplyData)
 
@@ -305,26 +307,30 @@ export default function PatientInquiryPage() {
   const handleReplyView = async (item: PatientData) => {
     const result = await fetchReferralReply({
       hospitalCode: hospitalId.toUpperCase(),
-      mcdpCd: item.departmentCode,
-      mdcrYmd: item.rawReferralDate,
-      mddrId: item.doctorId,
-      ptntNo: item.patientNo
+      ptno: item.patientNo,
+      refrSno: item.referralSeqNo,
+      refrYmd: item.rawReferralDate
     })
-    if (result && result.items.length > 0) {
-      const reply = result.items[0]
+    if (result?.item) {
+      const reply = result.item
+      const genderText = reply.genderCode === 'M' ? '남' : reply.genderCode === 'F' ? '여' : reply.genderCode || item.gender
+      // frontResidentNo 앞 6자리로 생년월일 추출
+      const birthDate = reply.frontResidentNo
+        ? `${reply.frontResidentNo.slice(0, 2)}-${reply.frontResidentNo.slice(2, 4)}-${reply.frontResidentNo.slice(4, 6)}`
+        : ''
       setReplyData({
-        referralHospital: item.hospitalName || '',
-        referralDoctor: item.referralDoctorName || '',
-        referralDate: formatApiDate(reply.replyDate),
+        referralHospital: item.hospitalName || user?.profile?.hospName || '',
+        referralDoctor: user?.userName || '',
+        referralDate: formatApiDate(reply.referralDate),
         patientName: reply.patientName || item.patientName,
-        gender: item.gender,
-        birthDate: '',
-        department: reply.replyDepartmentName || reply.departmentName || '',
-        doctor: reply.replyDoctorName || reply.doctorName || '',
-        treatmentPeriod: formatApiDate(reply.visitDate),
-        registrationNumber: reply.patientNo || item.patientNo,
+        gender: genderText,
+        birthDate,
+        department: reply.departmentName || '',
+        doctor: reply.doctorName || '',
+        treatmentPeriod: reply.treatmentPeriod || '',
+        registrationNumber: item.patientNo,
         diagnosis: reply.diagnosisName || '',
-        medicalOpinion: reply.replyContent || '',
+        medicalOpinion: reply.opinion || '',
         createdDate: formatApiDate(reply.replyDate)
       })
     } else {

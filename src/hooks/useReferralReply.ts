@@ -3,29 +3,32 @@ import { useLazyQuery } from '@apollo/client/react'
 import { EHR_REFERRAL_REPLY_QUERY } from '@/graphql/hospital/queries'
 
 export interface ReferralReplyItem {
-  patientNo: string | null
-  patientName: string | null
+  referralDate: string | null
   departmentName: string | null
   doctorName: string | null
+  patientName: string | null
+  genderCode: string | null
+  age: string | null
+  frontResidentNo: string | null
+  backResidentNo: string | null
+  diagnosisCode: string | null
   diagnosisName: string | null
-  replyContent: string | null
+  treatmentPeriod: string | null
+  visitTypeCode: string | null
+  opinion: string | null
   replyDate: string | null
-  replyDepartmentName: string | null
-  replyDoctorName: string | null
-  visitDate: string | null
+  phoneNo: string | null
 }
 
 interface ReferralReplyResult {
-  items: ReferralReplyItem[]
-  totalCount: number
+  item: ReferralReplyItem | null
 }
 
 interface ReferralReplyQueryInput {
   hospitalCode: string
-  mcdpCd: string
-  mdcrYmd: string
-  mddrId: string
-  ptntNo: string
+  ptno: string
+  refrSno: string
+  refrYmd: string
 }
 
 export function useReferralReply() {
@@ -40,8 +43,7 @@ export function useReferralReply() {
 
   return {
     fetchReferralReply,
-    replyItems: data?.ehrGetReferralReply?.items ?? [],
-    totalCount: data?.ehrGetReferralReply?.totalCount ?? 0,
+    replyItem: data?.ehrGetReferralReply?.item ?? null,
     loading,
     error
   }
