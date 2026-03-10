@@ -19,7 +19,7 @@ interface HospitalSnsData {
   }
 }
 
-export function useHospitalSns(pageRow: number = 4, startIndex: number = 0) {
+export function useHospitalSns(pageRow: number = 4, startIndex: number = 1) {
   const { data, loading, error } = useQuery<HospitalSnsData>(HOSPITAL_SNS_QUERY, {
     variables: { pageRow, startIndex },
     fetchPolicy: 'cache-and-network'
