@@ -10,7 +10,6 @@ import { Button } from '@/components/atoms/Button/Button'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
 import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
-import { MedicalDepartmentStep } from '@/components/organisms/MedicalDepartmentStep/MedicalDepartmentStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import styles from './page.module.scss'
 
@@ -18,7 +17,7 @@ import styles from './page.module.scss'
 export default function EditHospitalPage() {
   const router = useHospitalRouter()
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 5
+  const totalSteps = 4
 
   const guideMessages = useMemo(() => {
     return [
@@ -69,11 +68,8 @@ export default function EditHospitalPage() {
             {/* 3단계: 실무자 정보 + 의료기관 유형 + 인력현황 */}
             {currentStep === 3 && <StaffInfoStep currentStep={3} totalSteps={totalSteps} />}
 
-            {/* 4단계: 진료과 운영 현황(전문의 수) */}
-            {currentStep === 4 && <MedicalDepartmentStep currentStep={4} totalSteps={totalSteps} showEquipment={false} />}
-
-            {/* 5단계: 병원특성 및 기타사항 + 첨부파일 */}
-            {currentStep === 5 && <HospitalCharacteristicsStep currentStep={5} totalSteps={totalSteps} />}
+            {/* 4단계: 병원특성 및 기타사항 + 첨부파일 */}
+            {currentStep === 4 && <HospitalCharacteristicsStep currentStep={4} totalSteps={totalSteps} />}
 
             {/* 하단 버튼 */}
             <div className={styles.formActions}>
