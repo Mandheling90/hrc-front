@@ -1,0 +1,30 @@
+@use '@/styles/variables' as *;
+
+.topButton {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-full;
+  background-color: $color-bg;
+  border: 1px solid $gray-8;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: $z-index-fixed;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-base ease, visibility $transition-base ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover {
+    background-color: $gray-1;
+  }
+}
