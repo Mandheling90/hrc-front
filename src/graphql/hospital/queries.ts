@@ -22,6 +22,8 @@ export const EHR_REFERRAL_PATIENTS_QUERY = gql`
         referralDate
         careInstitutionNo
         hospitalName
+        referralSeqNo
+        referralStatusCode
       }
       totalCount
     }
@@ -31,19 +33,23 @@ export const EHR_REFERRAL_PATIENTS_QUERY = gql`
 export const EHR_REFERRAL_REPLY_QUERY = gql`
   query EhrGetReferralReply($input: ReferralReplyQueryInput!) {
     ehrGetReferralReply(input: $input) {
-      items {
-        patientNo
-        patientName
+      item {
+        referralDate
         departmentName
         doctorName
+        patientName
+        genderCode
+        age
+        frontResidentNo
+        backResidentNo
+        diagnosisCode
         diagnosisName
-        replyContent
+        treatmentPeriod
+        visitTypeCode
+        opinion
         replyDate
-        replyDepartmentName
-        replyDoctorName
-        visitDate
+        phoneNo
       }
-      totalCount
     }
   }
 `

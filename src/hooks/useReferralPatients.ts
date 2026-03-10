@@ -21,6 +21,8 @@ export interface ReferralPatientItem {
   referralDate: string
   careInstitutionNo: string
   hospitalName: string
+  referralSeqNo: string | null
+  referralStatusCode: string | null
 }
 
 interface ReferralPatientsResult {

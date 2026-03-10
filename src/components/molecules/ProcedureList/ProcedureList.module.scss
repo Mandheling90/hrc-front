@@ -122,6 +122,19 @@
   }
 }
 
+.link {
+  color: inherit;
+  // text-decoration: underline;
+  cursor: pointer;
+  display: inline;
+  white-space: normal;
+  outline: none;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
 .note {
   font-size: $font-size-xl; // 20px - 리스트와 동일
   font-family: Pretendard;

@@ -338,47 +338,52 @@
 }
 
 .searchInput {
-  width: 507px;
-  flex-shrink: 0;
+  &#{&} {
+    width: 507px;
+    flex-shrink: 0;
 
-  @include tablet {
-    width: auto;
-    flex: 1;
-  }
+    @include tablet {
+      width: auto;
+      flex: 1;
+    }
 
-  @include mobile {
-    width: 100%;
+    @include mobile {
+      width: 100%;
+    }
   }
 }
 
 .searchBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 0 15px;
-  border-radius: 5px;
-  white-space: nowrap;
-  align-self: stretch;
+  &#{&} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 15px;
+    height: auto;
+    border-radius: 5px;
+    white-space: nowrap;
+    align-self: stretch;
 
-  span {
-    font-size: 20px;
-    font-weight: $font-weight-semibold;
-    line-height: 1.5;
+    span {
+      font-size: 20px;
+      font-weight: $font-weight-semibold;
+      line-height: 1.5;
 
-    @include tablet {
-      font-size: 18px;
+      @include tablet {
+        font-size: 18px;
+      }
+
+      @include mobile {
+        font-size: 18px;
+      }
     }
 
     @include mobile {
-      font-size: 18px;
+      justify-content: center;
+      width: 100%;
+      padding: 8px 15px;
     }
-  }
-
-  @include mobile {
-    justify-content: center;
-    width: 100%;
-    padding: 8px 15px;
   }
 }
 

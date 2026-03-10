@@ -12,6 +12,7 @@ import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import styles from './page.module.scss'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
+import { useHospital } from '@/hooks'
 
 // 임시 데이터 타입
 interface ClinicData {
@@ -101,20 +102,61 @@ const regionOptions = [
   { value: 'daegu', label: '대구' }
 ]
 
-// 병원 유형 옵션
-const hospitalTypeOptions = [
-  { value: 'all', label: '병원 유형(전체)' },
-  { value: 'hospital', label: '병원' },
-  { value: 'clinic', label: '의원' }
-]
+// 병원별 유형 옵션
+const hospitalTypeOptionsByHospital: Record<string, { value: string; label: string }[]> = {
+  anam: [
+    { value: 'all', label: '병원 유형(전체)' },
+    { value: 'superior-general', label: '상급종합병원' },
+    { value: 'general', label: '종합병원' },
+    { value: 'hospital', label: '병원' },
+    { value: 'nursing', label: '요양병원' },
+    { value: 'oriental', label: '한방' },
+    { value: 'clinic', label: '의원' }
+  ],
+  ansan: [
+    { value: 'all', label: '병원 유형(전체)' },
+    { value: 'superior-general', label: '상급종합병원' },
+    { value: 'general', label: '종합병원' },
+    { value: 'hospital', label: '병원' },
+    { value: 'nursing', label: '요양병원' },
+    { value: 'mental', label: '정신병원' },
+    { value: 'dental-hospital', label: '치과병원' },
+    { value: 'oriental-hospital', label: '한방병원' },
+    { value: 'clinic', label: '의원' },
+    { value: 'dental-clinic', label: '치과의원' },
+    { value: 'oriental-clinic', label: '한의원' },
+    { value: 'public-health', label: '보건기관' }
+  ],
+  guro: [
+    { value: 'all', label: '병원 유형(전체)' },
+    { value: 'superior-general', label: '상급종합병원' },
+    { value: 'general', label: '종합병원' },
+    { value: 'hospital', label: '병원' },
+    { value: 'nursing', label: '요양병원' },
+    { value: 'oriental-hospital', label: '한방병원' },
+    { value: 'dental-hospital', label: '치과병원' },
+    { value: 'mental', label: '정신병원' },
+    { value: 'public-health', label: '보건기관' },
+    { value: 'institution', label: '기관' },
+    { value: 'clinic', label: '의원' },
+    { value: 'dental-clinic', label: '치과의원' },
+    { value: 'oriental-clinic', label: '한의원' }
+  ]
+}
 
 export default function ClinicStatusPage() {
+  const { hospitalId } = useHospital()
   const [selectedRegion, setSelectedRegion] = useState<string>('all')
   const [selectedHospitalType, setSelectedHospitalType] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedClinicId, setSelectedClinicId] = useState<string>(mockClinics[0]?.id || '')
   const itemsPerPage = 4
+
+  const hospitalTypeOptions = useMemo(
+    () => hospitalTypeOptionsByHospital[hospitalId] ?? hospitalTypeOptionsByHospital.anam,
+    [hospitalId]
+  )
 
   // Breadcrumb 설정
   const breadcrumbItems = useMemo(() => {

@@ -650,6 +650,8 @@ type ReferralPatientItem {
   referralDate: String
   careInstitutionNo: String
   hospitalName: String
+  referralSeqNo: String
+  referralStatusCode: String
 }
 
 type ReferralPatientResponse {
@@ -661,28 +663,31 @@ type ReferralPatientResponse {
 
 input ReferralReplyQueryInput {
   hospitalCode: HospitalCode!
-  mcdpCd: String!
-  mdcrYmd: String!
-  mddrId: String!
-  ptntNo: String!
+  ptno: String!
+  refrSno: String!
+  refrYmd: String!
 }
 
 type ReferralReplyItem {
-  patientNo: String
-  patientName: String
+  referralDate: String
   departmentName: String
   doctorName: String
+  patientName: String
+  genderCode: String
+  age: String
+  frontResidentNo: String
+  backResidentNo: String
+  diagnosisCode: String
   diagnosisName: String
-  replyContent: String
+  treatmentPeriod: String
+  visitTypeCode: String
+  opinion: String
   replyDate: String
-  replyDepartmentName: String
-  replyDoctorName: String
-  visitDate: String
+  phoneNo: String
 }
 
 type ReferralReplyResponse {
-  items: [ReferralReplyItem!]!
-  totalCount: Float!
+  item: ReferralReplyItem
 }
 
 type Query {
@@ -702,7 +707,7 @@ type Query {
   activePopups: [PopupModel!]!
   miniBanners: [PopupModel!]!
   # 병원 SNS
-  hospitalSns(hospitalCode: HospitalCode!, pageRow: Int): HospitalArticleList!
+  hospitalSns(pageRow: Int, startIndex: Int): HospitalArticleList!
   # 메뉴
   menus(menuType: MenuType!): [MenuModel!]!
   # 게시판

@@ -47,7 +47,7 @@ export interface StaffInfoStepData {
   position: string
   contactNumber: string
   mobilePhone: string
-  staffEmail: string
+  staffEmail?: string
   medicalInstitutionType: string
   totalEmployees: string
   specialists: string
@@ -134,7 +134,7 @@ export interface ClinicStaffInfoStepData {
   position: string
   contactNumber: string
   mobilePhone: string
-  staffEmail: string
+  staffEmail?: string
   medicalInstitutionType: string
   totalBeds: string
   totalStaff: string

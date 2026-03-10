@@ -5,11 +5,6 @@ import { FormField } from '@/components/molecules/FormField/FormField'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
-import { SearchIcon } from '@/components/icons/SearchIcon'
-import {
-  HospitalSearchModal,
-  HospitalSearchResult
-} from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
 import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import { useHospital } from '@/hooks'
 import type { StaffInfoStepData, StepRef } from '@/types/partner-application'
@@ -52,12 +47,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
     const [position, setPosition] = useState(defaultValues?.position ?? '')
     const [contactNumber, setContactNumber] = useState(defaultValues?.contactNumber ?? '')
     const [mobilePhone, setMobilePhone] = useState(defaultValues?.mobilePhone ?? '')
-    const [staffEmail, setStaffEmail] = useState(defaultValues?.staffEmail ?? '')
     const [medicalInstitutionType, setMedicalInstitutionType] = useState(defaultValues?.medicalInstitutionType ?? '')
     const [totalEmployees, setTotalEmployees] = useState(defaultValues?.totalEmployees ?? '')
     const [specialists, setSpecialists] = useState(defaultValues?.specialists ?? '')
     const [nurses, setNurses] = useState(defaultValues?.nurses ?? '')
-    const [isHospitalSearchOpen, setIsHospitalSearchOpen] = useState(false)
 
     useImperativeHandle(ref, () => ({
       getData: () => ({
@@ -67,7 +60,6 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
         position,
         contactNumber,
         mobilePhone,
-        staffEmail,
         medicalInstitutionType,
         totalEmployees,
         specialists,
@@ -117,9 +109,6 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               placeholder='이름을 입력해주세요.'
               value={staffName}
               onChange={e => setStaffName(e.target.value)}
-              buttonText='병원찾기'
-              onButtonClick={() => setIsHospitalSearchOpen(true)}
-              buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
             />
 
             {/* 부서/진료과 */}
@@ -183,16 +172,6 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               onChange={e => setMobilePhone(e.target.value)}
             />
 
-            {/* 이메일 */}
-            <FormField
-              label='이메일'
-              id='staffEmail'
-              name='staffEmail'
-              type='email'
-              placeholder='이메일을 입력해주세요.'
-              value={staffEmail}
-              onChange={e => setStaffEmail(e.target.value)}
-            />
           </div>
         </div>
 
@@ -271,12 +250,6 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
             />
           </div>
         </div>
-        <HospitalSearchModal
-          isOpen={isHospitalSearchOpen}
-          onClose={() => setIsHospitalSearchOpen(false)}
-          onSelect={() => setIsHospitalSearchOpen(false)}
-          closeOnBackdropClick
-        />
       </div>
     )
   }

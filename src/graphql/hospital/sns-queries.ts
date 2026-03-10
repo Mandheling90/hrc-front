@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const HOSPITAL_SNS_QUERY = gql`
-  query HospitalSns($hospitalCode: HospitalCode!, $pageRow: Int) {
-    hospitalSns(hospitalCode: $hospitalCode, pageRow: $pageRow) {
+  query HospitalSns($pageRow: Int, $startIndex: Int) {
+    hospitalSns(pageRow: $pageRow, startIndex: $startIndex) {
       totalCount
       articles {
         articleNo

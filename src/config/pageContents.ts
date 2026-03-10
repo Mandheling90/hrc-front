@@ -328,7 +328,7 @@ const anamContent: HospitalPageContent = {
         },
         {
           chip: '진료결과 회신',
-          items: [{ text: '우편발송' }, { text: '인터넷 결과 조회 : KRC 홈페이지(https://refer.kumc.or.kr)' }],
+          items: [{ text: '우편발송' }, { text: '인터넷 결과 조회 : KRC 홈페이지(https://anamrefer.kumc.or.kr)', href: 'https://anamrefer.kumc.or.kr' }],
           stepIcon: 'FlowStep04Icon'
         },
         {
@@ -826,7 +826,7 @@ const guroContent: HospitalPageContent = {
         },
         {
           chip: '진료결과 회신',
-          items: [{ text: '우편발송' }, { text: 'E-mail 발송' }, { text: '진료협력센터 홈페이지 확인' }],
+          items: [{ text: '우편발송' }, { text: 'E-mail 발송' }, { text: '진료협력센터 홈페이지 확인(https://gurorefer.kumc.or.kr)', href: 'https://gurorefer.kumc.or.kr' }],
           stepIcon: 'FlowStep04Icon'
         },
         {
@@ -1425,7 +1425,7 @@ const ansanContent: HospitalPageContent = {
           items: [
             { text: '우편발송' },
             { text: 'E-mail 발송' },
-            { text: '인터넷 결과 조회 : KRC 홈페이지(https://refer.kumc.or.kr)' }
+            { text: '인터넷 결과 조회 : KRC 홈페이지(https://ansanrefer.kumc.or.kr)', href: 'https://ansanrefer.kumc.or.kr' }
           ],
           stepIcon: 'FlowStep04Icon'
         },
