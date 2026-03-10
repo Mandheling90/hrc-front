@@ -432,7 +432,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
                     name: 'otherStitchOut',
                     checked: other.stitchOut,
                     onChange: checked => setOther(prev => ({ ...prev, stitchOut: checked })),
-                    label: 'stich out'
+                    label: 'stitch out'
                   },
                   {
                     id: 'otherChemoport',
