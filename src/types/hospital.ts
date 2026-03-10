@@ -111,6 +111,7 @@ export interface ReferralRequestInfo {
 export interface ProcedureListItem {
   text: string
   highlighted?: boolean
+  href?: string
 }
 
 // 진료정보교류 의뢰 페이지 정보

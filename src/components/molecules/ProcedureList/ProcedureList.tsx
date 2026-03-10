@@ -8,6 +8,8 @@ export interface ProcedureListItem {
   text: string
   /** 하이라이팅 여부 (빨간색 사각형 글머리 기호) */
   highlighted?: boolean
+  /** 외부 링크 (새 창에서 열림) */
+  href?: string
 }
 
 export interface ProcedureListProps {
@@ -39,11 +41,22 @@ export const ProcedureList: React.FC<ProcedureListProps> = ({ items, label, note
     <div className={`${styles.procedureInfo} ${className}`}>
       {renderLabel()}
       <ul className={styles.procedureList}>
-        {items.map((item, index) => (
-          <li key={index} className={item.highlighted ? styles.procedureItemHighlighted : styles.procedureItem}>
-            {item.text}
-          </li>
-        ))}
+        {items.map((item, index) => {
+          const renderText = () => {
+            if (!item.href) return item.text
+            // 괄호 안의 URL 부분만 링크로 렌더링 (span + onClick으로 텍스트 흐름 유지)
+            const match = item.text.match(/^(.*?)(\(https?:\/\/[^)]+\))(.*)$/)
+            if (match) {
+              return <>{match[1]}<span role='link' tabIndex={0} className={styles.link} onClick={() => window.open(item.href, '_blank', 'noopener,noreferrer')} onKeyDown={(e) => { if (e.key === 'Enter') window.open(item.href, '_blank', 'noopener,noreferrer') }}>{match[2]}</span>{match[3]}</>
+            }
+            return <span role='link' tabIndex={0} className={styles.link} onClick={() => window.open(item.href, '_blank', 'noopener,noreferrer')} onKeyDown={(e) => { if (e.key === 'Enter') window.open(item.href, '_blank', 'noopener,noreferrer') }}>{item.text}</span>
+          }
+          return (
+            <li key={index} className={item.highlighted ? styles.procedureItemHighlighted : styles.procedureItem}>
+              {renderText()}
+            </li>
+          )
+        })}
       </ul>
       {note && <p className={styles.note}>{note}</p>}
     </div>
