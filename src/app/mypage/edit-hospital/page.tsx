@@ -31,6 +31,7 @@ export default function EditHospitalPage() {
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
+      window.scrollTo(0, 0)
     } else if (currentStep === totalSteps) {
       // 마지막 단계에서 저장 완료
       console.log('협력병원 정보수정 완료')
@@ -41,6 +42,7 @@ export default function EditHospitalPage() {
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
+      window.scrollTo(0, 0)
     }
   }
 
