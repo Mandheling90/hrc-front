@@ -6,14 +6,14 @@ import {
   MedicationDetailModal,
   MedicationDetailData
 } from '@/components/organisms/MedicationDetailModal/MedicationDetailModal'
-import { useDrugOrders, type DrugOrderItem } from '@/hooks/useExamResults'
+import { useDrugOrders, useDrugOrderDetail, type DrugOrderItem } from '@/hooks/useExamResults'
 import { matchesKeyword, matchesDateRange, sortByDate, paginate, formatDateDisplay, type FilterSortProps } from '../../utils/filterSort'
 import styles from '../../page.module.scss'
 
 export interface PrescriptionTabProps extends FilterSortProps {
   hospitalCode: string
   ptntNo: string
-  mdcrDt: string
+  mcdpCd: string
 }
 
 interface PrescriptionRow {
@@ -33,15 +33,15 @@ interface PrescriptionRow {
 function toRow(item: DrugOrderItem, index: number): PrescriptionRow {
   return {
     id: `${item.orderCode}-${index}`,
-    prescriptionDate: formatDateDisplay(item.visitDate),
-    department: '-',
-    doctor: '-',
+    prescriptionDate: formatDateDisplay(item.visitDate ?? item.orderDate),
+    department: item.departmentName ?? '-',
+    doctor: item.doctorName ?? '-',
     drugName: item.orderName ?? '-',
-    singleDose: item.dosage ?? '-',
-    unit: item.doseUnit ?? '-',
-    dailyFrequency: item.frequency ?? '-',
-    days: item.days ?? '-',
-    category: item.usage ?? '-',
+    singleDose: item.dosage ?? item.dose ?? '-',
+    unit: item.doseUnit ?? item.unit ?? '-',
+    dailyFrequency: item.frequency ?? item.count ?? '-',
+    days: item.days ?? item.useDay ?? '-',
+    category: item.usage ?? item.type ?? '-',
     _raw: item
   }
 }
@@ -53,18 +53,19 @@ const FIELD_MAP = {
 }
 
 export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
-  hospitalCode, ptntNo, mdcrDt,
+  hospitalCode, ptntNo, mcdpCd,
   sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
 }) => {
   const { searchDrugOrders, items, loading } = useDrugOrders()
+  const { searchDrugOrderDetail } = useDrugOrderDetail()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedDrug, setSelectedDrug] = useState<MedicationDetailData | null>(null)
 
   useEffect(() => {
-    if (ptntNo && mdcrDt) {
-      searchDrugOrders({ hospitalCode, ptntNo, mdcrDt })
+    if (ptntNo && mcdpCd) {
+      searchDrugOrders({ hospitalCode, ptntNo, mcdpCd })
     }
-  }, [hospitalCode, ptntNo, mdcrDt, searchDrugOrders])
+  }, [hospitalCode, ptntNo, mcdpCd, searchDrugOrders])
 
   const allRows = useMemo(() => items.map(toRow), [items])
 
@@ -83,7 +84,24 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
 
   const pagedRows = useMemo(() => paginate(filteredSorted, currentPage, pageSize), [filteredSorted, currentPage, pageSize])
 
-  const handleDrugNameClick = useCallback((item: PrescriptionRow) => {
+  const handleDrugNameClick = useCallback(async (item: PrescriptionRow) => {
+    const orderCode = item._raw.orderCode
+    if (orderCode) {
+      const detail = await searchDrugOrderDetail({ hospitalCode, ordrCd: orderCode })
+      if (detail) {
+        setSelectedDrug({
+          drugName: detail.drugName ?? item.drugName,
+          koreanName: detail.prodName ?? '-',
+          ingredient: detail.ingredient ?? '-',
+          type: detail.drugTypeName ?? item.category,
+          unit: detail.unit ?? item.unit,
+          manufacturer: detail.manufacturer ?? '-',
+          detail: detail.description ?? ''
+        })
+        setIsModalOpen(true)
+        return
+      }
+    }
     setSelectedDrug({
       drugName: item.drugName,
       koreanName: '-',
@@ -94,7 +112,7 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
       detail: ''
     })
     setIsModalOpen(true)
-  }, [])
+  }, [hospitalCode, searchDrugOrderDetail])
 
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false)

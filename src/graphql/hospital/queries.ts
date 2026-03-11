@@ -149,16 +149,45 @@ export const EHR_DRUG_ORDERS_QUERY = gql`
   query EhrGetDrugOrders($input: DrugOrderQueryInput!) {
     ehrGetDrugOrders(input: $input) {
       items {
-        days
+        orderCode
+        orderName
+        orderDate
+        dose
+        totalAmount
+        unit
+        count
+        useDay
+        type
+        methodWhen
+        methodHow
+        departmentName
+        doctorName
         dosage
         doseUnit
         frequency
-        orderCode
-        orderName
+        days
         usage
         visitDate
       }
       totalCount
+    }
+  }
+`
+
+export const EHR_DRUG_ORDER_DETAIL_QUERY = gql`
+  query EhrGetDrugOrderDetail($input: DrugOrderDetailQueryInput!) {
+    ehrGetDrugOrderDetail(input: $input) {
+      item {
+        drugCode
+        drugName
+        prodName
+        ingredient
+        drugType
+        drugTypeName
+        unit
+        manufacturer
+        description
+      }
     }
   }
 `

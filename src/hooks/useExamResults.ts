@@ -4,7 +4,8 @@ import {
   EHR_EXAM_RESULTS_QUERY,
   EHR_EXAM_SLIPS_QUERY,
   EHR_SPECIAL_EXAM_RESULTS_QUERY,
-  EHR_DRUG_ORDERS_QUERY
+  EHR_DRUG_ORDERS_QUERY,
+  EHR_DRUG_ORDER_DETAIL_QUERY
 } from '@/graphql/hospital/queries'
 
 // ── 진단검사 결과 ──
@@ -144,12 +145,23 @@ export function useSpecialExamResults() {
 // ── 약 처방 내역 ──
 
 export interface DrugOrderItem {
-  days: string | null
+  orderCode: string | null
+  orderName: string | null
+  orderDate: string | null
+  dose: string | null
+  totalAmount: string | null
+  unit: string | null
+  count: string | null
+  useDay: string | null
+  type: string | null
+  methodWhen: string | null
+  methodHow: string | null
+  departmentName: string | null
+  doctorName: string | null
   dosage: string | null
   doseUnit: string | null
   frequency: string | null
-  orderCode: string | null
-  orderName: string | null
+  days: string | null
   usage: string | null
   visitDate: string | null
 }
@@ -157,7 +169,7 @@ export interface DrugOrderItem {
 export interface DrugOrderQueryInput {
   hospitalCode: string
   ptntNo: string
-  mdcrDt: string
+  mcdpCd: string
 }
 
 export function useDrugOrders() {
@@ -177,6 +189,46 @@ export function useDrugOrders() {
     searchDrugOrders,
     items: data?.ehrGetDrugOrders?.items ?? [],
     totalCount: data?.ehrGetDrugOrders?.totalCount ?? 0,
+    loading,
+    error
+  }
+}
+
+// ── 약 처방 상세 조회 ──
+
+export interface DrugOrderDetailItem {
+  drugCode: string | null
+  drugName: string | null
+  prodName: string | null
+  ingredient: string | null
+  drugType: string | null
+  drugTypeName: string | null
+  unit: string | null
+  manufacturer: string | null
+  description: string | null
+}
+
+export interface DrugOrderDetailQueryInput {
+  hospitalCode: string
+  ordrCd: string
+}
+
+export function useDrugOrderDetail() {
+  const [query, { data, loading, error }] = useLazyQuery<{
+    ehrGetDrugOrderDetail: { item: DrugOrderDetailItem | null }
+  }>(EHR_DRUG_ORDER_DETAIL_QUERY, { fetchPolicy: 'network-only' })
+
+  const searchDrugOrderDetail = useCallback(
+    async (input: DrugOrderDetailQueryInput) => {
+      const result = await query({ variables: { input } })
+      return result.data?.ehrGetDrugOrderDetail?.item ?? null
+    },
+    [query]
+  )
+
+  return {
+    searchDrugOrderDetail,
+    item: data?.ehrGetDrugOrderDetail?.item ?? null,
     loading,
     error
   }

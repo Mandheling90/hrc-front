@@ -808,16 +808,27 @@ type SpecialExamResultResponse {
 input DrugOrderQueryInput {
   hospitalCode: HospitalCode!
   ptntNo: String!
-  mdcrDt: String!
+  mcdpCd: String!
 }
 
 type DrugOrderItem {
-  days: String
+  orderCode: String
+  orderName: String
+  orderDate: String
+  dose: String
+  totalAmount: String
+  unit: String
+  count: String
+  useDay: String
+  type: String
+  methodWhen: String
+  methodHow: String
+  departmentName: String
+  doctorName: String
   dosage: String
   doseUnit: String
   frequency: String
-  orderCode: String
-  orderName: String
+  days: String
   usage: String
   visitDate: String
 }
@@ -829,14 +840,23 @@ type DrugOrderResponse {
 
 input DrugOrderDetailQueryInput {
   hospitalCode: HospitalCode!
-  ptntNo: String!
-  mdcrDt: String!
   ordrCd: String!
 }
 
+type DrugOrderDetailItem {
+  drugCode: String
+  drugName: String
+  prodName: String
+  ingredient: String
+  drugType: String
+  drugTypeName: String
+  unit: String
+  manufacturer: String
+  description: String
+}
+
 type DrugOrderDetailResponse {
-  items: [DrugOrderItem!]!
-  totalCount: Float!
+  item: DrugOrderDetailItem
 }
 
 type Query {

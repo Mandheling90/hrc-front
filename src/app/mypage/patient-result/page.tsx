@@ -139,7 +139,7 @@ export default function PatientResultPage() {
       case 'other':
         return <OtherExamTab hospitalCode={hospitalCode} ptntNo={ptntNo} {...commonProps} />
       case 'prescription':
-        return <PrescriptionTab hospitalCode={hospitalCode} ptntNo={ptntNo} mdcrDt={visitDateCompact} {...commonProps} />
+        return <PrescriptionTab hospitalCode={hospitalCode} ptntNo={ptntNo} mcdpCd={mcdpCd} {...commonProps} />
       default:
         return (
           <HistoryTab
