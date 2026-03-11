@@ -379,6 +379,77 @@
   transition: width 50ms linear;
 }
 
+// Scroll Down 인디케이터
+// Scroll Down: section1 기준 absolute
+.scrollDown {
+  position: absolute;
+  // 1870px+: 카드 오른쪽
+  bottom: 100px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  animation: fadeInUp 0.6s ease-out, bounceUpDown 1.8s ease-in-out 0.6s infinite;
+
+  // 1870px 미만: 카드 위로
+  @media (max-width: 1869px) {
+    bottom: 345px;
+  }
+
+  // 태블릿
+  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
+    bottom: 340px;
+  }
+
+  // 모바일
+  @media (max-width: $breakpoint-md) {
+    bottom: 340px;
+  }
+}
+
+.scrollDownText {
+  font-family: $font-family-base;
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $color-white;
+  white-space: nowrap;
+}
+
+.scrollDownIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 38px;
+  border: 1px solid $color-white;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+}
+
+@keyframes bounceUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .quickBox {
   position: absolute;
   bottom: 30px;
