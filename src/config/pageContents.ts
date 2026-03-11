@@ -43,7 +43,7 @@ const anamContent: HospitalPageContent = {
       '고려대학교안암병원 진료협력센터는 지역병원에서 의뢰된 환자에게 최적의 의료서비스를 제공하는 3차 의료기관으로서의 기능을 수행하고 있습니다.',
       '다양한 진료의뢰시스템을 통해 지역병원 및 지역주민에게 진료의뢰 편의성을 제공하며, 신속한 의료서비스를 제공받으실 수 있도록 최선을 다하고 있습니다.'
     ],
-    phone: '02-920-5892~4',
+    phone: '02-920-5964~4',
     operatingHours: {
       weekday: '08:30~17:30',
       saturday: '09:00~12:30'
@@ -58,7 +58,7 @@ const anamContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: ['T. 02-920-5892~4', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        description: ['T. 02-920-5964~4', '평일 08:30~17:30', '토요일 09:00~12:30'],
         href: '#',
         mobileSpan: 2,
         layoutType: 'icon-title'
@@ -129,7 +129,7 @@ const anamContent: HospitalPageContent = {
         text: '승인 (거점의료기관 승인 -> 한국보건의료정보원 최종 승인)'
       }
     ],
-    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
+    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5964'
   },
   referralHira: {
     pageTitle: '심평원중계시스템 의뢰',
@@ -186,12 +186,12 @@ const anamContent: HospitalPageContent = {
         ]
       }
     ],
-    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
+    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5964'
   },
   network: {
     intro: [
       '고려대학교 안암병원은 진료, 교육, 연구에 관한 사항을 상호 협력함으로써 국민의료환경 및 의료의 질을 향상시키고\n의료전달체계를 확립하여 의료계의 발전을 도모하고자 협력네트워크를 운영하고 있습니다.',
-      '원장님의 적극적인 지원과 관심으로 진료의뢰 및 회송체계를 활성화시키고자 노력하고 있으며,\n더욱 원활한 의뢰 · 회송체계를 위해 협력병 · 의원 체결을 하고자 합니다.',
+      '원장님의 적극적인 지원과 관심으로 진료의뢰 및 회송체계를 활성화시키고자 노력하고 있으며,\n더욱 원활한 의뢰·회송체계를 위해 협력병·의원 체결을 하고자 합니다.',
       '협력병·의원 체결 신청을 해주시면 절차에 따라 체결 진행하겠습니다.'
     ],
     breadcrumbs: [
@@ -206,12 +206,12 @@ const anamContent: HospitalPageContent = {
       {
         text: '종합검진 20% 감면(기본검진에 한함) 및 고대안암병원 장례식장 빈소사용료 20% 감면 (감면 대상: 원장님 본인, 배우자, 본인의 직계존비속)'
       },
-      { text: '병원 및 진료가 주최 각종 연수강좌 안내' },
+      { text: '병원 및 진료과 주최 각종 연수강좌 안내' },
       { text: '응급환자 신속 대처를 위한 교수 직통 핫라인 제공' },
       { text: '직원 직무교육 및 서비스교육 제공' },
       { text: '상호교류가 활발한 병·의원장 외래교수 위촉' },
       { text: '초진환자 의뢰 시 빠른 예약 서비스 제공' },
-      { text: '협력병·의원 의료진에 대한 상하반기 일요일 종합검진 실시(약 40% 감면)' }
+      { text: '협력병·의원 의료진에 대한 상하반기 일요일 종합검진 실시(약 50% 감면)' }
     ],
     target: {
       hospital: [{ text: '협력병원: 상호협력이 우수한 병원급 이상의 의료기관을 대상으로 매월 선정' }],
@@ -229,7 +229,7 @@ const anamContent: HospitalPageContent = {
       { stepNumber: '05', title: '협력증서 전달', icon: 'CertificateIcon' }
     ],
     contact: {
-      phone: '02-920-5892',
+      phone: '02-920-5964',
       fax: '02-920-6523'
     },
     downloadLinks: [
@@ -305,7 +305,7 @@ const anamContent: HospitalPageContent = {
           icon: 'OperationPhoneFaxIcon',
           title: '전용 전화 및 팩스',
           rows: [
-            { label: 'Tel', value: '02-920-5892' },
+            { label: 'Tel', value: '02-920-5964' },
             { label: 'Fax', value: '02-920-6523' }
           ]
         }
@@ -331,7 +331,13 @@ const anamContent: HospitalPageContent = {
         },
         {
           chip: '진료결과 회신',
-          items: [{ text: '우편발송' }, { text: '인터넷 결과 조회 : KRC 홈페이지(https://anamrefer.kumc.or.kr)', href: 'https://anamrefer.kumc.or.kr' }],
+          items: [
+            { text: '우편발송' },
+            {
+              text: '인터넷 결과 조회 : KRC 홈페이지(https://anamrefer.kumc.or.kr)',
+              href: 'https://anamrefer.kumc.or.kr'
+            }
+          ],
           stepIcon: 'FlowStep04Icon'
         },
         {
@@ -383,11 +389,11 @@ const anamContent: HospitalPageContent = {
                     children: [
                       {
                         title: '진료의뢰',
-                        phone: '02-920-5892'
+                        phone: '02-920-5964'
                       },
                       {
                         title: '입원회송',
-                        phone: '02-920-5892'
+                        phone: '02-920-5964'
                       },
                       {
                         title: '외래회송',
@@ -829,7 +835,11 @@ const guroContent: HospitalPageContent = {
         },
         {
           chip: '진료결과 회신',
-          items: [{ text: '우편발송' }, { text: 'E-mail 발송' }, { text: '진료협력센터 홈페이지 확인(https://gurorefer.kumc.or.kr)', href: 'https://gurorefer.kumc.or.kr' }],
+          items: [
+            { text: '우편발송' },
+            { text: 'E-mail 발송' },
+            { text: '진료협력센터 홈페이지 확인(https://gurorefer.kumc.or.kr)', href: 'https://gurorefer.kumc.or.kr' }
+          ],
           stepIcon: 'FlowStep04Icon'
         },
         {
@@ -1428,7 +1438,10 @@ const ansanContent: HospitalPageContent = {
           items: [
             { text: '우편발송' },
             { text: 'E-mail 발송' },
-            { text: '인터넷 결과 조회 : KRC 홈페이지(https://ansanrefer.kumc.or.kr)', href: 'https://ansanrefer.kumc.or.kr' }
+            {
+              text: '인터넷 결과 조회 : KRC 홈페이지(https://ansanrefer.kumc.or.kr)',
+              href: 'https://ansanrefer.kumc.or.kr'
+            }
           ],
           stepIcon: 'FlowStep04Icon'
         },
