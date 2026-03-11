@@ -250,7 +250,7 @@ export interface ProcedureFlowStep {
 // 진료협력센터 소개 페이지 정보
 export interface AboutIntroInfo {
   introBox: {
-    title: string // InfoBox 제목 (예: "KRC (Korea University Anam Hospital Referral Center)")
+    title?: string // InfoBox 제목 (예: "KRC (Korea University Anam Hospital Referral Center)")
     messages: string[] // InfoBox 메시지 배열
   }
   mainTasks: ProcedureListItem[] // 주요업무 항목들
