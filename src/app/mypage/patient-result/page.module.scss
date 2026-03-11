@@ -772,6 +772,15 @@
   &:hover {
     opacity: 0.9;
   }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: 0.4;
+    }
+  }
 }
 
 // 이미지 신청 버튼 (영상검사)
@@ -789,6 +798,15 @@
 
   &:hover {
     background-color: $gray-2;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $color-white;
+    }
   }
 }
 
