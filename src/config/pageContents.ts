@@ -740,7 +740,7 @@ const guroContent: HospitalPageContent = {
       { stepNumber: '05', title: '협력증서 전달', icon: 'CertificateIcon' }
     ],
     contact: {
-      phone: '02-2626-8446',
+      phone: '02-6464-8446',
       fax: '02-2626-1681'
     },
     downloadLink: '#',
