@@ -103,9 +103,9 @@ const ansanConfig: HospitalConfig = {
     english: 'KOREA UNIVERSITY ANSAN HOSPITAL REFERRAL CENTER'
   },
   contact: {
-    phone: '1577-7576',
+    phone: '1577-7516',
     fax: '031-412-4266',
-    reservation: '1577-7576',
+    reservation: '1577-7516',
     referralCenter: '031-412-5103'
   },
   address: {

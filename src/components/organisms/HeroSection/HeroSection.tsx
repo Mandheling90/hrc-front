@@ -124,6 +124,11 @@ const inquiryLinksGuro: InquiryLink[] = [
   { href: '#', label: '진료협력센터 카카오톡', icon: 'kakao' }
 ]
 
+const inquiryLinksAnsan: InquiryLink[] = [
+  { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
+  { href: '/referral/request/hira', label: '심평원중계시스템 의뢰' }
+]
+
 const downloadLinks = [
   { href: '#', label: '진료의뢰서' },
   { href: '#', label: '협력병의원 체결 신청서류' },
@@ -395,6 +400,12 @@ const contactInfoGuro = {
   callCenter: '1577-9966'
 }
 
+const contactInfoAnsan = {
+  phone: '031-412-5103',
+  fax: '031-412-4266',
+  callCenter: '1577-7516'
+}
+
 // 슬라이드 자동 재생 간격 (ms)
 const AUTOPLAY_INTERVAL = 30000
 
@@ -580,10 +591,10 @@ export const HeroSection: React.FC = () => {
   }, [isGuro, isAnsan, isDark])
 
   // 병원별 조회 서비스 링크
-  const inquiryLinks = isGuro ? inquiryLinksGuro : inquiryLinksAnam
+  const inquiryLinks = isGuro ? inquiryLinksGuro : isAnsan ? inquiryLinksAnsan : inquiryLinksAnam
 
   // 병원별 연락처 정보
-  const contactInfo = isGuro ? contactInfoGuro : contactInfoAnam
+  const contactInfo = isGuro ? contactInfoGuro : isAnsan ? contactInfoAnsan : contactInfoAnam
 
   // 병원별 서식 다운로드 링크 (구로/안산: 진료정보공개동의서 제외)
   const filteredDownloadLinks = isAnam
