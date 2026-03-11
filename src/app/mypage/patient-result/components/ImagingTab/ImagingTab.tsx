@@ -51,13 +51,13 @@ const FIELD_MAP = {
 const renderImageButton = (item: ImagingRow) => {
   if (item.imageStatus === 'view') {
     return (
-      <button type='button' className={styles.viewButton}>
+      <button type='button' className={styles.viewButton} disabled>
         보기
       </button>
     )
   }
   return (
-    <button type='button' className={styles.requestButton}>
+    <button type='button' className={styles.requestButton} disabled>
       신청
     </button>
   )
