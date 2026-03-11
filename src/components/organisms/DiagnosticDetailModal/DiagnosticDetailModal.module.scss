@@ -26,22 +26,22 @@
   align-items: center;
   gap: 40px;
   min-width: 300px;
-  max-width: 1200px;
+  max-width: 1280px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
 
   @include tablet {
-    padding: 24px;
-    gap: 32px;
-    max-width: 90%;
+    padding: 40px;
+    gap: 40px;
+    max-width: 668px;
   }
 
   @include mobile {
     padding: 20px;
     gap: 24px;
-    max-width: 95%;
+    max-width: 320px;
   }
 }
 
@@ -84,8 +84,8 @@
   color: $color-white;
 
   @include tablet {
-    font-size: 18px;
-    padding: 4px 16px;
+    font-size: 20px;
+    padding: 4px 20px;
   }
 
   @include mobile {
@@ -103,7 +103,7 @@
   margin: 0;
 
   @include tablet {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   @include mobile {
@@ -134,19 +134,18 @@
 }
 
 // 컨텐츠 영역
+.loadingState {
+  width: 100%;
+  text-align: center;
+  padding: $spacing-8 0;
+  color: $gray-6;
+  font-size: 14px;
+}
+
 .content {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 56px;
-
-  @include tablet {
-    gap: 40px;
-  }
-
-  @include mobile {
-    gap: 32px;
-  }
 }
 
 // 검사 섹션
@@ -156,25 +155,28 @@
   gap: 16px;
 }
 
+.examHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
 .tableContainer {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  @include mobile {
-    align-items: flex-end;
-  }
 }
 
 .legend {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 16px;
-
-  @include mobile {
-    gap: 16px;
-  }
 }
 
 .legendItem {
@@ -203,6 +205,10 @@
   line-height: 1.5;
   color: $gray-12;
 
+  @include tablet {
+    font-size: 16px;
+  }
+
   @include mobile {
     font-size: 16px;
   }
@@ -214,6 +220,10 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
+
+  @include tablet {
+    display: none;
+  }
 
   @include mobile {
     display: none;
@@ -233,10 +243,6 @@
     font-size: 20px;
     font-weight: $font-weight-semibold;
     color: $gray-12;
-
-    @include tablet {
-      font-size: 18px;
-    }
   }
 }
 
@@ -254,19 +260,39 @@
     font-weight: $font-weight-normal;
     color: $gray-11;
     padding: 10px 0;
-
-    @include tablet {
-      font-size: 16px;
-    }
   }
 }
 
 .tableCell {
-  flex: 1;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.cellName {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.cellResult {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.cellMin {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.cellMax {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.cellRemark {
+  flex: 1;
+  min-width: 0;
 }
 
 .divider {
@@ -298,12 +324,16 @@
   }
 }
 
-// 모바일 카드
+// 태블릿/모바일 카드
 .mobileCards {
   display: none;
   flex-direction: column;
   gap: 8px;
   width: 100%;
+
+  @include tablet {
+    display: flex;
+  }
 
   @include mobile {
     display: flex;
@@ -315,6 +345,12 @@
   border: 1px solid $gray-9;
   border-radius: 10px;
   padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobileCardContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -365,6 +401,10 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   color: $gray-12;
+
+  @include mobile {
+    font-size: 18px;
+  }
 }
 
 .mobileCardValue {
@@ -391,31 +431,20 @@
   }
 }
 
-// 비고 섹션
-.remarksSection {
+// 카드 내 비고
+.mobileCardRemark {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 40px;
+  align-items: flex-start;
+  padding: 0 10px;
+  line-height: 1.5;
 }
 
-.remarksContent {
-  background-color: $color-white;
-  border: 1px solid $gray-9;
-  border-radius: 10px;
-  padding: 20px;
-  min-height: 218px;
-
-  p {
-    margin: 0;
-    font-size: 18px;
-    font-weight: $font-weight-normal;
-    line-height: 1.5;
-    color: $gray-11;
-    white-space: pre-wrap;
-    word-break: break-word;
-
-    @include mobile {
-      font-size: 16px;
-    }
-  }
+.mobileCardRemarkText {
+  flex: 1;
+  font-size: 16px;
+  font-weight: $font-weight-normal;
+  color: $gray-11;
+  line-height: 1.5;
+  word-break: break-word;
 }

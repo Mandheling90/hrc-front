@@ -16,6 +16,12 @@ export { useReferralPatients } from '@/hooks/useReferralPatients'
 // Referral Reply Hooks - 진료회신서 조회
 export { useReferralReply } from '@/hooks/useReferralReply'
 
+// Visit History Hooks - 수진이력 조회
+export { useVisitHistory } from '@/hooks/useVisitHistory'
+
+// Exam Result Hooks - 검사결과 조회
+export { useExamResults, useExamSlips, useSpecialExamResults, useDrugOrders } from '@/hooks/useExamResults'
+
 // Partner Application Hooks - 협력 병·의원 신청
 export {
   useApplyPartnerHospital,

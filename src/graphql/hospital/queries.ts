@@ -54,6 +54,115 @@ export const EHR_REFERRAL_REPLY_QUERY = gql`
   }
 `
 
+export const EHR_VISIT_HISTORY_QUERY = gql`
+  query EhrGetVisitHistory($input: VisitHistoryQueryInput!) {
+    ehrGetVisitHistory(input: $input) {
+      items {
+        visitDate
+        visitDatetime
+        departmentName
+        doctorId
+        doctorName
+        visitTypeCode
+        visitTypeName
+        admissionDate
+        wardCode
+        wardName
+        roomNo
+        diagnosisName
+      }
+      totalCount
+    }
+  }
+`
+
+export const EHR_EXAM_RESULTS_QUERY = gql`
+  query EhrGetExamResultsByDate($input: PatientDateQueryInput!) {
+    ehrGetExamResultsByDate(input: $input) {
+      items {
+        departmentName
+        doctorName
+        examCode
+        examDate
+        examRoomCode
+        examRoomName
+        normalLowerLimit
+        normalUpperLimit
+        orderName
+        resultContent
+        resultFormatCode
+        resultRemark
+        resultUnit
+      }
+      totalCount
+    }
+  }
+`
+
+export const EHR_EXAM_SLIPS_QUERY = gql`
+  query EhrGetExamSlipsByDate($input: ExamSlipQueryInput!) {
+    ehrGetExamSlipsByDate(input: $input) {
+      items {
+        departmentCode
+        departmentName
+        doctorId
+        doctorName
+        enforceDate
+        enforceDatetime
+        examCode
+        orderName
+        slipCode
+        slipName
+        treatmentDate
+      }
+      totalCount
+    }
+  }
+`
+
+export const EHR_SPECIAL_EXAM_RESULTS_QUERY = gql`
+  query EhrGetSpecialExamResults($input: ExamSlipQueryInput!) {
+    ehrGetSpecialExamResults(input: $input) {
+      items {
+        departmentName
+        doctorName
+        examDate
+        grossResult
+        orderCode
+        orderDate
+        orderName
+        pacsAccessNo
+        readerId1
+        readerId2
+        readerId3
+        resultContent
+        sortOrder
+        specimenCode
+        specimenNo
+      }
+      totalCount
+    }
+  }
+`
+
+export const EHR_DRUG_ORDERS_QUERY = gql`
+  query EhrGetDrugOrders($input: DrugOrderQueryInput!) {
+    ehrGetDrugOrders(input: $input) {
+      items {
+        days
+        dosage
+        doseUnit
+        frequency
+        orderCode
+        orderName
+        usage
+        visitDate
+      }
+      totalCount
+    }
+  }
+`
+
 export const EHR_HOSPITAL_SEARCH_QUERY = gql`
   query EhrGetCollaboratingHospitals($input: SearchCollaboratingHospitalsInput!) {
     ehrGetCollaboratingHospitals(input: $input) {

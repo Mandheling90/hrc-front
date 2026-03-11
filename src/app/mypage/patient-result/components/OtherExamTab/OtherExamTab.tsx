@@ -1,125 +1,87 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { PathologyResultModal } from '@/components/organisms/PathologyResultModal'
-import { ImageViewerModal } from '@/components/organisms/ImageViewerModal'
+import { useSpecialExamResults, type SpecialExamResultItem, type ExamSlipQueryInput } from '@/hooks/useExamResults'
+import { matchesKeyword, matchesDateRange, sortByDate, paginate, formatDateDisplay, type FilterSortProps } from '../../utils/filterSort'
 import styles from '../../page.module.scss'
 
-// 기타검사 데이터 타입
-export interface OtherExamItem {
-  id: number
+export interface OtherExamTabProps extends FilterSortProps {
+  hospitalCode: string
+  ptntNo: string
+  slipCd?: string
+  mcdpCd?: string
+}
+
+type ImageStatus = 'request' | 'view'
+
+interface OtherExamRow {
+  id: string
   department: string
   doctor: string
   examName: string
-  imageStatus: 'request' | 'received' | 'viewable' // 신청 | 접수 | 보기
+  examDate: string
+  imageStatus: ImageStatus
+  _raw: SpecialExamResultItem
 }
 
-// Mock 기타검사 데이터
-const mockOtherExamData: OtherExamItem[] = [
-  {
-    id: 1,
-    department: '감염내과',
-    doctor: '김선용',
-    examName: 'ECG (심전도)',
-    imageStatus: 'request'
-  },
-  {
-    id: 2,
-    department: '심장내과',
-    doctor: '박인구',
-    examName: 'Echocardiography (심초음파)',
-    imageStatus: 'request'
-  },
-  {
-    id: 3,
-    department: '신경과',
-    doctor: '황순철',
-    examName: 'EEG (뇌파검사)',
-    imageStatus: 'received'
-  },
-  {
-    id: 4,
-    department: '호흡기내과',
-    doctor: '홍상우',
-    examName: 'PFT (폐기능검사)',
-    imageStatus: 'viewable'
-  },
-  {
-    id: 5,
-    department: '신경과',
-    doctor: '이정민',
-    examName: 'EMG (근전도검사)',
-    imageStatus: 'viewable'
-  }
-]
-
-// Mock 기타검사 판독결과 데이터
-const mockOtherExamResults: Record<number, string> = {
-  1: '[impression] Normal sinus rhythm.\nNo significant ST-T changes.',
-  2: '[impression] Normal LV systolic function (EF 60%).\nNo regional wall motion abnormality.',
-  3: '[impression] Normal background activity.\nNo epileptiform discharge.',
-  4: '[impression] Mild restrictive pattern.\nFVC 75%, FEV1 78%, FEV1/FVC 85%.',
-  5: '[impression] Normal nerve conduction study.\nNo evidence of peripheral neuropathy.'
+function getImageStatus(item: SpecialExamResultItem): ImageStatus {
+  return item.pacsAccessNo ? 'view' : 'request'
 }
 
-// Mock 기타검사 이미지 데이터
-const mockOtherExamImages: Record<number, string[]> = {
-  4: Array.from({ length: 10 }, () => '/images/Gastrofiberscopy_sample.png'),
-  5: Array.from({ length: 18 }, () => '/images/Gastrofiberscopy_sample.png')
-}
-
-// 이미지 상태별 버튼 렌더링
-const renderImageButton = (
-  item: OtherExamItem,
-  onRequestClick: (item: OtherExamItem) => void,
-  onViewImageClick: (item: OtherExamItem) => void
-) => {
-  switch (item.imageStatus) {
-    case 'viewable':
-      return (
-        <button type='button' className={styles.viewButton} onClick={() => onViewImageClick(item)}>
-          보기
-        </button>
-      )
-    case 'received':
-      return (
-        <button type='button' className={styles.receivedButton} onClick={() => onRequestClick(item)}>
-          접수
-        </button>
-      )
-    case 'request':
-    default:
-      return (
-        <button type='button' className={styles.requestButton} onClick={() => onRequestClick(item)}>
-          신청
-        </button>
-      )
+function toRow(item: SpecialExamResultItem, index: number): OtherExamRow {
+  return {
+    id: `${item.orderCode}-${index}`,
+    department: item.departmentName ?? '-',
+    doctor: item.doctorName ?? '-',
+    examName: item.orderName ?? '-',
+    examDate: formatDateDisplay(item.examDate ?? item.orderDate),
+    imageStatus: getImageStatus(item),
+    _raw: item
   }
 }
 
-// 기타검사 테이블 컬럼 정의
+const FIELD_MAP = {
+  department: 'department' as const,
+  doctor: 'doctor' as const,
+  diagnosis: 'examName' as const
+}
+
+const renderImageButton = (item: OtherExamRow) => {
+  if (item.imageStatus === 'view') {
+    return (
+      <button type='button' className={styles.viewButton}>
+        보기
+      </button>
+    )
+  }
+  return (
+    <button type='button' className={styles.requestButton}>
+      신청
+    </button>
+  )
+}
+
 const getOtherExamColumns = (
-  onImageClick: (item: OtherExamItem) => void,
-  onViewImageClick: (item: OtherExamItem) => void,
-  onViewResultClick: (item: OtherExamItem) => void
-): TableColumn<OtherExamItem>[] => [
+  onViewResultClick: (item: OtherExamRow) => void
+): TableColumn<OtherExamRow>[] => [
   { id: 'department', label: '진료과', field: 'department', width: '160px', align: 'center' },
   { id: 'doctor', label: '진료의', field: 'doctor', width: '130px', align: 'center' },
   { id: 'examName', label: '검사명', field: 'examName', width: '1fr', align: 'center' },
   {
     id: 'image',
     label: '이미지',
-    width: '160px',
+    width: '130px',
     align: 'center',
-    renderCell: (item: OtherExamItem) => renderImageButton(item, onImageClick, onViewImageClick)
+    renderCell: renderImageButton
   },
   {
     id: 'result',
     label: '판독결과',
-    width: '160px',
+    width: '130px',
     align: 'center',
-    renderCell: (item: OtherExamItem) => (
+    renderCell: (item: OtherExamRow) => (
       <button type='button' className={styles.viewButton} onClick={() => onViewResultClick(item)}>
         보기
       </button>
@@ -127,14 +89,9 @@ const getOtherExamColumns = (
   }
 ]
 
-// 기타검사 태블릿 카드 렌더링 함수
 const getOtherExamTabletCard =
-  (
-    onImageClick: (item: OtherExamItem) => void,
-    onViewImageClick: (item: OtherExamItem) => void,
-    onViewResultClick: (item: OtherExamItem) => void
-  ) =>
-  (item: OtherExamItem) => (
+  (onViewResultClick: (item: OtherExamRow) => void) =>
+  (item: OtherExamRow) => (
     <div className={styles.tabletCard}>
       <div className={styles.tabletCardHeader}>
         <span className={styles.tabletCardHeaderLabel}>진료과</span>
@@ -151,7 +108,7 @@ const getOtherExamTabletCard =
         </div>
         <div className={styles.tabletCardRow}>
           <span className={styles.tabletCardLabel}>이미지</span>
-          {renderImageButton(item, onImageClick, onViewImageClick)}
+          {renderImageButton(item)}
         </div>
         <div className={styles.tabletCardRow}>
           <span className={styles.tabletCardLabel}>판독결과</span>
@@ -163,14 +120,9 @@ const getOtherExamTabletCard =
     </div>
   )
 
-// 기타검사 모바일 카드 렌더링 함수
 const getOtherExamMobileCard =
-  (
-    onImageClick: (item: OtherExamItem) => void,
-    onViewImageClick: (item: OtherExamItem) => void,
-    onViewResultClick: (item: OtherExamItem) => void
-  ) =>
-  (item: OtherExamItem) => (
+  (onViewResultClick: (item: OtherExamRow) => void) =>
+  (item: OtherExamRow) => (
     <div className={styles.mobileCard}>
       <div className={styles.mobileCardHeader}>
         <span className={styles.mobileCardHeaderLabel}>진료과</span>
@@ -187,7 +139,7 @@ const getOtherExamMobileCard =
         </div>
         <div className={styles.mobileCardRow}>
           <span className={styles.mobileCardLabel}>이미지</span>
-          {renderImageButton(item, onImageClick, onViewImageClick)}
+          {renderImageButton(item)}
         </div>
         <div className={styles.mobileCardRow}>
           <span className={styles.mobileCardLabel}>판독결과</span>
@@ -199,69 +151,73 @@ const getOtherExamMobileCard =
     </div>
   )
 
-export const OtherExamTab: React.FC = () => {
+export const OtherExamTab: React.FC<OtherExamTabProps> = ({
+  hospitalCode, ptntNo, slipCd = 'L10', mcdpCd,
+  sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
+}) => {
+  const { searchSpecialExamResults, items, loading } = useSpecialExamResults()
   const [isResultModalOpen, setIsResultModalOpen] = useState(false)
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
-  const [selectedExam, setSelectedExam] = useState<OtherExamItem | null>(null)
+  const [selectedRow, setSelectedRow] = useState<OtherExamRow | null>(null)
 
-  // 이미지 신청/접수 클릭 핸들러
-  const handleImageClick = (item: OtherExamItem) => {
-    // TODO: 이미지 신청/접수 기능 구현
-    console.log('이미지 신청/접수 클릭:', item)
-  }
+  useEffect(() => {
+    if (ptntNo) {
+      const input: ExamSlipQueryInput = { hospitalCode, ptntNo, slipCd }
+      if (mcdpCd) input.mcdpCd = mcdpCd
+      searchSpecialExamResults(input)
+    }
+  }, [hospitalCode, ptntNo, slipCd, mcdpCd, searchSpecialExamResults])
 
-  // 이미지 보기 클릭 핸들러
-  const handleViewImageClick = (item: OtherExamItem) => {
-    setSelectedExam(item)
-    setIsImageModalOpen(true)
-  }
+  const allRows = useMemo(() => items.map(toRow), [items])
 
-  // 이미지 모달 닫기
-  const handleCloseImageModal = () => {
-    setIsImageModalOpen(false)
-    setSelectedExam(null)
-  }
+  const filteredSorted = useMemo(() => {
+    let result = allRows.filter(row =>
+      matchesKeyword(row, searchFilter, FIELD_MAP) &&
+      matchesDateRange(row.examDate, searchFilter)
+    )
+    result = sortByDate(result, 'examDate', sortOrder)
+    return result
+  }, [allRows, searchFilter, sortOrder])
 
-  // 판독결과 보기 클릭 핸들러
-  const handleViewResultClick = (item: OtherExamItem) => {
-    setSelectedExam(item)
+  useEffect(() => {
+    onTotalCountChange(filteredSorted.length)
+  }, [filteredSorted.length, onTotalCountChange])
+
+  const pagedRows = useMemo(() => paginate(filteredSorted, currentPage, pageSize), [filteredSorted, currentPage, pageSize])
+
+  const handleViewResultClick = (item: OtherExamRow) => {
+    setSelectedRow(item)
     setIsResultModalOpen(true)
   }
 
-  // 판독결과 모달 닫기
   const handleCloseResultModal = () => {
     setIsResultModalOpen(false)
-    setSelectedExam(null)
+    setSelectedRow(null)
+  }
+
+  if (loading) {
+    return <div className={styles.emptyState}>데이터를 불러오는 중입니다...</div>
+  }
+
+  if (filteredSorted.length === 0) {
+    return <div className={styles.emptyState}>기타검사 결과가 없습니다.</div>
   }
 
   return (
     <>
       <Table
-        columns={getOtherExamColumns(handleImageClick, handleViewImageClick, handleViewResultClick)}
-        data={mockOtherExamData}
+        columns={getOtherExamColumns(handleViewResultClick)}
+        data={pagedRows}
         getRowKey={item => item.id}
-        renderTabletCard={getOtherExamTabletCard(handleImageClick, handleViewImageClick, handleViewResultClick)}
-        renderMobileCard={getOtherExamMobileCard(handleImageClick, handleViewImageClick, handleViewResultClick)}
+        renderTabletCard={getOtherExamTabletCard(handleViewResultClick)}
+        renderMobileCard={getOtherExamMobileCard(handleViewResultClick)}
       />
 
-      {/* 판독결과 모달 */}
-      {selectedExam && (
+      {selectedRow && (
         <PathologyResultModal
           isOpen={isResultModalOpen}
           onClose={handleCloseResultModal}
-          examName={selectedExam.examName}
-          result={mockOtherExamResults[selectedExam.id] || ''}
-        />
-      )}
-
-      {/* 이미지 뷰어 모달 */}
-      {selectedExam && (
-        <ImageViewerModal
-          isOpen={isImageModalOpen}
-          onClose={handleCloseImageModal}
-          examType='기타 검사'
-          examName={selectedExam.examName}
-          images={mockOtherExamImages[selectedExam.id] || []}
+          examName={selectedRow.examName}
+          result={selectedRow._raw.resultContent || selectedRow._raw.grossResult || ''}
         />
       )}
     </>

@@ -690,6 +690,155 @@ type ReferralReplyResponse {
   item: ReferralReplyItem
 }
 
+# ── 수진이력 조회 (EHR 프록시) ──
+
+input VisitHistoryQueryInput {
+  hospitalCode: HospitalCode!
+  ptntNo: String!
+  mcdpCd: String
+  fromDt: String
+  toDt: String
+}
+
+type VisitHistoryItem {
+  visitDate: String
+  visitDatetime: String
+  departmentName: String
+  doctorId: String
+  doctorName: String
+  visitTypeCode: String
+  visitTypeName: String
+  admissionDate: String
+  wardCode: String
+  wardName: String
+  roomNo: String
+  diagnosisName: String
+}
+
+type VisitHistoryResponse {
+  items: [VisitHistoryItem!]!
+  totalCount: Float!
+}
+
+# ── 진단검사 결과 조회 (EHR 프록시) ──
+
+input PatientDateQueryInput {
+  hospitalCode: HospitalCode!
+  ptntNo: String!
+  date: String!
+  slipCd: String
+}
+
+type ExamResultItem {
+  departmentName: String
+  doctorName: String
+  examCode: String
+  examDate: String
+  examRoomCode: String
+  examRoomName: String
+  normalLowerLimit: String
+  normalUpperLimit: String
+  orderName: String
+  resultContent: String
+  resultFormatCode: String
+  resultRemark: String
+  resultUnit: String
+}
+
+type ExamResultResponse {
+  items: [ExamResultItem!]!
+  totalCount: Float!
+}
+
+# ── 검사 SLIP 조회 (병리/영상/내시경/기타) ──
+
+input ExamSlipQueryInput {
+  hospitalCode: HospitalCode!
+  ptntNo: String!
+  slipCd: String!
+  mcdpCd: String
+}
+
+type ExamSlipItem {
+  departmentCode: String
+  departmentName: String
+  doctorId: String
+  doctorName: String
+  enforceDate: String
+  enforceDatetime: String
+  examCode: String
+  orderName: String
+  slipCode: String
+  slipName: String
+  treatmentDate: String
+}
+
+type ExamSlipResponse {
+  items: [ExamSlipItem!]!
+  totalCount: Float!
+}
+
+# ── 특수검사 결과 조회 (영상/내시경/기타 판독결과) ──
+
+type SpecialExamResultItem {
+  departmentName: String
+  doctorName: String
+  examDate: String
+  grossResult: String
+  orderCode: String
+  orderDate: String
+  orderName: String
+  pacsAccessNo: String
+  readerId1: String
+  readerId2: String
+  readerId3: String
+  resultContent: String
+  sortOrder: String
+  specimenCode: String
+  specimenNo: String
+}
+
+type SpecialExamResultResponse {
+  items: [SpecialExamResultItem!]!
+  totalCount: Float!
+}
+
+# ── 약 처방 내역 조회 ──
+
+input DrugOrderQueryInput {
+  hospitalCode: HospitalCode!
+  ptntNo: String!
+  mdcrDt: String!
+}
+
+type DrugOrderItem {
+  days: String
+  dosage: String
+  doseUnit: String
+  frequency: String
+  orderCode: String
+  orderName: String
+  usage: String
+  visitDate: String
+}
+
+type DrugOrderResponse {
+  items: [DrugOrderItem!]!
+  totalCount: Float!
+}
+
+input DrugOrderDetailQueryInput {
+  hospitalCode: HospitalCode!
+  ptntNo: String!
+  mdcrDt: String!
+  ordrCd: String!
+}
+
+type DrugOrderDetailResponse {
+  items: [DrugOrderItem!]!
+  totalCount: Float!
+}
+
 type Query {
   me: User!
   checkUserIdAvailable(userId: String!): UserIdAvailability!
@@ -698,6 +847,18 @@ type Query {
   ehrGetReferralPatients(input: ReferralPatientQueryInput!): ReferralPatientResponse!
   # 진료회신서 조회
   ehrGetReferralReply(input: ReferralReplyQueryInput!): ReferralReplyResponse!
+  # 수진이력 조회
+  ehrGetVisitHistory(input: VisitHistoryQueryInput!): VisitHistoryResponse!
+  # 진단검사 결과 조회
+  ehrGetExamResultsByDate(input: PatientDateQueryInput!): ExamResultResponse!
+  # 검사 SLIP 조회 (병리/영상/내시경/기타)
+  ehrGetExamSlipsByDate(input: ExamSlipQueryInput!): ExamSlipResponse!
+  # 특수검사 결과 조회
+  ehrGetSpecialExamResults(input: ExamSlipQueryInput!): SpecialExamResultResponse!
+  # 약 처방 내역 조회
+  ehrGetDrugOrders(input: DrugOrderQueryInput!): DrugOrderResponse!
+  # 약 처방 상세 조회
+  ehrGetDrugOrderDetail(input: DrugOrderDetailQueryInput!): DrugOrderDetailResponse!
   # 협력 병·의원 신청 조회
   myPartnerApplication(hospitalCode: HospitalCode!): PartnerHospitalModel
   myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!

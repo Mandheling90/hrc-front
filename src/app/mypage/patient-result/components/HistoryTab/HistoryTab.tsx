@@ -1,12 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
+import { useVisitHistory, type VisitHistoryItem, type VisitHistoryQueryInput } from '@/hooks/useVisitHistory'
+import { matchesKeyword, matchesDateRange, sortByDate, paginate, formatDateDisplay, type FilterSortProps } from '../../utils/filterSort'
 import styles from '../../page.module.scss'
 
-// 수진 이력 데이터 타입
-export interface HistoryItem {
-  id: number
+export interface HistoryTabProps extends FilterSortProps {
+  hospitalCode: string
+  ptntNo: string
+  mcdpCd?: string
+}
+
+interface HistoryRow {
+  id: string
   visitDate: string
   visitType: string
   department: string
@@ -14,44 +21,24 @@ export interface HistoryItem {
   diagnosis: string
 }
 
-// Mock 수진 이력 데이터
-const mockHistoryData: HistoryItem[] = [
-  {
-    id: 1,
-    visitDate: '2025-11-25',
-    visitType: '외래',
-    department: '감염내과',
-    doctor: '김선용',
-    diagnosis: 'Acute Upper Respiratory Infection (ICD-10: J06.9)'
-  },
-  {
-    id: 2,
-    visitDate: '2025-11-04',
-    visitType: '외래',
-    department: '소화기내과',
-    doctor: '박인구',
-    diagnosis: 'Gastroesophageal Reflux Disease – GERD (ICD-10: K21.9)'
-  },
-  {
-    id: 3,
-    visitDate: '2025-10-30',
-    visitType: '입원',
-    department: '치과',
-    doctor: '황순철',
-    diagnosis: 'Lumbar Herniated Intervertebral Disc (ICD-10: M51.2)'
-  },
-  {
-    id: 4,
-    visitDate: '2025-10-21',
-    visitType: '외래',
-    department: '호흡기내과',
-    doctor: '홍상우',
-    diagnosis: 'Type 2 Diabetes Mellitus – T2DM (ICD-10: E11.9)'
+function toHistoryRow(item: VisitHistoryItem, index: number): HistoryRow {
+  return {
+    id: `${item.visitDate}-${index}`,
+    visitDate: formatDateDisplay(item.visitDate),
+    visitType: item.visitTypeName ?? '-',
+    department: item.departmentName ?? '-',
+    doctor: item.doctorName ?? '-',
+    diagnosis: item.diagnosisName ?? '-'
   }
-]
+}
 
-// 수진이력 테이블 컬럼 정의
-const historyColumns: TableColumn<HistoryItem>[] = [
+const FIELD_MAP = {
+  department: 'department' as const,
+  doctor: 'doctor' as const,
+  diagnosis: 'diagnosis' as const
+}
+
+const historyColumns: TableColumn<HistoryRow>[] = [
   { id: 'visitDate', label: '내원일', field: 'visitDate', width: '160px', align: 'center' },
   { id: 'visitType', label: '진료구분', field: 'visitType', width: '130px', align: 'center' },
   { id: 'department', label: '진료과', field: 'department', width: '1fr', align: 'center' },
@@ -59,8 +46,7 @@ const historyColumns: TableColumn<HistoryItem>[] = [
   { id: 'diagnosis', label: '진단명', field: 'diagnosis', width: '550px', align: 'center' }
 ]
 
-// 수진이력 태블릿 카드 렌더링 함수
-const renderHistoryTabletCard = (item: HistoryItem) => (
+const renderHistoryTabletCard = (item: HistoryRow) => (
   <div className={styles.tabletCard}>
     <div className={styles.tabletCardHeader}>
       <span className={styles.tabletCardHeaderLabel}>내원일</span>
@@ -87,8 +73,7 @@ const renderHistoryTabletCard = (item: HistoryItem) => (
   </div>
 )
 
-// 수진이력 모바일 카드 렌더링 함수
-const renderHistoryMobileCard = (item: HistoryItem) => (
+const renderHistoryMobileCard = (item: HistoryRow) => (
   <div className={styles.mobileCard}>
     <div className={styles.mobileCardHeader}>
       <span className={styles.mobileCardHeaderLabel}>내원일</span>
@@ -115,11 +100,50 @@ const renderHistoryMobileCard = (item: HistoryItem) => (
   </div>
 )
 
-export const HistoryTab: React.FC = () => {
+export const HistoryTab: React.FC<HistoryTabProps> = ({
+  hospitalCode, ptntNo, mcdpCd,
+  sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
+}) => {
+  const { searchVisitHistory, items, loading } = useVisitHistory()
+
+  useEffect(() => {
+    if (ptntNo) {
+      const input: VisitHistoryQueryInput = { hospitalCode, ptntNo }
+      if (mcdpCd) input.mcdpCd = mcdpCd
+      searchVisitHistory(input)
+    }
+  }, [hospitalCode, ptntNo, mcdpCd, searchVisitHistory])
+
+  const allRows = useMemo(() => items.map(toHistoryRow), [items])
+
+  const filteredSorted = useMemo(() => {
+    console.log('[HistoryTab] filtering:', { searchFilter, sortOrder, totalRows: allRows.length })
+    let result = allRows.filter(row =>
+      matchesKeyword(row, searchFilter, FIELD_MAP) && matchesDateRange(row.visitDate, searchFilter)
+    )
+    result = sortByDate(result, 'visitDate', sortOrder)
+    console.log('[HistoryTab] filtered result:', result.length, 'rows', result.slice(0, 3).map(r => ({ visitDate: r.visitDate, department: r.department })))
+    return result
+  }, [allRows, searchFilter, sortOrder])
+
+  useEffect(() => {
+    onTotalCountChange(filteredSorted.length)
+  }, [filteredSorted.length, onTotalCountChange])
+
+  const pagedRows = useMemo(() => paginate(filteredSorted, currentPage, pageSize), [filteredSorted, currentPage, pageSize])
+
+  if (loading) {
+    return <div className={styles.emptyState}>데이터를 불러오는 중입니다...</div>
+  }
+
+  if (filteredSorted.length === 0) {
+    return <div className={styles.emptyState}>수진 이력이 없습니다.</div>
+  }
+
   return (
     <Table
       columns={historyColumns}
-      data={mockHistoryData}
+      data={pagedRows}
       getRowKey={item => item.id}
       renderTabletCard={renderHistoryTabletCard}
       renderMobileCard={renderHistoryMobileCard}

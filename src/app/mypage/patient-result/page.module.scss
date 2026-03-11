@@ -418,34 +418,18 @@
   }
 }
 
-.dateInput {
+.dateInputWrapper {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 10px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
-  border-radius: 5px;
+  min-width: 180px;
+  max-width: 220px;
 
-  input {
-    border: none;
-    outline: none;
-    font-size: 16px;
-    font-weight: $font-weight-normal;
-    line-height: 1.5;
-    color: $gray-9;
-    background: transparent;
-    width: 100%;
-
-    @include mobile {
-      font-size: 14px;
-    }
+  @include tablet {
+    max-width: 100%;
   }
 
-  svg {
-    color: $gray-9;
-    flex-shrink: 0;
+  @include mobile {
+    max-width: 100%;
+    min-width: 0;
   }
 }
 
@@ -515,7 +499,7 @@
     flex: 1;
   }
 
-  button {
+  > button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -894,6 +878,13 @@
     height: 18px;
     font-size: 12px;
   }
+}
+
+.emptyState {
+  padding: 60px 0;
+  text-align: center;
+  color: $gray-10;
+  font-size: $font-size-lg;
 }
 
 // 페이지네이션

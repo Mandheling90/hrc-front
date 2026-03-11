@@ -1,14 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
-import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { TabNavigation, TabItem } from '@/components/molecules/TabNavigation'
 import { ListIcon } from '@/components/icons/ListIcon'
+import { useHospital, useHospitalRouter } from '@/hooks'
 import {
   PatientInfoCard,
   SearchCard,
@@ -20,6 +21,7 @@ import {
   OtherExamTab,
   PrescriptionTab
 } from './components'
+import type { SearchFilter } from './components/SearchCard/SearchCard'
 import styles from './page.module.scss'
 
 // 탭 목록
@@ -39,14 +41,6 @@ const SORT_OPTIONS = [
   { value: 'oldest', label: '오래된 순' }
 ]
 
-// Mock 환자 정보
-const patientInfo = {
-  name: '김*환',
-  gender: '남',
-  age: 52,
-  firstReferralDate: '2017-09-13'
-}
-
 // 탭별 제목 매핑
 const TAB_TITLES: Record<string, string> = {
   history: '수진 이력',
@@ -65,38 +59,96 @@ const TAB_NOTICES: Record<string, string> = {
   other: '등록된 이미지는 3개월만 열람이 가능합니다.'
 }
 
+const PAGE_SIZE = 10
+
 export default function PatientResultPage() {
+  const searchParams = useSearchParams()
+  const { hospitalId } = useHospital()
+  const hospitalCode = hospitalId.toUpperCase()
+
+  const ptntNo = searchParams.get('patientNo') ?? ''
+  const mcdpCd = searchParams.get('mcdpCd') ?? ''
+  const visitDate = searchParams.get('visitDate') ?? '' // YYYY-MM-DD
+  const visitDateCompact = visitDate.replace(/-/g, '') // YYYYMMDD
+
+  const patientInfo = {
+    name: searchParams.get('patientName') ?? '-',
+    gender: searchParams.get('gender') ?? '-',
+    age: Number(searchParams.get('age')) || 0,
+    firstReferralDate: searchParams.get('referralDate') ?? '-'
+  }
+
+  const router = useHospitalRouter()
+
   const [activeTab, setActiveTab] = useState('history')
   const [sortOrder, setSortOrder] = useState('newest')
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalFilteredCount, setTotalFilteredCount] = useState(0)
+  const [searchFilter, setSearchFilter] = useState<SearchFilter | null>(null)
 
-  const breadcrumbItems = [
-    { label: '홈', href: '/' },
-    { label: '마이페이지', href: '/mypage' },
-    { label: '의뢰환자 조회', href: '/mypage/patient-inquiry' },
-    { label: '수진이력' }
-  ]
+  const totalPages = Math.max(1, Math.ceil(totalFilteredCount / PAGE_SIZE))
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId)
+    setCurrentPage(1)
+    setSearchFilter(null)
+  }
+
+  const handleSearch = useCallback((filter: SearchFilter) => {
+    setSearchFilter(filter)
+    setCurrentPage(1)
+  }, [])
+
+  const handleSortChange = (value: string) => {
+    setSortOrder(value)
+    setCurrentPage(1)
+  }
+
+  const handleTotalCountChange = useCallback((count: number) => {
+    setTotalFilteredCount(count)
+  }, [])
 
   // 탭 컨텐츠 렌더링
   const renderTabContent = () => {
+    const commonProps = {
+      sortOrder,
+      searchFilter,
+      currentPage,
+      pageSize: PAGE_SIZE,
+      onTotalCountChange: handleTotalCountChange
+    }
+
     switch (activeTab) {
       case 'history':
-        return <HistoryTab />
+        return (
+          <HistoryTab
+            hospitalCode={hospitalCode}
+            ptntNo={ptntNo}
+            mcdpCd={mcdpCd || undefined}
+            {...commonProps}
+          />
+        )
       case 'diagnostic':
-        return <DiagnosticTab />
+        return <DiagnosticTab hospitalCode={hospitalCode} ptntNo={ptntNo} mcdpCd={mcdpCd || undefined} {...commonProps} />
       case 'pathology':
-        return <PathologyTab />
+        return <PathologyTab hospitalCode={hospitalCode} ptntNo={ptntNo} {...commonProps} />
       case 'imaging':
-        return <ImagingTab />
+        return <ImagingTab hospitalCode={hospitalCode} ptntNo={ptntNo} {...commonProps} />
       case 'endoscopy':
-        return <EndoscopyTab />
+        return <EndoscopyTab hospitalCode={hospitalCode} ptntNo={ptntNo} {...commonProps} />
       case 'other':
-        return <OtherExamTab />
+        return <OtherExamTab hospitalCode={hospitalCode} ptntNo={ptntNo} {...commonProps} />
       case 'prescription':
-        return <PrescriptionTab />
+        return <PrescriptionTab hospitalCode={hospitalCode} ptntNo={ptntNo} mdcrDt={visitDateCompact} {...commonProps} />
       default:
-        // 아직 구현되지 않은 탭은 수진이력 탭을 표시
-        return <HistoryTab />
+        return (
+          <HistoryTab
+            hospitalCode={hospitalCode}
+            ptntNo={ptntNo}
+            mcdpCd={mcdpCd || undefined}
+            {...commonProps}
+          />
+        )
     }
   }
 
@@ -104,8 +156,6 @@ export default function PatientResultPage() {
     <>
       <Header />
       <main className={styles.container}>
-        {/* <Breadcrumbs items={breadcrumbItems} /> */}
-
         <h1 className={styles.pageTitle}>의뢰환자 결과조회</h1>
 
         <div className={styles.content}>
@@ -113,7 +163,7 @@ export default function PatientResultPage() {
           <div className={styles.topSection}>
             {/* 의뢰환자 목록 버튼 */}
             <div className={styles.listButtonWrapper}>
-              <button type='button' className={styles.listButton}>
+              <button type='button' className={styles.listButton} onClick={() => router.push('/mypage/patient-inquiry')}>
                 <ListIcon width={24} height={24} />
                 <span>의뢰환자 목록</span>
               </button>
@@ -122,12 +172,12 @@ export default function PatientResultPage() {
             {/* 카드 컨테이너 */}
             <div className={styles.cardsContainer}>
               <PatientInfoCard patientInfo={patientInfo} />
-              <SearchCard />
+              <SearchCard onSearch={handleSearch} />
             </div>
           </div>
 
           {/* 탭 네비게이션 */}
-          <TabNavigation tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
+          <TabNavigation tabs={TABS} activeTab={activeTab} onTabChange={handleTabChange} />
 
           {/* 컨텐츠 섹션 */}
           <div className={styles.historySection}>
@@ -142,7 +192,7 @@ export default function PatientResultPage() {
                 <div />
               )}
               <div className={styles.sortRadio}>
-                <Radio name='sortOrder' options={SORT_OPTIONS} value={sortOrder} onChange={setSortOrder} />
+                <Radio name='sortOrder' options={SORT_OPTIONS} value={sortOrder} onChange={handleSortChange} />
               </div>
             </div>
 
@@ -150,9 +200,11 @@ export default function PatientResultPage() {
             {renderTabContent()}
 
             {/* 페이지네이션 */}
-            <div className={styles.paginationWrapper}>
-              <Pagination currentPage={currentPage} totalPages={5} onPageChange={setCurrentPage} />
-            </div>
+            {totalFilteredCount > PAGE_SIZE && (
+              <div className={styles.paginationWrapper}>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+              </div>
+            )}
           </div>
         </div>
       </main>

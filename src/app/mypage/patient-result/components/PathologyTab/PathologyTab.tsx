@@ -1,56 +1,45 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { PathologyResultModal } from '@/components/organisms/PathologyResultModal'
+import { useSpecialExamResults, type SpecialExamResultItem } from '@/hooks/useExamResults'
+import type { ExamSlipQueryInput } from '@/hooks/useExamResults'
+import { matchesKeyword, matchesDateRange, sortByDate, paginate, formatDateDisplay, type FilterSortProps } from '../../utils/filterSort'
 import styles from '../../page.module.scss'
 
-// 병리검사 데이터 타입
-export interface PathologyItem {
-  id: number
+export interface PathologyTabProps extends FilterSortProps {
+  hospitalCode: string
+  ptntNo: string
+  slipCd?: string
+  mcdpCd?: string
+}
+
+interface PathologyRow {
+  id: string
   department: string
   examDate: string
   examName: string
+  _raw: SpecialExamResultItem
 }
 
-// Mock 병리검사 데이터
-const mockPathologyData: PathologyItem[] = [
-  {
-    id: 1,
-    department: '소화기내과',
-    examDate: '2025-11-25',
-    examName: '자가면역역환검사'
-  },
-  {
-    id: 2,
-    department: '소화기내과',
-    examDate: '2025-11-04',
-    examName: '미생물영역'
-  },
-  {
-    id: 3,
-    department: '소화기내과',
-    examDate: '2025-10-30',
-    examName: '수혈검사'
-  },
-  {
-    id: 4,
-    department: '소화기내과',
-    examDate: '2025-10-21',
-    examName: '뇨/체액화학'
+function toRow(item: SpecialExamResultItem, index: number): PathologyRow {
+  return {
+    id: `${item.orderCode}-${index}`,
+    department: item.departmentName ?? '-',
+    examDate: formatDateDisplay(item.examDate),
+    examName: item.orderName ?? '-',
+    _raw: item
   }
-]
-
-// Mock 병리검사 판독결과 데이터
-const mockPathologyResults: Record<number, string> = {
-  1: '[impression] Progressed both lung consolidation since last study. Others show no change.\nProgressed both lung consolidation since last study. Others show no change.',
-  2: '[impression] No significant interval change in both lung consolidation.\nStable condition compared to previous study.',
-  3: '[impression] Mild improvement in right lung consolidation.\nLeft lung shows no significant change.',
-  4: '[impression] Follow-up recommended in 3 months.\nNo evidence of malignancy.'
 }
 
-// 병리검사 테이블 컬럼 정의
-const getPathologyColumns = (onViewClick: (item: PathologyItem) => void): TableColumn<PathologyItem>[] => [
+const FIELD_MAP = {
+  department: 'department' as const,
+  doctor: 'department' as const,
+  diagnosis: 'examName' as const
+}
+
+const getPathologyColumns = (onViewClick: (item: PathologyRow) => void): TableColumn<PathologyRow>[] => [
   { id: 'department', label: '진료과', field: 'department', width: '250px', align: 'center' },
   { id: 'examDate', label: '검사일', field: 'examDate', width: '180px', align: 'center' },
   { id: 'examName', label: '검사명', field: 'examName', width: '1fr', align: 'center' },
@@ -59,7 +48,7 @@ const getPathologyColumns = (onViewClick: (item: PathologyItem) => void): TableC
     label: '판독결과',
     width: '200px',
     align: 'center',
-    renderCell: (item: PathologyItem) => (
+    renderCell: (item: PathologyRow) => (
       <button type='button' className={styles.viewButton} onClick={() => onViewClick(item)}>
         조회
       </button>
@@ -67,8 +56,7 @@ const getPathologyColumns = (onViewClick: (item: PathologyItem) => void): TableC
   }
 ]
 
-// 병리검사 태블릿 카드 렌더링 함수
-const getPathologyTabletCard = (onViewClick: (item: PathologyItem) => void) => (item: PathologyItem) => (
+const getPathologyTabletCard = (onViewClick: (item: PathologyRow) => void) => (item: PathologyRow) => (
   <div className={styles.tabletCard}>
     <div className={styles.tabletCardHeader}>
       <span className={styles.tabletCardHeaderLabel}>진료과</span>
@@ -93,8 +81,7 @@ const getPathologyTabletCard = (onViewClick: (item: PathologyItem) => void) => (
   </div>
 )
 
-// 병리검사 모바일 카드 렌더링 함수
-const getPathologyMobileCard = (onViewClick: (item: PathologyItem) => void) => (item: PathologyItem) => (
+const getPathologyMobileCard = (onViewClick: (item: PathologyRow) => void) => (item: PathologyRow) => (
   <div className={styles.mobileCard}>
     <div className={styles.mobileCardHeader}>
       <span className={styles.mobileCardHeaderLabel}>진료과</span>
@@ -119,39 +106,73 @@ const getPathologyMobileCard = (onViewClick: (item: PathologyItem) => void) => (
   </div>
 )
 
-export const PathologyTab: React.FC = () => {
+export const PathologyTab: React.FC<PathologyTabProps> = ({
+  hospitalCode, ptntNo, slipCd = 'G', mcdpCd,
+  sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
+}) => {
+  const { searchSpecialExamResults, items, loading } = useSpecialExamResults()
   const [isPathologyModalOpen, setIsPathologyModalOpen] = useState(false)
-  const [selectedPathology, setSelectedPathology] = useState<PathologyItem | null>(null)
+  const [selectedRow, setSelectedRow] = useState<PathologyRow | null>(null)
 
-  // 병리검사 판독결과 모달 열기
-  const handleViewPathologyResult = (item: PathologyItem) => {
-    setSelectedPathology(item)
+  useEffect(() => {
+    if (ptntNo) {
+      const input: ExamSlipQueryInput = { hospitalCode, ptntNo, slipCd }
+      if (mcdpCd) input.mcdpCd = mcdpCd
+      searchSpecialExamResults(input)
+    }
+  }, [hospitalCode, ptntNo, slipCd, mcdpCd, searchSpecialExamResults])
+
+  const allRows = useMemo(() => items.map(toRow), [items])
+
+  const filteredSorted = useMemo(() => {
+    let result = allRows.filter(row =>
+      matchesKeyword(row, searchFilter, FIELD_MAP) &&
+      matchesDateRange(row.examDate, searchFilter)
+    )
+    result = sortByDate(result, 'examDate', sortOrder)
+    return result
+  }, [allRows, searchFilter, sortOrder])
+
+  useEffect(() => {
+    onTotalCountChange(filteredSorted.length)
+  }, [filteredSorted.length, onTotalCountChange])
+
+  const pagedRows = useMemo(() => paginate(filteredSorted, currentPage, pageSize), [filteredSorted, currentPage, pageSize])
+
+  const handleViewPathologyResult = (item: PathologyRow) => {
+    setSelectedRow(item)
     setIsPathologyModalOpen(true)
   }
 
-  // 병리검사 판독결과 모달 닫기
   const handleClosePathologyModal = () => {
     setIsPathologyModalOpen(false)
-    setSelectedPathology(null)
+    setSelectedRow(null)
+  }
+
+  if (loading) {
+    return <div className={styles.emptyState}>데이터를 불러오는 중입니다...</div>
+  }
+
+  if (filteredSorted.length === 0) {
+    return <div className={styles.emptyState}>병리검사 결과가 없습니다.</div>
   }
 
   return (
     <>
       <Table
         columns={getPathologyColumns(handleViewPathologyResult)}
-        data={mockPathologyData}
+        data={pagedRows}
         getRowKey={item => item.id}
         renderTabletCard={getPathologyTabletCard(handleViewPathologyResult)}
         renderMobileCard={getPathologyMobileCard(handleViewPathologyResult)}
       />
 
-      {/* 병리검사 판독결과 모달 */}
-      {selectedPathology && (
+      {selectedRow && (
         <PathologyResultModal
           isOpen={isPathologyModalOpen}
           onClose={handleClosePathologyModal}
-          examName={selectedPathology.examName}
-          result={mockPathologyResults[selectedPathology.id] || ''}
+          examName={selectedRow.examName}
+          result={selectedRow._raw.resultContent || selectedRow._raw.grossResult || ''}
         />
       )}
     </>

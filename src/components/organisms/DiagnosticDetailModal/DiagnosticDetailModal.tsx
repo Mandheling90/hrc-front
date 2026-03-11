@@ -15,6 +15,7 @@ export interface DiagnosticResultItem {
   max: number | string
   isLow?: boolean
   isHigh?: boolean
+  remark?: string
 }
 
 export interface DiagnosticDetailModalProps {
@@ -26,10 +27,12 @@ export interface DiagnosticDetailModalProps {
   examName: string
   /** 검사 결과 데이터 */
   results: DiagnosticResultItem[]
-  /** 비고 내용 */
+  /** 비고 내용 (레거시 - 항목별 remark 없을 때 폴백) */
   remarks?: string
   /** 배경 클릭 시 닫기 여부 (기본값: true) */
   closeOnBackdropClick?: boolean
+  /** 데이터 로딩 중 */
+  loading?: boolean
 }
 
 export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
@@ -38,7 +41,8 @@ export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
   examName,
   results,
   remarks,
-  closeOnBackdropClick = true
+  closeOnBackdropClick = true,
+  loading = false
 }) => {
   // ESC 키로 닫기
   useEffect(() => {
@@ -108,12 +112,14 @@ export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
 
         {/* 컨텐츠 영역 */}
         <div className={styles.content}>
+          {loading ? (
+            <div className={styles.loadingState}>데이터를 불러오는 중입니다...</div>
+          ) : (
+          <>
           {/* 검사명 섹션 */}
           <div className={styles.examSection}>
-            <SectionTitle title={examName} noMargin />
-
-            <div className={styles.tableContainer}>
-              {/* 범례 */}
+            <div className={styles.examHeader}>
+              <SectionTitle title={examName} noMargin />
               <div className={styles.legend}>
                 <div className={styles.legendItem}>
                   <span className={styles.legendBoxMin}></span>
@@ -124,18 +130,22 @@ export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
                   <span className={styles.legendText}>Max 이상</span>
                 </div>
               </div>
+            </div>
 
+            <div className={styles.tableContainer}>
               {/* 데스크톱: 결과 테이블 */}
               <div className={styles.resultTable}>
                 {/* 테이블 헤더 */}
                 <div className={styles.tableHeader}>
-                  <div className={styles.tableCell}>검사명</div>
+                  <div className={`${styles.tableCell} ${styles.cellName}`}>검사명</div>
                   <div className={styles.divider}></div>
-                  <div className={styles.tableCell}>결과치</div>
+                  <div className={`${styles.tableCell} ${styles.cellResult}`}>결과치</div>
                   <div className={styles.divider}></div>
-                  <div className={styles.tableCell}>Min</div>
+                  <div className={`${styles.tableCell} ${styles.cellMin}`}>Min</div>
                   <div className={styles.divider}></div>
-                  <div className={styles.tableCell}>Max</div>
+                  <div className={`${styles.tableCell} ${styles.cellMax}`}>Max</div>
+                  <div className={styles.divider}></div>
+                  <div className={`${styles.tableCell} ${styles.cellRemark}`}>비고</div>
                 </div>
 
                 {/* 테이블 바디 */}
@@ -143,9 +153,9 @@ export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
                   const status = getResultStatus(item)
                   return (
                     <div key={item.id} className={styles.tableRow}>
-                      <div className={styles.tableCell}>{item.testName}</div>
+                      <div className={`${styles.tableCell} ${styles.cellName}`}>{item.testName}</div>
                       <div className={styles.divider}></div>
-                      <div className={styles.tableCell}>
+                      <div className={`${styles.tableCell} ${styles.cellResult}`}>
                         <span
                           className={`${styles.resultValue} ${status === 'low' ? styles.low : ''} ${status === 'high' ? styles.high : ''}`}
                         >
@@ -153,61 +163,63 @@ export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
                         </span>
                       </div>
                       <div className={styles.divider}></div>
-                      <div className={styles.tableCell}>{item.min}</div>
+                      <div className={`${styles.tableCell} ${styles.cellMin}`}>{item.min}</div>
                       <div className={styles.divider}></div>
-                      <div className={styles.tableCell}>{item.max}</div>
+                      <div className={`${styles.tableCell} ${styles.cellMax}`}>{item.max}</div>
+                      <div className={styles.divider}></div>
+                      <div className={`${styles.tableCell} ${styles.cellRemark}`}>{item.remark || '-'}</div>
                     </div>
                   )
                 })}
               </div>
 
-              {/* 모바일: 카드 형태 */}
+              {/* 태블릿/모바일: 카드 형태 */}
               <div className={styles.mobileCards}>
                 {results.map(item => {
                   const status = getResultStatus(item)
                   return (
                     <div key={item.id} className={styles.mobileCard}>
-                      <div className={styles.mobileCardHeader}>
-                        <span className={styles.mobileCardLabel}>검사명</span>
-                        <span className={styles.mobileCardValue}>{item.testName}</span>
-                      </div>
-                      <div className={styles.mobileCardBody}>
-                        <div
-                          className={`${styles.mobileCardRow} ${styles.resultRow} ${status === 'low' ? styles.low : ''} ${status === 'high' ? styles.high : ''}`}
-                        >
-                          <span className={styles.mobileCardLabel}>결과치</span>
-                          <span
-                            className={`${styles.mobileCardResultValue} ${status === 'low' ? styles.low : ''} ${status === 'high' ? styles.high : ''}`}
+                      <div className={styles.mobileCardContent}>
+                        <div className={styles.mobileCardHeader}>
+                          <span className={styles.mobileCardLabel}>검사명</span>
+                          <span className={styles.mobileCardValue}>{item.testName}</span>
+                        </div>
+                        <div className={styles.mobileCardBody}>
+                          <div
+                            className={`${styles.mobileCardRow} ${styles.resultRow} ${status === 'low' ? styles.low : ''} ${status === 'high' ? styles.high : ''}`}
                           >
-                            {item.result}
-                          </span>
-                        </div>
-                        <div className={styles.mobileCardInfo}>
-                          <div className={styles.mobileCardRow}>
-                            <span className={styles.mobileCardLabel}>Min</span>
-                            <span className={styles.mobileCardValue}>{item.min}</span>
+                            <span className={styles.mobileCardLabel}>결과치</span>
+                            <span
+                              className={`${styles.mobileCardResultValue} ${status === 'low' ? styles.low : ''} ${status === 'high' ? styles.high : ''}`}
+                            >
+                              {item.result}
+                            </span>
                           </div>
-                          <div className={styles.mobileCardRow}>
-                            <span className={styles.mobileCardLabel}>Max</span>
-                            <span className={styles.mobileCardValue}>{item.max}</span>
+                          <div className={styles.mobileCardInfo}>
+                            <div className={styles.mobileCardRow}>
+                              <span className={styles.mobileCardLabel}>Min</span>
+                              <span className={styles.mobileCardValue}>{item.min}</span>
+                            </div>
+                            <div className={styles.mobileCardRow}>
+                              <span className={styles.mobileCardLabel}>Max</span>
+                              <span className={styles.mobileCardValue}>{item.max}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
+                      {item.remark && (
+                        <div className={styles.mobileCardRemark}>
+                          <span className={styles.mobileCardLabel}>비고</span>
+                          <span className={styles.mobileCardRemarkText}>{item.remark}</span>
+                        </div>
+                      )}
                     </div>
                   )
                 })}
               </div>
             </div>
           </div>
-
-          {/* 비고 섹션 */}
-          {remarks && (
-            <div className={styles.remarksSection}>
-              <SectionTitle title='비고' noMargin />
-              <div className={styles.remarksContent}>
-                <p>{remarks}</p>
-              </div>
-            </div>
+          </>
           )}
         </div>
       </div>

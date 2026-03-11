@@ -285,7 +285,7 @@ export default function PatientInquiryPage() {
             variant='primary'
             size='small'
             className={styles.viewBtn}
-            onClick={() => router.push(`/mypage/patient-result?patientNo=${item.patientNo}&visitDate=${item.treatmentDate}`)}
+            onClick={() => router.push(`/mypage/patient-result?patientNo=${item.patientNo}&visitDate=${item.treatmentDate}&mcdpCd=${item.departmentCode}&patientName=${encodeURIComponent(item.patientName)}&gender=${encodeURIComponent(item.gender)}&age=${item.age}&referralDate=${item.referralDate}`)}
           >
             조회
           </Button>
@@ -544,7 +544,7 @@ export default function PatientInquiryPage() {
                                   variant='primary'
                                   size='small'
                                   className={styles.cardViewBtn}
-                                  onClick={() => router.push(`/mypage/patient-result?patientNo=${item.patientNo}&visitDate=${item.treatmentDate}`)}
+                                  onClick={() => router.push(`/mypage/patient-result?patientNo=${item.patientNo}&visitDate=${item.treatmentDate}&mcdpCd=${item.departmentCode}&patientName=${encodeURIComponent(item.patientName)}&gender=${encodeURIComponent(item.gender)}&age=${item.age}&referralDate=${item.referralDate}`)}
                                 >
                                   조회
                                 </Button>
