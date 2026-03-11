@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useHospital } from '@/hooks'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Input } from '@/components/atoms/Input/Input'
@@ -18,6 +19,7 @@ import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmBut
 import type { Doctor } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 
 export default function EConsultPage() {
+  const { isAnam } = useHospital()
   // 폼 상태
   const [privacyConsent, setPrivacyConsent] = useState(false)
   const [applicantName, setApplicantName] = useState('김철수')
@@ -66,11 +68,17 @@ export default function EConsultPage() {
   }
 
   // 안내사항 메시지
-  const noticeMessages = [
-    '의학적 자문을 요청하는 커뮤니티입니다.',
-    '환자관련 개인정보가 노출되지 않도록 유의하여 주시길 바랍니다.',
-    '진료협력센터(직통) : 02-920-5892, 5893, 5894'
-  ]
+  const noticeMessages = isAnam
+    ? [
+        '고려대학교안암병원 자문의를 통하여 온라인으로 진료상담이 가능합니다.',
+        '희망하시는 진료과의 자문의를 선택하여 문의하실 수 있습니다.',
+        '답변이 등록되면, 신청자분의 e-mail로 안내드릴 예정이며, 답변은 마이페이지에서 조회가 가능합니다.'
+      ]
+    : [
+        '의학적 자문을 요청하는 커뮤니티입니다.',
+        '환자관련 개인정보가 노출되지 않도록 유의하여 주시길 바랍니다.',
+        '진료협력센터(직통) : 02-920-5964, 5893, 5894'
+      ]
 
   return (
     <div className={styles.wrap}>
@@ -86,9 +94,10 @@ export default function EConsultPage() {
               <InfoBox
                 variant='guide'
                 messages={noticeMessages}
-                showBullets={true}
+                showBullets={!isAnam}
                 className={styles.noticeBox}
                 contentAlign='center'
+                textAlign={isAnam ? 'center' : undefined}
               />
             </div>
 

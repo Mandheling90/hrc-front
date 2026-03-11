@@ -275,9 +275,9 @@ const anamContent: HospitalPageContent = {
   },
   aboutIntro: {
     introBox: {
-      title: 'KRC(Korea University Anam Hospital Referral Center)',
+      title: undefined,
       messages: [
-        '고려대학교안암병원 진료협력센터(KRC)는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 \n환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, \n의료전달 체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
+        '고려대학교안암병원 진료협력센터는 1·2차 의료기관에서 의뢰한 환자의 효율적인 진료를 위하여 \n환자의뢰, 진료결과 회신, 회송을 통해 지역사회 의료기관과 균형적인 의료발전을 도모하고, \n의료전달 체계의 중심적 역할을 수행하여 지역주민 건강의 유지, 증진에 기여하고자 설립되었습니다.',
         '지역사회와의 상생을 기반으로 최적의 의료서비스를 제공하기위해\n협력 병·의원 원장님들과 긴밀하고 활발한 협력네트워크를 만들어나가도록 하겠습니다.'
       ]
     },
@@ -412,7 +412,7 @@ const anamContent: HospitalPageContent = {
   aboutLocation: {
     address: {
       jibun: '안암동5가 126-1',
-      road: '서울 성북구 고려대로 73 고대병원'
+      road: '서울 성북구 고려대로 73 고려대병원'
     },
     coordinates: {
       latitude: 37.587,
@@ -432,7 +432,7 @@ const anamContent: HospitalPageContent = {
     },
     bus: [
       {
-        name: '고려대이공대 고대병원 하차',
+        name: '고려대이공대 · 고대병원 하차',
         directions: [
           {
             label: '안암동 주민센터 방면',
