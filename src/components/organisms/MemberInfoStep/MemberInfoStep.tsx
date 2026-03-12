@@ -55,7 +55,7 @@ export const MemberInfoStep: React.FC<MemberInfoStepProps> = ({
         onPrev={onPrev}
         submitButtonText={signupLoading ? '처리 중...' : '다음 단계'}
         cancelButtonText='취소'
-        disabledFields={['name', 'birthDate']}
+        disabledFields={['name', 'birthDate', 'phone']}
       />
     </>
   )
