@@ -106,10 +106,34 @@
   }
 }
 
-.mychartImage {
+.mychartImageDesktop {
   height: auto;
   object-fit: contain;
   width: auto;
+  display: block;
+
+  @include tablet {
+    display: none;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.mychartImageMobile {
+  height: auto;
+  object-fit: contain;
+  width: auto;
+  display: none;
+
+  @include tablet {
+    display: block;
+  }
+
+  @include mobile {
+    display: block;
+  }
 }
 
 // 문의 섹션

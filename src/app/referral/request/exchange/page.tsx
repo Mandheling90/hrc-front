@@ -86,11 +86,19 @@ export default function ExchangePage() {
               <div className={styles.mychartLink}>
                 <a href='http://mychart.kr' target='_blank' rel='noopener noreferrer' className={styles.mychartButton}>
                   <Image
-                    src='/images/service/myChartTitle.png'
+                    src='/images/service/myChartTitle-d.png'
                     alt='보건복지부 마이차트'
-                    width={200}
-                    height={60}
-                    className={styles.mychartImage}
+                    width={335}
+                    height={75}
+                    className={styles.mychartImageDesktop}
+                    priority
+                  />
+                  <Image
+                    src='/images/service/myChartTitle-m.png'
+                    alt='보건복지부 마이차트'
+                    width={280}
+                    height={63}
+                    className={styles.mychartImageMobile}
                     priority
                   />
                 </a>
