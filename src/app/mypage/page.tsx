@@ -1,7 +1,10 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Link from '@/components/atoms/HospitalLink'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { useHospital } from '@/hooks'
+import { useReferralPatients } from '@/hooks/useReferralPatients'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { ArrowRightLargeIcon } from '@/components/icons/ArrowRightLargeIcon'
@@ -11,12 +14,6 @@ import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import styles from './page.module.scss'
 
-// 더미 데이터 - 실제로는 API에서 가져와야 함
-const mockUserData = {
-  hospitalName: 'A 병원',
-  userName: '홍길동'
-}
-
 interface PatientData {
   date: string
   name: string
@@ -24,13 +21,16 @@ interface PatientData {
   department: string
 }
 
-const mockPatientData: PatientData[] = [
-  { date: '2025-08-21', name: '송*지', age: '50대', department: '호흡기·알레르기내과' },
-  { date: '2025-08-14', name: '이*철', age: '40대', department: '치과' },
-  { date: '2025-08-02', name: '김*순', age: '50대', department: '소화기 내과' },
-  { date: '2025-07-30', name: '황*은', age: '20대', department: '내과' },
-  { date: '2025-07-23', name: '박*민', age: '10대', department: '소아청소년과' }
-]
+// YYYYMMDD → YYYY-MM-DD 변환
+function formatApiDate(dateStr: string | null): string {
+  if (!dateStr) return ''
+  if (dateStr.length === 8) {
+    return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`
+  }
+  return dateStr
+}
+
+const DISPLAY_COUNT = 5
 
 const patientColumns: TableColumn<PatientData>[] = [
   { id: 'date', label: '날짜', field: 'date', width: '130px' },
@@ -45,24 +45,44 @@ const mockConsultData = {
   expired: 83
 }
 
-// 모바일용 CardList 데이터 변환
-const patientCards: CardRow[][] = mockPatientData.map((patient, index) => [
-  {
-    id: `patient-${index}`,
-    leftContent: (
-      <div className={styles.patientMobileContent}>
-        <span className={styles.patientMobileDate}>{patient.date}</span>
-        <div className={styles.patientMobileInfo}>
-          <span className={styles.patientMobileName}>{patient.name}</span>
-          <span className={styles.patientMobileDepartment}>{patient.department}</span>
-        </div>
-      </div>
-    ),
-    rightContent: null
-  }
-])
-
 export default function MyPage() {
+  const { user } = useAuthContext()
+  const { hospitalId } = useHospital()
+  const { searchReferralPatients, patients, loading: patientsLoading } = useReferralPatients()
+
+  useEffect(() => {
+    if (hospitalId) {
+      searchReferralPatients({ hospitalCode: hospitalId.toUpperCase() })
+    }
+  }, [hospitalId, searchReferralPatients])
+
+  const recentPatients: PatientData[] = useMemo(() => {
+    return patients.slice(0, DISPLAY_COUNT).map((item) => ({
+      date: formatApiDate(item.referralDate),
+      name: item.patientName || '',
+      age: item.age ? `${item.age}세` : '',
+      department: item.departmentName || ''
+    }))
+  }, [patients])
+
+  const patientCards: CardRow[][] = useMemo(() => {
+    return recentPatients.map((patient, index) => [
+      {
+        id: `patient-${index}`,
+        leftContent: (
+          <div className={styles.patientMobileContent}>
+            <span className={styles.patientMobileDate}>{patient.date}</span>
+            <div className={styles.patientMobileInfo}>
+              <span className={styles.patientMobileName}>{patient.name}</span>
+              <span className={styles.patientMobileDepartment}>{patient.department}</span>
+            </div>
+          </div>
+        ),
+        rightContent: null
+      }
+    ])
+  }, [recentPatients])
+
   return (
     <div className={styles.wrap}>
       <Header />
@@ -76,9 +96,9 @@ export default function MyPage() {
               {/* 사용자 정보 카드 */}
               <div className={styles.userCard}>
                 <div className={styles.userInfo}>
-                  <p className={styles.hospitalName}>{mockUserData.hospitalName}</p>
+                  <p className={styles.hospitalName}>{user?.profile?.hospName || ''}</p>
                   <div className={styles.userName}>
-                    <span className={styles.userNameText}>{mockUserData.userName}</span>
+                    <span className={styles.userNameText}>{user?.userName || ''}</span>
                     <span className={styles.userNameSuffix}>님</span>
                   </div>
                 </div>
@@ -115,14 +135,14 @@ export default function MyPage() {
               <div className={styles.patientCard}>
                 <div className={styles.cardHeader}>
                   <SectionTitle title='의뢰환자 조회' noMargin />
-                  <button type='button' className={styles.arrowBtn}>
+                  <Link href='/mypage/patient-inquiry' className={styles.arrowBtn}>
                     <ArrowRightLargeIcon width={24} height={24} stroke='white' />
-                  </button>
+                  </Link>
                 </div>
                 {/* 데스크톱/태블릿용 테이블 */}
                 <Table
                   columns={patientColumns}
-                  data={mockPatientData}
+                  data={recentPatients}
                   getRowKey={(_, index) => index}
                   hideHeader
                   className={styles.patientList}

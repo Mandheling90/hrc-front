@@ -367,8 +367,8 @@ const HeaderInner: React.FC = () => {
                         로그아웃
                       </button>
                       <span className={styles.divider}>|</span>
-                      <Link href='/mypage/edit-profile' className={styles.textLink}>
-                        정보수정
+                      <Link href='/mypage' className={styles.textLink}>
+                        마이페이지
                       </Link>
                     </>
                   ) : (
