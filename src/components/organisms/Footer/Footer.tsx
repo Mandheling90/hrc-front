@@ -9,16 +9,16 @@ import { stripHospitalPrefix } from '@/utils/hospital'
 import styles from './Footer.module.scss'
 
 const commonPartnerLogos = [
-  { id: 1, image: '/images/img-section4-1.png', alt: '건강보험심사평가원', href: 'https://www.hira.or.kr/main.do' },
-  { id: 2, image: '/images/img-section4-2.png', alt: '보건복지부 마이차트', href: 'https://mychart.kr/portal/main/main.do' },
-  { id: 3, image: '/images/img-section4-3.png', alt: '한국보건의료정보원', href: 'https://www.khis.kr/' }
+  { id: 1, image: '/images/home/img-section4-1.png', alt: '건강보험심사평가원', href: 'https://www.hira.or.kr/main.do' },
+  { id: 2, image: '/images/home/img-section4-2.png', alt: '보건복지부 마이차트', href: 'https://mychart.kr/portal/main/main.do' },
+  { id: 3, image: '/images/home/img-section4-3.png', alt: '한국보건의료정보원', href: 'https://www.khis.kr/' }
 ]
 
 // TODO: 리뉴얼 배포 후 각 병원 진료협력센터 실제 URL로 교체
 const allHospitalLogos: Record<string, { id: number; image: string; alt: string; href: string }> = {
-  anam: { id: 7, image: '/images/anam/Component 4.png', alt: '안암병원 진료협력센터', href: '/anam' },
-  guro: { id: 8, image: '/images/guro/Component 4.png', alt: '구로병원 진료협력센터', href: '/guro' },
-  ansan: { id: 9, image: '/images/ansan/Component 4.png', alt: '안산병원 진료협력센터', href: '/ansan' }
+  anam: { id: 7, image: '/images/common/anam/Component 4.png', alt: '안암병원 진료협력센터', href: '/anam' },
+  guro: { id: 8, image: '/images/common/guro/Component 4.png', alt: '구로병원 진료협력센터', href: '/guro' },
+  ansan: { id: 9, image: '/images/common/ansan/Component 4.png', alt: '안산병원 진료협력센터', href: '/ansan' }
 }
 
 const getPolicyLinks = (homepage: string) => [
@@ -45,12 +45,12 @@ const socialLinksMap: Record<string, { href: string; label: string; icon: string
 
 const certifications = [
   {
-    image: '/images/img-footermark.png',
+    image: '/images/common/img-footermark.png',
     scope: '[인증범위]전자의무기록시스템(EMR) 인증',
     period: '[유효기간]2022.11.01 ~ 2025.10.31'
   },
   {
-    image: '/images/img-footermark2.png',
+    image: '/images/common/img-footermark2.png',
     scope: '[인증범위]의료정보시스템(EMR, OCS) 및 홈페이지 서비스 운영',
     period: '[유효기간]2023.10.18 ~ 2026.10.17'
   }

@@ -152,7 +152,7 @@ const anamContent: HospitalPageContent = {
         title: '심평원 중계시스템 접속 (https://ef.hira.or.kr)',
         linkText: 'https://ef.hira.or.kr',
         image: {
-          src: '/images/service/hira-step1.png',
+          src: '/images/referral/hira/hira-step1.png',
           alt: '심평원 중계시스템 접속 화면',
           width: 1042,
           height: 525
@@ -170,7 +170,7 @@ const anamContent: HospitalPageContent = {
         stepNumber: 'STEP. 02',
         title: '의뢰서 작성',
         image: {
-          src: '/images/service/hira-step2.png',
+          src: '/images/referral/hira/hira-step2.png',
           alt: '의뢰서 작성 화면',
           width: 1042,
           height: 471
@@ -354,7 +354,7 @@ const anamContent: HospitalPageContent = {
   aboutGreeting: {
     slogan: '원장님의 진료 여정에 함께하는 든든한 동반자가 되겠습니다.',
     image: {
-      src: '/images/director-anam.png',
+      src: '/images/about/greeting/director-anam.png',
       alt: '고려대학교안암병원 진료협력센터장 최혁순',
       width: 500,
       height: 600
@@ -658,7 +658,7 @@ const guroContent: HospitalPageContent = {
         title: '심평원 중계시스템 접속 (https://ef.hira.or.kr)',
         linkText: 'https://ef.hira.or.kr',
         image: {
-          src: '/images/service/hira-step1.png',
+          src: '/images/referral/hira/hira-step1.png',
           alt: '심평원 중계시스템 접속 화면',
           width: 1042,
           height: 525
@@ -676,7 +676,7 @@ const guroContent: HospitalPageContent = {
         stepNumber: 'STEP. 02',
         title: '의뢰서 작성',
         image: {
-          src: '/images/service/hira-step2.png',
+          src: '/images/referral/hira/hira-step2.png',
           alt: '의뢰서 작성 화면',
           width: 1042,
           height: 471
@@ -856,7 +856,7 @@ const guroContent: HospitalPageContent = {
   aboutGreeting: {
     slogan: '원장님의 진료 여정에 함께하는 든든한 동반자가 되겠습니다.',
     image: {
-      src: '/images/director-guro.png',
+      src: '/images/about/greeting/director-guro.png',
       alt: '고려대학교 구로병원 진료협력센터장 윤영훈',
       width: 500,
       height: 600
@@ -1258,7 +1258,7 @@ const ansanContent: HospitalPageContent = {
         title: '심평원 중계시스템 접속 (https://ef.hira.or.kr)',
         linkText: 'https://ef.hira.or.kr',
         image: {
-          src: '/images/service/hira-step1.png',
+          src: '/images/referral/hira/hira-step1.png',
           alt: '심평원 중계시스템 접속 화면',
           width: 1042,
           height: 525
@@ -1276,7 +1276,7 @@ const ansanContent: HospitalPageContent = {
         stepNumber: 'STEP. 02',
         title: '의뢰서 작성',
         image: {
-          src: '/images/service/hira-step2.png',
+          src: '/images/referral/hira/hira-step2.png',
           alt: '의뢰서 작성 화면',
           width: 1042,
           height: 471
@@ -1464,7 +1464,7 @@ const ansanContent: HospitalPageContent = {
       { text: ' 가 되겠습니다.', color: 'black' }
     ],
     image: {
-      src: '/images/director-ansan.png',
+      src: '/images/about/greeting/director-ansan.png',
       alt: '고려대학교안산병원 진료협력센터장 홍광대',
       width: 500,
       height: 600
@@ -1538,7 +1538,7 @@ const ansanContent: HospitalPageContent = {
     medicalCenter: {
       address: '경기도 안산시 단원구 적금로 123 지하1층',
       phone: '031-412-5103',
-      floorMapImage: '/images/FloorMapAnsan.png'
+      floorMapImage: '/images/about/location/FloorMapAnsan.png'
     },
     // 층별 안내도 범례
     floorMapLegend: [

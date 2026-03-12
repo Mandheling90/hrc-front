@@ -12,10 +12,10 @@ export default function GreetingPage() {
   const greetingInfo = pageContent.aboutGreeting
 
   // 병원별 배경 이미지 경로
-  const backgroundImageSrc = `/images/building-${hospitalId}.png`
+  const backgroundImageSrc = `/images/home/building-${hospitalId}.png`
   // 안암/구로: 슬로건 이미지 사용
 
-  const sloganImageSrc = `/images/${hospitalId}/slogan.png`
+  const sloganImageSrc = `/images/about/greeting/slogan-${hospitalId}.png`
 
   // greetingInfo가 없으면 빈 화면 반환
   if (!greetingInfo) {

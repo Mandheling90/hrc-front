@@ -13,21 +13,21 @@ const educationEvents = [
     id: 1,
     title: '2025년 상반기 진료협력센터 심포지엄',
     date: '2025.08.15',
-    image: '/images/Frame 1000006464.png',
+    image: '/images/home/Frame 1000006464.png',
     category: 'center'
   },
   {
     id: 2,
     title: '협력병원 대상 최신 의료기술 세미나',
     date: '2025.07.28',
-    image: '/images/Frame 1000006464-1.png',
+    image: '/images/home/Frame 1000006464-1.png',
     category: 'center'
   },
   {
     id: 3,
     title: '의료진 대상 연수 프로그램 안내',
     date: '2025.07.10',
-    image: '/images/Frame 1000006464-2.png',
+    image: '/images/home/Frame 1000006464-2.png',
     category: 'center'
   },
   // 고대구로병원
@@ -35,21 +35,21 @@ const educationEvents = [
     id: 4,
     title: '고대구로병원 건강강좌 개최',
     date: '2025.08.10',
-    image: '/images/Frame 1000006464.png',
+    image: '/images/home/Frame 1000006464.png',
     category: 'hospital'
   },
   {
     id: 5,
     title: '지역사회 건강증진 프로그램',
     date: '2025.07.20',
-    image: '/images/Frame 1000006464-1.png',
+    image: '/images/home/Frame 1000006464-1.png',
     category: 'hospital'
   },
   {
     id: 6,
     title: '환자안전 캠페인 행사',
     date: '2025.07.05',
-    image: '/images/Frame 1000006464-2.png',
+    image: '/images/home/Frame 1000006464-2.png',
     category: 'hospital'
   }
 ]
@@ -101,8 +101,8 @@ const categoriesGuro = [
 ]
 
 const fallbackSlides = [
-  { id: '1', image: '/images/img-section2-1.jpg', alt: '의료진 1' },
-  { id: '2', image: '/images/img-section2-1.jpg', alt: '의료진 2' }
+  { id: '1', image: '/images/home/img-section2-1.jpg', alt: '의료진 1' },
+  { id: '2', image: '/images/home/img-section2-1.jpg', alt: '의료진 2' }
 ]
 
 const MINI_BANNER_INTERVAL = 4000

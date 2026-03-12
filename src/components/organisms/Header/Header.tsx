@@ -108,7 +108,7 @@ const HeaderInner: React.FC = () => {
   const router = useHospitalRouter()
   const { isAuthenticated } = useAuthContext()
   const { logout } = useLogout()
-  const logoUrl = `/images/${hospitalId}/logo-top.png`
+  const logoUrl = `/images/common/${hospitalId}/logo-top.png`
   const rawPathname = usePathname()
   const searchParams = useSearchParams()
   // 병원 prefix를 제거한 순수 경로 (예: /anam/login → /login)
@@ -423,7 +423,7 @@ const HeaderInner: React.FC = () => {
           onMouseLeave={() => setIsDropdownOpen(false)}
         >
           {/* 장식 원형 배경 */}
-          <img src='/assets/images/dropdown-circles.svg' alt='' className={styles.dropdownCircles} aria-hidden='true' />
+          <img src='/images/common/dropdown-circles.svg' alt='' className={styles.dropdownCircles} aria-hidden='true' />
           <div className={styles.container}>
             <div className={styles.dropdownInner}>
               {/* 좌측 안내 */}
@@ -640,7 +640,7 @@ const HeaderInner: React.FC = () => {
       {/* 태블릿 메뉴 (769px ~ 1024px) */}
       <div className={`${styles.tabletMenu} ${isMenuOpen ? styles.open : ''}`}>
         {/* 장식 원형 배경 */}
-        <img src='/assets/images/dropdown-circles.svg' alt='' className={styles.tabletCircles} aria-hidden='true' />
+        <img src='/images/common/dropdown-circles.svg' alt='' className={styles.tabletCircles} aria-hidden='true' />
         <div className={styles.tabletHeader}>
           <Link
             href='/'

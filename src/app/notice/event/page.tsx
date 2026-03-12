@@ -35,109 +35,109 @@ const mockEducationEvents: EducationEventNotice[] = [
     id: '1',
     title: '고려대 안암병원–서울시복지재단, 가족돌봄청소년·청년 건강·자립 지원 업무협약 체결',
     registeredDate: '2025-12-18',
-    thumbnail: '/assets/images/img-1.png'
+    thumbnail: '/images/notice/event/img-1.png'
   },
   {
     id: '2',
     title: "고려대의료원, 유튜브 채널 '고대병원' 구독자 100만 돌파 기념 대규모 감사 이벤트 개최",
     registeredDate: '2025-12-15',
-    thumbnail: '/assets/images/img-2.png'
+    thumbnail: '/images/notice/event/img-2.png'
   },
   {
     id: '3',
     title: '최종일 교수, 보건복지부 장관표창 수상',
     registeredDate: '2025-12-15',
-    thumbnail: '/assets/images/img-3.png'
+    thumbnail: '/images/notice/event/img-3.png'
   },
   {
     id: '4',
     title: '강석호 교수, 필리핀 비뇨의학회에서 원격 라이브서저리 시연',
     registeredDate: '2025-12-08',
-    thumbnail: '/assets/images/img-4.png'
+    thumbnail: '/images/notice/event/img-4.png'
   },
   {
     id: '5',
     title: '박영빈 교수, 아시아-오세아니아 임상신경생리학회 우수 포스터상 수상',
     registeredDate: '2025-12-08',
-    thumbnail: '/assets/images/img-5.png'
+    thumbnail: '/images/notice/event/img-5.png'
   },
   {
     id: '6',
     title: '2025 K-STAR 심포지엄 성료 - 성별 차이 반영한 심혈관질환 진료 표준 모색',
     registeredDate: '2025-12-01',
-    thumbnail: '/assets/images/img-6.png'
+    thumbnail: '/images/notice/event/img-6.png'
   },
   {
     id: '7',
     title: '김병준, 유성혜 교수팀 대한신경두경부영상의학회 우수논문상 수상',
     registeredDate: '2025-11-25',
-    thumbnail: '/assets/images/img-7.png'
+    thumbnail: '/images/notice/event/img-7.png'
   },
   {
     id: '8',
     title: '고영윤, 박종웅 교수팀, 대한정형외과학회 \u2018포스터 전시 우수상\u2019 수상',
     registeredDate: '2025-11-24',
-    thumbnail: '/assets/images/img-8.png'
+    thumbnail: '/images/notice/event/img-8.png'
   },
   {
     id: '9',
     title: '홍석하, 한승범 교수팀, 대한정형외과학회 \u2018포스터 전시 장려상\u2019 수상',
     registeredDate: '2025-11-24',
-    thumbnail: '/assets/images/img.png'
+    thumbnail: '/images/notice/event/img.png'
   },
   {
     id: '10',
     title: '고려대 안암병원–서울시복지재단, 가족돌봄청소년·청년 건강·자립 지원 업무협약 체결',
     registeredDate: '2025-12-18',
-    thumbnail: '/assets/images/img-1.png'
+    thumbnail: '/images/notice/event/img-1.png'
   },
   {
     id: '11',
     title: "고려대의료원, 유튜브 채널 '고대병원' 구독자 100만 돌파 기념 대규모 감사 이벤트 개최",
     registeredDate: '2025-12-15',
-    thumbnail: '/assets/images/img-2.png'
+    thumbnail: '/images/notice/event/img-2.png'
   },
   {
     id: '12',
     title: '최종일 교수, 보건복지부 장관표창 수상',
     registeredDate: '2025-12-15',
-    thumbnail: '/assets/images/img-3.png'
+    thumbnail: '/images/notice/event/img-3.png'
   },
   {
     id: '13',
     title: '강석호 교수, 필리핀 비뇨의학회에서 원격 라이브서저리 시연',
     registeredDate: '2025-12-08',
-    thumbnail: '/assets/images/img-4.png'
+    thumbnail: '/images/notice/event/img-4.png'
   },
   {
     id: '14',
     title: '박영빈 교수, 아시아-오세아니아 임상신경생리학회 우수 포스터상 수상',
     registeredDate: '2025-12-08',
-    thumbnail: '/assets/images/img-5.png'
+    thumbnail: '/images/notice/event/img-5.png'
   },
   {
     id: '15',
     title: '2025 K-STAR 심포지엄 성료 - 성별 차이 반영한 심혈관질환 진료 표준 모색',
     registeredDate: '2025-12-01',
-    thumbnail: '/assets/images/img-6.png'
+    thumbnail: '/images/notice/event/img-6.png'
   },
   {
     id: '16',
     title: '김병준, 유성혜 교수팀 대한신경두경부영상의학회 우수논문상 수상',
     registeredDate: '2025-11-25',
-    thumbnail: '/assets/images/img-7.png'
+    thumbnail: '/images/notice/event/img-7.png'
   },
   {
     id: '17',
     title: '고영윤, 박종웅 교수팀, 대한정형외과학회 \u2018포스터 전시 우수상\u2019 수상',
     registeredDate: '2025-11-24',
-    thumbnail: '/assets/images/img-8.png'
+    thumbnail: '/images/notice/event/img-8.png'
   },
   {
     id: '18',
     title: '홍석하, 한승범 교수팀, 대한정형외과학회 \u2018포스터 전시 장려상\u2019 수상',
     registeredDate: '2025-11-24',
-    thumbnail: '/assets/images/img.png'
+    thumbnail: '/images/notice/event/img.png'
   }
 ]
 

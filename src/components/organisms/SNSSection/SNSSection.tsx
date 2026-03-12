@@ -24,7 +24,7 @@ function getThumbnailUrl(article: { linkUrl: string | null }): string {
     const videoId = extractYouTubeVideoId(article.linkUrl)
     if (videoId) return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
   }
-  return '/images/img-section3-1.jpg'
+  return '/images/home/img-section3-1.jpg'
 }
 
 export const SNSSection: React.FC = () => {

@@ -13,7 +13,7 @@ interface FloorMapAnsanProps {
 export function FloorMapAnsan({
   address = '(15355) 경기 안산시 단원구 적금로 123 고려대학교 안산병원 본관 지하 1층 (에스컬레이터 옆)',
   phone = '031-412-5103',
-  imageSrc = '/images/FloorMapAnsan.png'
+  imageSrc = '/images/about/location/FloorMapAnsan.png'
 }: FloorMapAnsanProps) {
   return (
     <div className={styles.container}>

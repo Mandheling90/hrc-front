@@ -5,12 +5,12 @@ import Link from '@/components/atoms/HospitalLink'
 import styles from './PartnerSection.module.scss'
 
 const partners = [
-  { id: 1, image: '/images/img-section4-1.png', href: '#' },
-  { id: 2, image: '/images/img-section4-2.png', href: '#' },
-  { id: 3, image: '/images/img-section4-3.png', href: '#' },
-  { id: 4, image: '/images/img-section4-4.png', href: '#' },
-  { id: 5, image: '/images/img-section4-5.png', href: '#' },
-  { id: 6, image: '/images/img-section4-6.png', href: '#' }
+  { id: 1, image: '/images/home/img-section4-1.png', href: '#' },
+  { id: 2, image: '/images/home/img-section4-2.png', href: '#' },
+  { id: 3, image: '/images/home/img-section4-3.png', href: '#' },
+  { id: 4, image: '/images/home/img-section4-4.png', href: '#' },
+  { id: 5, image: '/images/home/img-section4-5.png', href: '#' },
+  { id: 6, image: '/images/home/img-section4-6.png', href: '#' }
 ]
 
 export const PartnerSection: React.FC = () => {

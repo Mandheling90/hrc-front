@@ -68,7 +68,7 @@ export default function ExchangePage() {
             </div>
             <div className={styles.flowchartImage}>
               <Image
-                src='/images/service/flowchart-referral-process.png'
+                src='/images/referral/exchange/flowchart-referral-process.png'
                 alt='진료정보교류 진료의뢰 절차 플로우차트'
                 width={1200}
                 height={800}
@@ -86,7 +86,7 @@ export default function ExchangePage() {
               <div className={styles.mychartLink}>
                 <a href='http://mychart.kr' target='_blank' rel='noopener noreferrer' className={styles.mychartButton}>
                   <Image
-                    src='/images/service/myChartTitle-d.png'
+                    src='/images/referral/exchange/myChartTitle-d.png'
                     alt='보건복지부 마이차트'
                     width={335}
                     height={75}
@@ -94,7 +94,7 @@ export default function ExchangePage() {
                     priority
                   />
                   <Image
-                    src='/images/service/myChartTitle-m.png'
+                    src='/images/referral/exchange/myChartTitle-m.png'
                     alt='보건복지부 마이차트'
                     width={280}
                     height={63}

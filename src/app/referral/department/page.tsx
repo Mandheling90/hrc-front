@@ -105,7 +105,7 @@ export default function DepartmentPage() {
           id: '1',
           name: '김양현',
           department: '가정의학과',
-          imageUrl: '/images/service/referral/1000007064.png',
+          imageUrl: '/images/referral/department/1000007064.png',
           specialties: [
             '비만클리닉',
             '노인병클리닉',

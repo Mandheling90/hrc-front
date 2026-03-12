@@ -113,7 +113,7 @@ export function LocationPageGuro() {
                       <div className={`${styles.shuttleBoardingLocation} ${styles.shuttleBoardingLocationFirst}`}>
                         <div className={styles.shuttleBoardingImage}>
                           <Image
-                            src={`/images/boarding_location_1.png`}
+                            src={`/images/about/location/boarding_location_1.png`}
                             alt={locationInfo.shuttle.boardingLocations[0].name}
                             fill
                             className={styles.shuttleBoardingImg}
@@ -130,7 +130,7 @@ export function LocationPageGuro() {
                           <div key={index + 1} className={styles.shuttleBoardingLocation}>
                             <div className={styles.shuttleBoardingImage}>
                               <Image
-                                src={`/images/boarding_location_${index + 2}.png`}
+                                src={`/images/about/location/boarding_location_${index + 2}.png`}
                                 alt={location.name}
                                 fill
                                 className={styles.shuttleBoardingImg}

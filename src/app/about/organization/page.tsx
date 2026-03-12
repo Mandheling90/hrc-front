@@ -11,9 +11,9 @@ export default function OrganizationPage() {
   const { hospitalId, isGuro } = useHospital()
 
   // 병원별 조직도 이미지 경로
-  const desktopImageSrc = `/images/organization_${hospitalId}_desktop.png`
-  const tabletImageSrc = `/images/organization_${hospitalId}_tablet.png`
-  const mobileImageSrc = `/images/organization_${hospitalId}_mobile.png`
+  const desktopImageSrc = `/images/about/organization/organization_${hospitalId}_desktop.png`
+  const tabletImageSrc = `/images/about/organization/organization_${hospitalId}_tablet.png`
+  const mobileImageSrc = `/images/about/organization/organization_${hospitalId}_mobile.png`
 
   return (
     <div className={styles.wrap}>

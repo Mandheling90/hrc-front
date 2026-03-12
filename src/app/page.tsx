@@ -13,8 +13,8 @@ const hospitals = [
     fullName: '고려대학교 안암병원 진료협력센터',
     fullNameEn: 'KOREA UNIVERSITY ANAM HOSPITAL REFERRAL CENTER',
     description: '서울시 성북구 고려대로 73',
-    logo: '/images/anam/logo.png',
-    bgImage: '/images/building-anam.png'
+    logo: '/images/common/anam/logo.png',
+    bgImage: '/images/home/building-anam.png'
   },
   {
     id: 'guro',
@@ -22,8 +22,8 @@ const hospitals = [
     fullName: '고려대학교 구로병원 진료협력센터',
     fullNameEn: 'KOREA UNIVERSITY GURO HOSPITAL REFERRAL CENTER',
     description: '서울시 구로구 구로동로 148',
-    logo: '/images/guro/logo.png',
-    bgImage: '/images/building-guro.png'
+    logo: '/images/common/guro/logo.png',
+    bgImage: '/images/home/building-guro.png'
   },
   {
     id: 'ansan',
@@ -31,8 +31,8 @@ const hospitals = [
     fullName: '고려대학교 안산병원 진료협력센터',
     fullNameEn: 'KOREA UNIVERSITY ANSAN HOSPITAL REFERRAL CENTER',
     description: '경기도 안산시 단원구 적금로 123',
-    logo: '/images/ansan/logo.png',
-    bgImage: '/images/building-ansan.png'
+    logo: '/images/common/ansan/logo.png',
+    bgImage: '/images/home/building-ansan.png'
   }
 ]
 

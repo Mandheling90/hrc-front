@@ -8,11 +8,11 @@ import styles from './HeroSection.module.scss'
 
 // 전화 아이콘
 // eslint-disable-next-line @next/next/no-img-element
-const PhoneIcon = () => <img src='/images/icon-phone.svg' alt='전화' width={57} height={56} />
+const PhoneIcon = () => <img src='/images/common/icons/icon-phone.svg' alt='전화' width={57} height={56} />
 
 // 모바일 전화 아이콘
 // eslint-disable-next-line @next/next/no-img-element
-const PhoneIconMobile = () => <img src='/images/icon-phone.svg' alt='전화' width={32} height={32} />
+const PhoneIconMobile = () => <img src='/images/common/icons/icon-phone.svg' alt='전화' width={32} height={32} />
 
 // 아코디언 화살표 아이콘
 const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
@@ -32,7 +32,7 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
 const DownloadIcon = () => (
   // eslint-disable-next-line @next/next/no-img-element
   <img
-    src='/images/down_load.png'
+    src='/images/home/down_load.png'
     alt='다운로드'
     width={20}
     height={16}
@@ -591,9 +591,9 @@ export const HeroSection: React.FC = () => {
   // 병원별 비디오 소스 (배너가 없을 때 폴백)
   const fallbackVideoSrc = useMemo(() => {
     const suffix = isDark ? '-dark' : ''
-    if (isGuro) return `/assets/video/main-visual-gu${suffix}.mp4`
-    if (isAnsan) return `/assets/video/main-visual-ansan${suffix}.mp4`
-    return `/assets/video/main-visual-an${suffix}.mp4`
+    if (isGuro) return `/images/home/videos/main-visual-gu${suffix}.mp4`
+    if (isAnsan) return `/images/home/videos/main-visual-ansan${suffix}.mp4`
+    return `/images/home/videos/main-visual-an${suffix}.mp4`
   }, [isGuro, isAnsan, isDark])
 
   // 병원별 조회 서비스 링크
@@ -750,10 +750,10 @@ export const HeroSection: React.FC = () => {
             <img
               src={
                 isGuro
-                  ? '/assets/video/main-visual-gu-img.png'
+                  ? '/images/home/videos/main-visual-gu-img.png'
                   : isAnsan
-                    ? '/assets/video/main-visual-ansan-img.png'
-                    : '/assets/video/main-visual-an-img.png'
+                    ? '/images/home/videos/main-visual-ansan-img.png'
+                    : '/images/home/videos/main-visual-an-img.png'
               }
               alt='메인 비주얼'
               className={styles.bannerImage}

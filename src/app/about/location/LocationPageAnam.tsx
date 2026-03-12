@@ -59,7 +59,7 @@ export function LocationPageAnam() {
                 <div className={styles.subwayMapContainer}>
                   <div className={styles.subwayMapImage}>
                     <Image
-                      src='/images/subway_map.png'
+                      src='/images/about/location/subway_map.png'
                       alt='지하철 노선도'
                       fill
                       className={styles.subwayMapImg}

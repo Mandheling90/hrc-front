@@ -31,7 +31,7 @@ export function SubwayInfoAnsan({ subwayInfo }: SubwayInfoAnsanProps) {
       {/* 지하철 노선도 이미지 */}
       <div className={styles.mapWrapper}>
         <Image
-          src='/images/subway_map_snsan.png'
+          src='/images/about/location/subway_map_snsan.png'
           alt='안산 지하철 노선도'
           fill
           className={styles.mapImage}

@@ -177,7 +177,7 @@ export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, on
         {/* 병원 서명 */}
         <div className={styles.signature}>
           <div className={styles.signatureLogo}>
-            <Image src='/assets/images/logo-top.png' alt='고려대학교 안암병원' width={300} height={48} />
+            <Image src='/images/common/anam/logo-top.png' alt='고려대학교 안암병원' width={300} height={48} />
           </div>
         </div>
       </div>

@@ -28,8 +28,8 @@ const anamConfig: HospitalConfig = {
     youtube: 'https://www.youtube.com/@Korea_University_Anam_Hospital'
   },
   logo: {
-    header: '/images/anam/logo-header.png',
-    footer: '/images/anam/logo-footer.png'
+    header: '/images/common/anam/logo-header.png',
+    footer: '/images/common/anam/logo-footer.png'
   },
   certifications: {
     emr: {
@@ -74,8 +74,8 @@ const guroConfig: HospitalConfig = {
     youtube: 'https://www.youtube.com/@gurohospital'
   },
   logo: {
-    header: '/images/guro/logo-header.png',
-    footer: '/images/guro/logo-footer.png'
+    header: '/images/common/guro/logo-header.png',
+    footer: '/images/common/guro/logo-footer.png'
   },
   certifications: {
     emr: {
@@ -120,8 +120,8 @@ const ansanConfig: HospitalConfig = {
     youtube: 'https://www.youtube.com/@ansanhospital'
   },
   logo: {
-    header: '/images/ansan/logo-header.png',
-    footer: '/images/ansan/logo-footer.png'
+    header: '/images/common/ansan/logo-header.png',
+    footer: '/images/common/ansan/logo-footer.png'
   },
   certifications: {
     emr: {

@@ -684,7 +684,7 @@
     content: '';
     width: 100%;
     height: 100%;
-    background: url(/images/main/bg-box.png);
+    background: url(/images/home/bg-box.png);
     background-size: cover;
     background-position: center;
     position: absolute;
@@ -838,7 +838,7 @@
 .hoverOverlay {
   width: 100%;
   height: 100%;
-  background: url(/images/main/bg-box.png);
+  background: url(/images/home/bg-box.png);
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -1043,19 +1043,19 @@
     }
 
     &.doctor::before {
-      background-image: url(/images/icon/icon-doctor.svg);
+      background-image: url(/images/common/icons/icon-doctor.svg);
     }
 
     &.hospital::before {
-      background-image: url(/images/icon/icon-hospital.svg);
+      background-image: url(/images/common/icons/icon-hospital.svg);
     }
 
     &.calendar::before {
-      background-image: url(/images/icon/icon-calendar.svg);
+      background-image: url(/images/common/icons/icon-calendar.svg);
     }
 
     &.map::before {
-      background-image: url(/images/icon/icon-map.svg);
+      background-image: url(/images/common/icons/icon-map.svg);
     }
   }
 
