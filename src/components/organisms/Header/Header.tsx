@@ -136,10 +136,17 @@ const HeaderInner: React.FC = () => {
         subItems: menu.children
           .filter(child => child.gnbExposure)
           .sort((a, b) => a.sortOrder - b.sortOrder)
-          .map(child => ({
-            href: child.path || '#',
-            label: child.name
-          }))
+          .map(child => {
+            let href = child.path || '#'
+            if (child.targetContentId) {
+              href = `/content?id=${child.targetContentId}`
+            } else if (child.targetBoardId) {
+              href = `/board?boardId=${child.targetBoardId}`
+            } else if (child.externalUrl) {
+              href = child.externalUrl
+            }
+            return { href, label: child.name }
+          })
       }))
       .filter(menu => menu.subItems.length > 0)
   }, [apiMenus])
@@ -165,15 +172,22 @@ const HeaderInner: React.FC = () => {
     return pathname === strippedHref || fullPath === strippedHref
   }
 
-  // 메뉴 href가 현재 경로에 매칭되는지 확인
-  const isMatchingHref = useCallback((href: string) => {
-    // href에서 병원 prefix 제거 + 쿼리스트링 분리
+  // 메뉴 href가 현재 경로에 매칭되는지 확인 (정확도 점수 반환: 0=불일치, 1=경로만, 2=쿼리스트링 포함 완전일치)
+  const getMatchScore = useCallback((href: string): number => {
     const strippedHref = stripHospitalPrefix(href)
     const hrefPath = strippedHref.split('?')[0]
 
-    if (pathname === strippedHref || fullPath === strippedHref) return true
-    return pathname === hrefPath || pathname.startsWith(hrefPath + '/')
+    // 쿼리스트링 포함 완전 일치 (가장 높은 우선순위)
+    if (fullPath === strippedHref || pathname === strippedHref) return 2
+    // 경로만 일치 (쿼리스트링 무시)
+    if (pathname === hrefPath || pathname.startsWith(hrefPath + '/')) return 1
+    return 0
   }, [pathname, fullPath])
+
+  // 하위 호환용 boolean 래퍼
+  const isMatchingHref = useCallback((href: string) => {
+    return getMatchScore(href) > 0
+  }, [getMatchScore])
 
   // 현재 경로가 속한 메뉴 섹션 인덱스 (GNB 활성 표시용)
   const currentMenuIndex = useMemo(() => {
@@ -213,19 +227,20 @@ const HeaderInner: React.FC = () => {
     // 홈 아이콘
     items.push({ label: '', href: '/', isHome: true })
 
-    // 현재 경로가 속한 메뉴 카테고리 찾기 (가장 구체적인 매치 우선)
+    // 현재 경로가 속한 메뉴 카테고리 찾기 (정확도 점수 → href 길이 순 우선)
     let currentCategory: MenuItem | null = null
     let currentSubItem: SubMenuItem | null = null
+    let bestScore = 0
     let bestMatchLength = -1
 
     for (const menu of breadcrumbMenuItems) {
       for (const sub of menu.subItems) {
-        if (isMatchingHref(sub.href)) {
-          if (sub.href.length > bestMatchLength) {
-            bestMatchLength = sub.href.length
-            currentCategory = menu
-            currentSubItem = sub
-          }
+        const score = getMatchScore(sub.href)
+        if (score > 0 && (score > bestScore || (score === bestScore && sub.href.length > bestMatchLength))) {
+          bestScore = score
+          bestMatchLength = sub.href.length
+          currentCategory = menu
+          currentSubItem = sub
         }
       }
     }
@@ -258,7 +273,7 @@ const HeaderInner: React.FC = () => {
     }
 
     return items
-  }, [pathname, fullPath, shouldShowBreadcrumbs, menuItems, breadcrumbMenuItems, isMatchingHref])
+  }, [pathname, fullPath, shouldShowBreadcrumbs, menuItems, breadcrumbMenuItems, isMatchingHref, getMatchScore])
 
   // 브래드크럼 드롭다운 토글
   const handleBreadcrumbToggle = useCallback((index: number) => {

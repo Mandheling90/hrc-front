@@ -35,7 +35,7 @@ function ContentPageInner() {
   const { data, loading, error } = useQuery<ContentData>(CONTENT_BY_ID_QUERY, {
     variables: { id },
     skip: !id,
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-first'
   })
 
   const content = data?.contentById
