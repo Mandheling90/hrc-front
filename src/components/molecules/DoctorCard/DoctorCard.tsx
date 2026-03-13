@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { ScheduleTable, ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
 import { EConsultingIcon } from '@/components/icons/EConsultingIcon'
@@ -30,11 +30,24 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
   onDoctorInfoClick,
   className = ''
 }) => {
+  const [imgError, setImgError] = useState(false)
+
+  const showPlaceholder = !imageUrl || imgError
+
   return (
     <div className={`${styles.doctorCard} ${className}`}>
       <div className={styles.cardContent}>
         <div className={styles.imageSection}>
-          {imageUrl ? (
+          {showPlaceholder ? (
+            <div className={styles.placeholderImage}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src='/images/referral/department/hospital_signature_kr 4.svg'
+                alt='의료진 사진 없음'
+                className={styles.placeholderImg}
+              />
+            </div>
+          ) : (
             <div className={styles.imageWrapper}>
               <Image
                 src={imageUrl}
@@ -43,15 +56,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
                 height={274}
                 className={styles.image}
                 unoptimized
-              />
-            </div>
-          ) : (
-            <div className={styles.placeholderImage}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src='/images/referral/department/hospital_signature_kr 4.svg'
-                alt='의료진 사진 없음'
-                className={styles.placeholderImg}
+                onError={() => setImgError(true)}
               />
             </div>
           )}

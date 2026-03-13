@@ -192,6 +192,32 @@ export const EHR_DRUG_ORDER_DETAIL_QUERY = gql`
   }
 `
 
+export const MEDICAL_STAFF_LIST_QUERY = gql`
+  query MedicalStaffList($filter: AdmapMedicalStaffFilterInput) {
+    medicalStaffList(filter: $filter) {
+      items {
+        doctorId
+        doctorName
+        photoUrl
+        departmentCode
+        departmentName
+        bio
+        hospitalCode
+        mcdpAbrvCd
+        mcdpDvsnCd
+        mcdpSqncVl
+        apstYmd
+        apfnYmd
+        smcrYn
+        frvsMdcrPsblYn
+        revsMdcrPsblYn
+        fastMdcrDt
+      }
+      totalCount
+    }
+  }
+`
+
 export const EHR_HOSPITAL_SEARCH_QUERY = gql`
   query EhrGetCollaboratingHospitals($input: SearchCollaboratingHospitalsInput!) {
     ehrGetCollaboratingHospitals(input: $input) {

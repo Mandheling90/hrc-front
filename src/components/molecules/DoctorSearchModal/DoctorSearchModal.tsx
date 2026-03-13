@@ -1,11 +1,13 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { InfoIcon } from '@/components/icons/InfoIcon'
+import { useMedicalStaff, MedicalStaffItem } from '@/hooks/useMedicalStaff'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './DoctorSearchModal.module.scss'
 import { Table, TableColumn } from '../Table/Table'
 import { CardList } from '../CardList/CardList'
@@ -19,6 +21,8 @@ export interface Doctor {
   email: string
   /** 선택 여부 */
   selected: boolean
+  /** 의사 ID */
+  doctorId?: string
 }
 
 export interface DoctorSearchModalProps {
@@ -34,54 +38,15 @@ export interface DoctorSearchModalProps {
   className?: string
 }
 
-const departments = [
-  '가정의학과',
-  '간담췌외과',
-  '감염내과',
-  '내분비내과',
-  '대장항문외과',
-  '류마티스내과',
-  '마취통증의학과',
-  '방사선종양학과',
-  '비뇨의학과',
-  '산부인과',
-  '성형외과',
-  '소아외과',
-  '소아청소년과',
-  '소화기내과',
-  '순환기내과',
-  '신경과',
-  '신경외과',
-  '신장내과',
-  '심장혈관흉부외과',
-  '안과',
-  '영상의학과',
-  '유방내분비외과',
-  '위장관외과',
-  '이비인후과',
-  '이식혈관외과',
-  '재활의학과',
-  '정신건강의학과',
-  '정형외과',
-  '종양내과',
-  '중환자외상외과',
-  '치과',
-  '피부과',
-  '혈액내과',
-  '호흡기알레르기내과'
-]
-
-// 임시 데이터
-const mockDoctors: Doctor[] = [
-  { department: '내과', name: '김민우', email: 'abc**@korea.com', selected: true },
-  { department: '외과', name: '홍설아', email: 'abc**@korea.com', selected: false },
-  { department: '신경외과', name: '강현민', email: 'abc**@korea.com', selected: false },
-  { department: '신장내과', name: '김동완', email: 'abc**@korea.com', selected: false },
-  { department: '소화기내과', name: '백진혁', email: 'abc**@korea.com', selected: false },
-  { department: '산부인과', name: '양호중', email: 'abc**@korea.com', selected: false },
-  { department: '감염내과', name: '김선용', email: 'abc**@korea.com', selected: false },
-  { department: '감염내과', name: '김선용', email: 'Gastrofiberscopy [G]', selected: false }
-]
+function staffToDoctor(item: MedicalStaffItem): Doctor {
+  return {
+    doctorId: item.doctorId,
+    department: item.departmentName || '',
+    name: item.doctorName || '',
+    email: '',
+    selected: false
+  }
+}
 
 type ModalStep = 'department' | 'doctor'
 
@@ -92,12 +57,47 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   closeOnBackdropClick = false,
   className = ''
 }) => {
+  const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
+
   const [step, setStep] = useState<ModalStep>('department')
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors)
+  const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null)
   const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
   const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 768 : false))
+
+  // 모달 열릴 때 자문의 목록 조회
+  useEffect(() => {
+    if (isOpen) {
+      fetchMedicalStaff()
+    }
+  }, [isOpen, fetchMedicalStaff])
+
+  // API 응답에서 진료과 목록 추출
+  const departments = useMemo(() => {
+    const deptSet = new Set<string>()
+    for (const staff of staffList) {
+      if (staff.departmentName) {
+        deptSet.add(staff.departmentName)
+      }
+    }
+    return Array.from(deptSet).sort((a, b) => a.localeCompare(b, 'ko'))
+  }, [staffList])
+
+  // API 응답을 Doctor 형태로 변환 + 선택 상태 반영
+  const doctors: Doctor[] = useMemo(() => {
+    let filtered = staffList
+    if (selectedDepartment) {
+      filtered = staffList.filter(s => s.departmentName === selectedDepartment)
+    }
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(s => s.doctorName?.includes(searchQuery.trim()))
+    }
+    return filtered.map(item => ({
+      ...staffToDoctor(item),
+      selected: item.doctorId === selectedDoctorId
+    }))
+  }, [staffList, selectedDepartment, searchQuery, selectedDoctorId])
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -134,6 +134,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       setStep('department')
       setSelectedDepartment(null)
       setSearchQuery('')
+      setSelectedDoctorId(null)
     }
   }, [isOpen])
 
@@ -169,21 +170,15 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     setStep('department')
     setSelectedDepartment(null)
     setSearchQuery('')
+    setSelectedDoctorId(null)
   }
 
   const handleSearch = () => {
-    // TODO: 검색 기능 구현
-    console.log('검색:', searchQuery)
+    // searchQuery 변경 시 useMemo에서 자동 필터링됨
   }
 
   const handleDoctorSelect = (doctor: Doctor) => {
-    setDoctors(prev =>
-      prev.map(d =>
-        d.name === doctor.name && d.department === doctor.department
-          ? { ...d, selected: true }
-          : { ...d, selected: false }
-      )
-    )
+    setSelectedDoctorId(doctor.doctorId || null)
   }
 
   const handleConfirm = () => {
@@ -191,10 +186,6 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     onConfirm(selectedDoctors)
     onClose()
   }
-
-  const filteredDoctors = selectedDepartment
-    ? doctors.filter(doctor => doctor.department === selectedDepartment)
-    : doctors
 
   // Table 컬럼 정의
   const columns: TableColumn<Doctor>[] = [
@@ -270,16 +261,20 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
               <p className={styles.infoText}>신청하실 진료과를 선택해주세요.</p>
             </div>
             <div className={styles.departmentChips}>
-              {departments.map(dept => (
-                <button
-                  key={dept}
-                  type='button'
-                  onClick={() => handleDepartmentClick(dept)}
-                  className={`${styles.departmentChip} ${selectedDepartment === dept ? styles.active : ''}`}
-                >
-                  {dept}
-                </button>
-              ))}
+              {staffLoading ? (
+                <Skeleton width='100%' height={40} variant='rounded' count={6} gap={8} />
+              ) : (
+                departments.map(dept => (
+                  <button
+                    key={dept}
+                    type='button'
+                    onClick={() => handleDepartmentClick(dept)}
+                    className={`${styles.departmentChip} ${selectedDepartment === dept ? styles.active : ''}`}
+                  >
+                    {dept}
+                  </button>
+                ))
+              )}
             </div>
           </div>
         ) : (
@@ -305,9 +300,11 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                 </div>
 
                 <div className={styles.listContainer}>
-                  {isTablet ? (
+                  {staffLoading ? (
+                    <Skeleton width='100%' height={48} variant='rounded' count={5} gap={8} />
+                  ) : isTablet ? (
                     <CardList
-                      cards={filteredDoctors.map(doctor => [
+                      cards={doctors.map(doctor => [
                         {
                           id: 'selected',
                           leftContent: <span>선택</span>,
@@ -342,14 +339,14 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                           twoLine: isMobile
                         }
                       ])}
-                      getCardKey={(card, index) => `${filteredDoctors[index].name}-${index}`}
+                      getCardKey={(card, index) => `${doctors[index].name}-${index}`}
                       scrollableHeight='100%'
                       className={styles.cardList}
                     />
                   ) : (
                     <Table
                       columns={columns}
-                      data={filteredDoctors}
+                      data={doctors}
                       getRowKey={(doctor, index) => `${doctor.name}-${index}`}
                       className={styles.table}
                       scrollableHeight='100%'

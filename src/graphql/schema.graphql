@@ -900,6 +900,40 @@ type Query {
   presignedDownloadUrl(attachmentId: ID!): String!
   # 콘텐츠
   contentById(id: String!): Content
+  # 자문의 목록 조회
+  medicalStaffList(filter: AdmapMedicalStaffFilterInput): MedicalStaffListResponse!
+}
+
+# ── 자문의 ──
+
+input AdmapMedicalStaffFilterInput {
+  mcdpCd: String
+  mddrId: String
+  mddrNm: String
+}
+
+type MedicalStaffItem {
+  doctorId: String
+  doctorName: String
+  photoUrl: String
+  departmentCode: String
+  departmentName: String
+  bio: String
+  hospitalCode: String
+  mcdpAbrvCd: String
+  mcdpDvsnCd: String
+  mcdpSqncVl: String
+  apstYmd: String
+  apfnYmd: String
+  smcrYn: String
+  frvsMdcrPsblYn: String
+  revsMdcrPsblYn: String
+  fastMdcrDt: String
+}
+
+type MedicalStaffListResponse {
+  items: [MedicalStaffItem!]!
+  totalCount: Int!
 }
 
 # ── NICE 본인인증 ──

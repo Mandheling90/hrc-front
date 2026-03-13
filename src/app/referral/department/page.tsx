@@ -11,6 +11,8 @@ import { ScheduleTitle } from '@/components/molecules/ScheduleTitle/ScheduleTitl
 import { SectionContainer } from '@/components/molecules/SectionContainer/SectionContainer'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
+import { useMedicalStaff, MedicalStaffItem } from '@/hooks/useMedicalStaff'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
@@ -41,13 +43,29 @@ function getWeekDates(date: Date): { startDate: Date; endDate: Date } {
   return { startDate, endDate }
 }
 
+// API 응답 → 의사 카드 데이터 변환
+function mapStaffToDoctor(item: MedicalStaffItem) {
+  const specialties = item.bio ? item.bio.split(',').map(s => s.trim()).filter(Boolean) : []
+  return {
+    id: item.doctorId || '',
+    name: item.doctorName || '',
+    department: item.departmentName || '',
+    imageUrl: item.photoUrl || undefined,
+    specialties,
+    schedule: [] as ScheduleSlot[],
+    hasEConsulting: item.frvsMdcrPsblYn === 'Y' || item.revsMdcrPsblYn === 'Y'
+  }
+}
+
 export default function DepartmentPage() {
+  const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
+
   // 현재 주간 날짜 상태
   const [currentWeek, setCurrentWeek] = useState(new Date())
   const weekDates = useMemo(() => getWeekDates(currentWeek), [currentWeek])
 
   // 선택된 진료과 상태
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState<string | undefined>('family-medicine')
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<string | undefined>(undefined)
 
   // 높이 동기화를 위한 refs
   const mainContentRef = useRef<HTMLDivElement>(null)
@@ -57,108 +75,42 @@ export default function DepartmentPage() {
   // 태블릿/모바일 여부 확인
   const [isTablet, setIsTablet] = useState(false)
 
-  // 샘플 진료과 데이터 (실제로는 pageContent에서 가져와야 함)
+  // 초기 로드: 전체 자문의 목록 가져오기
+  useEffect(() => {
+    fetchMedicalStaff()
+  }, [fetchMedicalStaff])
+
+  // API 응답에서 진료과 목록 추출
   const departments: Department[] = useMemo(() => {
-    const deptNames = [
-      '가정의학과',
-      '간담췌외과',
-      '감염내과',
-      '내분비내과',
-      '대장항문외과',
-      '류마티스내과',
-      '마취통증학과',
-      '방사선종양학과',
-      '병리과',
-      '비뇨의학과',
-      '산부인과',
-      '성형외과',
-      '소아청소년과',
-      '신경과',
-      '신경외과',
-      '안과',
-      '영상의학과',
-      '이비인후과',
-      '재활의학과',
-      '정형외과',
-      '정신건강의학과',
-      '치과',
-      '피부과',
-      '흉부외과',
-      '혈액종양내과'
-    ]
-
-    return deptNames.map(name => ({
-      id: name.toLowerCase().replace(/\s+/g, '-'),
-      name,
-      initial: getInitial(name[0])
-    }))
-  }, [])
-
-  // 샘플 의료진 데이터 (실제로는 API에서 가져와야 함)
-  const doctors = useMemo(() => {
-    if (!selectedDepartmentId) return []
-
-    // 가정의학과 샘플 데이터
-    if (selectedDepartmentId === 'family-medicine') {
-      return [
-        {
-          id: '1',
-          name: '김양현',
-          department: '가정의학과',
-          imageUrl: '/images/referral/department/1000007064.png',
-          specialties: [
-            '비만클리닉',
-            '노인병클리닉',
-            '건강증진클리닉',
-            '금연클리닉',
-            '지역사회의학',
-            '비만클리닉',
-            '노인병클리닉',
-            '건강증진클리닉',
-            '금연클리닉',
-            '지역사회의학'
-          ],
-          schedule: [
-            { day: '월', period: '오전', available: true },
-            { day: '화', period: '오전', available: true },
-            { day: '목', period: '오전', available: true },
-            { day: '금', period: '오전', available: true },
-            { day: '금', period: '오후', available: true }
-          ],
-          hasEConsulting: true
-        },
-        {
-          id: '2',
-          name: '한병덕',
-          department: '가정의학과',
-          specialties: ['건강증진', '노인병', '만성질환관리', '예방의학'],
-          schedule: [
-            { day: '월', period: '오전', available: true },
-            { day: '화', period: '오전', available: true },
-            { day: '수', period: '오전', available: true },
-            { day: '목', period: '오전', available: true },
-            { day: '금', period: '오전', available: true },
-            { day: '토', period: '오전', available: true }
-          ],
-          hasEConsulting: false
-        },
-        {
-          id: '3',
-          name: '김양현',
-          department: '가정의학과',
-          specialties: ['만성피로', '갱년기', '건강검진', '예방접종'],
-          schedule: [
-            { day: '월', period: '오후', available: true },
-            { day: '수', period: '오후', available: true },
-            { day: '금', period: '오후', available: true }
-          ],
-          hasEConsulting: true
-        }
-      ]
+    const deptMap = new Map<string, string>()
+    for (const staff of staffList) {
+      if (staff.departmentCode && staff.departmentName) {
+        deptMap.set(staff.departmentCode, staff.departmentName)
+      }
     }
+    return Array.from(deptMap.entries())
+      .map(([code, name]) => ({
+        id: code,
+        name,
+        initial: getInitial(name[0])
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+  }, [staffList])
 
-    return []
-  }, [selectedDepartmentId])
+  // 첫 진료과 자동 선택
+  useEffect(() => {
+    if (departments.length > 0 && !selectedDepartmentId) {
+      setSelectedDepartmentId(departments[0].id)
+    }
+  }, [departments, selectedDepartmentId])
+
+  // 선택된 진료과의 의료진 필터링
+  const doctors = useMemo(() => {
+    if (!selectedDepartmentId) return staffList.map(mapStaffToDoctor)
+    return staffList
+      .filter(s => s.departmentCode === selectedDepartmentId)
+      .map(mapStaffToDoctor)
+  }, [staffList, selectedDepartmentId])
 
   // Breadcrumb 설정
   const breadcrumbItems = useMemo(() => {
@@ -192,12 +144,24 @@ export default function DepartmentPage() {
     setCurrentWeek(newDate)
   }
 
+  const scrollMainContentToTop = () => {
+    if (mainContentRef.current) {
+      const scrollable = mainContentRef.current.querySelector('[class*="scrollable"]')
+      if (scrollable) {
+        scrollable.scrollTo({ top: 0 })
+      }
+      mainContentRef.current.scrollTo({ top: 0 })
+    }
+  }
+
   const handleDepartmentSelect = (departmentId: string) => {
     setSelectedDepartmentId(departmentId)
+    scrollMainContentToTop()
   }
 
   const handleAllSelect = () => {
     setSelectedDepartmentId(undefined)
+    scrollMainContentToTop()
   }
 
   const handleEConsultingClick = (doctorId: string) => {
@@ -317,8 +281,9 @@ export default function DepartmentPage() {
               <DepartmentSidebar
                 departments={departments}
                 selectedDepartmentId={selectedDepartmentId}
-                onDepartmentSelect={() => {}}
-                onAllSelect={() => {}}
+                onDepartmentSelect={handleDepartmentSelect}
+                onAllSelect={handleAllSelect}
+                loading={staffLoading}
               />
             </aside>
 
@@ -335,7 +300,9 @@ export default function DepartmentPage() {
                 }
                 scrollable
               >
-                {doctors.length > 0 ? (
+                {staffLoading ? (
+                  <Skeleton width='100%' height={160} variant='rounded' count={3} gap={16} />
+                ) : doctors.length > 0 ? (
                   doctors.map(doctor => (
                     <DoctorCard
                       key={doctor.id}
@@ -351,7 +318,7 @@ export default function DepartmentPage() {
                   ))
                 ) : (
                   <div className={styles.emptyState}>
-                    <p>선택한 진료과의 의료진 정보가 없습니다 .</p>
+                    <p>선택한 진료과의 의료진 정보가 없습니다.</p>
                   </div>
                 )}
               </SectionContainer>

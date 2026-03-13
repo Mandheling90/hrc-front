@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef } from 'react'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './DepartmentSidebar.module.scss'
 
 export interface Department {
@@ -14,6 +15,7 @@ export interface DepartmentSidebarProps {
   selectedDepartmentId?: string
   onDepartmentSelect: (departmentId: string) => void
   onAllSelect?: () => void
+  loading?: boolean
   className?: string
   height?: number | string
 }
@@ -26,6 +28,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
   selectedDepartmentId,
   onDepartmentSelect,
   onAllSelect,
+  loading = false,
   className = '',
   height
 }) => {
@@ -71,7 +74,7 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
             <button
               type='button'
               className={`${styles.initialButton} ${styles.allButton} ${!selectedDepartmentId ? styles.active : ''}`}
-              onClick={() => {}}
+              onClick={onAllSelect}
             >
               ALL
             </button>
@@ -86,7 +89,12 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
                 className={`${styles.initialButton} ${hasActiveDept ? styles.active : ''} ${
                   !hasDepts ? styles.disabled : ''
                 }`}
-                onClick={() => {}}
+                onClick={() => {
+                  const el = groupRefs.current[initial]
+                  if (el && listRef.current) {
+                    listRef.current.scrollTo({ top: el.offsetTop - listRef.current.offsetTop, behavior: 'smooth' })
+                  }
+                }}
                 disabled={!hasDepts}
                 aria-label={`${initial}로 이동`}
               >
@@ -97,34 +105,40 @@ export const DepartmentSidebar: React.FC<DepartmentSidebarProps> = ({
         </aside>
 
         <div ref={listRef} className={styles.departmentList}>
-          {initialsWithDepts.map(initial => {
-            const depts = groupedDepartments[initial]
-            if (!depts?.length) return null
+          {loading ? (
+            <div className={styles.skeletonWrap}>
+              <Skeleton width='100%' height={32} variant='rounded' count={8} gap={12} />
+            </div>
+          ) : (
+            initialsWithDepts.map(initial => {
+              const depts = groupedDepartments[initial]
+              if (!depts?.length) return null
 
-            return (
-              <div
-                key={initial}
-                ref={el => {
-                  groupRefs.current[initial] = el
-                }}
-                className={styles.initialGroup}
-              >
-                <div className={styles.initialBar}>{initial}</div>
-                <div className={styles.departments}>
-                  {depts.map(dept => (
-                    <button
-                      key={dept.id}
-                      type='button'
-                      className={`${styles.departmentButton} ${selectedDepartmentId === dept.id ? styles.active : ''}`}
-                      onClick={() => {}}
-                    >
-                      {dept.name}
-                    </button>
-                  ))}
+              return (
+                <div
+                  key={initial}
+                  ref={el => {
+                    groupRefs.current[initial] = el
+                  }}
+                  className={styles.initialGroup}
+                >
+                  <div className={styles.initialBar}>{initial}</div>
+                  <div className={styles.departments}>
+                    {depts.map(dept => (
+                      <button
+                        key={dept.id}
+                        type='button'
+                        className={`${styles.departmentButton} ${selectedDepartmentId === dept.id ? styles.active : ''}`}
+                        onClick={() => onDepartmentSelect(dept.id)}
+                      >
+                        {dept.name}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })
+          )}
         </div>
       </div>
     </div>

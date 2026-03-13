@@ -208,6 +208,11 @@ $active-outline: #de989b; // Primary/Normal active
   }
 }
 
+// 스켈레톤 래퍼
+.skeletonWrap {
+  padding: 20px 30px;
+}
+
 // 구분선 (레거시 호환)
 .divider {
   display: none;
