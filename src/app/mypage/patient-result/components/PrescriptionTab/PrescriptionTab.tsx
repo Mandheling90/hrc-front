@@ -6,6 +6,7 @@ import {
   MedicationDetailModal,
   MedicationDetailData
 } from '@/components/organisms/MedicationDetailModal/MedicationDetailModal'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useDrugOrders, useDrugOrderDetail, type DrugOrderItem } from '@/hooks/useExamResults'
 import { matchesKeyword, matchesDateRange, sortByDate, paginate, formatDateDisplay, type FilterSortProps } from '../../utils/filterSort'
 import styles from '../../page.module.scss'
@@ -221,7 +222,7 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
   )
 
   if (loading) {
-    return <div className={styles.emptyState}>데이터를 불러오는 중입니다...</div>
+    return <Skeleton width='100%' height={44} variant='rounded' count={5} gap={4} />
   }
 
   if (filteredSorted.length === 0) {

@@ -14,6 +14,7 @@ import {
   BOARD_POSTS_QUERY,
   ATTACHMENTS_QUERY
 } from '@/graphql/menu/queries'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
 
 interface BoardPostDetail {
@@ -142,7 +143,15 @@ function BoardDetailPageInner() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          {loading && <div className={styles.loading}>로딩 중...</div>}
+          {loading && (
+            <div>
+              <Skeleton width='100%' height={32} variant='rounded' />
+              <div style={{ height: 16 }} />
+              <Skeleton width='30%' height={16} variant='text' />
+              <div style={{ height: 24 }} />
+              <Skeleton width='100%' height={200} variant='rounded' />
+            </div>
+          )}
           {error && <div className={styles.error}>게시글을 불러올 수 없습니다.</div>}
           {post && (
             <>

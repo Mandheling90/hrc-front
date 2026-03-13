@@ -12,6 +12,7 @@ import { SearchFilterWithInfo } from '@/components/molecules/SearchFilterWithInf
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { BOARD_POSTS_QUERY } from '@/graphql/menu/queries'
 import { useMenus } from '@/hooks/useMenus'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
 
 interface BoardPost {
@@ -273,8 +274,15 @@ function BoardContent({ boardId }: { boardId: string }) {
             searchFieldWidth={480}
           />
 
+          {/* 로딩 */}
+          {loading && (
+            <div className={styles.tableSection}>
+              <Skeleton width='100%' height={48} variant='rounded' count={10} gap={4} />
+            </div>
+          )}
+
           {/* 썸네일형 */}
-          {isThumbnailType && (
+          {!loading && isThumbnailType && (
             <section className={styles.cardGrid} aria-label='게시글 목록'>
               {allPosts.map(item => (
                 <button
@@ -302,7 +310,7 @@ function BoardContent({ boardId }: { boardId: string }) {
           )}
 
           {/* 리스트형 */}
-          {!isThumbnailType && (
+          {!loading && !isThumbnailType && (
             <div className={styles.tableSection}>
               {!isMobile ? (
                 <Table

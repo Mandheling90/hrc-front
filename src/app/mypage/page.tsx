@@ -12,6 +12,7 @@ import { ConsultIcon } from '@/components/icons/ConsultIcon'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
 
 interface PatientData {
@@ -139,16 +140,22 @@ export default function MyPage() {
                     <ArrowRightLargeIcon width={24} height={24} stroke='white' />
                   </Link>
                 </div>
-                {/* 데스크톱/태블릿용 테이블 */}
-                <Table
-                  columns={patientColumns}
-                  data={recentPatients}
-                  getRowKey={(_, index) => index}
-                  hideHeader
-                  className={styles.patientList}
-                />
-                {/* 모바일용 카드리스트 */}
-                <CardList cards={patientCards} getCardKey={(_, index) => index} className={styles.patientMobileList} />
+                {patientsLoading ? (
+                  <Skeleton width='100%' height={40} variant='rounded' count={5} gap={8} />
+                ) : (
+                  <>
+                    {/* 데스크톱/태블릿용 테이블 */}
+                    <Table
+                      columns={patientColumns}
+                      data={recentPatients}
+                      getRowKey={(_, index) => index}
+                      hideHeader
+                      className={styles.patientList}
+                    />
+                    {/* 모바일용 카드리스트 */}
+                    <CardList cards={patientCards} getCardKey={(_, index) => index} className={styles.patientMobileList} />
+                  </>
+                )}
               </div>
 
               {/* e-Consult 조회 카드 */}

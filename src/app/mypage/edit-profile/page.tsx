@@ -8,6 +8,7 @@ import { Footer } from '@/components/organisms/Footer/Footer'
 import { MemberInfoForm, MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { AuthUser } from '@/types/auth'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { UpdateProfileInput } from '@/hooks/useAuth'
 import styles from './page.module.scss'
 
@@ -126,7 +127,8 @@ export default function EditProfilePage() {
           <div className={styles.container}>
             <h1 className={styles.pageTitle}>회원정보 수정</h1>
             <div className={styles.content}>
-              <p>회원 정보를 불러오는 중입니다...</p>
+              <Skeleton width='100%' height={48} variant='rounded' />
+              <Skeleton width='100%' height={48} variant='rounded' count={8} gap={16} />
             </div>
           </div>
         </main>

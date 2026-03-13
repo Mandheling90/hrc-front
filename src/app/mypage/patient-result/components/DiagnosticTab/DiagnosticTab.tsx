@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { DiagnosticDetailModal, DiagnosticResultItem } from '@/components/organisms/DiagnosticDetailModal'
 import { useExamSlips, useExamResults, type ExamSlipItem, type ExamResultItem } from '@/hooks/useExamResults'
@@ -195,7 +196,7 @@ export const DiagnosticTab: React.FC<DiagnosticTabProps> = ({
   }, [selectedRow, resultItems])
 
   if (slipLoading) {
-    return <div className={styles.emptyState}>데이터를 불러오는 중입니다...</div>
+    return <Skeleton width='100%' height={44} variant='rounded' count={5} gap={4} />
   }
 
   if (filteredSorted.length === 0) {

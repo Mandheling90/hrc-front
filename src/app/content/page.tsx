@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client/react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { CONTENT_BY_ID_QUERY } from '@/graphql/menu/queries'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
 
 interface ContentData {
@@ -44,7 +45,13 @@ function ContentPageInner() {
       <Header />
       <main className={styles.main}>
         <div className='container'>
-          {loading && <div className={styles.loading}>로딩 중...</div>}
+          {loading && (
+            <div>
+              <Skeleton width='60%' height={24} variant='text' />
+              <div style={{ height: 16 }} />
+              <Skeleton width='100%' height={300} variant='rounded' />
+            </div>
+          )}
           {error && <div className={styles.error}>콘텐츠를 불러올 수 없습니다.</div>}
           {content && <div className={styles.contentBody} dangerouslySetInnerHTML={{ __html: content.body }} />}
           {!loading && !error && !content && id && <div className={styles.error}>콘텐츠를 찾을 수 없습니다.</div>}

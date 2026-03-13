@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './DiagnosticDetailModal.module.scss'
 
 // 검사 결과 항목 타입
@@ -113,7 +114,7 @@ export const DiagnosticDetailModal: React.FC<DiagnosticDetailModalProps> = ({
         {/* 컨텐츠 영역 */}
         <div className={styles.content}>
           {loading ? (
-            <div className={styles.loadingState}>데이터를 불러오는 중입니다...</div>
+            <Skeleton width='100%' height={36} variant='rounded' count={4} gap={8} />
           ) : (
           <>
           {/* 검사명 섹션 */}
