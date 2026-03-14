@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 import { useLazyQuery, useQuery } from '@apollo/client/react'
+import { MEDICAL_STAFF_LIST_QUERY } from '@/graphql/hospital/queries'
 import {
-  MEDICAL_STAFF_LIST_QUERY,
   MEDICAL_STAFF_DEPARTMENT_LIST_QUERY,
   MEDICAL_STAFF_WEEKLY_SCHEDULE_QUERY
-} from '@/graphql/hospital/queries'
+} from '@/graphql/hospital/medical-staff-queries'
 
 export interface MedicalStaffItem {
   doctorId: string
