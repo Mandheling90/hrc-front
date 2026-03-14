@@ -47,6 +47,8 @@ export interface FormFieldProps {
   mobileStack?: boolean
   /** 라벨 텍스트 뒤에 추가할 요소 (예: 유효성 상태 텍스트) */
   labelExtra?: React.ReactNode
+  /** Input의 readOnly 여부 */
+  readOnly?: boolean
 }
 
 export const FormField: React.FC<FormFieldProps> = ({
@@ -70,7 +72,8 @@ export const FormField: React.FC<FormFieldProps> = ({
   rightElement,
   children,
   mobileStack = false,
-  labelExtra
+  labelExtra,
+  readOnly = false
 }) => {
   const hasRightElement = buttonText || rightElement
 
@@ -94,6 +97,7 @@ export const FormField: React.FC<FormFieldProps> = ({
             onChange={onChange}
             onKeyDown={onKeyDown}
             disabled={disabled}
+            readOnly={readOnly}
             error={error}
             className={`${styles.inputWithButtonInput} ${inputClassName || ''}`}
           />
@@ -122,6 +126,7 @@ export const FormField: React.FC<FormFieldProps> = ({
           onChange={onChange}
           onKeyDown={onKeyDown}
           disabled={disabled}
+          readOnly={readOnly}
           error={error}
           className={inputClassName}
         />

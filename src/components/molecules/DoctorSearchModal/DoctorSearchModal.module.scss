@@ -174,32 +174,6 @@
   }
 }
 
-.infoRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.infoText {
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: -0.8px;
-  color: $gray-11;
-  margin: 0;
-
-  @include tablet {
-    font-size: 18px;
-    letter-spacing: -0.72px;
-  }
-
-  @include mobile {
-    font-size: 16px;
-    letter-spacing: -0.64px;
-  }
-}
-
 .departmentChips {
   display: flex;
   flex-wrap: wrap;
@@ -243,7 +217,7 @@
   }
 
   @include tablet {
-    width: calc((100% - 12px * 2) / 3);
+    width: 175px;
     min-width: 0;
     font-size: 18px;
     letter-spacing: -0.72px;
@@ -266,10 +240,16 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  gap: 24px;
+
+  @include tablet {
+    gap: 20px;
+  }
 
   @include mobile {
     flex: none;
     overflow: visible;
+    gap: 16px;
   }
 }
 
@@ -277,15 +257,10 @@
   display: flex;
   gap: 8px;
   align-items: flex-start;
+  justify-content: center;
   padding: 0;
-  margin: 0 auto;
   box-sizing: border-box;
   flex-shrink: 0;
-
-  @include tablet {
-    width: auto;
-    flex-direction: row;
-  }
 
   @include mobile {
     width: 100%;
@@ -367,61 +342,293 @@
   }
 }
 
-.listContainer {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  align-items: stretch;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-
-  .table {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-
-    input[type='checkbox'] {
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      min-height: 32px;
-    }
-  }
-}
-
-.searchContainer {
-  display: flex;
-  flex-direction: column;
+// ========== 카드 그리드 ==========
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  border: 1px solid $gray-6;
-  border-radius: 10px;
-  padding: 30px;
-  flex: 1;
-  min-height: 0;
+  overflow-y: auto;
+  max-height: 723px;
+  padding-right: 4px;
 
   @include tablet {
-    padding: 24px;
+    grid-template-columns: 1fr;
+    max-height: 660px;
     gap: 20px;
   }
 
   @include mobile {
-    padding: 20px;
-    gap: 16px;
-    flex: none;
-    height: 360px;
-    min-height: 0;
-    overflow: hidden;
+    grid-template-columns: 1fr;
+    max-height: 540px;
+    gap: 8px;
   }
 }
 
-.cardList {
+// ========== 의사 카드 ==========
+.doctorCard {
+  border: 1px solid $gray-4;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: $color-secondary;
+  }
+
+  @include tablet {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  @include mobile {
+    padding: 10px;
+    gap: 24px;
+  }
+}
+
+.doctorCardSelected {
+  border-color: $color-secondary;
+  background-color: $color-secondary-bg;
+}
+
+.doctorCardBody {
+  display: flex;
+  gap: 20px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.doctorPhoto {
+  flex-shrink: 0;
+  width: 130px;
+  aspect-ratio: 188 / 274;
+  border: 1px solid $gray-4;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: $gray-2;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @include tablet {
+    width: 110px;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.doctorPhotoPlaceholder {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border: 1px solid $gray-4;
+  overflow: hidden;
+
+  img {
+    max-width: 80%;
+    max-height: 60%;
+    object-fit: contain;
+    opacity: 0.5;
+  }
+}
+
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.doctorNameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.doctorName {
+  font-size: 32px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.4;
+  letter-spacing: -1.28px;
+  color: $color-darken;
+
+  @include tablet {
+    font-size: 24px;
+    letter-spacing: -0.96px;
+  }
+
+  @include mobile {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+  }
+}
+
+.doctorDepartment {
+  font-size: 20px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  color: $gray-11;
+
+  @include tablet {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  @include mobile {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+}
+
+.doctorEmail {
+  font-size: 18px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  letter-spacing: -0.72px;
+  color: $gray-11;
+  margin: 0;
+
+  @include tablet {
+    font-size: 16px;
+    letter-spacing: -0.64px;
+  }
+
+  @include mobile {
+    font-size: 14px;
+    letter-spacing: -0.56px;
+  }
+}
+
+.doctorBio {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.doctorBioLabel {
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+  line-height: 1.5;
+  color: $color-primary;
+
+  @include mobile {
+    font-size: 14px;
+  }
+}
+
+.doctorBioText {
+  font-size: 16px;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  color: $gray-11;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  @include mobile {
+    font-size: 14px;
+    -webkit-line-clamp: 2;
+  }
+}
+
+// ========== 카드 버튼 ==========
+.doctorCardActions {
+  display: flex;
+  gap: 12px;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.selectDoctorButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: $color-secondary;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  span {
+    font-size: 18px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5;
+    letter-spacing: -0.72px;
+    color: $color-white;
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  @include mobile {
+    padding: 10px 12px;
+
+    span {
+      font-size: 16px;
+      letter-spacing: -0.64px;
+    }
+  }
+}
+
+.doctorInfoButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: $color-white;
+  border: 2px solid $gray-4;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  span {
+    font-size: 18px;
+    font-weight: $font-weight-semibold;
+    line-height: 1.5;
+    letter-spacing: -0.72px;
+    color: $gray-9;
+  }
+
+  &:hover {
+    border-color: $gray-8;
+  }
+
+  @include mobile {
+    padding: 10px 12px;
+
+    span {
+      font-size: 16px;
+      letter-spacing: -0.64px;
+    }
+  }
 }
 
 // ========== 하단 버튼 ==========
@@ -465,14 +672,4 @@
     font-size: 18px;
     letter-spacing: -0.72px;
   }
-}
-
-.radio {
-  -webkit-appearance: radio;
-  -moz-appearance: radio;
-  appearance: radio;
-  width: 20px;
-  height: 20px;
-  accent-color: $color-primary;
-  cursor: pointer;
 }

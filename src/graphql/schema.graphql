@@ -1024,4 +1024,52 @@ type Mutation {
   completeVerification(input: CompleteVerificationInput!): VerificationResultOutput!
   findUserIdByVerification(input: FindUserIdByVerificationInput!): FindUserIdPayload!
   resetPasswordByVerification(input: ResetPasswordByVerificationInput!): MessageResponse!
+  # e-Consult 신청
+  createEConsult(input: CreateEConsultInput!): EConsultModel!
+}
+
+# ── e-Consult ──
+
+input CreateEConsultInput {
+  hospitalCode: HospitalCode!
+  consultantId: String!
+  title: String!
+  content: String!
+}
+
+enum EConsultStatus {
+  WAITING
+  COMPLETED
+  EXPIRED
+}
+
+type EConsultReplyModel {
+  id: ID!
+  content: String!
+  repliedAt: DateTime!
+}
+
+type DoctorModel {
+  id: ID!
+  doctorId: String
+  name: String
+  departmentName: String
+  email: String
+}
+
+type EConsultModel {
+  id: ID!
+  hospitalCode: HospitalCode!
+  requesterId: String!
+  requester: User
+  consultantId: String!
+  consultant: DoctorModel
+  title: String!
+  content: String!
+  status: EConsultStatus!
+  reply: EConsultReplyModel
+  answeredAt: DateTime
+  expiresAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }

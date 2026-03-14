@@ -5,14 +5,14 @@ import { createPortal } from 'react-dom'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
-import { InfoIcon } from '@/components/icons/InfoIcon'
+import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
 import { useMedicalStaff, MedicalStaffItem } from '@/hooks/useMedicalStaff'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './DoctorSearchModal.module.scss'
-import { Table, TableColumn } from '../Table/Table'
-import { CardList } from '../CardList/CardList'
 
 export interface Doctor {
+  /** 자문의 고유 ID (UUID) */
+  id?: string
   /** 진료과 */
   department: string
   /** 자문의 이름 */
@@ -23,6 +23,10 @@ export interface Doctor {
   selected: boolean
   /** 의사 ID */
   doctorId?: string
+  /** 프로필 사진 URL */
+  photoUrl?: string
+  /** 전문분야 / 약력 */
+  bio?: string
 }
 
 export interface DoctorSearchModalProps {
@@ -36,6 +40,10 @@ export interface DoctorSearchModalProps {
   closeOnBackdropClick?: boolean
   /** 추가 클래스명 */
   className?: string
+  /** 외부에서 주입하는 자문의 목록 (제공 시 내부 API 호출 생략, 진료과 단계 생략) */
+  externalDoctors?: Doctor[]
+  /** 외부 데이터 로딩 상태 */
+  externalLoading?: boolean
 }
 
 function staffToDoctor(item: MedicalStaffItem): Doctor {
@@ -55,26 +63,39 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   onClose,
   onConfirm,
   closeOnBackdropClick = false,
-  className = ''
+  className = '',
+  externalDoctors,
+  externalLoading
 }) => {
+  const useExternal = !!externalDoctors
+  const externalHasDepartments = useExternal && externalDoctors.some(d => d.department)
   const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
 
-  const [step, setStep] = useState<ModalStep>('department')
+  const [step, setStep] = useState<ModalStep>(useExternal && !externalHasDepartments ? 'doctor' : 'department')
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null)
-  const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
-  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 768 : false))
 
-  // 모달 열릴 때 자문의 목록 조회
+  const isLoading = useExternal ? (externalLoading ?? false) : staffLoading
+
+
+  // 모달 열릴 때 자문의 목록 조회 (외부 데이터 미사용 시)
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !useExternal) {
       fetchMedicalStaff()
     }
-  }, [isOpen, fetchMedicalStaff])
+  }, [isOpen, fetchMedicalStaff, useExternal])
 
   // API 응답에서 진료과 목록 추출
   const departments = useMemo(() => {
+    if (useExternal && externalHasDepartments) {
+      const deptSet = new Set<string>()
+      for (const d of externalDoctors) {
+        if (d.department) deptSet.add(d.department)
+      }
+      return Array.from(deptSet).sort((a, b) => a.localeCompare(b, 'ko'))
+    }
+    if (useExternal) return []
     const deptSet = new Set<string>()
     for (const staff of staffList) {
       if (staff.departmentName) {
@@ -82,10 +103,24 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       }
     }
     return Array.from(deptSet).sort((a, b) => a.localeCompare(b, 'ko'))
-  }, [staffList])
+  }, [staffList, useExternal, externalDoctors, externalHasDepartments])
 
   // API 응답을 Doctor 형태로 변환 + 선택 상태 반영
   const doctors: Doctor[] = useMemo(() => {
+    if (useExternal) {
+      let filtered = externalDoctors
+      if (externalHasDepartments && selectedDepartment) {
+        filtered = filtered.filter(d => d.department === selectedDepartment)
+      }
+      if (searchQuery.trim()) {
+        filtered = filtered.filter(d => d.name?.includes(searchQuery.trim()))
+      }
+      return filtered.map(d => ({
+        ...d,
+        selected: d.doctorId === selectedDoctorId
+      }))
+    }
+
     let filtered = staffList
     if (selectedDepartment) {
       filtered = staffList.filter(s => s.departmentName === selectedDepartment)
@@ -97,7 +132,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       ...staffToDoctor(item),
       selected: item.doctorId === selectedDoctorId
     }))
-  }, [staffList, selectedDepartment, searchQuery, selectedDoctorId])
+  }, [staffList, selectedDepartment, searchQuery, selectedDoctorId, useExternal, externalDoctors])
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -131,27 +166,12 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   // 모달이 닫힐 때 초기화
   useEffect(() => {
     if (!isOpen) {
-      setStep('department')
+      setStep(useExternal && !externalHasDepartments ? 'doctor' : 'department')
       setSelectedDepartment(null)
       setSearchQuery('')
       setSelectedDoctorId(null)
     }
-  }, [isOpen])
-
-  // 반응형 체크
-  useEffect(() => {
-    const checkSize = () => {
-      setIsTablet(window.innerWidth <= 1429)
-      setIsMobile(window.innerWidth <= 768)
-    }
-
-    checkSize()
-    window.addEventListener('resize', checkSize)
-
-    return () => {
-      window.removeEventListener('resize', checkSize)
-    }
-  }, [])
+  }, [isOpen, useExternal, externalHasDepartments])
 
   if (!isOpen) return null
 
@@ -161,7 +181,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }
 
-  const handleDepartmentClick = (department: string) => {
+  const handleDepartmentClick = (department: string | null) => {
     setSelectedDepartment(department)
     setStep('doctor')
   }
@@ -179,54 +199,10 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
   const handleDoctorSelect = (doctor: Doctor) => {
     setSelectedDoctorId(doctor.doctorId || null)
-  }
-
-  const handleConfirm = () => {
-    const selectedDoctors = doctors.filter(doctor => doctor.selected)
+    const selectedDoctors = [{ ...doctor, selected: true }]
     onConfirm(selectedDoctors)
     onClose()
   }
-
-  // Table 컬럼 정의
-  const columns: TableColumn<Doctor>[] = [
-    {
-      id: 'department',
-      label: '진료과',
-      width: '280px',
-      field: 'department',
-      align: 'center'
-    },
-    {
-      id: 'name',
-      label: '자문의',
-      width: '130px',
-      field: 'name',
-      align: 'center'
-    },
-    {
-      id: 'email',
-      label: '이메일',
-      width: '1fr',
-      field: 'email',
-      align: 'center'
-    },
-    {
-      id: 'selected',
-      label: '선택',
-      width: '160px',
-      align: 'center',
-      renderCell: doctor => (
-        <input
-          type='radio'
-          name='doctor-select'
-          checked={doctor.selected}
-          onChange={() => handleDoctorSelect(doctor)}
-          aria-label={`${doctor.name} 선택`}
-          className={styles.radio}
-        />
-      )
-    }
-  ]
 
   return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
@@ -256,24 +232,32 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
         {step === 'department' ? (
           /* 1뎁스: 진료과 선택 */
           <div className={styles.departmentSection}>
-            <div className={styles.infoRow}>
-              <InfoIcon width={24} height={24} fill='#636363' />
-              <p className={styles.infoText}>신청하실 진료과를 선택해주세요.</p>
-            </div>
             <div className={styles.departmentChips}>
-              {staffLoading ? (
-                <Skeleton width='100%' height={40} variant='rounded' count={6} gap={8} />
-              ) : (
-                departments.map(dept => (
-                  <button
-                    key={dept}
-                    type='button'
-                    onClick={() => handleDepartmentClick(dept)}
-                    className={`${styles.departmentChip} ${selectedDepartment === dept ? styles.active : ''}`}
-                  >
-                    {dept}
-                  </button>
+              {isLoading ? (
+                Array.from({ length: 12 }, (_, i) => (
+                  <Skeleton key={i} width={186} height={50} variant='rounded' />
                 ))
+              ) : (
+                <>
+                  <button
+                    key='__all__'
+                    type='button'
+                    onClick={() => handleDepartmentClick(null)}
+                    className={`${styles.departmentChip} ${selectedDepartment === null ? styles.active : ''}`}
+                  >
+                    전체
+                  </button>
+                  {departments.map(dept => (
+                    <button
+                      key={dept}
+                      type='button'
+                      onClick={() => handleDepartmentClick(dept)}
+                      className={`${styles.departmentChip} ${selectedDepartment === dept ? styles.active : ''}`}
+                    >
+                      {dept}
+                    </button>
+                  ))}
+                </>
               )}
             </div>
           </div>
@@ -281,100 +265,112 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           /* 2뎁스: 의사 검색/선택 */
           <>
             <div className={styles.doctorSection}>
-              <div className={styles.searchContainer}>
-                <div className={styles.searchWrapper}>
-                  <Input
-                    id='doctor-search'
-                    type='text'
-                    placeholder='의료진명을 입력해주세요.'
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') handleSearch()
-                    }}
-                    className={styles.searchInput}
-                  />
-                  <button type='button' onClick={handleSearch} className={styles.searchButton}>
-                    <span>의료진 검색</span>
-                  </button>
-                </div>
+              <div className={styles.searchWrapper}>
+                <Input
+                  id='doctor-search'
+                  type='text'
+                  placeholder='의료진명을 입력해주세요.'
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') handleSearch()
+                  }}
+                  className={styles.searchInput}
+                />
+                <button type='button' onClick={handleSearch} className={styles.searchButton}>
+                  <span>의료진 검색</span>
+                </button>
+              </div>
 
-                <div className={styles.listContainer}>
-                  {staffLoading ? (
-                    <Skeleton width='100%' height={48} variant='rounded' count={5} gap={8} />
-                  ) : isTablet ? (
-                    <CardList
-                      cards={doctors.map(doctor => [
-                        {
-                          id: 'selected',
-                          leftContent: <span>선택</span>,
-                          rightContent: (
-                            <input
-                              type='radio'
-                              name='doctor-select-card'
-                              checked={doctor.selected}
-                              onChange={() => handleDoctorSelect(doctor)}
-                              aria-label={`${doctor.name} 선택`}
-                              className={styles.radio}
+              <div className={styles.cardGrid}>
+                {isLoading ? (
+                  Array.from({ length: 4 }, (_, i) => (
+                    <Skeleton key={i} width='100%' height={280} variant='rounded' />
+                  ))
+                ) : (
+                  doctors.map((doctor, index) => (
+                    <div
+                      key={`${doctor.doctorId || doctor.name}-${index}`}
+                      className={`${styles.doctorCard} ${doctor.selected ? styles.doctorCardSelected : ''}`}
+                    >
+                      <div className={styles.doctorCardBody}>
+                        <div className={styles.doctorPhoto}>
+                          {doctor.photoUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={doctor.photoUrl}
+                              alt={`${doctor.name} 프로필`}
+                              onError={e => {
+                                const target = e.currentTarget
+                                target.onerror = null
+                                target.src = '/images/referral/department/hospital_signature_kr 4.svg'
+                                target.style.objectFit = 'contain'
+                                target.style.opacity = '0.5'
+                                target.style.padding = '10%'
+                              }}
                             />
-                          ),
-                          highlighted: true
-                        },
-                        {
-                          id: 'department',
-                          leftContent: <span>진료과</span>,
-                          rightContent: <span>{doctor.department}</span>,
-                          twoLine: isMobile
-                        },
-                        {
-                          id: 'name',
-                          leftContent: <span>자문의</span>,
-                          rightContent: <span>{doctor.name}</span>,
-                          twoLine: isMobile
-                        },
-                        {
-                          id: 'email',
-                          leftContent: <span>이메일</span>,
-                          rightContent: <span>{doctor.email}</span>,
-                          twoLine: isMobile
-                        }
-                      ])}
-                      getCardKey={(card, index) => `${doctors[index].name}-${index}`}
-                      scrollableHeight='100%'
-                      className={styles.cardList}
-                    />
-                  ) : (
-                    <Table
-                      columns={columns}
-                      data={doctors}
-                      getRowKey={(doctor, index) => `${doctor.name}-${index}`}
-                      className={styles.table}
-                      scrollableHeight='100%'
-                      defaultTextOverflow='ellipsis'
-                      scrollWithHeader
-                    />
-                  )}
-                </div>
+                          ) : (
+                            <div className={styles.doctorPhotoPlaceholder}>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src='/images/referral/department/hospital_signature_kr 4.svg'
+                                alt='병원 로고'
+                              />
+                            </div>
+                          )}
+                        </div>
+                        <div className={styles.doctorInfo}>
+                          <div className={styles.doctorNameRow}>
+                            <span className={styles.doctorName}>{doctor.name}</span>
+                            <span className={styles.doctorDepartment}>{doctor.department}</span>
+                          </div>
+                          {doctor.email && (
+                            <p className={styles.doctorEmail}>{doctor.email}</p>
+                          )}
+                          {doctor.bio && (
+                            <div className={styles.doctorBio}>
+                              <span className={styles.doctorBioLabel}>전문분야</span>
+                              <span className={styles.doctorBioText}>{doctor.bio}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.doctorCardActions}>
+                        <button
+                          type='button'
+                          className={styles.selectDoctorButton}
+                          onClick={() => handleDoctorSelect(doctor)}
+                        >
+                          <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                            <path d='M4 10L8.5 14.5L16 5.5' stroke='#ffffff' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' />
+                          </svg>
+                          <span>자문의 선택</span>
+                        </button>
+                        <button
+                          type='button'
+                          className={styles.doctorInfoButton}
+                        >
+                          <DoctorInfoIcon width={20} height={20} stroke='#8c8c8c' strokeWidth={2} />
+                          <span>의료진 소개</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 
             <div className={styles.buttonRow}>
-              <Button
-                type='button'
-                variant='primaryOutline'
-                onClick={handleBackToDepartment}
-                className={styles.actionButton}
-              >
-                진료과 변경
-              </Button>
-              <Button
-                type='button'
-                variant='primaryOutline'
-                onClick={handleConfirm}
-                className={styles.actionButton}
-              >
-                자문의 선택
-              </Button>
+              {(!useExternal || externalHasDepartments) && (
+                <Button
+                  type='button'
+                  variant='primaryOutline'
+                  onClick={handleBackToDepartment}
+                  className={styles.actionButton}
+                >
+                  진료과 변경
+                </Button>
+              )}
             </div>
           </>
         )}

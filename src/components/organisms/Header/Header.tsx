@@ -92,7 +92,7 @@ const myPageMenu: MenuItem = {
     { href: '/mypage/edit-profile', label: '회원정보 수정' },
     { href: '/mypage/edit-clinic', label: '협력병의원 정보수정' },
     { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
-    { href: '/mypage/patient-result', label: 'e-Consult 조회' }
+    { href: '/mypage/e-consult', label: 'e-Consult 조회' }
   ]
 }
 
@@ -403,11 +403,10 @@ const HeaderInner: React.FC = () => {
                 <div className={styles.utilMobile}>
                   {isLoggedIn ? (
                     <button type='button' className={styles.iconBtn} aria-label='로그아웃' onClick={() => logout()}>
-                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                        <path
-                          d='M12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12ZM12 14C8.67 14 2 15.67 2 19V22H22V19C22 15.67 15.33 14 12 14Z'
-                          fill='currentColor'
-                        />
+                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <path d='M13 4H20C20.55 4 21 4.45 21 5V19C21 19.55 20.55 20 20 20H13' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                        <path d='M3 12H14.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                        <path d='M11 8.5L14.5 12L11 15.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
                       </svg>
                     </button>
                   ) : (
