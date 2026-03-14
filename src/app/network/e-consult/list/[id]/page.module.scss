@@ -331,6 +331,10 @@
   line-height: 30px !important;
   border-radius: 5px !important; // Figma: 5px
 
+  &:disabled {
+    border: 1px solid #ccc !important;
+  }
+
   @include mobile {
     width: 100%;
   }

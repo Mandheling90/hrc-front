@@ -35,6 +35,7 @@ export interface AuthUser {
   userType: UserType
   hospitalCode: HospitalCode
   hospitalId: string | null
+  doctorId: string | null
   phone: string | null
   status: UserStatus
   mustChangePw: boolean

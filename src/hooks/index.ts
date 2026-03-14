@@ -36,6 +36,9 @@ export {
 // NICE 본인인증
 export { useNiceVerification } from '@/hooks/useNiceVerification'
 
+// Consultant e-Consult Hooks - 자문의 e-Consult 할당 확인
+export { useConsultantEConsults } from '@/hooks/useConsultantEConsults'
+
 // Hospital Router Hooks - URL 경로 기반 병원 라우팅
 export { useHospitalRouter } from '@/hooks/useHospitalRouter'
 export { useHospitalPathname } from '@/hooks/useHospitalPathname'

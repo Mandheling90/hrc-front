@@ -54,8 +54,13 @@ export function useLogin() {
     const { data } = await loginMutation({ variables: { input } })
 
     if (data?.login) {
-      setAuth(data.login.accessToken, data.login.refreshToken, data.login.user)
-      return data.login
+      const user = { ...data.login.user }
+      // DEV 전용: doctorId가 없으면 임시로 55030 주입
+      if (process.env.NODE_ENV === 'development' && !user.doctorId) {
+        user.doctorId = '55030'
+      }
+      setAuth(data.login.accessToken, data.login.refreshToken, user)
+      return { ...data.login, user }
     }
 
     return null

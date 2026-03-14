@@ -1,6 +1,10 @@
 'use client'
 
 import React, { useMemo, useState, useEffect } from 'react'
+import { useQuery } from '@apollo/client/react'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { CONSULTANT_ASSIGNED_ECONSULTS_QUERY } from '@/graphql/econsult/queries'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
@@ -8,7 +12,37 @@ import { StatusBadge } from '@/components/atoms/StatusBadge/StatusBadge'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { CardList } from '@/components/molecules/CardList/CardList'
 import { SearchFilterWithInfo } from '@/components/molecules/SearchFilterWithInfo/SearchFilterWithInfo'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
+
+// API 응답 타입
+interface ConsultantAssignedEConsultsData {
+  consultantAssignedEConsults: {
+    items: {
+      id: string
+      title: string
+      status: string
+      createdAt: string
+      answeredAt?: string
+      requester?: {
+        id: string
+        userName?: string
+        email?: string
+        phone?: string
+        profile?: { hospName?: string }
+      }
+      consultant?: {
+        id: string
+        name?: string
+        department?: string
+        specialty?: string
+        email?: string
+      }
+    }[]
+    totalCount: number
+    hasNextPage: boolean
+  }
+}
 
 // e-Consult 데이터 타입
 interface EConsultData {
@@ -17,74 +51,19 @@ interface EConsultData {
   title: string
   applicant: string
   hospitalName: string
-  department: string // Figma 태블릿에서 표시되는 진료과
+  department: string
   status: 'waiting' | 'expired' | 'completed'
   registeredDate: string
 }
 
-// 임시 데이터
-const mockEConsults: EConsultData[] = [
-  {
-    id: '1',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    department: '소화기내과',
-    status: 'waiting',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '2',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    department: '소화기내과',
-    status: 'expired',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '3',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    department: '소화기내과',
-    status: 'completed',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '4',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    department: '소화기내과',
-    status: 'completed',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '5',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    department: '소화기내과',
-    status: 'completed',
-    registeredDate: '2025-11-25'
-  },
-  {
-    id: '6',
-    number: 84,
-    title: '소아청소년과 김철수 선생님 자문을 요청드립니다.',
-    applicant: '김*수',
-    hospitalName: '고대협력병원',
-    department: '소화기내과',
-    status: 'completed',
-    registeredDate: '2025-11-25'
-  }
-]
+/** 날짜 포맷 (YYYY-MM-DD) */
+const formatDate = (dateStr: string): string => {
+  const d = new Date(dateStr)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
 
 // 답변 상태 옵션
 const statusOptions = [
@@ -94,13 +73,55 @@ const statusOptions = [
   { value: 'completed', label: '답변 완료' }
 ]
 
+/** 상태 필터값 → API EConsultStatus 변환 */
+const statusFilterMap: Record<string, string | undefined> = {
+  all: undefined,
+  waiting: 'PENDING',
+  expired: 'EXPIRED',
+  completed: 'ANSWERED'
+}
+
+/** API 상태 → UI 상태 변환 */
+const mapApiStatus = (status: string): 'waiting' | 'expired' | 'completed' => {
+  switch (status) {
+    case 'PENDING':
+      return 'waiting'
+    case 'EXPIRED':
+      return 'expired'
+    case 'ANSWERED':
+      return 'completed'
+    default:
+      return 'waiting'
+  }
+}
+
 export default function EConsultListPage() {
+  const router = useHospitalRouter()
+  const { user } = useAuthContext()
+  const doctorId = user?.doctorId
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [isTablet, setIsTablet] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 1429 : false))
   const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 768 : false))
   const itemsPerPage = 5
+
+  const statusFilter = statusFilterMap[selectedStatus]
+
+  const { data, loading } = useQuery<ConsultantAssignedEConsultsData>(CONSULTANT_ASSIGNED_ECONSULTS_QUERY, {
+    variables: {
+      doctorId,
+      filter: {
+        ...(statusFilter ? { status: statusFilter } : {})
+      },
+      pagination: {
+        page: currentPage,
+        limit: itemsPerPage
+      }
+    },
+    skip: !doctorId,
+    fetchPolicy: 'cache-and-network'
+  })
 
   // 태블릿/모바일 여부 확인
   useEffect(() => {
@@ -117,35 +138,45 @@ export default function EConsultListPage() {
     }
   }, [])
 
-  // 필터링 및 검색
+  // 상태 필터 변경 시 첫 페이지로 이동
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [selectedStatus])
+
+  // API 데이터 → UI 데이터 변환
+  const items: EConsultData[] = useMemo(() => {
+    if (!data?.consultantAssignedEConsults?.items) return []
+    // DEV: API에서 오는 실제 status 값 확인
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[e-consult list] raw items:', data.consultantAssignedEConsults.items.map(i => ({ id: i.id, status: i.status })))
+    }
+    return data.consultantAssignedEConsults.items.map((item, index) => ({
+      id: item.id,
+      number: (currentPage - 1) * itemsPerPage + index + 1,
+      title: item.title,
+      applicant: item.requester?.userName || '-',
+      hospitalName: item.requester?.profile?.hospName || '-',
+      department: item.consultant?.department || '-',
+      status: mapApiStatus(item.status),
+      registeredDate: formatDate(item.createdAt)
+    }))
+  }, [data, currentPage, itemsPerPage])
+
+  // 클라이언트 측 검색 필터
   const filteredData = useMemo(() => {
-    let filtered = mockEConsults
+    if (!searchQuery.trim()) return items
+    const query = searchQuery.toLowerCase()
+    return items.filter(
+      item =>
+        item.title.toLowerCase().includes(query) ||
+        item.applicant.toLowerCase().includes(query) ||
+        item.hospitalName.toLowerCase().includes(query)
+    )
+  }, [items, searchQuery])
 
-    // 상태 필터
-    if (selectedStatus !== 'all') {
-      filtered = filtered.filter(item => item.status === selectedStatus)
-    }
-
-    // 검색어 필터
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(
-        item =>
-          item.title.toLowerCase().includes(query) ||
-          item.applicant.toLowerCase().includes(query) ||
-          item.hospitalName.toLowerCase().includes(query)
-      )
-    }
-
-    return filtered
-  }, [selectedStatus, searchQuery])
-
-  // 페이지네이션
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage)
-  const paginatedData = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    return filteredData.slice(startIndex, startIndex + itemsPerPage)
-  }, [filteredData, currentPage, itemsPerPage])
+  // 페이지네이션 (서버 사이드)
+  const totalCount = data?.consultantAssignedEConsults?.totalCount || 0
+  const totalPages = Math.ceil(totalCount / itemsPerPage)
 
   // 테이블 컬럼 정의
   const columns: TableColumn<EConsultData>[] = useMemo(
@@ -204,15 +235,11 @@ export default function EConsultListPage() {
   )
 
   const handleSearch = () => {
-    // 검색 로직은 이미 필터링에 포함됨
-    setCurrentPage(1) // 검색 시 첫 페이지로 이동
+    setCurrentPage(1)
   }
 
   const handleRowClick = (item: EConsultData) => {
-    // 상세 페이지로 이동
-    const hospitalId = window.location.pathname.split('/')[1]
-    const prefix = ['anam', 'guro', 'ansan'].includes(hospitalId) ? `/${hospitalId}` : ''
-    window.location.href = `${prefix}/network/e-consult/list/${item.id}`
+    router.push(`/network/e-consult/list/${item.id}`)
   }
 
   return (
@@ -238,10 +265,12 @@ export default function EConsultListPage() {
 
           {/* 테이블 또는 카드 리스트 */}
           <div className={styles.tableSection}>
-            {isTablet ? (
+            {loading && !data ? (
+              <Skeleton width='100%' height={48} variant='rounded' count={5} gap={8} />
+            ) : isTablet ? (
               /* 태블릿/모바일: 카드형 리스트 */
               <CardList
-                cards={paginatedData.map(item => {
+                cards={filteredData.map(item => {
                   const statusLabels = {
                     waiting: '답변 대기',
                     expired: '기간 만료',
@@ -304,22 +333,21 @@ export default function EConsultListPage() {
                     }
                   ]
                 })}
-                getCardKey={(card, index) => paginatedData[index].id}
+                getCardKey={(card, index) => filteredData[index].id}
                 getCardClassName={(card, index) => {
-                  // 상태 클래스 항상 추가 (CSS 미디어 쿼리로 배경색 제어)
-                  const status = paginatedData[index].status
+                  const status = filteredData[index].status
                   const statusClass = `cardStatus${status.charAt(0).toUpperCase() + status.slice(1)}`
                   return statusClass
                 }}
                 columns={isMobile ? 1 : 2}
                 className={styles.eConsultCardList}
-                onCardClick={cardIndex => handleRowClick(paginatedData[cardIndex])}
+                onCardClick={cardIndex => handleRowClick(filteredData[cardIndex])}
               />
             ) : (
               /* 데스크톱: 테이블 */
               <Table
                 columns={columns}
-                data={paginatedData}
+                data={filteredData}
                 getRowKey={item => item.id}
                 onRowClick={handleRowClick}
                 className={styles.table}
