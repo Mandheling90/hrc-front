@@ -20,6 +20,24 @@ export const ECONSULT_CONSULTANTS_QUERY = gql`
   }
 `
 
+export const CONSULTANT_DOCTORS_QUERY = gql`
+  query ConsultantDoctors {
+    consultantDoctors {
+      id
+      doctorId
+      name
+      departmentId
+      department
+      specialty
+      hospitalCode
+      email
+      phone
+      photoUrl
+      isActive
+    }
+  }
+`
+
 export const MY_ECONSULTS_QUERY = gql`
   query MyEConsults($filter: EConsultFilterInput, $pagination: PaginationInput) {
     myEConsults(filter: $filter, pagination: $pagination) {

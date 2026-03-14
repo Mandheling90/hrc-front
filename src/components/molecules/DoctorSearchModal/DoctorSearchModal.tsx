@@ -163,10 +163,12 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }, [isOpen])
 
-  // 모달이 닫힐 때 초기화
+  // 모달이 열릴 때 externalDoctors에 맞게 step 설정 / 닫힐 때 초기화
   useEffect(() => {
-    if (!isOpen) {
-      setStep(useExternal && !externalHasDepartments ? 'doctor' : 'department')
+    if (isOpen) {
+      setStep(useExternal && externalHasDepartments ? 'department' : useExternal ? 'doctor' : 'department')
+    } else {
+      setStep(useExternal && externalHasDepartments ? 'department' : useExternal ? 'doctor' : 'department')
       setSelectedDepartment(null)
       setSearchQuery('')
       setSelectedDoctorId(null)

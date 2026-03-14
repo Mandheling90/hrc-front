@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useMutation, useQuery } from '@apollo/client/react'
+import { useSearchParams } from 'next/navigation'
 import { useHospital } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { Header } from '@/components/organisms/Header/Header'
@@ -21,13 +22,9 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import type { Doctor } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 import { CREATE_ECONSULT_MUTATION } from '@/graphql/econsult/mutations'
-import { ECONSULT_CONSULTANTS_QUERY } from '@/graphql/econsult/queries'
+import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useMedicalStaff } from '@/hooks/useMedicalStaff'
-import { DEV_ECONSULT_CONSULTANTS } from '@/utils/devDefaultData'
-
-const isDev = process.env.NODE_ENV === 'development'
 
 const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
   anam: HospitalCode.Anam,
@@ -39,6 +36,13 @@ export default function EConsultPage() {
   const { isAnam, hospitalId } = useHospital()
   const { user } = useAuthContext()
   const router = useHospitalRouter()
+  const searchParams = useSearchParams()
+
+  // 진료과 안내에서 넘어온 의사 정보
+  const preselectedDoctorId = searchParams.get('doctorId') || ''
+  const preselectedDoctorName = searchParams.get('doctorName') || ''
+  const preselectedDepartment = searchParams.get('department') || ''
+  const hasPreselected = !!preselectedDoctorId
 
   // 폼 상태
   const [privacyConsent, setPrivacyConsent] = useState(false)
@@ -59,73 +63,75 @@ export default function EConsultPage() {
     message: ''
   })
 
-  // 로그인 사용자 정보로 폼 초기화 + 자문의 검색 팝업 자동 열기
+  // 자문의 목록 조회
+  const { data: consultantsData, loading: consultantsLoading } = useQuery<{
+    consultantDoctors: Array<{
+      id: string
+      doctorId: string
+      name: string
+      email: string
+      departmentId: string
+      department: string
+      photoUrl: string
+      specialty: string
+      isActive: boolean
+    }>
+  }>(CONSULTANT_DOCTORS_QUERY)
+
+  const econsultDoctors: Doctor[] = useMemo(() => {
+    return (consultantsData?.consultantDoctors ?? [])
+      .filter(c => c.isActive)
+      .map(c => ({
+        id: c.id,
+        doctorId: c.doctorId,
+        name: c.name,
+        email: c.email || '',
+        department: c.department || '',
+        photoUrl: c.photoUrl || undefined,
+        bio: c.specialty || undefined,
+        selected: false
+      }))
+  }, [consultantsData])
+
+  // 로그인 사용자 정보로 폼 초기화
   useEffect(() => {
     if (user) {
       setApplicantName(user.userName || '')
       setHospitalName(user.profile?.hospName || '')
       setEmail(user.email || '')
       setEmailConsent(user.profile?.emailConsent ? 'agree' : 'disagree')
-
-      setIsDoctorSearchModalOpen(true)
     }
   }, [user])
 
-  // 자문의 목록 조회
-  const hospitalCodeEnum = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
-  const { data: consultantsData, loading: consultantsLoading } = useQuery<{ adminEconsultConsultants: Array<{ id: string; doctorId: string; name: string; email: string; departmentName: string; photoUrl: string; specialty: string; isActive: boolean }> }>(ECONSULT_CONSULTANTS_QUERY, {
-    variables: { hospitalCode: hospitalCodeEnum },
-    skip: isDev
-  })
-
-  // dev: medicalStaffList 조회 → 하드코딩 자문의 ID와 매칭하여 진료과 정보 보강
-  const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
-  const [devStaffFetched, setDevStaffFetched] = useState(false)
+  // 진료과 안내에서 넘어온 경우: consultantDoctors에서 매칭하여 자문의 자동 세팅
+  const preselectedApplied = useRef(false)
   useEffect(() => {
-    if (isDev) {
-      fetchMedicalStaff().then(() => setDevStaffFetched(true))
-    }
-  }, [fetchMedicalStaff])
-  const devLoading = isDev && (!devStaffFetched || staffLoading)
-
-  const econsultDoctors: Doctor[] = useMemo(() => {
-    if (!isDev) {
-      return (consultantsData?.adminEconsultConsultants ?? [])
-        .filter(c => c.isActive)
-        .map(c => ({
-          id: c.id,
-          doctorId: c.doctorId,
-          name: c.name,
-          email: c.email || '',
-          department: c.departmentName || '',
-          photoUrl: c.photoUrl || undefined,
-          bio: c.specialty || undefined,
-          selected: false
-        }))
-    }
-
-    // medicalStaffList에서 doctorId → staff 정보 매핑
-    const staffMap = new Map<string, { departmentName: string; photoUrl: string | null; bio: string | null }>()
-    for (const s of staffList) {
-      if (s.doctorId) {
-        staffMap.set(s.doctorId, { departmentName: s.departmentName, photoUrl: s.photoUrl, bio: s.bio })
+    if (hasPreselected && !preselectedApplied.current && econsultDoctors.length > 0) {
+      const matched = econsultDoctors.find(d => d.doctorId === preselectedDoctorId)
+      if (matched) {
+        const displayText = matched.department ? `${matched.department} ${matched.name}` : matched.name
+        setConsultingDoctor(displayText)
+        setSelectedDoctorId(matched.id || matched.doctorId || '')
+        setSelectedDoctorName(matched.name)
+        setSelectedDepartment(matched.department || '')
+      } else {
+        // consultantDoctors에 없으면 쿼리 파라미터 값으로 세팅
+        const displayText = preselectedDepartment ? `${preselectedDepartment} ${preselectedDoctorName}` : preselectedDoctorName
+        setConsultingDoctor(displayText)
+        setSelectedDoctorId(preselectedDoctorId)
+        setSelectedDoctorName(preselectedDoctorName)
+        setSelectedDepartment(preselectedDepartment)
       }
+      preselectedApplied.current = true
     }
+  }, [hasPreselected, preselectedDoctorId, preselectedDoctorName, preselectedDepartment, econsultDoctors])
 
-    return DEV_ECONSULT_CONSULTANTS.map(c => {
-      const staff = staffMap.get(c.doctorId)
-      return {
-        id: c.id,
-        doctorId: c.doctorId,
-        name: c.name,
-        email: c.email,
-        department: staff?.departmentName || c.departmentName,
-        photoUrl: staff?.photoUrl || undefined,
-        bio: staff?.bio || undefined,
-        selected: false
-      }
-    })
-  }, [consultantsData, staffList])
+  // 자문의 데이터 로딩 완료 후 검색 팝업 자동 열기 (preselected가 아닌 경우만)
+  useEffect(() => {
+    if (user && !hasPreselected && !consultantsLoading && econsultDoctors.length > 0) {
+      setIsDoctorSearchModalOpen(true)
+    }
+  }, [user, hasPreselected, consultantsLoading, econsultDoctors.length])
 
   // GraphQL Mutation
   const [createEConsult, { loading: submitting }] = useMutation(CREATE_ECONSULT_MUTATION)
@@ -428,7 +434,7 @@ export default function EConsultPage() {
         onConfirm={handleDoctorConfirm}
         closeOnBackdropClick={true}
         externalDoctors={econsultDoctors}
-        externalLoading={isDev ? devLoading : consultantsLoading}
+        externalLoading={consultantsLoading}
       />
 
       {/* 알림 모달 */}

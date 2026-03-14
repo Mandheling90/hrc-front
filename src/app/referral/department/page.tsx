@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -12,6 +12,7 @@ import { SectionContainer } from '@/components/molecules/SectionContainer/Sectio
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useMedicalStaff, MedicalStaffItem, WeeklyScheduleItem } from '@/hooks/useMedicalStaff'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
@@ -86,6 +87,7 @@ function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, Sched
 }
 
 export default function DepartmentPage() {
+  const router = useHospitalRouter()
   const { departmentList, deptLoading, fetchMedicalStaff, staffList, loading: staffLoading, fetchWeeklySchedule, scheduleList, scheduleLoading } = useMedicalStaff()
 
   // 현재 주간 날짜 상태
@@ -195,10 +197,16 @@ export default function DepartmentPage() {
     scrollMainContentToTop()
   }
 
-  const handleEConsultingClick = (doctorId: string) => {
-    // e-Consulting 신청 로직
-    console.log('e-Consulting 신청:', doctorId)
-  }
+  const handleEConsultingClick = useCallback((doctorId: string) => {
+    const doctor = doctors.find(d => d.id === doctorId)
+    if (!doctor) return
+    const params = new URLSearchParams({
+      doctorId,
+      doctorName: doctor.name,
+      department: doctor.department
+    })
+    router.push(`/network/e-consult?${params.toString()}`)
+  }, [doctors, router])
 
   const handleDoctorInfoClick = (doctorId: string) => {
     // 의료진 소개 로직
