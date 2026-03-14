@@ -218,6 +218,39 @@ export const MEDICAL_STAFF_LIST_QUERY = gql`
   }
 `
 
+export const MEDICAL_STAFF_DEPARTMENT_LIST_QUERY = gql`
+  query MedicalStaffDepartmentList {
+    medicalStaffDepartmentList {
+      items {
+        departmentCode
+        departmentName
+      }
+      totalCount
+    }
+  }
+`
+
+export const MEDICAL_STAFF_WEEKLY_SCHEDULE_QUERY = gql`
+  query MedicalStaffWeeklySchedule($mcdpCd: String!, $mdcrYmd: String!) {
+    medicalStaffWeeklySchedule(mcdpCd: $mcdpCd, mdcrYmd: $mdcrYmd) {
+      items {
+        doctorId
+        doctorName
+        departmentCode
+        departmentName
+        apntPsblYn
+        monAmpmCd
+        tueAmpmCd
+        wedAmpmCd
+        thuAmpmCd
+        friAmpmCd
+        hospitalCode
+      }
+      totalCount
+    }
+  }
+`
+
 export const EHR_HOSPITAL_SEARCH_QUERY = gql`
   query EhrGetCollaboratingHospitals($input: SearchCollaboratingHospitalsInput!) {
     ehrGetCollaboratingHospitals(input: $input) {

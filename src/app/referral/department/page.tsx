@@ -12,7 +12,7 @@ import { SectionContainer } from '@/components/molecules/SectionContainer/Sectio
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { LinkIcon } from '@/components/icons/LinkIcon'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
-import { useMedicalStaff, MedicalStaffItem } from '@/hooks/useMedicalStaff'
+import { useMedicalStaff, MedicalStaffItem, WeeklyScheduleItem } from '@/hooks/useMedicalStaff'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
@@ -26,6 +26,14 @@ function getInitial(char: string): string {
   const initialCode = Math.floor((code - 0xac00) / 0x24c)
   const initials = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
   return initials[initialCode] || 'ㅇ' // 기본값은 ㅇ
+}
+
+/** Date → 'YYYYMMDD' 포맷 */
+function formatYmd(date: Date): string {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}${m}${d}`
 }
 
 // 주간 날짜 계산 함수
@@ -43,8 +51,28 @@ function getWeekDates(date: Date): { startDate: Date; endDate: Date } {
   return { startDate, endDate }
 }
 
+/** 주간 스케줄 AmpmCd → ScheduleSlot 변환 ('Am'=오전, 'Pm'=오후, 'Al'=오전+오후) */
+function parseAmpmCd(day: '월' | '화' | '수' | '목' | '금', code: string | null): ScheduleSlot[] {
+  if (!code) return []
+  const c = code.toLowerCase()
+  const slots: ScheduleSlot[] = []
+  if (c === 'am' || c === 'al') slots.push({ day, period: '오전', available: true })
+  if (c === 'pm' || c === 'al') slots.push({ day, period: '오후', available: true })
+  return slots
+}
+
+function scheduleItemToSlots(item: WeeklyScheduleItem): ScheduleSlot[] {
+  return [
+    ...parseAmpmCd('월', item.monAmpmCd),
+    ...parseAmpmCd('화', item.tueAmpmCd),
+    ...parseAmpmCd('수', item.wedAmpmCd),
+    ...parseAmpmCd('목', item.thuAmpmCd),
+    ...parseAmpmCd('금', item.friAmpmCd)
+  ]
+}
+
 // API 응답 → 의사 카드 데이터 변환
-function mapStaffToDoctor(item: MedicalStaffItem) {
+function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, ScheduleSlot[]>) {
   const specialties = item.bio ? item.bio.split(',').map(s => s.trim()).filter(Boolean) : []
   return {
     id: item.doctorId || '',
@@ -52,13 +80,13 @@ function mapStaffToDoctor(item: MedicalStaffItem) {
     department: item.departmentName || '',
     imageUrl: item.photoUrl || undefined,
     specialties,
-    schedule: [] as ScheduleSlot[],
+    schedule: scheduleMap.get(item.doctorId) ?? ([] as ScheduleSlot[]),
     hasEConsulting: item.frvsMdcrPsblYn === 'Y' || item.revsMdcrPsblYn === 'Y'
   }
 }
 
 export default function DepartmentPage() {
-  const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
+  const { departmentList, deptLoading, fetchMedicalStaff, staffList, loading: staffLoading, fetchWeeklySchedule, scheduleList, scheduleLoading } = useMedicalStaff()
 
   // 현재 주간 날짜 상태
   const [currentWeek, setCurrentWeek] = useState(new Date())
@@ -75,27 +103,16 @@ export default function DepartmentPage() {
   // 태블릿/모바일 여부 확인
   const [isTablet, setIsTablet] = useState(false)
 
-  // 초기 로드: 전체 자문의 목록 가져오기
-  useEffect(() => {
-    fetchMedicalStaff()
-  }, [fetchMedicalStaff])
-
-  // API 응답에서 진료과 목록 추출
+  // 진료과 목록 → Department 형태로 변환
   const departments: Department[] = useMemo(() => {
-    const deptMap = new Map<string, string>()
-    for (const staff of staffList) {
-      if (staff.departmentCode && staff.departmentName) {
-        deptMap.set(staff.departmentCode, staff.departmentName)
-      }
-    }
-    return Array.from(deptMap.entries())
-      .map(([code, name]) => ({
-        id: code,
-        name,
-        initial: getInitial(name[0])
+    return departmentList
+      .map(dept => ({
+        id: dept.departmentCode,
+        name: dept.departmentName,
+        initial: getInitial(dept.departmentName[0])
       }))
       .sort((a, b) => a.name.localeCompare(b.name, 'ko'))
-  }, [staffList])
+  }, [departmentList])
 
   // 첫 진료과 자동 선택
   useEffect(() => {
@@ -104,13 +121,27 @@ export default function DepartmentPage() {
     }
   }, [departments, selectedDepartmentId])
 
-  // 선택된 진료과의 의료진 필터링
+  // 진료과 선택 시 의료진 목록 + 스케줄 조회
+  useEffect(() => {
+    if (selectedDepartmentId) {
+      fetchMedicalStaff({ mcdpCd: selectedDepartmentId })
+      fetchWeeklySchedule(selectedDepartmentId, formatYmd(weekDates.startDate))
+    }
+  }, [selectedDepartmentId, fetchMedicalStaff, fetchWeeklySchedule, weekDates.startDate])
+
+  // 스케줄 데이터를 doctorId별 Map으로 변환
+  const scheduleMap = useMemo(() => {
+    const map = new Map<string, ScheduleSlot[]>()
+    for (const item of scheduleList) {
+      map.set(item.doctorId, scheduleItemToSlots(item))
+    }
+    return map
+  }, [scheduleList])
+
+  // 의료진 리스트 (서버에서 진료과별로 조회됨)
   const doctors = useMemo(() => {
-    if (!selectedDepartmentId) return staffList.map(mapStaffToDoctor)
-    return staffList
-      .filter(s => s.departmentCode === selectedDepartmentId)
-      .map(mapStaffToDoctor)
-  }, [staffList, selectedDepartmentId])
+    return staffList.map(item => mapStaffToDoctor(item, scheduleMap))
+  }, [staffList, scheduleMap])
 
   // Breadcrumb 설정
   const breadcrumbItems = useMemo(() => {
@@ -283,7 +314,7 @@ export default function DepartmentPage() {
                 selectedDepartmentId={selectedDepartmentId}
                 onDepartmentSelect={handleDepartmentSelect}
                 onAllSelect={handleAllSelect}
-                loading={staffLoading}
+                loading={deptLoading}
               />
             </aside>
 
@@ -300,7 +331,7 @@ export default function DepartmentPage() {
                 }
                 scrollable
               >
-                {staffLoading ? (
+                {staffLoading || scheduleLoading ? (
                   <Skeleton width='100%' height={160} variant='rounded' count={3} gap={16} />
                 ) : doctors.length > 0 ? (
                   doctors.map(doctor => (
