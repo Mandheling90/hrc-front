@@ -334,6 +334,7 @@ export interface AirportRoute {
 // 자가용 방면 경로 단계
 export interface CarDirectionStep {
   text: string // 단계 설명 텍스트
+  icon?: 'car' | 'road' | 'bridge' | 'map' // 아이콘 타입 (기본: car, road, road, bridge, map 순)
 }
 
 // 자가용 방면 경로

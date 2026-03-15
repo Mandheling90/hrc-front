@@ -68,6 +68,26 @@ export const CarDirectionModal: React.FC<CarDirectionModalProps> = ({
     }
   }
 
+  // 기본 아이콘 순서: car, road, road, bridge, map
+  const defaultIcons = ['car', 'road', 'road', 'bridge', 'map']
+
+  // 첫 번째 route의 steps에서 아이콘 결정
+  const firstRoute = routes[0]
+  const stepIcons = firstRoute?.steps.map((step, i) => step.icon || defaultIcons[i] || 'road') || defaultIcons
+
+  const renderIcon = (iconType: string) => {
+    switch (iconType) {
+      case 'car':
+        return <CarIcon width={56} height={56} fill='black' />
+      case 'bridge':
+        return <BridgeIcon width={56} height={56} fill='black' stroke='black' />
+      case 'map':
+        return <MapIcon width={56} height={56} fill='black' />
+      default:
+        return <RoadIcon width={56} height={56} fill='black' />
+    }
+  }
+
   return createPortal(
     <div className={styles.backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
@@ -83,21 +103,11 @@ export const CarDirectionModal: React.FC<CarDirectionModalProps> = ({
         <div className={styles.routeMap}>
           <div className={styles.routeMapLine}></div>
           <div className={styles.routeMapIcons}>
-            <div className={styles.routeMapIcon}>
-              <CarIcon width={56} height={56} fill='black' />
-            </div>
-            <div className={styles.routeMapIcon}>
-              <RoadIcon width={56} height={56} fill='black' />
-            </div>
-            <div className={styles.routeMapIcon}>
-              <RoadIcon width={56} height={56} fill='black' />
-            </div>
-            <div className={styles.routeMapIcon}>
-              <BridgeIcon width={56} height={56} fill='black' stroke='black' />
-            </div>
-            <div className={styles.routeMapIcon}>
-              <MapIcon width={56} height={56} fill='black' />
-            </div>
+            {stepIcons.map((iconType, i) => (
+              <div key={i} className={styles.routeMapIcon}>
+                {renderIcon(iconType)}
+              </div>
+            ))}
           </div>
         </div>
 

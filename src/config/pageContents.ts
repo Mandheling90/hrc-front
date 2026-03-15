@@ -926,10 +926,25 @@ const guroContent: HospitalPageContent = {
       google: 'https://maps.google.com/?q=서울시 구로구 구로동로 148'
     },
     car: [
-      { label: '사당동 방면', isActive: false },
+      {
+        label: '사당동 방면',
+        isActive: false,
+        routes: [
+          {
+            title: '사당동 방면',
+            steps: [
+              { text: '사당동 출발', icon: 'car' },
+              { text: '남부순환도로\n구로 방향 이동', icon: 'road' },
+              { text: '오류IC 진입', icon: 'road' },
+              { text: '가리봉 방향 이동', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
       {
         label: '시내 방면',
-        isActive: true,
+        isActive: false,
         routes: [
           {
             title: '강북',
@@ -963,13 +978,118 @@ const guroContent: HospitalPageContent = {
           }
         ]
       },
-      { label: '인천 방면', isActive: false },
-      { label: '안양 방면', isActive: false },
-      { label: '올림픽대로', isActive: false },
-      { label: '경부고속도로', isActive: false },
-      { label: '서해안고속도로', isActive: false },
-      { label: '영동고속도로', isActive: false },
-      { label: '외곽순환고속도로', isActive: false }
+      {
+        label: '인천 방면',
+        isActive: false,
+        routes: [
+          {
+            title: '인천 방면',
+            steps: [
+              { text: '인천 출발', icon: 'car' },
+              { text: '경인로 이용\n서울 방향 이동', icon: 'road' },
+              { text: '구로전화국\n사거리 통과', icon: 'road' },
+              { text: '고대구로병원\n사거리 진입', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
+      {
+        label: '안양 방면',
+        isActive: false,
+        routes: [
+          {
+            title: '안양 방면',
+            steps: [
+              { text: '안양 출발', icon: 'car' },
+              { text: '경인로 이용\n서울 방향 이동', icon: 'road' },
+              { text: '구로전화국\n사거리 통과', icon: 'road' },
+              { text: '고대구로병원\n사거리 진입', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
+      {
+        label: '올림픽대로',
+        isActive: false,
+        routes: [
+          {
+            title: '올림픽대로',
+            steps: [
+              { text: '올림픽대로 이용', icon: 'car' },
+              { text: '성산대교 진입', icon: 'road' },
+              { text: '서부간선도로 진입', icon: 'road' },
+              { text: '고대구로병원 사거리\n방면 이동', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
+      {
+        label: '경부고속도로',
+        isActive: false,
+        routes: [
+          {
+            title: '경부고속도로',
+            steps: [
+              { text: '경부고속도로 이용', icon: 'car' },
+              { text: '양재IC →\n남부순환도로 진입', icon: 'road' },
+              { text: '구로 방향 이동', icon: 'road' },
+              { text: '오류IC 진입 후\n가리봉 방향 이동', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
+      {
+        label: '서해안고속도로',
+        isActive: false,
+        routes: [
+          {
+            title: '서해안고속도로',
+            steps: [
+              { text: '서해안고속도로 이용', icon: 'car' },
+              { text: '금천IC 진출', icon: 'road' },
+              { text: '서부간선도로 진입', icon: 'road' },
+              { text: '고대구로병원 사거리\n방면 이동', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
+      {
+        label: '영동고속도로',
+        isActive: false,
+        routes: [
+          {
+            title: '영동고속도로',
+            steps: [
+              { text: '영동고속도로 이용', icon: 'car' },
+              { text: '서해안고속도로 진입', icon: 'road' },
+              { text: '금천IC 진출', icon: 'road' },
+              { text: '서부간선도로 진입', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      },
+      {
+        label: '외곽순환고속도로',
+        isActive: false,
+        routes: [
+          {
+            title: '외곽순환고속도로',
+            steps: [
+              { text: '외곽순환고속도로 이용', icon: 'car' },
+              { text: '서운JC에서\n경인고속도로 진입', icon: 'road' },
+              { text: '서울 방향 이동', icon: 'road' },
+              { text: '서부간선도로 진입', icon: 'road' },
+              { text: '도착', icon: 'map' }
+            ]
+          }
+        ]
+      }
     ],
     shuttle: {
       routes: [
