@@ -1,10 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { useQuery, useMutation } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useAuthContext } from '@/contexts/AuthContext'
 import { CONSULTANT_ECONSULT_BY_ID_QUERY } from '@/graphql/econsult/queries'
 import { CONSULTANT_REPLY_ECONSULT_MUTATION } from '@/graphql/econsult/mutations'
 import { Header } from '@/components/organisms/Header/Header'
@@ -84,10 +83,14 @@ const mapStatus = (s?: string): 'waiting' | 'expired' | 'completed' | undefined 
 
 export default function EConsultDetailPage() {
   const router = useHospitalRouter()
-  const { user } = useAuthContext()
   const params = useParams()
   const id = params.id as string
-  const doctorId = user?.doctorId
+  const [doctorId, setDoctorId] = useState<string | null>(null)
+
+  useEffect(() => {
+    const storedDoctorId = localStorage.getItem('econsult_doctor_id')
+    setDoctorId(storedDoctorId)
+  }, [])
   const [replyContent, setReplyContent] = useState('')
 
   const { data, loading } = useQuery<ConsultantEConsultByIdData>(CONSULTANT_ECONSULT_BY_ID_QUERY, {
@@ -117,7 +120,7 @@ export default function EConsultDetailPage() {
   const registeredDate = eConsultData?.createdAt ? formatDate(eConsultData.createdAt) : '-'
   const replyData = eConsultData?.reply
   const replyDate = replyData?.createdAt ? formatDateTime(replyData.createdAt) : undefined
-  const replier = replyData?.repliedBy?.userName || eConsultData?.consultant?.name || user?.userName
+  const replier = replyData?.repliedBy?.userName || eConsultData?.consultant?.name || '-'
 
   const maxLength = 1500
   const characterCount = replyContent.length

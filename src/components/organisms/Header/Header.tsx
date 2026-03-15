@@ -8,7 +8,7 @@ import { stripHospitalPrefix } from '@/utils/hospital'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useLogout } from '@/hooks/useAuth'
-import { useConsultantEConsults } from '@/hooks/useConsultantEConsults'
+
 import { useMenus } from '@/hooks/useMenus'
 import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
@@ -109,7 +109,7 @@ const HeaderInner: React.FC = () => {
   const router = useHospitalRouter()
   const { isAuthenticated } = useAuthContext()
   const { logout } = useLogout()
-  const { hasAssignedEConsults } = useConsultantEConsults()
+
   const logoUrl = `/images/common/${hospitalId}/logo-top.png`
   const rawPathname = usePathname()
   const searchParams = useSearchParams()
@@ -157,22 +157,8 @@ const HeaderInner: React.FC = () => {
   const menuItems = useMemo(() => {
     const baseMenus = apiMenuItems.length > 0 ? apiMenuItems : commonMenuItems
 
-    // 자문의 e-Consult 할당이 있으면 협력네트워크 하위에 메뉴 추가
-    const menusWithConsultant = baseMenus.map(menu => {
-      if (menu.label === '협력네트워크' && hasAssignedEConsults) {
-        const alreadyHas = menu.subItems.some(sub => sub.href === '/network/e-consult/list')
-        if (!alreadyHas) {
-          return {
-            ...menu,
-            subItems: [...menu.subItems, { href: '/network/e-consult/list', label: '자문의 e-Consult 조회' }]
-          }
-        }
-      }
-      return menu
-    })
-
-    return isLoggedIn ? [...menusWithConsultant, myPageMenu] : menusWithConsultant
-  }, [isLoggedIn, apiMenuItems, hasAssignedEConsults])
+    return isLoggedIn ? [...baseMenus, myPageMenu] : baseMenus
+  }, [isLoggedIn, apiMenuItems])
 
   // Breadcrumb 매칭용 메뉴 (API 메뉴 + 하드코딩 메뉴 모두 포함)
   const breadcrumbMenuItems = useMemo(() => {

@@ -3,7 +3,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useAuthContext } from '@/contexts/AuthContext'
 import { CONSULTANT_ASSIGNED_ECONSULTS_QUERY } from '@/graphql/econsult/queries'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -97,8 +96,13 @@ const mapApiStatus = (status: string): 'waiting' | 'expired' | 'completed' => {
 
 export default function EConsultListPage() {
   const router = useHospitalRouter()
-  const { user } = useAuthContext()
-  const doctorId = user?.doctorId
+  const [doctorId, setDoctorId] = useState<string | null>(null)
+
+  // e-consult 전용 doctorId를 localStorage에서 읽기
+  useEffect(() => {
+    const storedDoctorId = localStorage.getItem('econsult_doctor_id')
+    setDoctorId(storedDoctorId)
+  }, [])
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
