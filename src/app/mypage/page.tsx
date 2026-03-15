@@ -166,12 +166,32 @@ export default function MyPage() {
                   <button type='button' className={styles.downloadBtn}>
                     사용자 매뉴얼
                   </button>
-                  <button type='button' className={styles.downloadBtn}>
+                  <a
+                    href={
+                      hospitalId === 'guro'
+                        ? '/medical_referral_form/Medical_referral_form_guro.hwp'
+                        : hospitalId === 'ansan'
+                          ? '/medical_referral_form/Medical_referral_form_asan.hwp'
+                          : '/medical_referral_form/Medical_referral_form_anam.pdf'
+                    }
+                    download
+                    className={styles.downloadBtn}
+                  >
                     진료의뢰서 서식
-                  </button>
-                  <button type='button' className={styles.downloadBtn}>
-                    환자 개인정보 동의서 서식
-                  </button>
+                  </a>
+                  {hospitalId === 'anam' ? (
+                    <a
+                      href='/application_patient_form_anam.hwp'
+                      download
+                      className={styles.downloadBtn}
+                    >
+                      환자 개인정보 동의서 서식
+                    </a>
+                  ) : (
+                    <button type='button' className={styles.downloadBtn}>
+                      환자 개인정보 동의서 서식
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
