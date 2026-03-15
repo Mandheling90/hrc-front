@@ -175,10 +175,10 @@ export function LocationPageGuro() {
           {locationInfo.subway && Array.isArray(locationInfo.subway) && (
             <TransportAccordion title='지하철' defaultExpanded={true}>
               <div className={styles.subwayRoutesContainer}>
-                <button type='button' className={styles.subwaySearchButton}>
+                <a href='https://map.naver.com/p/subway/1000/-/-/-?c=14139483.8922834,4521084.3550941,15,0,0,0,dh' target='_blank' rel='noopener noreferrer' className={styles.subwaySearchButton}>
                   <span className={styles.subwaySearchButtonText}>지하철로 길찾기</span>
                   <SearchIcon width={16} height={16} fill='#ffffff' />
-                </button>
+                </a>
                 <div className={styles.subwayRoutesGrid}>
                   <div className={styles.subwayRoutesColumn}>
                     {locationInfo.subway.slice(0, 2).map((route, index) => (

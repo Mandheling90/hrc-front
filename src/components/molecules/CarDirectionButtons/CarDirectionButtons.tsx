@@ -19,7 +19,7 @@ export const CarDirectionButtons: React.FC<CarDirectionButtonsProps> = ({ direct
             <button
               key={index}
               type='button'
-              className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
+              className={`${styles.carDirectionButton} `}
               onClick={() => {
                 if (direction.routes && direction.routes.length > 0) {
                   onDirectionClick(direction)
@@ -37,7 +37,7 @@ export const CarDirectionButtons: React.FC<CarDirectionButtonsProps> = ({ direct
               <button
                 key={index + 4}
                 type='button'
-                className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
+                className={`${styles.carDirectionButton} `}
                 onClick={() => {
                   if (direction.routes && direction.routes.length > 0) {
                     onDirectionClick(direction)
@@ -59,7 +59,7 @@ export const CarDirectionButtons: React.FC<CarDirectionButtonsProps> = ({ direct
             <button
               key={index}
               type='button'
-              className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
+              className={`${styles.carDirectionButton} `}
               onClick={() => {
                 if (direction.routes && direction.routes.length > 0) {
                   onDirectionClick(direction)
@@ -77,7 +77,7 @@ export const CarDirectionButtons: React.FC<CarDirectionButtonsProps> = ({ direct
               <button
                 key={index + 3}
                 type='button'
-                className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
+                className={`${styles.carDirectionButton} `}
                 onClick={() => {
                   if (direction.routes && direction.routes.length > 0) {
                     onDirectionClick(direction)
@@ -96,7 +96,7 @@ export const CarDirectionButtons: React.FC<CarDirectionButtonsProps> = ({ direct
               <button
                 key={index + 6}
                 type='button'
-                className={`${styles.carDirectionButton} ${direction.isActive ? styles.carDirectionButtonActive : ''}`}
+                className={`${styles.carDirectionButton} `}
                 onClick={() => {
                   if (direction.routes && direction.routes.length > 0) {
                     onDirectionClick(direction)
@@ -117,7 +117,7 @@ export const CarDirectionButtons: React.FC<CarDirectionButtonsProps> = ({ direct
           <button
             key={index}
             type='button'
-            className={`${styles.carDirectionButtonMobile} ${direction.isActive ? styles.carDirectionButtonMobileActive : ''}`}
+            className={`${styles.carDirectionButtonMobile} `}
             onClick={() => {
               if (direction.routes && direction.routes.length > 0) {
                 onDirectionClick(direction)

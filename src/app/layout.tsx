@@ -8,7 +8,10 @@ export const metadata: Metadata = {
     default: '고려대학교 진료협력센터',
     template: '%s | 고려대학교 진료협력센터'
   },
-  description: '고려대학교 진료협력센터 - 진료의뢰, 협력네트워크, 의료상담 서비스'
+  description: '고려대학교 진료협력센터 - 진료의뢰, 협력네트워크, 의료상담 서비스',
+  icons: {
+    icon: '/images/favicon.ico'
+  }
 }
 
 export default function RootLayout({

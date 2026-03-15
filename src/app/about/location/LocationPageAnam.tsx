@@ -67,12 +67,12 @@ export function LocationPageAnam() {
                     />
                   </div>
                   <div className={styles.subwayMapFooter}>
-                    <button type='button' className={styles.subwaySearchButton}>
+                    <a href='https://map.naver.com/p/subway/1000/-/-/-?c=14139483.8922834,4521084.3550941,15,0,0,0,dh' target='_blank' rel='noopener noreferrer' className={styles.subwaySearchButton}>
                       <span className={styles.subwaySearchButtonText}>지하철로 길찾기</span>
                       <div className={styles.subwaySearchButtonIcon}>
                         <SearchIcon width={16} height={16} fill='#ffffff' />
                       </div>
-                    </button>
+                    </a>
                     <p className={styles.subwayMapSource}>이미지 출처 : 서울교통공사</p>
                   </div>
                 </div>

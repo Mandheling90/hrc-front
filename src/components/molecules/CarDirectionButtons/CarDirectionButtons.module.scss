@@ -110,22 +110,7 @@
   }
 
   &:hover {
-    border-color: $gray-6;
-  }
-
-  &.carDirectionButtonActive {
-    width: 260px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    background-color: #ffffff;
-    padding: 15px 30px;
-    border-radius: 150px;
-    border-width: 4px;
-    border-style: solid;
     border-color: #9f1836;
-    box-sizing: border-box;
   }
 
   @include tablet {
@@ -146,11 +131,7 @@
       height: 20px;
     }
 
-    &.carDirectionButtonActive {
-      flex: 1 1 0%;
-      width: auto;
-      height: 47px;
-      padding: 10px 20px;
+    &:hover {
       border-width: 2px;
       border-color: #9f1836;
     }
@@ -198,8 +179,7 @@
     height: 16px;
   }
 
-  &.carDirectionButtonMobileActive {
+  &:hover {
     border-color: #9f1836;
-    border-width: 2px;
   }
 }

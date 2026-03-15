@@ -41,10 +41,10 @@ export function SubwayInfoAnsan({ subwayInfo }: SubwayInfoAnsanProps) {
 
       {/* 하단 버튼 및 출처 */}
       <div className={styles.footer}>
-        <button type='button' className={styles.searchButton}>
+        <a href='https://map.naver.com/p/subway/1000/-/-/-?c=14139483.8922834,4521084.3550941,15,0,0,0,dh' target='_blank' rel='noopener noreferrer' className={styles.searchButton}>
           <span className={styles.searchButtonText}>지하철로 길찾기</span>
           <SearchIcon width={16} height={16} fill='#ffffff' />
-        </button>
+        </a>
         <p className={styles.source}>이미지 출처 : 한국철도공사</p>
       </div>
     </div>
