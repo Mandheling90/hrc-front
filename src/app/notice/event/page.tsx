@@ -200,7 +200,9 @@ function AnsanEducationEventPage() {
   const startIndex = (currentPage - 1) * itemsPerPage + 1
   const { articles, totalCount, loading } = useHospitalLectures(itemsPerPage, startIndex)
 
-  const totalPages = Math.ceil(totalCount / itemsPerPage)
+  // API의 totalCount가 0을 반환하므로, articles 개수로 다음 페이지 존재 여부를 판단
+  const hasNextPage = articles.length === itemsPerPage
+  const totalPages = hasNextPage ? currentPage + 1 : currentPage
 
   useEffect(() => {
     const checkMobile = () => {
@@ -213,14 +215,14 @@ function AnsanEducationEventPage() {
 
   // 테이블 데이터 변환
   const tableData = useMemo(() => {
-    return articles.map((article, index) => ({
+    return articles.map(article => ({
       id: String(article.articleNo),
-      number: (totalCount || articles.length) - ((currentPage - 1) * itemsPerPage + index),
+      number: article.articleNo,
       title: article.title,
       registeredDate: article.createdDt?.split('T')[0] ?? '',
       linkUrl: article.linkUrl
     }))
-  }, [articles, totalCount, currentPage, itemsPerPage])
+  }, [articles])
 
   const columns: TableColumn<(typeof tableData)[number]>[] = useMemo(
     () => [
@@ -317,7 +319,7 @@ function AnsanEducationEventPage() {
             {!loading && tableData.length === 0 && <div className={styles.emptyState}>등록된 교육/행사가 없습니다.</div>}
           </div>
 
-          {totalPages > 1 && (
+          {tableData.length > 0 && (
             <div className={styles.paginationWrapper}>
               <Pagination
                 currentPage={currentPage}
