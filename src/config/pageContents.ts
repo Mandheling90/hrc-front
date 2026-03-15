@@ -419,9 +419,9 @@ const anamContent: HospitalPageContent = {
       longitude: 127.0268
     },
     mapLinks: {
-      naver: 'https://map.naver.com/v5/entry/place/11583195',
-      daum: 'https://map.daum.net/link/map/고려대학교안암병원,37.5865,127.0297',
-      google: 'https://maps.google.com/?q=고려대학교안암병원'
+      naver: 'https://map.naver.com/v5/search/서울 성북구 고려대로 73',
+      daum: 'https://map.kakao.com/?q=서울 성북구 고려대로 73',
+      google: 'https://maps.google.com/?q=서울 성북구 고려대로 73'
     },
     subway: {
       line: '6호선',
@@ -921,9 +921,9 @@ const guroContent: HospitalPageContent = {
       longitude: 126.8847
     },
     mapLinks: {
-      naver: 'https://map.naver.com/v5/entry/place/11710215',
-      daum: 'https://map.daum.net/link/map/고려대학교구로병원,37.4928,126.8856',
-      google: 'https://maps.google.com/?q=고려대학교구로병원'
+      naver: 'https://map.naver.com/v5/search/서울시 구로구 구로동로 148',
+      daum: 'https://map.kakao.com/?q=서울시 구로구 구로동로 148',
+      google: 'https://maps.google.com/?q=서울시 구로구 구로동로 148'
     },
     car: [
       { label: '사당동 방면', isActive: false },
@@ -1530,9 +1530,9 @@ const ansanContent: HospitalPageContent = {
       longitude: 126.8252
     },
     mapLinks: {
-      naver: 'https://map.naver.com/v5/entry/place/11664050',
-      daum: 'https://map.daum.net/link/map/고려대학교안산병원,37.3167,126.8306',
-      google: 'https://maps.google.com/?q=고려대학교안산병원'
+      naver: 'https://map.naver.com/v5/search/경기도 안산시 단원구 적금로 123',
+      daum: 'https://map.kakao.com/?q=경기도 안산시 단원구 적금로 123',
+      google: 'https://maps.google.com/?q=경기도 안산시 단원구 적금로 123'
     },
     // 진료협력센터 정보
     medicalCenter: {

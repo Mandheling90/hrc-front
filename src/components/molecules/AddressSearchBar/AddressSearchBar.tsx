@@ -16,6 +16,14 @@ export interface AddressSearchBarProps {
 }
 
 export const AddressSearchBar: React.FC<AddressSearchBarProps> = ({ jibun, road, onSearchClick, className = '' }) => {
+  const handleSearchClick = () => {
+    if (onSearchClick) {
+      onSearchClick()
+    } else {
+      window.open(`https://map.kakao.com/?q=${encodeURIComponent(road)}`, '_blank', 'noopener,noreferrer')
+    }
+  }
+
   return (
     <div className={`${styles.addressInfoWrapper} ${className}`}>
       <div className={styles.addressInfo}>
@@ -31,7 +39,7 @@ export const AddressSearchBar: React.FC<AddressSearchBarProps> = ({ jibun, road,
           </div>
         </div>
       </div>
-      <button type='button' className={styles.searchButton} onClick={onSearchClick} aria-label='길찾기 검색'>
+      <button type='button' className={styles.searchButton} onClick={handleSearchClick} aria-label='길찾기 검색'>
         <span className={styles.searchButtonText}>길 찾기</span>
         <div className={styles.searchButtonIcon}>
           <SearchIcon width={24} height={24} fill='#ffffff' />
