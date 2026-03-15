@@ -592,7 +592,8 @@ const guroContent: HospitalPageContent = {
         icon: 'SNSTalkIcon',
         title: 'SNS 의뢰',
         description: ['고대구로병원 카카오톡 채널', '평일 08:30~17:30'],
-        href: '#',
+        href: 'https://pf.kakao.com/_JqDxkb',
+        external: true,
         mobileSpan: 2,
         layoutType: 'icon-title'
       }

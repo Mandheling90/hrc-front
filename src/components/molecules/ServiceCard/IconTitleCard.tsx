@@ -9,6 +9,7 @@ export interface IconTitleCardProps {
   title: string
   description: string[]
   href?: string
+  external?: boolean
   onClick?: () => void
   className?: string
 }
@@ -22,6 +23,7 @@ export const IconTitleCard: React.FC<IconTitleCardProps> = ({
   title,
   description,
   href,
+  external,
   onClick,
   className = ''
 }) => {
@@ -45,7 +47,7 @@ export const IconTitleCard: React.FC<IconTitleCardProps> = ({
 
   if (href) {
     return (
-      <Link href={href} className={cardClassName}>
+      <Link href={href} className={cardClassName} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
         {content}
       </Link>
     )

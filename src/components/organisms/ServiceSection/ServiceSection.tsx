@@ -33,6 +33,8 @@ export interface ServiceItem {
   badgeText?: string
   /** 모바일에서 정렬 방식 (기본값: 'left') */
   mobileAlign?: 'left' | 'center'
+  /** 외부 링크 여부 (새창 열기) */
+  external?: boolean
 }
 
 export interface ServiceSectionProps {
@@ -119,6 +121,7 @@ export const ServiceSection: React.FC<ServiceSectionProps> = ({
               title={service.title}
               description={descArray}
               href={service.href}
+              external={service.external}
               onClick={service.onClick}
               className={service.className}
             />

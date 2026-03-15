@@ -111,6 +111,7 @@ interface InquiryLink {
   href: string
   label: string
   icon?: string
+  external?: boolean
 }
 
 const inquiryLinksAnam: InquiryLink[] = [
@@ -121,7 +122,7 @@ const inquiryLinksAnam: InquiryLink[] = [
 
 const inquiryLinksGuro: InquiryLink[] = [
   { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
-  { href: '#', label: '진료협력센터 카카오톡', icon: 'kakao' }
+  { href: 'https://pf.kakao.com/_JqDxkb', label: '진료협력센터 카카오톡', icon: 'kakao', external: true }
 ]
 
 const inquiryLinksAnsan: InquiryLink[] = [
@@ -129,11 +130,21 @@ const inquiryLinksAnsan: InquiryLink[] = [
   { href: '/referral/request/hira', label: '심평원중계시스템 의뢰' }
 ]
 
-const downloadLinks = [
-  { href: '#', label: '진료의뢰서' },
-  { href: '#', label: '협력병의원 체결 신청서류' },
-  { href: '#', label: '진료정보공개동의서' }
-]
+const downloadLinksByHospital: Record<string, { href: string; label: string; download?: boolean }[]> = {
+  anam: [
+    { href: '/medical_referral_form/Medical_referral_form_anam.pdf', label: '진료의뢰서', download: true },
+    { href: '/application_form/application_form_anam.hwp', label: '협력병의원 체결 신청서류', download: true },
+    { href: '#', label: '진료정보공개동의서' }
+  ],
+  guro: [
+    { href: '/medical_referral_form/Medical_referral_form_guro.hwp', label: '진료의뢰서', download: true },
+    { href: '/application_form/application_form_guro.hwp', label: '협력병의원 체결 신청서류', download: true }
+  ],
+  ansan: [
+    { href: '/medical_referral_form/Medical_referral_form_asan.hwp', label: '진료의뢰서', download: true },
+    { href: '/application_form/application_form_ansan.hwp', label: '협력병의원 체결 신청서류', download: true }
+  ]
+}
 
 // 진료과 안내 아이콘
 const HospitalIcon = () => (
@@ -601,10 +612,12 @@ export const HeroSection: React.FC = () => {
   // 병원별 연락처 정보
   const contactInfo = isGuro ? contactInfoGuro : isAnsan ? contactInfoAnsan : contactInfoAnam
 
-  // 병원별 서식 다운로드 링크 (구로/안산: 진료정보공개동의서 제외)
-  const filteredDownloadLinks = isAnam
-    ? downloadLinks
-    : downloadLinks.filter(link => link.label !== '진료정보공개동의서')
+  // 병원별 서식 다운로드 링크
+  const filteredDownloadLinks = isGuro
+    ? downloadLinksByHospital.guro
+    : isAnsan
+      ? downloadLinksByHospital.ansan
+      : downloadLinksByHospital.anam
 
   // 현재 활성 배너
   const currentBanner = hasBanners ? banners[currentIndex] : null
@@ -832,6 +845,7 @@ export const HeroSection: React.FC = () => {
                   key={index}
                   href={link.href}
                   className={`${styles.line} ${link.icon === 'kakao' ? styles.kakaoLink : ''}`}
+                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   {link.label}
                   {link.icon === 'kakao' && <KakaoIcon />}
@@ -850,12 +864,19 @@ export const HeroSection: React.FC = () => {
               <ChevronIcon isOpen={isDownloadOpen} />
             </button>
             <div className={styles.linkList}>
-              {filteredDownloadLinks.map((link, index) => (
-                <Link key={index} href={link.href} className={styles.line}>
-                  <span>{link.label}</span>
-                  <DownloadIcon />
-                </Link>
-              ))}
+              {filteredDownloadLinks.map((link, index) =>
+                link.download ? (
+                  <a key={index} href={link.href} download className={styles.line}>
+                    <span>{link.label}</span>
+                    <DownloadIcon />
+                  </a>
+                ) : (
+                  <Link key={index} href={link.href} className={styles.line}>
+                    <span>{link.label}</span>
+                    <DownloadIcon />
+                  </Link>
+                )
+              )}
             </div>
           </div>
           <div className={`${styles.box} ${styles.square}`}>
