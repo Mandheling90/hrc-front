@@ -10,7 +10,18 @@ declare global {
         load: (callback: () => void) => void
         LatLng: new (lat: number, lng: number) => unknown
         Map: new (container: HTMLElement, options: { center: unknown; level: number }) => unknown
-        Marker: new (options: { map: unknown; position: unknown }) => unknown
+        Marker: new (options: { map: unknown; position: unknown; image?: unknown }) => unknown
+        MarkerImage: new (src: string, size: unknown, options?: { offset?: unknown }) => unknown
+        Size: new (width: number, height: number) => unknown
+        Point: new (x: number, y: number) => unknown
+        InfoWindow: new (options: { content: string; removable?: boolean }) => unknown
+        CustomOverlay: new (options: { content: string | HTMLElement; map?: unknown; position: unknown; yAnchor?: number; xAnchor?: number }) => { setMap: (map: unknown | null) => void }
+        services: {
+          Places: new () => {
+            keywordSearch: (keyword: string, callback: (result: Array<{ id: string; place_name: string; road_address_name: string; address_name: string; phone: string; place_url: string; x: string; y: string }>, status: string) => void, options?: { location?: unknown; radius?: number; size?: number }) => void
+          }
+          Status: { OK: string; ZERO_RESULT: string; ERROR: string }
+        }
       }
     }
   }

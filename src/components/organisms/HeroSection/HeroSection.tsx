@@ -384,7 +384,7 @@ const iconMap: { [key: string]: React.FC } = {
 const infoLinks = [
   { href: '#', icon: 'doctor', label: '의료진 검색' },
   { href: '#', icon: 'hospital', label: '진료과 안내' },
-  { href: '#', icon: 'calendar', label: '외래시간표' },
+  { href: '#', icon: 'calendar', label: '협력네트워크' },
   { href: '/about/location', icon: 'map', label: '오시는 길' }
 ]
 
@@ -581,7 +581,6 @@ export const HeroSection: React.FC = () => {
   const [isAtTop, setIsAtTop] = useState(true)
   const lastBoxRef = useRef<HTMLDivElement>(null)
   const [scrollDownRight, setScrollDownRight] = useState<number | null>(null)
-
 
   const isMobile = useIsMobile()
   const isDark = useIsDark()
@@ -896,11 +895,20 @@ export const HeroSection: React.FC = () => {
 
       {/* Scroll Down 인디케이터 - section1 기준 absolute, container 밖 */}
       {isAtTop && (
-        <div className={styles.scrollDown} style={scrollDownRight !== null ? { right: `${scrollDownRight}px` } : undefined}>
+        <div
+          className={styles.scrollDown}
+          style={scrollDownRight !== null ? { right: `${scrollDownRight}px` } : undefined}
+        >
           <span className={styles.scrollDownText}>Scroll Down</span>
           <div className={styles.scrollDownIcon}>
             <svg width='23' height='23' viewBox='0 0 23 23' fill='none' xmlns='http://www.w3.org/2000/svg'>
-              <path d='M7 10L11.5 14.5L16 10' stroke='white' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+              <path
+                d='M7 10L11.5 14.5L16 10'
+                stroke='white'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
             </svg>
           </div>
         </div>
