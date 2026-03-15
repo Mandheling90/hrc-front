@@ -266,7 +266,7 @@ export default function EConsultDetailPage() {
             <div className={styles.replySection}>
               <div className={styles.replyTop}>
                 <div className={styles.replyHeader}>
-                  <span className={styles.replierName}>{user?.userName || '-'}</span>
+                  <span className={styles.replierName}>{eConsultData?.consultant?.name || '-'}</span>
                   <span className={styles.replyLabel}>답변 내용을 입력해주세요.</span>
                 </div>
                 <Textarea
