@@ -94,13 +94,15 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
           <div className={styles.infoItem}>
             <span className={styles.label}>전화번호</span>
             <span className={styles.separator}>|</span>
-            <span className={styles.phoneValue}>{phone}</span>
+            <a href={`tel:${phone}`} className={styles.phoneValue} onClick={e => e.stopPropagation()}>{phone}</a>
           </div>
-          <div className={styles.infoItem}>
-            <span className={styles.label}>팩스번호</span>
-            <span className={styles.separator}>|</span>
-            <span className={styles.faxValue}>{fax}</span>
-          </div>
+          {fax && (
+            <div className={styles.infoItem}>
+              <span className={styles.label}>팩스번호</span>
+              <span className={styles.separator}>|</span>
+              <span className={styles.faxValue}>{fax}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
