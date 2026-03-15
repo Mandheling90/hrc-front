@@ -158,7 +158,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               type='tel'
               placeholder='-없이 입력해주세요.'
               value={contactNumber}
-              onChange={e => setContactNumber(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setContactNumber(filtered)
+              }}
             />
 
             {/* 휴대전화 */}
@@ -169,7 +172,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               type='tel'
               placeholder='-없이 입력해주세요.'
               value={mobilePhone}
-              onChange={e => setMobilePhone(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setMobilePhone(filtered)
+              }}
             />
 
           </div>
@@ -222,7 +228,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               type='text'
               placeholder='총 직원 수를 입력해주세요.'
               value={totalEmployees}
-              onChange={e => setTotalEmployees(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setTotalEmployees(filtered)
+              }}
             />
 
             {/* 전문의 수 */}
@@ -234,7 +243,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               type='text'
               placeholder='전문의 수를 입력해주세요.'
               value={specialists}
-              onChange={e => setSpecialists(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setSpecialists(filtered)
+              }}
             />
 
             {/* 간호사 수 */}
@@ -246,7 +258,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               type='text'
               placeholder='간호사 수를 입력해주세요.'
               value={nurses}
-              onChange={e => setNurses(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setNurses(filtered)
+              }}
             />
           </div>
         </div>

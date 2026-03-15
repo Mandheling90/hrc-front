@@ -20,6 +20,9 @@ declare global {
           Places: new () => {
             keywordSearch: (keyword: string, callback: (result: Array<{ id: string; place_name: string; road_address_name: string; address_name: string; phone: string; place_url: string; x: string; y: string }>, status: string) => void, options?: { location?: unknown; radius?: number; size?: number }) => void
           }
+          Geocoder: new () => {
+            addressSearch: (address: string, callback: (result: Array<{ x: string; y: string; address_name: string; road_address?: { address_name: string } }>, status: string) => void) => void
+          }
           Status: { OK: string; ZERO_RESULT: string; ERROR: string }
         }
       }

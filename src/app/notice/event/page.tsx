@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState, useEffect } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useHospital } from '@/hooks'
+import { useHospital, useHospitalLectures } from '@/hooks'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
@@ -179,18 +179,172 @@ const categoryOptions = [
 
 export default function NoticeEducationEventPage() {
   const router = useHospitalRouter()
-  const { isGuro } = useHospital()
+  const { isGuro, isAnsan } = useHospital()
+
+  // 안산: hospitalLectures API 사용
+  if (isAnsan) {
+    return <AnsanEducationEventPage />
+  }
+
+  // 구로: 썸네일형, 안암: 게시판형
+  return <DefaultEducationEventPage isGuro={isGuro} />
+}
+
+// ── 안산 전용 페이지 (hospitalLectures API) ──
+function AnsanEducationEventPage() {
+  const router = useHospitalRouter()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [isMobile, setIsMobile] = useState(false)
+  const itemsPerPage = 10
+
+  const startIndex = (currentPage - 1) * itemsPerPage + 1
+  const { articles, totalCount, loading } = useHospitalLectures(itemsPerPage, startIndex)
+
+  const totalPages = Math.ceil(totalCount / itemsPerPage)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // 테이블 데이터 변환
+  const tableData = useMemo(() => {
+    return articles.map((article, index) => ({
+      id: String(article.articleNo),
+      number: (totalCount || articles.length) - ((currentPage - 1) * itemsPerPage + index),
+      title: article.title,
+      registeredDate: article.createdDt?.split('T')[0] ?? '',
+      linkUrl: article.linkUrl
+    }))
+  }, [articles, totalCount, currentPage, itemsPerPage])
+
+  const columns: TableColumn<(typeof tableData)[number]>[] = useMemo(
+    () => [
+      {
+        id: 'number',
+        label: '번호',
+        width: '70px',
+        align: 'center',
+        renderCell: item => <span className={styles.numberText}>{item.number}</span>
+      },
+      {
+        id: 'title',
+        label: '제목',
+        width: '1fr',
+        align: 'left',
+        textOverflow: 'ellipsis',
+        renderCell: item => <span className={styles.titleText}>{item.title}</span>
+      },
+      {
+        id: 'registeredDate',
+        label: '등록일',
+        width: '150px',
+        align: 'center',
+        renderCell: item => <span className={styles.dateText}>{item.registeredDate}</span>
+      }
+    ],
+    []
+  )
+
+  const handleRowClick = (item: (typeof tableData)[number]) => {
+    if (item.linkUrl) {
+      window.open(item.linkUrl, '_blank', 'noopener,noreferrer')
+    }
+  }
+
+  const handleCardClick = (cardIndex: number) => {
+    const item = tableData[cardIndex]
+    if (item) {
+      handleRowClick(item)
+    }
+  }
+
+  const cardData: CardRow[][] = useMemo(() => {
+    return tableData.map(item => [
+      {
+        id: 'title',
+        leftContent: (
+          <div className={styles.boardCardTitleWrapper}>
+            <span className={styles.boardCardTitle}>{item.title}</span>
+          </div>
+        ),
+        rightContent: null,
+        highlighted: false,
+        twoLine: false
+      },
+      {
+        id: 'date',
+        leftContent: null,
+        rightContent: <span className={styles.boardCardDate}>{item.registeredDate}</span>,
+        highlighted: false,
+        twoLine: false
+      }
+    ])
+  }, [tableData])
+
+  return (
+    <div className={styles.wrap}>
+      <Header />
+      <main className={styles.main}>
+        <div className='container'>
+          <h1 className={styles.pageTitle}>교육 / 행사</h1>
+
+          <div className={styles.tableSection}>
+            {loading && tableData.length === 0 ? (
+              <div className={styles.emptyState}>데이터를 불러오는 중입니다...</div>
+            ) : !isMobile ? (
+              <Table
+                columns={columns}
+                data={tableData}
+                getRowKey={item => item.id}
+                onRowClick={handleRowClick}
+                className={styles.boardTable}
+                enableHoverStyle
+              />
+            ) : (
+              <CardList
+                cards={cardData}
+                getCardKey={(card, index) => tableData[index]?.id || index}
+                onCardClick={handleCardClick}
+                className={styles.boardCardList}
+              />
+            )}
+
+            {!loading && tableData.length === 0 && <div className={styles.emptyState}>등록된 교육/행사가 없습니다.</div>}
+          </div>
+
+          {totalPages > 1 && (
+            <div className={styles.paginationWrapper}>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                maxVisiblePages={5}
+              />
+            </div>
+          )}
+        </div>
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
+// ── 기본 페이지 (구로: 썸네일형, 안암: 게시판형) ──
+function DefaultEducationEventPage({ isGuro }: { isGuro: boolean }) {
+  const router = useHospitalRouter()
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [isMobile, setIsMobile] = useState(false)
 
-  // 구로는 썸네일, 안암/안산은 게시판
   const useThumbnailLayout = isGuro
-
   const itemsPerPage = useThumbnailLayout ? 9 : 10
 
-  // 모바일 감지 (게시판형에서 Table/CardList 전환용)
   useEffect(() => {
     if (useThumbnailLayout) return
     const checkMobile = () => {
@@ -201,7 +355,6 @@ export default function NoticeEducationEventPage() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [useThumbnailLayout])
 
-  // 썸네일형 필터링
   const filteredThumbnailData = useMemo(() => {
     if (!useThumbnailLayout) return []
     if (!searchQuery.trim()) return mockEducationEvents
@@ -209,7 +362,6 @@ export default function NoticeEducationEventPage() {
     return mockEducationEvents.filter(item => item.title.toLowerCase().includes(query))
   }, [searchQuery, useThumbnailLayout])
 
-  // 게시판형 필터링
   const filteredBoardData = useMemo(() => {
     if (useThumbnailLayout) return []
     if (!searchQuery.trim()) return mockBoardEvents
@@ -217,21 +369,18 @@ export default function NoticeEducationEventPage() {
     if (selectedCategory === 'title') {
       return mockBoardEvents.filter(item => item.title.toLowerCase().includes(query))
     }
-    // 전체 및 내용 검색 (TODO: content 필드 추가 후)
     return mockBoardEvents.filter(item => item.title.toLowerCase().includes(query))
   }, [searchQuery, selectedCategory, useThumbnailLayout])
 
   const filteredData = useThumbnailLayout ? filteredThumbnailData : filteredBoardData
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
 
-  // 썸네일형 페이지네이션
   const paginatedThumbnailData = useMemo(() => {
     if (!useThumbnailLayout) return []
     const startIndex = (currentPage - 1) * itemsPerPage
     return filteredThumbnailData.slice(startIndex, startIndex + itemsPerPage)
   }, [filteredThumbnailData, currentPage, itemsPerPage, useThumbnailLayout])
 
-  // 게시판형 페이지네이션
   const paginatedBoardData = useMemo(() => {
     if (useThumbnailLayout) return []
     const startIndex = (currentPage - 1) * itemsPerPage
@@ -251,7 +400,6 @@ export default function NoticeEducationEventPage() {
     handleSearch()
   }
 
-  // 게시판형 테이블 컬럼
   const boardColumns: TableColumn<EducationEventBoardData>[] = useMemo(
     () => [
       {
@@ -291,7 +439,6 @@ export default function NoticeEducationEventPage() {
     }
   }
 
-  // 게시판형 모바일 카드 데이터
   const boardCardData: CardRow[][] = useMemo(() => {
     return paginatedBoardData.map(item => [
       {
@@ -322,7 +469,6 @@ export default function NoticeEducationEventPage() {
         <div className='container'>
           <h1 className={styles.pageTitle}>교육 / 행사</h1>
 
-          {/* 검색 영역: 썸네일형은 단순 검색, 게시판형은 카테고리+검색 */}
           {useThumbnailLayout ? (
             <form className={styles.searchSection} onSubmit={handleSubmit}>
               <div className={styles.searchField}>
@@ -353,7 +499,6 @@ export default function NoticeEducationEventPage() {
             />
           )}
 
-          {/* 썸네일형 카드 레이아웃 (구로) */}
           {useThumbnailLayout && (
             <section className={styles.cardGrid} aria-label='교육 및 행사 목록'>
               {paginatedThumbnailData.map(item => (
@@ -372,7 +517,6 @@ export default function NoticeEducationEventPage() {
             </section>
           )}
 
-          {/* 게시판형 테이블/카드 레이아웃 (안암/안산) */}
           {!useThumbnailLayout && (
             <div className={styles.tableSection}>
               {!isMobile ? (

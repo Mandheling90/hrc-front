@@ -173,7 +173,10 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             type='tel'
             placeholder='-없이 입력해주세요.'
             value={faxNumber}
-            onChange={e => setFaxNumber(e.target.value)}
+            onChange={e => {
+              const filtered = e.target.value.replace(/[^0-9]/g, '')
+              setFaxNumber(filtered)
+            }}
           />
 
           {/* 병원 홈페이지 주소 */}

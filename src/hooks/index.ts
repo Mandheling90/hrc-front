@@ -46,6 +46,12 @@ export { useHospitalPathname } from '@/hooks/useHospitalPathname'
 // Hospital SNS
 export { useHospitalSns } from '@/hooks/useHospitalSns'
 
+// Hospital News - 병원소식
+export { useHospitalNews } from '@/hooks/useHospitalNews'
+
+// Hospital Lectures - 병원 강의/교육
+export { useHospitalLectures } from '@/hooks/useHospitalLectures'
+
 // Menu Hooks - GNB 메뉴
 export { useMenus } from '@/hooks/useMenus'
 

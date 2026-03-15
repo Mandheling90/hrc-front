@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect, useMemo, useRef } from 'react'
-import { useMutation, useQuery } from '@apollo/client/react'
+import React, { useState, useEffect, useMemo } from 'react'
+import { useMutation } from '@apollo/client/react'
 import { useSearchParams } from 'next/navigation'
 import { useHospital } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
@@ -23,7 +23,6 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
 import type { Doctor } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 import { CREATE_ECONSULT_MUTATION } from '@/graphql/econsult/mutations'
-import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 
@@ -51,10 +50,14 @@ export default function EConsultPage() {
   const [hospitalName, setHospitalName] = useState('')
   const [email, setEmail] = useState('')
   const [emailConsent, setEmailConsent] = useState('agree')
-  const [consultingDoctor, setConsultingDoctor] = useState('')
-  const [selectedDoctorId, setSelectedDoctorId] = useState('')
-  const [selectedDoctorName, setSelectedDoctorName] = useState('')
-  const [selectedDepartment, setSelectedDepartment] = useState('')
+  const [consultingDoctor, setConsultingDoctor] = useState(
+    hasPreselected
+      ? preselectedDepartment ? `${preselectedDepartment} ${preselectedDoctorName}` : preselectedDoctorName
+      : ''
+  )
+  const [selectedDoctorId, setSelectedDoctorId] = useState(preselectedDoctorId)
+  const [selectedDoctorName, setSelectedDoctorName] = useState(preselectedDoctorName)
+  const [selectedDepartment, setSelectedDepartment] = useState(preselectedDepartment)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [contentByteCount, setContentByteCount] = useState(0)
@@ -63,36 +66,6 @@ export default function EConsultPage() {
     isOpen: false,
     message: ''
   })
-
-  // 자문의 목록 조회
-  const { data: consultantsData, loading: consultantsLoading } = useQuery<{
-    consultantDoctors: Array<{
-      id: string
-      doctorId: string
-      name: string
-      email: string
-      departmentId: string
-      department: string
-      photoUrl: string
-      specialty: string
-      isActive: boolean
-    }>
-  }>(CONSULTANT_DOCTORS_QUERY)
-
-  const econsultDoctors: Doctor[] = useMemo(() => {
-    return (consultantsData?.consultantDoctors ?? [])
-      .filter(c => c.isActive)
-      .map(c => ({
-        id: c.id,
-        doctorId: c.doctorId,
-        name: c.name,
-        email: c.email || '',
-        department: c.department || '',
-        photoUrl: c.photoUrl || undefined,
-        bio: c.specialty || undefined,
-        selected: false
-      }))
-  }, [consultantsData])
 
   // 로그인 사용자 정보로 폼 초기화
   useEffect(() => {
@@ -103,29 +76,6 @@ export default function EConsultPage() {
       setEmailConsent(user.profile?.emailConsent ? 'agree' : 'disagree')
     }
   }, [user])
-
-  // 진료과 안내에서 넘어온 경우: consultantDoctors에서 매칭하여 자문의 자동 세팅
-  const preselectedApplied = useRef(false)
-  useEffect(() => {
-    if (hasPreselected && !preselectedApplied.current && econsultDoctors.length > 0) {
-      const matched = econsultDoctors.find(d => d.doctorId === preselectedDoctorId)
-      if (matched) {
-        const displayText = matched.department ? `${matched.department} ${matched.name}` : matched.name
-        setConsultingDoctor(displayText)
-        setSelectedDoctorId(matched.id || matched.doctorId || '')
-        setSelectedDoctorName(matched.name)
-        setSelectedDepartment(matched.department || '')
-      } else {
-        // consultantDoctors에 없으면 쿼리 파라미터 값으로 세팅
-        const displayText = preselectedDepartment ? `${preselectedDepartment} ${preselectedDoctorName}` : preselectedDoctorName
-        setConsultingDoctor(displayText)
-        setSelectedDoctorId(preselectedDoctorId)
-        setSelectedDoctorName(preselectedDoctorName)
-        setSelectedDepartment(preselectedDepartment)
-      }
-      preselectedApplied.current = true
-    }
-  }, [hasPreselected, preselectedDoctorId, preselectedDoctorName, preselectedDepartment, econsultDoctors])
 
   // 페이지 진입 시 검색 팝업 자동 열기 (preselected가 아닌 경우만)
   useEffect(() => {
@@ -315,29 +265,22 @@ export default function EConsultPage() {
                     className={styles.radio}
                   />
                 </div>
-                {hasPreselected && consultantsLoading ? (
-                  <div className={styles.field}>
-                    <InputLabel required>자문의</InputLabel>
-                    <Skeleton width='100%' height={50} variant='rounded' />
-                  </div>
-                ) : (
-                  <FormField
-                    label='자문의'
-                    required
-                    id='consulting-doctor'
-                    name='consulting-doctor'
-                    type='text'
-                    placeholder='자문의를 검색해주세요'
-                    value={consultingDoctor}
-                    onChange={e => setConsultingDoctor(e.target.value)}
-                    readOnly
-                    buttonText='자문의 검색'
-                    onButtonClick={handleSearchDoctor}
-                    buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
-                    error=''
-                    mobileStack
-                  />
-                )}
+                <FormField
+                  label='자문의'
+                  required
+                  id='consulting-doctor'
+                  name='consulting-doctor'
+                  type='text'
+                  placeholder='자문의를 검색해주세요'
+                  value={consultingDoctor}
+                  onChange={e => setConsultingDoctor(e.target.value)}
+                  readOnly
+                  buttonText='자문의 검색'
+                  onButtonClick={handleSearchDoctor}
+                  buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
+                  error=''
+                  mobileStack
+                />
               </div>
             </div>
 
@@ -441,8 +384,6 @@ export default function EConsultPage() {
         onClose={() => setIsDoctorSearchModalOpen(false)}
         onConfirm={handleDoctorConfirm}
         closeOnBackdropClick={true}
-        externalDoctors={econsultDoctors}
-        externalLoading={consultantsLoading}
       />
 
       {/* 알림 모달 */}

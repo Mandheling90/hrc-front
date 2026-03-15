@@ -543,7 +543,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       name='regPhone'
                       placeholder='-없이 입력해주세요.'
                       value={regPhone}
-                      onChange={e => setRegPhone(e.target.value)}
+                      onChange={e => {
+                        const filtered = e.target.value.replace(/[^0-9]/g, '')
+                        setRegPhone(filtered)
+                      }}
                     />
                   </div>
                 </div>

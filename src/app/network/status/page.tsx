@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useEffect, useRef } from 'react'
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -12,103 +12,54 @@ import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import styles from './page.module.scss'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
-import { useHospital } from '@/hooks'
+import { useHospital, useSearchCollaboratingHospitals } from '@/hooks'
+import { HospitalCode } from '@/graphql/__generated__/types'
 
-// 임시 데이터 타입
 interface ClinicData {
   id: string
   name: string
   type: 'hospital' | 'clinic'
   address: string
+  baseAddress: string
   phone: string
   fax: string
+  website: string
   latitude: number
   longitude: number
 }
 
-// 임시 데이터
-const mockClinics: ClinicData[] = [
-  {
-    id: '1',
-    name: '서울송도병원',
-    type: 'hospital',
-    address: '서울특별시 영등포구 경인로 767(문래동3가)',
-    phone: '02-6950-4114',
-    fax: '02-6950-4118',
-    latitude: 37.5170,
-    longitude: 126.8946
-  },
-  {
-    id: '2',
-    name: '서울송도의원',
-    type: 'clinic',
-    address: '서울특별시 중구 다산로 78(신당동)',
-    phone: '02-2231-0900',
-    fax: '02-2231-0931',
-    latitude: 37.5575,
-    longitude: 127.0073
-  },
-  {
-    id: '3',
-    name: '서울숭인병원',
-    type: 'hospital',
-    address: '서울특별시 종로구 종로 386',
-    phone: '02-737-7582',
-    fax: '02-737-7541',
-    latitude: 37.5759,
-    longitude: 127.0181
-  },
-  {
-    id: '4',
-    name: '서울스마트요양병원',
-    type: 'hospital',
-    address: '서울특별시 양천구 중앙로 181(신정동) 복합메디컬타운 8F',
-    phone: '02-2135-7601',
-    fax: '02-2135-7622',
-    latitude: 37.5172,
-    longitude: 126.8561
-  },
-  {
-    id: '5',
-    name: '서울강남의원',
-    type: 'clinic',
-    address: '서울특별시 강남구 테헤란로 123',
-    phone: '02-1234-5678',
-    fax: '02-1234-5679',
-    latitude: 37.5000,
-    longitude: 127.0365
-  },
-  {
-    id: '6',
-    name: '서울강북병원',
-    type: 'hospital',
-    address: '서울특별시 강북구 도봉로 456',
-    phone: '02-2345-6789',
-    fax: '02-2345-6790',
-    latitude: 37.6397,
-    longitude: 127.0255
-  },
-  {
-    id: '7',
-    name: '서울서초의원',
-    type: 'clinic',
-    address: '서울특별시 서초구 서초대로 789',
-    phone: '02-3456-7890',
-    fax: '02-3456-7891',
-    latitude: 37.4837,
-    longitude: 127.0074
-  },
-  {
-    id: '8',
-    name: '서울마포병원',
-    type: 'hospital',
-    address: '서울특별시 마포구 홍대입구로 321',
-    phone: '02-4567-8901',
-    fax: '02-4567-8902',
-    latitude: 37.5568,
-    longitude: 126.9237
-  }
-]
+const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
+  anam: HospitalCode.Anam,
+  guro: HospitalCode.Guro,
+  ansan: HospitalCode.Ansan
+}
+
+// classificationCode → type 매핑 (의원 계열은 'clinic', 나머지는 'hospital')
+const CLINIC_CLASSIFICATION_CODES = ['11', '21', '31'] // 의원, 치과의원, 한의원
+function mapClassificationToType(code?: string): 'hospital' | 'clinic' {
+  if (!code) return 'clinic'
+  return CLINIC_CLASSIFICATION_CODES.includes(code) ? 'clinic' : 'hospital'
+}
+
+// 주소 → 좌표 변환 (카카오 Geocoder)
+function geocodeAddress(address: string): Promise<{ lat: number; lng: number } | null> {
+  return new Promise(resolve => {
+    if (!window.kakao?.maps?.services) {
+      resolve(null)
+      return
+    }
+    const geocoder = new window.kakao.maps.services.Geocoder()
+    console.log('[Geocode] 요청 주소:', address)
+    geocoder.addressSearch(address, (result, status) => {
+      console.log('[Geocode] 응답:', address, status, result)
+      if (status === window.kakao.maps.services.Status.OK && result.length > 0) {
+        resolve({ lat: parseFloat(result[0].y), lng: parseFloat(result[0].x) })
+      } else {
+        resolve(null)
+      }
+    })
+  })
+}
 
 // 지역 옵션
 const regionOptions = [
@@ -164,19 +115,68 @@ const hospitalTypeOptionsByHospital: Record<string, { value: string; label: stri
 
 export default function ClinicStatusPage() {
   const { hospitalId } = useHospital()
+  const { searchHospitals, loading: apiLoading } = useSearchCollaboratingHospitals()
+  const [clinics, setClinics] = useState<ClinicData[]>([])
   const [selectedRegion, setSelectedRegion] = useState<string>('all')
   const [selectedHospitalType, setSelectedHospitalType] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [selectedClinicId, setSelectedClinicId] = useState<string>(mockClinics[0]?.id || '')
+  const [selectedClinicId, setSelectedClinicId] = useState<string>('')
+  const [dataLoading, setDataLoading] = useState(false)
   const itemsPerPage = 4
+  const geocodeCacheRef = useRef<Map<string, { lat: number; lng: number }>>(new Map())
 
   const hospitalTypeOptions = useMemo(
     () => hospitalTypeOptionsByHospital[hospitalId] ?? hospitalTypeOptionsByHospital.anam,
     [hospitalId]
   )
 
-  const selectedClinic = mockClinics.find(c => c.id === selectedClinicId)
+  // API 데이터 로드 + Geocoding
+  const fetchClinics = useCallback(async (options?: { hsptNm?: string; adrsNm?: string; hsptClsfCd?: string }) => {
+    const hospitalCode = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
+    setDataLoading(true)
+    try {
+      const result = await searchHospitals({
+        hospitalCode,
+        ...options
+      })
+      if (!result) {
+        setClinics([])
+        return
+      }
+
+      const mapped: ClinicData[] = result.hospitals.map((h, idx) => ({
+        id: h.id || `hospital-${idx}`,
+        name: h.name,
+        type: mapClassificationToType(h.classificationCode ?? undefined),
+        address: [h.address, h.addressDetail].filter(Boolean).join(' '),
+        baseAddress: h.address || '',
+        phone: h.phone || '',
+        fax: h.faxNumber || '',
+        website: h.website || '',
+        latitude: 0,
+        longitude: 0
+      }))
+
+      setClinics(mapped)
+      if (mapped.length > 0) {
+        setSelectedClinicId(mapped[0].id)
+      }
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return
+      console.error('병원 데이터 조회 실패:', err)
+      setClinics([])
+    } finally {
+      setDataLoading(false)
+    }
+  }, [hospitalId, searchHospitals])
+
+  // 초기 데이터 로드
+  useEffect(() => {
+    fetchClinics()
+  }, [fetchClinics])
+
+  const selectedClinic = clinics.find(c => c.id === selectedClinicId)
 
   // 카카오맵 관련
   const mapRef = useRef<HTMLDivElement>(null)
@@ -196,7 +196,7 @@ export default function ClinicStatusPage() {
     }
 
     const script = document.createElement('script')
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false`
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services&autoload=false`
     script.async = true
     script.onload = () => {
       window.kakao.maps.load(() => setMapLoaded(true))
@@ -216,22 +216,56 @@ export default function ClinicStatusPage() {
     const map = new kakao.maps.Map(mapRef.current, { center, level: 4 })
     mapInstanceRef.current = map
 
+    // 컨테이너 크기 변경 감지 → relayout
+    const observer = new ResizeObserver(() => {
+      (map as { relayout: () => void }).relayout()
+    })
+    observer.observe(mapRef.current)
+
     return () => {
+      observer.disconnect()
       markerRef.current = null
       overlayRef.current = null
     }
   }, [mapLoaded])
 
-  // 선택된 병원 변경 시 마커 + CustomOverlay 표시
+  // 선택된 병원 변경 시 좌표 조회 후 마커 + CustomOverlay 표시
   useEffect(() => {
     if (!mapLoaded || !mapInstanceRef.current || !selectedClinic) return
+    let cancelled = false
 
-    const { kakao } = window
-    const map = mapInstanceRef.current as {
-      setCenter: (pos: unknown) => void
-      panTo: (pos: unknown) => void
-    }
-    const position = new kakao.maps.LatLng(selectedClinic.latitude, selectedClinic.longitude)
+    const showMarker = async () => {
+      let lat = selectedClinic.latitude
+      let lng = selectedClinic.longitude
+
+      // 좌표가 없으면 geocoding
+      if (lat === 0 && lng === 0 && selectedClinic.baseAddress) {
+        // 캐시 확인
+        const cached = geocodeCacheRef.current.get(selectedClinic.baseAddress)
+        if (cached) {
+          lat = cached.lat
+          lng = cached.lng
+        } else {
+          const coords = await geocodeAddress(selectedClinic.baseAddress)
+          if (cancelled) return
+          if (coords) {
+            lat = coords.lat
+            lng = coords.lng
+            geocodeCacheRef.current.set(selectedClinic.baseAddress, coords)
+          } else {
+            return // geocoding 실패 시 마커 표시 안 함
+          }
+        }
+      }
+
+      if (cancelled) return
+
+      const { kakao } = window
+      const map = mapInstanceRef.current as {
+        setCenter: (pos: unknown) => void
+        panTo: (pos: unknown) => void
+      }
+      const position = new kakao.maps.LatLng(lat, lng)
 
     // 기존 마커/오버레이 제거
     if (markerRef.current) {
@@ -327,8 +361,15 @@ export default function ClinicStatusPage() {
     overlay.setMap(mapInstanceRef.current)
     overlayRef.current = overlay
 
-    // 지도 중심 이동
-    map.panTo(position)
+      // 지도 중심 이동
+      map.panTo(position)
+    }
+
+    showMarker()
+
+    return () => {
+      cancelled = true
+    }
   }, [mapLoaded, selectedClinicId, selectedClinic])
 
   // Breadcrumb 설정
@@ -340,20 +381,9 @@ export default function ClinicStatusPage() {
     ]
   }, [])
 
-  // 필터링된 데이터
+  // 필터링된 데이터 (검색어는 프론트에서 추가 필터링)
   const filteredClinics = useMemo(() => {
-    return mockClinics.filter(clinic => {
-      // 지역 필터 (임시로 모든 데이터 통과)
-      if (selectedRegion !== 'all') {
-        // 실제로는 지역 정보로 필터링
-      }
-
-      // 병원 유형 필터 (임시로 모든 데이터 통과)
-      if (selectedHospitalType !== 'all') {
-        // 실제로는 병원 유형으로 필터링
-      }
-
-      // 검색어 필터
+    return clinics.filter(clinic => {
       if (searchQuery) {
         const query = searchQuery.toLowerCase()
         return (
@@ -362,10 +392,9 @@ export default function ClinicStatusPage() {
           clinic.phone.includes(query)
         )
       }
-
       return true
     })
-  }, [selectedRegion, selectedHospitalType, searchQuery])
+  }, [clinics, searchQuery])
 
   // 페이지네이션된 데이터
   const paginatedClinics = useMemo(() => {
@@ -377,22 +406,48 @@ export default function ClinicStatusPage() {
   // 전체 페이지 수
   const totalPages = Math.ceil(filteredClinics.length / itemsPerPage)
 
+  // 지역/유형 필터 변경 시 API 재조회
+  useEffect(() => {
+    const options: { adrsNm?: string; hsptClsfCd?: string } = {}
+    if (selectedRegion !== 'all') {
+      const regionLabel = regionOptions.find(r => r.value === selectedRegion)?.label
+      if (regionLabel) options.adrsNm = regionLabel
+    }
+    if (selectedHospitalType !== 'all') {
+      options.hsptClsfCd = selectedHospitalType
+    }
+    fetchClinics(options)
+    setCurrentPage(1)
+  }, [selectedRegion, selectedHospitalType])
+
   // 검색 핸들러
   const handleSearch = () => {
-    setCurrentPage(1) // 검색 시 첫 페이지로 이동
+    setCurrentPage(1)
+    const options: { hsptNm?: string; adrsNm?: string; hsptClsfCd?: string } = {}
+    if (searchQuery.trim()) {
+      options.hsptNm = searchQuery.trim()
+    }
+    if (selectedRegion !== 'all') {
+      const regionLabel = regionOptions.find(r => r.value === selectedRegion)?.label
+      if (regionLabel) options.adrsNm = regionLabel
+    }
+    if (selectedHospitalType !== 'all') {
+      options.hsptClsfCd = selectedHospitalType
+    }
+    fetchClinics(options)
   }
 
   // 지도 버튼 클릭 핸들러
   const handleMapClick = (clinicId: string) => {
     setSelectedClinicId(clinicId)
-    // TODO: 지도 표시 또는 지도 페이지로 이동
-    console.log('지도 보기:', clinicId)
   }
 
   // 홈 버튼 클릭 핸들러
   const handleHomeClick = (clinicId: string) => {
-    // TODO: 병의원 홈페이지로 이동
-    console.log('홈페이지 보기:', clinicId)
+    const clinic = clinics.find(c => c.id === clinicId)
+    if (clinic?.website) {
+      window.open(clinic.website, '_blank', 'noopener,noreferrer')
+    }
   }
 
   return (
@@ -463,7 +518,11 @@ export default function ClinicStatusPage() {
               {/* 병의원 리스트 */}
               <div className={styles.clinicListWrapper}>
                 <div className={styles.clinicList}>
-                  {paginatedClinics.length > 0 ? (
+                  {dataLoading ? (
+                    <div className={styles.emptyState}>
+                      <p>데이터를 불러오는 중입니다...</p>
+                    </div>
+                  ) : paginatedClinics.length > 0 ? (
                     <>
                       {paginatedClinics.map((clinic, index) => (
                         <ClinicCard

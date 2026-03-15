@@ -182,7 +182,10 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
               type='tel'
               placeholder='-없이 입력해주세요.'
               value={contactNumber}
-              onChange={e => setContactNumber(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setContactNumber(filtered)
+              }}
             />
 
             {/* 휴대전화 */}
@@ -193,7 +196,10 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
               type='tel'
               placeholder='-없이 입력해주세요.'
               value={mobilePhone}
-              onChange={e => setMobilePhone(e.target.value)}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setMobilePhone(filtered)
+              }}
             />
 
           </div>

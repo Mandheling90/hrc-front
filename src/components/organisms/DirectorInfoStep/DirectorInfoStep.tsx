@@ -151,7 +151,10 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             type='tel'
             placeholder='-없이 입력해주세요.'
             value={phone}
-            onChange={e => setPhone(e.target.value)}
+            onChange={e => {
+              const filtered = e.target.value.replace(/[^0-9]/g, '')
+              setPhone(filtered)
+            }}
           />
 
           {/* 성별 */}

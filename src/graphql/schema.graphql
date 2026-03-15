@@ -889,6 +889,10 @@ type Query {
   miniBanners: [PopupModel!]!
   # 병원 SNS
   hospitalSns(pageRow: Int, startIndex: Int): HospitalArticleList!
+  # 병원소식
+  hospitalNews(pageRow: Int, startIndex: Int): HospitalArticleList!
+  # 병원 강의/교육
+  hospitalLectures(pageRow: Int, startIndex: Int): HospitalArticleList!
   # 메뉴
   menus(menuType: MenuType!): [MenuModel!]!
   # 게시판

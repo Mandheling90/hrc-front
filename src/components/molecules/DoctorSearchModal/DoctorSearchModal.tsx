@@ -15,6 +15,8 @@ export interface Doctor {
   id?: string
   /** 진료과 */
   department: string
+  /** 진료과 코드 */
+  departmentCode?: string
   /** 자문의 이름 */
   name: string
   /** 이메일 */
@@ -68,50 +70,27 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   externalLoading
 }) => {
   const useExternal = !!externalDoctors
-  const externalHasDepartments = useExternal && externalDoctors.some(d => d.department)
-  const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
+  const { fetchMedicalStaff, staffList, loading: staffLoading, departmentList, deptLoading } = useMedicalStaff()
 
   const [step, setStep] = useState<ModalStep>('department')
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
+  const [selectedDepartmentCode, setSelectedDepartmentCode] = useState<string | null>(null)
+  const [selectedDepartmentName, setSelectedDepartmentName] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null)
 
-  const isLoading = useExternal ? (externalLoading ?? false) : staffLoading
+  const isLoading = deptLoading
 
-
-  // 모달 열릴 때 자문의 목록 조회 (외부 데이터 미사용 시)
-  useEffect(() => {
-    if (isOpen && !useExternal) {
-      fetchMedicalStaff()
-    }
-  }, [isOpen, fetchMedicalStaff, useExternal])
-
-  // API 응답에서 진료과 목록 추출
+  // 진료과 목록: useMedicalStaff의 departmentList 사용
   const departments = useMemo(() => {
-    if (useExternal && externalHasDepartments) {
-      const deptSet = new Set<string>()
-      for (const d of externalDoctors) {
-        if (d.department) deptSet.add(d.department)
-      }
-      return Array.from(deptSet).sort((a, b) => a.localeCompare(b, 'ko'))
-    }
-    if (useExternal) return []
-    const deptSet = new Set<string>()
-    for (const staff of staffList) {
-      if (staff.departmentName) {
-        deptSet.add(staff.departmentName)
-      }
-    }
-    return Array.from(deptSet).sort((a, b) => a.localeCompare(b, 'ko'))
-  }, [staffList, useExternal, externalDoctors, externalHasDepartments])
+    return departmentList
+      .filter(d => d.departmentName)
+      .sort((a, b) => a.departmentName.localeCompare(b.departmentName, 'ko'))
+  }, [departmentList])
 
-  // API 응답을 Doctor 형태로 변환 + 선택 상태 반영
+  // API 응답을 Doctor 형태로 변환 + 검색어 필터링
   const doctors: Doctor[] = useMemo(() => {
     if (useExternal) {
       let filtered = externalDoctors
-      if (externalHasDepartments && selectedDepartment) {
-        filtered = filtered.filter(d => d.department === selectedDepartment)
-      }
       if (searchQuery.trim()) {
         filtered = filtered.filter(d => d.name?.includes(searchQuery.trim()))
       }
@@ -121,10 +100,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       }))
     }
 
-    let filtered = staffList
-    if (selectedDepartment) {
-      filtered = staffList.filter(s => s.departmentName === selectedDepartment)
-    }
+    let filtered = staffList.filter(s => s.smcrYn === 'Y')
     if (searchQuery.trim()) {
       filtered = filtered.filter(s => s.doctorName?.includes(searchQuery.trim()))
     }
@@ -132,7 +108,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       ...staffToDoctor(item),
       selected: item.doctorId === selectedDoctorId
     }))
-  }, [staffList, selectedDepartment, searchQuery, selectedDoctorId, useExternal, externalDoctors])
+  }, [staffList, searchQuery, selectedDoctorId, useExternal, externalDoctors])
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -163,22 +139,18 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }, [isOpen])
 
-  // 모달이 열릴 때 externalDoctors에 맞게 step 설정 / 닫힐 때 초기화
+  // 모달이 열릴 때 항상 진료과 선택 단계로 / 닫힐 때 초기화
   useEffect(() => {
     if (isOpen) {
-      // 로딩 중이면 department step 유지
-      if (isLoading) {
-        setStep('department')
-      } else {
-        setStep(useExternal && externalHasDepartments ? 'department' : useExternal ? 'doctor' : 'department')
-      }
+      setStep('department')
     } else {
       setStep('department')
-      setSelectedDepartment(null)
+      setSelectedDepartmentCode(null)
+      setSelectedDepartmentName(null)
       setSearchQuery('')
       setSelectedDoctorId(null)
     }
-  }, [isOpen, useExternal, externalHasDepartments, isLoading])
+  }, [isOpen])
 
   if (!isOpen) return null
 
@@ -188,14 +160,18 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }
 
-  const handleDepartmentClick = (department: string | null) => {
-    setSelectedDepartment(department)
+  const handleDepartmentClick = (deptCode: string | null, deptName: string | null) => {
+    setSelectedDepartmentCode(deptCode)
+    setSelectedDepartmentName(deptName)
+    // 선택한 진료과 코드로 의료진 조회
+    fetchMedicalStaff(deptCode ? { mcdpCd: deptCode } : undefined)
     setStep('doctor')
   }
 
   const handleBackToDepartment = () => {
     setStep('department')
-    setSelectedDepartment(null)
+    setSelectedDepartmentCode(null)
+    setSelectedDepartmentName(null)
     setSearchQuery('')
     setSelectedDoctorId(null)
   }
@@ -221,10 +197,10 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
               <span>e-Consulting</span>
             </div>
             <h2 className={styles.title}>
-              {step === 'doctor' && selectedDepartment ? (
+              {step === 'doctor' && selectedDepartmentName ? (
                 <>
                   {'자문의 검색 > '}
-                  <span className={styles.titleDepartment}>{selectedDepartment}</span>
+                  <span className={styles.titleDepartment}>{selectedDepartmentName}</span>
                 </>
               ) : (
                 '자문의 검색'
@@ -249,19 +225,19 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                   <button
                     key='__all__'
                     type='button'
-                    onClick={() => handleDepartmentClick(null)}
-                    className={`${styles.departmentChip} ${selectedDepartment === null ? styles.active : ''}`}
+                    onClick={() => handleDepartmentClick(null, null)}
+                    className={`${styles.departmentChip} ${selectedDepartmentCode === null ? styles.active : ''}`}
                   >
                     전체
                   </button>
                   {departments.map(dept => (
                     <button
-                      key={dept}
+                      key={dept.departmentCode}
                       type='button'
-                      onClick={() => handleDepartmentClick(dept)}
-                      className={`${styles.departmentChip} ${selectedDepartment === dept ? styles.active : ''}`}
+                      onClick={() => handleDepartmentClick(dept.departmentCode, dept.departmentName)}
+                      className={`${styles.departmentChip} ${selectedDepartmentCode === dept.departmentCode ? styles.active : ''}`}
                     >
-                      {dept}
+                      {dept.departmentName}
                     </button>
                   ))}
                 </>
@@ -290,7 +266,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
               </div>
 
               <div className={styles.cardGrid}>
-                {isLoading ? (
+                {staffLoading ? (
                   Array.from({ length: 4 }, (_, i) => (
                     <Skeleton key={i} width='100%' height={280} variant='rounded' />
                   ))
@@ -368,16 +344,14 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
             </div>
 
             <div className={styles.buttonRow}>
-              {(!useExternal || externalHasDepartments) && (
-                <Button
-                  type='button'
-                  variant='primaryOutline'
-                  onClick={handleBackToDepartment}
-                  className={styles.actionButton}
-                >
-                  진료과 변경
-                </Button>
-              )}
+              <Button
+                type='button'
+                variant='primaryOutline'
+                onClick={handleBackToDepartment}
+                className={styles.actionButton}
+              >
+                진료과 변경
+              </Button>
             </div>
           </>
         )}

@@ -223,12 +223,14 @@ export const EHR_HOSPITAL_SEARCH_QUERY = gql`
     ehrGetCollaboratingHospitals(input: $input) {
       totalCount
       hospitals {
+        id
         name
         address
         addressDetail
         phisCode
         classificationCode
         phone
+        faxNumber
         representative
         website
         zipCode

@@ -370,7 +370,16 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               type='text'
               placeholder='YYYY-MM-DD'
               value={formData.birthDate}
-              onChange={handleInputChange}
+              onChange={e => {
+                const digits = e.target.value.replace(/[^0-9]/g, '').slice(0, 8)
+                let formatted = digits
+                if (digits.length > 4 && digits.length <= 6) {
+                  formatted = `${digits.slice(0, 4)}-${digits.slice(4)}`
+                } else if (digits.length > 6) {
+                  formatted = `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6)}`
+                }
+                setFormData(prev => ({ ...prev, birthDate: formatted }))
+              }}
               disabled={isFieldDisabled('birthDate')}
             />
 
@@ -394,7 +403,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               type='tel'
               placeholder='010-0000-0000'
               value={formData.phone}
-              onChange={handleInputChange}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                setFormData(prev => ({ ...prev, phone: filtered }))
+              }}
               disabled={isFieldDisabled('phone')}
             />
 
