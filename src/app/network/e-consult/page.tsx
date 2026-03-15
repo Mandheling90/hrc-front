@@ -126,12 +126,12 @@ export default function EConsultPage() {
     }
   }, [hasPreselected, preselectedDoctorId, preselectedDoctorName, preselectedDepartment, econsultDoctors])
 
-  // 자문의 데이터 로딩 완료 후 검색 팝업 자동 열기 (preselected가 아닌 경우만)
+  // 페이지 진입 시 검색 팝업 자동 열기 (preselected가 아닌 경우만)
   useEffect(() => {
-    if (user && !hasPreselected && !consultantsLoading && econsultDoctors.length > 0) {
+    if (user && !hasPreselected) {
       setIsDoctorSearchModalOpen(true)
     }
-  }, [user, hasPreselected, consultantsLoading, econsultDoctors.length])
+  }, [user, hasPreselected])
 
   // GraphQL Mutation
   const [createEConsult, { loading: submitting }] = useMutation(CREATE_ECONSULT_MUTATION)

@@ -71,7 +71,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   const externalHasDepartments = useExternal && externalDoctors.some(d => d.department)
   const { fetchMedicalStaff, staffList, loading: staffLoading } = useMedicalStaff()
 
-  const [step, setStep] = useState<ModalStep>(useExternal && !externalHasDepartments ? 'doctor' : 'department')
+  const [step, setStep] = useState<ModalStep>('department')
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null)
@@ -166,14 +166,19 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   // 모달이 열릴 때 externalDoctors에 맞게 step 설정 / 닫힐 때 초기화
   useEffect(() => {
     if (isOpen) {
-      setStep(useExternal && externalHasDepartments ? 'department' : useExternal ? 'doctor' : 'department')
+      // 로딩 중이면 department step 유지
+      if (isLoading) {
+        setStep('department')
+      } else {
+        setStep(useExternal && externalHasDepartments ? 'department' : useExternal ? 'doctor' : 'department')
+      }
     } else {
-      setStep(useExternal && externalHasDepartments ? 'department' : useExternal ? 'doctor' : 'department')
+      setStep('department')
       setSelectedDepartment(null)
       setSearchQuery('')
       setSelectedDoctorId(null)
     }
-  }, [isOpen, useExternal, externalHasDepartments])
+  }, [isOpen, useExternal, externalHasDepartments, isLoading])
 
   if (!isOpen) return null
 
@@ -237,7 +242,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
             <div className={styles.departmentChips}>
               {isLoading ? (
                 Array.from({ length: 12 }, (_, i) => (
-                  <Skeleton key={i} width={186} height={50} variant='rounded' />
+                  <Skeleton key={i} width={182} height={62} variant='rounded' />
                 ))
               ) : (
                 <>
