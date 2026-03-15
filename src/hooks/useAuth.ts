@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_PROFILE_MUTATION } from '@/graphql/auth/mutations'
-import { ME_QUERY } from '@/graphql/auth/queries'
+import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_DOCTOR_PROFILE_MUTATION, CHANGE_PASSWORD_MUTATION, WITHDRAW_MEMBER_MUTATION } from '@/graphql/auth/mutations'
+import { ME_QUERY, MY_PROFILE_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
 
 interface LoginInput {
@@ -80,11 +80,11 @@ export function useSignup() {
   return { signup, loading, error }
 }
 
-export interface UpdateProfileInput {
-  password?: string
-  passwordConfirm?: string
+export interface UpdateDoctorProfileInput {
+  userName?: string
   email?: string
   phone?: string
+  doctorType?: string
   licenseNo?: string
   isDirector?: boolean
   school?: string
@@ -103,14 +103,14 @@ export interface UpdateProfileInput {
 }
 
 export function useUpdateProfile() {
-  const [updateProfileMutation, { loading, error }] = useMutation<{ updateProfile: AuthUser }>(
-    UPDATE_PROFILE_MUTATION,
-    { refetchQueries: [{ query: ME_QUERY }] }
+  const [updateProfileMutation, { loading, error }] = useMutation<{ updateDoctorProfile: AuthUser }>(
+    UPDATE_DOCTOR_PROFILE_MUTATION,
+    { refetchQueries: [{ query: MY_PROFILE_QUERY }] }
   )
 
-  const updateProfile = async (input: UpdateProfileInput) => {
+  const updateProfile = async (input: UpdateDoctorProfileInput) => {
     const { data } = await updateProfileMutation({ variables: { input } })
-    return data?.updateProfile ?? null
+    return data?.updateDoctorProfile ?? null
   }
 
   return { updateProfile, loading, error }
@@ -122,6 +122,49 @@ export function useMe() {
   })
 
   return { user: data?.me ?? null, loading, error }
+}
+
+export function useMyProfile() {
+  const { data, loading, error } = useQuery<{ myProfile: AuthUser }>(MY_PROFILE_QUERY, {
+    fetchPolicy: 'cache-and-network'
+  })
+
+  return { user: data?.myProfile ?? null, loading, error }
+}
+
+export interface ChangePasswordInput {
+  oldPassword: string
+  newPassword: string
+}
+
+export function useChangePassword() {
+  const [changePasswordMutation, { loading, error }] = useMutation<{
+    changePassword: { success: boolean; message: string }
+  }>(CHANGE_PASSWORD_MUTATION)
+
+  const changePassword = async (input: ChangePasswordInput) => {
+    const { data } = await changePasswordMutation({ variables: { input } })
+    return data?.changePassword ?? null
+  }
+
+  return { changePassword, loading, error }
+}
+
+export function useWithdrawMember() {
+  const { clearAuth } = useAuthContext()
+  const [withdrawMemberMutation, { loading, error }] = useMutation<{
+    withdrawMember: { success: boolean; message: string }
+  }>(WITHDRAW_MEMBER_MUTATION)
+
+  const withdrawMember = async (password: string) => {
+    const { data } = await withdrawMemberMutation({ variables: { input: { password } } })
+    if (data?.withdrawMember?.success) {
+      clearAuth()
+    }
+    return data?.withdrawMember ?? null
+  }
+
+  return { withdrawMember, loading, error }
 }
 
 export function useLogout() {

@@ -69,39 +69,47 @@ export const LOGOUT_MUTATION = gql`
   }
 `
 
-export const UPDATE_PROFILE_MUTATION = gql`
-  mutation UpdateProfile($input: UpdateProfileInput!) {
-    updateProfile(input: $input) {
+export const UPDATE_DOCTOR_PROFILE_MUTATION = gql`
+  mutation UpdateDoctorProfile($input: UpdateDoctorProfileInput!) {
+    updateDoctorProfile(input: $input) {
       id
-      userId
-      email
       userName
-      userType
-      hospitalCode
-      hospitalId
-      phone
-      status
-      mustChangePw
       profile {
-        birthDate
-        department
-        gender
-        hospAddress
-        hospAddressDetail
-        hospCode
-        hospName
-        hospPhone
-        hospWebsite
-        hospZipCode
-        careInstitutionNo
+        doctorType
         licenseNo
-        representative
+        isDirector
         school
+        specialty
+        department
         smsConsent
         emailConsent
         replyConsent
-        specialty
+        hospName
+        careInstitutionNo
+        hospZipCode
+        hospAddress
+        hospAddressDetail
+        hospPhone
+        hospWebsite
       }
+    }
+  }
+`
+
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePassword($input: ChangePasswordInput!) {
+    changePassword(input: $input) {
+      success
+      message
+    }
+  }
+`
+
+export const WITHDRAW_MEMBER_MUTATION = gql`
+  mutation WithdrawMember($input: WithdrawMemberInput!) {
+    withdrawMember(input: $input) {
+      success
+      message
     }
   }
 `

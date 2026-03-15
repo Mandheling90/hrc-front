@@ -2,14 +2,14 @@
 
 import React, { useMemo, useState } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useMe, useUpdateProfile } from '@/hooks/useAuth'
+import { useMyProfile, useUpdateProfile, useChangePassword } from '@/hooks/useAuth'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { MemberInfoForm, MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { AuthUser } from '@/types/auth'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
-import { UpdateProfileInput } from '@/hooks/useAuth'
+import { UpdateDoctorProfileInput } from '@/hooks/useAuth'
 import styles from './page.module.scss'
 
 /** API에서 받은 사용자 정보를 폼 데이터 형식으로 변환 */
@@ -19,20 +19,25 @@ const mapUserToFormData = (user: AuthUser): Partial<MemberInfoFormData> => {
   const memberTypeMap: Record<string, string> = {
     DOCTOR: '의사',
     DENTIST: '치과의사',
-    ORIENTAL_DOCTOR: '한의사'
+    ORIENTAL_DOCTOR: '한의사',
+    '1': '의사',
+    '2': '치과의사',
+    '3': '한의사'
   }
+
+  const doctorType = profile?.doctorType || user.userType
 
   return {
     name: user.userName || '',
     birthDate: profile?.birthDate ? profile.birthDate.split('T')[0] : '',
-    memberType: memberTypeMap[user.userType] || '의사',
+    memberType: memberTypeMap[doctorType] || '의사',
     phone: user.phone || '',
     userId: user.userId || '',
     password: '',
     passwordConfirm: '',
     email: user.email || '',
     licenseNumber: profile?.licenseNo || '',
-    isDirector: !!profile?.representative,
+    isDirector: !!profile?.isDirector,
     school: profile?.school || '',
     department: profile?.department || '전체',
     specialty: profile?.specialty || '',
@@ -50,10 +55,18 @@ const mapUserToFormData = (user: AuthUser): Partial<MemberInfoFormData> => {
 }
 
 /** 폼 데이터를 API 입력 형식으로 변환 */
-const mapFormDataToInput = (data: MemberInfoFormData): UpdateProfileInput => {
-  const input: UpdateProfileInput = {
+const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput => {
+  const doctorTypeMap: Record<string, string> = {
+    '의사': '1',
+    '치과의사': '2',
+    '한의사': '3'
+  }
+
+  const input: UpdateDoctorProfileInput = {
+    userName: data.name,
     email: data.email,
     phone: data.phone,
+    doctorType: doctorTypeMap[data.memberType] || '1',
     licenseNo: data.licenseNumber,
     isDirector: data.isDirector,
     school: data.school,
@@ -71,19 +84,14 @@ const mapFormDataToInput = (data: MemberInfoFormData): UpdateProfileInput => {
     hospWebsite: data.hospitalWebsite
   }
 
-  // 비밀번호가 입력된 경우에만 포함
-  if (data.password) {
-    input.password = data.password
-    input.passwordConfirm = data.passwordConfirm
-  }
-
   return input
 }
 
 export default function EditProfilePage() {
   const router = useHospitalRouter()
-  const { user, loading } = useMe()
+  const { user, loading } = useMyProfile()
   const { updateProfile, loading: updating } = useUpdateProfile()
+  const { changePassword } = useChangePassword()
   const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
     isOpen: false,
     message: ''
@@ -106,6 +114,19 @@ export default function EditProfilePage() {
     try {
       const input = mapFormDataToInput(data)
       await updateProfile(input)
+
+      // 비밀번호 변경 요청 (비밀번호 입력 시에만)
+      if (data.password && data.passwordConfirm) {
+        const result = await changePassword({
+          oldPassword: data.password,
+          newPassword: data.passwordConfirm
+        })
+        if (result && !result.success) {
+          setAlertModal({ isOpen: true, message: result.message || '비밀번호 변경에 실패했습니다.' })
+          return
+        }
+      }
+
       setAlertModal({ isOpen: true, message: '회원정보가 수정되었습니다.' })
     } catch {
       setAlertModal({ isOpen: true, message: '회원정보 수정 중 오류가 발생했습니다.' })
@@ -152,7 +173,7 @@ export default function EditProfilePage() {
               onCancel={handleCancel}
               submitButtonText={updating ? '저장 중...' : '저장'}
               cancelButtonText='취소'
-              disabledFields={['userId', 'careNumber']}
+              disabledFields={['name', 'birthDate', 'memberType', 'phone', 'userId', 'careNumber']}
               showWithdrawButton={true}
               onWithdraw={handleWithdraw}
             />

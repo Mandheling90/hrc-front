@@ -10,6 +10,41 @@ export const CHECK_USER_ID_QUERY = gql`
   }
 `
 
+export const MY_PROFILE_QUERY = gql`
+  query MyProfile {
+    myProfile {
+      id
+      userId
+      userName
+      email
+      phone
+      userType
+      status
+      hospitalCode
+      profile {
+        birthDate
+        gender
+        doctorType
+        licenseNo
+        isDirector
+        school
+        specialty
+        department
+        smsConsent
+        emailConsent
+        replyConsent
+        hospName
+        careInstitutionNo
+        hospZipCode
+        hospAddress
+        hospAddressDetail
+        hospPhone
+        hospWebsite
+      }
+    }
+  }
+`
+
 export const ME_QUERY = gql`
   query Me {
     me {

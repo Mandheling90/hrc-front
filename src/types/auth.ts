@@ -6,6 +6,8 @@ export type Gender = 'M' | 'F'
 
 export type UserStatus = 'ACTIVE' | 'PENDING' | 'REJECTED' | 'WITHDRAWN'
 
+export type DoctorType = 'DOCTOR' | 'DENTIST' | 'ORIENTAL_DOCTOR'
+
 export interface UserProfile {
   birthDate: string | null
   department: string | null
@@ -20,6 +22,8 @@ export interface UserProfile {
   careInstitutionNo: string | null
   licenseNo: string | null
   representative: string | null
+  doctorType: DoctorType | null
+  isDirector: boolean | null
   school: string | null
   smsConsent: boolean
   emailConsent: boolean
@@ -48,8 +52,6 @@ export interface LoginFormData {
   userId: string
   password: string
 }
-
-export type DoctorType = 'DOCTOR' | 'DENTIST' | 'ORIENTAL_DOCTOR'
 
 export interface SignupFormData {
   userName: string

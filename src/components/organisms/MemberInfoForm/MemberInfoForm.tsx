@@ -392,6 +392,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 value={formData.memberType}
                 options={memberTypeOptions}
                 onChange={handleRadioChange('memberType')}
+                disabled={isFieldDisabled('memberType')}
               />
             </div>
 

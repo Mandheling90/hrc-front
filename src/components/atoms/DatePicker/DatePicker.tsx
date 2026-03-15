@@ -73,7 +73,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         suffixIcon={suffixIcon}
         allowClear={false}
         className={`${styles.datePicker} ${className}`}
-        popupClassName={styles.popup}
+        classNames={{ popup: { root: styles.popup } }}
       />
     )
   }
@@ -90,7 +90,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       suffixIcon={suffixIcon}
       allowClear={false}
       className={`${styles.datePicker} ${className}`}
-      popupClassName={styles.popup}
+      classNames={{ popup: { root: styles.popup } }}
     />
   )
 }

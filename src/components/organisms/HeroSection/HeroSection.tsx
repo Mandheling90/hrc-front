@@ -392,11 +392,17 @@ const iconMap: { [key: string]: React.FC } = {
   map: MapIcon
 }
 
-const infoLinks = [
-  { href: '#', icon: 'doctor', label: '의료진 검색' },
-  { href: '#', icon: 'hospital', label: '진료과 안내' },
-  { href: '#', icon: 'calendar', label: '협력네트워크' },
-  { href: '/about/location', icon: 'map', label: '오시는 길' }
+const doctorSearchUrls: Record<string, string> = {
+  anam: 'https://anam.kumc.or.kr/kr/doctor-department/doctor.do',
+  guro: 'https://guro.kumc.or.kr/kr/doctor-department/doctor.do',
+  ansan: 'https://ansan.kumc.or.kr/kr/doctor-department/doctor.do'
+}
+
+const getInfoLinks = (hospitalId: string) => [
+  { href: doctorSearchUrls[hospitalId] || doctorSearchUrls.anam, icon: 'doctor', label: '의료진 검색', external: true },
+  { href: '/referral/department', icon: 'hospital', label: '진료과 안내', external: false },
+  { href: '/network', icon: 'calendar', label: '협력네트워크', external: false },
+  { href: '/about/location', icon: 'map', label: '오시는 길', external: false }
 ]
 
 const contactInfoAnam = {
@@ -572,7 +578,7 @@ const PlayIcon = () => (
 )
 
 export const HeroSection: React.FC = () => {
-  const { isAnam, isGuro, isAnsan, hospital } = useHospital()
+  const { isAnam, isGuro, isAnsan, hospital, hospitalId } = useHospital()
   const { banners, loading: bannersLoading } = useSlideBanners()
   const videoRef = useRef<HTMLVideoElement>(null)
   const fallbackVideoRef = useRef<HTMLVideoElement>(null)
@@ -882,14 +888,21 @@ export const HeroSection: React.FC = () => {
           <div className={`${styles.box} ${styles.square}`}>
             <div className={styles.hoverOverlay} aria-hidden='true' />
             <ul>
-              {infoLinks.map((link, index) => {
+              {getInfoLinks(hospitalId).map((link, index) => {
                 const IconComponent = iconMap[link.icon]
                 return (
                   <li key={index}>
-                    <Link href={link.href}>
-                      {IconComponent ? <IconComponent /> : <i className={`icon ${link.icon} ${styles.icon}`}></i>}
-                      <p>{link.label}</p>
-                    </Link>
+                    {link.external ? (
+                      <a href={link.href} target='_blank' rel='noopener noreferrer'>
+                        {IconComponent ? <IconComponent /> : <i className={`icon ${link.icon} ${styles.icon}`}></i>}
+                        <p>{link.label}</p>
+                      </a>
+                    ) : (
+                      <Link href={link.href}>
+                        {IconComponent ? <IconComponent /> : <i className={`icon ${link.icon} ${styles.icon}`}></i>}
+                        <p>{link.label}</p>
+                      </Link>
+                    )}
                   </li>
                 )
               })}
@@ -915,7 +928,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Scroll Down 인디케이터 - section1 기준 absolute, container 밖 */}
-      {isAtTop && (
+      {isAtTop && !isInquiryOpen && !isDownloadOpen && (
         <div
           className={styles.scrollDown}
           style={scrollDownRight !== null ? { right: `${scrollDownRight}px` } : undefined}

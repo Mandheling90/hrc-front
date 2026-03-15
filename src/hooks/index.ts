@@ -4,7 +4,7 @@
 export { useHospital } from '@/contexts/HospitalContext'
 
 // Auth Hooks - 인증 관련
-export { useLogin, useSignup, useMe, useLogout } from '@/hooks/useAuth'
+export { useLogin, useSignup, useMe, useMyProfile, useWithdrawMember, useLogout } from '@/hooks/useAuth'
 export { useAuthContext } from '@/contexts/AuthContext'
 
 // Hospital Hooks - 협력 병·의원 관련

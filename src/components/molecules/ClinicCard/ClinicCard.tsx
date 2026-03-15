@@ -22,6 +22,8 @@ export interface ClinicCardProps {
   onMapClick?: () => void
   /** 홈 버튼 클릭 핸들러 */
   onHomeClick?: () => void
+  /** 홈 버튼 표시 여부 (기본값: true) */
+  showHomeButton?: boolean
   /** 카드 클릭 핸들러 */
   onClick?: () => void
   /** className */
@@ -37,6 +39,7 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
   highlighted = false,
   onMapClick,
   onHomeClick,
+  showHomeButton = true,
   onClick,
   className = ''
 }) => {
@@ -63,17 +66,19 @@ export const ClinicCard: React.FC<ClinicCardProps> = ({
           >
             <MapIcon width={24} height={24} fill={highlighted ? '#fff' : '#636363'} className={styles.mapIcon} />
           </button>
-          <button
-            type='button'
-            className={`${styles.iconButton} ${highlighted ? styles.homeButtonActive : styles.homeButtonNormal}`}
-            onClick={e => {
-              e.stopPropagation()
-              onHomeClick?.()
-            }}
-            aria-label='홈페이지 보기'
-          >
-            <HomeIcon width={24} height={24} fill={highlighted ? '#fff' : '#636363'} className={styles.homeIcon} />
-          </button>
+          {showHomeButton && (
+            <button
+              type='button'
+              className={`${styles.iconButton} ${highlighted ? styles.homeButtonActive : styles.homeButtonNormal}`}
+              onClick={e => {
+                e.stopPropagation()
+                onHomeClick?.()
+              }}
+              aria-label='홈페이지 보기'
+            >
+              <HomeIcon width={24} height={24} fill={highlighted ? '#fff' : '#636363'} className={styles.homeIcon} />
+            </button>
+          )}
         </div>
       </div>
 

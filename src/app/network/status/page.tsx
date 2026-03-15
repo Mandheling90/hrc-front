@@ -446,7 +446,8 @@ export default function ClinicStatusPage() {
   const handleHomeClick = (clinicId: string) => {
     const clinic = clinics.find(c => c.id === clinicId)
     if (clinic?.website) {
-      window.open(clinic.website, '_blank', 'noopener,noreferrer')
+      const url = /^https?:\/\//.test(clinic.website) ? clinic.website : `https://${clinic.website}`
+      window.open(url, '_blank', 'noopener,noreferrer')
     }
   }
 
@@ -535,6 +536,7 @@ export default function ClinicStatusPage() {
                           highlighted={selectedClinicId === clinic.id}
                           onMapClick={() => handleMapClick(clinic.id)}
                           onHomeClick={() => handleHomeClick(clinic.id)}
+                          showHomeButton={!!clinic.website}
                           onClick={() => setSelectedClinicId(clinic.id)}
                         />
                       ))}

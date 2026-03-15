@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { useAuthContext, useWithdrawMember } from '@/hooks'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -17,20 +18,39 @@ const withdrawNoticeItems = [
   '탈퇴한 회원 ID와 동일한 ID로의 재가입은 불가합니다.'
 ]
 
-// 더미 데이터 - 실제로는 로그인된 사용자 정보를 사용
-const mockUserId = 'ID1234TEST'
-
 const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '회원탈퇴' }]
 
 export default function WithdrawPage() {
   const router = useHospitalRouter()
+  const { user } = useAuthContext()
+  const { withdrawMember, loading } = useWithdrawMember()
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: 회원탈퇴 API 호출
-    console.log('회원탈퇴 요청:', { userId: mockUserId, password })
+
+    if (!password) {
+      alert('비밀번호를 입력해주세요.')
+      return
+    }
+
+    if (!confirm('정말로 탈퇴하시겠습니까?\n탈퇴 후 복구할 수 없습니다.')) {
+      return
+    }
+
+    try {
+      const result = await withdrawMember(password)
+      if (result?.success) {
+        alert('회원 탈퇴가 완료되었습니다.')
+        router.push('/')
+      } else {
+        alert(result?.message || '회원 탈퇴에 실패했습니다.')
+      }
+    } catch (err: any) {
+      const message = err?.graphQLErrors?.[0]?.message || '회원 탈퇴 중 오류가 발생했습니다.'
+      alert(message)
+    }
   }
 
   const handleCancel = () => {
@@ -61,7 +81,7 @@ export default function WithdrawPage() {
 
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.inputGroup}>
-              <Input type='text' id='userId' name='userId' placeholder='아이디' value={mockUserId} disabled />
+              <Input type='text' id='userId' name='userId' placeholder='아이디' value={user?.userId ?? ''} disabled />
             </div>
             <div className={styles.inputGroup}>
               <Input
@@ -86,8 +106,8 @@ export default function WithdrawPage() {
               <Button type='button' variant='outline' size='medium' onClick={handleCancel}>
                 취소
               </Button>
-              <Button type='submit' variant='primary' size='medium'>
-                회원탈퇴
+              <Button type='submit' variant='primary' size='medium' disabled={loading}>
+                {loading ? '처리중...' : '회원탈퇴'}
               </Button>
             </div>
           </form>

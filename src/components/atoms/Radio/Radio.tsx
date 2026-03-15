@@ -14,9 +14,10 @@ export interface RadioProps {
   className?: string
   /** 라디오 버튼 라벨의 최소 너비 (px 또는 rem 단위) */
   minWidth?: string
+  disabled?: boolean
 }
 
-export const Radio: React.FC<RadioProps> = ({ name, value, options, onChange, className = '', minWidth }) => {
+export const Radio: React.FC<RadioProps> = ({ name, value, options, onChange, className = '', minWidth, disabled }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value)
   }
@@ -33,6 +34,7 @@ export const Radio: React.FC<RadioProps> = ({ name, value, options, onChange, cl
             value={option.value}
             checked={value === option.value}
             onChange={handleChange}
+            disabled={disabled}
           />
           <span>{option.label}</span>
         </label>
