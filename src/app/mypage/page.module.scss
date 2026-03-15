@@ -246,18 +246,14 @@
   transition: all $transition-base;
 
   &:hover {
-    background-color: $gray-2;
+    background-color: $gray-4;
+    border-color: $gray-11;
   }
 
   @include mobile {
     font-size: 20px;
     padding: 10px 20px;
   }
-}
-
-.downloadBtnActive {
-  background-color: $gray-4;
-  border-color: $gray-11;
 }
 
 // 중간 카드 영역

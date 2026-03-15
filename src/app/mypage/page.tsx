@@ -2,9 +2,12 @@
 
 import React, { useEffect, useMemo } from 'react'
 import Link from '@/components/atoms/HospitalLink'
+import { useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useHospital } from '@/hooks'
 import { useReferralPatients } from '@/hooks/useReferralPatients'
+import { HospitalCode } from '@/graphql/__generated__/types'
+import { MY_ECONSULTS_QUERY } from '@/graphql/econsult/queries'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { ArrowRightLargeIcon } from '@/components/icons/ArrowRightLargeIcon'
@@ -40,16 +43,59 @@ const patientColumns: TableColumn<PatientData>[] = [
   { id: 'department', label: '진료과', field: 'department', width: '1fr' }
 ]
 
-const mockConsultData = {
-  waiting: 2,
-  completed: 10,
-  expired: 83
+/** HospitalId → HospitalCode 변환 */
+const toHospitalCode = (id: string): HospitalCode => {
+  const map: Record<string, HospitalCode> = {
+    anam: HospitalCode.Anam,
+    guro: HospitalCode.Guro,
+    ansan: HospitalCode.Ansan
+  }
+  return map[id] ?? HospitalCode.Anam
+}
+
+interface MyEConsultsData {
+  myEConsults: {
+    totalCount: number
+  }
 }
 
 export default function MyPage() {
   const { user } = useAuthContext()
   const { hospitalId } = useHospital()
   const { searchReferralPatients, patients, loading: patientsLoading } = useReferralPatients()
+
+  const hospitalCode = toHospitalCode(hospitalId)
+
+  // e-Consult 상태별 건수 조회
+  const { data: waitingData } = useQuery<MyEConsultsData>(MY_ECONSULTS_QUERY, {
+    variables: {
+      filter: { hospitalCode, status: 'PENDING' },
+      pagination: { page: 1, limit: 1 }
+    },
+    fetchPolicy: 'cache-and-network'
+  })
+
+  const { data: completedData } = useQuery<MyEConsultsData>(MY_ECONSULTS_QUERY, {
+    variables: {
+      filter: { hospitalCode, status: 'ANSWERED' },
+      pagination: { page: 1, limit: 1 }
+    },
+    fetchPolicy: 'cache-and-network'
+  })
+
+  const { data: expiredData } = useQuery<MyEConsultsData>(MY_ECONSULTS_QUERY, {
+    variables: {
+      filter: { hospitalCode, status: 'EXPIRED' },
+      pagination: { page: 1, limit: 1 }
+    },
+    fetchPolicy: 'cache-and-network'
+  })
+
+  const consultData = {
+    waiting: waitingData?.myEConsults?.totalCount ?? 0,
+    completed: completedData?.myEConsults?.totalCount ?? 0,
+    expired: expiredData?.myEConsults?.totalCount ?? 0
+  }
 
   useEffect(() => {
     if (hospitalId) {
@@ -117,7 +163,7 @@ export default function MyPage() {
               <div className={styles.downloadCard}>
                 <h2 className={styles.cardTitle}>서식 다운로드</h2>
                 <div className={styles.downloadList}>
-                  <button type='button' className={`${styles.downloadBtn} ${styles.downloadBtnActive}`}>
+                  <button type='button' className={styles.downloadBtn}>
                     사용자 매뉴얼
                   </button>
                   <button type='button' className={styles.downloadBtn}>
@@ -170,30 +216,30 @@ export default function MyPage() {
                   <div className={styles.consultStats}>
                     <div className={styles.statItem}>
                       <div className={`${styles.statCircle} ${styles.statCircleWaiting}`}>
-                        <span className={styles.statNumber}>{mockConsultData.waiting}</span>
+                        <span className={styles.statNumber}>{consultData.waiting}</span>
                         <span className={styles.statUnit}>건</span>
                       </div>
                       <p className={styles.statLabel}>답변 대기</p>
                     </div>
                     <div className={styles.statItem}>
                       <div className={`${styles.statCircle} ${styles.statCircleCompleted}`}>
-                        <span className={styles.statNumber}>{mockConsultData.completed}</span>
+                        <span className={styles.statNumber}>{consultData.completed}</span>
                         <span className={styles.statUnit}>건</span>
                       </div>
                       <p className={styles.statLabel}>답변 완료</p>
                     </div>
                     <div className={styles.statItem}>
                       <div className={`${styles.statCircle} ${styles.statCircleExpired}`}>
-                        <span className={styles.statNumber}>{mockConsultData.expired}</span>
+                        <span className={styles.statNumber}>{consultData.expired}</span>
                         <span className={styles.statUnit}>건</span>
                       </div>
                       <p className={styles.statLabel}>기간 만료</p>
                     </div>
                   </div>
-                  <button type='button' className={styles.consultApplyBtn}>
+                  <Link href='/network/e-consult' className={styles.consultApplyBtn}>
                     <ConsultIcon width={36} height={36} />
                     <span>e-Consulting 신청</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
