@@ -192,6 +192,26 @@ export const EHR_DRUG_ORDER_DETAIL_QUERY = gql`
   }
 `
 
+export const IMAGING_REQUEST_OVERLAY_QUERY = gql`
+  query ImagingRequestOverlay($ptntNo: String!, $examDate: String!, $orderCode: String!, $pacsAccessNo: String) {
+    imagingRequestOverlay(ptntNo: $ptntNo, examDate: $examDate, orderCode: $orderCode, pacsAccessNo: $pacsAccessNo) {
+      id
+      displayState
+      status
+      requestedAt
+      expiresAt
+      attachments {
+        id
+        originalName
+        mimeType
+        fileSize
+        storedPath
+        createdAt
+      }
+    }
+  }
+`
+
 export const MEDICAL_STAFF_LIST_QUERY = gql`
   query MedicalStaffList($filter: AdmapMedicalStaffFilterInput) {
     medicalStaffList(filter: $filter) {

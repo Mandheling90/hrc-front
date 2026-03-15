@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { PathologyResultModal } from '@/components/organisms/PathologyResultModal'
+import { ImageViewerModal } from '@/components/organisms/ImageViewerModal'
 import { useSpecialExamResults, type SpecialExamResultItem, type ExamSlipQueryInput } from '@/hooks/useExamResults'
+import { useImagingOverlay, useRequestImagingExam, usePresignedImageUrls, type ImagingDisplayState, type ImagingOverlayResult } from '@/hooks/useImagingRequest'
 import { matchesKeyword, matchesDateRange, sortByDate, paginate, formatDateDisplay, type FilterSortProps } from '../../utils/filterSort'
 import styles from '../../page.module.scss'
 
@@ -15,20 +17,14 @@ export interface OtherExamTabProps extends FilterSortProps {
   mcdpCd?: string
 }
 
-type ImageStatus = 'request' | 'view'
-
 interface OtherExamRow {
   id: string
   department: string
   doctor: string
   examName: string
   examDate: string
-  imageStatus: ImageStatus
+  displayState: ImagingDisplayState | null
   _raw: SpecialExamResultItem
-}
-
-function getImageStatus(item: SpecialExamResultItem): ImageStatus {
-  return item.pacsAccessNo ? 'view' : 'request'
 }
 
 function toRow(item: SpecialExamResultItem, index: number): OtherExamRow {
@@ -38,7 +34,7 @@ function toRow(item: SpecialExamResultItem, index: number): OtherExamRow {
     doctor: item.doctorName ?? '-',
     examName: item.orderName ?? '-',
     examDate: formatDateDisplay(item.examDate ?? item.orderDate),
-    imageStatus: getImageStatus(item),
+    displayState: null,
     _raw: item
   }
 }
@@ -49,116 +45,27 @@ const FIELD_MAP = {
   diagnosis: 'examName' as const
 }
 
-const renderImageButton = (item: OtherExamRow) => {
-  if (item.imageStatus === 'view') {
-    return (
-      <button type='button' className={styles.viewButton} disabled>
-        보기
-      </button>
-    )
-  }
-  return (
-    <button type='button' className={styles.requestButton} disabled>
-      신청
-    </button>
-  )
+const DISPLAY_LABELS: Record<ImagingDisplayState, string> = {
+  REQUESTABLE: '신청',
+  PENDING_IMAGE: '접수',
+  VIEWABLE: '보기',
+  REJECTED: '반려',
+  EXPIRED: '만료'
 }
-
-const getOtherExamColumns = (
-  onViewResultClick: (item: OtherExamRow) => void
-): TableColumn<OtherExamRow>[] => [
-  { id: 'department', label: '진료과', field: 'department', width: '160px', align: 'center' },
-  { id: 'doctor', label: '진료의', field: 'doctor', width: '130px', align: 'center' },
-  { id: 'examName', label: '검사명', field: 'examName', width: '1fr', align: 'center' },
-  {
-    id: 'image',
-    label: '이미지',
-    width: '130px',
-    align: 'center',
-    renderCell: renderImageButton
-  },
-  {
-    id: 'result',
-    label: '판독결과',
-    width: '130px',
-    align: 'center',
-    renderCell: (item: OtherExamRow) => (
-      <button type='button' className={styles.viewButton} onClick={() => onViewResultClick(item)}>
-        보기
-      </button>
-    )
-  }
-]
-
-const getOtherExamTabletCard =
-  (onViewResultClick: (item: OtherExamRow) => void) =>
-  (item: OtherExamRow) => (
-    <div className={styles.tabletCard}>
-      <div className={styles.tabletCardHeader}>
-        <span className={styles.tabletCardHeaderLabel}>진료과</span>
-        <span className={styles.tabletCardHeaderValue}>{item.department}</span>
-      </div>
-      <div className={styles.tabletCardBody}>
-        <div className={styles.tabletCardRow}>
-          <span className={styles.tabletCardLabel}>진료의</span>
-          <span className={styles.tabletCardValue}>{item.doctor}</span>
-        </div>
-        <div className={styles.tabletCardRow}>
-          <span className={styles.tabletCardLabel}>검사명</span>
-          <span className={styles.tabletCardValue}>{item.examName}</span>
-        </div>
-        <div className={styles.tabletCardRow}>
-          <span className={styles.tabletCardLabel}>이미지</span>
-          {renderImageButton(item)}
-        </div>
-        <div className={styles.tabletCardRow}>
-          <span className={styles.tabletCardLabel}>판독결과</span>
-          <button type='button' className={styles.viewButton} onClick={() => onViewResultClick(item)}>
-            보기
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-
-const getOtherExamMobileCard =
-  (onViewResultClick: (item: OtherExamRow) => void) =>
-  (item: OtherExamRow) => (
-    <div className={styles.mobileCard}>
-      <div className={styles.mobileCardHeader}>
-        <span className={styles.mobileCardHeaderLabel}>진료과</span>
-        <span className={styles.mobileCardHeaderValue}>{item.department}</span>
-      </div>
-      <div className={styles.mobileCardBody}>
-        <div className={styles.mobileCardRow}>
-          <span className={styles.mobileCardLabel}>진료의</span>
-          <span className={styles.mobileCardValue}>{item.doctor}</span>
-        </div>
-        <div className={styles.mobileCardRow}>
-          <span className={styles.mobileCardLabel}>검사명</span>
-          <span className={styles.mobileCardValue}>{item.examName}</span>
-        </div>
-        <div className={styles.mobileCardRow}>
-          <span className={styles.mobileCardLabel}>이미지</span>
-          {renderImageButton(item)}
-        </div>
-        <div className={styles.mobileCardRow}>
-          <span className={styles.mobileCardLabel}>판독결과</span>
-          <button type='button' className={styles.viewButton} onClick={() => onViewResultClick(item)}>
-            보기
-          </button>
-        </div>
-      </div>
-    </div>
-  )
 
 export const OtherExamTab: React.FC<OtherExamTabProps> = ({
   hospitalCode, ptntNo, slipCd = 'L10', mcdpCd,
   sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
 }) => {
   const { searchSpecialExamResults, items, loading } = useSpecialExamResults()
+  const { fetchOverlay } = useImagingOverlay()
+  const { requestImagingExam, loading: requesting } = useRequestImagingExam()
+  const { fetchPresignedUrls } = usePresignedImageUrls()
   const [isResultModalOpen, setIsResultModalOpen] = useState(false)
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [selectedRow, setSelectedRow] = useState<OtherExamRow | null>(null)
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [overlayMap, setOverlayMap] = useState<Record<string, ImagingOverlayResult | null>>({})
 
   useEffect(() => {
     if (ptntNo) {
@@ -168,7 +75,40 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
     }
   }, [hospitalCode, ptntNo, slipCd, mcdpCd, searchSpecialExamResults])
 
-  const allRows = useMemo(() => items.map(toRow), [items])
+  useEffect(() => {
+    if (items.length === 0) return
+    const fetchAll = async () => {
+      const entries: [string, ImagingOverlayResult | null][] = []
+      await Promise.all(
+        items.map(async (item, index) => {
+          const key = `${item.orderCode}-${index}`
+          try {
+            const result = await fetchOverlay({
+              ptntNo,
+              examDate: item.examDate ?? item.orderDate ?? '',
+              orderCode: item.orderCode ?? '',
+              pacsAccessNo: item.pacsAccessNo
+            })
+            entries.push([key, result])
+          } catch {
+            entries.push([key, null])
+          }
+        })
+      )
+      setOverlayMap(Object.fromEntries(entries))
+    }
+    fetchAll()
+  }, [items, ptntNo, fetchOverlay])
+
+  const allRows = useMemo(() =>
+    items.map((item, i) => {
+      const row = toRow(item, i)
+      const overlay = overlayMap[row.id]
+      row.displayState = overlay?.displayState ?? 'REQUESTABLE'
+      return row
+    }),
+    [items, overlayMap]
+  )
 
   const filteredSorted = useMemo(() => {
     let result = allRows.filter(row =>
@@ -185,6 +125,68 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
 
   const pagedRows = useMemo(() => paginate(filteredSorted, currentPage, pageSize), [filteredSorted, currentPage, pageSize])
 
+  const handleRequest = useCallback(async (item: OtherExamRow) => {
+    if (requesting) return
+    try {
+      const result = await requestImagingExam({
+        hospitalCode,
+        ptntNo,
+        examDate: item._raw.examDate ?? item._raw.orderDate ?? '',
+        orderCode: item._raw.orderCode ?? '',
+        pacsAccessNo: item._raw.pacsAccessNo
+      })
+      if (result) {
+        setOverlayMap(prev => ({ ...prev, [item.id]: result }))
+      }
+    } catch (err: any) {
+      const message = err?.graphQLErrors?.[0]?.message || '영상검사 신청 중 오류가 발생했습니다.'
+      alert(message)
+    }
+  }, [hospitalCode, ptntNo, requesting, requestImagingExam])
+
+  const handleViewImage = useCallback(async (item: OtherExamRow) => {
+    const overlay = overlayMap[item.id]
+    const attachments = overlay?.attachments ?? []
+    if (attachments.length === 0) return
+    const urls = await fetchPresignedUrls(attachments)
+    setImageUrls(urls)
+    setSelectedRow(item)
+    setIsImageModalOpen(true)
+  }, [overlayMap, fetchPresignedUrls])
+
+  const renderImageButton = useCallback((item: OtherExamRow) => {
+    const state = item.displayState
+    if (!state) return <span className={styles.statusText}>-</span>
+    switch (state) {
+      case 'REQUESTABLE':
+        return (
+          <button type='button' className={styles.requestButton} onClick={() => handleRequest(item)} disabled={requesting}>
+            {DISPLAY_LABELS.REQUESTABLE}
+          </button>
+        )
+      case 'VIEWABLE':
+        return (
+          <button type='button' className={styles.viewButton} onClick={() => handleViewImage(item)}>
+            {DISPLAY_LABELS.VIEWABLE}
+          </button>
+        )
+      case 'PENDING_IMAGE':
+        return (
+          <button type='button' className={styles.receivedButton}>
+            {DISPLAY_LABELS.PENDING_IMAGE}
+          </button>
+        )
+      case 'REJECTED':
+        return (
+          <button type='button' className={styles.requestButton} onClick={() => handleRequest(item)} disabled={requesting}>
+            {DISPLAY_LABELS.REQUESTABLE}
+          </button>
+        )
+      case 'EXPIRED':
+        return <span className={styles.statusText}>{DISPLAY_LABELS.EXPIRED}</span>
+    }
+  }, [handleRequest, handleViewImage, requesting])
+
   const handleViewResultClick = (item: OtherExamRow) => {
     setSelectedRow(item)
     setIsResultModalOpen(true)
@@ -194,6 +196,100 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
     setIsResultModalOpen(false)
     setSelectedRow(null)
   }
+
+  const handleCloseImageModal = () => {
+    setIsImageModalOpen(false)
+    setSelectedRow(null)
+    setImageUrls([])
+  }
+
+  const otherExamColumns: TableColumn<OtherExamRow>[] = useMemo(() => [
+    { id: 'department', label: '진료과', field: 'department', width: '160px', align: 'center' },
+    { id: 'doctor', label: '진료의', field: 'doctor', width: '130px', align: 'center' },
+    { id: 'examName', label: '검사명', field: 'examName', width: '1fr', align: 'center' },
+    {
+      id: 'image',
+      label: '이미지',
+      width: '130px',
+      align: 'center',
+      renderCell: renderImageButton
+    },
+    {
+      id: 'result',
+      label: '판독결과',
+      width: '130px',
+      align: 'center',
+      renderCell: (item: OtherExamRow) => (
+        <button type='button' className={styles.viewButton} onClick={() => handleViewResultClick(item)}>
+          보기
+        </button>
+      )
+    }
+  ], [renderImageButton])
+
+  const renderTabletCard = useCallback(
+    (item: OtherExamRow) => (
+      <div className={styles.tabletCard}>
+        <div className={styles.tabletCardHeader}>
+          <span className={styles.tabletCardHeaderLabel}>진료과</span>
+          <span className={styles.tabletCardHeaderValue}>{item.department}</span>
+        </div>
+        <div className={styles.tabletCardBody}>
+          <div className={styles.tabletCardRow}>
+            <span className={styles.tabletCardLabel}>진료의</span>
+            <span className={styles.tabletCardValue}>{item.doctor}</span>
+          </div>
+          <div className={styles.tabletCardRow}>
+            <span className={styles.tabletCardLabel}>검사명</span>
+            <span className={styles.tabletCardValue}>{item.examName}</span>
+          </div>
+          <div className={styles.tabletCardRow}>
+            <span className={styles.tabletCardLabel}>이미지</span>
+            {renderImageButton(item)}
+          </div>
+          <div className={styles.tabletCardRow}>
+            <span className={styles.tabletCardLabel}>판독결과</span>
+            <button type='button' className={styles.viewButton} onClick={() => handleViewResultClick(item)}>
+              보기
+            </button>
+          </div>
+        </div>
+      </div>
+    ),
+    [renderImageButton]
+  )
+
+  const renderMobileCard = useCallback(
+    (item: OtherExamRow) => (
+      <div className={styles.mobileCard}>
+        <div className={styles.mobileCardHeader}>
+          <span className={styles.mobileCardHeaderLabel}>진료과</span>
+          <span className={styles.mobileCardHeaderValue}>{item.department}</span>
+        </div>
+        <div className={styles.mobileCardBody}>
+          <div className={styles.mobileCardRow}>
+            <span className={styles.mobileCardLabel}>진료의</span>
+            <span className={styles.mobileCardValue}>{item.doctor}</span>
+          </div>
+          <div className={styles.mobileCardRow}>
+            <span className={styles.mobileCardLabel}>검사명</span>
+            <span className={styles.mobileCardValue}>{item.examName}</span>
+          </div>
+          <div className={styles.mobileCardRow}>
+            <span className={styles.mobileCardLabel}>이미지</span>
+            {renderImageButton(item)}
+          </div>
+          <div className={styles.mobileCardRow}>
+            <span className={styles.mobileCardLabel}>판독결과</span>
+            <button type='button' className={styles.viewButton} onClick={() => handleViewResultClick(item)}>
+              보기
+            </button>
+          </div>
+        </div>
+      </div>
+    ),
+    [renderImageButton]
+  )
 
   if (loading) {
     return <Skeleton width='100%' height={44} variant='rounded' count={5} gap={4} />
@@ -206,19 +302,29 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
   return (
     <>
       <Table
-        columns={getOtherExamColumns(handleViewResultClick)}
+        columns={otherExamColumns}
         data={pagedRows}
         getRowKey={item => item.id}
-        renderTabletCard={getOtherExamTabletCard(handleViewResultClick)}
-        renderMobileCard={getOtherExamMobileCard(handleViewResultClick)}
+        renderTabletCard={renderTabletCard}
+        renderMobileCard={renderMobileCard}
       />
 
-      {selectedRow && (
+      {selectedRow && isResultModalOpen && (
         <PathologyResultModal
           isOpen={isResultModalOpen}
           onClose={handleCloseResultModal}
           examName={selectedRow.examName}
           result={selectedRow._raw.resultContent || selectedRow._raw.grossResult || ''}
+        />
+      )}
+
+      {selectedRow && isImageModalOpen && (
+        <ImageViewerModal
+          isOpen={isImageModalOpen}
+          onClose={handleCloseImageModal}
+          examType='기타 검사'
+          examName={selectedRow.examName}
+          images={imageUrls}
         />
       )}
     </>
