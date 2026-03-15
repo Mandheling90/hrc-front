@@ -1010,6 +1010,47 @@ input UpdateProfileInput {
   hospWebsite: String
 }
 
+input CreateImagingRequestInput {
+  hospitalCode: HospitalCode!
+  ptntNo: String!
+  examDate: String!
+  orderCode: String!
+  pacsAccessNo: String
+  refrSno: String
+  refrYmd: String
+}
+
+input WithdrawMemberInput {
+  password: String!
+}
+
+input ChangePasswordInput {
+  oldPassword: String!
+  newPassword: String!
+}
+
+input UpdateDoctorProfileInput {
+  userName: String
+  email: String
+  phone: String
+  licenseNo: String
+  isDirector: Boolean
+  school: String
+  department: String
+  specialty: String
+  doctorType: String
+  smsConsent: Boolean
+  emailConsent: Boolean
+  replyConsent: Boolean
+  hospName: String
+  careInstitutionNo: String
+  hospZipCode: String
+  hospAddress: String
+  hospAddressDetail: String
+  hospPhone: String
+  hospWebsite: String
+}
+
 type Mutation {
   login(input: LoginInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
