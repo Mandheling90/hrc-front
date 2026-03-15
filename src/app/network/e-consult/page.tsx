@@ -17,6 +17,7 @@ import { FormField } from '@/components/molecules/FormField/FormField'
 import { DoctorSearchModal } from '@/components/molecules/DoctorSearchModal/DoctorSearchModal'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { SearchIcon } from '@/components/icons/SearchIcon'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
@@ -314,22 +315,29 @@ export default function EConsultPage() {
                     className={styles.radio}
                   />
                 </div>
-                <FormField
-                  label='자문의'
-                  required
-                  id='consulting-doctor'
-                  name='consulting-doctor'
-                  type='text'
-                  placeholder='자문의를 검색해주세요'
-                  value={consultingDoctor}
-                  onChange={e => setConsultingDoctor(e.target.value)}
-                  readOnly
-                  buttonText='자문의 검색'
-                  onButtonClick={handleSearchDoctor}
-                  buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
-                  error=''
-                  mobileStack
-                />
+                {hasPreselected && consultantsLoading ? (
+                  <div className={styles.field}>
+                    <InputLabel required>자문의</InputLabel>
+                    <Skeleton width='100%' height={50} variant='rounded' />
+                  </div>
+                ) : (
+                  <FormField
+                    label='자문의'
+                    required
+                    id='consulting-doctor'
+                    name='consulting-doctor'
+                    type='text'
+                    placeholder='자문의를 검색해주세요'
+                    value={consultingDoctor}
+                    onChange={e => setConsultingDoctor(e.target.value)}
+                    readOnly
+                    buttonText='자문의 검색'
+                    onButtonClick={handleSearchDoctor}
+                    buttonIcon={<SearchIcon width={22} height={22} fill='#fff' />}
+                    error=''
+                    mobileStack
+                  />
+                )}
               </div>
             </div>
 
