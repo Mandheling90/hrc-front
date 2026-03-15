@@ -30,8 +30,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (storedToken && storedUser) {
       try {
         const parsed: AuthUser = JSON.parse(storedUser)
-        // DEV 전용: doctorId가 없으면 임시로 55030 주입
-        if (process.env.NODE_ENV === 'development' && !parsed.doctorId) {
+        // DEV 전용: testuser 계정일 때 doctorId 임시 주입
+        if (process.env.NODE_ENV === 'development' && parsed.userId === 'testuser' && !parsed.doctorId) {
           parsed.doctorId = '55030'
         }
         setToken(storedToken)
