@@ -173,7 +173,7 @@ export default function EditProfilePage() {
               onCancel={handleCancel}
               submitButtonText={updating ? '저장 중...' : '저장'}
               cancelButtonText='취소'
-              disabledFields={['name', 'birthDate', 'memberType', 'phone', 'userId', 'careNumber']}
+              disabledFields={['name', 'birthDate', 'memberType', 'phone', 'userId', 'licenseNumber', 'school', 'careNumber']}
               showWithdrawButton={true}
               onWithdraw={handleWithdraw}
             />

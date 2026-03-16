@@ -514,6 +514,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 options={SCHOOL_OPTIONS}
                 value={formData.school}
                 onChange={handleSelectChange('school')}
+                disabled={isFieldDisabled('school')}
               />
             </div>
 

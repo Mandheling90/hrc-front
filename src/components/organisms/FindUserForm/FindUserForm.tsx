@@ -11,6 +11,7 @@ import { FaceIdIcon } from '@/components/icons/FaceIdIcon'
 import { PasswordIcon } from '@/components/icons/PasswordIcon'
 import { useNiceVerification } from '@/hooks/useNiceVerification'
 import { FIND_USER_ID_BY_VERIFICATION_MUTATION } from '@/graphql/verification/mutations'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 
 type VerifyTarget = 'findId' | 'findPassword'
 
@@ -19,8 +20,8 @@ export const FindUserForm: React.FC = () => {
   const router = useHospitalRouter()
   const [userId, setUserId] = useState('')
 
-  // 아이디 찾기 결과
-  const [foundUserId, setFoundUserId] = useState<string | null>(null)
+  // 아이디 찾기 완료 팝업
+  const [showIdSentModal, setShowIdSentModal] = useState(false)
   const [findError, setFindError] = useState<string | null>(null)
 
   // 어떤 카드에서 인증을 요청했는지 추적
@@ -50,15 +51,13 @@ export const FindUserForm: React.FC = () => {
     const processVerification = async () => {
       if (verifyTargetRef.current === 'findId') {
         try {
-          const { data } = await findUserIdByVerification({
+          await findUserIdByVerification({
             variables: {
               input: { verificationToken: verifiedData.verificationToken }
             }
           })
-          if (data?.findUserIdByVerification?.maskedUserId) {
-            setFoundUserId(data.findUserIdByVerification.maskedUserId)
-            setFindError(null)
-          }
+          setShowIdSentModal(true)
+          setFindError(null)
         } catch (err) {
           const message = err instanceof Error ? err.message : '아이디 찾기에 실패했습니다.'
           setFindError(message)
@@ -101,54 +100,13 @@ export const FindUserForm: React.FC = () => {
     requestVerification()
   }
 
-  const handleGoLogin = () => {
-    router.push('/login')
-  }
-
-  const handleRetry = () => {
-    setFoundUserId(null)
-    setFindError(null)
+  const handleIdSentModalClose = () => {
+    setShowIdSentModal(false)
     verificationProcessedRef.current = false
     resetVerification()
   }
 
   const errorMessage = findError || verificationError
-
-  // 아이디 찾기 결과 화면
-  if (foundUserId) {
-    return (
-      <div className={styles.findForm}>
-        <h2 className={styles.title}>아이디/비밀번호 찾기</h2>
-        <div className={styles.resultContainer}>
-          <div className={styles.resultBox}>
-            <p className={styles.resultLabel}>회원님의 아이디는</p>
-            <p className={styles.resultUserId}>{foundUserId}</p>
-            <p className={styles.resultLabel}>입니다.</p>
-          </div>
-          <div className={styles.resultButtons}>
-            <Button
-              type='button'
-              variant='outline'
-              size='medium'
-              onClick={handleRetry}
-              className={styles.resultButton}
-            >
-              다시 찾기
-            </Button>
-            <Button
-              type='button'
-              variant='primary'
-              size='medium'
-              onClick={handleGoLogin}
-              className={styles.resultButton}
-            >
-              로그인
-            </Button>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className={styles.findForm}>
@@ -228,6 +186,13 @@ export const FindUserForm: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <AlertModal
+        isOpen={showIdSentModal}
+        message='인증하신 번호로 가입한 아이디를 발송했습니다.'
+        closeButtonText='확인'
+        onClose={handleIdSentModalClose}
+      />
     </div>
   )
 }
