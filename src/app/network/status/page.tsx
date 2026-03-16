@@ -124,6 +124,8 @@ export default function ClinicStatusPage() {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedClinicId, setSelectedClinicId] = useState<string>('')
   const [dataLoading, setDataLoading] = useState(true)
+
+  const isLoading = dataLoading || apiLoading
   const itemsPerPage = 4
   const geocodeCacheRef = useRef<Map<string, { lat: number; lng: number }>>(new Map())
 
@@ -520,7 +522,7 @@ export default function ClinicStatusPage() {
               {/* 병의원 리스트 */}
               <div className={styles.clinicListWrapper}>
                 <div className={styles.clinicList}>
-                  {dataLoading ? (
+                  {isLoading ? (
                     <>
                       {Array.from({ length: 4 }, (_, i) => (
                         <div key={i} className={styles.skeletonCard}>
