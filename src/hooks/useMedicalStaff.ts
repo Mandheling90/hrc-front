@@ -48,6 +48,7 @@ interface MedicalStaffFilterInput {
   mcdpCd?: string
   mddrId?: string
   mddrNm?: string
+  spdrQlfcYn?: string
 }
 
 interface MedicalStaffListResult {

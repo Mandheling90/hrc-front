@@ -12,6 +12,7 @@ import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import styles from './page.module.scss'
 import { InfoIcon } from '@/components/icons/InfoIcon'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useHospital, useSearchCollaboratingHospitals } from '@/hooks'
 import { HospitalCode } from '@/graphql/__generated__/types'
 
@@ -122,7 +123,7 @@ export default function ClinicStatusPage() {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedClinicId, setSelectedClinicId] = useState<string>('')
-  const [dataLoading, setDataLoading] = useState(false)
+  const [dataLoading, setDataLoading] = useState(true)
   const itemsPerPage = 4
   const geocodeCacheRef = useRef<Map<string, { lat: number; lng: number }>>(new Map())
 
@@ -520,9 +521,29 @@ export default function ClinicStatusPage() {
               <div className={styles.clinicListWrapper}>
                 <div className={styles.clinicList}>
                   {dataLoading ? (
-                    <div className={styles.emptyState}>
-                      <p>데이터를 불러오는 중입니다...</p>
-                    </div>
+                    <>
+                      {Array.from({ length: 4 }, (_, i) => (
+                        <div key={i} className={styles.skeletonCard}>
+                          <div className={styles.skeletonHeader}>
+                            <div className={styles.skeletonNameGroup}>
+                              <Skeleton variant='rounded' width={80} height={32} />
+                              <Skeleton width={180} height={32} />
+                            </div>
+                            <div className={styles.skeletonButtonGroup}>
+                              <Skeleton variant='circle' width={54} height={54} />
+                              <Skeleton variant='circle' width={54} height={54} />
+                            </div>
+                          </div>
+                          <div className={styles.skeletonContent}>
+                            <Skeleton width='80%' height={20} />
+                            <div className={styles.skeletonPhoneRow}>
+                              <Skeleton width={200} height={20} />
+                              <Skeleton width={200} height={20} />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </>
                   ) : paginatedClinics.length > 0 ? (
                     <>
                       {paginatedClinics.map((clinic, index) => (

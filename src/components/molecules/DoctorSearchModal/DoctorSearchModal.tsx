@@ -54,6 +54,8 @@ function staffToDoctor(item: MedicalStaffItem): Doctor {
     department: item.departmentName || '',
     name: item.doctorName || '',
     email: '',
+    photoUrl: item.photoUrl || undefined,
+    bio: item.bio || undefined,
     selected: false
   }
 }
@@ -100,7 +102,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       }))
     }
 
-    let filtered = staffList.filter(s => s.smcrYn === 'Y')
+    let filtered = staffList
     if (searchQuery.trim()) {
       filtered = filtered.filter(s => s.doctorName?.includes(searchQuery.trim()))
     }
@@ -164,7 +166,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     setSelectedDepartmentCode(deptCode)
     setSelectedDepartmentName(deptName)
     // 선택한 진료과 코드로 의료진 조회
-    fetchMedicalStaff(deptCode ? { mcdpCd: deptCode } : undefined)
+    fetchMedicalStaff({ ...(deptCode ? { mcdpCd: deptCode } : {}), spdrQlfcYn: 'Y' })
     setStep('doctor')
   }
 

@@ -363,6 +363,55 @@
   font-size: $font-size-lg;
 }
 
+// ========================================
+// 스켈레톤 카드
+// ========================================
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-8;
+  padding: 30px;
+  border-bottom: 1px solid $gray-9;
+
+  @include mobile {
+    padding: $spacing-5;
+    gap: $spacing-4;
+  }
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skeletonNameGroup {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.skeletonButtonGroup {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.skeletonContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.skeletonPhoneRow {
+  display: flex;
+  gap: $spacing-10;
+
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+}
+
 .paginationWrapper {
   @include pagination-wrapper;
 }
