@@ -32,6 +32,12 @@ const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
   ansan: HospitalCode.Ansan
 }
 
+const DEFAULT_HOSPITAL_NAME: Record<string, string> = {
+  anam: '고려대학교 안암병원',
+  guro: '고려대학교 구로병원',
+  ansan: '고려대학교 안산병원'
+}
+
 export default function EConsultPage() {
   const { isAnam, hospitalId } = useHospital()
   const { user } = useAuthContext()
@@ -71,11 +77,11 @@ export default function EConsultPage() {
   useEffect(() => {
     if (user) {
       setApplicantName(user.userName || '')
-      setHospitalName(user.profile?.hospName || '')
+      setHospitalName(user.profile?.hospName || DEFAULT_HOSPITAL_NAME[hospitalId] || '')
       setEmail(user.email || '')
       setEmailConsent(user.profile?.emailConsent ? 'agree' : 'disagree')
     }
-  }, [user])
+  }, [user, hospitalId])
 
   // 페이지 진입 시 검색 팝업 자동 열기 (preselected가 아닌 경우만)
   useEffect(() => {
