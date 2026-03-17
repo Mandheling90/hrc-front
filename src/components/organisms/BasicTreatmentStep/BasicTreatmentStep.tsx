@@ -18,38 +18,38 @@ export interface BasicTreatmentStepProps {
 }
 
 const DEFAULT_MANAGEMENT: Record<string, boolean> = {
-  tracheostomyCare: true,
+  tracheostomyCare: false,
   eTube: false,
   lTube: false,
   peg: false,
-  foleyNelaton: true,
+  foleyNelaton: false,
   drainageTube: false,
   centralVenousCatheter: false,
   chemoport: false
 }
 
 const DEFAULT_PRESCRIPTION: Record<string, boolean> = {
-  bloodTransfusion: true,
+  bloodTransfusion: false,
   tpnPpn: false,
   antibiotics: false
 }
 
 const DEFAULT_DRESSING: Record<string, boolean> = {
-  pressureUlcerPrevention: true,
+  pressureUlcerPrevention: false,
   vacuumManagement: false,
   simpleComplexDressing: false
 }
 
 const DEFAULT_TREATMENT: Record<string, boolean> = {
-  intubation: true,
+  intubation: false,
   ventilatorCare: false,
   homeVentilator: false,
   highFlowO2: false,
-  o2Therapy: true,
+  o2Therapy: false,
   suction: false,
   paracentesis: false,
   thoracentesis: false,
-  chestTube: true,
+  chestTube: false,
   hemodialysis: false,
   peritonealDialysis: false,
   enema: false

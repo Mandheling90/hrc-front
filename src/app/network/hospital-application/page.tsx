@@ -39,10 +39,7 @@ import { HospitalCode } from '@/graphql/__generated__/types'
 import { mapStepsToApiInput, mapApiToStepData, type AllStepData } from '@/utils/partnerApplicationMapper'
 import { uploadFile } from '@/lib/upload'
 import {
-  DEV_HOSPITAL_EXTRA,
-  DEV_DIRECTOR_EXTRA,
-  DEV_STAFF_INFO,
-  DEV_BED_FACILITY
+  DEV_DIRECTOR_EXTRA
 } from '@/utils/devDefaultData'
 import styles from './page.module.scss'
 
@@ -92,7 +89,6 @@ export default function HospitalApplicationPage() {
   const userHospitalDefaults = useMemo<Partial<HospitalInfoStepData> | undefined>(() => {
     if (!user?.profile) return undefined
     return {
-      ...(isDev ? DEV_HOSPITAL_EXTRA : {}),
       hospitalName: user.profile.hospName ?? '',
       medicalInstitutionNumber: user.profile.careInstitutionNo ?? '',
       zipCode: user.profile.hospZipCode ?? '',
@@ -117,6 +113,7 @@ export default function HospitalApplicationPage() {
       school: user.profile?.school ?? '',
       department: user.profile?.department ?? '',
       specialty: user.profile?.specialty ?? '',
+      isDirector: user.profile?.isDirector ?? false,
       smsConsent: user.profile ? (user.profile.smsConsent ? '동의' : '비동의') : '',
       emailConsent: user.profile ? (user.profile.emailConsent ? '동의' : '비동의') : '',
       replyConsent: user.profile ? (user.profile.replyConsent ? '동의' : '비동의') : ''
@@ -375,7 +372,7 @@ export default function HospitalApplicationPage() {
                     ref={step3Ref}
                     currentStep={3}
                     totalSteps={8}
-                    defaultValues={stepDataCache.step3 ?? (isDev ? DEV_STAFF_INFO : undefined)}
+                    defaultValues={stepDataCache.step3}
                   />
                 )}
 
@@ -386,7 +383,7 @@ export default function HospitalApplicationPage() {
                     ref={step4Ref}
                     currentStep={4}
                     totalSteps={8}
-                    defaultValues={stepDataCache.step4 ?? (isDev ? DEV_BED_FACILITY : undefined)}
+                    defaultValues={stepDataCache.step4}
                   />
                 )}
 

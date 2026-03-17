@@ -23,15 +23,15 @@ export const BedAndFacilityStep = forwardRef<StepRef<BedAndFacilityStepData>, Be
     // 병상 운영 현황 상태
     const [totalBedCount, setTotalBedCount] = useState(defaultValues?.totalBedCount ?? '')
     const [operatingBeds, setOperatingBeds] = useState(defaultValues?.operatingBeds ?? '')
-    const [premiumRoomChecked, setPremiumRoomChecked] = useState(defaultValues?.premiumRoomChecked ?? true)
+    const [premiumRoomChecked, setPremiumRoomChecked] = useState(defaultValues?.premiumRoomChecked ?? false)
     const [premiumRoomCount, setPremiumRoomCount] = useState(defaultValues?.premiumRoomCount ?? '')
-    const [multiPersonRoomChecked, setMultiPersonRoomChecked] = useState(defaultValues?.multiPersonRoomChecked ?? true)
+    const [multiPersonRoomChecked, setMultiPersonRoomChecked] = useState(defaultValues?.multiPersonRoomChecked ?? false)
     const [multiPersonRoomCount, setMultiPersonRoomCount] = useState(defaultValues?.multiPersonRoomCount ?? '')
     const [isolationRoomChecked, setIsolationRoomChecked] = useState(defaultValues?.isolationRoomChecked ?? false)
     const [isolationRoomCount, setIsolationRoomCount] = useState(defaultValues?.isolationRoomCount ?? '')
 
     // 시설 운영 현황 상태
-    const [icuChecked, setIcuChecked] = useState(defaultValues?.icuChecked ?? true)
+    const [icuChecked, setIcuChecked] = useState(defaultValues?.icuChecked ?? false)
     const [icuCount, setIcuCount] = useState(defaultValues?.icuCount ?? '')
     const [emergencyRoomChecked, setEmergencyRoomChecked] = useState(defaultValues?.emergencyRoomChecked ?? false)
     const [emergencyRoomCount, setEmergencyRoomCount] = useState(defaultValues?.emergencyRoomCount ?? '')
@@ -46,7 +46,7 @@ export const BedAndFacilityStep = forwardRef<StepRef<BedAndFacilityStepData>, Be
     )
     const [rehabilitationTherapy, setRehabilitationTherapy] = useState(
       defaultValues?.rehabilitationTherapy ?? {
-        physical: true,
+        physical: false,
         occupational: false,
         speech: false,
         swallowing: false,

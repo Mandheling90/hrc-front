@@ -50,7 +50,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
       blood: defaultValues?.dialysis?.blood ?? false,
       peritoneal: defaultValues?.dialysis?.peritoneal ?? false
     })
-    const [medication, setMedication] = useState<string>(defaultValues?.medication ?? '')
+    const [medication, setMedication] = useState<string>(defaultValues?.medication ?? '불가능')
     const [dermatology, setDermatology] = useState<{ phototherapy: boolean; excimerLaser: boolean }>({
       phototherapy: defaultValues?.dermatology?.phototherapy ?? false,
       excimerLaser: defaultValues?.dermatology?.excimerLaser ?? false

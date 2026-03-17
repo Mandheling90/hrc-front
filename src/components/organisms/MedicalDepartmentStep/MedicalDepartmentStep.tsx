@@ -20,10 +20,10 @@ export interface MedicalDepartmentStepProps {
 }
 
 const DEFAULT_DEPARTMENTS: Record<string, { checked: boolean; count: string }> = {
-  familyMedicine: { checked: true, count: '' },
+  familyMedicine: { checked: false, count: '' },
   internalMedicine: { checked: false, count: '' },
   anesthesiology: { checked: false, count: '' },
-  radiationOncology: { checked: true, count: '' },
+  radiationOncology: { checked: false, count: '' },
   pathology: { checked: false, count: '' },
   urology: { checked: false, count: '' },
   obstetricsGynecology: { checked: false, count: '' },
@@ -50,23 +50,23 @@ const DEFAULT_DEPARTMENTS: Record<string, { checked: boolean; count: string }> =
 
 const DEFAULT_EQUIPMENT: Record<string, boolean> = {
   xray: false,
-  mri: true,
+  mri: false,
   ct: false,
   pet: false,
   ultrasound: false,
-  echocardiography: true,
-  ekg: true,
-  endoscopy: true,
+  echocardiography: false,
+  ekg: false,
+  endoscopy: false,
   mammography: false,
-  vfss: true,
+  vfss: false,
   boneDensity: false,
   cpm: false,
   ventilator: false,
-  homeVentilator: true,
+  homeVentilator: false,
   highFlowO2: false,
   portableO2Suction: false,
   pft: false,
-  hemodialysis: true,
+  hemodialysis: false,
   crrt: false,
   infusionPump: false
 }

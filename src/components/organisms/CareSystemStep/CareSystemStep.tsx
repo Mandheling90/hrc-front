@@ -34,7 +34,7 @@ export const CareSystemStep = forwardRef<StepRef<CareSystemStepData>, CareSystem
     // 격리유형 상태
     const [isolationType, setIsolationType] = useState(
       defaultValues?.isolationType ?? {
-        vre: true,
+        vre: false,
         cre: false,
         cpe: false,
         tb: false,
@@ -46,7 +46,7 @@ export const CareSystemStep = forwardRef<StepRef<CareSystemStepData>, CareSystem
     // 격리 중 간병 상태
     const [nursingDuringIsolation, setNursingDuringIsolation] = useState(
       defaultValues?.nursingDuringIsolation ?? {
-        joint: true,
+        joint: false,
         individual: false,
         guardian: false
       }
@@ -55,7 +55,7 @@ export const CareSystemStep = forwardRef<StepRef<CareSystemStepData>, CareSystem
     // 격리 중 재활 상태
     const [rehabilitationDuringIsolation, setRehabilitationDuringIsolation] = useState(
       defaultValues?.rehabilitationDuringIsolation ?? {
-        no: true,
+        no: false,
         bedside: false,
         isolationWard: false
       }
