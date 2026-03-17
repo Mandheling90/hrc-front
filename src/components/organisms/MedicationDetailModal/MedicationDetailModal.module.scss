@@ -169,13 +169,13 @@
 }
 
 .infoCellLabel {
-  width: 51px;
   flex-shrink: 0;
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   letter-spacing: -0.8px;
   color: $gray-12;
+  white-space: nowrap;
 
   @include tablet {
     font-size: 18px;
@@ -183,7 +183,6 @@
   }
 
   @include mobile {
-    width: 46px;
     font-size: 18px;
     letter-spacing: -0.72px;
   }
