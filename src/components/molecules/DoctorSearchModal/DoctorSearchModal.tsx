@@ -2,12 +2,13 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useQuery } from '@apollo/client/react'
+import { useLazyQuery, useQuery } from '@apollo/client/react'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
 import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
+import { MEDICAL_STAFF_DEPARTMENT_LIST_QUERY } from '@/graphql/hospital/medical-staff-queries'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './DoctorSearchModal.module.scss'
 
@@ -75,11 +76,21 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 }) => {
   const useExternal = !!externalDoctors
 
-  // 전체 자문의 목록 (진료과 추출용)
-  const { data: allConsultantData, loading: allLoading } = useQuery(CONSULTANT_DOCTORS_QUERY, {
+  // 1뎁스: 모든 진료과 목록 조회
+  const { data: deptData, loading: deptLoading } = useQuery<{
+    medicalStaffDepartmentList: { items: { departmentCode: string; departmentName: string }[]; totalCount: number }
+  }>(MEDICAL_STAFF_DEPARTMENT_LIST_QUERY, {
     skip: useExternal,
     fetchPolicy: 'cache-and-network'
   })
+
+  // 2뎁스: 선택된 진료과의 자문의 목록 조회
+  const [fetchConsultants, { data: consultantData, loading: consultantLoading }] = useLazyQuery(
+    CONSULTANT_DOCTORS_QUERY,
+    {
+      fetchPolicy: 'cache-and-network'
+    }
+  )
 
   const [step, setStep] = useState<ModalStep>('department')
   const [selectedDepartmentCode, setSelectedDepartmentCode] = useState<string | null>(null)
@@ -87,26 +98,18 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null)
 
-  const isLoading = allLoading
+  const isLoading = deptLoading
 
-  // 진료과 목록: 전체 자문의에서 department 추출
+  // 진료과 목록: API에서 직접 조회
   const departments = useMemo(() => {
-    const list: ConsultantDoctor[] = allConsultantData?.consultantDoctors ?? []
-    const deptMap = new Map<string, string>()
-    for (const doc of list) {
-      if (doc.department && !deptMap.has(doc.department)) {
-        deptMap.set(doc.department, doc.department)
-      }
-    }
-    return Array.from(deptMap.entries())
-      .map(([name]) => ({ departmentName: name }))
-      .sort((a, b) => a.departmentName.localeCompare(b.departmentName, 'ko'))
-  }, [allConsultantData])
+    const items = deptData?.medicalStaffDepartmentList?.items ?? []
+    return [...items].sort((a, b) => a.departmentName.localeCompare(b.departmentName, 'ko'))
+  }, [deptData])
 
-  // 전체 자문의 목록
-  const allConsultants: ConsultantDoctor[] = allConsultantData?.consultantDoctors ?? []
+  // 자문의 목록: 선택된 진료과 기반으로 API 조회 결과
+  const consultants: ConsultantDoctor[] = consultantData?.consultantDoctors ?? []
 
-  // API 응답을 Doctor 형태로 변환 + 진료과/검색어 필터링
+  // API 응답을 Doctor 형태로 변환 + 검색어 필터링
   const doctors: Doctor[] = useMemo(() => {
     if (useExternal) {
       let filtered = externalDoctors
@@ -119,11 +122,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       }))
     }
 
-    let filtered = allConsultants
-    // 진료과 필터
-    if (selectedDepartmentName) {
-      filtered = filtered.filter(s => s.department === selectedDepartmentName)
-    }
+    let filtered = consultants
     if (searchQuery.trim()) {
       filtered = filtered.filter(s => s.name?.includes(searchQuery.trim()))
     }
@@ -137,7 +136,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       bio: item.specialty || undefined,
       selected: item.doctorId === selectedDoctorId
     }))
-  }, [allConsultants, selectedDepartmentName, searchQuery, selectedDoctorId, useExternal, externalDoctors])
+  }, [consultants, searchQuery, selectedDoctorId, useExternal, externalDoctors])
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -189,10 +188,14 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }
 
-  const handleDepartmentClick = (deptName: string | null) => {
-    setSelectedDepartmentCode(deptName)
+  const handleDepartmentClick = (deptCode: string | null, deptName: string | null) => {
+    setSelectedDepartmentCode(deptCode)
     setSelectedDepartmentName(deptName)
     setStep('doctor')
+    // 선택한 진료과 코드로 자문의 목록 조회
+    fetchConsultants({
+      variables: deptCode ? { departmentCode: deptCode } : {}
+    })
   }
 
   const handleBackToDepartment = () => {
@@ -244,25 +247,23 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
           <div className={styles.departmentSection}>
             <div className={styles.departmentChips}>
               {isLoading ? (
-                Array.from({ length: 12 }, (_, i) => (
-                  <Skeleton key={i} width={182} height={62} variant='rounded' />
-                ))
+                Array.from({ length: 12 }, (_, i) => <Skeleton key={i} width={182} height={62} variant='rounded' />)
               ) : (
                 <>
                   <button
                     key='__all__'
                     type='button'
-                    onClick={() => handleDepartmentClick(null)}
+                    onClick={() => handleDepartmentClick(null, null)}
                     className={`${styles.departmentChip} ${selectedDepartmentCode === null ? styles.active : ''}`}
                   >
                     전체
                   </button>
                   {departments.map(dept => (
                     <button
-                      key={dept.departmentName}
+                      key={dept.departmentCode}
                       type='button'
-                      onClick={() => handleDepartmentClick(dept.departmentName)}
-                      className={`${styles.departmentChip} ${selectedDepartmentCode === dept.departmentName ? styles.active : ''}`}
+                      onClick={() => handleDepartmentClick(dept.departmentCode, dept.departmentName)}
+                      className={`${styles.departmentChip} ${selectedDepartmentCode === dept.departmentCode ? styles.active : ''}`}
                     >
                       {dept.departmentName}
                     </button>
@@ -293,80 +294,82 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
               </div>
 
               <div className={styles.cardGrid}>
-                {allLoading ? (
-                  Array.from({ length: 4 }, (_, i) => (
-                    <Skeleton key={i} width='100%' height={280} variant='rounded' />
-                  ))
-                ) : (
-                  doctors.map((doctor, index) => (
-                    <div
-                      key={`${doctor.doctorId || doctor.name}-${index}`}
-                      className={`${styles.doctorCard} ${doctor.selected ? styles.doctorCardSelected : ''}`}
-                    >
-                      <div className={styles.doctorCardBody}>
-                        <div className={styles.doctorPhoto}>
-                          {doctor.photoUrl ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={doctor.photoUrl}
-                              alt={`${doctor.name} 프로필`}
-                              onError={e => {
-                                const target = e.currentTarget
-                                target.onerror = null
-                                target.src = '/images/referral/department/hospital_signature_kr 4.svg'
-                                target.style.objectFit = 'contain'
-                                target.style.opacity = '0.5'
-                                target.style.padding = '10%'
-                              }}
-                            />
-                          ) : (
-                            <div className={styles.doctorPhotoPlaceholder}>
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                {consultantLoading
+                  ? Array.from({ length: 4 }, (_, i) => (
+                      <Skeleton key={i} width='100%' height={280} variant='rounded' />
+                    ))
+                  : doctors.map((doctor, index) => (
+                      <div
+                        key={`${doctor.doctorId || doctor.name}-${index}`}
+                        className={`${styles.doctorCard} ${doctor.selected ? styles.doctorCardSelected : ''}`}
+                      >
+                        <div className={styles.doctorCardBody}>
+                          <div className={styles.doctorPhoto}>
+                            {doctor.photoUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
                               <img
-                                src='/images/referral/department/hospital_signature_kr 4.svg'
-                                alt='병원 로고'
+                                src={doctor.photoUrl}
+                                alt={`${doctor.name} 프로필`}
+                                onError={e => {
+                                  const target = e.currentTarget
+                                  target.onerror = null
+                                  target.src = '/images/referral/department/hospital_signature_kr 4.svg'
+                                  target.style.objectFit = 'contain'
+                                  target.style.opacity = '0.5'
+                                  target.style.padding = '10%'
+                                }}
                               />
-                            </div>
-                          )}
-                        </div>
-                        <div className={styles.doctorInfo}>
-                          <div className={styles.doctorNameRow}>
-                            <span className={styles.doctorName}>{doctor.name}</span>
-                            <span className={styles.doctorDepartment}>{doctor.department}</span>
+                            ) : (
+                              <div className={styles.doctorPhotoPlaceholder}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src='/images/referral/department/hospital_signature_kr 4.svg' alt='병원 로고' />
+                              </div>
+                            )}
                           </div>
-                          {doctor.email && (
-                            <p className={styles.doctorEmail}>{doctor.email}</p>
-                          )}
-                          {doctor.bio && (
-                            <div className={styles.doctorBio}>
-                              <span className={styles.doctorBioLabel}>전문분야</span>
-                              <span className={styles.doctorBioText}>{doctor.bio}</span>
+                          <div className={styles.doctorInfo}>
+                            <div className={styles.doctorNameRow}>
+                              <span className={styles.doctorName}>{doctor.name}</span>
+                              <span className={styles.doctorDepartment}>{doctor.department}</span>
                             </div>
-                          )}
+                            {doctor.email && <p className={styles.doctorEmail}>{doctor.email}</p>}
+                            {doctor.bio && (
+                              <div className={styles.doctorBio}>
+                                <span className={styles.doctorBioLabel}>전문분야</span>
+                                <span className={styles.doctorBioText}>{doctor.bio}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className={styles.doctorCardActions}>
+                          <button
+                            type='button'
+                            className={styles.selectDoctorButton}
+                            onClick={() => handleDoctorSelect(doctor)}
+                          >
+                            <svg
+                              width='20'
+                              height='20'
+                              viewBox='0 0 20 20'
+                              fill='none'
+                              xmlns='http://www.w3.org/2000/svg'
+                            >
+                              <path
+                                d='M4 10L8.5 14.5L16 5.5'
+                                stroke='#ffffff'
+                                strokeWidth='2.5'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                              />
+                            </svg>
+                            <span>자문의 선택</span>
+                          </button>
+                          <button type='button' className={styles.doctorInfoButton}>
+                            <DoctorInfoIcon width={20} height={20} stroke='#8c8c8c' strokeWidth={2} />
+                            <span>의료진 소개</span>
+                          </button>
                         </div>
                       </div>
-                      <div className={styles.doctorCardActions}>
-                        <button
-                          type='button'
-                          className={styles.selectDoctorButton}
-                          onClick={() => handleDoctorSelect(doctor)}
-                        >
-                          <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                            <path d='M4 10L8.5 14.5L16 5.5' stroke='#ffffff' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' />
-                          </svg>
-                          <span>자문의 선택</span>
-                        </button>
-                        <button
-                          type='button'
-                          className={styles.doctorInfoButton}
-                        >
-                          <DoctorInfoIcon width={20} height={20} stroke='#8c8c8c' strokeWidth={2} />
-                          <span>의료진 소개</span>
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                )}
+                    ))}
               </div>
             </div>
 

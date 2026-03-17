@@ -179,7 +179,7 @@ export const SignupForm: React.FC = () => {
           />
         )}
 
-        {currentStep === 2 && <VerificationStep onVerified={handleVerified} onPrev={handlePrev} />}
+        {currentStep === 2 && <VerificationStep onVerified={handleVerified} onPrev={handlePrev} onDuplicate={() => router.push('/login')} />}
 
         {currentStep === 3 && (
           <MemberInfoStep

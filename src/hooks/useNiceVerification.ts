@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { useMutation } from '@apollo/client/react'
+import { useMutation, useLazyQuery } from '@apollo/client/react'
 import { INITIATE_VERIFICATION_MUTATION, COMPLETE_VERIFICATION_MUTATION } from '@/graphql/verification/mutations'
-import type { NiceVerifiedData, NiceCallbackData, UseNiceVerificationReturn } from '@/lib/nice/types'
+import { CHECK_VERIFICATION_DUPLICATE_QUERY } from '@/graphql/verification/queries'
+import type { NiceVerifiedData, NiceCallbackData, UseNiceVerificationReturn, UseNiceVerificationOptions } from '@/lib/nice/types'
 
 const DEV_MODE = process.env.NEXT_PUBLIC_NICE_DEV_MODE === 'true'
 
@@ -19,11 +20,13 @@ const DEV_DUMMY_DATA: NiceVerifiedData = {
   verificationToken: 'DEV_TOKEN_' + Date.now()
 }
 
-export function useNiceVerification(): UseNiceVerificationReturn {
+export function useNiceVerification(options?: UseNiceVerificationOptions): UseNiceVerificationReturn {
+  const checkDuplicate = options?.checkDuplicate ?? false
   const [isVerified, setIsVerified] = useState(false)
   const [verifiedData, setVerifiedData] = useState<NiceVerifiedData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isDuplicate, setIsDuplicate] = useState(false)
   const popupRef = useRef<Window | null>(null)
   const pollTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const sessionIdRef = useRef<string | null>(null)
@@ -44,6 +47,9 @@ export function useNiceVerification(): UseNiceVerificationReturn {
       verificationToken: string | null
     }
   }>(COMPLETE_VERIFICATION_MUTATION)
+  const [checkVerificationDuplicate] = useLazyQuery<{
+    checkVerificationDuplicate: { isDuplicate: boolean; message: string | null }
+  }>(CHECK_VERIFICATION_DUPLICATE_QUERY, { fetchPolicy: 'network-only' })
 
   const cleanup = useCallback(() => {
     if (pollTimerRef.current) {
@@ -79,7 +85,7 @@ export function useNiceVerification(): UseNiceVerificationReturn {
 
         const result = data?.completeVerification
         if (result) {
-          setVerifiedData({
+          const verified: NiceVerifiedData = {
             name: result.name,
             phone: result.phone,
             birthDate: result.birthDate,
@@ -89,7 +95,29 @@ export function useNiceVerification(): UseNiceVerificationReturn {
             authMethod: result.authMethod,
             nationalInfo: result.nationalInfo,
             verificationToken: result.verificationToken
-          })
+          }
+
+          // 중복 가입 체크
+          if (checkDuplicate && verified.verificationToken) {
+            try {
+              const { data: dupData } = await checkVerificationDuplicate({
+                variables: {
+                  verificationToken: verified.verificationToken
+                }
+              })
+              if (dupData?.checkVerificationDuplicate?.isDuplicate) {
+                setIsDuplicate(true)
+                setError(dupData.checkVerificationDuplicate.message || '이미 가입된 회원입니다.')
+                setIsLoading(false)
+                cleanup()
+                return
+              }
+            } catch {
+              // 중복 체크 실패 시에도 가입 진행 허용
+            }
+          }
+
+          setVerifiedData(verified)
           setIsVerified(true)
           setError(null)
         } else {
@@ -109,7 +137,7 @@ export function useNiceVerification(): UseNiceVerificationReturn {
       window.removeEventListener('message', handleMessage)
       cleanup()
     }
-  }, [cleanup, completeVerification])
+  }, [cleanup, completeVerification, checkDuplicate, checkVerificationDuplicate])
 
   const requestVerification = useCallback(async () => {
     setIsLoading(true)
@@ -169,6 +197,7 @@ export function useNiceVerification(): UseNiceVerificationReturn {
     setVerifiedData(null)
     setIsLoading(false)
     setError(null)
+    setIsDuplicate(false)
     sessionIdRef.current = null
     cleanup()
   }, [cleanup])
@@ -179,6 +208,7 @@ export function useNiceVerification(): UseNiceVerificationReturn {
     verifiedData,
     isLoading,
     error,
+    isDuplicate,
     reset
   }
 }

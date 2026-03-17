@@ -22,6 +22,12 @@ export interface NiceCallbackData {
   webTransactionId: string
 }
 
+/** useNiceVerification 훅 옵션 */
+export interface UseNiceVerificationOptions {
+  /** 중복 가입 체크 여부 (회원가입 시 true) */
+  checkDuplicate?: boolean
+}
+
 /** useNiceVerification 훅 반환 타입 */
 export interface UseNiceVerificationReturn {
   requestVerification: () => void
@@ -29,5 +35,6 @@ export interface UseNiceVerificationReturn {
   verifiedData: NiceVerifiedData | null
   isLoading: boolean
   error: string | null
+  isDuplicate: boolean
   reset: () => void
 }

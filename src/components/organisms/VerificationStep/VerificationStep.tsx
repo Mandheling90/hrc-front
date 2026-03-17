@@ -16,10 +16,12 @@ export interface VerificationStepProps {
   onVerified: (data: NiceVerifiedData) => void
   /** 이전 단계 핸들러 */
   onPrev: () => void
+  /** 중복 회원 감지 시 콜백 */
+  onDuplicate?: () => void
 }
 
-export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }) => {
-  const { requestVerification, isVerified, verifiedData, isLoading, error } = useNiceVerification()
+export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified, onDuplicate }) => {
+  const { requestVerification, isVerified, verifiedData, isLoading, error, isDuplicate } = useNiceVerification({ checkDuplicate: true })
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
 
@@ -30,13 +32,21 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }
     }
   }, [isVerified, verifiedData, onVerified])
 
-  // 에러 발생 시 AlertModal 표시
+  // 중복 회원 감지 시 알림 모달 표시
   useEffect(() => {
-    if (error) {
+    if (isDuplicate) {
+      setAlertMessage('이미 가입된 회원입니다. 로그인 페이지로 이동합니다.')
+      setShowAlert(true)
+    }
+  }, [isDuplicate])
+
+  // 에러 발생 시 AlertModal 표시 (중복이 아닌 경우만)
+  useEffect(() => {
+    if (error && !isDuplicate) {
       setAlertMessage(error)
       setShowAlert(true)
     }
-  }, [error])
+  }, [error, isDuplicate])
 
   return (
     <>
@@ -77,7 +87,17 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({ onVerified }
         ]}
       />
 
-      <AlertModal isOpen={showAlert} message={alertMessage} onClose={() => setShowAlert(false)} />
+      <AlertModal
+        isOpen={showAlert}
+        message={alertMessage}
+        closeButtonText={isDuplicate ? '확인' : '닫기'}
+        onClose={() => {
+          setShowAlert(false)
+          if (isDuplicate && onDuplicate) {
+            onDuplicate()
+          }
+        }}
+      />
     </>
   )
 }
