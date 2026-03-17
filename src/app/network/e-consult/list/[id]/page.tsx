@@ -267,14 +267,14 @@ export default function EConsultDetailPage() {
               <div className={styles.replyTop}>
                 <div className={styles.replyHeader}>
                   <span className={styles.replierName}>{eConsultData?.consultant?.name || '-'}</span>
-                  <span className={styles.replyLabel}>답변 내용을 입력해주세요.</span>
+                  <span className={styles.replyLabel}></span>
                 </div>
                 <Textarea
                   id='reply'
                   name='reply'
                   value={replyContent}
                   onChange={e => setReplyContent(e.target.value)}
-                  placeholder=''
+                  placeholder='답변 내용을 입력해주세요.'
                   maxLength={maxLength}
                   borderless
                   disableFocusHighlight
