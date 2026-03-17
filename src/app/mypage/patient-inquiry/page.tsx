@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
@@ -18,6 +18,7 @@ import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { MedicalReplyModal, MedicalReplyData } from '@/components/organisms/MedicalReplyModal/MedicalReplyModal'
 import { useReferralPatients, ReferralPatientItem } from '@/hooks/useReferralPatients'
 import { useReferralReply } from '@/hooks/useReferralReply'
+import { useMedicalStaff } from '@/hooks/useMedicalStaff'
 import { useHospital, useHospitalRouter } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import styles from './page.module.scss'
@@ -162,6 +163,7 @@ export default function PatientInquiryPage() {
   const { user } = useAuthContext()
   const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
   const { fetchReferralReply } = useReferralReply()
+  const { fetchMedicalStaff, staffList } = useMedicalStaff()
   const router = useHospitalRouter()
   const [replyData, setReplyData] = useState<MedicalReplyData>(emptyReplyData)
 
@@ -174,10 +176,24 @@ export default function PatientInquiryPage() {
     setAppliedEndDate(end)
     setIsTablet(window.innerWidth <= 1429)
     setIsMounted(true)
-  }, [])
+    fetchMedicalStaff({ spdrQlfcYn: 'Y' })
+  }, [fetchMedicalStaff])
+
+  // 자문의(e-Consult 가능) doctorId Set
+  const consultableDoctorIds = useMemo(() => {
+    const ids = new Set<string>()
+    for (const staff of staffList) {
+      ids.add(staff.doctorId)
+    }
+    return ids
+  }, [staffList])
 
   // 전체 데이터를 매핑 후 클라이언트에서 필터/정렬/페이징
-  const allPatientData: PatientData[] = patients.map(mapApiToPatientData)
+  const allPatientData: PatientData[] = patients.map(item => {
+    const data = mapApiToPatientData(item)
+    data.doctorCanConsult = consultableDoctorIds.has(data.doctorId)
+    return data
+  })
 
   const filteredData = allPatientData
     .filter(item => {
@@ -254,8 +270,25 @@ export default function PatientInquiryPage() {
       width: '110px',
       renderCell: item => (
         <div className={styles.doctorCell}>
-          <span className={item.doctorCanConsult ? styles.consultable : ''}>{item.doctor}</span>
-          {item.doctorCanConsult && <ConsultBadgeIcon />}
+          {item.doctorCanConsult ? (
+            <button
+              type='button'
+              className={styles.consultableBtn}
+              onClick={() => {
+                const params = new URLSearchParams({
+                  doctorId: item.doctorId,
+                  doctorName: item.doctor,
+                  department: item.department
+                })
+                router.push(`/network/e-consult?${params.toString()}`)
+              }}
+            >
+              <span className={styles.consultable}>{item.doctor}</span>
+              <ConsultBadgeIcon />
+            </button>
+          ) : (
+            <span>{item.doctor}</span>
+          )}
         </div>
       )
     },
@@ -501,10 +534,23 @@ export default function PatientInquiryPage() {
                               label='진료의'
                               value={
                                 item.doctorCanConsult ? (
-                                  <span className={styles.doctorConsultable}>
-                                    {item.doctor}
-                                    <ConsultBadgeIcon />
-                                  </span>
+                                  <button
+                                    type='button'
+                                    className={styles.consultableBtn}
+                                    onClick={() => {
+                                      const params = new URLSearchParams({
+                                        doctorId: item.doctorId,
+                                        doctorName: item.doctor,
+                                        department: item.department
+                                      })
+                                      router.push(`/network/e-consult?${params.toString()}`)
+                                    }}
+                                  >
+                                    <span className={styles.doctorConsultable}>
+                                      {item.doctor}
+                                      <ConsultBadgeIcon />
+                                    </span>
+                                  </button>
                                 ) : (
                                   item.doctor
                                 )
