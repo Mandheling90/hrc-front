@@ -85,7 +85,9 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   })
 
   // 2뎁스: 선택된 진료과의 자문의 목록 조회
-  const [fetchConsultants, { data: consultantData, loading: consultantLoading }] = useLazyQuery(
+  const [fetchConsultants, { data: consultantData, loading: consultantLoading }] = useLazyQuery<{
+    consultantDoctors: ConsultantDoctor[]
+  }>(
     CONSULTANT_DOCTORS_QUERY,
     {
       fetchPolicy: 'cache-and-network'
