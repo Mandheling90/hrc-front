@@ -21,12 +21,11 @@ export const ECONSULT_CONSULTANTS_QUERY = gql`
 `
 
 export const CONSULTANT_DOCTORS_QUERY = gql`
-  query ConsultantDoctors {
-    consultantDoctors {
+  query ConsultantDoctors($departmentCode: String, $search: String, $spdrQlfcYn: String, $specialty: String) {
+    consultantDoctors(departmentCode: $departmentCode, search: $search, spdrQlfcYn: $spdrQlfcYn, specialty: $specialty) {
       id
       doctorId
       name
-      departmentId
       department
       specialty
       hospitalCode
@@ -34,6 +33,7 @@ export const CONSULTANT_DOCTORS_QUERY = gql`
       phone
       photoUrl
       isActive
+      sortOrder
     }
   }
 `

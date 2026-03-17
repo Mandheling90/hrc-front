@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
+import { useQuery } from '@apollo/client/react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
@@ -18,8 +19,8 @@ import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { MedicalReplyModal, MedicalReplyData } from '@/components/organisms/MedicalReplyModal/MedicalReplyModal'
 import { useReferralPatients, ReferralPatientItem } from '@/hooks/useReferralPatients'
 import { useReferralReply } from '@/hooks/useReferralReply'
-import { useMedicalStaff } from '@/hooks/useMedicalStaff'
 import { useHospital, useHospitalRouter } from '@/hooks'
+import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { useAuthContext } from '@/contexts/AuthContext'
 import styles from './page.module.scss'
 
@@ -163,7 +164,9 @@ export default function PatientInquiryPage() {
   const { user } = useAuthContext()
   const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
   const { fetchReferralReply } = useReferralReply()
-  const { fetchMedicalStaff, staffList } = useMedicalStaff()
+  const { data: consultantData } = useQuery(CONSULTANT_DOCTORS_QUERY, {
+    fetchPolicy: 'cache-and-network'
+  })
   const router = useHospitalRouter()
   const [replyData, setReplyData] = useState<MedicalReplyData>(emptyReplyData)
 
@@ -176,17 +179,17 @@ export default function PatientInquiryPage() {
     setAppliedEndDate(end)
     setIsTablet(window.innerWidth <= 1429)
     setIsMounted(true)
-    fetchMedicalStaff({ spdrQlfcYn: 'Y' })
-  }, [fetchMedicalStaff])
+  }, [])
 
   // 자문의(e-Consult 가능) doctorId Set
   const consultableDoctorIds = useMemo(() => {
     const ids = new Set<string>()
-    for (const staff of staffList) {
-      ids.add(staff.doctorId)
+    const doctors = consultantData?.consultantDoctors ?? []
+    for (const doc of doctors) {
+      if (doc.doctorId) ids.add(doc.doctorId)
     }
     return ids
-  }, [staffList])
+  }, [consultantData])
 
   // 전체 데이터를 매핑 후 클라이언트에서 필터/정렬/페이징
   const allPatientData: PatientData[] = patients.map(item => {

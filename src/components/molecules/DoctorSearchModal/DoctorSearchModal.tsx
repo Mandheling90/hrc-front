@@ -2,11 +2,12 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useQuery } from '@apollo/client/react'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
-import { useMedicalStaff, MedicalStaffItem } from '@/hooks/useMedicalStaff'
+import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './DoctorSearchModal.module.scss'
 
@@ -48,16 +49,17 @@ export interface DoctorSearchModalProps {
   externalLoading?: boolean
 }
 
-function staffToDoctor(item: MedicalStaffItem): Doctor {
-  return {
-    doctorId: item.doctorId,
-    department: item.departmentName || '',
-    name: item.doctorName || '',
-    email: '',
-    photoUrl: item.photoUrl || undefined,
-    bio: item.bio || undefined,
-    selected: false
-  }
+interface ConsultantDoctor {
+  id: string
+  doctorId?: string
+  name: string
+  department?: string
+  specialty?: string
+  email?: string
+  phone?: string
+  photoUrl?: string
+  isActive: boolean
+  sortOrder: number
 }
 
 type ModalStep = 'department' | 'doctor'
@@ -72,7 +74,12 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   externalLoading
 }) => {
   const useExternal = !!externalDoctors
-  const { fetchMedicalStaff, staffList, loading: staffLoading, departmentList, deptLoading } = useMedicalStaff()
+
+  // 전체 자문의 목록 (진료과 추출용)
+  const { data: allConsultantData, loading: allLoading } = useQuery(CONSULTANT_DOCTORS_QUERY, {
+    skip: useExternal,
+    fetchPolicy: 'cache-and-network'
+  })
 
   const [step, setStep] = useState<ModalStep>('department')
   const [selectedDepartmentCode, setSelectedDepartmentCode] = useState<string | null>(null)
@@ -80,16 +87,26 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null)
 
-  const isLoading = deptLoading
+  const isLoading = allLoading
 
-  // 진료과 목록: useMedicalStaff의 departmentList 사용
+  // 진료과 목록: 전체 자문의에서 department 추출
   const departments = useMemo(() => {
-    return departmentList
-      .filter(d => d.departmentName)
+    const list: ConsultantDoctor[] = allConsultantData?.consultantDoctors ?? []
+    const deptMap = new Map<string, string>()
+    for (const doc of list) {
+      if (doc.department && !deptMap.has(doc.department)) {
+        deptMap.set(doc.department, doc.department)
+      }
+    }
+    return Array.from(deptMap.entries())
+      .map(([name]) => ({ departmentName: name }))
       .sort((a, b) => a.departmentName.localeCompare(b.departmentName, 'ko'))
-  }, [departmentList])
+  }, [allConsultantData])
 
-  // API 응답을 Doctor 형태로 변환 + 검색어 필터링
+  // 전체 자문의 목록
+  const allConsultants: ConsultantDoctor[] = allConsultantData?.consultantDoctors ?? []
+
+  // API 응답을 Doctor 형태로 변환 + 진료과/검색어 필터링
   const doctors: Doctor[] = useMemo(() => {
     if (useExternal) {
       let filtered = externalDoctors
@@ -102,15 +119,25 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       }))
     }
 
-    let filtered = staffList
+    let filtered = allConsultants
+    // 진료과 필터
+    if (selectedDepartmentName) {
+      filtered = filtered.filter(s => s.department === selectedDepartmentName)
+    }
     if (searchQuery.trim()) {
-      filtered = filtered.filter(s => s.doctorName?.includes(searchQuery.trim()))
+      filtered = filtered.filter(s => s.name?.includes(searchQuery.trim()))
     }
     return filtered.map(item => ({
-      ...staffToDoctor(item),
+      id: item.id,
+      doctorId: item.doctorId,
+      department: item.department || '',
+      name: item.name || '',
+      email: item.email || '',
+      photoUrl: item.photoUrl || undefined,
+      bio: item.specialty || undefined,
       selected: item.doctorId === selectedDoctorId
     }))
-  }, [staffList, searchQuery, selectedDoctorId, useExternal, externalDoctors])
+  }, [allConsultants, selectedDepartmentName, searchQuery, selectedDoctorId, useExternal, externalDoctors])
 
   // ESC 키로 닫기
   useEffect(() => {
@@ -162,11 +189,9 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }
 
-  const handleDepartmentClick = (deptCode: string | null, deptName: string | null) => {
-    setSelectedDepartmentCode(deptCode)
+  const handleDepartmentClick = (deptName: string | null) => {
+    setSelectedDepartmentCode(deptName)
     setSelectedDepartmentName(deptName)
-    // 선택한 진료과 코드로 의료진 조회
-    fetchMedicalStaff({ ...(deptCode ? { mcdpCd: deptCode } : {}), spdrQlfcYn: 'Y' })
     setStep('doctor')
   }
 
@@ -227,17 +252,17 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                   <button
                     key='__all__'
                     type='button'
-                    onClick={() => handleDepartmentClick(null, null)}
+                    onClick={() => handleDepartmentClick(null)}
                     className={`${styles.departmentChip} ${selectedDepartmentCode === null ? styles.active : ''}`}
                   >
                     전체
                   </button>
                   {departments.map(dept => (
                     <button
-                      key={dept.departmentCode}
+                      key={dept.departmentName}
                       type='button'
-                      onClick={() => handleDepartmentClick(dept.departmentCode, dept.departmentName)}
-                      className={`${styles.departmentChip} ${selectedDepartmentCode === dept.departmentCode ? styles.active : ''}`}
+                      onClick={() => handleDepartmentClick(dept.departmentName)}
+                      className={`${styles.departmentChip} ${selectedDepartmentCode === dept.departmentName ? styles.active : ''}`}
                     >
                       {dept.departmentName}
                     </button>
@@ -268,7 +293,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
               </div>
 
               <div className={styles.cardGrid}>
-                {staffLoading ? (
+                {allLoading ? (
                   Array.from({ length: 4 }, (_, i) => (
                     <Skeleton key={i} width='100%' height={280} variant='rounded' />
                   ))
