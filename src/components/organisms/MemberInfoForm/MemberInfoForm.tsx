@@ -318,12 +318,17 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       setAlertModal({ isOpen: true, message: '병원명을 검색하여 입력해주세요.' })
       return
     }
-    if (!passwordValidation.valid) {
+    const isPasswordChanged = formData.password || formData.passwordConfirm
+    if (isPasswordChanged && !passwordValidation.valid) {
       setAlertModal({ isOpen: true, message: '비밀번호 조건을 확인해주세요.' })
       return
     }
-    if (!passwordConfirmStatus.match) {
+    if (isPasswordChanged && !passwordConfirmStatus.match) {
       setAlertModal({ isOpen: true, message: '비밀번호가 일치하지 않습니다.' })
+      return
+    }
+    if (mode === 'signup' && !formData.password) {
+      setAlertModal({ isOpen: true, message: '비밀번호를 입력해주세요.' })
       return
     }
     onSubmit(formData)
