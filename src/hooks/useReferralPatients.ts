@@ -23,6 +23,7 @@ export interface ReferralPatientItem {
   hospitalName: string
   referralSeqNo: string | null
   referralStatusCode: string | null
+  isConsultant: boolean | null
 }
 
 interface ReferralPatientsResult {

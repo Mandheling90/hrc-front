@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
-import { useQuery } from '@apollo/client/react'
+import React, { useState, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
@@ -20,7 +19,6 @@ import { MedicalReplyModal, MedicalReplyData } from '@/components/organisms/Medi
 import { useReferralPatients, ReferralPatientItem } from '@/hooks/useReferralPatients'
 import { useReferralReply } from '@/hooks/useReferralReply'
 import { useHospital, useHospitalRouter } from '@/hooks'
-import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { useAuthContext } from '@/contexts/AuthContext'
 import styles from './page.module.scss'
 
@@ -90,7 +88,7 @@ function mapApiToPatientData(item: ReferralPatientItem): PatientData {
     treatmentDate: formatApiDate(item.visitDate),
     department: item.departmentName || '',
     doctor: item.doctorName || '',
-    doctorCanConsult: false,
+    doctorCanConsult: item.isConsultant === true,
     consentStatus: 'Y',
     prescriptionStatus: item.drugOrderExists === 'Y' || item.drugOrderExists === true ? 'Y' : item.drugOrderExists === 'N' || item.drugOrderExists === false ? 'N' : null,
     hasResult: !!item.visitDate && !!item.patientNo,
@@ -164,9 +162,6 @@ export default function PatientInquiryPage() {
   const { user } = useAuthContext()
   const { searchReferralPatients, patients, totalCount, loading } = useReferralPatients()
   const { fetchReferralReply } = useReferralReply()
-  const { data: consultantData } = useQuery(CONSULTANT_DOCTORS_QUERY, {
-    fetchPolicy: 'cache-and-network'
-  })
   const router = useHospitalRouter()
   const [replyData, setReplyData] = useState<MedicalReplyData>(emptyReplyData)
 
@@ -181,22 +176,8 @@ export default function PatientInquiryPage() {
     setIsMounted(true)
   }, [])
 
-  // 자문의(e-Consult 가능) doctorId Set
-  const consultableDoctorIds = useMemo(() => {
-    const ids = new Set<string>()
-    const doctors = consultantData?.consultantDoctors ?? []
-    for (const doc of doctors) {
-      if (doc.doctorId) ids.add(doc.doctorId)
-    }
-    return ids
-  }, [consultantData])
-
   // 전체 데이터를 매핑 후 클라이언트에서 필터/정렬/페이징
-  const allPatientData: PatientData[] = patients.map(item => {
-    const data = mapApiToPatientData(item)
-    data.doctorCanConsult = consultableDoctorIds.has(data.doctorId)
-    return data
-  })
+  const allPatientData: PatientData[] = patients.map(item => mapApiToPatientData(item))
 
   const filteredData = allPatientData
     .filter(item => {

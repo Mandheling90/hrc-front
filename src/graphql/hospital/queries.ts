@@ -24,6 +24,7 @@ export const EHR_REFERRAL_PATIENTS_QUERY = gql`
         hospitalName
         referralSeqNo
         referralStatusCode
+        isConsultant
       }
       totalCount
     }
