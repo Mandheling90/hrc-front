@@ -100,6 +100,8 @@ export interface UpdateDoctorProfileInput {
   hospAddressDetail?: string
   hospPhone?: string
   hospWebsite?: string
+  oldPassword?: string
+  newPassword?: string
 }
 
 export function useUpdateProfile() {

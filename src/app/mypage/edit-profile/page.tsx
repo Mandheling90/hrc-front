@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useMyProfile, useUpdateProfile, useChangePassword } from '@/hooks/useAuth'
+import { useMyProfile, useUpdateProfile } from '@/hooks/useAuth'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { MemberInfoForm, MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
@@ -84,6 +84,12 @@ const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput 
     hospWebsite: data.hospitalWebsite
   }
 
+  // 비밀번호 변경 시 oldPassword, newPassword 포함
+  if (data.currentPassword && data.password) {
+    input.oldPassword = data.currentPassword
+    input.newPassword = data.password
+  }
+
   return input
 }
 
@@ -91,7 +97,6 @@ export default function EditProfilePage() {
   const router = useHospitalRouter()
   const { user, loading } = useMyProfile()
   const { updateProfile, loading: updating } = useUpdateProfile()
-  const { changePassword } = useChangePassword()
   const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
     isOpen: false,
     message: ''
@@ -114,18 +119,6 @@ export default function EditProfilePage() {
     try {
       const input = mapFormDataToInput(data)
       await updateProfile(input)
-
-      // 비밀번호 변경 요청 (비밀번호 입력 시에만)
-      if (data.password && data.passwordConfirm) {
-        const result = await changePassword({
-          oldPassword: data.password,
-          newPassword: data.passwordConfirm
-        })
-        if (result && !result.success) {
-          setAlertModal({ isOpen: true, message: result.message || '비밀번호 변경에 실패했습니다.' })
-          return
-        }
-      }
 
       setAlertModal({ isOpen: true, message: '회원정보가 수정되었습니다.' })
     } catch {

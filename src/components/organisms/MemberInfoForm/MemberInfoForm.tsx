@@ -29,6 +29,7 @@ export interface MemberInfoFormData {
   memberType: string
   phone: string
   userId: string
+  currentPassword: string
   password: string
   passwordConfirm: string
   email: string
@@ -57,6 +58,7 @@ export const defaultFormData: MemberInfoFormData = {
   memberType: '의사',
   phone: '',
   userId: '',
+  currentPassword: '',
   password: '',
   passwordConfirm: '',
   email: '',
@@ -319,6 +321,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       return
     }
     const isPasswordChanged = formData.password || formData.passwordConfirm
+    if (mode === 'edit' && isPasswordChanged && !formData.currentPassword) {
+      setAlertModal({ isOpen: true, message: '현재 비밀번호를 입력해주세요.' })
+      return
+    }
     if (isPasswordChanged && !passwordValidation.valid) {
       setAlertModal({ isOpen: true, message: '비밀번호 조건을 확인해주세요.' })
       return
@@ -426,10 +432,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               value={formData.userId}
               onChange={handleInputChange}
               disabled={isFieldDisabled('userId')}
-              buttonText={checkingUserId ? '확인 중...' : '중복 확인'}
-              onButtonClick={handleIdCheck}
+              buttonText={mode === 'signup' ? (checkingUserId ? '확인 중...' : '중복 확인') : undefined}
+              onButtonClick={mode === 'signup' ? handleIdCheck : undefined}
               labelExtra={
-                userIdChecked ? (
+                mode === 'signup' && userIdChecked ? (
                   <span className={userIdAvailable ? styles.passwordStatusValid : styles.passwordStatus}>
                     {userIdAvailable ? '사용가능' : '사용불가'}
                   </span>
@@ -437,10 +443,22 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               }
             />
 
+            {mode === 'edit' && (
+              <FormField
+                label='현재 비밀번호'
+                id='currentPassword'
+                name='currentPassword'
+                type='password'
+                placeholder='현재 비밀번호를 입력해주세요'
+                value={formData.currentPassword}
+                onChange={handleInputChange}
+              />
+            )}
+
             <div className={styles.passwordFieldWrapper}>
               <FormField
-                label='비밀번호'
-                required
+                label={mode === 'edit' ? '새 비밀번호' : '비밀번호'}
+                required={mode === 'signup'}
                 id='password'
                 name='password'
                 type='password'
@@ -464,8 +482,8 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
             </div>
 
             <FormField
-              label='비밀번호 확인'
-              required
+              label={mode === 'edit' ? '새 비밀번호 확인' : '비밀번호 확인'}
+              required={mode === 'signup'}
               id='passwordConfirm'
               name='passwordConfirm'
               type='password'
