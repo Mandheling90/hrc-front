@@ -233,6 +233,7 @@ export const MEDICAL_STAFF_LIST_QUERY = gql`
         frvsMdcrPsblYn
         revsMdcrPsblYn
         fastMdcrDt
+        specialty
       }
       totalCount
     }

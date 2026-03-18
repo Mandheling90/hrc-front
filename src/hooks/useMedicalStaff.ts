@@ -23,6 +23,7 @@ export interface MedicalStaffItem {
   frvsMdcrPsblYn: string | null
   revsMdcrPsblYn: string | null
   fastMdcrDt: string | null
+  specialty: string | null
 }
 
 export interface DepartmentItem {
@@ -46,9 +47,6 @@ export interface WeeklyScheduleItem {
 
 interface MedicalStaffFilterInput {
   mcdpCd?: string
-  mddrId?: string
-  mddrNm?: string
-  spdrQlfcYn?: string
 }
 
 interface MedicalStaffListResult {

@@ -29,8 +29,8 @@ export interface Doctor {
   doctorId?: string
   /** 프로필 사진 URL */
   photoUrl?: string
-  /** 전문분야 / 약력 */
-  bio?: string
+  /** 전문분야 */
+  specialty?: string
 }
 
 export interface DoctorSearchModalProps {
@@ -135,7 +135,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       name: item.name || '',
       email: item.email || '',
       photoUrl: item.photoUrl || undefined,
-      bio: item.specialty || undefined,
+      specialty: item.specialty || undefined,
       selected: item.doctorId === selectedDoctorId
     }))
   }, [consultants, searchQuery, selectedDoctorId, useExternal, externalDoctors])
@@ -334,10 +334,10 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                               <span className={styles.doctorDepartment}>{doctor.department}</span>
                             </div>
                             {doctor.email && <p className={styles.doctorEmail}>{doctor.email}</p>}
-                            {doctor.bio && (
+                            {doctor.specialty && (
                               <div className={styles.doctorBio}>
                                 <span className={styles.doctorBioLabel}>전문분야</span>
-                                <span className={styles.doctorBioText}>{doctor.bio}</span>
+                                <span className={styles.doctorBioText}>{doctor.specialty}</span>
                               </div>
                             )}
                           </div>

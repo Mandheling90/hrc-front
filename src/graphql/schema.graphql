@@ -912,8 +912,6 @@ type Query {
 
 input AdmapMedicalStaffFilterInput {
   mcdpCd: String
-  mddrId: String
-  mddrNm: String
 }
 
 type MedicalStaffItem {
@@ -933,6 +931,7 @@ type MedicalStaffItem {
   frvsMdcrPsblYn: String
   revsMdcrPsblYn: String
   fastMdcrDt: String
+  specialty: String
 }
 
 type MedicalStaffListResponse {

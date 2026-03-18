@@ -74,7 +74,7 @@ function scheduleItemToSlots(item: WeeklyScheduleItem): ScheduleSlot[] {
 
 // API 응답 → 의사 카드 데이터 변환
 function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, ScheduleSlot[]>) {
-  const specialties = item.bio ? item.bio.split(',').map(s => s.trim()).filter(Boolean) : []
+  const specialties = item.specialty ? item.specialty.split(',').map(s => s.trim()).filter(Boolean) : []
   return {
     id: item.doctorId || '',
     name: item.doctorName || '',

@@ -21,8 +21,8 @@ export const ECONSULT_CONSULTANTS_QUERY = gql`
 `
 
 export const CONSULTANT_DOCTORS_QUERY = gql`
-  query ConsultantDoctors($departmentCode: String, $search: String, $spdrQlfcYn: String, $specialty: String) {
-    consultantDoctors(departmentCode: $departmentCode, search: $search, spdrQlfcYn: $spdrQlfcYn, specialty: $specialty) {
+  query ConsultantDoctors($departmentCode: String, $search: String, $specialty: String) {
+    consultantDoctors(departmentCode: $departmentCode, search: $search, specialty: $specialty) {
       id
       doctorId
       name
@@ -34,6 +34,7 @@ export const CONSULTANT_DOCTORS_QUERY = gql`
       photoUrl
       isActive
       sortOrder
+      licenseNo
     }
   }
 `
