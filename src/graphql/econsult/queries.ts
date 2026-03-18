@@ -35,6 +35,7 @@ export const CONSULTANT_DOCTORS_QUERY = gql`
       isActive
       sortOrder
       licenseNo
+      drNo
     }
   }
 `

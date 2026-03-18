@@ -932,6 +932,7 @@ type MedicalStaffItem {
   revsMdcrPsblYn: String
   fastMdcrDt: String
   specialty: String
+  drNo: String
 }
 
 type MedicalStaffListResponse {

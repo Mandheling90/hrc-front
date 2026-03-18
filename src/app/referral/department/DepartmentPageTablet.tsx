@@ -25,6 +25,7 @@ export interface Doctor {
   specialties: string[]
   schedule: ScheduleSlot[]
   hasEConsulting: boolean
+  drNo?: string
 }
 
 export interface DepartmentPageTabletProps {

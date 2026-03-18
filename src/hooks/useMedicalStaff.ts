@@ -24,6 +24,7 @@ export interface MedicalStaffItem {
   revsMdcrPsblYn: string | null
   fastMdcrDt: string | null
   specialty: string | null
+  drNo: string | null
 }
 
 export interface DepartmentItem {

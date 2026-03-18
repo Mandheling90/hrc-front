@@ -271,7 +271,8 @@
 
 .searchInput {
   width: 287px;
-  flex: none;
+  max-width: 287px;
+  flex: 0 0 287px;
 
   input {
     width: 100%;
@@ -282,7 +283,8 @@
 
   @include tablet {
     width: 287px;
-    flex: none;
+    max-width: 287px;
+    flex: 0 0 287px;
 
     input {
       font-size: 16px;
@@ -292,6 +294,7 @@
 
   @include mobile {
     width: 100%;
+    max-width: 100%;
     flex: 1;
   }
 }

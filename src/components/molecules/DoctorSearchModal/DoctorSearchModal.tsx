@@ -10,6 +10,7 @@ import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
 import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { MEDICAL_STAFF_DEPARTMENT_LIST_QUERY } from '@/graphql/hospital/medical-staff-queries'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
+import { getCurrentHospitalConfig } from '@/config/hospitals'
 import styles from './DoctorSearchModal.module.scss'
 
 export interface Doctor {
@@ -31,6 +32,8 @@ export interface Doctor {
   photoUrl?: string
   /** 전문분야 */
   specialty?: string
+  /** 병원 홈페이지 의료진 번호 */
+  drNo?: string
 }
 
 export interface DoctorSearchModalProps {
@@ -59,6 +62,7 @@ interface ConsultantDoctor {
   email?: string
   phone?: string
   photoUrl?: string
+  drNo?: string
   isActive: boolean
   sortOrder: number
 }
@@ -136,6 +140,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       email: item.email || '',
       photoUrl: item.photoUrl || undefined,
       specialty: item.specialty || undefined,
+      drNo: item.drNo || undefined,
       selected: item.doctorId === selectedDoctorId
     }))
   }, [consultants, searchQuery, selectedDoctorId, useExternal, externalDoctors])
@@ -365,7 +370,19 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                             </svg>
                             <span>자문의 선택</span>
                           </button>
-                          <button type='button' className={styles.doctorInfoButton}>
+                          <button
+                            type='button'
+                            className={styles.doctorInfoButton}
+                            onClick={() => {
+                              if (!doctor.drNo) return
+                              const hospitalConfig = getCurrentHospitalConfig()
+                              window.open(
+                                `${hospitalConfig.links.homepage}/kr/doctor-department/doctor/view.do?drNo=${doctor.drNo}`,
+                                '_blank',
+                                'noopener,noreferrer'
+                              )
+                            }}
+                          >
                             <DoctorInfoIcon width={20} height={20} stroke='#8c8c8c' strokeWidth={2} />
                             <span>의료진 소개</span>
                           </button>

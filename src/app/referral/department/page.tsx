@@ -14,6 +14,7 @@ import { LinkIcon } from '@/components/icons/LinkIcon'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useMedicalStaff, MedicalStaffItem, WeeklyScheduleItem } from '@/hooks/useMedicalStaff'
+import { getCurrentHospitalConfig } from '@/config/hospitals'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
@@ -82,7 +83,8 @@ function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, Sched
     imageUrl: item.photoUrl || undefined,
     specialties,
     schedule: scheduleMap.get(item.doctorId) ?? ([] as ScheduleSlot[]),
-    hasEConsulting: item.frvsMdcrPsblYn === 'Y' || item.revsMdcrPsblYn === 'Y'
+    hasEConsulting: item.frvsMdcrPsblYn === 'Y' || item.revsMdcrPsblYn === 'Y',
+    drNo: item.drNo || undefined
   }
 }
 
@@ -209,8 +211,11 @@ export default function DepartmentPage() {
   }, [doctors, router])
 
   const handleDoctorInfoClick = (doctorId: string) => {
-    // 의료진 소개 로직
-    console.log('의료진 소개:', doctorId)
+    const doctor = doctors.find(d => d.id === doctorId)
+    if (!doctor?.drNo) return
+    const hospitalConfig = getCurrentHospitalConfig()
+    const url = `${hospitalConfig.links.homepage}/kr/doctor-department/doctor/view.do?drNo=${doctor.drNo}`
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
   // 태블릿/모바일용 데이터 변환
@@ -233,7 +238,8 @@ export default function DepartmentPage() {
         imageUrl: doctor.imageUrl,
         specialties: doctor.specialties,
         schedule: doctor.schedule as ScheduleSlot[],
-        hasEConsulting: doctor.hasEConsulting
+        hasEConsulting: doctor.hasEConsulting,
+        drNo: doctor.drNo
       })),
     [doctors]
   )
