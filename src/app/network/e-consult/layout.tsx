@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useHospitalRouter } from '@/hooks'
 
-const ECONSULT_DOCTOR_ID_KEY = 'econsult_doctor_id'
+const DOCTOR_ACCESS_TOKEN_KEY = 'doctorAccessToken'
 
 export default function EConsultLayout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuthContext()
@@ -22,10 +22,10 @@ export default function EConsultLayout({ children }: { children: React.ReactNode
       return
     }
 
-    // /list 경로: econsult_doctor_id 체크
+    // /list 경로: doctorAccessToken 체크
     if (isListPage) {
-      const doctorId = localStorage.getItem(ECONSULT_DOCTOR_ID_KEY)
-      if (!doctorId) {
+      const token = localStorage.getItem(DOCTOR_ACCESS_TOKEN_KEY)
+      if (!token) {
         router.push('/network/e-consult/login')
       } else {
         setIsReady(true)

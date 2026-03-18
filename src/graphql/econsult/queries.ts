@@ -72,12 +72,10 @@ export const MY_ECONSULTS_QUERY = gql`
 
 export const CONSULTANT_ASSIGNED_ECONSULTS_QUERY = gql`
   query ConsultantAssignedEConsults(
-    $doctorId: String!
     $filter: EConsultFilterInput
     $pagination: PaginationInput
   ) {
     consultantAssignedEConsults(
-      doctorId: $doctorId
       filter: $filter
       pagination: $pagination
     ) {
@@ -111,8 +109,8 @@ export const CONSULTANT_ASSIGNED_ECONSULTS_QUERY = gql`
 `
 
 export const CONSULTANT_ECONSULT_BY_ID_QUERY = gql`
-  query ConsultantEConsultById($doctorId: String!, $id: String!) {
-    consultantEConsultById(doctorId: $doctorId, id: $id) {
+  query ConsultantEConsultById($id: String!) {
+    consultantEConsultById(id: $id) {
       id
       title
       content
@@ -146,6 +144,26 @@ export const CONSULTANT_ECONSULT_BY_ID_QUERY = gql`
           userName
         }
       }
+    }
+  }
+`
+
+export const MY_ASSIGNED_ECONSULTS_QUERY = gql`
+  query MyAssignedEConsults(
+    $consultantDoctorId: String!
+    $filter: EConsultFilterInput
+    $pagination: PaginationInput
+  ) {
+    myAssignedEConsults(
+      consultantDoctorId: $consultantDoctorId
+      filter: $filter
+      pagination: $pagination
+    ) {
+      items {
+        id
+      }
+      totalCount
+      hasNextPage
     }
   }
 `

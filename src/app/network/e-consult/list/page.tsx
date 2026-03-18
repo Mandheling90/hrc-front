@@ -96,13 +96,6 @@ const mapApiStatus = (status: string): 'waiting' | 'expired' | 'completed' => {
 
 export default function EConsultListPage() {
   const router = useHospitalRouter()
-  const [doctorId, setDoctorId] = useState<string | null>(null)
-
-  // e-consult 전용 doctorId를 localStorage에서 읽기
-  useEffect(() => {
-    const storedDoctorId = localStorage.getItem('econsult_doctor_id')
-    setDoctorId(storedDoctorId)
-  }, [])
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedStatus, setSelectedStatus] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -114,7 +107,6 @@ export default function EConsultListPage() {
 
   const { data, loading } = useQuery<ConsultantAssignedEConsultsData>(CONSULTANT_ASSIGNED_ECONSULTS_QUERY, {
     variables: {
-      doctorId,
       filter: {
         ...(statusFilter ? { status: statusFilter } : {})
       },
@@ -123,7 +115,6 @@ export default function EConsultListPage() {
         limit: itemsPerPage
       }
     },
-    skip: !doctorId,
     fetchPolicy: 'cache-and-network'
   })
 

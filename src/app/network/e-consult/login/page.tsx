@@ -6,19 +6,46 @@ import { Input } from '@/components/atoms/Input/Input'
 import { Button } from '@/components/atoms/Button/Button'
 import { EyeIcon } from '@/components/icons/EyeIcon'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { useHospital } from '@/contexts/HospitalContext'
+import { useMutation } from '@apollo/client/react'
+import { CONSULTANT_LOGIN_MUTATION } from '@/graphql/econsult/mutations'
 import { useState } from 'react'
 import styles from './page.module.scss'
 
-const ECONSULT_DOCTOR_ID_KEY = 'econsult_doctor_id'
+const DOCTOR_ACCESS_TOKEN_KEY = 'doctorAccessToken'
+const ECONSULT_CONSULTANT_KEY = 'econsult_consultant'
+
+interface ConsultantLoginData {
+  consultantLogin: {
+    accessToken: string
+    consultant: {
+      id: string
+      doctorId: string | null
+      name: string
+      hospitalCode: string
+      departmentCode: string | null
+      departmentName: string | null
+    }
+    cccUser: {
+      userId: string
+      userNm: string
+      dprtNm: string
+      hsptNm: string
+    }
+  }
+}
 
 export default function ConsultantLoginPage() {
   const router = useHospitalRouter()
+  const { hospitalId } = useHospital()
   const [doctorId, setDoctorId] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [consultantLogin, { loading }] = useMutation<ConsultantLoginData>(CONSULTANT_LOGIN_MUTATION)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
 
@@ -31,9 +58,27 @@ export default function ConsultantLoginPage() {
       return
     }
 
-    // 임시: 사번만 localStorage에 저장 (일반 로그인과 분리)
-    localStorage.setItem(ECONSULT_DOCTOR_ID_KEY, doctorId.trim())
-    router.push('/network/e-consult/list')
+    try {
+      const hospitalCode = hospitalId.toUpperCase()
+      const { data } = await consultantLogin({
+        variables: {
+          input: {
+            hospitalCode,
+            loginId: doctorId.trim(),
+            password
+          }
+        }
+      })
+
+      const result = data?.consultantLogin
+      if (result) {
+        localStorage.setItem(DOCTOR_ACCESS_TOKEN_KEY, result.accessToken)
+        localStorage.setItem(ECONSULT_CONSULTANT_KEY, JSON.stringify(result.consultant))
+        router.push('/network/e-consult/list')
+      }
+    } catch {
+      setErrorMessage('사번 또는 비밀번호가 올바르지 않습니다.')
+    }
   }
 
   return (
@@ -79,8 +124,15 @@ export default function ConsultantLoginPage() {
                   </button>
                 </div>
                 {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-                <Button type='submit' variant='primary' size='medium' fullWidth className={styles.loginButton}>
-                  로그인
+                <Button
+                  type='submit'
+                  variant='primary'
+                  size='medium'
+                  fullWidth
+                  className={styles.loginButton}
+                  disabled={loading}
+                >
+                  {loading ? '로그인 중...' : '로그인'}
                 </Button>
               </form>
             </div>

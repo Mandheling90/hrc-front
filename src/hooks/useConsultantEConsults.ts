@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { CONSULTANT_ASSIGNED_ECONSULTS_QUERY } from '@/graphql/econsult/queries'
+import { MY_ASSIGNED_ECONSULTS_QUERY } from '@/graphql/econsult/queries'
 
-interface ConsultantAssignedEConsultsData {
-  consultantAssignedEConsults: {
+interface MyAssignedEConsultsData {
+  myAssignedEConsults: {
     items: Array<{ id: string }>
     totalCount: number
     hasNextPage: boolean
@@ -12,18 +12,18 @@ interface ConsultantAssignedEConsultsData {
 
 export const useConsultantEConsults = () => {
   const { user, isAuthenticated } = useAuthContext()
-  const doctorId = user?.doctorId
+  const consultantDoctorId = user?.doctorId
 
-  const { data, loading } = useQuery<ConsultantAssignedEConsultsData>(CONSULTANT_ASSIGNED_ECONSULTS_QUERY, {
+  const { data, loading } = useQuery<MyAssignedEConsultsData>(MY_ASSIGNED_ECONSULTS_QUERY, {
     variables: {
-      doctorId,
+      consultantDoctorId,
       pagination: { page: 1, limit: 1 }
     },
-    skip: !isAuthenticated || !doctorId,
+    skip: !isAuthenticated || !consultantDoctorId,
     fetchPolicy: 'cache-first'
   })
 
-  const totalCount = data?.consultantAssignedEConsults?.totalCount ?? 0
+  const totalCount = data?.myAssignedEConsults?.totalCount ?? 0
   const hasAssignedEConsults = totalCount > 0
 
   return {

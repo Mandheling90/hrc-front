@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useQuery, useMutation } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
@@ -85,22 +85,15 @@ export default function EConsultDetailPage() {
   const router = useHospitalRouter()
   const params = useParams()
   const id = params.id as string
-  const [doctorId, setDoctorId] = useState<string | null>(null)
-
-  useEffect(() => {
-    const storedDoctorId = localStorage.getItem('econsult_doctor_id')
-    setDoctorId(storedDoctorId)
-  }, [])
   const [replyContent, setReplyContent] = useState('')
 
   const { data, loading } = useQuery<ConsultantEConsultByIdData>(CONSULTANT_ECONSULT_BY_ID_QUERY, {
-    variables: { doctorId, id },
-    skip: !doctorId,
+    variables: { id },
     fetchPolicy: 'cache-and-network'
   })
 
   const [replyEConsult, { loading: replyLoading }] = useMutation(CONSULTANT_REPLY_ECONSULT_MUTATION, {
-    refetchQueries: [{ query: CONSULTANT_ECONSULT_BY_ID_QUERY, variables: { doctorId, id } }]
+    refetchQueries: [{ query: CONSULTANT_ECONSULT_BY_ID_QUERY, variables: { id } }]
   })
 
   const eConsultData = data?.consultantEConsultById
@@ -126,11 +119,10 @@ export default function EConsultDetailPage() {
   const characterCount = replyContent.length
 
   const handleReplySubmit = async () => {
-    if (!replyContent.trim() || !doctorId) return
+    if (!replyContent.trim()) return
     try {
       await replyEConsult({
         variables: {
-          doctorId,
           id,
           input: { content: replyContent }
         }

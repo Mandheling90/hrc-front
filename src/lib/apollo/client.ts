@@ -27,6 +27,14 @@ function getHospitalCodeFromURL(): string {
 const AUTH_TOKEN_KEY = 'auth_token'
 const AUTH_REFRESH_TOKEN_KEY = 'auth_refresh_token'
 const AUTH_USER_KEY = 'auth_user'
+const DOCTOR_ACCESS_TOKEN_KEY = 'doctorAccessToken'
+
+/** consultant 전용 오퍼레이션 이름 목록 */
+const CONSULTANT_OPERATIONS = [
+  'ConsultantAssignedEConsults',
+  'ConsultantEConsultById',
+  'ConsultantReplyEConsult'
+]
 
 let isRefreshing = false
 let pendingRequests: Array<() => void> = []
@@ -39,8 +47,11 @@ function resolvePendingRequests() {
 export function makeClient() {
   const graphqlUri = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql'
 
-  const authLink = new SetContextLink(prevContext => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem(AUTH_TOKEN_KEY) : null
+  const authLink = new SetContextLink((prevContext, operation) => {
+    const isConsultantOp = operation.operationName && CONSULTANT_OPERATIONS.includes(operation.operationName)
+    const token = typeof window !== 'undefined'
+      ? localStorage.getItem(isConsultantOp ? DOCTOR_ACCESS_TOKEN_KEY : AUTH_TOKEN_KEY)
+      : null
 
     return {
       headers: {
@@ -53,7 +64,7 @@ export function makeClient() {
 
   const errorLink = new ErrorLink(({ error, operation, forward }) => {
     // 인증이 불필요한 mutation은 토큰 리프레시/리다이렉트 스킵
-    const publicOperations = ['Login', 'Signup', 'FindUserIdByVerification', 'ResetPasswordByVerification', 'InitiateVerification', 'CompleteVerification']
+    const publicOperations = ['Login', 'Signup', 'FindUserIdByVerification', 'ResetPasswordByVerification', 'InitiateVerification', 'CompleteVerification', 'ConsultantLogin']
     if (operation.operationName && publicOperations.includes(operation.operationName)) return
 
     // 401 감지: GraphQL UNAUTHENTICATED 에러 또는 네트워크 401
