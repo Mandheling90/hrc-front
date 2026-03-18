@@ -21,6 +21,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
+      <head>
+        <link
+          rel='stylesheet'
+          as='style'
+          crossOrigin='anonymous'
+          href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css'
+        />
+        <link
+          rel='stylesheet'
+          as='style'
+          crossOrigin='anonymous'
+          href='https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css'
+        />
+      </head>
       <body>
         <Script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js' strategy='lazyOnload' />
         <Providers>{children}</Providers>
