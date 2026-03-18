@@ -405,13 +405,23 @@ const HeaderInner: React.FC = () => {
                 {/* 모바일/태블릿 */}
                 <div className={styles.utilMobile}>
                   {isLoggedIn ? (
-                    <button type='button' className={styles.iconBtn} aria-label='로그아웃' onClick={() => logout()}>
-                      <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                        <path d='M13 4H20C20.55 4 21 4.45 21 5V19C21 19.55 20.55 20 20 20H13' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
-                        <path d='M3 12H14.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
-                        <path d='M11 8.5L14.5 12L11 15.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
-                      </svg>
-                    </button>
+                    <>
+                      <Link href='/mypage' className={styles.iconBtn} aria-label='마이페이지'>
+                        <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
+                          <path
+                            d='M12 12C14.76 12 17 9.76 17 7C17 4.24 14.76 2 12 2C9.24 2 7 4.24 7 7C7 9.76 9.24 12 12 12ZM12 14C8.67 14 2 15.67 2 19V22H22V19C22 15.67 15.33 14 12 14Z'
+                            fill='currentColor'
+                          />
+                        </svg>
+                      </Link>
+                      <button type='button' className={styles.iconBtn} aria-label='로그아웃' onClick={() => logout()}>
+                        <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                          <path d='M13 4H20C20.55 4 21 4.45 21 5V19C21 19.55 20.55 20 20 20H13' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                          <path d='M3 12H14.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                          <path d='M11 8.5L14.5 12L11 15.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                        </svg>
+                      </button>
+                    </>
                   ) : (
                     <Link href='/login' className={styles.iconBtn} aria-label='로그인'>
                       <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
