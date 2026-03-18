@@ -1,14 +1,17 @@
 'use client'
 
 import React, { useMemo, useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useHospitalNews } from '@/hooks/useHospitalNews'
+import { getHospitalFromPath } from '@/utils/hospital'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
 import { SearchFilterWithInfo } from '@/components/molecules/SearchFilterWithInfo/SearchFilterWithInfo'
 import { Pagination } from '@/components/molecules/Pagination/Pagination'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
 
 interface NoticeData {
@@ -28,6 +31,8 @@ const categoryOptions = [
 
 export default function NoticeListPage() {
   const router = useHospitalRouter()
+  const pathname = usePathname()
+  const hospitalId = getHospitalFromPath(pathname)
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -96,7 +101,13 @@ export default function NoticeListPage() {
   }
 
   const handleRowClick = (item: NoticeData) => {
-    if (item.linkUrl) {
+    if (hospitalId === 'anam' || hospitalId === 'guro' || hospitalId === 'ansan') {
+      window.open(
+        `https://${hospitalId}.kumc.or.kr/kr/B022/view.do?article=${item.id}`,
+        '_blank',
+        'noopener,noreferrer'
+      )
+    } else if (item.linkUrl) {
       window.open(item.linkUrl, '_blank', 'noopener,noreferrer')
     }
   }
@@ -159,7 +170,15 @@ export default function NoticeListPage() {
           {/* 데스크톱/태블릿: 테이블, 모바일: 카드 */}
           <div className={styles.tableSection}>
             {loading ? (
-              <div className={styles.loadingWrapper}>로딩 중...</div>
+              <div className={styles.skeletonWrapper}>
+                {Array.from({ length: itemsPerPage }, (_, i) => (
+                  <div key={i} className={styles.skeletonRow}>
+                    <Skeleton width={50} height={20} variant='text' />
+                    <Skeleton width='100%' height={20} variant='text' />
+                    <Skeleton width={120} height={20} variant='text' />
+                  </div>
+                ))}
+              </div>
             ) : !isMobile ? (
               <Table
                 columns={columns}

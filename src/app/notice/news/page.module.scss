@@ -128,6 +128,36 @@
   }
 }
 
+// 스켈레톤 로딩
+.skeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 1430px;
+  margin: 0 auto;
+}
+
+.skeletonRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-6;
+  padding: $spacing-4 $spacing-4;
+  border-bottom: 1px solid $gray-3;
+
+  > :first-child {
+    flex-shrink: 0;
+  }
+
+  > :nth-child(2) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  > :last-child {
+    flex-shrink: 0;
+  }
+}
+
 // 병원소식 테이블 스타일
 .noticeTable {
   max-width: 1430px;

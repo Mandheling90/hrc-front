@@ -253,9 +253,11 @@ function AnsanEducationEventPage() {
   )
 
   const handleRowClick = (item: (typeof tableData)[number]) => {
-    if (item.linkUrl) {
-      window.open(item.linkUrl, '_blank', 'noopener,noreferrer')
-    }
+    window.open(
+      `https://ansan.kumc.or.kr/kr/as_classes/view.do?article=${item.id}`,
+      '_blank',
+      'noopener,noreferrer'
+    )
   }
 
   const handleCardClick = (cardIndex: number) => {
