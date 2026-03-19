@@ -99,6 +99,70 @@ const fromInstitutionTypeCode = (v?: string): string => {
   return INSTITUTION_TYPE_REVERSE[v] ?? v
 }
 
+/** 진료과 key → 한글 라벨 */
+const DEPARTMENT_LABEL_MAP: Record<string, string> = {
+  familyMedicine: '가정의학과',
+  internalMedicine: '내과',
+  anesthesiology: '마취통증의학과',
+  radiationOncology: '방사선종양학과',
+  pathology: '병리과',
+  urology: '비뇨의학과',
+  obstetricsGynecology: '산부인과',
+  plasticSurgery: '성형외과',
+  pediatrics: '소아청소년과',
+  neurology: '신경과',
+  neurosurgery: '신경외과',
+  nephrology: '신장내과',
+  ophthalmology: '안과',
+  radiology: '영상의학과',
+  surgery: '외과',
+  emergencyMedicine: '응급의학과',
+  otorhinolaryngology: '이비인후과',
+  rehabilitationMedicine: '재활의학과',
+  psychiatry: '정신건강의학과',
+  orthopedicSurgery: '정형외과',
+  laboratoryMedicine: '진단검사의학과',
+  dentistry: '치과',
+  dermatology: '피부과',
+  cardiothoracicSurgery: '심장혈관흉부외과',
+  koreanMedicine: '한의학과',
+  other: '기타'
+}
+
+/** departments 객체에서 checked된 진료과목을 콤마 구분 문자열로 변환 */
+const toDepartmentString = (
+  departments?: Record<string, { checked: boolean; count: string }>
+): string | undefined => {
+  if (!departments) return undefined
+  const labels = Object.entries(departments)
+    .filter(([, v]) => v.checked)
+    .map(([k]) => DEPARTMENT_LABEL_MAP[k] ?? k)
+  return labels.length > 0 ? labels.join(',') : undefined
+}
+
+/** InstitutionType enum → 병원종별코드 (EHR hsptClsfCd) */
+const INSTITUTION_CODE_MAP: Record<string, string> = {
+  [InstitutionType.TertiaryHospital]: '10',
+  [InstitutionType.GeneralHospital]: '20',
+  [InstitutionType.Hospital]: '30',
+  [InstitutionType.DentalHospital]: '31',
+  [InstitutionType.MentalHospital]: '32',
+  [InstitutionType.NursingHospital]: '40',
+  [InstitutionType.Clinic]: '50',
+  [InstitutionType.DentalClinic]: '51',
+  [InstitutionType.PublicHealth]: '60',
+  [InstitutionType.Institution]: '70',
+  [InstitutionType.Unclassified]: '80',
+  [InstitutionType.Oriental]: '90',
+  [InstitutionType.OrientalHospital]: '99'
+}
+
+/** InstitutionType → 병원종별코드 문자열 */
+const toInstitutionCode = (type?: InstitutionType): string | undefined => {
+  if (!type) return undefined
+  return INSTITUTION_CODE_MAP[type] ?? undefined
+}
+
 /** 격리 중 간병: 영문 key → 한글 라벨 */
 const ISOLATION_CARE_LABEL: Record<string, string> = {
   joint: '공동',
@@ -139,9 +203,11 @@ export function mapStepsToApiInput(
     hospitalId,
     hospitalCode,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
+    institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
 
     // Step 1: 병원 정보
     hospitalName: emptyToUndef(step1?.hospitalName),
+    hospitalPhisCode: emptyToUndef(step1?.medicalInstitutionNumber),
     hospitalZipCode: emptyToUndef(step1?.zipCode),
     hospitalAddress: emptyToUndef(step1?.address),
     hospitalAddressDetail: emptyToUndef(step1?.detailAddress),
@@ -223,6 +289,7 @@ export function mapStepsToApiInput(
 
     // Step 6: 진료과 운영 현황 및 주요 보유 장비
     departmentSpecialists: step6?.departments,
+    medicalDepartment: toDepartmentString(step6?.departments),
     majorEquipment: step6
       ? JSON.stringify({
           equipment: step6.equipment,
@@ -412,9 +479,11 @@ export function mapClinicStepsToApiInput(
     hospitalId,
     hospitalCode,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
+    institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
 
     // Step 1: 병원 정보
     hospitalName: emptyToUndef(step1?.hospitalName),
+    hospitalPhisCode: emptyToUndef(step1?.medicalInstitutionNumber),
     hospitalZipCode: emptyToUndef(step1?.zipCode),
     hospitalAddress: emptyToUndef(step1?.address),
     hospitalAddressDetail: emptyToUndef(step1?.detailAddress),
@@ -474,6 +543,9 @@ export function mapClinicStepsToApiInput(
           other: step3.other
         }
       : undefined,
+
+    // 의원은 진료과 Step이 없으므로 병원장 진료과를 사용
+    medicalDepartment: emptyToUndef(step2?.department),
 
     // Step 4: 병원특성 및 기타사항
     remarks: emptyToUndef(step4?.hospitalCharacteristics)

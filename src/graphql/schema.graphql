@@ -453,8 +453,14 @@ input ApplyPartnerHospitalInput {
   """병원 우편번호 (Hospital 테이블 업데이트)"""
   hospitalZipCode: String
 
+  """요양기관번호 (Hospital 테이블 업데이트)"""
+  hospitalPhisCode: String
+
   """중환자실 수"""
   icuCount: Int
+
+  """병원종별코드"""
+  institutionCode: String
 
   """의료기관 유형"""
   institutionType: InstitutionType
@@ -488,6 +494,9 @@ input ApplyPartnerHospitalInput {
 
   """주요 보유 장비"""
   majorEquipment: String
+
+  """진료과목/표방과목"""
+  medicalDepartment: String
 
   """다인실 수"""
   multiRoomCount: Int
@@ -4623,11 +4632,17 @@ input SaveDraftPartnerInput {
   """병원 우편번호 (Hospital 테이블 업데이트)"""
   hospitalZipCode: String
 
+  """요양기관번호 (Hospital 테이블 업데이트)"""
+  hospitalPhisCode: String
+
   """중환자실 수 (H전용)"""
   icuCount: Int
 
   """의료기관 유형"""
   institutionType: InstitutionType
+
+  """병원종별코드"""
+  institutionCode: String
 
   """원장 여부"""
   isDirector: Boolean
@@ -4658,6 +4673,9 @@ input SaveDraftPartnerInput {
 
   """주요 보유 장비 (M전용)"""
   majorEquipment: String
+
+  """진료과목/표방과목"""
+  medicalDepartment: String
 
   """다인실 수 (H전용)"""
   multiRoomCount: Int
