@@ -37,7 +37,7 @@ $spacing-14: 3.5rem; // 56px
 
 // STEP 카드 스타일
 .stepCard {
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 30px;
   margin-top: $spacing-6;
@@ -72,7 +72,7 @@ $spacing-14: 3.5rem; // 56px
 .stepTitle {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
   line-height: 1.5;
   letter-spacing: -0.96px;
@@ -90,7 +90,7 @@ $spacing-14: 3.5rem; // 56px
 .stepDivider {
   width: 100%;
   height: 1px;
-  background-color: $gray-8;
+  background-color: var(--color-border);
   margin: $spacing-6 0;
 }
 
@@ -227,7 +227,7 @@ $spacing-14: 3.5rem; // 56px
   margin: 0;
   font-size: $font-size-lg;
   font-weight: $font-weight-normal;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   line-height: 1.5;
   letter-spacing: -0.72px;
 }

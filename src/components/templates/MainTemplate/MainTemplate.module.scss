@@ -3,13 +3,5 @@
 
 .wrap {
   @include page-wrap-no-breadcrumbs;
-  background-color: var(--color-white, #fff);
-
-  @media (prefers-color-scheme: dark) {
-    background-color: var(--color-white, #0e0f10);
-  }
-
-  [data-theme='dark'] & {
-    background-color: var(--color-white, #0e0f10);
-  }
+  background-color: var(--color-white);
 }

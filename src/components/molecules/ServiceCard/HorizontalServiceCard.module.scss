@@ -8,8 +8,8 @@
   justify-content: center;
   gap: 56px;
   padding: 30px 50px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: $shadow-sm;
   text-align: center;
@@ -39,7 +39,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #fcebeb;
+  background-color: var(--color-accent-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,7 @@
 .title {
   font-size: $font-size-2xl;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
   line-height: 1.5;
   letter-spacing: -0.96px;
@@ -81,7 +81,7 @@
   font-size: $font-size-lg;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-9;
+  color: var(--color-text-tertiary);
   margin: 0;
   letter-spacing: -0.72px;
   width: auto;
@@ -150,7 +150,7 @@
   .title {
     font-size: $font-size-lg;
     font-weight: $font-weight-semibold;
-    color: $gray-12;
+    color: var(--color-darken);
     letter-spacing: -0.72px;
     text-align: center;
   }

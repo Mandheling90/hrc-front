@@ -41,6 +41,23 @@ function useCardsPerPage() {
   return cardsPerPage
 }
 
+// 다크모드 감지 훅
+function useIsDark() {
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const check = () => {
+      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark')
+    }
+    check()
+    const observer = new MutationObserver(check)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => observer.disconnect()
+  }, [])
+
+  return isDark
+}
+
 export const PopupZone: React.FC = () => {
   const { hospital } = useHospital()
   const { popups, loading } = useActivePopups()
@@ -48,6 +65,7 @@ export const PopupZone: React.FC = () => {
   const [startIndex, setStartIndex] = useState(0)
   const [hideToday, setHideToday] = useState(false)
   const cardsPerPage = useCardsPerPage()
+  const isDark = useIsDark()
 
   const showArrows = popups.length > cardsPerPage
   const maxIndex = Math.max(0, popups.length - cardsPerPage)
@@ -155,9 +173,9 @@ export const PopupZone: React.FC = () => {
                 onClick={() => handlePopupClick(popup)}
                 style={{ cursor: popup.linkUrl ? 'pointer' : 'default' }}
               >
-                {popup.imageUrl ? (
+                {(popup.imageUrl || (isDark && popup.imageDarkUrl)) ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={popup.imageUrl} alt={popup.altText || '팝업 이미지'} className={styles.cardImg} />
+                  <img src={(isDark && popup.imageDarkUrl) || popup.imageUrl || ''} alt={popup.altText || '팝업 이미지'} className={styles.cardImg} />
                 ) : (
                   <div className={styles.cardPlaceholder} />
                 )}

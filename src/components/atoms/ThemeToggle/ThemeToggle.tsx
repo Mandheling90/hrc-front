@@ -35,9 +35,9 @@ export const ThemeToggle: React.FC = () => {
       <span className={styles.thumb}>
         <span className={styles.thumbIcon}>
           {isDark ? (
-            <SunCloudIcon width={28} height={28} stroke="currentColor" />
-          ) : (
             <MoonCloudIcon width={28} height={28} stroke="currentColor" />
+          ) : (
+            <SunCloudIcon width={28} height={28} stroke="currentColor" />
           )}
         </span>
       </span>

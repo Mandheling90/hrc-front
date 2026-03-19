@@ -65,8 +65,8 @@
   align-items: center;
   gap: $spacing-4;
   padding: $spacing-5 $spacing-12;
-  background-color: $gray-2;
-  border: 1px solid $gray-9; // Figma: #8C8C8C
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border); // Figma: #8C8C8C
   border-radius: 10px 10px 0 0;
   font-family: Pretendard, sans-serif;
   font-weight: $font-weight-semibold;
@@ -88,7 +88,7 @@
 }
 
 .departmentLabel {
-  color: $gray-12;
+  color: var(--color-darken);
   font-size: 24px; // Figma desktop: 24px
 
   @include tablet {
@@ -97,7 +97,7 @@
 }
 
 .departmentSeparator {
-  color: $gray-12;
+  color: var(--color-darken);
   font-size: 20px; // Figma desktop: 20px
 
   @include tablet {
@@ -120,10 +120,10 @@
   flex-wrap: wrap;
   gap: $spacing-4;
   padding: $spacing-5;
-  background-color: $gray-4; // Figma: #E8E8E8
-  border: 1px solid $gray-9; // Figma: #8C8C8C
+  background-color: var(--color-bg-hover); // Figma: #E8E8E8
+  border: 1px solid var(--color-border); // Figma: #8C8C8C
   border-top: none;
-  border-bottom: 1px solid $gray-9;
+  border-bottom: 1px solid var(--color-border);
 
   @include tablet {
     gap: $spacing-3;
@@ -144,8 +144,8 @@
   padding: 0;
   border-radius: $radius-full;
   border: none;
-  background-color: $color-white;
-  color: $gray-12;
+  background-color: var(--color-white);
+  color: var(--color-darken);
   font-size: 20px; // Figma desktop: 20px
   font-weight: $font-weight-semibold;
   cursor: pointer;
@@ -175,14 +175,14 @@
   }
 
   &.active {
-    outline: 3px solid #de989b; // Figma: active border
+    outline: 3px solid $color-primary; // Figma: active border
     border: none;
-    color: $gray-12;
+    color: var(--color-darken);
   }
 
   &.disabled {
     background-color: $gray-8;
-    color: $gray-11; // Figma: #636363
+    color: var(--color-text-secondary); // Figma: #636363
     cursor: not-allowed;
   }
 }
@@ -192,8 +192,8 @@
   flex-wrap: wrap;
   gap: $spacing-4;
   padding: $spacing-5;
-  background-color: $gray-4; // Figma: #E8E8E8
-  border: 1px solid $gray-9; // Figma: #8C8C8C
+  background-color: var(--color-bg-hover); // Figma: #E8E8E8
+  border: 1px solid var(--color-border); // Figma: #8C8C8C
   border-top: none;
   border-radius: 0 0 10px 10px;
 
@@ -216,8 +216,8 @@
   padding: $spacing-2 $spacing-6;
   border-radius: $radius-full;
   border: none;
-  background-color: rgba(254, 248, 248, 1); // #fef8f8
-  color: $gray-12;
+  background-color: var(--color-accent-bg); // #fef8f8
+  color: var(--color-darken);
   font-size: 20px; // Figma desktop: 20px
   font-weight: $font-weight-semibold;
   line-height: 1.5;
@@ -239,11 +239,11 @@
   }
 
   &:hover:not(.active) {
-    background-color: rgba(254, 248, 248, 0.8);
+    background-color: var(--color-accent-bg);
   }
 
   &.active {
-    background-color: rgba(254, 248, 248, 1);
+    background-color: var(--color-accent-bg);
     border: 1px solid $color-primary;
     color: $color-primary;
   }
@@ -255,7 +255,7 @@
   flex-direction: column;
   gap: 0;
   width: 100%;
-  border: 1px solid $gray-9; // Figma: #8C8C8C
+  border: 1px solid var(--color-border); // Figma: #8C8C8C
   border-radius: 10px;
   overflow: hidden;
 }
@@ -282,7 +282,7 @@
   display: flex;
   gap: 16px; // Figma tablet: 16px
   padding: 20px; // Figma tablet: 20px
-  border-bottom: 1px solid $gray-9; // Figma: #8C8C8C
+  border-bottom: 1px solid var(--color-border); // Figma: #8C8C8C
   align-items: flex-end;
 
   @include mobile {
@@ -319,7 +319,7 @@
 .doctorName {
   font-size: 32px; // Figma desktop: 32px
   font-weight: $font-weight-semibold; // 600
-  color: black; // Figma: black
+  color: var(--color-darken); // Figma: black
   margin: 0;
   line-height: 1.5; // 48px / 32px
   letter-spacing: -1.28px; // Figma desktop: -1.28px
@@ -333,7 +333,7 @@
 .doctorDepartment {
   font-size: 20px; // Figma desktop: 20px
   font-weight: $font-weight-semibold; // Figma: 600
-  color: black; // Figma: black
+  color: var(--color-darken); // Figma: black
   line-height: 1.5; // 30px / 20px
   letter-spacing: -0.8px; // Figma desktop: -0.8px
 
@@ -367,7 +367,7 @@
 .specialtiesText {
   font-size: 18px; // Figma desktop: 18px
   font-weight: $font-weight-normal; // 400
-  color: $gray-11; // Figma: #636363
+  color: var(--color-text-secondary); // Figma: #636363
   line-height: 1.5; // 27px / 18px
   letter-spacing: -0.72px; // Figma desktop: -0.72px
   overflow: hidden;
@@ -459,10 +459,10 @@
 }
 
 .doctorInfoButton {
-  background-color: $color-white;
+  background-color: var(--color-white);
   border: 2px solid $gray-4; // Figma: #E8E8E8
   border-radius: 5px;
-  color: $gray-9; // Figma: #8C8C8C
+  color: var(--color-text-tertiary); // Figma: #8C8C8C
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -481,11 +481,11 @@
 
   &:hover:not(:disabled) {
     border-color: $gray-6;
-    background-color: $gray-2;
+    background-color: var(--color-surface);
   }
 
   &:active:not(:disabled) {
-    background-color: $gray-2;
+    background-color: var(--color-surface);
   }
 
   svg {
@@ -503,7 +503,7 @@
   span {
     font-size: 18px; // Figma desktop: 18px
     font-weight: $font-weight-semibold; // 600
-    color: $gray-9; // Figma: #8C8C8C
+    color: var(--color-text-tertiary); // Figma: #8C8C8C
     white-space: nowrap;
     line-height: 1.5; // 27px / 18px
     letter-spacing: -0.72px;
