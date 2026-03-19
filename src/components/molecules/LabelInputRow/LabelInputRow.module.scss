@@ -23,7 +23,7 @@
     .textLabel {
       font-size: $font-size-xl; // 20px
       font-weight: $font-weight-semibold; // 600
-      color: #000000;
+      color: var(--color-darken);
       line-height: 1.5;
       letter-spacing: -0.8px;
       text-align: center;
@@ -47,25 +47,25 @@
     :global(.input) {
       height: 43px;
       padding: 8px 15px;
-      border: 1px solid $gray-9;
+      border: 1px solid var(--color-border);
       border-radius: 5px;
       font-size: $font-size-lg; // 18px
       line-height: 1.5;
       letter-spacing: -0.72px;
-      color: #000000;
+      color: var(--color-darken);
 
       &::placeholder {
-        color: $gray-9;
+        color: var(--color-text-tertiary);
       }
 
       &:disabled {
-        background-color: $gray-4;
-        border-color: $gray-9;
-        color: $gray-11;
+        background-color: var(--color-bg-hover);
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
         cursor: not-allowed;
 
         &::placeholder {
-          color: $gray-11;
+          color: var(--color-text-secondary);
         }
       }
     }

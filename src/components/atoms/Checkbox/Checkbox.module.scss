@@ -5,7 +5,7 @@
   align-items: center;
   font-size: $font-size-lg; // 20px
   font-weight: $font-weight-normal; // 400 (regular)
-  color: $gray-11;
+  color: var(--color-text-secondary);
   cursor: pointer;
   gap: 8px;
   letter-spacing: -0.8px;
@@ -32,12 +32,12 @@
 
   // 체크된 상태일 때 라벨 색상 변경
   input:checked ~ span {
-    color: $gray-12;
+    color: var(--color-darken);
   }
 
   // 체크 안된 상태일 때 라벨 색상
   input:not(:checked) ~ span {
-    color: $gray-11;
+    color: var(--color-text-secondary);
   }
 
   // 항상 진한 색상 유지 옵션
@@ -45,12 +45,12 @@
     // 체크/미체크 상태와 관계없이 항상 진한 색상 유지
     input:checked ~ span,
     input:not(:checked) ~ span {
-      color: $gray-12;
+      color: var(--color-darken);
     }
 
     // highlightText는 빨간색 유지 (더 구체적인 선택자로 우선순위 높임)
     span :global(.highlightText) {
-      color: $color-primary !important;
+      color: var(--color-primary) !important;
     }
   }
 
@@ -72,24 +72,26 @@
   min-height: 24px;
   margin: 0;
   cursor: pointer;
-  accent-color: $color-primary;
-  appearance: checkbox;
-  -webkit-appearance: checkbox;
-  -moz-appearance: checkbox;
-  border: 1.5px solid $gray-9;
+  accent-color: var(--color-primary);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
   border-radius: 4px;
   flex-shrink: 0;
 
   &:checked {
-    background-color: $color-primary;
-    border-color: $color-primary;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M10 3L4.5 8.5L2 6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M13 4.5L6.5 11L3 7.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 16px 16px;
   }
 
   &:focus {
-    outline: 2px solid rgba(137, 26, 38, 0.3);
+    outline: 2px solid rgba(var(--color-primary-rgb), 0.3);
     outline-offset: 2px;
   }
 

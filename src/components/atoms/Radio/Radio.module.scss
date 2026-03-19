@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #000;
+  color: var(--color-darken);
   font-family: $font-family-base;
   font-size: $font-size-lg; // 18px
   font-style: normal;
@@ -32,15 +32,15 @@
     height: 20px;
     margin: 0;
     cursor: pointer;
-    border: 1px solid $gray-9;
+    border: 1px solid var(--color-border);
     border-radius: 50%;
-    background-color: #fff;
+    background-color: var(--color-white);
     position: relative;
     flex-shrink: 0;
 
     &:checked {
-      border-color: $color-primary;
-      background-color: #fff;
+      border-color: var(--color-primary);
+      background-color: var(--color-white);
 
       &::after {
         content: '';
@@ -51,13 +51,13 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: $color-primary;
+        background-color: var(--color-primary);
       }
     }
 
     &:not(:checked) {
-      border-color: $gray-9;
-      background-color: #fff;
+      border-color: var(--color-border);
+      background-color: var(--color-white);
     }
 
     &:focus {
@@ -86,19 +86,19 @@
 
   // 체크된 상태일 때 라벨 색상 변경
   input:checked ~ span {
-    color: #000000;
+    color: var(--color-darken);
   }
 
   // 체크 안된 상태일 때 라벨 색상
   input:not(:checked) ~ span {
-    color: $gray-11;
+    color: var(--color-text-secondary);
   }
 
   // disabled 상태
   input:disabled {
     cursor: not-allowed;
     opacity: 0.5;
-    background-color: $gray-3;
+    background-color: var(--color-bg-hover);
 
     &:checked {
       opacity: 0.5;
@@ -106,7 +106,7 @@
   }
 
   input:disabled ~ span {
-    color: $gray-9;
+    color: var(--color-text-tertiary);
     cursor: not-allowed;
   }
 

@@ -103,6 +103,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
             {/* 실무자명 */}
             <FormField
               label='실무자명'
+              required
               id='staffName'
               name='staffName'
               type='text'

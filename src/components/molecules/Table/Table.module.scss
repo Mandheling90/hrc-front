@@ -10,8 +10,8 @@
   min-height: 0;
 
   // 호버 스타일 CSS 변수 (외부에서 오버라이드 가능)
-  --table-row-hover-bg: #f8efe2;
-  --table-row-hover-title-color: #816331;
+  --table-row-hover-bg: var(--color-accent-bg);
+  --table-row-hover-title-color: var(--color-secondary);
 
   // 호버 스타일 활성화 시에만 적용
   &.hoverEnabled {
@@ -46,12 +46,12 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: $gray-4;
+    background: var(--color-bg-hover);
     border-radius: 40px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $color-primary;
+    background: var(--color-primary);
     border-radius: 60px;
   }
 }
@@ -59,8 +59,8 @@
 .tableHeader {
   display: flex;
   align-items: center; // Figma 기준
-  background-color: $gray-2;
-  border: 1px solid $gray-9;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   gap: 8px; // Figma 기준
@@ -90,7 +90,7 @@
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal; // 1.5
   letter-spacing: -0.8px; // Figma: -4%
-  color: $color-darken; // Figma: #000000
+  color: var(--color-darken); // Figma: #000000
   text-align: center;
   display: flex;
   align-items: center;
@@ -149,7 +149,7 @@
     bottom: 0;
     transform: translateX(-50%);
     width: 1px;
-    background-color: $gray-11; // Figma: #636363
+    background-color: var(--color-text-secondary); // Figma: #636363
   }
 }
 
@@ -183,12 +183,12 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: $gray-4;
+    background: var(--color-bg-hover);
     border-radius: 40px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $color-primary;
+    background: var(--color-primary);
     border-radius: 60px;
 
     &:hover {
@@ -218,8 +218,8 @@
 .tableRow {
   display: flex;
   align-items: center; // Figma 기준
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   gap: 8px; // Figma 기준
@@ -231,17 +231,17 @@
 
   // 하이라이트된 행 스타일
   &.highlighted {
-    background-color: #f8efe2;
-    border-color: $gray-9;
+    background-color: var(--color-accent-bg);
+    border-color: var(--color-border);
 
     .dataCell {
-      color: $gray-11;
+      color: var(--color-text-secondary);
       font-weight: $font-weight-normal;
 
       // 하이라이트된 행의 StatusBadge 스타일
       :global(.badge) {
-        background-color: #fdf9f4;
-        color: #816331;
+        background-color: var(--color-surface);
+        color: var(--color-secondary);
         border: none;
       }
 
@@ -249,7 +249,7 @@
       &[data-column-id='title'],
       &[data-column-id='applicant'],
       &[data-column-id='hospitalName'] {
-        color: #816331;
+        color: var(--color-secondary);
         font-weight: $font-weight-semibold;
       }
     }
@@ -262,7 +262,7 @@
   font-weight: $font-weight-normal;
   line-height: $line-height-normal; // 1.5
   letter-spacing: -0.8px; // Figma: -4%
-  color: $gray-11; // Figma: #636363
+  color: var(--color-text-secondary); // Figma: #636363
   text-align: center;
   display: flex;
   align-items: center;

@@ -37,13 +37,13 @@
   width: 100%;
   max-width: $container-max-width;
   padding: 80px 50px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 48px;
-  background-color: #fff;
+  background-color: var(--color-white);
 
   @include tablet {
     padding: 80px 50px; // Figma 태블릿: 동일
@@ -62,7 +62,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8efe2;
+  background-color: var(--color-accent-bg);
   border-radius: 50%;
   flex-shrink: 0;
 
@@ -111,7 +111,7 @@
   font-family: $font-family-base;
   font-size: 24px;
   font-weight: $font-weight-semibold;
-  color: $color-primary;
+  color: var(--color-primary);
   line-height: 36px; // Figma: 36px
   letter-spacing: -0.96px;
   text-align: center;
@@ -134,7 +134,7 @@
   font-family: $font-family-base;
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   line-height: 30px; // Figma: 30px
   letter-spacing: -0.8px;
   text-align: center;
@@ -179,14 +179,14 @@
 
 .infoField {
   width: 100%;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   height: 80px;
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #fef8f8;
+  background-color: var(--color-accent-bg);
 
   @include tablet {
     height: 80px; // Figma 태블릿: 80px 유지
@@ -207,7 +207,7 @@
   font-family: $font-family-base;
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
-  color: #000;
+  color: var(--color-darken);
   line-height: 30px;
   letter-spacing: -0.8px;
   width: 420px;
@@ -233,7 +233,7 @@
 .infoDivider {
   width: 1px;
   height: 18px;
-  background-color: $gray-9;
+  background-color: var(--color-border);
   flex-shrink: 0;
 
   @include tablet {
@@ -249,7 +249,7 @@
   font-family: $font-family-base;
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal;
-  color: #000;
+  color: var(--color-darken);
   line-height: 30px;
   letter-spacing: -0.8px;
   flex: 1;

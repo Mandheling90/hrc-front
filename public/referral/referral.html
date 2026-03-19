@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>진료의뢰시스템 소개</title>
+  <link rel="stylesheet" as="style" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    /* ===== CSS Variables (Light / Dark) ===== */
+    :root {
+      --color-white: #ffffff;
+      --color-darken: #000000;
+      --color-primary: #9f1836;
+      --color-surface-elevated: #ffffff;
+      --color-border: #e8e8e8;
+      --color-text-secondary: #636363;
+      --color-text-tertiary: #8c8c8c;
+      --color-accent-bg: #f8efe2;
+      --color-section-title: #000000;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme='dark'] {
+      --color-white: #1e1e1e;
+      --color-darken: #bdbdbd;
+      --color-primary: #c9304e;
+      --color-surface-elevated: #000000;
+      --color-border: #333333;
+      --color-text-secondary: #bdbdbd;
+      --color-text-tertiary: #7b8393;
+      --color-accent-bg: #2a1a1e;
+      --color-section-title: rgba(255, 255, 255, 0.7);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== Reset ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background-color: var(--color-white);
+      color: var(--color-darken);
+    }
+
+    /* ===== Theme Toggle ===== */
+    .themeToggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background-color: var(--color-surface-elevated);
+      color: var(--color-darken);
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    /* ===== Layout ===== */
+    .wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-white);
+    }
+
+    .main {
+      flex: 1;
+      padding: 64px 0 80px;
+    }
+
+    .container {
+      max-width: 1430px;
+      margin: 0 auto;
+      padding: 0 50px;
+    }
+
+    /* ===== Page Title ===== */
+    .pageTitle {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--color-darken);
+      text-align: center;
+      margin: 0 0 80px;
+      line-height: 1.5;
+      letter-spacing: -1.6px;
+    }
+
+    /* ===== InfoBox (Guide) ===== */
+    .guide {
+      background-color: var(--color-surface-elevated);
+      background-image: url('./boxBgImg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 40px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme='dark'] .guide {
+      background-color: transparent;
+    }
+
+    [data-theme='dark'] .guide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(0, 0, 0, 0.75);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    [data-theme='dark'] .guide > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .guideInner {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .guideMessage {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      letter-spacing: -0.8px;
+      margin: 0;
+      white-space: pre-line;
+    }
+
+    /* ===== Section Title ===== */
+    .sectionHeader {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .sectionHeader svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .sectionTitle {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--color-darken);
+      margin: 0;
+      line-height: 1.5;
+      letter-spacing: -1.28px;
+    }
+
+    /* ===== Service Section ===== */
+    .section {
+      margin: 40px 0;
+      width: 100%;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-auto-rows: 1fr;
+      gap: 24px;
+      width: 100%;
+      padding-top: 5px;
+    }
+
+    .grid > * {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Service Card (Vertical) ===== */
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 30px;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      width: 100%;
+      height: 100%;
+    }
+
+    .iconCircle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: var(--color-accent-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .iconCircle svg {
+      width: 60px;
+      height: 60px;
+    }
+
+    .textWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .cardTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-darken);
+      margin: 0;
+      line-height: 1.5;
+      letter-spacing: -0.96px;
+      word-break: keep-all;
+    }
+
+    .cardDesc {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--color-text-tertiary);
+      margin: 0;
+      text-align: center;
+      word-break: keep-all;
+      white-space: pre-line;
+    }
+
+    /* ===== Tablet (769px ~ 1429px) ===== */
+    @media (max-width: 1429px) {
+      .main { padding: 32px 0 48px; }
+      .container { padding: 0 24px; }
+      .pageTitle { font-size: 36px; margin-bottom: 48px; }
+      .guide { padding: 20px; }
+      .guideInner { gap: 20px; }
+      .guideMessage { font-size: 18px; line-height: 27px; letter-spacing: -0.72px; }
+      .sectionTitle { font-size: 24px; letter-spacing: -0.96px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .card { padding: 20px; gap: 16px; }
+      .iconCircle { width: 80px; height: 80px; border-radius: 56px; }
+      .iconCircle svg { width: 48px; height: 48px; }
+      .cardTitle { font-size: 20px; }
+      .cardDesc { font-size: 18px; letter-spacing: -0.72px; }
+    }
+
+    /* ===== Mobile (<= 768px) ===== */
+    @media (max-width: 768px) {
+      .main { padding: 32px 0 40px; }
+      .container { padding: 0 16px; }
+      .pageTitle { font-size: 24px; margin-bottom: 24px; letter-spacing: -0.96px; }
+      .guide { padding: 20px; }
+      .guideMessage { font-size: 18px; line-height: 27px; letter-spacing: -0.72px; }
+      .sectionTitle { font-size: 24px; letter-spacing: -0.96px; }
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+
+      .card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        gap: 16px;
+        padding: 10px;
+        box-shadow: none;
+      }
+
+      .iconCircle {
+        width: 60px;
+        height: 60px;
+        border-radius: 42px;
+        flex-shrink: 0;
+      }
+
+      .iconCircle svg { width: 36px; height: 36px; }
+
+      .textWrapper {
+        flex: 1;
+        align-items: flex-start;
+        gap: 0;
+      }
+
+      .cardTitle {
+        font-size: 20px;
+        text-align: left;
+        letter-spacing: -0.8px;
+      }
+
+      .cardDesc {
+        font-size: 16px;
+        text-align: left;
+        letter-spacing: -0.64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle (preview용, 컨텐츠 관리에서 불러올 때는 제거) -->
+  <button class="themeToggle" onclick="toggleTheme()">🌓 다크/라이트 전환</button>
+
+  <div class="wrap">
+    <main class="main">
+      <div class="container">
+        <h1 class="pageTitle">진료의뢰시스템 소개</h1>
+
+        <!-- InfoBox (Guide) -->
+        <div class="guide">
+          <div class="guideInner">
+            <p class="guideMessage">진료의뢰시스템은 지역병의원과 협력병의원의 의사전용 사이트로,
+의뢰하신 환자 및 회송된 환자의 진료정보를 확인할 수 있는 시스템입니다.</p>
+          </div>
+        </div>
+
+        <!-- Service Section -->
+        <section class="section">
+          <div class="sectionHeader">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="19" height="19" rx="3" stroke="#9F1836" stroke-width="2" stroke-linejoin="round" />
+              <path d="M21 21H4V20.8976L20.8976 4H21V21Z" fill="#9F1836" />
+            </svg>
+            <h2 class="sectionTitle">이용가능한 서비스</h2>
+          </div>
+
+          <div class="grid">
+            <!-- 진료의뢰 -->
+            <div>
+              <div class="card">
+                <div class="iconCircle">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40.5 35.5003V53.8337H11.1667V9.83366H14.8333C14.8333 9.83366 16.0556 9.83366 16.0556 8.00033C16.0556 6.16699 14.8333 6.16699 14.8333 6.16699H11.1667C10.1942 6.16699 9.26157 6.5533 8.57394 7.24093C7.88631 7.92857 7.5 8.8612 7.5 9.83366V53.8337C7.5 54.8061 7.88631 55.7387 8.57394 56.4264C9.26157 57.114 10.1942 57.5003 11.1667 57.5003H40.5C41.4725 57.5003 42.4051 57.114 43.0927 56.4264C43.7804 55.7387 44.1667 54.8061 44.1667 53.8337V35.5003C44.1667 35.5003 44.1667 34.2781 42.3333 34.2781C40.5 34.2781 40.5 35.5003 40.5 35.5003Z" fill="#720021"/>
+                    <path d="M51.7166 16.1065L45.938 10.7433C45.4142 10.2669 44.7101 10 43.9767 10C43.2433 10 42.5392 10.2669 42.0155 10.7433L17.5 33.4963V42.5H27.1836L51.6991 19.747C52.2125 19.2609 52.5 18.6074 52.5 17.9268C52.5 17.2461 52.2125 16.5926 51.6991 16.1065H51.7166ZM25.7302 39.2496H21.0022V34.8615L37.5326 19.5032L42.2781 23.9076L25.7302 39.2496ZM44.7472 21.616L40.0017 17.2117L43.9767 13.5224L48.7222 17.9268L44.7472 21.616Z" fill="#720021"/>
+                    <mask id="mask-referral" fill="white"><rect x="17.2778" y="2.5" width="17.1111" height="9.77778" rx="2.44444"/></mask>
+                    <rect x="17.2778" y="2.5" width="17.1111" height="9.77778" rx="2.44444" stroke="#720021" stroke-width="7.33333" mask="url(#mask-referral)"/>
+                  </svg>
+                </div>
+                <div class="textWrapper">
+                  <h3 class="cardTitle">진료의뢰</h3>
+                  <p class="cardDesc">진료정보교류와 심평원 중계포털을
+이용한 전자의뢰가 가능합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 의뢰 환자 조회 -->
+            <div>
+              <div class="card">
+                <div class="iconCircle">
+                  <svg width="49" height="54" viewBox="0 0 49 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.9688 30.7639H13.125C10.1413 30.7639 7.27983 31.9345 5.17005 34.0183C3.06026 36.102 1.875 38.9281 1.875 41.875V51.875H22.9688M9.5 12.9861C9.5 15.933 10.6853 18.7591 12.795 20.8429C14.9048 22.9266 17.7663 24.0972 20.75 24.0972C23.7337 24.0972 26.5952 22.9266 28.705 20.8429C30.8147 18.7591 32 15.933 32 12.9861C32 10.0393 30.8147 7.21311 28.705 5.12937C26.5952 3.04563 23.7337 1.875 20.75 1.875C17.7663 1.875 14.9048 3.04563 12.795 5.12937C10.6853 7.21311 9.5 10.0393 9.5 12.9861Z" stroke="#720021" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M41.8125 46.8761L46.875 51.8761M27.1875 40.765C27.1875 42.9751 28.0764 45.0947 29.6588 46.6575C31.2411 48.2203 33.3872 49.0983 35.625 49.0983C37.8628 49.0983 40.0089 48.2203 41.5912 46.6575C43.1736 45.0947 44.0625 42.9751 44.0625 40.765C44.0625 38.5548 43.1736 36.4352 41.5912 34.8724C40.0089 33.3096 37.8628 32.4316 35.625 32.4316C33.3872 32.4316 31.2411 33.3096 29.6588 34.8724C28.0764 36.4352 27.1875 38.5548 27.1875 40.765Z" stroke="#720021" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="textWrapper">
+                  <h3 class="cardTitle">의뢰 환자 조회</h3>
+                  <p class="cardDesc">의뢰해주신 환자의
+진료정보 조회가 가능합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- e-Consulting -->
+            <div>
+              <div class="card">
+                <div class="iconCircle">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.26582 52.5C4.7851 52.5 3.54975 52.005 2.55975 51.015C1.56975 50.025 1.07368 48.7886 1.07153 47.3057V12.6943C1.07153 11.2136 1.5676 9.97821 2.55975 8.98821C3.55189 7.99821 4.78617 7.50214 6.2626 7.5H53.7376C55.2162 7.5 56.4505 7.99607 57.4404 8.98821C58.4305 9.98036 58.9265 11.2157 58.9287 12.6943V47.3089C58.9287 48.7875 58.4326 50.0228 57.4404 51.015C56.4483 52.0071 55.214 52.5021 53.7376 52.5H6.26582ZM6.26582 49.2857H53.7376C54.2304 49.2857 54.6837 49.08 55.0972 48.6686C55.5108 48.2571 55.7165 47.8028 55.7144 47.3057V17.1429H4.28582V47.3089C4.28582 47.8018 4.49153 48.255 4.90296 48.6686C5.31439 49.0821 5.7676 49.2878 6.2626 49.2857" fill="#720021"/>
+                    <path d="M42.0001 50.627V46.0332C42.0001 41.7029 42.0001 39.5361 40.6541 38.1917C39.3097 36.8457 37.143 36.8457 32.8126 36.8457L29.7501 39.9082L26.6875 36.8457C22.3571 36.8457 20.1904 36.8457 18.846 38.1917C17.5 39.5361 17.5 41.7029 17.5 46.0332V50.627M35.8751 36.8457V45.2676" stroke="#720021" stroke-width="2.29689" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24.3906 36.8438V42.9689M24.3906 42.9689C25.2029 42.9689 25.9818 43.2915 26.5562 43.8659C27.1305 44.4402 27.4532 45.2191 27.4532 46.0314V47.5626M24.3906 42.9689C23.5784 42.9689 22.7994 43.2915 22.2251 43.8659C21.6508 44.4402 21.3281 45.2191 21.3281 46.0314V47.5626M35.1094 26.8907V25.3594C35.1094 24.6556 34.9708 23.9587 34.7015 23.3084C34.4321 22.6582 34.0374 22.0674 33.5397 21.5697C33.042 21.0721 32.4512 20.6773 31.801 20.408C31.1508 20.1386 30.4538 20 29.75 20C29.0462 20 28.3493 20.1386 27.6991 20.408C27.0489 20.6773 26.458 21.0721 25.9604 21.5697C25.4627 22.0674 25.0679 22.6582 24.7986 23.3084C24.5293 23.9587 24.3906 24.6556 24.3906 25.3594V26.8907C24.3906 27.5945 24.5293 28.2914 24.7986 28.9416C25.0679 29.5918 25.4627 30.1827 25.9604 30.6803C26.458 31.178 27.0489 31.5728 27.6991 31.8421C28.3493 32.1114 29.0462 32.2501 29.75 32.2501C30.4538 32.2501 31.1508 32.1114 31.801 31.8421C32.4512 31.5728 33.042 31.178 33.5397 30.6803C34.0374 30.1827 34.4321 29.5918 34.7015 28.9416C34.9708 28.2914 35.1094 27.5945 35.1094 26.8907Z" stroke="#720021" stroke-width="2.29689" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M37.0234 46.4121C37.0234 46.7167 36.9025 47.0088 36.6871 47.2242C36.4717 47.4396 36.1796 47.5606 35.875 47.5606C35.5704 47.5606 35.2783 47.4396 35.0629 47.2242C34.8476 47.0088 34.7266 46.7167 34.7266 46.4121C34.7266 46.1075 34.8476 45.8154 35.0629 45.6C35.2783 45.3847 35.5704 45.2637 35.875 45.2637C36.1796 45.2637 36.4717 45.3847 36.6871 45.6C36.9025 45.8154 37.0234 46.1075 37.0234 46.4121Z" stroke="#720021" stroke-width="2.29689"/>
+                    <circle cx="6.25" cy="13.75" r="1.25" fill="white"/>
+                    <circle cx="10" cy="13.75" r="1.25" fill="white"/>
+                    <circle cx="13.75" cy="13.75" r="1.25" fill="white"/>
+                  </svg>
+                </div>
+                <div class="textWrapper">
+                  <h3 class="cardTitle">e-Consulting</h3>
+                  <p class="cardDesc">고려대학교 안암병원 자문의를 통해
+온라인으로 의료상담이 가능합니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 협력네트워크 -->
+            <div>
+              <div class="card">
+                <div class="iconCircle">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip-network)">
+                      <path d="M30 58.125C24.4374 58.125 18.9997 56.4755 14.3746 53.3851C9.74947 50.2947 6.14462 45.9022 4.0159 40.763C1.88719 35.6238 1.33022 29.9688 2.41543 24.5131C3.50064 19.0574 6.17928 14.046 10.1126 10.1126C14.046 6.17928 19.0574 3.50064 24.5131 2.41543C29.9688 1.33022 35.6238 1.88719 40.763 4.0159C45.9022 6.14462 50.2947 9.74947 53.3851 14.3746C56.4755 18.9997 58.125 24.4374 58.125 30" stroke="#720021" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M23.2225 57.3003C19.42 51.7203 16.875 41.5803 16.875 29.9978C16.875 18.4153 19.42 8.27781 23.2225 2.69531M1.9375 28.1228H22.5M7.4975 13.1228H52.5M5.12 43.1228H18.035M36.7775 2.69531C39.7221 7.59399 41.5965 13.0604 42.2775 18.7353" stroke="#720021" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M57.5 40.9312V46.5825C57.5 46.9039 57.4367 47.2222 57.3137 47.5191C57.1907 47.8161 57.0104 48.0859 56.7831 48.3131C56.5559 48.5404 56.2861 48.7207 55.9891 48.8437C55.6922 48.9667 55.3739 49.03 55.0525 49.03H49.0163V55.0662C49.0187 55.3861 48.9567 55.7032 48.8339 55.9985C48.711 56.2938 48.5299 56.5613 48.3013 56.785C47.8398 57.2412 47.2177 57.498 46.5688 57.5H40.9175C40.2686 57.498 39.6464 57.2412 39.185 56.785C38.7321 56.327 38.4756 55.7104 38.47 55.0662V49.03H32.4475C31.7984 49.03 31.1759 48.7721 30.7169 48.3131C30.2579 47.8541 30 47.2316 30 46.5825V40.9312C30 40.2821 30.2579 39.6596 30.7169 39.2006C31.1759 38.7416 31.7984 38.4838 32.4475 38.4838H38.47V32.4475C38.4737 31.9632 38.6193 31.4907 38.8889 31.0884C39.1585 30.6861 39.5401 30.3718 39.9866 30.1843C40.2821 30.0634 40.5982 30.0008 40.9175 30H46.5C47.1489 30.002 47.7711 30.2588 48.2325 30.715C48.4603 30.9422 48.6407 31.2123 48.7635 31.5097C48.8862 31.807 48.9487 32.1258 48.9475 32.4475V38.4838H54.9837C55.6327 38.4879 56.2542 38.745 56.7163 39.1987C56.9559 39.4206 57.1487 39.6882 57.2833 39.9858C57.4179 40.2833 57.4916 40.6048 57.5 40.9312Z" fill="#720021"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip-network"><rect width="60" height="60" fill="white"/></clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="textWrapper">
+                  <h3 class="cardTitle">협력네트워크</h3>
+                  <p class="cardDesc">온라인으로 협력병의원
+체결신청이 가능합니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+  </script>
+</body>
+</html>

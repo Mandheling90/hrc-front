@@ -38,17 +38,17 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 30px;
-  color: #000000;
-  background-color: $color-white;
+  color: var(--color-darken);
+  background-color: var(--color-white);
   border: none;
-  outline: 2px solid $gray-4;
+  outline: 2px solid var(--color-border);
   outline-offset: -2px;
   border-radius: 150px;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: $gray-2;
+    background-color: var(--color-bg-hover);
   }
 
   @include tablet {
@@ -66,8 +66,8 @@
 }
 
 .section {
-  background-color: #fff;
-  border: 1px solid $gray-9; // Figma 디자인에 맞게 #8C8C8C로 수정
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border); // Figma 디자인에 맞게 #8C8C8C로 수정
   border-radius: 20px;
   padding: 40px;
   margin-bottom: 24px;
@@ -167,7 +167,7 @@
   font-weight: 400;
   line-height: 1.5em;
   letter-spacing: -0.56px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 
   @include mobile {
     font-size: 13px;

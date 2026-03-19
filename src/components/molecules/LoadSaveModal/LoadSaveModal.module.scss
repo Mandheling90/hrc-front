@@ -17,7 +17,7 @@
 
 .modal {
   background-color: $color-white;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0px 0px 39px 0px rgba(0, 0, 0, 0.35);
   padding: $spacing-10; // 40px
@@ -36,13 +36,13 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: $spacing-5; // 20px
-  border-bottom: 2px solid #bbb;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .title {
   font-size: $font-size-3xl; // 32px
   font-weight: $font-weight-semibold; // 600
-  color: #000000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -1.28px;
   margin: 0;
@@ -62,7 +62,7 @@
   flex-shrink: 0;
 
   &:hover {
-    background-color: $gray-2;
+    background-color: var(--color-bg-hover);
   }
 
   &:active {

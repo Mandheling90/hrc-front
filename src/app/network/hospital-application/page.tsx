@@ -338,7 +338,7 @@ export default function HospitalApplicationPage() {
                     </Button>
                     <Button variant='outline' size='small' pill onClick={handleLoadButtonClick}>
                       임시저장 불러오기
-                      <SaveIcon width={16} height={16} stroke='#000' strokeWidth={1.25} />
+                      <SaveIcon width={16} height={16} stroke='currentColor' strokeWidth={1.25} />
                     </Button>
                   </div>
                 )}

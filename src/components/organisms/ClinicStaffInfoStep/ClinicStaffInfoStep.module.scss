@@ -65,7 +65,7 @@
 .subSectionTitle {
   font-size: $font-size-2xl; // 24px
   font-weight: $font-weight-semibold; // 600
-  color: #000000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.96px;
   margin: 0;

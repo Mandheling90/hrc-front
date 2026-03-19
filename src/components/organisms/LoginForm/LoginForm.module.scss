@@ -15,7 +15,7 @@
 .title {
   font-size: 48px;
   font-weight: 600;
-  color: #000;
+  color: var(--color-darken);
   text-align: center;
   line-height: 72px;
   margin-bottom: 24px;
@@ -35,7 +35,7 @@
 
 .description {
   font-size: 20px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   text-align: center;
   margin: 0 auto 80px;
   line-height: 30px;
@@ -111,14 +111,14 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.3s;
 
   &:hover {
-    color: $color-primary;
+    color: var(--color-primary);
   }
 
   svg {
@@ -177,17 +177,17 @@
 }
 
 .link {
-  color: $gray-11;
+  color: var(--color-text-secondary);
   text-decoration: none;
   transition: color 0.3s;
 
   &:hover {
-    color: $color-primary;
+    color: var(--color-primary);
   }
 }
 
 .separator {
   width: 1px;
   height: 11px;
-  background-color: $gray-11;
+  background-color: var(--color-text-secondary);
 }

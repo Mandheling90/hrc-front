@@ -26,7 +26,7 @@ export const CareSystemStep = forwardRef<StepRef<CareSystemStepData>, CareSystem
     const [jointNursingCare, setJointNursingCare] = useState(defaultValues?.jointNursingCare ?? '유')
 
     // 격리병상 운영 현황 상태
-    const [isolationWardOperation, setIsolationWardOperation] = useState(defaultValues?.isolationWardOperation ?? '유')
+    const [isolationWardOperation, setIsolationWardOperation] = useState(defaultValues?.isolationWardOperation ?? '무')
     const [singleRoom, setSingleRoom] = useState(defaultValues?.singleRoom ?? '')
     const [doubleRoom, setDoubleRoom] = useState(defaultValues?.doubleRoom ?? '')
     const [tripleRoom, setTripleRoom] = useState(defaultValues?.tripleRoom ?? '')
@@ -76,6 +76,36 @@ export const CareSystemStep = forwardRef<StepRef<CareSystemStepData>, CareSystem
         rehabilitationDuringIsolation
       }),
       validate: () => {
+        if (isolationWardOperation === '유') {
+          const missing: string[] = []
+
+          // 격리병상 운영 현황: 최소 1개 입력
+          if (!singleRoom.trim() && !doubleRoom.trim() && !tripleRoom.trim()) {
+            missing.push('격리병상 운영 현황 (1인실/2인실/3인실 중 최소 1개)')
+          }
+
+          // 격리유형: 최소 1개 체크
+          const hasIsolationType = isolationType.vre || isolationType.cre || isolationType.cpe || isolationType.tb || isolationType.other
+          if (!hasIsolationType) {
+            missing.push('격리유형')
+          }
+
+          // 격리 중 간병: 최소 1개 체크
+          const hasNursing = nursingDuringIsolation.joint || nursingDuringIsolation.individual || nursingDuringIsolation.guardian
+          if (!hasNursing) {
+            missing.push('격리 중 간병')
+          }
+
+          // 격리 중 재활: 최소 1개 체크
+          const hasRehab = rehabilitationDuringIsolation.no || rehabilitationDuringIsolation.bedside || rehabilitationDuringIsolation.isolationWard
+          if (!hasRehab) {
+            missing.push('격리 중 재활')
+          }
+
+          if (missing.length > 0) {
+            return `격리병상 운영 현황이 '유'인 경우 다음 항목을 입력해주세요:\n${missing.join(', ')}`
+          }
+        }
         return null
       }
     }))

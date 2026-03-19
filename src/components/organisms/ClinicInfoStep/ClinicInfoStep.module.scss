@@ -51,8 +51,8 @@
 
 // 주소 입력 필드 (비활성화)
 .addressInput {
-  background-color: $gray-4;
-  border-color: $gray-9;
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border);
 }
 
 // 상세주소 입력 필드

@@ -16,8 +16,8 @@
 }
 
 .modal {
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0px 0px 39px 0px rgba(0, 0, 0, 0.35);
   padding: 40px;
@@ -46,7 +46,7 @@
   justify-content: space-between;
   width: 100%;
   padding-bottom: 20px;
-  border-bottom: 1px solid $gray-8;
+  border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
 }
 
@@ -55,7 +55,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5em;
   letter-spacing: -1.28px;
-  color: $color-darken;
+  color: var(--color-darken);
   margin: 0;
 
   @include mobile {
@@ -134,7 +134,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5em;
   letter-spacing: -0.8px;
-  color: $color-darken;
+  color: var(--color-darken);
 
   @include mobile {
     font-size: 18px;
@@ -174,7 +174,7 @@
   padding: 0 20px;
   height: 43px;
   min-width: auto;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -187,7 +187,7 @@
     font-weight: $font-weight-semibold;
     line-height: 1.5em;
     letter-spacing: -0.8px;
-    color: $color-white;
+    color: #fff;
     white-space: nowrap;
 
     @include mobile {
@@ -255,12 +255,12 @@
     }
 
     &::-webkit-scrollbar-track {
-      background: $gray-4;
+      background: var(--color-bg-hover);
       border-radius: 40px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: $color-primary;
+      background: var(--color-primary);
       border-radius: 60px;
     }
   }
@@ -280,8 +280,8 @@
 .emptyResultHeader {
   display: flex;
   align-items: center;
-  background-color: $gray-2;
-  border: 1px solid $gray-9;
+  background-color: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   gap: 16px;
@@ -296,7 +296,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5em;
   letter-spacing: -0.8px;
-  color: $color-darken;
+  color: var(--color-darken);
   text-align: center;
   display: flex;
   align-items: center;
@@ -319,7 +319,7 @@
     bottom: 0;
     transform: translateX(-50%);
     width: 1px;
-    background-color: $gray-11;
+    background-color: var(--color-text-secondary);
   }
 }
 
@@ -327,8 +327,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $gray-4;
-  border: 1px solid $gray-9;
+  background-color: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 20px;
   width: 100%;
@@ -338,7 +338,7 @@
     font-weight: $font-weight-semibold;
     line-height: 1.5em;
     letter-spacing: -0.8px;
-    color: $gray-11;
+    color: var(--color-text-secondary);
     text-align: center;
   }
 
@@ -355,15 +355,15 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: $gray-1;
+    background-color: var(--color-bg-hover);
   }
 }
 
@@ -372,7 +372,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5em;
   letter-spacing: -0.72px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 }
 
 .mobileAddress {
@@ -380,7 +380,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5em;
   letter-spacing: -0.64px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 }
 
 // ============================================

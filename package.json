@@ -10,6 +10,7 @@
     "prebuild": "graphql-codegen --config codegen.ts",
     "build": "next build",
     "start": "next start",
+    "prd": "npm run build && npm run start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",

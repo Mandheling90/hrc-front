@@ -127,6 +127,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
             {/* 실무자명 */}
             <FormField
               label='실무자명'
+              required
               id='staffName'
               name='staffName'
               type='text'

@@ -68,8 +68,8 @@
 .formSection {
   width: 100%;
   max-width: 630px; // Figma 기준 630px
-  background-color: $color-white;
-  border: 1px solid $gray-9; // Figma 기준 #8C8C8C
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border); // Figma 기준 #8C8C8C
   border-radius: 20px; // Figma 기준 20px
   padding: $spacing-10; // 40px
 }
@@ -90,7 +90,7 @@
 .formTitle {
   font-size: 32px; // Figma 기준 32px
   font-weight: $font-weight-semibold; // 600
-  color: $color-primary; // #9F1836
+  color: var(--color-primary); // #9F1836
   line-height: 48px; // Figma 기준 48px
   letter-spacing: -1.28px; // -4%
 }
@@ -98,7 +98,7 @@
 .formSubtitle {
   font-size: $font-size-lg; // 18px
   font-weight: $font-weight-normal; // 400
-  color: $gray-11; // Figma 기준 #636363
+  color: var(--color-text-secondary); // Figma 기준 #636363
   line-height: 27px; // Figma 기준 27px
   letter-spacing: -0.72px; // -4%
 }
@@ -109,23 +109,23 @@
   gap: 2px;
   font-size: 32px; // Figma 기준 32px
   font-weight: $font-weight-semibold; // 600
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 48px; // Figma 기준 48px
   letter-spacing: -1.28px; // -4%
 }
 
 .stepNumber {
-  color: $color-primary;
+  color: var(--color-primary);
 }
 
 .stepSeparator,
 .stepTotal {
-  color: $gray-12;
+  color: var(--color-darken);
 }
 
 .formDivider {
   height: 2px;
-  background-color: $gray-8; // Figma 기준 #BBBBBB
+  background-color: var(--color-border); // Figma 기준 #BBBBBB
   margin-bottom: $spacing-8; // 32px
 }
 
@@ -167,7 +167,7 @@
   align-items: center;
   gap: 8px;
   font-size: $font-size-lg; // 18px
-  color: $gray-10;
+  color: var(--color-text-tertiary);
   letter-spacing: -0.72px;
   line-height: 1.5;
   margin-top: 4px;
@@ -204,8 +204,8 @@
 }
 
 .addressInput {
-  background-color: $gray-3;
-  border-color: $gray-8;
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border);
 }
 
 .detailAddressInput {
