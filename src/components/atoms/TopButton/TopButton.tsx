@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react'
 import { ChevronUpIcon } from '@/components/icons/ChevronUpIcon'
+import { ThemeToggle } from '@/components/atoms/ThemeToggle/ThemeToggle'
 import styles from './TopButton.module.scss'
 
 export const TopButton: React.FC = () => {
@@ -21,13 +22,16 @@ export const TopButton: React.FC = () => {
   }
 
   return (
-    <button
-      className={`${styles.topButton} ${visible ? styles.visible : ''}`}
-      onClick={scrollToTop}
-      aria-label="맨 위로 이동"
-      type="button"
-    >
-      <ChevronUpIcon width={20} height={20} stroke="#636363" />
-    </button>
+    <div className={`${styles.floatingButtons} ${visible ? styles.visible : ''}`}>
+      {process.env.NODE_ENV === 'development' && <ThemeToggle />}
+      <button
+        className={styles.topButton}
+        onClick={scrollToTop}
+        aria-label="맨 위로 이동"
+        type="button"
+      >
+        <ChevronUpIcon width={20} height={20} stroke="#636363" />
+      </button>
+    </div>
   )
 }
