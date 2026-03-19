@@ -15,8 +15,8 @@
 }
 
 .headerBox {
-  background-color: #fdf9f4;
-  border: 1px solid $gray-8;
+  background-color: var(--color-accent-bg);
+  border: 1px solid var(--gray-8);
   border-radius: 10px;
   padding: 30px;
   display: flex;
@@ -34,7 +34,7 @@
 .headerDivider {
   width: 1px;
   height: 18px;
-  background-color: $gray-8;
+  background-color: var(--gray-8);
   flex-shrink: 0;
 
   @include mobile {
@@ -51,7 +51,7 @@
   margin: 0;
   font-size: 24px;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   letter-spacing: -0.96px;
   line-height: 36px;
   word-break: break-word;
@@ -83,7 +83,7 @@
 .postDate {
   font-size: 24px;
   font-weight: $font-weight-normal;
-  color: $gray-11;
+  color: var(--gray-11);
   letter-spacing: -0.96px;
   line-height: 36px;
 
@@ -109,8 +109,8 @@
 }
 
 .attachmentBox {
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-9);
   border-radius: 5px;
   padding: 20px;
   display: flex;
@@ -121,13 +121,13 @@
   @include mobile {
     padding: 20px;
     gap: 24px;
-    border-color: $gray-6;
+    border-color: var(--gray-6);
   }
 }
 
 .attachmentIcon {
   flex-shrink: 0;
-  color: $gray-11;
+  color: var(--gray-11);
 
   @include mobile {
     display: none;
@@ -149,7 +149,7 @@
 .attachmentName {
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  color: $gray-11;
+  color: var(--gray-11);
   letter-spacing: -0.8px;
   line-height: 30px;
   white-space: nowrap;
@@ -203,7 +203,7 @@
 .contentBody {
   font-size: $font-size-xl;
   font-weight: $font-weight-normal;
-  color: #555555;
+  color: var(--color-text-secondary);
   letter-spacing: -0.8px;
   line-height: 30px;
 
@@ -241,19 +241,19 @@
 .listButton {
   width: 260px;
   padding: 15px 30px;
-  background-color: $color-white;
-  border: 2px solid $gray-4;
+  background-color: var(--color-white);
+  border: 2px solid var(--gray-4);
   border-radius: 5px;
   font-size: 24px;
   font-weight: $font-weight-semibold;
   line-height: 36px;
-  color: $color-darken;
+  color: var(--color-darken);
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
 
   &:hover {
-    background-color: $gray-2;
-    border-color: $gray-8;
+    background-color: var(--gray-2);
+    border-color: var(--gray-8);
   }
 }
 

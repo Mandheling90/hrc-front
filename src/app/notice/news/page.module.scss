@@ -45,10 +45,10 @@
   align-items: center;
   width: 400px;
   height: 48px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   padding: 10px 16px 10px 0px;
   gap: $spacing-4;
-  border-bottom: 1px solid $gray-10;
+  border-bottom: 1px solid var(--gray-10);
   flex: 1;
 
   @include tablet {
@@ -82,7 +82,7 @@
     padding: 0;
     height: auto;
     font-size: $font-size-xl;
-    color: $gray-12;
+    color: var(--gray-12);
     letter-spacing: -0.8px;
     background-color: transparent;
     line-height: $line-height-normal;
@@ -93,7 +93,7 @@
     }
 
     &::placeholder {
-      color: $gray-9;
+      color: var(--gray-9);
     }
   }
 }
@@ -109,7 +109,7 @@
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
-  color: $gray-11;
+  color: var(--gray-11);
 
   &:hover {
     opacity: 0.7;
@@ -142,7 +142,7 @@
   align-items: center;
   gap: $spacing-6;
   padding: $spacing-4 $spacing-4;
-  border-bottom: 1px solid $gray-3;
+  border-bottom: 1px solid var(--gray-3);
 
   > :first-child {
     flex-shrink: 0;
@@ -173,7 +173,7 @@
   width: 58px;
   padding: 4px 12px;
   background-color: $color-primary;
-  color: $color-white;
+  color: var(--color-white);
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
   line-height: 30px;
@@ -187,7 +187,7 @@
   font-weight: $font-weight-normal;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $gray-11; // #636363
+  color: var(--gray-11); // #636363
 }
 
 // 제목 텍스트 스타일
@@ -196,7 +196,7 @@
   font-weight: $font-weight-semibold;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: var(--notice-title-color, $color-darken); // 기본: black, 호버 시 CSS 변수로 변경
+  color: var(--notice-title-color, var(--color-darken)); // 기본: black, 호버 시 CSS 변수로 변경
   transition: color 0.2s;
   // 텍스트 오버플로우 처리
   display: block;
@@ -212,7 +212,7 @@
   font-weight: $font-weight-normal;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $gray-11; // #636363
+  color: var(--gray-11); // #636363
 }
 
 .paginationWrapper {
@@ -236,7 +236,7 @@
 }
 
 .noticeCard {
-  background-color: #f8efe2 !important;
+  background-color: var(--color-accent-bg) !important;
 }
 
 .cardTitleWrapper {
@@ -250,7 +250,7 @@
 .cardTitle {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   letter-spacing: -0.72px;
   line-height: $line-height-normal;
   word-break: break-word;
@@ -261,7 +261,7 @@
 .cardDate {
   font-size: $font-size-base;
   font-weight: $font-weight-normal;
-  color: $gray-11;
+  color: var(--gray-11);
   letter-spacing: -0.56px;
   text-align: right;
 }

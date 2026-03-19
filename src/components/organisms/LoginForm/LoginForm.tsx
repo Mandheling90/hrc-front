@@ -6,6 +6,7 @@ import { EyeIcon } from '@/components/icons/EyeIcon'
 import { useLogin } from '@/hooks/useAuth'
 import Link from '@/components/atoms/HospitalLink'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import React, { useState } from 'react'
 import styles from './LoginForm.module.scss'
 
@@ -40,6 +41,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     password: ''
   })
   const [errorMessage, setErrorMessage] = useState('')
+  const [showChangePwModal, setShowChangePwModal] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,7 +56,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     try {
       const result = await login({ userId, password: formData.password })
       if (result) {
-        router.push(redirectTo)
+        if (result.mustChangePw) {
+          setShowChangePwModal(true)
+        } else {
+          router.push(redirectTo)
+        }
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : '로그인에 실패했습니다.'
@@ -148,6 +154,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </Link>
         </div>
       )}
+
+      <AlertModal
+        isOpen={showChangePwModal}
+        message='임시비밀번호로 로그인하셨습니다. 비밀번호를 변경해주세요.'
+        closeButtonText='확인'
+        onClose={() => {
+          setShowChangePwModal(false)
+          router.push('/mypage/change-password')
+        }}
+      />
     </div>
   )
 }

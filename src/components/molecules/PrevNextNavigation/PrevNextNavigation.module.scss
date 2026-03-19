@@ -16,11 +16,11 @@
   display: flex;
   align-items: center;
   gap: 16px; // Figma: gap 16px
-  background-color: $color-white;
-  border-bottom: 1px solid $gray-8; // Figma: #BBBBBB
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--gray-8); // Figma: #BBBBBB
 
   &:first-child {
-    border-top: 1px solid $gray-8; // Figma: #BBBBBB
+    border-top: 1px solid var(--gray-8); // Figma: #BBBBBB
   }
 
   @include mobile {
@@ -34,7 +34,7 @@
   align-items: center;
   gap: 8px;
   padding: 15px 20px; // Figma: padding
-  background-color: $gray-2; // Figma: #F9F9F9
+  background-color: var(--gray-2); // Figma: #F9F9F9
   flex-shrink: 0;
 }
 
@@ -48,7 +48,7 @@
 .navLabel {
   font-size: $font-size-xl; // Figma: 20px
   font-weight: $font-weight-normal; // Figma: 400
-  color: $color-darken; // Figma: black (for prev), gray-11 (for next disabled)
+  color: var(--color-darken); // Figma: black (for prev), gray-11 (for next disabled)
   line-height: 30px;
   letter-spacing: -0.8px;
   flex-shrink: 0;
@@ -68,7 +68,7 @@
 
 // 다음 글 비활성화 상태
 .navLabelDisabled {
-  color: $gray-11; // Figma: #636363
+  color: var(--gray-11); // Figma: #636363
 }
 
 .navContent {
@@ -80,7 +80,7 @@
 .navLink {
   font-size: $font-size-xl; // Figma: 20px
   font-weight: $font-weight-normal; // Figma: 400
-  color: $color-darken; // Figma: black
+  color: var(--color-darken); // Figma: black
   line-height: 30px;
   letter-spacing: -0.8px;
   background: none;
@@ -113,7 +113,7 @@
 .navEmpty {
   font-size: $font-size-xl; // Figma: 20px
   font-weight: $font-weight-normal; // Figma: 400
-  color: $gray-11; // Figma: #636363
+  color: var(--gray-11); // Figma: #636363
   line-height: 30px;
   letter-spacing: -0.8px;
   text-align: left;

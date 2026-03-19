@@ -36,7 +36,7 @@
   width: 58px;
   padding: 4px 12px;
   background-color: $color-primary;
-  color: $color-white;
+  color: var(--color-white);
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
   line-height: 30px;
@@ -49,7 +49,7 @@
   font-weight: $font-weight-normal;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--gray-11);
 }
 
 .titleText {
@@ -57,7 +57,7 @@
   font-weight: $font-weight-semibold;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: var(--notice-title-color, $color-darken);
+  color: var(--notice-title-color, var(--color-darken));
   transition: color 0.2s;
   display: block;
   width: 100%;
@@ -71,7 +71,7 @@
   font-weight: $font-weight-normal;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--gray-11);
 }
 
 // 모바일 카드
@@ -90,7 +90,7 @@
 }
 
 .noticeCard {
-  background-color: #f8efe2 !important;
+  background-color: var(--color-accent-bg) !important;
 }
 
 .cardTitleWrapper {
@@ -104,7 +104,7 @@
 .cardTitle {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   letter-spacing: -0.72px;
   line-height: $line-height-normal;
   word-break: break-word;
@@ -115,7 +115,7 @@
 .cardDate {
   font-size: $font-size-base;
   font-weight: $font-weight-normal;
-  color: $gray-11;
+  color: var(--gray-11);
   letter-spacing: -0.56px;
   text-align: right;
 }
@@ -162,7 +162,7 @@
 
   &:hover .thumbnailTitle,
   &:focus .thumbnailTitle {
-    color: black;
+    color: var(--color-darken);
   }
 }
 
@@ -170,9 +170,9 @@
   width: 100%;
   height: 450px;
   border-radius: 10px;
-  border: 1px solid $gray-5;
+  border: 1px solid var(--gray-5);
   overflow: hidden;
-  background-color: $gray-3;
+  background-color: var(--gray-3);
   display: flex;
   align-items: center;
 
@@ -196,7 +196,7 @@
 .thumbnailPlaceholder {
   width: 100%;
   height: 100%;
-  background-color: $gray-3;
+  background-color: var(--gray-3);
 }
 
 .thumbnailContent {
@@ -209,7 +209,7 @@
 .thumbnailTitle {
   font-size: $font-size-xl;
   font-weight: $font-weight-semibold;
-  color: $gray-11;
+  color: var(--gray-11);
   letter-spacing: -0.8px;
   line-height: $line-height-normal;
   @include text-ellipsis;
@@ -227,7 +227,7 @@
 .thumbnailDate {
   font-size: $font-size-lg;
   font-weight: $font-weight-normal;
-  color: $gray-11;
+  color: var(--gray-11);
   letter-spacing: -0.72px;
   line-height: $line-height-normal;
 }
@@ -243,6 +243,6 @@
   grid-column: 1 / -1;
   text-align: center;
   padding: $spacing-16 0;
-  color: $gray-10;
+  color: var(--gray-10);
   font-size: $font-size-base;
 }

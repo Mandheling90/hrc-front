@@ -16,14 +16,14 @@
 // 지도 섹션
 .mapSection {
   margin-bottom: $spacing-16;
-  border: 1px solid $gray-5; // 1px solid light gray border
+  border: 1px solid var(--gray-5); // 1px solid light gray border
   border-radius: $radius-lg;
 }
 
 // 교통수단 섹션
 .transportSection {
   margin-bottom: $spacing-8;
-  border: 1px solid $gray-6;
+  border: 1px solid var(--gray-6);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -34,13 +34,13 @@
   align-items: center;
   justify-content: space-between;
   padding: $spacing-5 $spacing-6;
-  background-color: $color-white;
+  background-color: var(--color-white);
   border: none;
   cursor: pointer;
   transition: background-color $transition-base;
 
   &:hover {
-    background-color: $gray-1;
+    background-color: var(--gray-1);
   }
 
   @include mobile {
@@ -67,8 +67,8 @@
 
 .transportContent {
   padding: $spacing-6;
-  background-color: $gray-1;
-  border-top: 1px solid $gray-6;
+  background-color: var(--gray-1);
+  border-top: 1px solid var(--gray-6);
 
   @include mobile {
     padding: $spacing-4;
@@ -78,8 +78,8 @@
 // 버스 섹션의 transportContent는 흰색 배경
 .busContent {
   padding: $spacing-6;
-  background-color: $color-white;
-  border-top: 1px solid $gray-6;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--gray-6);
 
   @include mobile {
     padding: $spacing-4;
@@ -131,7 +131,7 @@
   gap: 10px;
   padding: 5px 30px;
   background-color: #ed6c00;
-  color: $color-white;
+  color: var(--color-white);
   font-size: 24px;
   font-family: $font-family-base;
   font-weight: $font-weight-semibold;
@@ -148,7 +148,7 @@
   font-size: 24px;
   font-family: $font-family-base;
   font-weight: $font-weight-semibold;
-  color: $color-darken; // #000000
+  color: var(--color-darken); // #000000
   line-height: $line-height-normal;
 
   @include mobile {
@@ -164,7 +164,7 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  background-color: $color-white;
+  background-color: var(--color-white);
   border: none;
   border-radius: 0;
   overflow: hidden;
@@ -179,8 +179,8 @@
   width: 100%;
   height: 330px;
   align-self: stretch;
-  background-color: $color-white;
-  border: 1px solid $gray-4;
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-4);
 
   @include tablet {
     height: 300px;
@@ -194,7 +194,7 @@
 .subwayMapImg {
   object-fit: cover;
   object-position: center;
-  background-color: $color-white;
+  background-color: var(--color-white);
 }
 
 .subwayMapFooter {
@@ -243,7 +243,7 @@
 }
 
 .subwaySearchButtonText {
-  color: $color-white;
+  color: var(--color-white);
   font-size: 18px;
   font-family: $font-family-base;
   font-weight: $font-weight-semibold;
@@ -272,7 +272,7 @@
 .subwayMapSource {
   font-size: 18px;
   font-family: $font-family-base;
-  color: $gray-11; // #636363
+  color: var(--gray-11); // #636363
   margin: 0;
   white-space: nowrap;
 
@@ -306,7 +306,7 @@
 .busCategoryTitle {
   font-size: $font-size-xl; // 24px
   font-weight: $font-weight-semibold; // 600
-  color: $gray-12;
+  color: var(--gray-12);
   margin: 0;
   line-height: $line-height-normal;
   letter-spacing: -0.96px;
@@ -317,7 +317,7 @@
   flex-wrap: wrap;
   gap: $spacing-2; // 8px
   padding: $spacing-5; // 20px
-  border: 1px solid $gray-9; // #8c8c8c
+  border: 1px solid var(--gray-9); // #8c8c8c
   border-radius: $radius-md; // 8px
 
   @include mobile {
@@ -398,8 +398,8 @@
   width: 260px;
   flex-shrink: 0;
   border-radius: 150px;
-  background-color: $color-white;
-  color: var(--Color-Black-&-White-Black, black);
+  background-color: var(--color-white);
+  color: var(--color-darken);
   font-size: 21px;
   font-family: Pretendard;
   font-weight: 600;
@@ -407,7 +407,7 @@
   word-wrap: break-word;
   cursor: pointer;
   transition: all $transition-base;
-  border: 2px solid $gray-6;
+  border: 2px solid var(--gray-6);
   overflow: visible;
   box-sizing: border-box;
 
@@ -426,7 +426,7 @@
   }
 
   &:hover {
-    border-color: $gray-6;
+    border-color: var(--gray-6);
   }
 
   &.carDirectionButtonActive {
@@ -435,7 +435,7 @@
     justify-content: center;
     align-items: center;
     gap: 16px;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     padding: 15px 30px;
     border-radius: 150px;
     border-width: 4px;
@@ -450,7 +450,7 @@
     height: 47px;
     padding: 10px 20px;
     border-width: 2px;
-    border-color: $gray-6;
+    border-color: var(--gray-6);
 
     span {
       font-size: 20px;
@@ -513,7 +513,7 @@
   left: 0;
   width: 1430px;
   height: 0;
-  border-top: 1px dashed $gray-8; // #BBBBBB
+  border-top: 1px dashed var(--gray-8); // #BBBBBB
 }
 
 .shuttleRouteIcons {
@@ -538,7 +538,7 @@
   width: 32px;
   height: 32px;
   position: relative;
-  background: $color-white;
+  background: var(--color-white);
   border-radius: 40px;
   border: 8px solid $color-primary; // #9F1836
 }
@@ -558,13 +558,13 @@
 }
 
 .shuttleRouteLabelMain {
-  color: var(--Color-Black-&-White-Black, black);
+  color: var(--color-darken);
   font-weight: 600;
   line-height: 30px;
 }
 
 .shuttleRouteLabelSub {
-  color: $gray-11; // #636363
+  color: var(--gray-11); // #636363
   font-weight: 400;
   line-height: 30px;
 }
@@ -573,7 +573,7 @@
 .shuttleRouteItem:first-child .shuttleRouteLabel,
 .shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
 .shuttleRouteItem:last-child .shuttleRouteLabel {
-  color: var(--Color-Black-&-White-Black, black);
+  color: var(--color-darken);
   font-weight: 600;
   line-height: 30px;
   word-wrap: break-word;
@@ -607,7 +607,7 @@
   }
 
   .shuttleRouteLabelMain {
-    color: #111111;
+    color: var(--color-darken);
     font-size: 18px;
     line-height: 27px;
   }
@@ -621,7 +621,7 @@
   .shuttleRouteItem:first-child .shuttleRouteLabel,
   .shuttleRouteItem:nth-child(3) .shuttleRouteLabel,
   .shuttleRouteItem:last-child .shuttleRouteLabel {
-    color: #111111;
+    color: var(--color-darken);
     font-size: 18px;
     line-height: 27px;
   }
@@ -678,13 +678,13 @@
 .shuttleBoardingName {
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   margin: 0;
 }
 
 .shuttleBoardingDescription {
   font-size: $font-size-xl; // 20px
-  color: $gray-11;
+  color: var(--gray-11);
   margin: 0;
   line-height: $line-height-normal;
 }
@@ -712,17 +712,17 @@
 
 .shuttleBoardingNoticeChipNotice {
   background-color: $color-primary;
-  color: $color-white;
+  color: var(--color-white);
 }
 
 .shuttleBoardingNoticeChipInfo {
   background-color: $color-secondary;
-  color: $gray-12;
+  color: var(--gray-12);
 }
 
 .shuttleBoardingNoticeText {
   font-size: $font-size-xl; // 20px
-  color: $gray-11;
+  color: var(--gray-11);
   flex: 1;
 }
 
@@ -871,7 +871,7 @@
 }
 
 .subwaySearchButtonText {
-  color: $color-white;
+  color: var(--color-white);
   font-size: $font-size-xl; // 20px
   font-family: Pretendard;
   font-weight: $font-weight-semibold;
@@ -895,7 +895,7 @@
 .subwayRoutesDivider {
   width: 1px;
   align-self: stretch;
-  border-left: 1px solid $gray-8;
+  border-left: 1px solid var(--gray-8);
   flex-shrink: 0;
 }
 
@@ -926,7 +926,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: $color-white;
+  background: var(--color-white);
   border: 4px solid;
   border-radius: 100px;
   width: 60px;
@@ -951,7 +951,7 @@
 }
 
 .subwayRouteStepName {
-  color: $gray-12;
+  color: var(--gray-12);
   font-size: $font-size-lg; // 18px
   font-family: Pretendard;
   font-weight: $font-weight-normal;
@@ -1075,7 +1075,7 @@
   gap: $spacing-2;
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   margin: 0 0 $spacing-4;
 
   &::before {
@@ -1125,24 +1125,24 @@
   display: flex;
   flex-direction: column;
   border-top: 3px solid $color-primary;
-  border-left: 1px solid $gray-8;
-  border-right: 1px solid $gray-8;
-  border-bottom: 1px solid $gray-8;
+  border-left: 1px solid var(--gray-8);
+  border-right: 1px solid var(--gray-8);
+  border-bottom: 1px solid var(--gray-8);
 }
 
 .airportBusTableRow {
   display: flex;
-  border-top: 1px solid $gray-8;
+  border-top: 1px solid var(--gray-8);
 }
 
 .airportBusTableHeader {
   width: 360px;
   padding: $spacing-5 $spacing-10;
-  background-color: $gray-2;
-  border-right: 1px solid $gray-8;
+  background-color: var(--gray-2);
+  border-right: 1px solid var(--gray-8);
   font-size: $font-size-base;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   text-align: center;
   flex-shrink: 0;
   display: flex;
@@ -1155,7 +1155,7 @@
   padding: $spacing-5 $spacing-10;
   font-size: $font-size-base;
   font-weight: $font-weight-normal;
-  color: $gray-12;
+  color: var(--gray-12);
   display: flex;
   flex-direction: column;
   justify-content: center;

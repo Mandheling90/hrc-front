@@ -11,7 +11,7 @@
 .title {
   font-size: 40px;
   font-weight: 700;
-  color: #000;
+  color: var(--color-darken);
   text-align: center;
   margin-bottom: 64px;
   letter-spacing: -1.6px;
@@ -55,7 +55,7 @@
   align-items: center;
   gap: 32px;
   overflow: hidden;
-  border: 2px solid $gray-9;
+  border: 2px solid var(--gray-9);
   cursor: pointer;
   transition: border-color 0.2s;
 
@@ -77,7 +77,7 @@
 }
 
 .cardSecondary {
-  border-color: $gray-9;
+  border-color: var(--gray-9);
 }
 
 .cardIcon {
@@ -88,6 +88,10 @@
   justify-content: center;
   background-color: #fcebeb;
   border-radius: 50%;
+
+  [data-theme='dark'] & {
+    background-color: var(--color-accent-bg);
+  }
 
   svg {
     width: 60px;
@@ -129,7 +133,7 @@
 .cardTitle {
   font-size: 24px;
   font-weight: 600;
-  color: #000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.96px;
   margin: 0;
@@ -144,7 +148,7 @@
 .cardDescription {
   font-size: 18px;
   font-weight: 400;
-  color: $gray-11;
+  color: var(--gray-11);
   line-height: 1.5;
   letter-spacing: -0.72px;
   margin: 0;
@@ -163,9 +167,9 @@
   font-weight: 600;
   letter-spacing: -0.96px;
   border-radius: 5px;
-  border: 2px solid $gray-4 !important;
-  background-color: #fff !important;
-  color: #000 !important;
+  border: 2px solid var(--gray-4) !important;
+  background-color: var(--color-white) !important;
+  color: var(--color-darken) !important;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 
@@ -199,7 +203,7 @@
 .inputLabel {
   font-size: 20px;
   font-weight: 600;
-  color: #000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.8px;
 
@@ -212,20 +216,20 @@
 .inputField {
   width: 100%;
   padding: 8px 10px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--gray-9);
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--color-white);
   font-family: $font-family-base;
   font-size: 18px;
   font-weight: 400;
-  color: #000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.8px;
   height: 43px;
   box-sizing: border-box;
 
   &::placeholder {
-    color: $gray-9;
+    color: var(--gray-9);
     font-size: 18px;
     letter-spacing: -0.8px;
   }
@@ -264,7 +268,7 @@
   align-items: center;
   gap: 40px;
   padding: 60px 0;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--gray-9);
   border-radius: 10px;
 
   @include mobile {
@@ -283,7 +287,7 @@
 .resultLabel {
   font-size: 20px;
   font-weight: 400;
-  color: $gray-11;
+  color: var(--gray-11);
   line-height: 1.5;
   letter-spacing: -0.04em;
   margin: 0;

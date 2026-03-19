@@ -23,7 +23,7 @@ export const PrevNextNavigation: React.FC<PrevNextNavigationProps> = ({ prev, ne
       {/* 이전 글 */}
       <div className={styles.navItem}>
         <div className={styles.navLabelSection}>
-          <ChevronUpIcon width={24} height={24} stroke={hasPrev ? '#000000' : '#636363'} className={styles.navIcon} />
+          <ChevronUpIcon width={24} height={24} stroke={hasPrev ? 'var(--color-darken)' : 'var(--gray-11)'} className={styles.navIcon} />
           <span className={`${styles.navLabel} ${!hasPrev ? styles.navLabelDisabled : ''}`}>이전 글</span>
         </div>
         <div className={styles.navContent}>
@@ -40,7 +40,7 @@ export const PrevNextNavigation: React.FC<PrevNextNavigationProps> = ({ prev, ne
       {/* 다음 글 */}
       <div className={styles.navItem}>
         <div className={styles.navLabelSection}>
-          <ChevronDownIcon width={24} height={24} fill={hasNext ? '#000000' : '#636363'} className={styles.navIcon} />
+          <ChevronDownIcon width={24} height={24} fill={hasNext ? 'var(--color-darken)' : 'var(--gray-11)'} className={styles.navIcon} />
           <span className={`${styles.navLabel} ${!hasNext ? styles.navLabelDisabled : ''}`}>다음 글</span>
         </div>
         <div className={styles.navContent}>
