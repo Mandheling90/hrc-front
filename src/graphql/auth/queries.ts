@@ -48,38 +48,21 @@ export const MY_PROFILE_QUERY = gql`
 export const ME_QUERY = gql`
   query Me {
     me {
-      id
-      userId
       email
       userName
-      userType
-      hospitalCode
-      hospitalId
       phone
-      status
-      mustChangePw
       profile {
         birthDate
         department
         gender
-        hospAddress
-        hospAddressDetail
-        hospCode
         hospName
-        hospPhone
-        hospWebsite
-        hospZipCode
         careInstitutionNo
         licenseNo
-        representative
         school
-        smsConsent
-        emailConsent
-        replyConsent
         specialty
+        graduationYear
+        trainingHospital
       }
-      createdAt
-      updatedAt
     }
   }
 `

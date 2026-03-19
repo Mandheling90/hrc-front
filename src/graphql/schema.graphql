@@ -1,836 +1,1522 @@
-enum UserType {
-  ADMIN
-  DOCTOR
-  HOSPITAL
-  MEMBER
-  CONSULTANT
+"""메뉴 접근 권한 수준 (NONE: 접근불가, READ: 읽기전용, FULL: 모두허용)"""
+enum AccessLevel {
+  """모두허용"""
+  FULL
+
+  """접근불가"""
+  NONE
+
+  """읽기전용"""
+  READ
 }
 
-enum HospitalCode {
-  ANAM
-  GURO
-  ANSAN
+"""ADMAP 홈페이지 진료과 목록 항목"""
+type AdmapHomepageDepartmentListItem {
+  """진료과 약어코드"""
+  departmentAbbreviationCode: String
+
+  """진료과 코드"""
+  departmentCode: String!
+
+  """진료과명"""
+  departmentName: String!
+
+  """소속 병원"""
+  hospitalCode: HospitalCode!
+
+  """진료과 정렬값"""
+  sortOrder: String
 }
 
-enum Gender {
-  M
-  F
+"""ADMAP 홈페이지 진료과 목록 응답"""
+type AdmapHomepageDepartmentListResponse {
+  """진료과 목록"""
+  items: [AdmapHomepageDepartmentListItem!]!
+
+  """총 항목 수"""
+  totalCount: Float!
 }
 
-enum UserStatus {
-  ACTIVE
-  PENDING
-  REJECTED
-  WITHDRAWN
+"""ADMAP 의료진 목록 필터"""
+input AdmapMedicalStaffFilterInput {
+  """진료과 코드 (선택)"""
+  mcdpCd: String
 }
 
-enum InstitutionType {
-  TERTIARY_HOSPITAL
-  GENERAL_HOSPITAL
-  HOSPITAL
-  DENTAL_HOSPITAL
-  MENTAL_HOSPITAL
-  NURSING_HOSPITAL
-  CLINIC
-  DENTAL_CLINIC
-  PUBLIC_HEALTH
-  INSTITUTION
-  UNCLASSIFIED
-  ORIENTAL
-  ORIENTAL_HOSPITAL
-}
+"""ADMAP 의료진 목록 항목"""
+type AdmapMedicalStaffListItem {
+  """발령종료일"""
+  apfnYmd: String
 
-type UserProfile {
-  birthDate: String
-  department: String
-  gender: Gender
-  hospAddress: String
-  hospAddressDetail: String
-  hospCode: String
-  hospName: String
-  hospPhone: String
-  hospWebsite: String
-  hospZipCode: String
-  careInstitutionNo: String
-  licenseNo: String
-  representative: String
-  school: String
-  smsConsent: Boolean!
-  emailConsent: Boolean!
-  replyConsent: Boolean!
+  """발령시작일"""
+  apstYmd: String
+
+  """의료진 소개 / 전문분야"""
+  bio: String
+
+  """진료과 코드"""
+  departmentCode: String!
+
+  """진료과명"""
+  departmentName: String!
+
+  """의료진 ID"""
+  doctorId: ID!
+
+  """의료진 이름"""
+  doctorName: String!
+
+  """의료진 번호 (drNo)"""
+  drNo: String
+
+  """빠른진료일시"""
+  fastMdcrDt: String
+
+  """초진가능여부 (Y/N)"""
+  frvsMdcrPsblYn: String
+
+  """소속 병원"""
+  hospitalCode: HospitalCode!
+
+  """진료과 약어코드"""
+  mcdpAbrvCd: String
+
+  """진료과 구분코드"""
+  mcdpDvsnCd: String
+
+  """진료과 순번"""
+  mcdpSqncVl: String
+
+  """의료진 사진 URL"""
+  photoUrl: String
+
+  """재진가능여부 (Y/N)"""
+  revsMdcrPsblYn: String
+
+  """동시진료여부 (Y/N)"""
+  smcrYn: String
+
+  """전문분야"""
   specialty: String
 }
 
-type User {
-  id: ID!
-  userId: String!
-  email: String!
-  userName: String!
-  userType: UserType!
-  hospitalCode: HospitalCode!
-  hospitalId: String
-  phone: String
-  status: UserStatus!
-  mustChangePw: Boolean!
-  profile: UserProfile
-  createdAt: String!
-  updatedAt: String!
+"""ADMAP 의료진 목록 응답"""
+type AdmapMedicalStaffListResponse {
+  """의료진 목록"""
+  items: [AdmapMedicalStaffListItem!]!
+
+  """총 항목 수"""
+  totalCount: Float!
 }
 
+"""ADMAP 주간 일정 항목"""
+type AdmapWeeklyScheduleListItem {
+  """예약가능여부 (Y/N)"""
+  apntPsblYn: String
+
+  """진료과 코드"""
+  departmentCode: String!
+
+  """진료과명"""
+  departmentName: String!
+
+  """의료진 ID"""
+  doctorId: ID!
+
+  """의료진 이름"""
+  doctorName: String!
+
+  """금요일 오전/오후 코드"""
+  friAmpmCd: String
+
+  """소속 병원"""
+  hospitalCode: HospitalCode!
+
+  """월요일 오전/오후 코드"""
+  monAmpmCd: String
+
+  """목요일 오전/오후 코드"""
+  thuAmpmCd: String
+
+  """화요일 오전/오후 코드"""
+  tueAmpmCd: String
+
+  """수요일 오전/오후 코드"""
+  wedAmpmCd: String
+}
+
+"""ADMAP 주간 일정 목록 응답"""
+type AdmapWeeklyScheduleListResponse {
+  """주간 일정 목록"""
+  items: [AdmapWeeklyScheduleListItem!]!
+
+  """총 항목 수"""
+  totalCount: Float!
+}
+
+"""관리자 계정 생성 입력"""
+input AdminCreateUserInput {
+  """이메일 (미입력 시 시스템 기본값 사용)"""
+  email: String
+
+  """생성 대상 병원 코드 (통합관리자 필수)"""
+  hospitalCode: HospitalCode
+
+  """허용 IP (설정 시 해당 IP에서만 로그인 가능)"""
+  ipAddress: String
+
+  """비밀번호"""
+  password: String!
+
+  """비밀번호 확인"""
+  passwordConfirm: String!
+
+  """로그인 아이디"""
+  userId: String!
+
+  """이름"""
+  userName: String!
+}
+
+"""의료진 (관리자용)"""
+type AdminDoctorModel {
+  """생성일시"""
+  createdAt: DateTime!
+
+  """진료과명"""
+  departmentName: String
+
+  """이메일"""
+  email: String
+
+  """소속 병원"""
+  hospitalCode: HospitalCode
+
+  """의료진 ID"""
+  id: ID!
+
+  """활성 여부"""
+  isActive: Boolean!
+
+  """면허번호"""
+  licenseNo: String
+
+  """이름"""
+  name: String!
+
+  """연락처"""
+  phone: String
+
+  """사진 URL(미사용)"""
+  photoUrl: String
+
+  """정렬순서"""
+  sortOrder: Int!
+
+  """전문분야"""
+  specialty: String
+
+  """회원 상태"""
+  status: UserStatus!
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """로그인 아이디"""
+  userId: String!
+}
+
+"""관리자용 e-Consult 자문의"""
+type AdminEconsultConsultantModel {
+  """생성일시"""
+  createdAt: DateTime!
+
+  """진료과 코드"""
+  departmentCode: String
+
+  """진료과명"""
+  departmentName: String
+
+  """외부 의료진 식별자(ADMAP doctorId)"""
+  doctorId: String
+
+  """이메일"""
+  email: String!
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """자문의 레코드 ID"""
+  id: ID!
+
+  """활성 여부"""
+  isActive: Boolean!
+
+  """이름"""
+  name: String!
+
+  """연락처"""
+  phone: String
+
+  """사진 URL"""
+  photoUrl: String
+
+  """전문분야/소개문구"""
+  specialty: String
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""관리자 회원 수정 입력"""
+input AdminUpdateUserInput {
+  """이메일"""
+  email: String
+
+  """허용 IP (설정 시 해당 IP에서만 로그인 가능, 빈 문자열로 해제)"""
+  ipAddress: String
+
+  """전화번호"""
+  phone: String
+
+  """상태"""
+  status: UserStatus
+
+  """이름"""
+  userName: String
+
+  """사용자 유형"""
+  userType: UserType
+}
+
+"""관리자 회원 필터"""
+input AdminUserFilterInput {
+  """검색어 (아이디/이름/이메일)"""
+  search: String
+
+  """사용자 상태"""
+  status: UserStatus
+
+  """사용자 유형"""
+  userType: UserType
+}
+
+"""협력병의원 신청 입력 - 제출 시 필수값 검증은 서비스 레벨에서 수행"""
+input ApplyPartnerHospitalInput {
+  """가동 병상 수"""
+  activeBedCount: Int
+
+  """첨부파일 메타데이터 (JSON 배열)"""
+  attachments: JSON
+
+  """기본 처치 가능 항목 (JSON)"""
+  availableTreatments: JSON
+
+  """엑시머레이저 가능 여부"""
+  clinicHasExcimerLaser: Boolean
+
+  """혈액투석 가능 여부"""
+  clinicHasHemodialysis: Boolean
+
+  """복막투석 가능 여부"""
+  clinicHasPeritoneal: Boolean
+
+  """광선치료 가능 여부"""
+  clinicHasPhototherapy: Boolean
+
+  """투약 유형"""
+  clinicMedicationType: String
+
+  """진료과별 전문의 현황 (JSON)"""
+  departmentSpecialists: JSON
+
+  """병원장 생년월일 (YYYY-MM-DD)"""
+  directorBirthDate: String
+
+  """병원장 차량번호"""
+  directorCarNo: String
+
+  """병원장 진료과"""
+  directorDepartment: String
+
+  """병원장 이메일"""
+  directorEmail: String
+
+  """E-mail 수신 동의"""
+  directorEmailConsent: Boolean
+
+  """병원장 성별 (M/F)"""
+  directorGender: String
+
+  """병원장 졸업년도"""
+  directorGraduationYear: String
+
+  """의사면허번호"""
+  directorLicenseNo: String
+
+  """병원장 성명"""
+  directorName: String
+
+  """병원장 휴대전화"""
+  directorPhone: String
+
+  """회신서 수신 동의"""
+  directorReplyConsent: Boolean
+
+  """병원장 출신학교"""
+  directorSchool: String
+
+  """SMS 수신 동의"""
+  directorSmsConsent: Boolean
+
+  """병원장 세부전공"""
+  directorSubSpecialty: String
+
+  """병원장 수련병원"""
+  directorTrainingHospital: String
+
+  """응급실 수"""
+  erCount: Int
+
+  """인공신장실 유무"""
+  hasDialysisRoom: Boolean
+
+  """응급실 유무"""
+  hasEr: Boolean
+
+  """보호자 간병 유무"""
+  hasGuardianCare: Boolean
+
+  """호스피스 유무"""
+  hasHospice: Boolean
+
+  """중환자실 유무"""
+  hasIcu: Boolean
+
+  """간호간병통합서비스 유무"""
+  hasIntegratedNursing: Boolean
+
+  """수술실 유무"""
+  hasOperatingRoom: Boolean
+
+  """물리치료실 유무"""
+  hasPhysicalTherapy: Boolean
+
+  """정신과 병동 폐쇄"""
+  hasPsychClosed: Boolean
+
+  """정신과 병동 일반"""
+  hasPsychGeneral: Boolean
+
+  """재활치료실 격리"""
+  hasRehabIsolation: Boolean
+
+  """재활치료실 작업"""
+  hasRehabOt: Boolean
+
+  """재활치료실 물리"""
+  hasRehabPt: Boolean
+
+  """재활치료실 언어"""
+  hasRehabSt: Boolean
+
+  """재활치료실 연하"""
+  hasRehabSwallow: Boolean
+
+  """공동 간병 유무"""
+  hasSharedCare: Boolean
+
+  """병원 주소 (Hospital 테이블 업데이트)"""
+  hospitalAddress: String
+
+  """병원 상세주소 (Hospital 테이블 업데이트)"""
+  hospitalAddressDetail: String
+
+  """신청 대상 병원 코드 (안암/구로/안산)"""
+  hospitalCode: HospitalCode!
+
+  """병원 팩스번호 (Hospital 테이블 업데이트)"""
+  hospitalFaxNumber: String
+
+  """병원 ID (Hospital 테이블)"""
+  hospitalId: String!
+
+  """병원명 (Hospital 테이블 업데이트)"""
+  hospitalName: String
+
+  """병원 대표전화 (Hospital 테이블 업데이트)"""
+  hospitalPhone: String
+
+  """병원 홈페이지 주소 (Hospital 테이블 업데이트)"""
+  hospitalWebsite: String
+
+  """병원 우편번호 (Hospital 테이블 업데이트)"""
+  hospitalZipCode: String
+
+  """중환자실 수"""
+  icuCount: Int
+
+  """의료기관 유형"""
+  institutionType: InstitutionType
+
+  """원장 여부"""
+  isDirector: Boolean
+
+  """격리 중 간병 유형"""
+  isolationCareType: String
+
+  """격리 2인실 수"""
+  isolationDoubleCount: Int
+
+  """격리 중 재활 유형"""
+  isolationRehabType: String
+
+  """격리병실 수"""
+  isolationRoomCount: Int
+
+  """격리 1인실 수"""
+  isolationSingleCount: Int
+
+  """격리 3인실 수"""
+  isolationTripleCount: Int
+
+  """격리 유형 (JSON 배열)"""
+  isolationTypes: JSON
+
+  """격리병상 운영 여부"""
+  isolationWardOperation: Boolean
+
+  """주요 보유 장비"""
+  majorEquipment: String
+
+  """다인실 수"""
+  multiRoomCount: Int
+
+  """간호사 수"""
+  nurseCount: Int
+
+  """상급병실 수"""
+  premiumRoomCount: Int
+
+  """병원특성 및 기타사항"""
+  remarks: String
+
+  """전문의 수"""
+  specialistCount: Int
+
+  """실무자 부서/진료과 유형"""
+  staffDeptType: String
+
+  """실무자 부서/진료과 값"""
+  staffDeptValue: String
+
+  """실무자 이메일"""
+  staffEmail: String
+
+  """실무자 성명"""
+  staffName: String
+
+  """실무자 휴대전화"""
+  staffPhone: String
+
+  """실무자 직급"""
+  staffPosition: String
+
+  """실무자 연락처 (유선)"""
+  staffTel: String
+
+  """총 병상 수"""
+  totalBedCount: Int
+
+  """총 직원 수"""
+  totalStaffCount: Int
+}
+
+"""영상검사 요청 승인 입력"""
+input ApproveImagingRequestInput {
+  """영상검사 요청 ID"""
+  imagingRequestId: ID!
+
+  """승인 메모 (선택사항)"""
+  memo: String
+}
+
+"""첨부파일 연결 대상 유형"""
+enum AttachmentEntityType {
+  BANNER
+
+  """게시판"""
+  BOARD
+
+  """eConsult"""
+  ECONSULT
+  IMAGING_REQUEST
+
+  """협력병의원 신청"""
+  PARTNER_APPLICATION
+  POPUP
+
+  """프로필"""
+  PROFILE
+}
+
+"""첨부파일"""
+type AttachmentModel {
+  """생성일시"""
+  createdAt: DateTime
+
+  """파일 크기 (bytes)"""
+  fileSize: Int!
+
+  """첨부파일 ID"""
+  id: ID!
+
+  """MIME 타입"""
+  mimeType: String!
+
+  """원본 파일명"""
+  originalName: String!
+
+  """저장 경로"""
+  storedPath: String!
+}
+
+"""감사 로그 액션"""
+enum AuditAction {
+  """승인"""
+  APPROVE
+
+  """생성"""
+  CREATE
+
+  """삭제"""
+  DELETE
+
+  """로그인"""
+  LOGIN
+
+  """로그아웃"""
+  LOGOUT
+
+  """거부"""
+  REJECT
+
+  """수정"""
+  UPDATE
+}
+
+"""감사 로그 필터"""
+input AuditLogFilterInput {
+  """액션 유형"""
+  action: AuditAction
+
+  """관리자명"""
+  adminName: String
+
+  """관리자번호(로그인 ID)"""
+  adminNumber: String
+
+  """시작일"""
+  dateFrom: DateTime
+
+  """종료일"""
+  dateTo: DateTime
+
+  """로그명(target) 검색어"""
+  logName: String
+
+  """사용자 ID"""
+  userId: String
+}
+
+"""감사 로그"""
+type AuditLogModel {
+  """액션"""
+  action: AuditAction!
+
+  """관리자명"""
+  adminName: String
+
+  """관리자번호(로그인 ID)"""
+  adminNumber: String
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """상세 내용"""
+  detail: String
+
+  """병원 코드"""
+  hospitalCode: HospitalCode
+
+  """로그 ID"""
+  id: ID!
+
+  """IP 주소"""
+  ipAddress: String
+
+  """권한그룹과 연결된 관리자 등록/수정 내역"""
+  permissionMemberHistories: [PermissionAuditMemberHistoryModel]
+
+  """권한그룹과 연결된 메뉴 등록/수정 내역"""
+  permissionMenuHistories: [PermissionAuditMenuHistoryModel]
+
+  """대상"""
+  target: String!
+
+  """사용자 ID"""
+  userId: String
+}
+
+"""인증 응답"""
 type AuthPayload {
+  """JWT 액세스 토큰 (15분 유효)"""
   accessToken: String!
-  refreshToken: String!
+
+  """비밀번호 변경 필요 여부 (마이그레이션 회원)"""
   mustChangePw: Boolean!
+
+  """JWT 리프레시 토큰 (7일 유효)"""
+  refreshToken: String!
+
+  """사용자 정보"""
   user: User!
 }
 
-input LoginInput {
-  userId: String!
-  password: String!
+"""게시글 첨부파일 메타데이터"""
+input BoardAttachmentInput {
+  """MIME 타입"""
+  mimeType: String
+
+  """원본 파일명"""
+  name: String
+
+  """파일 크기(bytes)"""
+  size: Int
+
+  """업로드 후 반환된 파일 URL"""
+  url: String!
 }
 
-enum DoctorType {
-  DOCTOR
-  DENTIST
-  ORIENTAL_DOCTOR
-}
+"""게시판 게시글"""
+type BoardPost {
+  """작성자 ID"""
+  authorId: String!
 
-input SignupInput {
-  userName: String!
-  birthDate: String!
-  phone: String!
-  doctorType: DoctorType!
-  userId: String!
-  password: String!
-  passwordConfirm: String!
-  email: String!
-  licenseNo: String!
-  isDirector: Boolean!
-  school: String!
-  department: String!
-  specialty: String
-  smsConsent: Boolean!
-  emailConsent: Boolean!
-  replyConsent: Boolean!
-  hospitalCode: HospitalCode!
-  hospName: String!
-  careInstitutionNo: String!
-  hospZipCode: String!
-  hospAddress: String!
-  hospAddressDetail: String
-  hospPhone: String!
-  hospWebsite: String
-  ci: String
-  di: String
-  verificationToken: String!
-}
+  """게시판 아이디"""
+  boardId: String!
 
-type UserIdAvailability {
-  available: Boolean!
-  existsInDb: Boolean!
-  existsInEhr: Boolean!
-}
+  """내용"""
+  content: String!
 
-input SearchCollaboratingHospitalsInput {
-  hospitalCode: HospitalCode!
-  hsptNm: String
-  adrsNm: String
-  hsptClsfCd: String
-}
-
-enum PartnerType {
-  H
-  M
-}
-
-type AttachmentModel {
-  id: ID!
-  originalName: String!
-  storedPath: String!
-  mimeType: String!
-  fileSize: Int!
-  createdAt: DateTime
-}
-
-type HospitalModel {
-  id: ID
-  name: String!
-  address: String
-  addressDetail: String
-  phisCode: String
-  classificationCode: String
-  phone: String
-  faxNumber: String
-  representative: String
-  website: String
-  zipCode: String
-  hospitalCode: HospitalCode
-  partnerType: PartnerType
-  specialties: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-type HospitalSearchResult {
-  hospitals: [HospitalModel!]!
-  totalCount: Int!
-}
-
-input RegisterHospitalInput {
-  hospitalCode: HospitalCode!
-  hospitalName: String!
-  representative: String!
-  careInstitutionNo: String!
-  zipCode: String!
-  address: String!
-  addressDetail: String
-  phone: String!
-}
-
-# ── 협력 병·의원 신청 ──
-
-enum PartnerStatus {
-  DRAFT
-  PENDING
-  APPROVED
-  REJECTED
-  TERMINATED
-}
-
-scalar DateTime
-scalar JSON
-
-input ApplyPartnerHospitalInput {
-  hospitalCode: HospitalCode!
-  hospitalId: String!
-  institutionType: InstitutionType
-  # 병원 정보
-  hospitalName: String
-  hospitalAddress: String
-  hospitalAddressDetail: String
-  hospitalZipCode: String
-  hospitalPhone: String
-  hospitalFaxNumber: String
-  hospitalWebsite: String
-  # 병원장 정보
-  isDirector: Boolean
-  directorName: String
-  directorBirthDate: String
-  directorGender: String
-  directorLicenseNo: String
-  directorSchool: String
-  directorGraduationYear: String
-  directorTrainingHospital: String
-  directorDepartment: String
-  directorSubSpecialty: String
-  directorCarNo: String
-  directorPhone: String
-  directorEmail: String
-  directorSmsConsent: Boolean
-  directorEmailConsent: Boolean
-  directorReplyConsent: Boolean
-  # 실무자 정보
-  staffName: String
-  staffPosition: String
-  staffDeptType: String
-  staffDeptValue: String
-  staffPhone: String
-  staffTel: String
-  staffEmail: String
-  # 병상 및 시설
-  totalBedCount: Int
-  activeBedCount: Int
-  icuCount: Int
-  premiumRoomCount: Int
-  multiRoomCount: Int
-  erCount: Int
-  totalStaffCount: Int
-  specialistCount: Int
-  nurseCount: Int
-  # 시설 보유
-  hasIcu: Boolean
-  hasEr: Boolean
-  hasOperatingRoom: Boolean
-  hasPhysicalTherapy: Boolean
-  hasDialysisRoom: Boolean
-  hasHospice: Boolean
-  hasPsychGeneral: Boolean
-  hasPsychClosed: Boolean
-  # 간병 시스템
-  hasIntegratedNursing: Boolean
-  hasGuardianCare: Boolean
-  hasSharedCare: Boolean
-  # 격리실
-  isolationRoomCount: Int
-  isolationSingleCount: Int
-  isolationDoubleCount: Int
-  isolationTripleCount: Int
-  isolationTypes: JSON
-  isolationCareType: String
-  isolationRehabType: String
-  # 재활
-  hasRehabPt: Boolean
-  hasRehabOt: Boolean
-  hasRehabSt: Boolean
-  hasRehabSwallow: Boolean
-  hasRehabIsolation: Boolean
-  # 진료과 / 처치
-  departmentSpecialists: JSON
-  availableTreatments: JSON
-  # 의원 전용
-  clinicMedicationType: String
-  clinicHasHemodialysis: Boolean
-  clinicHasPeritoneal: Boolean
-  clinicHasPhototherapy: Boolean
-  clinicHasExcimerLaser: Boolean
-  # 기타
-  majorEquipment: String
-  remarks: String
-  attachments: JSON
-}
-
-input SaveDraftPartnerInput {
-  hospitalId: String!
-  hospitalCode: HospitalCode
-  institutionType: InstitutionType
-  # 병원 정보
-  hospitalName: String
-  hospitalAddress: String
-  hospitalAddressDetail: String
-  hospitalZipCode: String
-  hospitalPhone: String
-  hospitalFaxNumber: String
-  hospitalWebsite: String
-  # 병원장 정보
-  isDirector: Boolean
-  directorName: String
-  directorBirthDate: String
-  directorGender: String
-  directorLicenseNo: String
-  directorSchool: String
-  directorGraduationYear: String
-  directorTrainingHospital: String
-  directorDepartment: String
-  directorSubSpecialty: String
-  directorCarNo: String
-  directorPhone: String
-  directorEmail: String
-  directorSmsConsent: Boolean
-  directorEmailConsent: Boolean
-  directorReplyConsent: Boolean
-  # 실무자 정보
-  staffName: String
-  staffPosition: String
-  staffDeptType: String
-  staffDeptValue: String
-  staffPhone: String
-  staffTel: String
-  staffEmail: String
-  # 병상 및 시설
-  totalBedCount: Int
-  activeBedCount: Int
-  icuCount: Int
-  premiumRoomCount: Int
-  multiRoomCount: Int
-  erCount: Int
-  totalStaffCount: Int
-  specialistCount: Int
-  nurseCount: Int
-  # 시설 보유
-  hasIcu: Boolean
-  hasEr: Boolean
-  hasOperatingRoom: Boolean
-  hasPhysicalTherapy: Boolean
-  hasDialysisRoom: Boolean
-  hasHospice: Boolean
-  hasPsychGeneral: Boolean
-  hasPsychClosed: Boolean
-  # 간병 시스템
-  hasIntegratedNursing: Boolean
-  hasGuardianCare: Boolean
-  hasSharedCare: Boolean
-  # 격리실
-  isolationRoomCount: Int
-  isolationSingleCount: Int
-  isolationDoubleCount: Int
-  isolationTripleCount: Int
-  isolationTypes: JSON
-  isolationCareType: String
-  isolationRehabType: String
-  # 재활
-  hasRehabPt: Boolean
-  hasRehabOt: Boolean
-  hasRehabSt: Boolean
-  hasRehabSwallow: Boolean
-  hasRehabIsolation: Boolean
-  # 진료과 / 처치
-  departmentSpecialists: JSON
-  availableTreatments: JSON
-  # 의원 전용
-  clinicMedicationType: String
-  clinicHasHemodialysis: Boolean
-  clinicHasPeritoneal: Boolean
-  clinicHasPhototherapy: Boolean
-  clinicHasExcimerLaser: Boolean
-  # 기타
-  majorEquipment: String
-  remarks: String
-  attachments: JSON
-}
-
-type PartnerHospitalModel {
-  id: ID!
-  applicantId: String!
-  hospitalCode: HospitalCode!
-  hospitalId: String!
-  hospital: HospitalModel!
-  institutionType: InstitutionType
-  status: PartnerStatus!
-  # 병원장 정보
-  isDirector: Boolean
-  directorName: String
-  directorBirthDate: String
-  directorGender: String
-  directorLicenseNo: String
-  directorSchool: String
-  directorGraduationYear: String
-  directorTrainingHospital: String
-  directorDepartment: String
-  directorSubSpecialty: String
-  directorCarNo: String
-  directorPhone: String
-  directorEmail: String
-  directorSmsConsent: Boolean
-  directorEmailConsent: Boolean
-  directorReplyConsent: Boolean
-  # 실무자 정보
-  staffName: String
-  staffPosition: String
-  staffDeptType: String
-  staffDeptValue: String
-  staffPhone: String
-  staffTel: String
-  staffEmail: String
-  # 병상 및 시설
-  totalBedCount: Int
-  activeBedCount: Int
-  icuCount: Int
-  premiumRoomCount: Int
-  multiRoomCount: Int
-  erCount: Int
-  totalStaffCount: Int
-  specialistCount: Int
-  nurseCount: Int
-  # 시설 보유
-  hasIcu: Boolean
-  hasEr: Boolean
-  hasOperatingRoom: Boolean
-  hasPhysicalTherapy: Boolean
-  hasDialysisRoom: Boolean
-  hasHospice: Boolean
-  hasPsychGeneral: Boolean
-  hasPsychClosed: Boolean
-  # 간병 시스템
-  hasIntegratedNursing: Boolean
-  hasGuardianCare: Boolean
-  hasSharedCare: Boolean
-  # 격리실
-  isolationRoomCount: Int
-  isolationSingleCount: Int
-  isolationDoubleCount: Int
-  isolationTripleCount: Int
-  isolationTypes: JSON
-  isolationCareType: String
-  isolationRehabType: String
-  # 재활
-  hasRehabPt: Boolean
-  hasRehabOt: Boolean
-  hasRehabSt: Boolean
-  hasRehabSwallow: Boolean
-  hasRehabIsolation: Boolean
-  # 진료과 / 처치
-  departmentSpecialists: JSON
-  availableTreatments: JSON
-  # 의원 전용
-  clinicMedicationType: String
-  clinicHasHemodialysis: Boolean
-  clinicHasPeritoneal: Boolean
-  clinicHasPhototherapy: Boolean
-  clinicHasExcimerLaser: Boolean
-  # 기타
-  majorEquipment: String
-  remarks: String
-  attachments: JSON
-  attachmentRows: [AttachmentModel!]
-  # 심사
-  rejectReason: String
-  reviewedAt: DateTime
-  reviewedById: String
-  approvedAt: DateTime
-  terminatedAt: DateTime
+  """작성일시"""
   createdAt: DateTime!
+
+  """행사 종료일 (EVENT 유형)"""
+  endDate: DateTime
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """고유 ID"""
+  id: ID!
+
+  """삭제 여부"""
+  isDeleted: Boolean!
+
+  """상단 고정 여부"""
+  isPinned: Boolean!
+
+  """상위 게시글 ID (답글용)"""
+  parentId: String
+
+  """행사 시작일 (EVENT 유형)"""
+  startDate: DateTime
+
+  """썸네일 URL (EVENT 유형)"""
+  thumbnailUrl: String
+
+  """제목"""
+  title: String!
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """조회수"""
+  viewCount: Int!
+}
+
+"""게시판 설정"""
+type BoardSettingModel {
+  """첨부파일 사용 여부"""
+  allowAttachments: Boolean!
+
+  """게시판 아이디(병원 내 고유)"""
+  boardId: String!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """게시판 설명(관리자 메모)"""
+  description: String
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """설정 ID"""
+  id: ID!
+
+  """게시판명"""
+  name: String!
+
+  """게시판 템플릿 유형"""
+  templateType: BoardTemplateType!
+
+  """수정일시"""
   updatedAt: DateTime!
 }
 
-input PaginationInput {
-  page: Int
-  limit: Int
-  cursor: String
+"""게시판 템플릿 유형"""
+enum BoardTemplateType {
+  """기본형"""
+  BASIC
+
+  """썸네일형"""
+  THUMBNAIL
 }
 
-type PaginatedPartnerHospitalResponse {
-  items: [PartnerHospitalModel!]!
-  totalCount: Int!
-  hasNextPage: Boolean!
-  cursor: String
-}
-
-# ── 팝업/배너 ──
-
-enum PopupType {
-  POPUP
-  MINI_BANNER
-  SLIDE_BANNER
-}
-
-# ── 메뉴 ──
-
-enum MenuType {
-  ADMIN
-  USER
-}
-
-enum MenuTargetType {
-  BOARD
-  CONTENT
-  LINK
-  PARENT
-}
-
+"""게시판 유형"""
 enum BoardType {
+  """상담"""
   CONSULT
+
+  """교육/행사"""
   EVENT
+
+  """자유게시판"""
   FREE
+
+  """뉴스"""
   NEWS
+
+  """공지사항"""
   NOTICE
+
+  """학술"""
   STUDY
 }
 
-enum AttachmentEntityType {
-  BANNER
-  BOARD
-  ECONSULT
-  EXAM_IMAGE
-  PARTNER_APPLICATION
-  POPUP
-  PROFILE
-  REFERRAL
+type CccUserModel {
+  abrvDprtCd: String
+  bsplNm: String
+  dprtCd: String!
+  dprtNm: String!
+  hsptCd: String!
+  hsptNm: String!
+  ocfmDetlNm: String
+  userId: String!
+  userLcnsNo: String
+  userNm: String!
 }
 
-type MenuModel {
-  id: ID!
-  name: String!
-  path: String
-  sortOrder: Int!
-  menuType: MenuType!
-  menuTargetType: MenuTargetType
-  targetBoardType: BoardType
-  targetBoardId: String
-  targetContentId: String
-  externalUrl: String
-  gnbExposure: Boolean!
-  iconName: String
-  isActive: Boolean!
+"""비밀번호 변경 입력"""
+input ChangePasswordInput {
+  """새 비밀번호 (8자 이상, 영문+숫자+특수문자)"""
+  newPassword: String!
+
+  """현재 비밀번호"""
+  oldPassword: String!
+}
+
+"""EHR 의사정보 존재여부 확인 입력"""
+input CheckDoctorExistsInput {
+  """의사구분 (DOCTOR=양방/1, ORIENTAL_DOCTOR=한방/2, DENTIST=치방/3)"""
+  doctorType: DoctorType
+
+  """면허번호"""
+  drlcNo: String!
+
+  """조회 대상 병원"""
   hospitalCode: HospitalCode!
-  parentId: String
-  firstChildPath: String
-  children: [MenuModel!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
+
+  """의사명"""
+  userNm: String
 }
 
-type BoardPost {
-  id: ID!
-  boardId: String!
-  title: String!
-  content: String!
-  authorId: String!
+"""EHR 병원정보 존재여부 확인 입력"""
+input CheckHospitalExistsInput {
+  """조회 대상 병원"""
   hospitalCode: HospitalCode!
-  thumbnailUrl: String
-  isPinned: Boolean!
-  isDeleted: Boolean!
-  viewCount: Int!
-  parentId: String
-  startDate: DateTime
-  endDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
+
+  """요양기관번호"""
+  rcisNo: String!
 }
 
-type PaginatedBoardPostResponse {
-  items: [BoardPost!]!
-  totalCount: Int!
-  hasNextPage: Boolean!
-  cursor: String
+"""아이디 중복확인 결과 (우리 DB + EHR 동시 체크)"""
+type CheckUserIdResult {
+  """사용 가능 여부 (둘 다 통과해야 true)"""
+  available: Boolean!
+
+  """우리 DB에 동일 아이디 존재 여부 (true=이미 존재)"""
+  existsInDb: Boolean!
+
+  """EHR에 동일 아이디 기가입 여부 (true=이미 존재)"""
+  existsInEhr: Boolean!
 }
 
-type Content {
-  id: ID!
-  title: String!
-  body: String!
-  hospitalCode: HospitalCode!
-  contentGroupId: String
-  contentGroupName: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
+"""협력병원 상세정보"""
+type CollaboratingHospitalDetail {
+  """주소"""
+  address: String
 
-type PopupModel {
-  id: ID!
-  hospitalCode: HospitalCode!
-  popupType: PopupType!
-  isActive: Boolean!
-  alwaysVisible: Boolean!
-  targetBlank: Boolean!
-  imageUrl: String
-  imageDarkUrl: String
-  mobileImageUrl: String
-  mobileDarkImageUrl: String
-  linkUrl: String
-  altText: String
-  mainSlogan: String
-  subSlogan: String
-  mediaType: String
-  videoUrl: String
-  sortOrder: Int
-  startDate: DateTime
-  endDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
+  """상세주소"""
+  addressDetail: String
 
-type HospitalArticle {
-  articleNo: Int!
-  title: String!
-  linkUrl: String
-  thumbnailUrl: String
-  category: String
-  createdDt: String!
-  hospitalName: String!
-  writer: String!
-}
-
-type HospitalArticleList {
-  articles: [HospitalArticle!]!
-  totalCount: Int!
-}
-
-# ── 의뢰환자 조회 (EHR 프록시) ──
-
-input ReferralPatientQueryInput {
-  hospitalCode: HospitalCode!
-}
-
-type ReferralPatientItem {
-  patientNo: String
-  patientName: String
-  genderCode: String
-  age: String
-  visitDate: String
-  departmentCode: String
-  departmentName: String
-  doctorId: String
-  doctorName: String
-  referralDepartmentCode: String
-  referralDepartmentName: String
-  referralDoctorName: String
-  drugOrderExists: Boolean
-  infoConsentYn: String
-  replyDate: String
-  referralDate: String
+  """요양기관번호"""
   careInstitutionNo: String
-  hospitalName: String
-  referralSeqNo: String
-  referralStatusCode: String
+
+  """병원분류코드 (30:병원, 50:의원, 80:무분류)"""
+  classificationCode: String
+
+  """협력계약일"""
+  collaborationContractDate: String
+
+  """협력구분코드 (N:초기, A:협력병원, B:협력의원)"""
+  collaborationDivisionCode: String
+
+  """협력요청일"""
+  collaborationRequestDate: String
+
+  """담당자 이메일"""
+  contactEmail: String
+
+  """담당자명"""
+  contactName: String
+
+  """담당자 직급"""
+  contactOccupation: String
+
+  """담당자 전화번호 (휴대폰)"""
+  contactPhone: String
+
+  """대표원장 생년월일"""
+  directorBirthDate: String
+
+  """대표원장 차량번호"""
+  directorCarNo: String
+
+  """대표원장 진료과"""
+  directorDepartment: String
+
+  """대표원장 이메일"""
+  directorEmail: String
+
+  """이메일 수신동의 (Y/N)"""
+  directorEmailConsent: String
+
+  """대표원장 성별"""
+  directorGender: String
+
+  """대표원장 졸업년도"""
+  directorGraduationYear: String
+
+  """대표원장 면허번호"""
+  directorLicenseNo: String
+
+  """대표원장 휴대전화"""
+  directorPhone: String
+
+  """회신서 수신동의 (Y/N)"""
+  directorReplyConsent: String
+
+  """대표원장 출신대학"""
+  directorSchool: String
+
+  """SMS 수신동의 (Y/N)"""
+  directorSmsConsent: String
+
+  """대표원장 세부전공"""
+  directorSubSpecialty: String
+
+  """대표원장 수련병원"""
+  directorTrainingHospital: String
+
+  """응급실 가용병상수"""
+  emergencyBeds: String
+
+  """총 직원수"""
+  employeeCount: String
+
+  """장비현황"""
+  equipment: String
+
+  """팩스번호"""
+  fax: String
+
+  """허가병상수"""
+  licensedBeds: String
+
+  """진료과목"""
+  medicalSubjects: String
+
+  """병원명"""
+  name: String
+
+  """간호사수"""
+  nurseCount: String
+
+  """운영병상수"""
+  operatingBeds: String
+
+  """전화번호"""
+  phone: String
+
+  """병원 특성 및 기타 사항"""
+  remark: String
+
+  """대표자명 (병원장)"""
+  representative: String
+
+  """회송가능 진료과목"""
+  returnableMedicalSubjects: String
+
+  """의사수"""
+  specialistCount: String
+
+  """담당자 부서구분 (B:부서, A:진료과)"""
+  staffDeptType: String
+
+  """담당자 부서 공통코드"""
+  staffDeptValue: String
+
+  """담당자 내선번호"""
+  staffTel: String
+
+  """홈페이지"""
+  website: String
+
+  """우편번호"""
+  zipCode: String
 }
 
-type ReferralPatientResponse {
-  items: [ReferralPatientItem!]!
-  totalCount: Int!
+"""NICE 본인인증 결과 조회 입력"""
+input CompleteVerificationInput {
+  """세션 식별자 (initiateVerification에서 받은 값)"""
+  sessionId: String!
+
+  """NICE 콜백에서 받은 web_transaction_id"""
+  webTransactionId: String!
 }
 
-# ── 진료회신서 조회 (EHR 프록시) ──
-
-input ReferralReplyQueryInput {
-  hospitalCode: HospitalCode!
-  ptno: String!
-  refrSno: String!
-  refrYmd: String!
-}
-
-type ReferralReplyItem {
-  referralDate: String
-  departmentName: String
-  doctorName: String
-  patientName: String
-  genderCode: String
-  age: String
-  frontResidentNo: String
-  backResidentNo: String
-  diagnosisCode: String
-  diagnosisName: String
-  treatmentPeriod: String
-  visitTypeCode: String
-  opinion: String
-  replyDate: String
-  phoneNo: String
-}
-
-type ReferralReplyResponse {
-  item: ReferralReplyItem
-}
-
-# ── 수진이력 조회 (EHR 프록시) ──
-
-input VisitHistoryQueryInput {
-  hospitalCode: HospitalCode!
-  ptntNo: String!
-  mcdpCd: String
-  fromDt: String
-  toDt: String
-}
-
-type VisitHistoryItem {
-  visitDate: String
-  visitDatetime: String
-  departmentName: String
-  doctorId: String
-  doctorName: String
-  visitTypeCode: String
-  visitTypeName: String
-  admissionDate: String
-  wardCode: String
-  wardName: String
-  roomNo: String
-  diagnosisName: String
-}
-
-type VisitHistoryResponse {
-  items: [VisitHistoryItem!]!
-  totalCount: Float!
-}
-
-# ── 진단검사 결과 조회 (EHR 프록시) ──
-
-input PatientDateQueryInput {
-  hospitalCode: HospitalCode!
-  ptntNo: String!
-  date: String!
-  slipCd: String
-}
-
-type ExamResultItem {
-  departmentName: String
-  doctorName: String
-  examCode: String
-  examDate: String
-  examRoomCode: String
-  examRoomName: String
-  normalLowerLimit: String
-  normalUpperLimit: String
-  orderName: String
-  resultContent: String
-  resultFormatCode: String
-  resultRemark: String
-  resultUnit: String
-}
-
-type ExamResultResponse {
-  items: [ExamResultItem!]!
-  totalCount: Float!
-}
-
-# ── 검사 SLIP 조회 (병리/영상/내시경/기타) ──
-
-input ExamSlipQueryInput {
-  hospitalCode: HospitalCode!
-  ptntNo: String!
-  slipCd: String!
-  mcdpCd: String
-}
-
-type ExamSlipItem {
+type ConsultantInfoModel {
   departmentCode: String
   departmentName: String
   doctorId: String
-  doctorName: String
-  enforceDate: String
-  enforceDatetime: String
-  examCode: String
-  orderName: String
-  slipCode: String
-  slipName: String
-  treatmentDate: String
+  hospitalCode: String!
+  id: String!
+  name: String!
 }
 
-type ExamSlipResponse {
-  items: [ExamSlipItem!]!
-  totalCount: Float!
+input ConsultantLoginInput {
+  hospitalCode: String!
+  loginId: String!
+  password: String!
 }
 
-# ── 특수검사 결과 조회 (영상/내시경/기타 판독결과) ──
-
-type SpecialExamResultItem {
-  departmentName: String
-  doctorName: String
-  examDate: String
-  grossResult: String
-  orderCode: String
-  orderDate: String
-  orderName: String
-  pacsAccessNo: String
-  readerId1: String
-  readerId2: String
-  readerId3: String
-  resultContent: String
-  sortOrder: String
-  specimenCode: String
-  specimenNo: String
+type ConsultantLoginResponse {
+  accessToken: String!
+  cccUser: CccUserModel!
+  consultant: ConsultantInfoModel!
 }
 
-type SpecialExamResultResponse {
-  items: [SpecialExamResultItem!]!
-  totalCount: Float!
-}
+"""정적 콘텐츠"""
+type Content {
+  """본문"""
+  body: String!
 
-# ── 약 처방 내역 조회 ──
+  """콘텐츠 그룹 ID"""
+  contentGroupId: String
 
-input DrugOrderQueryInput {
+  """콘텐츠 그룹명"""
+  contentGroupName: String
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """병원 코드"""
   hospitalCode: HospitalCode!
+
+  """고유 ID"""
+  id: ID!
+
+  """제목"""
+  title: String!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+}
+
+"""콘텐츠 그룹"""
+type ContentGroupModel {
+  """연결된 콘텐츠 개수"""
+  contentCount: Int!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """그룹 ID"""
+  id: ID!
+
+  """그룹명"""
+  name: String!
+
+  """정렬순서"""
+  sortOrder: Int!
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""게시글 생성 입력"""
+input CreateBoardPostInput {
+  """첨부파일 목록"""
+  attachments: [BoardAttachmentInput!]
+
+  """게시판 아이디"""
+  boardId: String!
+
+  """내용"""
+  content: String!
+
+  """행사 종료일 (EVENT 유형)"""
+  endDate: DateTime
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """상단 고정 여부"""
+  isPinned: Boolean = false
+
+  """행사 시작일 (EVENT 유형)"""
+  startDate: DateTime
+
+  """썸네일 URL (EVENT 유형)"""
+  thumbnailUrl: String
+
+  """제목"""
+  title: String!
+}
+
+"""게시판 설정 생성 입력"""
+input CreateBoardSettingInput {
+  """첨부파일 사용 여부"""
+  allowAttachments: Boolean = true
+
+  """게시판 설명(관리자 메모, 200자 이내)"""
+  description: String
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """게시판명"""
+  name: String!
+
+  """게시판 템플릿 유형"""
+  templateType: BoardTemplateType = BASIC
+}
+
+"""콘텐츠 그룹 생성 입력"""
+input CreateContentGroupInput {
+  """그룹명"""
+  name: String!
+
+  """정렬순서"""
+  sortOrder: Int = 0
+}
+
+"""콘텐츠 생성 입력"""
+input CreateContentInput {
+  """본문"""
+  body: String!
+
+  """콘텐츠 그룹 ID"""
+  contentGroupId: String
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """제목"""
+  title: String!
+}
+
+"""의료진 생성 입력"""
+input CreateDoctorInput {
+  """진료과"""
+  department: String
+
+  """이메일"""
+  email: String
+
+  """소속 병원"""
+  hospitalCode: HospitalCode!
+
+  """면허번호"""
+  licenseNo: String
+
+  """이름(미입력시 기존값 유지)"""
+  name: String
+
+  """연락처"""
+  phone: String
+
+  """전문분야"""
+  specialty: String
+
+  """회원 상태(미입력시 ACTIVE)"""
+  status: UserStatus
+
+  """기존 회원 로그인 아이디"""
+  userId: String!
+}
+
+"""eConsult 신청 입력"""
+input CreateEConsultInput {
+  """자문의 레코드 ID 또는 doctorId"""
+  consultantId: String!
+
+  """상담 내용"""
+  content: String!
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """상담 제목"""
+  title: String!
+}
+
+"""영상검사 요청 신청 입력"""
+input CreateImagingRequestInput {
+  """검사일자 (YYYYMMDD 형식)"""
+  examDate: String!
+
+  """검사 구분 (기본값: RADIOLOGY)"""
+  examType: ImagingExamType
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """처방코드 (외부 EHR 기준)"""
+  orderCode: String!
+
+  """PACS 접근번호 (선택사항)"""
+  pacsAccessNo: String
+
+  """환자번호 (외부 EHR 기준)"""
   ptntNo: String!
-  mcdpCd: String!
+
+  """의뢰일련번호 (회신환자정보 조회용)"""
+  refrSno: String
+
+  """의뢰일자 (YYYYMMDD 형식)"""
+  refrYmd: String
+}
+
+"""메뉴 생성 입력"""
+input CreateMenuInput {
+  """외부 링크 URL"""
+  externalUrl: String
+
+  """GNB 노출 여부"""
+  gnbExposure: Boolean = true
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """아이콘명"""
+  iconName: String
+
+  """메뉴 타깃 유형"""
+  menuTargetType: MenuTargetType
+
+  """메뉴 유형"""
+  menuType: MenuType!
+
+  """메뉴명"""
+  name: String!
+
+  """상위 메뉴 ID"""
+  parentId: String
+
+  """경로"""
+  path: String
+
+  """정렬순서"""
+  sortOrder: Int = 0
+
+  """연결할 게시판 ID"""
+  targetBoardId: String
+
+  """연결할 게시판 유형"""
+  targetBoardType: BoardType
+
+  """연결할 콘텐츠 ID"""
+  targetContentId: String
+}
+
+"""메뉴 권한 그룹 생성 입력"""
+input CreateMenuPermissionGroupInput {
+  """그룹명"""
+  name: String!
+}
+
+"""팝업/배너 생성 입력"""
+input CreatePopupInput {
+  """이미지 대체 텍스트 (alt) — 메인배너 전용"""
+  altText: String
+
+  """상시노출 여부"""
+  alwaysVisible: Boolean = false
+
+  """종료일 (상시노출이면 생략 가능)"""
+  endDate: DateTime
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """PC 이미지 URL (다크모드) — 메인배너 전용"""
+  imageDarkUrl: String
+
+  """PC 이미지 URL (라이트모드)"""
+  imageUrl: String
+
+  """활성 여부"""
+  isActive: Boolean = true
+
+  """연결 링크 URL"""
+  linkUrl: String
+
+  """메인 슬로건 (최대 30자) — 메인배너 전용"""
+  mainSlogan: String
+
+  """미디어 타입 (IMAGE | VIDEO) — 메인배너 전용"""
+  mediaType: String
+
+  """모바일 이미지 URL (다크모드) — 메인배너 전용"""
+  mobileDarkImageUrl: String
+
+  """모바일 이미지 URL (라이트모드) — 메인배너 전용"""
+  mobileImageUrl: String
+
+  """팝업 유형 (POPUP | MINI_BANNER | SLIDE_BANNER)"""
+  popupType: PopupType!
+
+  """정렬순서"""
+  sortOrder: Int
+
+  """시작일 (상시노출이면 생략 가능)"""
+  startDate: DateTime
+
+  """서브 슬로건/부제 (최대 30자) — 메인배너 전용"""
+  subSlogan: String
+
+  """새 창 열기 여부"""
+  targetBlank: Boolean = true
+
+  """영상 URL — 메인배너 전용"""
+  videoUrl: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""e-Consult 자문의 지정 입력"""
+input DesignateEconsultConsultantInput {
+  """ADMAP doctorId"""
+  doctorId: String!
+
+  """자문의 이메일"""
+  email: String!
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+}
+
+"""의사 (자문의)"""
+type DoctorModel {
+  """진료과"""
+  department: String
+
+  """외부 의료진 식별자(ADMAP doctorId)"""
+  doctorId: String
+
+  """의료진 번호 (drNo)"""
+  drNo: String
+
+  """이메일"""
+  email: String
+
+  """소속 병원"""
+  hospitalCode: HospitalCode
+
+  """고유 ID"""
+  id: ID!
+
+  """활성 여부"""
+  isActive: Boolean!
+
+  """면허번호"""
+  licenseNo: String
+
+  """의사 이름"""
+  name: String!
+
+  """전화번호"""
+  phone: String
+
+  """프로필 사진 URL"""
+  photoUrl: String
+
+  """정렬 순서"""
+  sortOrder: Int!
+
+  """전문분야"""
+  specialty: String
+}
+
+"""의사 세부 유형 (EHR 의사구분코드)"""
+enum DoctorType {
+  """치과의사/치방"""
+  DENTIST
+
+  """의사/양방"""
+  DOCTOR
+
+  """한의사/한방"""
+  ORIENTAL_DOCTOR
+}
+
+type DrugOrderDetailItem {
+  """약품설명 (dtlsCtn)"""
+  description: String
+
+  """약품코드 (mdprCd)"""
+  drugCode: String
+
+  """약품명 (mdprNm)"""
+  drugName: String
+
+  """약종코드 (mdprClsfDetlCd)"""
+  drugType: String
+
+  """약종명 (detlCdNm)"""
+  drugTypeName: String
+
+  """성분 (ingrNm)"""
+  ingredient: String
+
+  """제조회사 (rstcCmpnNm)"""
+  manufacturer: String
+
+  """한글 제품명 (kornPdctNm)"""
+  prodName: String
+
+  """단위 (invnPcunCd)"""
+  unit: String
+}
+
+"""EHR 약품 상세 조회 입력 - 약품코드"""
+input DrugOrderDetailQueryInput {
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """약품코드 (mdprCd = ordrCd)"""
+  ordrCd: String!
+}
+
+type DrugOrderDetailResponse {
+  item: DrugOrderDetailItem
 }
 
 type DrugOrderItem {
-  orderCode: String
-  orderName: String
-  orderDate: String
-  dose: String
-  totalAmount: String
-  unit: String
+  """1회투여횟수 (ntm)"""
   count: String
-  useDay: String
-  type: String
-  methodWhen: String
-  methodHow: String
-  departmentName: String
-  doctorName: String
-  dosage: String
-  doseUnit: String
-  frequency: String
+
+  """일수 (daysCnt)"""
   days: String
+
+  """진료과 (kornDprtNm/mcdpNm)"""
+  departmentName: String
+
+  """진료의 (mddrNm)"""
+  doctorName: String
+
+  """용량 (dosqVl)"""
+  dosage: String
+
+  """1회투여량 (admnQty)"""
+  dose: String
+
+  """용량단위 (doseUnitNm)"""
+  doseUnit: String
+
+  """투여횟수 (frqcVl)"""
+  frequency: String
+
+  """자문의 여부"""
+  isConsultant: Boolean
+
+  """복용방법 (envlMemoCtn1/2)"""
+  methodHow: String
+
+  """복용시간 (tkmdInftDrusCtn)"""
+  methodWhen: String
+
+  """약품코드 (ordrCd)"""
+  orderCode: String
+
+  """처방일자 YYYYMMDD (ordrYmd)"""
+  orderDate: String
+
+  """약품명 (ordrNm)"""
+  orderName: String
+
+  """1회용량 (totlVlm)"""
+  totalAmount: String
+
+  """약종 (detlCdNm)"""
+  type: String
+
+  """단위 (icunCd)"""
+  unit: String
+
+  """용법 (usagCtn)"""
   usage: String
+
+  """사용일 (ddcn)"""
+  useDay: String
+
+  """진료일 (mdcrDt)"""
   visitDate: String
+}
+
+"""EHR 약처방 조회 입력 - 환자번호 기반 (진료일/진료과 선택)"""
+input DrugOrderQueryInput {
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """진료과 코드 - 선택"""
+  mcdpCd: String
+
+  """진료일 (YYYYMMDD) - 선택"""
+  mdcrDt: String
+
+  """환자번호"""
+  ptntNo: String!
 }
 
 type DrugOrderResponse {
@@ -838,283 +1524,4293 @@ type DrugOrderResponse {
   totalCount: Float!
 }
 
-input DrugOrderDetailQueryInput {
+"""eConsult 필터 입력"""
+input EConsultFilterInput {
+  """자문의 진료과 (부분 일치)"""
+  consultantDepartment: String
+
+  """자문의 이름 (부분 일치)"""
+  consultantName: String
+
+  """병원 코드 필터"""
+  hospitalCode: HospitalCode
+
+  """신청자 이메일 (부분 일치)"""
+  requesterEmail: String
+
+  """의료기관명 (부분 일치)"""
+  requesterHospitalName: String
+
+  """신청자명 (부분 일치)"""
+  requesterName: String
+
+  """상담 상태 필터 (답변여부)"""
+  status: EConsultStatus
+
+  """e-Consult 제목 (부분 일치)"""
+  title: String
+}
+
+"""eConsult (온라인 진료상담)"""
+type EConsultModel {
+  """답변일시"""
+  answeredAt: DateTime
+
+  """자문의"""
+  consultant: DoctorModel
+
+  """자문의 레코드 ID"""
+  consultantId: String!
+
+  """상담 내용"""
+  content: String!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """유효기간 만료일시"""
+  expiresAt: DateTime!
+
+  """병원 코드"""
   hospitalCode: HospitalCode!
-  ordrCd: String!
+
+  """고유 ID"""
+  id: ID!
+
+  """답변"""
+  reply: EConsultReplyModel
+
+  """신청자"""
+  requester: User
+
+  """신청자 ID"""
+  requesterId: String!
+
+  """상담 상태"""
+  status: EConsultStatus!
+
+  """상담 제목"""
+  title: String!
+
+  """수정일시"""
+  updatedAt: DateTime!
 }
 
-type DrugOrderDetailItem {
-  drugCode: String
-  drugName: String
-  prodName: String
-  ingredient: String
-  drugType: String
-  drugTypeName: String
-  unit: String
-  manufacturer: String
-  description: String
+"""eConsult 답변"""
+type EConsultReplyModel {
+  """답변 내용"""
+  content: String!
+
+  """답변일시"""
+  createdAt: DateTime!
+
+  """eConsult ID"""
+  econsultId: String!
+
+  """고유 ID"""
+  id: ID!
+
+  """답변자"""
+  repliedBy: User
+
+  """답변자 ID"""
+  repliedById: String!
 }
 
-type DrugOrderDetailResponse {
-  item: DrugOrderDetailItem
+"""eConsult 상태"""
+enum EConsultStatus {
+  """답변 완료"""
+  ANSWERED
+
+  """유효기간 만료"""
+  EXPIRED
+
+  """답변 대기"""
+  PENDING
 }
 
-type Query {
-  me: User!
-  checkUserIdAvailable(userId: String!): UserIdAvailability!
-  ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): HospitalSearchResult!
-  # 의뢰환자 조회
-  ehrGetReferralPatients(input: ReferralPatientQueryInput!): ReferralPatientResponse!
-  # 진료회신서 조회
-  ehrGetReferralReply(input: ReferralReplyQueryInput!): ReferralReplyResponse!
-  # 수진이력 조회
-  ehrGetVisitHistory(input: VisitHistoryQueryInput!): VisitHistoryResponse!
-  # 진단검사 결과 조회
-  ehrGetExamResultsByDate(input: PatientDateQueryInput!): ExamResultResponse!
-  # 검사 SLIP 조회 (병리/영상/내시경/기타)
-  ehrGetExamSlipsByDate(input: ExamSlipQueryInput!): ExamSlipResponse!
-  # 특수검사 결과 조회
-  ehrGetSpecialExamResults(input: ExamSlipQueryInput!): SpecialExamResultResponse!
-  # 약 처방 내역 조회
-  ehrGetDrugOrders(input: DrugOrderQueryInput!): DrugOrderResponse!
-  # 약 처방 상세 조회
-  ehrGetDrugOrderDetail(input: DrugOrderDetailQueryInput!): DrugOrderDetailResponse!
-  # 협력 병·의원 신청 조회
-  myPartnerApplication(hospitalCode: HospitalCode!): PartnerHospitalModel
-  myPartnerApplications(pagination: PaginationInput): PaginatedPartnerHospitalResponse!
-  partnerApplicationById(id: ID!): PartnerHospitalModel!
-  # 팝업/배너 조회
-  slideBanners: [PopupModel!]!
-  activePopups: [PopupModel!]!
-  miniBanners: [PopupModel!]!
-  # 병원 SNS
-  hospitalSns(pageRow: Int, startIndex: Int): HospitalArticleList!
-  # 병원소식
-  hospitalNews(pageRow: Int, startIndex: Int): HospitalArticleList!
-  # 병원 강의/교육
-  hospitalLectures(pageRow: Int, startIndex: Int): HospitalArticleList!
-  # 메뉴
-  menus(menuType: MenuType!): [MenuModel!]!
-  # 게시판
-  boardPosts(boardId: String!, pagination: PaginationInput, search: String): PaginatedBoardPostResponse!
-  pinnedPosts(boardId: String!): [BoardPost!]!
-  boardPostById(boardId: String!, id: String!): BoardPost!
-  # 첨부파일
-  attachments(entityId: ID!, entityType: AttachmentEntityType!): [AttachmentModel!]!
-  presignedDownloadUrl(attachmentId: ID!): String!
-  # 콘텐츠
-  contentById(id: String!): Content
-  # 자문의 목록 조회
-  medicalStaffList(filter: AdmapMedicalStaffFilterInput): MedicalStaffListResponse!
+"""EHR 존재여부 확인 결과"""
+type EhrCheckResult {
+  """존재 여부"""
+  exists: Boolean!
+
+  """EHR 원본 응답 (JSON 문자열)"""
+  rawResponse: String
 }
 
-# ── 자문의 ──
+"""EHR에서 조회된 의사 데이터 — rawResponse 파싱 결과"""
+type EhrDoctorData {
+  """생년월일 (YYYYMMDD 형식)"""
+  birthDate: String
 
-input AdmapMedicalStaffFilterInput {
-  mcdpCd: String
-}
-
-type MedicalStaffItem {
-  doctorId: String
-  doctorName: String
-  photoUrl: String
+  """진료과코드"""
   departmentCode: String
-  departmentName: String
-  bio: String
-  hospitalCode: String
-  mcdpAbrvCd: String
-  mcdpDvsnCd: String
-  mcdpSqncVl: String
-  apstYmd: String
-  apfnYmd: String
-  smcrYn: String
-  frvsMdcrPsblYn: String
-  revsMdcrPsblYn: String
-  fastMdcrDt: String
-  specialty: String
-  drNo: String
+
+  """성별코드 (M/F)"""
+  gender: String
+
+  """졸업년도"""
+  graduationYear: String
+
+  """면허번호"""
+  licenseNo: String
+
+  """수련병원명"""
+  trainingHospital: String
+
+  """출신대학코드"""
+  universityCode: String
+
+  """의사명"""
+  userName: String!
 }
 
-type MedicalStaffListResponse {
-  items: [MedicalStaffItem!]!
-  totalCount: Int!
+"""EHR 존재여부 확인 결과 (약처방/검사결과 등)"""
+type EhrExistsResult {
+  """존재 여부"""
+  exists: Boolean!
 }
 
-# ── NICE 본인인증 ──
+"""EHR 등록 결과"""
+type EhrRegisterResult {
+  """결과 메시지"""
+  message: String
 
-input InitiateVerificationInput {
-  returnUrl: String!
-}
+  """EHR 원본 응답 (JSON 문자열)"""
+  rawResponse: String
 
-type InitiateVerificationOutput {
-  authUrl: String!
-  sessionId: String!
-}
-
-input CompleteVerificationInput {
-  sessionId: String!
-  webTransactionId: String!
-}
-
-type VerificationResultOutput {
-  authMethod: String!
-  birthDate: String!
-  ci: String!
-  di: String!
-  gender: String!
-  name: String!
-  nationalInfo: String
-  phone: String
-  verificationToken: String
-}
-
-input FindUserIdByVerificationInput {
-  verificationToken: String!
-}
-
-type FindUserIdPayload {
-  maskedUserId: String!
-}
-
-input ResetPasswordByVerificationInput {
-  verificationToken: String!
-  userId: String!
-  newPassword: String!
-  newPasswordConfirm: String!
-}
-
-type MessageResponse {
-  message: String!
+  """등록 성공 여부"""
   success: Boolean!
 }
 
-input UpdateProfileInput {
-  password: String
-  passwordConfirm: String
-  email: String
-  phone: String
-  licenseNo: String
-  isDirector: Boolean
-  school: String
-  department: String
-  specialty: String
-  smsConsent: Boolean
-  emailConsent: Boolean
-  replyConsent: Boolean
-  hospName: String
-  careInstitutionNo: String
-  hospZipCode: String
-  hospAddress: String
-  hospAddressDetail: String
-  hospPhone: String
-  hospWebsite: String
+type EmailTestResult {
+  errorMessage: String
+  status: String!
+  success: Boolean!
 }
 
-input CreateImagingRequestInput {
+"""Enum 정보"""
+type EnumInfo {
+  """Enum 설명"""
+  description: String!
+
+  """Enum 이름 (예: HospitalCode, UserType)"""
+  name: String!
+
+  """Enum 값 목록"""
+  values: [EnumValue!]!
+}
+
+"""Enum 개별 값"""
+type EnumValue {
+  """값 (예: ANAM, PENDING)"""
+  key: String!
+
+  """한글 설명 (예: 안암병원, 승인대기)"""
+  label: String!
+}
+
+"""검사결과 항목"""
+type ExamResultItem {
+  """진료과명"""
+  departmentName: String
+
+  """진료의명"""
+  doctorName: String
+
+  """검사코드"""
+  examCode: String
+
+  """검사일자"""
+  examDate: String
+
+  """검사실코드"""
+  examRoomCode: String
+
+  """검사실명"""
+  examRoomName: String
+
+  """자문의 여부"""
+  isConsultant: Boolean
+
+  """정상범위 하한값"""
+  normalLowerLimit: String
+
+  """정상범위 상한값"""
+  normalUpperLimit: String
+
+  """처방명"""
+  orderName: String
+
+  """결과내용"""
+  resultContent: String
+
+  """결과포맷코드"""
+  resultFormatCode: String
+
+  """결과 비고"""
+  resultRemark: String
+
+  """결과단위"""
+  resultUnit: String
+}
+
+"""검사결과 조회 결과"""
+type ExamResultResponse {
+  """검사결과 목록"""
+  items: [ExamResultItem!]!
+
+  """총 건수"""
+  totalCount: Float!
+}
+
+"""SLIP(처방전) 항목"""
+type ExamSlipItem {
+  """진료과코드"""
+  departmentCode: String
+
+  """진료과명"""
+  departmentName: String
+
+  """진료의 ID"""
+  doctorId: String
+
+  """진료의명"""
+  doctorName: String
+
+  """시행일자"""
+  enforceDate: String
+
+  """시행일시"""
+  enforceDatetime: String
+
+  """검사코드"""
+  examCode: String
+
+  """자문의 여부"""
+  isConsultant: Boolean
+
+  """처방명"""
+  orderName: String
+
+  """SLIP 코드"""
+  slipCode: String
+
+  """SLIP 명"""
+  slipName: String
+
+  """진료일자"""
+  treatmentDate: String
+}
+
+"""EHR 검사 SLIP 조회 입력 - 환자번호 + slipCd + 진료과"""
+input ExamSlipQueryInput {
+  """조회 대상 병원"""
   hospitalCode: HospitalCode!
+
+  """진료과 코드"""
+  mcdpCd: String
+
+  """환자번호"""
   ptntNo: String!
-  examDate: String!
-  orderCode: String!
-  pacsAccessNo: String
-  refrSno: String
-  refrYmd: String
+
+  """SLIP 코드"""
+  slipCd: String!
 }
 
-input WithdrawMemberInput {
-  password: String!
+"""SLIP 조회 결과"""
+type ExamSlipResponse {
+  """SLIP 목록"""
+  items: [ExamSlipItem!]!
+
+  """총 건수"""
+  totalCount: Float!
 }
 
-input ChangePasswordInput {
-  oldPassword: String!
-  newPassword: String!
+"""본인인증 기반 아이디 찾기 입력"""
+input FindUserIdByVerificationInput {
+  """본인인증 확인 토큰 (completeVerification에서 발급)"""
+  verificationToken: String!
 }
 
-input UpdateDoctorProfileInput {
-  userName: String
+"""아이디 찾기 입력"""
+input FindUserIdInput {
+  """이메일"""
   email: String
+
+  """휴대폰 번호"""
   phone: String
-  licenseNo: String
-  isDirector: Boolean
-  school: String
-  department: String
-  specialty: String
-  doctorType: String
-  smsConsent: Boolean
-  emailConsent: Boolean
-  replyConsent: Boolean
-  hospName: String
+
+  """이름"""
+  userName: String!
+}
+
+"""아이디 찾기 결과"""
+type FindUserIdPayload {
+  """마스킹된 아이디 (예: te***d)"""
+  maskedUserId: String!
+}
+
+"""성별"""
+enum Gender {
+  """여성"""
+  F
+
+  """남성"""
+  M
+}
+
+"""EHR 협력병원 상세정보 조회 입력 - 요양기관번호 또는 면허번호로 조회"""
+input GetCollaboratingHospitalInfoInput {
+  """면허번호"""
+  drlcNo: String
+
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """요양기관번호"""
+  rcisNo: String
+}
+
+"""병원 게시글"""
+type HospitalArticle {
+  """게시글 번호"""
+  articleNo: Int!
+
+  """카테고리"""
+  category: String
+
+  """작성일 (ISO 8601)"""
+  createdDt: String!
+
+  """병원명 (예: 고대안암병원)"""
+  hospitalName: String!
+
+  """링크 URL (YouTube 등)"""
+  linkUrl: String
+
+  """썸네일 이미지 URL"""
+  thumbnailUrl: String
+
+  """제목"""
+  title: String!
+
+  """작성자"""
+  writer: String!
+}
+
+"""병원 게시글 목록 응답"""
+type HospitalArticleList {
+  """게시글 목록"""
+  articles: [HospitalArticle!]!
+
+  """총 게시글 수"""
+  totalCount: Int!
+}
+
+"""병원 코드"""
+enum HospitalCode {
+  """전체 병원 (슈퍼관리자 전용)"""
+  ALL
+
+  """안암병원"""
+  ANAM
+
+  """안산병원"""
+  ANSAN
+
+  """구로병원"""
+  GURO
+}
+
+"""DB 병원 검색 필터"""
+input HospitalFilterInput {
+  """검색 대상 병원 코드 (안암/구로/안산)"""
+  hospitalCode: HospitalCode!
+
+  """병원명 (부분 일치 검색)"""
+  name: String
+}
+
+"""협력 병의원 (DB 등록 + EHR 검색 결과 공통)"""
+type HospitalModel {
+  """주소"""
+  address: String
+
+  """상세주소"""
+  addressDetail: String
+
+  """병원분류코드 (H=병원, M=의원)"""
+  classificationCode: String
+
+  """등록일시 (DB 등록된 경우에만)"""
+  createdAt: DateTime
+
+  """팩스번호"""
+  faxNumber: String
+
+  """소속 병원 코드 (안암/구로/안산)"""
+  hospitalCode: HospitalCode
+
+  """병원 고유 ID (DB 등록된 경우에만)"""
+  id: ID
+
+  """병원명"""
+  name: String!
+
+  """협력 유형 (M=의원/H=병원)"""
+  partnerType: PartnerType
+
+  """요양기관번호 (PHIS 코드)"""
+  phisCode: String
+
+  """대표전화"""
+  phone: String
+
+  """대표자명"""
+  representative: String
+
+  """진료과목"""
+  specialties: String
+
+  """수정일시 (DB 등록된 경우에만)"""
+  updatedAt: DateTime
+
+  """홈페이지"""
+  website: String
+
+  """우편번호"""
+  zipCode: String
+}
+
+"""병원 검색 결과"""
+type HospitalSearchResult {
+  """병원 목록"""
+  hospitals: [HospitalModel!]!
+
+  """총 검색 결과 수"""
+  totalCount: Int!
+}
+
+"""검사 구분"""
+enum ImagingExamType {
+  """내시경검사"""
+  ENDOSCOPY
+
+  """기타검사"""
+  OTHER
+
+  """영상검사"""
+  RADIOLOGY
+}
+
+"""영상검사 첨부 업로드 메타데이터"""
+input ImagingRequestAttachmentInput {
+  """MIME 타입"""
+  mimeType: String
+
+  """원본 파일명"""
+  name: String
+
+  """파일 크기(bytes)"""
+  size: Int
+
+  """업로드 후 반환된 파일 URL"""
+  url: String!
+}
+
+"""영상검사 요청 사용자 표시 상태"""
+enum ImagingRequestDisplayState {
+  """기간 만료"""
+  EXPIRED
+
+  """이미지 준비 중"""
+  PENDING_IMAGE
+
+  """반려됨"""
+  REJECTED
+
+  """신청 가능"""
+  REQUESTABLE
+
+  """보기 가능"""
+  VIEWABLE
+}
+
+"""영상검사 요청 필터"""
+input ImagingRequestFilterInput {
+  """종료 날짜 (YYYYMMDD)"""
+  endDate: String
+
+  """검사명 검색"""
+  examName: String
+
+  """검사 구분 필터"""
+  examType: ImagingExamType
+
+  """환자명 검색"""
+  patientName: String
+
+  """환자번호 검색"""
+  ptntNo: String
+
+  """시작 날짜 (YYYYMMDD)"""
+  startDate: String
+
+  """상태 필터"""
+  status: ImagingRequestStatus
+}
+
+"""영상검사 요청 목록 조회 입력"""
+input ImagingRequestListInput {
+  """필터 조건"""
+  filter: ImagingRequestFilterInput
+
+  """페이지당 항목 수"""
+  limit: Float = 20
+
+  """페이지 번호 (1부터 시작)"""
+  page: Float = 1
+}
+
+"""영상검사 요청"""
+type ImagingRequestModel {
+  """승인 일시"""
+  approvedAt: DateTime
+
+  """첨부 이미지 목록"""
+  attachments: [AttachmentModel!]
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """사용자 표시 상태 (파생)"""
+  displayState: ImagingRequestDisplayState!
+
+  """검사일자 (YYYYMMDD 형식)"""
+  examDate: String!
+
+  """EHR 특수검사결과 조인 결과"""
+  examInfo: SpecialExamResultItem
+
+  """검사 구분 (영상검사, 내시경검사, 기타검사)"""
+  examType: ImagingExamType!
+
+  """만료 일시 (신청일 기준 3개월)"""
+  expiresAt: DateTime!
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """고유 ID"""
+  id: ID!
+
+  """처방코드 (외부 EHR 기준)"""
+  orderCode: String!
+
+  """PACS 접근번호 (우선 조인 키)"""
+  pacsAccessNo: String
+
+  """환자번호 (외부 EHR 기준)"""
+  ptntNo: String!
+
+  """EHR 회신환자정보 조인 결과"""
+  referralReply: ReferralReplyItem
+
+  """의뢰일련번호"""
+  refrSno: String
+
+  """의뢰일자 (YYYYMMDD 형식)"""
+  refrYmd: String
+
+  """반려 일시"""
+  rejectedAt: DateTime
+
+  """신청 일시"""
+  requestedAt: DateTime!
+
+  """내부 워크플로 상태"""
+  status: ImagingRequestStatus!
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""영상검사 요청 내부 워크플로 상태"""
+enum ImagingRequestStatus {
+  """승인됨"""
+  APPROVED
+
+  """만료됨"""
+  EXPIRED
+
+  """반려됨"""
+  REJECTED
+
+  """신청됨"""
+  REQUESTED
+}
+
+"""NICE 본인인증 요청 입력"""
+input InitiateVerificationInput {
+  """인증 완료 후 돌아올 URL (프론트엔드 콜백 페이지)"""
+  returnUrl: String!
+}
+
+"""NICE 본인인증 요청 결과"""
+type InitiateVerificationOutput {
+  """NICE 인증 팝업 URL (window.open으로 열기)"""
+  authUrl: String!
+
+  """세션 식별자 (completeVerification 시 사용)"""
+  sessionId: String!
+}
+
+"""의료기관 유형 (EHR hsptClsfCd 코드 기반)"""
+enum InstitutionType {
+  """의원 (코드: 50)"""
+  CLINIC
+
+  """치과의원 (코드: 51)"""
+  DENTAL_CLINIC
+
+  """치과병원 (코드: 31)"""
+  DENTAL_HOSPITAL
+
+  """종합병원 (코드: 20)"""
+  GENERAL_HOSPITAL
+
+  """병원 (코드: 30)"""
+  HOSPITAL
+
+  """기관 (코드: 70)"""
+  INSTITUTION
+
+  """정신병원 (코드: 32)"""
+  MENTAL_HOSPITAL
+
+  """요양병원 (코드: 40)"""
+  NURSING_HOSPITAL
+
+  """한방/한의원 (코드: 90)"""
+  ORIENTAL
+
+  """한방병원 (코드: 99)"""
+  ORIENTAL_HOSPITAL
+
+  """보건소/보건기관 (코드: 60)"""
+  PUBLIC_HEALTH
+
+  """상급종합병원 (코드: 10)"""
+  TERTIARY_HOSPITAL
+
+  """미분류 (코드: 80)"""
+  UNCLASSIFIED
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""레거시 회원 확인 결과 — 우리 DB + EHR 동시 확인"""
+type LegacyUserCheckResult {
+  """EHR에서 조회된 의사 기본 데이터"""
+  ehrDoctorData: EhrDoctorData
+
+  """우리 DB에 동일 아이디 존재 여부 (true=이미 가입됨)"""
+  existsInDb: Boolean!
+
+  """EHR 레거시 시스템에 존재 여부 (true=마이그레이션 대상)"""
+  existsInLegacy: Boolean!
+
+  """EHR에서 발견된 소속 병원 코드 (안암/구로/안산)"""
+  hospitalCode: HospitalCode
+}
+
+"""로그인 입력"""
+input LoginInput {
+  """비밀번호"""
+  password: String!
+
+  """아이디"""
+  userId: String!
+}
+
+"""EHR 기반 내 프로필 정보"""
+type MeEhrProfile {
+  """생년월일"""
+  birthDate: DateTime
+
+  """요양기관번호"""
   careInstitutionNo: String
-  hospZipCode: String
-  hospAddress: String
-  hospAddressDetail: String
-  hospPhone: String
-  hospWebsite: String
+
+  """진료과 코드"""
+  department: String
+
+  """성별코드 (M/F)"""
+  gender: String
+
+  """졸업연도"""
+  graduationYear: String
+
+  """소속 병원명"""
+  hospName: String
+
+  """의사면허번호"""
+  licenseNo: String
+
+  """출신학교 코드"""
+  school: String
+
+  """세부전공"""
+  specialty: String
+
+  """수련병원명"""
+  trainingHospital: String
+}
+
+"""EHR 기반 내 정보"""
+type MeEhrUser {
+  """이메일"""
+  email: String
+
+  """전화번호"""
+  phone: String
+
+  """EHR 프로필 정보"""
+  profile: MeEhrProfile
+
+  """이름"""
+  userName: String
+}
+
+"""메뉴"""
+type MenuModel {
+  """현재 사용자의 접근 권한 (null이면 FULL)"""
+  accessLevel: AccessLevel
+
+  """하위 메뉴 목록"""
+  children: [MenuModel!]
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """외부 링크 URL"""
+  externalUrl: String
+
+  """상위메뉴 클릭 시 이동할 첫 하위메뉴 경로"""
+  firstChildPath: String
+
+  """GNB 노출 여부"""
+  gnbExposure: Boolean!
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """아이콘명"""
+  iconName: String
+
+  """메뉴 ID"""
+  id: ID!
+
+  """활성 여부"""
+  isActive: Boolean!
+
+  """메뉴 타깃 유형"""
+  menuTargetType: MenuTargetType
+
+  """메뉴 유형"""
+  menuType: MenuType!
+
+  """메뉴명"""
+  name: String!
+
+  """상위 메뉴 ID"""
+  parentId: String
+
+  """경로"""
+  path: String
+
+  """정렬순서"""
+  sortOrder: Int!
+
+  """연결된 게시판 ID"""
+  targetBoardId: String
+
+  """연결된 게시판 유형"""
+  targetBoardType: BoardType
+
+  """연결된 콘텐츠 ID"""
+  targetContentId: String
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""메뉴 정렬 항목"""
+input MenuOrderItem {
+  """메뉴 ID"""
+  id: String!
+
+  """정렬순서"""
+  sortOrder: Int!
+}
+
+"""메뉴 권한 항목"""
+type MenuPermissionEntryModel {
+  """접근 권한 수준"""
+  accessLevel: AccessLevel!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """권한 그룹 ID"""
+  groupId: String!
+
+  """메뉴 권한 항목 ID"""
+  id: ID!
+
+  """메뉴 ID"""
+  menuId: String!
+
+  """메뉴명"""
+  menuName: String
+
+  """상위 메뉴 ID"""
+  menuParentId: String
+
+  """메뉴 정렬 순서"""
+  menuSortOrder: Int
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""메뉴 권한 그룹"""
+type MenuPermissionGroupModel {
+  """생성일시"""
+  createdAt: DateTime!
+
+  """권한 항목 목록"""
+  entries: [MenuPermissionEntryModel!]
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """메뉴 권한 그룹 ID"""
+  id: ID!
+
+  """그룹명"""
+  name: String!
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""메뉴 타깃 유형"""
+enum MenuTargetType {
+  """게시판 연결"""
+  BOARD
+
+  """콘텐츠 연결"""
+  CONTENT
+
+  """링크"""
+  LINK
+
+  """상위메뉴"""
+  PARENT
+}
+
+"""메뉴 유형"""
+enum MenuType {
+  """관리자 메뉴"""
+  ADMIN
+
+  """사용자 메뉴"""
+  USER
+}
+
+"""메시지 응답"""
+type MessageResponse {
+  """응답 메시지"""
+  message: String!
+
+  """성공 여부"""
+  success: Boolean!
+}
+
+"""레거시 회원 마이그레이션 입력"""
+input MigrateLegacyInput {
+  """NICE 본인인증 토큰 ID (본인인증 완료 후 전달)"""
+  niceTokenId: String!
+
+  """새 비밀번호 (영문+숫자+특수문자 조합 8~12자리)"""
+  password: String!
+
+  """새 비밀번호 확인"""
+  passwordConfirm: String!
+
+  """레거시 시스템 아이디 (EHR에 등록된 아이디)"""
+  userId: String!
+
+  """NICE 콜백에서 받은 web_transaction_id"""
+  webTransactionId: String!
 }
 
 type Mutation {
-  login(input: LoginInput!): AuthPayload!
-  signup(input: SignupInput!): AuthPayload!
-  logout: Boolean!
-  refreshToken(refreshToken: String!): AuthPayload!
-  # 회원정보 수정
-  updateProfile(input: UpdateProfileInput!): User!
-  registerHospital(input: RegisterHospitalInput!): HospitalModel!
-  # 협력 병·의원 신청
-  applyPartnerHospital(input: ApplyPartnerHospitalInput!): PartnerHospitalModel!
-  saveDraftPartnerApplication(input: SaveDraftPartnerInput!): PartnerHospitalModel!
-  submitPartnerApplication(id: ID!): PartnerHospitalModel!
-  cancelPartnerApplication(id: ID!): Boolean!
-  # NICE 본인인증
-  initiateVerification(input: InitiateVerificationInput!): InitiateVerificationOutput!
+  """관리자 계정 생성"""
+  adminCreateUser(input: AdminCreateUserInput!): User!
+
+  """관리자 계정 삭제 (비활성화)"""
+  adminDeleteUser(
+    """사용자 ID"""
+    id: String!
+  ): Boolean!
+
+  """관리자 회원 정보 수정"""
+  adminUpdateUser(
+    """사용자 ID"""
+    id: String!
+    input: AdminUpdateUserInput!
+  ): User!
+
+  """협력병의원 신청 - 병의원 정보를 입력하여 협력 신청"""
+  applyPartnerHospital(
+    """협력병의원 신청 정보"""
+    input: ApplyPartnerHospitalInput!
+  ): PartnerHospitalModel!
+
+  """관리자 영상검사 요청 승인"""
+  approveImagingRequest(
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+    input: ApproveImagingRequestInput!
+  ): ImagingRequestModel!
+
+  """협력병의원 신청 승인"""
+  approvePartnerApplication(
+    """신청 ID"""
+    id: String!
+  ): PartnerApplicationModel!
+
+  """회원 승인 - 승인대기 상태를 정상으로 변경"""
+  approveUser(
+    """사용자 ID"""
+    id: String!
+  ): User!
+
+  """관리자에게 권한그룹 할당/해제"""
+  assignPermissionGroup(
+    """권한그룹 ID (null이면 해제)"""
+    groupId: String
+
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """관리자 로그인 아이디"""
+    userId: String!
+  ): Boolean!
+
+  """eConsult 취소 - 대기 상태의 본인 상담만 취소 가능"""
+  cancelEConsult(
+    """eConsult ID"""
+    id: String!
+  ): Boolean!
+
+  """협력병의원 신청 취소 - 대기 중이거나 임시저장 상태의 신청만 취소 가능"""
+  cancelPartnerApplication(
+    """신청 ID"""
+    id: ID!
+  ): Boolean!
+
+  """비밀번호 변경 - 현재 비밀번호 확인 후 새 비밀번호로 변경"""
+  changePassword(input: ChangePasswordInput!): MessageResponse!
+
+  """NICE 본인인증 완료 - 콜백에서 받은 web_transaction_id로 결과 조회 후 복호화 결과 반환"""
   completeVerification(input: CompleteVerificationInput!): VerificationResultOutput!
-  findUserIdByVerification(input: FindUserIdByVerificationInput!): FindUserIdPayload!
-  resetPasswordByVerification(input: ResetPasswordByVerificationInput!): MessageResponse!
-  # e-Consult 신청
+
+  """자문의 CCC 로그인 - CCC 인증 후 자문의 전용 JWT 발급"""
+  consultantLogin(input: ConsultantLoginInput!): ConsultantLoginResponse!
+
+  """자문의 eConsult 답변 등록 - 자문의 로그인 필요"""
+  consultantReplyEConsult(
+    """eConsult ID"""
+    id: String!
+    input: ReplyEConsultInput!
+  ): EConsultReplyModel!
+
+  """게시글 생성 - 관리자 전용"""
+  createBoardPost(input: CreateBoardPostInput!): BoardPost!
+
+  """게시판 설정 생성"""
+  createBoardSetting(input: CreateBoardSettingInput!): BoardSettingModel!
+
+  """콘텐츠 생성"""
+  createContent(input: CreateContentInput!): Content!
+
+  """콘텐츠 그룹 생성"""
+  createContentGroup(
+    """생성 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+    input: CreateContentGroupInput!
+  ): ContentGroupModel!
+
+  """의료진 생성"""
+  createDoctor(input: CreateDoctorInput!): AdminDoctorModel!
+
+  """eConsult 신청 - 온라인 상담 요청 (유효기간 7일)"""
   createEConsult(input: CreateEConsultInput!): EConsultModel!
+
+  """메뉴 생성"""
+  createMenu(input: CreateMenuInput!): MenuModel!
+
+  """권한그룹 생성"""
+  createMenuPermissionGroup(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+    input: CreateMenuPermissionGroupInput!
+  ): MenuPermissionGroupModel!
+
+  """팝업/배너 생성"""
+  createPopup(input: CreatePopupInput!): PopupModel!
+
+  """e-Consult 자문의 비활성화"""
+  deactivateEconsultConsultant(
+    """자문의 레코드 ID"""
+    id: String!
+  ): Boolean!
+
+  """게시글 삭제 - 관리자 전용 (소프트 삭제)"""
+  deleteBoardPost(
+    """게시글 ID"""
+    id: String!
+  ): Boolean!
+
+  """게시판 설정 삭제"""
+  deleteBoardSetting(
+    """설정 ID"""
+    id: String!
+  ): Boolean!
+
+  """콘텐츠 그룹 삭제"""
+  deleteContentGroup(
+    """콘텐츠 그룹 ID"""
+    id: String!
+  ): Boolean!
+
+  """의료진 삭제 (비활성화)"""
+  deleteDoctor(
+    """의료진 회원 ID"""
+    id: String!
+  ): Boolean!
+
+  """파일 삭제 (Object Storage + DB)"""
+  deleteFile(
+    """첨부파일 ID"""
+    attachmentId: ID!
+  ): Boolean!
+
+  """메뉴 삭제 - 하위 메뉴도 함께 삭제"""
+  deleteMenu(
+    """메뉴 ID"""
+    id: String!
+  ): Boolean!
+
+  """권한그룹 삭제"""
+  deleteMenuPermissionGroup(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """권한그룹 ID"""
+    id: String!
+  ): Boolean!
+
+  """팝업/배너 삭제"""
+  deletePopup(
+    """팝업 ID"""
+    id: String!
+  ): Boolean!
+
+  """ADMAP 의료진을 e-Consult 자문의로 지정"""
+  designateEconsultConsultant(input: DesignateEconsultConsultantInput!): AdminEconsultConsultantModel!
+
+  """EHR 의사정보 등록 (신규) - 협력센터에 의사정보 신규 등록"""
+  ehrRegisterDoctor(input: RegisterDoctorEhrInput!): EhrRegisterResult!
+
+  """EHR 의사정보 등록 (의뢰처용) - 의뢰처 경로를 통한 의사정보 등록"""
+  ehrRegisterDoctorReferSite(input: RegisterDoctorEhrInput!): EhrRegisterResult!
+
+  """EHR 병원정보 등록 - 협력센터에 병원정보 신규 등록"""
+  ehrRegisterHospital(input: RegisterHospitalEhrInput!): EhrRegisterResult!
+
+  """EHR 병원정보 등록 (의뢰처용) - 의뢰처 경로를 통한 병원정보 등록"""
+  ehrRegisterHospitalReferSite(input: RegisterHospitalEhrInput!): EhrRegisterResult!
+
+  """EHR 의사정보 수정 - 등록된 의사정보 업데이트"""
+  ehrUpdateDoctorInfo(input: UpdateDoctorEhrInput!): EhrRegisterResult!
+
+  """EHR 병원정보 수정 - 등록된 병원정보 업데이트"""
+  ehrUpdateHospitalInfo(input: UpdateHospitalEhrInput!): EhrRegisterResult!
+
+  """EHR 회원상태코드 변경 - 회원 상태 업데이트 (1:일반/2:휴면/3:삭제/4:미가입)"""
+  ehrUpdateMemberStatus(input: UpdateMemberStatusInput!): EhrRegisterResult!
+
+  """아이디 찾기 - 이름+이메일 또는 이름+휴대폰으로 마스킹된 아이디 반환"""
+  findUserId(input: FindUserIdInput!): FindUserIdPayload!
+
+  """아이디 찾기 (본인인증) - NICE 본인인증 후 CI/이름/휴대폰으로 마스킹된 아이디 반환"""
+  findUserIdByVerification(input: FindUserIdByVerificationInput!): FindUserIdPayload!
+
+  """NICE 본인인증 시작 - 인증 팝업 URL과 세션 ID 반환"""
+  initiateVerification(input: InitiateVerificationInput!): InitiateVerificationOutput!
+
+  """로그인 - Access Token(15분)과 Refresh Token(7일) 발급"""
+  login(input: LoginInput!): AuthPayload!
+
+  """로그아웃 - Refresh Token 삭제"""
+  logout: Boolean!
+
+  """레거시 회원 마이그레이션 — NICE 본인인증 + EHR 매칭 후 계정 생성 (비인증)"""
+  migrateLegacyUser(
+    """마이그레이션 입력 데이터"""
+    input: MigrateLegacyInput!
+  ): AuthPayload!
+
+  """토큰 갱신 - Refresh Token으로 새 Access Token 발급"""
+  refreshToken(
+    """리프레시 토큰"""
+    refreshToken: String!
+  ): AuthPayload!
+
+  """병원 간이 등록 - 의사 가입 시 병원검색에서 없을 때 신규 등록 (비인증)"""
+  registerHospital(
+    """병원 신규등록 정보"""
+    input: RegisterHospitalInput!
+  ): HospitalModel!
+
+  """관리자 영상검사 요청 반려"""
+  rejectImagingRequest(
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+    input: RejectImagingRequestInput!
+  ): ImagingRequestModel!
+
+  """협력병의원 신청 반려"""
+  rejectPartnerApplication(
+    """신청 ID"""
+    id: String!
+
+    """반려 사유"""
+    reason: String!
+  ): PartnerApplicationModel!
+
+  """회원 거부 - 승인대기 상태를 거부로 변경"""
+  rejectUser(
+    """사용자 ID"""
+    id: String!
+
+    """거부 사유"""
+    reason: String!
+  ): User!
+
+  """메뉴 정렬 변경 - 일괄 정렬순서 업데이트"""
+  reorderMenus(input: ReorderMenusInput!): Boolean!
+
+  """팝업/배너 순서 변경 — orderedIds 배열의 인덱스 순서대로 sortOrder 재할당"""
+  reorderPopups(
+    """순서 변경 입력"""
+    input: ReorderPopupsInput!
+  ): Boolean!
+
+  """관리자 영상검사 첨부 이미지 교체"""
+  replaceImagingRequestAttachments(
+    """업로드 메타데이터 배열"""
+    attachments: [ImagingRequestAttachmentInput!]!
+
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """영상검사 요청 ID"""
+    imagingRequestId: String!
+  ): ImagingRequestModel!
+
+  """사용자 영상검사 요청 생성"""
+  requestImagingExam(input: CreateImagingRequestInput!): ImagingRequestModel!
+
+  """비밀번호 재설정 요청 - 이메일로 재설정 링크 발송"""
+  requestPasswordReset(input: RequestPasswordResetInput!): MessageResponse!
+
+  """비밀번호 재설정 - 토큰 검증 후 새 비밀번호 설정"""
+  resetPassword(input: ResetPasswordInput!): MessageResponse!
+
+  """비밀번호 재설정 (본인인증) - NICE 본인인증 후 새 비밀번호 설정"""
+  resetPasswordByVerification(input: ResetPasswordByVerificationInput!): MessageResponse!
+
+  """협력병의원 임시저장 - 기존 DRAFT/REJECTED가 있으면 덮어쓰기, 없으면 새로 생성"""
+  saveDraftPartnerApplication(
+    """협력병의원 임시저장 정보"""
+    input: SaveDraftPartnerInput!
+  ): PartnerHospitalModel!
+
+  """이메일 발송 테스트 (인증 불필요)"""
+  sendTestEmail(
+    """본문 (HTML 가능)"""
+    body: String!
+
+    """제목"""
+    subject: String!
+
+    """수신 이메일 주소"""
+    to: String!
+  ): EmailTestResult!
+
+  """SMS 발송 테스트 (인증 불필요)"""
+  sendTestSms(
+    """발신 병원 코드"""
+    hospitalCode: HospitalCode!
+
+    """메시지 내용"""
+    message: String!
+
+    """수신 번호"""
+    phone: String!
+  ): SmsTestResult!
+
+  """메뉴별 권한 설정"""
+  setMenuPermission(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+    input: SetMenuPermissionInput!
+  ): Boolean!
+
+  """권한그룹에 관리자 일괄 배정 (기존 배정 교체)"""
+  setPermissionGroupMembers(
+    """권한그룹 ID"""
+    groupId: String!
+
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """배정할 관리자 ID 목록 (user.id)"""
+    userIds: [String!]!
+  ): Boolean!
+
+  """회원가입 - 일반회원은 즉시 활성화, 병원/의사는 승인대기 상태로 생성"""
+  signup(input: SignupInput!): AuthPayload!
+
+  """협력병의원 신청 제출 - DRAFT → PENDING 전환, 필수값 검증 수행"""
+  submitPartnerApplication(
+    """임시저장 ID"""
+    id: ID!
+  ): PartnerHospitalModel!
+
+  """협력병의원 해지 - 승인된 협력병의원을 해지 처리"""
+  terminatePartnerApplication(
+    """신청 ID"""
+    id: String!
+
+    """해지 사유"""
+    reason: String!
+  ): PartnerApplicationModel!
+
+  """게시글 수정 - 관리자 전용"""
+  updateBoardPost(
+    """게시글 ID"""
+    id: String!
+    input: UpdateBoardPostInput!
+  ): BoardPost!
+
+  """게시판 설정 수정"""
+  updateBoardSetting(
+    """설정 ID"""
+    id: String!
+    input: UpdateBoardSettingInput!
+  ): BoardSettingModel!
+
+  """콘텐츠 수정"""
+  updateContent(
+    """콘텐츠 ID"""
+    id: String!
+    input: UpdateContentInput!
+  ): Content!
+
+  """콘텐츠 그룹 수정"""
+  updateContentGroup(
+    """콘텐츠 그룹 ID"""
+    id: String!
+    input: UpdateContentGroupInput!
+  ): ContentGroupModel!
+
+  """의료진 수정"""
+  updateDoctor(
+    """의료진 회원 ID"""
+    id: String!
+    input: UpdateDoctorInput!
+  ): AdminDoctorModel!
+
+  """의사 프로필 수정 - 면허번호, 전문분야, 진료과 변경 (의사 전용)"""
+  updateDoctorProfile(input: UpdateDoctorProfileInput!): User!
+
+  """e-Consult 자문의 이메일 수정"""
+  updateEconsultConsultantEmail(
+    """자문의 레코드 ID"""
+    id: String!
+    input: UpdateEconsultConsultantEmailInput!
+  ): AdminEconsultConsultantModel!
+
+  """메뉴 수정"""
+  updateMenu(
+    """메뉴 ID"""
+    id: String!
+    input: UpdateMenuInput!
+  ): MenuModel!
+
+  """권한그룹 수정"""
+  updateMenuPermissionGroup(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """권한그룹 ID"""
+    id: String!
+    input: UpdateMenuPermissionGroupInput!
+  ): MenuPermissionGroupModel!
+
+  """협력병의원 정보 수정 - 기존 신청의 필드를 수정 (승인 후 정보수정 포함, EHR 동기화)"""
+  updatePartnerApplication(
+    """협력병의원 정보 수정 입력"""
+    input: UpdatePartnerApplicationInput!
+  ): PartnerHospitalModel!
+
+  """팝업/배너 수정"""
+  updatePopup(
+    """팝업 ID"""
+    id: String!
+    input: UpdatePopupInput!
+  ): PopupModel!
+
+  """프로필 수정 - 이름, 이메일, 전화번호 변경"""
+  updateProfile(input: UpdateProfileInput!): User!
+
+  """회원 탈퇴 - 비밀번호 확인 후 계정 비활성화 (소프트 삭제)"""
+  withdrawMember(input: WithdrawMemberInput!): MessageResponse!
 }
 
-# ── e-Consult ──
+"""의료진 페이지네이션 응답"""
+type PaginatedAdminDoctorResponse {
+  """다음 페이지 커서"""
+  cursor: String
 
-input CreateEConsultInput {
-  hospitalCode: HospitalCode!
-  consultantId: String!
-  title: String!
-  content: String!
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [AdminDoctorModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
 }
 
-enum EConsultStatus {
-  WAITING
-  COMPLETED
-  EXPIRED
+"""관리자용 협력병의원 신청 페이지네이션 응답"""
+type PaginatedAdminPartnerApplicationResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [PartnerApplicationModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
 }
 
-type EConsultReplyModel {
-  id: ID!
-  content: String!
-  repliedAt: DateTime!
+"""관리자용 사용자 목록 응답"""
+type PaginatedAdminUserResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [User!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
 }
 
-type DoctorModel {
-  id: ID!
-  doctorId: String
-  name: String
-  departmentName: String
-  email: String
+"""감사 로그 페이지네이션 응답"""
+type PaginatedAuditLogResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [AuditLogModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
 }
 
-type EConsultModel {
-  id: ID!
-  hospitalCode: HospitalCode!
-  requesterId: String!
-  requester: User
-  consultantId: String!
-  consultant: DoctorModel
-  title: String!
-  content: String!
-  status: EConsultStatus!
-  reply: EConsultReplyModel
-  answeredAt: DateTime
-  expiresAt: DateTime!
+"""게시글 페이지네이션 응답"""
+type PaginatedBoardPostResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [BoardPost!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
+}
+
+"""eConsult 페이지네이션 응답"""
+type PaginatedEConsultResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [EConsultModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
+}
+
+"""협력병의원 현황 페이지네이션 응답"""
+type PaginatedHospitalResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [HospitalModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
+}
+
+"""영상검사 요청 페이지네이션 응답"""
+type PaginatedImagingRequestResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [ImagingRequestModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
+}
+
+"""협력병의원 페이지네이션 응답"""
+type PaginatedPartnerHospitalResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [PartnerHospitalModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
+}
+
+"""관리자용 팝업/배너 목록 응답"""
+type PaginatedPopupResponse {
+  """다음 페이지 커서"""
+  cursor: String
+
+  """다음 페이지 존재 여부"""
+  hasNextPage: Boolean!
+
+  """항목 목록"""
+  items: [PopupModel!]!
+
+  """전체 항목 수"""
+  totalCount: Int!
+}
+
+"""페이지네이션 입력"""
+input PaginationInput {
+  """커서 기반 페이지네이션용 커서 값"""
+  cursor: String
+
+  """페이지당 항목 수"""
+  limit: Int = 20
+
+  """페이지 번호 (1부터 시작)"""
+  page: Int = 1
+}
+
+"""협력병의원 신청 (관리자용)"""
+type PartnerApplicationModel {
+  """신청자 ID"""
+  applicantId: String
+
+  """승인일시"""
+  approvedAt: DateTime
+
+  """생성일시"""
   createdAt: DateTime!
+
+  """병원장명"""
+  directorName: String
+
+  """병원장 연락처"""
+  directorPhone: String
+
+  """협력 병의원 정보"""
+  hospital: HospitalModel!
+
+  """소속 병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """병원 ID"""
+  hospitalId: String!
+
+  """신청 ID"""
+  id: ID!
+
+  """반려 사유"""
+  rejectReason: String
+
+  """검토일시"""
+  reviewedAt: DateTime
+
+  """검토자 ID"""
+  reviewedById: String
+
+  """실무자 이메일"""
+  staffEmail: String
+
+  """실무자명"""
+  staffName: String
+
+  """실무자 연락처"""
+  staffPhone: String
+
+  """상태"""
+  status: PartnerStatus!
+
+  """해지일시"""
+  terminatedAt: DateTime
+
+  """수정일시"""
   updatedAt: DateTime!
+}
+
+"""협력병의원 필터"""
+input PartnerHospitalFilterInput {
+  """병원명 검색"""
+  search: String
+
+  """진료과목 검색"""
+  specialty: String
+}
+
+"""협력병의원 신청"""
+type PartnerHospitalModel {
+  """가동 병상 수"""
+  activeBedCount: Int
+
+  """신청자 ID"""
+  applicantId: String!
+
+  """승인일시"""
+  approvedAt: DateTime
+
+  """첨부파일 목록 (Attachment FK)"""
+  attachmentRows: [AttachmentModel!]
+
+  """첨부파일 메타데이터"""
+  attachments: JSON
+
+  """기본 처치 가능 항목 (JSON)"""
+  availableTreatments: JSON
+
+  """엑시머레이저 가능 여부"""
+  clinicHasExcimerLaser: Boolean
+
+  """혈액투석 가능 여부"""
+  clinicHasHemodialysis: Boolean
+
+  """복막투석 가능 여부"""
+  clinicHasPeritoneal: Boolean
+
+  """광선치료 가능 여부"""
+  clinicHasPhototherapy: Boolean
+
+  """투약 유형"""
+  clinicMedicationType: String
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """진료과별 전문의 현황 (JSON)"""
+  departmentSpecialists: JSON
+
+  """병원장 생년월일"""
+  directorBirthDate: String
+
+  """병원장 차량번호"""
+  directorCarNo: String
+
+  """병원장 진료과"""
+  directorDepartment: String
+
+  """병원장 이메일"""
+  directorEmail: String
+
+  """E-mail 수신 동의"""
+  directorEmailConsent: Boolean
+
+  """병원장 성별"""
+  directorGender: String
+
+  """병원장 졸업년도"""
+  directorGraduationYear: String
+
+  """의사면허번호"""
+  directorLicenseNo: String
+
+  """병원장 성명"""
+  directorName: String
+
+  """병원장 휴대전화"""
+  directorPhone: String
+
+  """회신서 수신 동의"""
+  directorReplyConsent: Boolean
+
+  """병원장 출신학교"""
+  directorSchool: String
+
+  """SMS 수신 동의"""
+  directorSmsConsent: Boolean
+
+  """병원장 세부전공"""
+  directorSubSpecialty: String
+
+  """병원장 수련병원"""
+  directorTrainingHospital: String
+
+  """응급실 수"""
+  erCount: Int
+
+  """인공신장실 유무"""
+  hasDialysisRoom: Boolean
+
+  """응급실 유무"""
+  hasEr: Boolean
+
+  """보호자 간병 유무"""
+  hasGuardianCare: Boolean
+
+  """호스피스 유무"""
+  hasHospice: Boolean
+
+  """중환자실 유무"""
+  hasIcu: Boolean
+
+  """간호간병통합서비스 유무"""
+  hasIntegratedNursing: Boolean
+
+  """수술실 유무"""
+  hasOperatingRoom: Boolean
+
+  """물리치료실 유무"""
+  hasPhysicalTherapy: Boolean
+
+  """정신과 병동 폐쇄"""
+  hasPsychClosed: Boolean
+
+  """정신과 병동 일반"""
+  hasPsychGeneral: Boolean
+
+  """재활치료실 격리"""
+  hasRehabIsolation: Boolean
+
+  """재활치료실 작업"""
+  hasRehabOt: Boolean
+
+  """재활치료실 물리"""
+  hasRehabPt: Boolean
+
+  """재활치료실 언어"""
+  hasRehabSt: Boolean
+
+  """재활치료실 연하"""
+  hasRehabSwallow: Boolean
+
+  """공동 간병 유무"""
+  hasSharedCare: Boolean
+
+  """병원 정보"""
+  hospital: HospitalModel!
+
+  """신청 대상 병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """병원 ID (FK)"""
+  hospitalId: String!
+
+  """중환자실 수"""
+  icuCount: Int
+
+  """고유 ID"""
+  id: ID!
+
+  """의료기관 유형"""
+  institutionType: InstitutionType
+
+  """원장 여부"""
+  isDirector: Boolean
+
+  """격리 중 간병 유형"""
+  isolationCareType: String
+
+  """격리 2인실 수"""
+  isolationDoubleCount: Int
+
+  """격리 중 재활 유형"""
+  isolationRehabType: String
+
+  """격리병실 수"""
+  isolationRoomCount: Int
+
+  """격리 1인실 수"""
+  isolationSingleCount: Int
+
+  """격리 3인실 수"""
+  isolationTripleCount: Int
+
+  """격리 유형 (JSON)"""
+  isolationTypes: JSON
+
+  """격리병상 운영 여부"""
+  isolationWardOperation: Boolean
+
+  """주요 보유 장비"""
+  majorEquipment: String
+
+  """다인실 수"""
+  multiRoomCount: Int
+
+  """간호사 수"""
+  nurseCount: Int
+
+  """상급병실 수"""
+  premiumRoomCount: Int
+
+  """반려 사유"""
+  rejectReason: String
+
+  """병원특성 및 기타사항"""
+  remarks: String
+
+  """심사일시"""
+  reviewedAt: DateTime
+
+  """심사자 ID"""
+  reviewedById: String
+
+  """전문의 수"""
+  specialistCount: Int
+
+  """실무자 부서/진료과 유형"""
+  staffDeptType: String
+
+  """실무자 부서/진료과 값"""
+  staffDeptValue: String
+
+  """실무자 이메일"""
+  staffEmail: String
+
+  """실무자 성명"""
+  staffName: String
+
+  """실무자 휴대전화"""
+  staffPhone: String
+
+  """실무자 직급"""
+  staffPosition: String
+
+  """실무자 연락처 (유선)"""
+  staffTel: String
+
+  """상태"""
+  status: PartnerStatus!
+
+  """해지일시"""
+  terminatedAt: DateTime
+
+  """총 병상 수"""
+  totalBedCount: Int
+
+  """총 직원 수"""
+  totalStaffCount: Int
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+"""협력병의원 상태"""
+enum PartnerStatus {
+  """승인"""
+  APPROVED
+
+  """임시저장"""
+  DRAFT
+
+  """신청대기"""
+  PENDING
+
+  """반려"""
+  REJECTED
+
+  """해지"""
+  TERMINATED
+}
+
+"""협력병의원 유형 (EHR hsptClsfCd 기준)"""
+enum PartnerType {
+  """협력병원"""
+  H
+
+  """협력의원"""
+  M
+}
+
+"""EHR 환자 날짜별 조회 입력 - 환자번호 + 날짜 기반"""
+input PatientDateQueryInput {
+  """진료일/검사일 (YYYYMMDD)"""
+  date: String!
+
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """환자번호"""
+  ptntNo: String!
+
+  """SLIP 코드"""
+  slipCd: String
+}
+
+"""환자 기본정보"""
+type PatientInfo {
+  """주소"""
+  address: String
+
+  """나이"""
+  age: String
+
+  """생년월일"""
+  birthDate: String
+
+  """성별코드 (M/F)"""
+  genderCode: String
+
+  """성별명"""
+  genderName: String
+
+  """환자명"""
+  patientName: String
+
+  """환자번호"""
+  patientNo: String
+
+  """전화번호"""
+  phone: String
+
+  """우편번호"""
+  zipCode: String
+}
+
+"""EHR 환자 조회 입력 - 환자번호 기반"""
+input PatientQueryInput {
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """환자번호"""
+  ptntNo: String!
+}
+
+"""권한 변경 이력 - 연결 관리자 상세"""
+type PermissionAuditMemberHistoryModel {
+  """처리 관리자명"""
+  adminName: String
+
+  """처리 관리자번호"""
+  adminNumber: String
+
+  """변경일시"""
+  createdAt: DateTime!
+
+  """로그 ID"""
+  logId: String!
+
+  """대상 관리자 목록"""
+  memberLabels: [String!]!
+
+  """로그명"""
+  target: String!
+}
+
+"""권한 변경 이력 - 연결 메뉴 상세"""
+type PermissionAuditMenuHistoryModel {
+  """변경 권한값"""
+  accessLevel: String
+
+  """처리 관리자명"""
+  adminName: String
+
+  """처리 관리자번호"""
+  adminNumber: String
+
+  """변경일시"""
+  createdAt: DateTime!
+
+  """로그 ID"""
+  logId: String!
+
+  """메뉴 ID"""
+  menuId: String
+
+  """메뉴명"""
+  menuName: String
+
+  """로그명"""
+  target: String!
+}
+
+"""팝업/배너"""
+type PopupModel {
+  """이미지 대체 텍스트 (alt) — 메인배너 전용"""
+  altText: String
+
+  """상시노출 여부 (true이면 startDate/endDate 무시)"""
+  alwaysVisible: Boolean!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """종료일 (상시노출이면 null)"""
+  endDate: DateTime
+
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """팝업 ID"""
+  id: ID!
+
+  """PC 이미지 URL (다크모드) — 메인배너 전용"""
+  imageDarkUrl: String
+
+  """PC 이미지 URL (라이트모드)"""
+  imageUrl: String
+
+  """활성 여부"""
+  isActive: Boolean!
+
+  """연결 링크 URL"""
+  linkUrl: String
+
+  """메인 슬로건 (최대 30자) — 메인배너 전용"""
+  mainSlogan: String
+
+  """미디어 타입 (IMAGE | VIDEO) — 메인배너 전용"""
+  mediaType: String
+
+  """모바일 이미지 URL (다크모드) — 메인배너 전용"""
+  mobileDarkImageUrl: String
+
+  """모바일 이미지 URL (라이트모드) — 메인배너 전용"""
+  mobileImageUrl: String
+
+  """팝업 유형 (POPUP | MINI_BANNER | SLIDE_BANNER)"""
+  popupType: PopupType!
+
+  """정렬 순서 (비활성화 시 null)"""
+  sortOrder: Int
+
+  """시작일 (상시노출이면 null)"""
+  startDate: DateTime
+
+  """서브 슬로건/부제 (최대 30자) — 메인배너 전용"""
+  subSlogan: String
+
+  """새 창 열기 여부 (true: 새 창, false: 현재 창)"""
+  targetBlank: Boolean!
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """영상 URL — 메인배너 mediaType=VIDEO일 때 사용"""
+  videoUrl: String
+}
+
+"""팝업/배너 유형"""
+enum PopupType {
+  """미니배너"""
+  MINI_BANNER
+
+  """팝업"""
+  POPUP
+
+  """슬라이드 배너"""
+  SLIDE_BANNER
+}
+
+type Query {
+  """활성 팝업 목록 조회 (현재 노출 기간 내) - URL 병원 경로(/anam|/guro|/ansan) 필요"""
+  activePopups: [PopupModel!]!
+
+  """감사 로그 상세 조회 - 소속 병원 로그만 조회"""
+  adminAuditLogById(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """로그 ID"""
+    id: String!
+  ): AuditLogModel!
+
+  """감사 로그 목록 조회 - 소속 병원 로그만 조회"""
+  adminAuditLogs(
+    """필터"""
+    filter: AuditLogFilterInput
+
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedAuditLogResponse!
+
+  """게시판 설정 목록 조회 - 소속 병원만 조회"""
+  adminBoardSettings(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+  ): [BoardSettingModel!]!
+
+  """관리자 콘텐츠 그룹 목록 조회"""
+  adminContentGroups(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+  ): [ContentGroupModel!]!
+
+  """관리자 콘텐츠 목록 조회 - 소속 병원 콘텐츠만 조회"""
+  adminContents(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+  ): [Content!]!
+
+  """관리자 의료진 목록 조회 - 소속 병원의 의료진만 조회"""
+  adminDoctors(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedAdminDoctorResponse!
+
+  """관리자 전체 e-Consult 목록 조회 - 모든 신청 항목 (필터/페이지네이션 지원)"""
+  adminEConsults(
+    """eConsult 필터"""
+    filter: EConsultFilterInput
+
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedEConsultResponse!
+
+  """관리자 e-Consult 자문의 목록 조회"""
+  adminEconsultConsultants(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+  ): [AdminEconsultConsultantModel!]!
+
+  """메뉴 트리 조회 - 유형별 상위/하위 메뉴 계층 구조"""
+  adminMenus(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """메뉴 유형"""
+    menuType: MenuType!
+  ): [MenuModel!]!
+
+  """관리자 협력병의원 신청 상세 조회"""
+  adminPartnerApplicationById(
+    """신청 ID"""
+    id: String!
+  ): PartnerHospitalModel!
+
+  """관리자 협력병의원 신청 목록 조회"""
+  adminPartnerApplications(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+
+    """상태 필터"""
+    status: PartnerStatus
+  ): PaginatedAdminPartnerApplicationResponse!
+
+  """권한 그룹 변경 이력 조회"""
+  adminPermissionAuditLogs(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedAuditLogResponse!
+
+  """관리자 팝업/배너 목록 조회 - 소속 병원만 조회"""
+  adminPopups(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+
+    """팝업 유형"""
+    popupType: PopupType
+  ): PaginatedPopupResponse!
+
+  """회원가입 승인/반려 검토용 회원 상세 조회"""
+  adminUserApprovalById(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """사용자 ID"""
+    id: String!
+  ): User!
+
+  """관리자 회원 상세 조회"""
+  adminUserById(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """사용자 ID"""
+    id: String!
+  ): User!
+
+  """관리자 회원 목록 조회 - 관리자 소속 병원의 회원만 조회"""
+  adminUsers(
+    """필터"""
+    filter: AdminUserFilterInput
+
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedAdminUserResponse!
+
+  """특정 엔티티에 연결된 첨부파일 목록 조회"""
+  attachments(
+    """엔티티 ID"""
+    entityId: ID!
+
+    """엔티티 유형"""
+    entityType: AttachmentEntityType!
+  ): [AttachmentModel!]!
+
+  """게시글 상세 조회 - 조회수 자동 증가"""
+  boardPostById(
+    """게시판 아이디"""
+    boardId: String!
+
+    """게시글 ID"""
+    id: String!
+  ): BoardPost!
+
+  """게시글 목록 조회 - 게시판 유형별 페이지네이션, 병원별 노출 필터, 검색 지원"""
+  boardPosts(
+    """게시판 아이디"""
+    boardId: String!
+
+    """페이지네이션"""
+    pagination: PaginationInput
+
+    """검색어 (제목/내용)"""
+    search: String
+  ): PaginatedBoardPostResponse!
+
+  """레거시 회원 확인 — 우리 DB + EHR 3개 병원 동시 조회 (비인증)"""
+  checkLegacyUser(
+    """확인할 아이디"""
+    userId: String!
+  ): LegacyUserCheckResult!
+
+  """아이디 중복확인 - 우리 DB + EHR 3개 병원 동시 체크 (비인증)"""
+  checkUserIdAvailable(
+    """확인할 아이디"""
+    userId: String!
+  ): CheckUserIdResult!
+
+  """본인인증 중복확인 - NICE 본인인증 토큰으로 CI/DI 중복 체크 (비인증)"""
+  checkVerificationDuplicate(
+    """NICE 본인인증 토큰"""
+    verificationToken: String!
+  ): VerificationDuplicateResult!
+
+  """자문의 배정 eConsult 목록 조회 - 자문의 로그인 필요"""
+  consultantAssignedEConsults(
+    """eConsult 필터"""
+    filter: EConsultFilterInput
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedEConsultResponse!
+
+  """자문의 목록 조회 - 병원/진료과/전문분야/이름 검색 지원"""
+  consultantDoctors(
+    """진료과 코드 필터"""
+    departmentCode: String
+
+    """검색어 (이름/전문분야)"""
+    search: String
+
+    """전문분야 필터"""
+    specialty: String
+  ): [DoctorModel!]!
+
+  """자문의 eConsult 상세 조회 - 자문의 로그인 필요"""
+  consultantEConsultById(
+    """eConsult ID"""
+    id: String!
+  ): EConsultModel!
+
+  """콘텐츠 상세 조회 - 콘텐츠 ID와 병원 코드(x-hospital-code 헤더)로 조회"""
+  contentById(
+    """콘텐츠 ID"""
+    id: String!
+  ): Content
+
+  """콘텐츠 목록 조회 - 병원 코드(x-hospital-code 헤더)로 병원별 필터"""
+  contents: [Content!]!
+
+  """eConsult 상세 조회 - 신청자 또는 관리자만 조회 가능"""
+  eConsultById(
+    """eConsult ID"""
+    id: String!
+  ): EConsultModel!
+
+  """EHR 의사정보 존재여부 확인 - 면허번호로 EHR 내 의사 등록 여부 조회 (비인증 - 가입 전 검증용)"""
+  ehrCheckDoctorExists(input: CheckDoctorExistsInput!): EhrCheckResult!
+
+  """EHR 의사 가입 임시정보 조회 - 웹사용자 ID로 기존 가입 여부 확인 (비인증 - 가입 전 검증용)"""
+  ehrCheckDoctorTempInfo(
+    """조회 대상 병원"""
+    hospitalCode: HospitalCode!
+
+    """웹사용자 ID"""
+    wwwUserId: String!
+  ): EhrCheckResult!
+
+  """EHR 약처방 유무 체크 - 진료일 기준 약처방 존재여부 확인"""
+  ehrCheckDrugOrderExists(input: PatientDateQueryInput!): EhrExistsResult!
+
+  """EHR 검사 유무 체크 - 진료일 기준 검사결과 존재여부 확인"""
+  ehrCheckExamResultExists(input: PatientDateQueryInput!): EhrExistsResult!
+
+  """EHR 병원정보 존재여부 확인 - 요양기관번호로 EHR 내 병원 등록 여부 조회 (비인증 - 가입 전 검증용)"""
+  ehrCheckHospitalExists(input: CheckHospitalExistsInput!): EhrCheckResult!
+
+  """EHR 협력병의원 신청 임시정보 조회 - 요양기관번호로 기존 신청 여부 확인 (비인증 - 가입 전 검증용)"""
+  ehrCheckHospitalTempInfo(
+    """조회 대상 병원"""
+    hospitalCode: HospitalCode!
+
+    """요양기관번호"""
+    rcisNo: String!
+  ): EhrCheckResult!
+
+  """EHR 협력병원 상세정보 조회 - 요양기관번호 또는 면허번호로 협력병원 상세 조회"""
+  ehrGetCollaboratingHospitalInfo(input: GetCollaboratingHospitalInfoInput!): CollaboratingHospitalDetail!
+
+  """
+  협력병원 검색 - EHR + 우리 DB 통합 조회 (비인증 - 가입 시 병원검색용). EHR 장애 시에도 우리 DB 결과는 정상 반환
+  """
+  ehrGetCollaboratingHospitals(input: SearchCollaboratingHospitalsInput!): HospitalSearchResult!
+
+  """약품 상세 조회 - 약품코드로 상세정보 조회"""
+  ehrGetDrugOrderDetail(input: DrugOrderDetailQueryInput!): DrugOrderDetailResponse!
+
+  """약처방 목록 조회 - 의뢰환자의 약처방 내역"""
+  ehrGetDrugOrders(input: DrugOrderQueryInput!): DrugOrderResponse!
+
+  """EHR 검사일자별 검사결과 조회 - 특정 검사일의 검사결과 목록"""
+  ehrGetExamResultsByDate(input: PatientDateQueryInput!): ExamResultResponse!
+
+  """EHR 검사일자별 SLIP 조회 - 특정 검사일의 처방전 목록"""
+  ehrGetExamSlipsByDate(input: ExamSlipQueryInput!): ExamSlipResponse!
+
+  """EHR 환자정보 조회 - 환자 기본정보 반환"""
+  ehrGetPatientInfo(input: PatientQueryInput!): PatientInfo!
+
+  """의뢰환자 목록 조회 - 로그인 사용자의 면허번호 기반 EHR 조회"""
+  ehrGetReferralPatients(input: ReferralPatientQueryInput!): ReferralPatientResponse!
+
+  """진료회신서 조회 - 의뢰 식별자 기반 단건 조회"""
+  ehrGetReferralReply(input: ReferralReplyQueryInput!): ReferralReplyResponse!
+
+  """
+  EHR 특수검사결과 조회 - 영상/병리/내시경/핵의학 검사결과 (slipCd: L08=병리, R=영상, E=내시경, N=핵의학)
+  """
+  ehrGetSpecialExamResults(input: ExamSlipQueryInput!): SpecialExamResultResponse!
+
+  """EHR 수진이력 조회 - 환자의 진료 내역 목록"""
+  ehrGetVisitHistory(input: VisitHistoryQueryInput!): VisitHistoryResponse!
+
+  """특정 Enum 조회 - 이름으로 Enum 값 목록 반환 (비인증)"""
+  enumByName(
+    """Enum 이름 (예: HospitalCode, UserType)"""
+    name: String!
+  ): EnumInfo
+
+  """전체 Enum 목록 조회 - 시스템에 정의된 모든 Enum과 값 반환 (비인증)"""
+  enums: [EnumInfo!]!
+
+  """특정 권한그룹의 메뉴 권한 목록"""
+  groupMenuPermissions(
+    """권한그룹 ID"""
+    groupId: String!
+  ): [MenuPermissionEntryModel!]!
+
+  """서버 상태 확인 - 정상이면 "ok" 반환"""
+  health: String!
+
+  """강좌안내 조회 - KUMC 병원별 강좌/교육 게시글 프록시 (구로/안산만 지원, 안암은 빈 목록 반환)"""
+  hospitalLectures(
+    """페이지당 게시글 수 (기본값: 10)"""
+    pageRow: Int = 10
+
+    """시작 인덱스 (기본값: 1)"""
+    startIndex: Int = 1
+  ): HospitalArticleList!
+
+  """병원뉴스 조회 - KUMC 병원별 뉴스 게시글 프록시"""
+  hospitalNews(
+    """페이지당 게시글 수 (기본값: 10)"""
+    pageRow: Int = 10
+
+    """시작 인덱스 (기본값: 1)"""
+    startIndex: Int = 1
+  ): HospitalArticleList!
+
+  """병원 SNS 조회 - KUMC 병원별 SNS/영상 게시글 프록시"""
+  hospitalSns(
+    """페이지당 게시글 수 (기본값: 10)"""
+    pageRow: Int = 10
+
+    """시작 인덱스 (기본값: 1)"""
+    startIndex: Int = 1
+  ): HospitalArticleList!
+
+  """관리자 영상검사 요청 상세 조회"""
+  imagingRequestDetail(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """영상검사 요청 ID"""
+    id: String!
+  ): ImagingRequestModel
+
+  """영상검사 요청 오버레이 조회 - 외부 검사행 기준 내부 요청 상태 조회"""
+  imagingRequestOverlay(
+    """검사일자 (YYYYMMDD)"""
+    examDate: String!
+
+    """처방코드"""
+    orderCode: String!
+
+    """PACS 접근번호"""
+    pacsAccessNo: String
+
+    """환자번호"""
+    ptntNo: String!
+  ): ImagingRequestModel
+
+  """관리자 영상검사 요청 목록 조회"""
+  imagingRequestsForAdmin(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
+    """목록 필터/페이지네이션"""
+    input: ImagingRequestListInput
+  ): PaginatedImagingRequestResponse!
+
+  """내 정보 조회 - 현재 로그인한 사용자 정보 반환"""
+  me: MeEhrUser!
+
+  """ADMAP 홈페이지 진료과 목록 조회 - 병원 코드(x-hospital-code 헤더)로 조회"""
+  medicalStaffDepartmentList: AdmapHomepageDepartmentListResponse!
+
+  """ADMAP 의료진 목록 조회 - 병원 코드(x-hospital-code 헤더)로 조회"""
+  medicalStaffList(
+    """의료진 목록 필터 (선택)"""
+    filter: AdmapMedicalStaffFilterInput
+  ): AdmapMedicalStaffListResponse!
+
+  """ADMAP 주간 일정 조회 - 병원 코드(x-hospital-code 헤더)로 조회"""
+  medicalStaffWeeklySchedule(
+    """진료과 코드 (필수)"""
+    mcdpCd: String!
+
+    """조회 날짜 (필수, YYYYMMDD 형식)"""
+    mdcrYmd: String!
+  ): AdmapWeeklyScheduleListResponse!
+
+  """권한그룹 목록 조회"""
+  menuPermissionGroups(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+  ): [MenuPermissionGroupModel!]!
+
+  """메뉴 트리 조회 - 병원별/유형별 활성 메뉴 계층 구조 (인증 불필요)"""
+  menus(
+    """메뉴 유형"""
+    menuType: MenuType!
+  ): [MenuModel!]!
+
+  """미니배너 목록 조회 - URL 병원 경로(/anam|/guro|/ansan) 필요"""
+  miniBanners: [PopupModel!]!
+
+  """배정된 eConsult 목록 조회 - 관리자 전용"""
+  myAssignedEConsults(
+    """자문의 사용자 ID (호환성 유지 인자명 — 실제로는 userId를 의미함. 향후 consultantUserId로 변경 예정)"""
+    consultantDoctorId: String!
+
+    """eConsult 필터"""
+    filter: EConsultFilterInput
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedEConsultResponse!
+
+  """내 eConsult 목록 조회 - 신청한 상담 목록 (필터/페이지네이션 지원)"""
+  myEConsults(
+    """eConsult 필터"""
+    filter: EConsultFilterInput
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedEConsultResponse!
+
+  """내 메뉴 권한 목록 조회"""
+  myMenuPermissions: [MenuPermissionEntryModel!]!
+
+  """내 협력병의원 신청 조회 (hospitalCode 기준, 단일) - 없으면 null"""
+  myPartnerApplication(
+    """병원코드 (ANAM/GURO/ANSAN)"""
+    hospitalCode: HospitalCode!
+  ): PartnerHospitalModel
+
+  """내 협력병의원 신청 목록 조회"""
+  myPartnerApplications(
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedPartnerHospitalResponse!
+
+  """내 프로필 조회 - 현재 로그인한 사용자의 상세 프로필 반환"""
+  myProfile: User!
+
+  """협력병의원 신청 상세 조회 (ID 기준)"""
+  partnerApplicationById(
+    """신청 ID"""
+    id: ID!
+  ): PartnerHospitalModel!
+
+  """협력병의원 상세 조회"""
+  partnerHospitalById(
+    """협력병의원 ID"""
+    id: ID!
+  ): HospitalModel!
+
+  """협력병의원 현황 목록 조회 (승인된 병의원만) - URL 병원 경로(/anam|/guro|/ansan) 기반 병원 필터"""
+  partnerHospitals(
+    """필터 조건"""
+    filter: PartnerHospitalFilterInput
+
+    """페이지네이션"""
+    pagination: PaginationInput
+  ): PaginatedHospitalResponse!
+
+  """권한그룹에 배정된 관리자 목록 조회"""
+  permissionGroupMembers(
+    """권한그룹 ID"""
+    groupId: String!
+
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+  ): [User!]!
+
+  """상단 고정 게시글 목록 조회"""
+  pinnedPosts(
+    """게시판 아이디"""
+    boardId: String!
+  ): [BoardPost!]!
+
+  """파일 다운로드용 Presigned URL 발급 (1시간 유효)"""
+  presignedDownloadUrl(
+    """첨부파일 ID"""
+    attachmentId: ID!
+  ): String!
+
+  """DB 병원 검색 - 우리 DB에 등록된 협력병원 목록 조회 (비인증)"""
+  searchHospitals(
+    """병원 검색 필터"""
+    filter: HospitalFilterInput!
+  ): [HospitalModel!]!
+
+  """슬라이드 배너 목록 조회 - URL 병원 경로(/anam|/guro|/ansan) 필요"""
+  slideBanners: [PopupModel!]!
+
+  """사용자 상세 조회 - 관리자 전용, ID로 사용자 정보 조회"""
+  userById(
+    """사용자 고유 ID"""
+    id: String!
+  ): User!
+}
+
+type ReferralPatientItem {
+  age: String
+  careInstitutionNo: String
+  departmentCode: String
+  departmentName: String
+  doctorId: String
+  doctorName: String
+  drugOrderExists: String
+  genderCode: String
+  hospitalName: String
+  infoConsentYn: String
+
+  """자문의 여부"""
+  isConsultant: Boolean
+  patientName: String
+  patientNo: String
+  referralDate: String
+  referralDepartmentCode: String
+  referralDepartmentName: String
+  referralDoctorName: String
+
+  """의뢰일련번호 (회신서 조회 시 필요)"""
+  referralSeqNo: String
+
+  """의뢰상태코드 (R: 의뢰, Y: 완료)"""
+  referralStatusCode: String
+  replyDate: String
+  visitDate: String
+}
+
+"""EHR 의뢰환자 조회 입력 - 병원코드 + 환자명(선택)"""
+input ReferralPatientQueryInput {
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """환자명 필터(선택)"""
+  ptntNm: String
+}
+
+type ReferralPatientResponse {
+  items: [ReferralPatientItem!]!
+  totalCount: Float!
+}
+
+"""진료회신서 상세 정보"""
+type ReferralReplyItem {
+  """나이"""
+  age: String
+
+  """주민번호 뒷자리"""
+  backResidentNo: String
+
+  """진료과명"""
+  departmentName: String
+
+  """진단코드"""
+  diagnosisCode: String
+
+  """진단명 (상병명)"""
+  diagnosisName: String
+
+  """진료의명"""
+  doctorName: String
+
+  """주민번호 앞자리"""
+  frontResidentNo: String
+
+  """성별코드"""
+  genderCode: String
+
+  """진료소견 및 경과 요약"""
+  opinion: String
+
+  """환자명"""
+  patientName: String
+
+  """전화번호"""
+  phoneNo: String
+
+  """의뢰일자"""
+  referralDate: String
+
+  """회신일자"""
+  replyDate: String
+
+  """진료기간"""
+  treatmentPeriod: String
+
+  """통원구분코드"""
+  visitTypeCode: String
+}
+
+"""EHR 회신서 조회 입력 - 의뢰 식별자 기반"""
+input ReferralReplyQueryInput {
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """환자번호"""
+  ptno: String!
+
+  """의뢰일련번호"""
+  refrSno: String!
+
+  """의뢰일자 (YYYYMMDD)"""
+  refrYmd: String!
+}
+
+"""진료회신서 응답 — 단건"""
+type ReferralReplyResponse {
+  item: ReferralReplyItem
+}
+
+"""EHR 의사정보 등록 입력"""
+input RegisterDoctorEhrInput {
+  """진료과"""
+  department: String
+
+  """면허번호"""
+  drlcNo: String
+
+  """이메일"""
+  email: String
+
+  """등록 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """전문분야"""
+  specialty: String
+
+  """전화번호"""
+  telNo: String
+
+  """의사명"""
+  userNm: String!
+
+  """웹 사용자 ID"""
+  wwwUserId: String!
+}
+
+"""EHR 병원정보 등록 입력 (DVO 전체 필드)"""
+input RegisterHospitalEhrInput {
+  """상세주소"""
+  adrsDetlNm: String
+
+  """주소"""
+  adrsNm: String
+
+  """우편번호"""
+  adrsZpcd: String
+
+  """담당구분코드"""
+  asgnClsfCd: String
+
+  """담당자명"""
+  asgnNm: String
+
+  """담당직종"""
+  asgnOcrsNm: String
+
+  """생년월일 (YYYYMMDD)"""
+  btdt: String
+
+  """대표자 연락처"""
+  ceoCnpnVl: String
+
+  """문자수신동의 (Y/N)"""
+  chmeRecvAgrmYn: String
+
+  """협력구분코드1"""
+  clbrDvsnCd1: String
+
+  """협력구분코드2"""
+  clbrDvsnCd2: String
+
+  """협력구분코드3"""
+  clbrDvsnCd3: String
+
+  """담당자 전화"""
+  cnpnDscrCtn: String
+
+  """면허번호"""
+  drlcNo: String
+
+  """세부전공"""
+  dtlsMajrCtn: String
+
+  """이메일"""
+  emadNm: String
+
+  """이메일회신동의 (Y/N)"""
+  emailRplyAgrmYn1: String
+
+  """팩스번호"""
+  fxno: String
+
+  """성별 (M/F)"""
+  gendCd: String
+
+  """졸업년도"""
+  grdtYy: String
+
+  """등록자ID"""
+  gvUserId: String
+
+  """등록자IP"""
+  gvUserIp: String
+
+  """의료인수"""
+  hlofMnemCnt: Int
+
+  """홈페이지 주소"""
+  hmpgAdrsNm: String
+
+  """등록 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """병원분류코드 (10/20/30/50)"""
+  hsptClsfCd: String
+
+  """병원명"""
+  hsptNm: String!
+
+  """비고"""
+  hsptRmrkCtn: String
+
+  """진료과코드"""
+  mcdpCd: String
+
+  """담당자 휴대폰"""
+  mngnCnpnVl: String
+
+  """출신대학코드"""
+  origMddpUnvrCd: String
+
+  """요양기관번호"""
+  rcisNo: String!
+
+  """의뢰기관 의사수"""
+  refrInstDrCnt: Int
+
+  """의뢰기관 간호사수"""
+  refrInstNursCnt: Int
+
+  """회신요청 (Y/N)"""
+  rplyRqstYn: String
+
+  """병상수"""
+  runSckbCnt: Int
+
+  """전문진료과코드"""
+  spcDprtMcdpCd: String
+
+  """전화번호"""
+  tlno: String
+
+  """수련병원"""
+  tragHsptNm: String
+
+  """대표자명"""
+  userNm: String
+}
+
+"""병원 신규등록 입력 - 의사 가입 시 병원검색에서 없을 때 간이 등록 (화면설계서 기준)"""
+input RegisterHospitalInput {
+  """병원주소"""
+  address: String!
+
+  """상세주소"""
+  addressDetail: String
+
+  """요양기관번호"""
+  careInstitutionNo: String!
+  directorBirthDate: String
+  directorDepartment: String
+  directorEmail: String
+  directorGender: String
+  directorGraduationYear: String
+  directorLicenseNo: String
+  directorName: String
+  directorPhone: String
+  directorSchool: String
+  directorSubSpecialty: String
+  directorTrainingHospital: String
+  emailConsent: Boolean
+  fax: String
+
+  """등록 대상 병원 (안암/구로/안산 - 프론트엔드 컨텍스트에서 전달)"""
+  hospitalCode: HospitalCode!
+
+  """병원명"""
+  hospitalName: String!
+  institutionType: String
+  nurseCount: Int
+
+  """대표전화 (-없이 입력)"""
+  phone: String!
+  remarks: String
+  replyConsent: Boolean
+
+  """대표자명"""
+  representative: String!
+  smsConsent: Boolean
+  specialistCount: Int
+  staffDeptType: String
+  staffDeptValue: String
+  staffName: String
+  staffPhone: String
+  staffPosition: String
+  staffTel: String
+  totalBedCount: Int
+  totalStaffCount: Int
+  website: String
+
+  """우편번호"""
+  zipCode: String!
+}
+
+"""영상검사 요청 반려 입력"""
+input RejectImagingRequestInput {
+  """영상검사 요청 ID"""
+  imagingRequestId: ID!
+
+  """반려 사유"""
+  reason: String!
+}
+
+"""메뉴 정렬 입력"""
+input ReorderMenusInput {
+  """정렬 항목 목록"""
+  items: [MenuOrderItem!]!
+}
+
+"""팝업/배너 순서 변경 입력"""
+input ReorderPopupsInput {
+  """병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """새 순서대로 나열한 팝업 ID 배열 (앞에 올수록 sortOrder 낮음)"""
+  orderedIds: [String!]!
+
+  """팝업 유형 (POPUP | MINI_BANNER | SLIDE_BANNER)"""
+  popupType: PopupType!
+}
+
+"""eConsult 답변 입력"""
+input ReplyEConsultInput {
+  """답변 내용"""
+  content: String!
+}
+
+"""비밀번호 재설정 요청 입력"""
+input RequestPasswordResetInput {
+  """이메일"""
+  email: String!
+
+  """아이디"""
+  userId: String!
+}
+
+"""본인인증 기반 임시비밀번호 발급 입력"""
+input ResetPasswordByVerificationInput {
+  """비밀번호를 재설정할 아이디"""
+  userId: String!
+
+  """본인인증 확인 토큰 (completeVerification에서 발급)"""
+  verificationToken: String!
+}
+
+"""비밀번호 재설정 실행 입력"""
+input ResetPasswordInput {
+  """새 비밀번호 (8자 이상, 영문+숫자+특수문자)"""
+  newPassword: String!
+
+  """비밀번호 재설정 토큰"""
+  token: String!
+}
+
+"""협력병의원 임시저장 입력 - 필수값 없이 저장 가능"""
+input SaveDraftPartnerInput {
+  """가동 병상 수 (H전용)"""
+  activeBedCount: Int
+
+  """첨부파일 메타데이터 (JSON 배열)"""
+  attachments: JSON
+
+  """기본 처치 가능 항목 (JSON) (H전용)"""
+  availableTreatments: JSON
+
+  """엑시머레이저 가능 여부 (M전용)"""
+  clinicHasExcimerLaser: Boolean
+
+  """혈액투석 가능 여부 (M전용)"""
+  clinicHasHemodialysis: Boolean
+
+  """복막투석 가능 여부 (M전용)"""
+  clinicHasPeritoneal: Boolean
+
+  """광선치료 가능 여부 (M전용)"""
+  clinicHasPhototherapy: Boolean
+
+  """투약 유형 (투약불가능/G-CSF피하주사가능) (M전용)"""
+  clinicMedicationType: String
+
+  """진료과별 전문의 현황 (JSON) (H전용)"""
+  departmentSpecialists: JSON
+
+  """병원장 생년월일 (YYYY-MM-DD)"""
+  directorBirthDate: String
+
+  """병원장 차량번호"""
+  directorCarNo: String
+
+  """병원장 진료과"""
+  directorDepartment: String
+
+  """병원장 이메일"""
+  directorEmail: String
+
+  """E-mail 수신 동의"""
+  directorEmailConsent: Boolean
+
+  """병원장 성별 (M/F)"""
+  directorGender: String
+
+  """병원장 졸업년도"""
+  directorGraduationYear: String
+
+  """의사면허번호"""
+  directorLicenseNo: String
+
+  """병원장 성명"""
+  directorName: String
+
+  """병원장 휴대전화"""
+  directorPhone: String
+
+  """회신서 수신 동의"""
+  directorReplyConsent: Boolean
+
+  """병원장 출신학교"""
+  directorSchool: String
+
+  """SMS 수신 동의"""
+  directorSmsConsent: Boolean
+
+  """병원장 세부전공"""
+  directorSubSpecialty: String
+
+  """병원장 수련병원"""
+  directorTrainingHospital: String
+
+  """응급실 수 (H전용)"""
+  erCount: Int
+
+  """인공신장실 유무 (H전용)"""
+  hasDialysisRoom: Boolean
+
+  """응급실 유무 (H전용)"""
+  hasEr: Boolean
+
+  """보호자 간병 유무 (H전용)"""
+  hasGuardianCare: Boolean
+
+  """호스피스 유무 (H전용)"""
+  hasHospice: Boolean
+
+  """중환자실 유무 (H전용)"""
+  hasIcu: Boolean
+
+  """간호간병통합서비스 유무 (H전용)"""
+  hasIntegratedNursing: Boolean
+
+  """수술실 유무 (H전용)"""
+  hasOperatingRoom: Boolean
+
+  """물리치료실 유무 (M전용)"""
+  hasPhysicalTherapy: Boolean
+
+  """정신과 병동 폐쇄 (H전용)"""
+  hasPsychClosed: Boolean
+
+  """정신과 병동 일반 (H전용)"""
+  hasPsychGeneral: Boolean
+
+  """재활치료실 격리 (H전용)"""
+  hasRehabIsolation: Boolean
+
+  """재활치료실 작업 (H전용)"""
+  hasRehabOt: Boolean
+
+  """재활치료실 물리 (H전용)"""
+  hasRehabPt: Boolean
+
+  """재활치료실 언어 (H전용)"""
+  hasRehabSt: Boolean
+
+  """재활치료실 연하 (H전용)"""
+  hasRehabSwallow: Boolean
+
+  """공동 간병 유무 (H전용)"""
+  hasSharedCare: Boolean
+
+  """병원 주소 (Hospital 테이블 업데이트)"""
+  hospitalAddress: String
+
+  """병원 상세주소 (Hospital 테이블 업데이트)"""
+  hospitalAddressDetail: String
+
+  """신청 대상 병원 코드 (안암/구로/안산)"""
+  hospitalCode: HospitalCode
+
+  """병원 팩스번호 (Hospital 테이블 업데이트)"""
+  hospitalFaxNumber: String
+
+  """병원 ID (Hospital 테이블)"""
+  hospitalId: String!
+
+  """병원명 (Hospital 테이블 업데이트)"""
+  hospitalName: String
+
+  """병원 대표전화 (Hospital 테이블 업데이트)"""
+  hospitalPhone: String
+
+  """병원 홈페이지 주소 (Hospital 테이블 업데이트)"""
+  hospitalWebsite: String
+
+  """병원 우편번호 (Hospital 테이블 업데이트)"""
+  hospitalZipCode: String
+
+  """중환자실 수 (H전용)"""
+  icuCount: Int
+
+  """의료기관 유형"""
+  institutionType: InstitutionType
+
+  """원장 여부"""
+  isDirector: Boolean
+
+  """격리 중 간병 유형 (공동/개인/보호자) (H전용)"""
+  isolationCareType: String
+
+  """격리 2인실 수 (H전용)"""
+  isolationDoubleCount: Int
+
+  """격리 중 재활 유형 (No/침상/격리병동재활실) (H전용)"""
+  isolationRehabType: String
+
+  """격리병실 수 (H전용)"""
+  isolationRoomCount: Int
+
+  """격리 1인실 수 (H전용)"""
+  isolationSingleCount: Int
+
+  """격리 3인실 수 (H전용)"""
+  isolationTripleCount: Int
+
+  """격리 유형 (VRE/CRE/CPE/TB/기타) (H전용)"""
+  isolationTypes: JSON
+
+  """격리병상 운영 여부 (H전용)"""
+  isolationWardOperation: Boolean
+
+  """주요 보유 장비 (M전용)"""
+  majorEquipment: String
+
+  """다인실 수 (H전용)"""
+  multiRoomCount: Int
+
+  """간호사 수"""
+  nurseCount: Int
+
+  """상급병실 수 (H전용)"""
+  premiumRoomCount: Int
+
+  """병원특성 및 기타사항"""
+  remarks: String
+
+  """전문의 수"""
+  specialistCount: Int
+
+  """실무자 부서/진료과 유형 (부서/진료과)"""
+  staffDeptType: String
+
+  """실무자 부서/진료과 값"""
+  staffDeptValue: String
+
+  """실무자 이메일"""
+  staffEmail: String
+
+  """실무자 성명"""
+  staffName: String
+
+  """실무자 휴대전화"""
+  staffPhone: String
+
+  """실무자 직급"""
+  staffPosition: String
+
+  """실무자 연락처 (유선)"""
+  staffTel: String
+
+  """총 병상 수"""
+  totalBedCount: Int
+
+  """총 직원 수"""
+  totalStaffCount: Int
+}
+
+"""EHR 협력병원 리스트 조회 입력 - 병원명/주소/분류코드로 검색 (최소 1개 필터 필수)"""
+input SearchCollaboratingHospitalsInput {
+  """주소명 (부분 검색 가능)"""
+  adrsNm: String
+
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """병원분류코드"""
+  hsptClsfCd: String
+
+  """병원명 (부분 검색 가능)"""
+  hsptNm: String
+}
+
+"""메뉴 권한 설정 입력"""
+input SetMenuPermissionInput {
+  """접근 권한 수준"""
+  accessLevel: AccessLevel!
+
+  """권한 그룹 ID"""
+  groupId: String!
+
+  """메뉴 ID"""
+  menuId: String!
+}
+
+"""회원가입 입력 - 의사 회원 전용 (화면설계서 기준)"""
+input SignupInput {
+  """생년월일 (YYYY-MM-DD 형식)"""
+  birthDate: String!
+
+  """요양기관번호"""
+  careInstitutionNo: String!
+
+  """NICE 본인인증 연계정보확인값 (CI) - 본인인증 완료 후 전달"""
+  ci: String
+
+  """진료과"""
+  department: String!
+
+  """NICE 본인인증 중복가입확인값 (DI) - 본인인증 완료 후 전달"""
+  di: String
+
+  """회원구분 (의사, 치과의사, 한의사)"""
+  doctorType: DoctorType!
+
+  """이메일"""
+  email: String!
+
+  """E-mail 동의여부"""
+  emailConsent: Boolean!
+
+  """병원 주소 (우편번호 검색으로 자동입력)"""
+  hospAddress: String!
+
+  """병원 상세주소 (선택)"""
+  hospAddressDetail: String
+
+  """병원명 (병원검색으로 입력)"""
+  hospName: String!
+
+  """대표전화 (-없이 입력)"""
+  hospPhone: String!
+
+  """병원 홈페이지 주소 (선택)"""
+  hospWebsite: String
+
+  """병원 우편번호"""
+  hospZipCode: String!
+
+  """소속 병원 코드 (안암/구로/안산)"""
+  hospitalCode: HospitalCode!
+
+  """원장여부"""
+  isDirector: Boolean!
+
+  """의사면허번호 (-없이 입력)"""
+  licenseNo: String!
+
+  """비밀번호 (영문+숫자+특수문자 조합 8~12자리)"""
+  password: String!
+
+  """비밀번호 확인"""
+  passwordConfirm: String!
+
+  """휴대전화 (본인인증에서 자동입력)"""
+  phone: String!
+
+  """회신서 수신 동의 여부"""
+  replyConsent: Boolean!
+
+  """출신학교"""
+  school: String!
+
+  """SMS 동의여부"""
+  smsConsent: Boolean!
+
+  """세부전공 (선택)"""
+  specialty: String
+
+  """회원 ID (4자 이상, 중복확인 필요)"""
+  userId: String!
+
+  """의사명 (본인인증에서 자동입력)"""
+  userName: String!
+
+  """NICE 본인인증 토큰 (completeVerification 응답, 10분 유효)"""
+  verificationToken: String!
+}
+
+type SmsTestResult {
+  errorMessage: String
+  status: String!
+  success: Boolean!
+}
+
+"""특수검사(영상/병리/내시경/핵의학) 결과 항목"""
+type SpecialExamResultItem {
+  """진료과명"""
+  departmentName: String
+
+  """진료의명"""
+  doctorName: String
+
+  """검사일자"""
+  examDate: String
+
+  """육안소견"""
+  grossResult: String
+
+  """자문의 여부"""
+  isConsultant: Boolean
+
+  """처방코드"""
+  orderCode: String
+
+  """처방일자"""
+  orderDate: String
+
+  """처방명"""
+  orderName: String
+
+  """PACS 접근번호"""
+  pacsAccessNo: String
+
+  """판독의 ID 1"""
+  readerId1: String
+
+  """판독의 ID 2"""
+  readerId2: String
+
+  """판독의 ID 3"""
+  readerId3: String
+
+  """판독결과"""
+  resultContent: String
+
+  """정렬순서"""
+  sortOrder: String
+
+  """검체코드"""
+  specimenCode: String
+
+  """검체번호"""
+  specimenNo: String
+}
+
+"""특수검사결과 조회 결과"""
+type SpecialExamResultResponse {
+  """특수검사결과 목록"""
+  items: [SpecialExamResultItem!]!
+
+  """총 건수"""
+  totalCount: Float!
+}
+
+"""게시글 수정 입력"""
+input UpdateBoardPostInput {
+  """첨부파일 목록"""
+  attachments: [BoardAttachmentInput!]
+
+  """게시판 아이디"""
+  boardId: String
+
+  """내용"""
+  content: String
+
+  """행사 종료일 (EVENT 유형)"""
+  endDate: DateTime
+
+  """병원 코드"""
+  hospitalCode: HospitalCode
+
+  """상단 고정 여부"""
+  isPinned: Boolean = false
+
+  """행사 시작일 (EVENT 유형)"""
+  startDate: DateTime
+
+  """썸네일 URL (EVENT 유형)"""
+  thumbnailUrl: String
+
+  """제목"""
+  title: String
+}
+
+"""게시판 설정 수정 입력"""
+input UpdateBoardSettingInput {
+  """첨부파일 사용 여부"""
+  allowAttachments: Boolean
+
+  """게시판 설명(관리자 메모, 200자 이내)"""
+  description: String
+
+  """게시판명"""
+  name: String
+
+  """게시판 템플릿 유형"""
+  templateType: BoardTemplateType
+}
+
+"""콘텐츠 그룹 수정 입력"""
+input UpdateContentGroupInput {
+  """그룹명"""
+  name: String
+
+  """정렬순서"""
+  sortOrder: Int
+}
+
+"""콘텐츠 수정 입력"""
+input UpdateContentInput {
+  """본문"""
+  body: String
+
+  """콘텐츠 그룹 ID (null 전달 시 해제)"""
+  contentGroupId: String
+
+  """제목"""
+  title: String
+}
+
+"""EHR 의사정보 수정 입력"""
+input UpdateDoctorEhrInput {
+  """진료과"""
+  department: String
+
+  """이메일"""
+  email: String
+
+  """대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """전문분야"""
+  specialty: String
+
+  """전화번호"""
+  telNo: String
+
+  """의사명"""
+  userNm: String
+
+  """웹 사용자 ID"""
+  wwwUserId: String!
+}
+
+"""의료진 수정 입력"""
+input UpdateDoctorInput {
+  """진료과"""
+  department: String
+
+  """이메일"""
+  email: String
+
+  """소속 병원"""
+  hospitalCode: HospitalCode
+
+  """면허번호"""
+  licenseNo: String
+
+  """이름"""
+  name: String
+
+  """연락처"""
+  phone: String
+
+  """전문분야"""
+  specialty: String
+
+  """회원 상태"""
+  status: UserStatus
+}
+
+"""의사 프로필 수정 입력"""
+input UpdateDoctorProfileInput {
+  """요양기관번호"""
+  careInstitutionNo: String
+
+  """진료과"""
+  department: String
+
+  """의사 구분 코드 (1=의사, 2=한의사, 3=치과의사)"""
+  doctorType: String
+
+  """이메일"""
+  email: String
+
+  """이메일 수신 동의 여부"""
+  emailConsent: Boolean
+
+  """병원 주소"""
+  hospAddress: String
+
+  """병원 상세주소"""
+  hospAddressDetail: String
+
+  """병원명"""
+  hospName: String
+
+  """병원 대표전화"""
+  hospPhone: String
+
+  """병원 홈페이지"""
+  hospWebsite: String
+
+  """병원 우편번호"""
+  hospZipCode: String
+
+  """원장 여부"""
+  isDirector: Boolean
+
+  """의사면허번호"""
+  licenseNo: String
+
+  """새 비밀번호 (8자 이상, 영문+숫자+특수문자)"""
+  newPassword: String
+
+  """현재 비밀번호 (비밀번호 변경 시 필수)"""
+  oldPassword: String
+
+  """전화번호"""
+  phone: String
+
+  """회신 수신 동의 여부"""
+  replyConsent: Boolean
+
+  """출신 학교"""
+  school: String
+
+  """SMS 수신 동의 여부"""
+  smsConsent: Boolean
+
+  """전문분야"""
+  specialty: String
+
+  """이름"""
+  userName: String
+}
+
+"""e-Consult 자문의 이메일 수정 입력"""
+input UpdateEconsultConsultantEmailInput {
+  """변경할 이메일"""
+  email: String!
+}
+
+"""EHR 병원정보 수정 입력 (DVO 전체 필드)"""
+input UpdateHospitalEhrInput {
+  """상세주소"""
+  adrsDetlNm: String
+
+  """주소"""
+  adrsNm: String
+
+  """우편번호"""
+  adrsZpcd: String
+
+  """담당구분코드"""
+  asgnClsfCd: String
+
+  """담당자명"""
+  asgnNm: String
+
+  """담당직종"""
+  asgnOcrsNm: String
+
+  """생년월일 (YYYYMMDD)"""
+  btdt: String
+
+  """대표자 연락처"""
+  ceoCnpnVl: String
+
+  """문자수신동의 (Y/N)"""
+  chmeRecvAgrmYn: String
+
+  """협력구분코드1"""
+  clbrDvsnCd1: String
+
+  """협력구분코드2"""
+  clbrDvsnCd2: String
+
+  """협력구분코드3"""
+  clbrDvsnCd3: String
+
+  """담당자 전화"""
+  cnpnDscrCtn: String
+
+  """면허번호"""
+  drlcNo: String
+
+  """세부전공"""
+  dtlsMajrCtn: String
+
+  """이메일"""
+  emadNm: String
+
+  """이메일회신동의 (Y/N)"""
+  emailRplyAgrmYn1: String
+
+  """팩스번호"""
+  fxno: String
+
+  """성별 (M/F)"""
+  gendCd: String
+
+  """졸업년도"""
+  grdtYy: String
+
+  """등록자ID"""
+  gvUserId: String
+
+  """등록자IP"""
+  gvUserIp: String
+
+  """의료인수"""
+  hlofMnemCnt: Int
+
+  """홈페이지 주소"""
+  hmpgAdrsNm: String
+
+  """대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """병원분류코드 (10/20/30/50)"""
+  hsptClsfCd: String
+
+  """병원명"""
+  hsptNm: String
+
+  """비고"""
+  hsptRmrkCtn: String
+
+  """진료과코드"""
+  mcdpCd: String
+
+  """담당자 휴대폰"""
+  mngnCnpnVl: String
+
+  """출신대학코드"""
+  origMddpUnvrCd: String
+
+  """요양기관번호"""
+  rcisNo: String!
+
+  """의뢰기관 의사수"""
+  refrInstDrCnt: Int
+
+  """의뢰기관 간호사수"""
+  refrInstNursCnt: Int
+
+  """회신요청 (Y/N)"""
+  rplyRqstYn: String
+
+  """병상수"""
+  runSckbCnt: Int
+
+  """전문진료과코드"""
+  spcDprtMcdpCd: String
+
+  """전화번호"""
+  tlno: String
+
+  """수련병원"""
+  tragHsptNm: String
+
+  """대표자명"""
+  userNm: String
+}
+
+"""EHR 회원상태코드 변경 입력"""
+input UpdateMemberStatusInput {
+  """대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """회원상태코드 (1:일반, 2:휴면, 3:삭제, 4:미가입)"""
+  wwwMmbrSttsCd: String!
+
+  """웹 사용자 ID"""
+  wwwUserId: String!
+}
+
+"""메뉴 수정 입력"""
+input UpdateMenuInput {
+  """외부 링크 URL"""
+  externalUrl: String
+
+  """GNB 노출 여부"""
+  gnbExposure: Boolean
+
+  """병원 코드"""
+  hospitalCode: HospitalCode
+
+  """아이콘명"""
+  iconName: String
+
+  """활성 여부"""
+  isActive: Boolean
+
+  """메뉴 타깃 유형"""
+  menuTargetType: MenuTargetType
+
+  """메뉴명"""
+  name: String
+
+  """상위 메뉴 ID"""
+  parentId: String
+
+  """경로"""
+  path: String
+
+  """정렬순서"""
+  sortOrder: Int
+
+  """연결할 게시판 ID"""
+  targetBoardId: String
+
+  """연결할 게시판 유형"""
+  targetBoardType: BoardType
+
+  """연결할 콘텐츠 ID"""
+  targetContentId: String
+}
+
+"""메뉴 권한 그룹 수정 입력"""
+input UpdateMenuPermissionGroupInput {
+  """그룹명"""
+  name: String!
+}
+
+"""협력병의원 정보 수정 입력 - 기존 신청의 필드를 수정 (승인 후 정보수정 포함)"""
+input UpdatePartnerApplicationInput {
+  """가동 병상 수"""
+  activeBedCount: Int
+
+  """첨부파일 메타데이터 (JSON 배열)"""
+  attachments: JSON
+
+  """기본 처치 가능 항목 (JSON)"""
+  availableTreatments: JSON
+
+  """엑시머레이저 가능 여부"""
+  clinicHasExcimerLaser: Boolean
+
+  """혈액투석 가능 여부"""
+  clinicHasHemodialysis: Boolean
+
+  """복막투석 가능 여부"""
+  clinicHasPeritoneal: Boolean
+
+  """광선치료 가능 여부"""
+  clinicHasPhototherapy: Boolean
+
+  """투약 유형"""
+  clinicMedicationType: String
+
+  """진료과별 전문의 현황 (JSON)"""
+  departmentSpecialists: JSON
+
+  """병원장 생년월일 (YYYY-MM-DD)"""
+  directorBirthDate: String
+
+  """병원장 차량번호"""
+  directorCarNo: String
+
+  """병원장 진료과"""
+  directorDepartment: String
+
+  """병원장 이메일"""
+  directorEmail: String
+
+  """E-mail 수신 동의"""
+  directorEmailConsent: Boolean
+
+  """병원장 성별 (M/F)"""
+  directorGender: String
+
+  """병원장 졸업년도"""
+  directorGraduationYear: String
+
+  """의사면허번호"""
+  directorLicenseNo: String
+
+  """병원장 성명"""
+  directorName: String
+
+  """병원장 휴대전화"""
+  directorPhone: String
+
+  """회신서 수신 동의"""
+  directorReplyConsent: Boolean
+
+  """병원장 출신학교"""
+  directorSchool: String
+
+  """SMS 수신 동의"""
+  directorSmsConsent: Boolean
+
+  """병원장 세부전공"""
+  directorSubSpecialty: String
+
+  """병원장 수련병원"""
+  directorTrainingHospital: String
+
+  """응급실 수"""
+  erCount: Int
+
+  """인공신장실 유무"""
+  hasDialysisRoom: Boolean
+
+  """응급실 유무"""
+  hasEr: Boolean
+
+  """보호자 간병 유무"""
+  hasGuardianCare: Boolean
+
+  """호스피스 유무"""
+  hasHospice: Boolean
+
+  """중환자실 유무"""
+  hasIcu: Boolean
+
+  """간호간병통합서비스 유무"""
+  hasIntegratedNursing: Boolean
+
+  """수술실 유무"""
+  hasOperatingRoom: Boolean
+
+  """물리치료실 유무"""
+  hasPhysicalTherapy: Boolean
+
+  """정신과 병동 폐쇄"""
+  hasPsychClosed: Boolean
+
+  """정신과 병동 일반"""
+  hasPsychGeneral: Boolean
+
+  """재활치료실 격리"""
+  hasRehabIsolation: Boolean
+
+  """재활치료실 작업"""
+  hasRehabOt: Boolean
+
+  """재활치료실 물리"""
+  hasRehabPt: Boolean
+
+  """재활치료실 언어"""
+  hasRehabSt: Boolean
+
+  """재활치료실 연하"""
+  hasRehabSwallow: Boolean
+
+  """공동 간병 유무"""
+  hasSharedCare: Boolean
+
+  """병원 주소 (Hospital 테이블 업데이트)"""
+  hospitalAddress: String
+
+  """병원 상세주소 (Hospital 테이블 업데이트)"""
+  hospitalAddressDetail: String
+
+  """병원 팩스번호 (Hospital 테이블 업데이트)"""
+  hospitalFaxNumber: String
+
+  """병원명 (Hospital 테이블 업데이트)"""
+  hospitalName: String
+
+  """병원 대표전화 (Hospital 테이블 업데이트)"""
+  hospitalPhone: String
+
+  """병원 홈페이지 주소 (Hospital 테이블 업데이트)"""
+  hospitalWebsite: String
+
+  """병원 우편번호 (Hospital 테이블 업데이트)"""
+  hospitalZipCode: String
+
+  """중환자실 수"""
+  icuCount: Int
+
+  """수정할 신청 ID"""
+  id: ID!
+
+  """의료기관 유형"""
+  institutionType: InstitutionType
+
+  """원장 여부"""
+  isDirector: Boolean
+
+  """격리 중 간병 유형"""
+  isolationCareType: String
+
+  """격리 2인실 수"""
+  isolationDoubleCount: Int
+
+  """격리 중 재활 유형"""
+  isolationRehabType: String
+
+  """격리병실 수"""
+  isolationRoomCount: Int
+
+  """격리 1인실 수"""
+  isolationSingleCount: Int
+
+  """격리 3인실 수"""
+  isolationTripleCount: Int
+
+  """격리 유형 (JSON 배열)"""
+  isolationTypes: JSON
+
+  """격리병상 운영 여부"""
+  isolationWardOperation: Boolean
+
+  """주요 보유 장비"""
+  majorEquipment: String
+
+  """다인실 수"""
+  multiRoomCount: Int
+
+  """간호사 수"""
+  nurseCount: Int
+
+  """상급병실 수"""
+  premiumRoomCount: Int
+
+  """병원특성 및 기타사항"""
+  remarks: String
+
+  """전문의 수"""
+  specialistCount: Int
+
+  """실무자 부서/진료과 유형"""
+  staffDeptType: String
+
+  """실무자 부서/진료과 값"""
+  staffDeptValue: String
+
+  """실무자 이메일"""
+  staffEmail: String
+
+  """실무자 성명"""
+  staffName: String
+
+  """실무자 휴대전화"""
+  staffPhone: String
+
+  """실무자 직급"""
+  staffPosition: String
+
+  """실무자 연락처 (유선)"""
+  staffTel: String
+
+  """총 병상 수"""
+  totalBedCount: Int
+
+  """총 직원 수"""
+  totalStaffCount: Int
+}
+
+"""팝업/배너 수정 입력"""
+input UpdatePopupInput {
+  """이미지 대체 텍스트 (alt) — 메인배너 전용"""
+  altText: String
+
+  """상시노출 여부"""
+  alwaysVisible: Boolean
+
+  """종료일 (상시노출이면 null)"""
+  endDate: DateTime
+
+  """PC 이미지 URL (다크모드) — 메인배너 전용"""
+  imageDarkUrl: String
+
+  """PC 이미지 URL (라이트모드)"""
+  imageUrl: String
+
+  """활성 여부 (false로 변경 시 sortOrder 자동 초기화)"""
+  isActive: Boolean
+
+  """연결 링크 URL"""
+  linkUrl: String
+
+  """메인 슬로건 (최대 30자) — 메인배너 전용"""
+  mainSlogan: String
+
+  """미디어 타입 (IMAGE | VIDEO) — 메인배너 전용"""
+  mediaType: String
+
+  """모바일 이미지 URL (다크모드) — 메인배너 전용"""
+  mobileDarkImageUrl: String
+
+  """모바일 이미지 URL (라이트모드) — 메인배너 전용"""
+  mobileImageUrl: String
+
+  """정렬순서"""
+  sortOrder: Int
+
+  """시작일 (상시노출이면 null)"""
+  startDate: DateTime
+
+  """서브 슬로건/부제 (최대 30자) — 메인배너 전용"""
+  subSlogan: String
+
+  """새 창 열기 여부"""
+  targetBlank: Boolean
+
+  """영상 URL — 메인배너 전용"""
+  videoUrl: String
+}
+
+"""프로필 수정 입력"""
+input UpdateProfileInput {
+  """이메일"""
+  email: String
+
+  """전화번호"""
+  phone: String
+
+  """이름"""
+  userName: String
+}
+
+"""사용자"""
+type User {
+  """허용 IP (설정 시 해당 IP에서만 로그인 가능)"""
+  allowedIp: String
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """이메일"""
+  email: String!
+
+  """소속 병원"""
+  hospitalCode: HospitalCode
+
+  """소속 병원 ID (Hospital 테이블 FK)"""
+  hospitalId: String
+
+  """고유 ID"""
+  id: ID!
+
+  """마지막 로그인 일시"""
+  lastLoginAt: DateTime
+
+  """마지막 로그인 IP"""
+  lastLoginIp: String
+
+  """비밀번호 변경 필요 여부"""
+  mustChangePw: Boolean!
+
+  """전화번호"""
+  phone: String
+
+  """프로필 정보"""
+  profile: UserProfile
+
+  """가입 반려 사유"""
+  rejectReason: String
+
+  """계정 상태"""
+  status: UserStatus!
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """로그인 아이디"""
+  userId: String!
+
+  """이름"""
+  userName: String!
+
+  """회원 유형"""
+  userType: UserType!
+
+  """회원 탈퇴 일시"""
+  withdrawnAt: DateTime
+}
+
+"""사용자 프로필 (추가 정보)"""
+type UserProfile {
+  """생년월일"""
+  birthDate: DateTime
+
+  """요양기관번호"""
+  careInstitutionNo: String
+
+  """진료과"""
+  department: String
+
+  """의사 세부유형 (1=의사/양방, 2=한의사/한방, 3=치과의사/치방)"""
+  doctorType: DoctorType
+
+  """E-mail 동의여부"""
+  emailConsent: Boolean!
+
+  """성별"""
+  gender: Gender
+
+  """병원주소"""
+  hospAddress: String
+
+  """병원 상세주소"""
+  hospAddressDetail: String
+
+  """병원코드 (레거시)"""
+  hospCode: String
+
+  """병원명"""
+  hospName: String
+
+  """대표전화"""
+  hospPhone: String
+
+  """병원 홈페이지 주소"""
+  hospWebsite: String
+
+  """병원 우편번호"""
+  hospZipCode: String
+
+  """원장여부"""
+  isDirector: Boolean!
+
+  """의사면허번호"""
+  licenseNo: String
+
+  """회신서 수신 동의 여부"""
+  replyConsent: Boolean!
+
+  """대표자명 (레거시)"""
+  representative: String
+
+  """출신학교"""
+  school: String
+
+  """SMS 동의여부"""
+  smsConsent: Boolean!
+
+  """전문분야 (세부전공)"""
+  specialty: String
+}
+
+"""사용자 상태"""
+enum UserStatus {
+  """정상"""
+  ACTIVE
+
+  """승인대기"""
+  PENDING
+
+  """거부"""
+  REJECTED
+
+  """탈퇴"""
+  WITHDRAWN
+}
+
+"""사용자 유형"""
+enum UserType {
+  """관리자"""
+  ADMIN
+
+  """의사"""
+  DOCTOR
+}
+
+"""본인인증 중복확인 결과"""
+type VerificationDuplicateResult {
+  """중복 여부 (true = 이미 가입됨)"""
+  isDuplicate: Boolean!
+
+  """중복 사유 메시지"""
+  message: String
+}
+
+"""NICE 본인인증 결과"""
+type VerificationResultOutput {
+  """연령대 코드 (NICE 원본값)"""
+  ageCode: String
+
+  """인증수단 (M:휴대폰, I:아이핀) - NICE REST API에서는 제공하지 않음"""
+  authMethod: String
+
+  """생년월일 (YYYYMMDD)"""
+  birthDate: String!
+
+  """연계정보확인값 (CI) - DB 저장용"""
+  ci: String!
+
+  """CI2 값 (NICE 원본값)"""
+  ci2: String
+
+  """중복가입확인값 (DI) - DB 저장용"""
+  di: String!
+
+  """성별 (M/F)"""
+  gender: String!
+
+  """통신사 코드 (NICE 원본값)"""
+  mobileCo: String
+
+  """인증된 이름"""
+  name: String!
+
+  """내/외국인 구분 (0:내국인, 1:외국인)"""
+  nationalInfo: String
+
+  """휴대전화번호 (휴대폰인증 시)"""
+  phone: String
+
+  """NICE 복호화 원본 전체 payload (디버깅용)"""
+  rawNiceData: JSON
+
+  """본인인증 확인 토큰 - 아이디/비밀번호 찾기 시 사용 (10분 유효)"""
+  verificationToken: String
+
+  """가상번호 (NICE 원본값)"""
+  vnumber: String
+}
+
+"""수진이력(진료내역) 항목"""
+type VisitHistoryItem {
+  """입원일자"""
+  admissionDate: String
+
+  """진료과명"""
+  departmentName: String
+
+  """진단명"""
+  diagnosisName: String
+
+  """담당의 ID"""
+  doctorId: String
+
+  """담당의명"""
+  doctorName: String
+
+  """자문의 여부"""
+  isConsultant: Boolean
+
+  """병실번호"""
+  roomNo: String
+
+  """진료일자"""
+  visitDate: String
+
+  """진료일시"""
+  visitDatetime: String
+
+  """진료구분코드"""
+  visitTypeCode: String
+
+  """진료구분명 (외래/입원 등)"""
+  visitTypeName: String
+
+  """병동코드"""
+  wardCode: String
+
+  """병동명"""
+  wardName: String
+}
+
+"""EHR 수진이력 조회 입력 - 환자번호 + 날짜범위"""
+input VisitHistoryQueryInput {
+  """조회 시작일 (YYYYMMDD)"""
+  fromDt: String
+
+  """조회 대상 병원"""
+  hospitalCode: HospitalCode!
+
+  """진료과코드"""
+  mcdpCd: String
+
+  """환자번호"""
+  ptntNo: String!
+
+  """조회 종료일 (YYYYMMDD)"""
+  toDt: String
+}
+
+"""수진이력 조회 결과"""
+type VisitHistoryResponse {
+  """수진이력 목록"""
+  items: [VisitHistoryItem!]!
+
+  """총 건수"""
+  totalCount: Float!
+}
+
+"""회원 탈퇴 입력"""
+input WithdrawMemberInput {
+  """비밀번호 확인"""
+  password: String!
 }
