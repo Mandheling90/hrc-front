@@ -68,7 +68,7 @@
   font-size: 12px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-white;
+  color: #ffffff;
   flex-shrink: 0;
 }
 
@@ -76,7 +76,7 @@
   font-size: 18px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-12;
+  color: var(--gray-12);
 
   @include mobile {
     font-size: 16px;
@@ -86,9 +86,9 @@
 // 검색/조회 카드
 .searchCard {
   padding: 40px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   border-radius: 20px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -136,7 +136,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.64px;
-  color: $gray-11;
+  color: var(--gray-11);
   margin: 0;
   display: none;
 
@@ -149,7 +149,7 @@
 .dividerLine {
   width: 100%;
   height: 2px;
-  background-color: $gray-8;
+  background-color: var(--gray-8);
 }
 
 .searchContent {
@@ -179,7 +179,7 @@
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-12;
+  color: var(--gray-12);
 
   @include tablet {
     font-size: 18px;
@@ -256,7 +256,7 @@
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-9;
+  color: var(--gray-9);
 
   @include mobile {
     display: none;
@@ -418,7 +418,7 @@
     left: 3px;
     width: 10px;
     height: 10px;
-    background-color: $color-white;
+    background-color: #ffffff;
     border-radius: 50%;
   }
 }
@@ -427,7 +427,7 @@
   font-size: 18px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-10;
+  color: var(--gray-10);
 
   @include mobile {
     font-size: 16px;
@@ -458,15 +458,15 @@
   :global(.tableRow) {
     padding: 15px 20px;
     border-radius: 10px;
-    border: 1px solid $gray-9;
+    border: 1px solid var(--color-border);
   }
 
   :global(.tableHeader) {
-    background-color: $gray-2;
+    background-color: var(--gray-2);
   }
 
   :global(.tableRow) {
-    background-color: $color-white;
+    background-color: var(--color-white);
   }
 
   :global(.headerCell),
@@ -482,12 +482,12 @@
 
   :global(.headerCell) {
     font-weight: $font-weight-semibold;
-    color: $color-darken;
+    color: var(--color-darken);
   }
 
   :global(.dataCell) {
     font-weight: $font-weight-normal;
-    color: $gray-11;
+    color: var(--gray-11);
   }
 
   :global(.separator) {
@@ -499,12 +499,12 @@
 // 만료된 행 스타일
 .expiredRow {
   position: relative;
-  background-color: $color-white !important;
-  border-color: $gray-11 !important;
+  background-color: var(--color-white) !important;
+  border-color: var(--gray-11) !important;
 
   // 모든 데이터 셀 회색 처리
   :global(.dataCell) {
-    color: $gray-11 !important;
+    color: var(--gray-11) !important;
   }
 
   // 블라인드 오버레이 레이어 (정보공개 동의여부 ~ 회신서 조회 영역만 덮음)
@@ -526,7 +526,7 @@
     font-weight: $font-weight-semibold;
     line-height: 1.5;
     letter-spacing: -0.8px;
-    color: $color-white;
+    color: #ffffff;
     pointer-events: none;
 
     @include mobile {
@@ -582,7 +582,7 @@
     left: 3px;
     width: 10px;
     height: 10px;
-    background-color: $color-white;
+    background-color: #ffffff;
     border-radius: 50%;
   }
 }
@@ -647,9 +647,9 @@
 // 태블릿/모바일 카드 스타일
 .patientCard {
   padding: 15px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   border-radius: 10px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -658,7 +658,7 @@
 
 .cardHeader {
   padding: 5px;
-  background-color: $gray-4;
+  background-color: var(--gray-4);
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
@@ -669,14 +669,14 @@
   font-size: 18px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-12;
+  color: var(--gray-12);
 }
 
 .cardHeaderValue {
   font-size: 18px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--gray-11);
 }
 
 .cardBody {
@@ -713,7 +713,7 @@
   font-size: 18px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-12;
+  color: var(--gray-12);
 
   @include mobile {
     font-size: 16px;
@@ -724,7 +724,7 @@
   font-size: 18px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--gray-11);
 
   @include mobile {
     font-size: 16px;
@@ -768,24 +768,24 @@
 
 // 만료된 카드 스타일
 .expiredCard {
-  border-color: $gray-11;
+  border-color: var(--gray-11);
   position: relative;
   overflow: hidden;
 
   // 기존 클래스 호환
   .cardHeaderValue,
   .cardValue {
-    color: $gray-11;
+    color: var(--gray-11);
   }
 
   .cardValuePrimary {
-    color: $gray-11;
+    color: var(--gray-11);
   }
 
   // CardList InfoRowContent 클래스 대응
   :global(.infoValue),
   :global(.infoValueAccent) {
-    color: $gray-11 !important;
+    color: var(--gray-11) !important;
   }
 
   // 만료 오버레이
@@ -805,7 +805,7 @@
     font-size: 18px;
     font-weight: $font-weight-semibold;
     line-height: 1.5;
-    color: $color-white;
+    color: #ffffff;
     pointer-events: none;
   }
 }
@@ -825,5 +825,5 @@
   font-size: 18px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-white;
+  color: #ffffff;
 }

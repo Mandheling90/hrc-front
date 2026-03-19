@@ -155,9 +155,11 @@ export default function MyPage() {
                   <Link href='/mypage/edit-profile' className={styles.userActionBtnPrimary}>
                     회원정보 수정
                   </Link>
-                  <Link href='/mypage/edit-clinic' className={styles.userActionBtn}>
-                    협력병•의원 정보수정
-                  </Link>
+                  {user?.profile?.isDirector && (
+                    <Link href='/mypage/edit-clinic' className={styles.userActionBtn}>
+                      협력병•의원 정보수정
+                    </Link>
+                  )}
                 </div>
               </div>
 

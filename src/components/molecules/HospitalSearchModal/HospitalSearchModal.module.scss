@@ -242,6 +242,13 @@
   gap: 16px;
 }
 
+.skeletonArea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
 .resultTable {
   width: 100%;
 

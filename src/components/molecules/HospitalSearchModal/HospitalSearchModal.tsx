@@ -10,6 +10,7 @@ import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useDaumPostcode } from '@/hooks/useDaumPostcode'
 import { useHospital } from '@/contexts/HospitalContext'
 import { EHR_HOSPITAL_SEARCH_QUERY } from '@/graphql/hospital/queries'
@@ -174,6 +175,10 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       return
     }
 
+    // 검색 시작 시 결과 화면으로 전환 (스켈레톤 표시)
+    setSearchResults([])
+    setView('results')
+
     const hospitalCodeEnum = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
     try {
       const { data } = await searchHospitals({
@@ -207,7 +212,6 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       console.error('병원 검색 오류:', err)
       setSearchResults([])
     }
-    setView('results')
   }
 
   const handleHospitalClick = (hospital: HospitalSearchResult) => {
@@ -382,7 +386,12 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
             <>
               {/* 검색 결과 */}
               <div className={styles.resultArea} data-testid='hospital-search-result-area'>
-                {searchResults.length > 0 ? (
+                {searchLoading ? (
+                  <div className={styles.skeletonArea}>
+                    <Skeleton width='100%' height={40} variant='rounded' />
+                    <Skeleton width='100%' height={40} variant='rounded' count={5} gap={8} />
+                  </div>
+                ) : searchResults.length > 0 ? (
                   <Table<HospitalSearchResult>
                     columns={hospitalColumns}
                     data={searchResults}

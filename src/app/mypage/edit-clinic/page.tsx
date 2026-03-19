@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -18,7 +19,15 @@ const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label:
 
 export default function EditClinicPage() {
   const router = useHospitalRouter()
+  const { user } = useAuthContext()
   const [currentStep, setCurrentStep] = useState(1)
+
+  // 원장여부 체크 - 원장이 아니면 마이페이지로 리다이렉트
+  useEffect(() => {
+    if (user && !user.profile?.isDirector) {
+      router.push('/mypage')
+    }
+  }, [user, router])
   const totalSteps = 4
 
   const guideMessages = useMemo(() => {

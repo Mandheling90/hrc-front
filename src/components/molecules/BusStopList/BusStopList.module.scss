@@ -39,7 +39,7 @@
   gap: $spacing-2; // 8px
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--gray-12);
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
 
@@ -56,7 +56,7 @@
   display: inline-block;
   width: 8px;
   height: 2px;
-  background-color: $gray-11;
+  background-color: var(--gray-11);
   flex-shrink: 0;
 }
 
