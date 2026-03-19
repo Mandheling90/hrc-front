@@ -5,9 +5,8 @@
 
 1. 실행 스크립트
 --------------------------------------------
-npm run prd              빌드 + 실행 (한번에)
-npm run build            빌드만
-npm run start            실행만
+npm run build            빌드
+npm run start            실행
 
 
 2. 환경 변수 (.env.production)
@@ -46,9 +45,6 @@ NEXT_PUBLIC_HOSPITAL_ID    기본 병원 ID (폴백용, 기본값: anam)
      .env.production 파일이 존재하는지 확인
 
   4) 빌드 + 실행
-     npm run prd
-
-  * 빌드와 실행을 분리하려면:
      npm run build
      npm run start
 
