@@ -13,11 +13,10 @@ const commonPartnerLogos = [
   { id: 3, image: '/images/home/img-section4-3.png', alt: '한국보건의료정보원', href: 'https://www.khis.kr/' }
 ]
 
-// TODO: 리뉴얼 배포 후 각 병원 진료협력센터 실제 URL로 교체
 const allHospitalLogos: Record<string, { id: number; image: string; alt: string; href: string }> = {
-  anam: { id: 7, image: '/images/common/anam/Component 4.png', alt: '안암병원 진료협력센터', href: '/anam' },
-  guro: { id: 8, image: '/images/common/guro/Component 4.png', alt: '구로병원 진료협력센터', href: '/guro' },
-  ansan: { id: 9, image: '/images/common/ansan/Component 4.png', alt: '안산병원 진료협력센터', href: '/ansan' }
+  anam: { id: 7, image: '/images/common/anam/Component 4.png', alt: '안암병원 진료협력센터', href: 'https://anamrefer.kumc.or.kr' },
+  guro: { id: 8, image: '/images/common/guro/Component 4.png', alt: '구로병원 진료협력센터', href: 'https://gurorefer.kumc.or.kr' },
+  ansan: { id: 9, image: '/images/common/ansan/Component 4.png', alt: '안산병원 진료협력센터', href: 'https://ansanrefer.kumc.or.kr' }
 }
 
 const getPolicyLinks = (homepage: string) => [
