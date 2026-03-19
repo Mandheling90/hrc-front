@@ -61,7 +61,7 @@
 .targetLabel {
   font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   margin-bottom: $spacing-3;
 }
 
@@ -87,7 +87,7 @@
   padding-left: 32px; // Figma: 32px
   font-size: $font-size-2xl; // 24px
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.96px;
 
@@ -108,8 +108,8 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-  background-color: $color-primary;
-  border: 1px solid $color-primary;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
   border-radius: 2px;
   flex-shrink: 0;
 }
@@ -171,8 +171,8 @@
   justify-content: center;
   gap: 56px; // Figma: 56px
   padding: 30px 50px; // Figma: 30px 50px
-  background-color: $color-white;
-  border: 1px solid $gray-9; // Figma: #8C8C8C
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border); // Figma: #8C8C8C
   border-radius: 10px; // Figma: 10px
   flex: 1 1 0;
   min-width: 0;
@@ -202,7 +202,7 @@
   min-width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #fcebeb; // Figma: #FCEBEB
+  background-color: var(--color-accent-bg); // Figma: #FCEBEB
 
   @include tablet {
     width: 40px;
@@ -241,7 +241,7 @@
 .contactLabel {
   font-size: 24px; // Figma: 24px
   font-weight: $font-weight-semibold; // Figma: 600
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.96px;
 
@@ -259,7 +259,7 @@
 .contactValue {
   font-size: 24px; // Figma: 24px
   font-weight: $font-weight-semibold; // Figma: 600
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.96px;
 
@@ -286,15 +286,15 @@
   gap: $spacing-6;
   width: 100%;
   padding: 20px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 5px;
-  background: white;
+  background: var(--color-white);
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: $gray-1;
+    background-color: var(--color-bg-hover);
   }
 }
 
@@ -308,7 +308,7 @@
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 30px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   word-wrap: break-word;
 
   @include tablet {
@@ -373,14 +373,14 @@
 }
 
 .hospitalButton {
-  color: $color-primary !important;
-  border-color: $color-primary !important;
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
   border-width: 2px !important; // Figma: 2px
-  background-color: $color-white !important;
+  background-color: var(--color-white) !important;
 
   &:hover:not(:disabled) {
-    background-color: #fff !important;
-    border-color: $color-primary !important;
-    color: $color-primary !important;
+    background-color: var(--color-white) !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
   }
 }

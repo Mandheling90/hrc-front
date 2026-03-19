@@ -14,14 +14,14 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 
   // Light mode
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(5px);
-  border: 1.5px solid $gray-10;
+  background-color: $color-primary;
+  backdrop-filter: none;
+  border: 1.5px solid transparent;
 
   &.dark {
-    background-color: $color-primary;
-    backdrop-filter: none;
-    border: 1.5px solid transparent;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    border: 1.5px solid $gray-10;
   }
 }
 
@@ -42,31 +42,32 @@
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 
-  // Light mode: thumb at bottom
-  // 80px - 4px top padding - 4px bottom padding - 40px thumb = 32px
-  transform: translateY(32px);
-  background-color: $gray-10;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  // Light mode: thumb at top
+  transform: translateY(0);
+  background-color: #fff;
+  border: 1px solid $gray-4;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    box-shadow: inset 0px -4px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
     pointer-events: none;
     transition: box-shadow 0.3s ease;
   }
 
-  // Dark mode: thumb at top
+  // Dark mode: thumb at bottom
+  // 80px - 4px top padding - 4px bottom padding - 40px thumb = 32px
   .dark & {
-    transform: translateY(0);
-    background-color: #fff;
-    border: 1px solid $gray-4;
-    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(32px);
+    background-color: $gray-10;
+    border: none;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 
     &::after {
-      box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0px -4px 4px rgba(0, 0, 0, 0.2);
     }
   }
 }
@@ -75,9 +76,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: $color-primary;
 
   .dark & {
-    color: $color-primary;
+    color: #fff;
   }
 }

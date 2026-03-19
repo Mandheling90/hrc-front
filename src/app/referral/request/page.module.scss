@@ -29,8 +29,8 @@
   align-items: center;
   justify-content: center; // 카드 내부 콘텐츠 수평 중앙 정렬
   padding: 20px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-9, $gray-9);
   border-radius: 10px;
   text-align: left;
   min-width: 0; // flex/grid 아이템 오버플로우 방지
@@ -110,7 +110,7 @@
   width: 60px;
   height: 60px;
   border-radius: 42px;
-  background-color: #fcebeb;
+  background-color: var(--color-accent-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,7 +127,7 @@
 .title {
   font-size: $font-size-2xl; // 24px
   font-weight: $font-weight-semibold; // 600
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
   line-height: $line-height-normal; // 1.5
   letter-spacing: -0.96px;
@@ -139,7 +139,7 @@
   gap: $spacing-2;
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal; // 400
-  color: $gray-9;
+  color: var(--color-text-tertiary);
   line-height: $line-height-normal; // 1.5
   letter-spacing: -0.8px;
   width: 100%; // 전체 너비 사용
@@ -166,7 +166,7 @@
   font-size: $font-size-xl; // 20px
   font-weight: $font-weight-normal; // 400
   line-height: $line-height-normal; // 1.5
-  color: $gray-9;
+  color: var(--color-text-tertiary);
   margin: 0;
   letter-spacing: -0.8px;
 }
@@ -198,7 +198,7 @@
     align-items: center;
     text-align: center;
     padding: $spacing-8 $spacing-6;
-    border: 1px solid $gray-4;
+    border: 1px solid var(--color-border);
     box-shadow: $shadow-sm;
     transition: all $transition-base;
 
@@ -247,7 +247,7 @@
   .iconCircle {
     width: 80px;
     height: 80px;
-    background-color: rgba(159, 24, 54, 0.15);
+    background-color: var(--color-accent-bg);
   }
 
   .textWrapper {
@@ -267,7 +267,7 @@
   .details {
     font-size: $font-size-xl; // 20px
     font-weight: $font-weight-normal; // 400
-    color: $gray-9;
+    color: var(--color-text-tertiary);
     margin-top: $spacing-3;
     letter-spacing: -0.8px;
     min-width: 0; // 오버플로우 방지
@@ -287,7 +287,7 @@
   .description {
     font-size: $font-size-xl; // 20px
     font-weight: $font-weight-normal; // 400
-    color: $gray-9;
+    color: var(--color-text-tertiary);
     margin: $spacing-2 0 0 0;
     letter-spacing: -0.8px;
   }

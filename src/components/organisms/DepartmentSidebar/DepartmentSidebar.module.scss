@@ -24,10 +24,10 @@ $active-outline: #de989b; // Primary/Normal active
 .header {
   height: 100px;
   padding: 30px 50px;
-  background-color: $gray-2; // #F9F9F9
+  background-color: var(--color-surface); // #F9F9F9
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border: 1px solid $gray-9; // #8C8C8C (outline)
+  border: 1px solid var(--color-border); // #8C8C8C (outline)
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@ $active-outline: #de989b; // Primary/Normal active
 .title {
   font-size: 24px;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5; // 36px
   letter-spacing: -0.96px;
 }
@@ -46,7 +46,7 @@ $active-outline: #de989b; // Primary/Normal active
 .titleColon {
   font-size: 20px;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5; // 30px
 }
 
@@ -64,9 +64,9 @@ $active-outline: #de989b; // Primary/Normal active
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  border-left: 1px solid $gray-9;
-  border-right: 1px solid $gray-9;
-  border-bottom: 1px solid $gray-9;
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 // 초성 네비게이션 (ALL, ㄱ, ㄴ, ...)
@@ -76,8 +76,8 @@ $active-outline: #de989b; // Primary/Normal active
   align-items: center;
   gap: 16px;
   padding: 20px;
-  background-color: $gray-4; // #E8E8E8
-  border-right: 1px solid $gray-8; // #BBBBBB (오른쪽만, 왼쪽은 body에서 처리)
+  background-color: var(--color-bg-hover); // #E8E8E8
+  border-right: 1px solid var(--color-border); // #BBBBBB (오른쪽만, 왼쪽은 body에서 처리)
   flex-shrink: 0;
   overflow-y: auto;
 
@@ -98,8 +98,8 @@ $active-outline: #de989b; // Primary/Normal active
   padding: 0;
   border-radius: 40px;
   border: none;
-  background-color: $color-white;
-  color: $gray-12;
+  background-color: var(--color-white);
+  color: var(--color-darken);
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5; // 30px
@@ -110,19 +110,19 @@ $active-outline: #de989b; // Primary/Normal active
   justify-content: center;
 
   &:hover:not(.active):not(:disabled) {
-    background-color: $gray-3;
+    background-color: var(--color-bg-hover);
   }
 
   &.active {
-    outline: 3px solid $active-outline; // #DE989B
+    outline: 3px solid var(--color-primary); // #DE989B
     outline-offset: 0;
-    background-color: $color-white;
+    background-color: var(--color-white);
   }
 
   &.disabled,
   &:disabled {
-    background-color: $gray-8; // #BBBBBB
-    color: $gray-11; // #636363
+    background-color: var(--color-border); // #BBBBBB
+    color: var(--color-text-secondary); // #636363
     cursor: not-allowed;
   }
 }
@@ -148,7 +148,7 @@ $active-outline: #de989b; // Primary/Normal active
   }
 
   &::-webkit-scrollbar-track {
-    background: $gray-4; // #E8E8E8
+    background: var(--color-bg-hover); // #E8E8E8
     border-radius: 40px;
   }
 
@@ -168,10 +168,10 @@ $active-outline: #de989b; // Primary/Normal active
 .initialBar {
   width: 100%;
   padding: 5px 10px;
-  background-color: $initial-bar-bg; // #E6CFAD
+  background-color: var(--color-secondary); // #E6CFAD
   font-size: 20px;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: #fff;
   line-height: 1.5; // 30px
   text-align: center;
   flex-shrink: 0;
@@ -194,13 +194,13 @@ $active-outline: #de989b; // Primary/Normal active
   border-radius: 0;
   font-size: 20px;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5; // 30px
   cursor: pointer;
   transition: color $transition-base;
 
   &:hover:not(.active) {
-    color: $gray-11;
+    color: var(--color-text-secondary);
   }
 
   &.active {

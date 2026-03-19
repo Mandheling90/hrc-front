@@ -173,7 +173,7 @@ $header-bp-mobile: 768px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: $color-white;
+  background-color: var(--color-white);
   // 헤더 + Breadcrumbs 높이 (Breadcrumbs는 조건부로 표시되지만, 공간은 항상 확보)
   padding-top: $header-height-desktop + $breadcrumbs-height-desktop;
 
@@ -191,7 +191,7 @@ $header-bp-mobile: 768px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: $color-white;
+  background-color: var(--color-white);
   padding-top: $header-height-desktop;
 
   @media (max-width: $header-bp-tablet) {
@@ -263,7 +263,7 @@ $header-bp-mobile: 768px;
 @mixin page-title-large {
   font-size: 40px;
   font-weight: $font-weight-bold;
-  color: $gray-12;
+  color: var(--color-darken);
   text-align: center;
   margin: 0 0 $spacing-20;
   line-height: 1.5;
@@ -288,7 +288,7 @@ $header-bp-mobile: 768px;
 @mixin page-title-medium {
   font-size: $font-size-4xl; // 36px
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   text-align: center;
   margin: 0 0 $spacing-10;
   line-height: 1.5;
@@ -315,7 +315,7 @@ $header-bp-mobile: 768px;
 @mixin section-title {
   font-size: 32px;
   font-weight: $font-weight-semibold;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
   line-height: 1.5;
   letter-spacing: -1.28px;

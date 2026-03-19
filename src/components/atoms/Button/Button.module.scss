@@ -23,63 +23,62 @@
 
 // Variants
 .primary {
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   color: #fff;
-  border: 2px solid $color-primary;
+  border: 2px solid var(--color-primary);
   font-weight: 600;
   letter-spacing: -0.96px; // Figma 디자인에 맞게 추가
 
   &:hover:not(:disabled) {
-    background-color: darken($color-primary, 10%);
+    opacity: 0.85;
   }
 
   &:disabled {
-    background-color: #ccc;
+    background-color: var(--color-border);
   }
 }
 
 .secondary {
-  background-color: #666;
+  background-color: var(--color-text-secondary);
   color: #fff;
 
   &:hover:not(:disabled) {
-    background-color: darken(#666, 10%);
+    opacity: 0.85;
   }
 }
 
 .outline {
-  background-color: #fff;
-  color: #000;
-  border: 2px solid $gray-4; // Figma 디자인에 맞게 2px로 유지
+  background-color: var(--color-white);
+  color: var(--color-darken);
+  border: 2px solid var(--color-border);
   font-weight: 600;
 
   &:hover:not(:disabled) {
-    background-color: $gray-2;
-    border-color: $gray-6;
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-text-tertiary);
   }
 }
 
 .primaryOutline {
-  background-color: #fff;
-  color: $color-primary;
-  border: 2px solid $color-primary;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
   font-weight: 600;
 
   &:hover:not(:disabled) {
-    background-color: rgba($color-primary, 0.05);
-    border-color: darken($color-primary, 10%);
+    background-color: rgba(var(--color-primary-rgb), 0.05);
   }
 }
 
 .gray {
-  background-color: #fff;
-  color: #666;
-  border: 1px solid #ddd;
+  background-color: var(--color-white);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
   font-weight: 600;
 
   &:hover:not(:disabled) {
-    background-color: $gray-2;
-    border-color: #bbb;
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-text-tertiary);
   }
 }
 

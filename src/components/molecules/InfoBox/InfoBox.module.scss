@@ -1,15 +1,35 @@
 @import '@/styles/variables.scss';
 
 .infoBox {
-  background-color: $color-secondary-bg;
+  background-color: var(--color-surface-elevated);
   background-image: url('/images/common/boxBgImg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: 1px solid $color-secondary-hover;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 40px 20px;
   text-align: center;
+
+  [data-theme='dark'] & {
+    background-color: transparent;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(0, 0, 0, 0.75);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
 
   &.contentLeft {
     text-align: left;
@@ -19,7 +39,7 @@
   p {
     font-size: 20px;
     font-weight: 400;
-    color: $gray-11;
+    color: var(--color-text-secondary);
     letter-spacing: -0.8px;
     line-height: 1.5;
     margin: 0;
@@ -78,16 +98,36 @@
   }
 
   .infoBox {
-    background-color: $color-secondary-bg;
+    background-color: var(--color-surface-elevated);
     background-image: url('/images/common/boxBgImg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border: 1px solid $color-secondary-hover;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 30px;
     text-align: left;
     height: 116px;
+
+    [data-theme='dark'] & {
+      background-color: transparent;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: rgba(0, 0, 0, 0.75);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      > * {
+        position: relative;
+        z-index: 1;
+      }
+    }
     display: flex;
     align-items: center;
   }
@@ -103,7 +143,7 @@
 
   .content {
     .message {
-      color: $gray-11;
+      color: var(--color-text-secondary);
     }
   }
 
@@ -127,7 +167,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #8b6f47;
+  color: var(--color-secondary);
 
   svg {
     width: 100%;
@@ -154,7 +194,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #000;
+  color: var(--color-darken);
   margin: 0;
   letter-spacing: -0.96px;
   line-height: 1.5;
@@ -175,7 +215,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 400;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0;
@@ -201,16 +241,36 @@
 
 // Guide variant
 .guide {
-  background-color: $color-secondary-bg;
+  background-color: var(--color-surface-elevated);
   background-image: url('/images/common/boxBgImg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: 1px solid $color-secondary-hover;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 40px 20px;
   display: flex;
   align-items: center;
+
+  [data-theme='dark'] & {
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
   justify-content: flex-start;
 
   // 테블릿 (769px ~ 1429px)
@@ -285,7 +345,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #8c0028; // Figma: primary/deep color
+  color: $color-primary; // Figma: primary/deep color
   text-align: left;
   line-height: 150%; /* 36px */
   letter-spacing: -0.96px;
@@ -343,7 +403,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 400;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   line-height: 1.5;
   letter-spacing: -0.8px;
   margin: 0;
@@ -383,5 +443,5 @@
 }
 
 .textBlack {
-  color: $color-darken !important;
+  color: var(--color-darken) !important;
 }

@@ -481,16 +481,23 @@ function useIsMobile(breakpoint = 768) {
   return isMobile
 }
 
-// 다크모드 감지 훅
+// 다크모드 감지 훅 (data-theme 속성 + 시스템 설정 모두 감지)
 function useIsDark() {
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
-    const mql = window.matchMedia('(prefers-color-scheme: dark)')
-    setIsDark(mql.matches)
-    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches)
-    mql.addEventListener('change', handler)
-    return () => mql.removeEventListener('change', handler)
+    const check = () => {
+      const attr = document.documentElement.getAttribute('data-theme')
+      setIsDark(attr === 'dark')
+    }
+
+    check()
+
+    // data-theme 속성 변경 감지
+    const observer = new MutationObserver(check)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
+    return () => observer.disconnect()
   }, [])
 
   return isDark
@@ -501,13 +508,14 @@ const BannerMedia: React.FC<{
   banner: SlideBanner
   isActive: boolean
   isMobile: boolean
+  isDark: boolean
   videoRef?: React.RefObject<HTMLVideoElement | null>
-}> = ({ banner, isActive, isMobile, videoRef }) => {
+}> = ({ banner, isActive, isMobile, isDark, videoRef }) => {
   const isVideo = banner.mediaType === 'VIDEO' && banner.videoUrl
 
   // 모바일에서는 영상 대신 모바일 이미지 표시
   if (isMobile) {
-    const mobileImg = banner.mobileImageUrl || banner.imageUrl
+    const mobileImg = (isDark && banner.mobileDarkImageUrl) || banner.mobileImageUrl || (isDark && banner.imageDarkUrl) || banner.imageUrl
     if (mobileImg) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -541,10 +549,11 @@ const BannerMedia: React.FC<{
     )
   }
 
-  if (banner.imageUrl) {
+  const desktopImg = (isDark && banner.imageDarkUrl) || banner.imageUrl
+  if (desktopImg) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={banner.imageUrl} alt={banner.altText || '배너 이미지'} className={styles.bannerImage} />
+      <img src={desktopImg} alt={banner.altText || '배너 이미지'} className={styles.bannerImage} />
     )
   }
 
@@ -758,6 +767,7 @@ export const HeroSection: React.FC = () => {
                 banner={banner}
                 isActive={index === currentIndex}
                 isMobile={isMobile}
+                isDark={isDark}
                 videoRef={index === currentIndex ? videoRef : undefined}
               />
             </div>
