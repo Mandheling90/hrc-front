@@ -10,7 +10,7 @@
   height: 80px; // Figma: 80px
   padding: 30px 50px; // Figma: 30px 50px
   border-radius: 10px;
-  border-bottom: 1px solid $gray-8; // Figma: #BBBBBB
+  border-bottom: 1px solid var(--color-border); // Figma: #BBBBBB
 }
 
 .navButton {
@@ -49,7 +49,7 @@
 .dateText {
   font-size: 20px; // Figma: 20px
   font-weight: $font-weight-semibold; // Figma: 600
-  color: $gray-12;
+  color: var(--color-darken);
   line-height: 1.5; // Figma: 30px / 20px = 1.5
   letter-spacing: -0.8px;
   white-space: nowrap;

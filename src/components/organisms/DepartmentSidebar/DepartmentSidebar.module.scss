@@ -110,11 +110,11 @@ $active-outline: #de989b; // Primary/Normal active
   justify-content: center;
 
   &:hover:not(.active):not(:disabled) {
-    background-color: $gray-3;
+    background-color: var(--color-bg-hover);
   }
 
   &.active {
-    outline: 3px solid $active-outline; // #DE989B
+    outline: 3px solid var(--color-primary); // #DE989B
     outline-offset: 0;
     background-color: var(--color-white);
   }
@@ -168,10 +168,10 @@ $active-outline: #de989b; // Primary/Normal active
 .initialBar {
   width: 100%;
   padding: 5px 10px;
-  background-color: $initial-bar-bg; // #E6CFAD
+  background-color: var(--color-secondary); // #E6CFAD
   font-size: 20px;
   font-weight: $font-weight-semibold;
-  color: var(--color-darken);
+  color: #fff;
   line-height: 1.5; // 30px
   text-align: center;
   flex-shrink: 0;

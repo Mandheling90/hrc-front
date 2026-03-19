@@ -62,7 +62,7 @@
 .emptyState {
   padding: $spacing-12;
   text-align: center;
-  color: $gray-10;
+  color: var(--color-text-tertiary);
   font-size: $font-size-lg;
   // background-color: $gray-2;
   // border-radius: $radius-lg;
