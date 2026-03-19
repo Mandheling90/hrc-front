@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:anam": "cross-env NEXT_PUBLIC_HOSPITAL_ID=anam next dev --port 3000",
+    "dev:guro": "cross-env NEXT_PUBLIC_HOSPITAL_ID=guro next dev --port 3001",
+    "dev:ansan": "cross-env NEXT_PUBLIC_HOSPITAL_ID=ansan next dev --port 3002",
     "prebuild": "graphql-codegen --config codegen.ts",
     "build": "next build",
     "start": "next start",
@@ -36,6 +39,7 @@
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.1.2",
     "eslint-config-prettier": "^10.1.8",

@@ -5,7 +5,6 @@ import Link from '@/components/atoms/HospitalLink'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useHospital } from '@/hooks'
-import { stripHospitalPrefix } from '@/utils/hospital'
 import styles from './Footer.module.scss'
 
 const commonPartnerLogos = [
@@ -81,8 +80,7 @@ const familyLinks = [
 
 export const Footer: React.FC = () => {
   const { hospital, hospitalId } = useHospital()
-  const rawPathname = usePathname()
-  const pathname = stripHospitalPrefix(rawPathname)
+  const pathname = usePathname()
   const isMainPage = pathname === '/'
   const [showDepartment, setShowDepartment] = useState(false)
   const [showFamily, setShowFamily] = useState(false)

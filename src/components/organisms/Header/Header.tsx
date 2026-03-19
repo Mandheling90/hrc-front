@@ -4,7 +4,6 @@ import Link from '@/components/atoms/HospitalLink'
 import { usePathname, useSearchParams } from 'next/navigation'
 import React, { Suspense, useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useHospital } from '@/hooks'
-import { stripHospitalPrefix } from '@/utils/hospital'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useLogout } from '@/hooks/useAuth'
@@ -111,10 +110,8 @@ const HeaderInner: React.FC = () => {
   const { logout } = useLogout()
 
   const logoUrl = `/images/common/${hospitalId}/logo-top.png`
-  const rawPathname = usePathname()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
-  // 병원 prefix를 제거한 순수 경로 (예: /anam/login → /login)
-  const pathname = stripHospitalPrefix(rawPathname)
   // 쿼리스트링 포함 경로 (예: /content?id=xxx) - API 메뉴 매칭용
   const fullPath = useMemo(() => {
     const qs = searchParams.toString()
@@ -169,19 +166,17 @@ const HeaderInner: React.FC = () => {
     return menuItems
   }, [apiMenuItems, isLoggedIn, menuItems])
 
-  // 현재 경로가 메뉴 href와 일치하는지 확인 (쿼리스트링 포함, 병원 prefix 제거)
+  // 현재 경로가 메뉴 href와 일치하는지 확인
   const isCurrentPage = (href: string) => {
-    const strippedHref = stripHospitalPrefix(href)
-    return pathname === strippedHref || fullPath === strippedHref
+    return pathname === href || fullPath === href
   }
 
   // 메뉴 href가 현재 경로에 매칭되는지 확인 (정확도 점수 반환: 0=불일치, 1=경로만, 2=쿼리스트링 포함 완전일치)
   const getMatchScore = useCallback((href: string): number => {
-    const strippedHref = stripHospitalPrefix(href)
-    const hrefPath = strippedHref.split('?')[0]
+    const hrefPath = href.split('?')[0]
 
     // 쿼리스트링 포함 완전 일치 (가장 높은 우선순위)
-    if (fullPath === strippedHref || pathname === strippedHref) return 2
+    if (fullPath === href || pathname === href) return 2
     // 경로만 일치 (쿼리스트링 무시)
     if (pathname === hrefPath || pathname.startsWith(hrefPath + '/')) return 1
     return 0

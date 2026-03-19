@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useMemo, useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useHospitalNews } from '@/hooks/useHospitalNews'
-import { getHospitalFromPath } from '@/utils/hospital'
+import { useHospital } from '@/hooks'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
@@ -31,8 +30,7 @@ const categoryOptions = [
 
 export default function NoticeListPage() {
   const router = useHospitalRouter()
-  const pathname = usePathname()
-  const hospitalId = getHospitalFromPath(pathname)
+  const { hospitalId } = useHospital()
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')

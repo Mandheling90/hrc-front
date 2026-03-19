@@ -13,15 +13,15 @@ import { REFRESH_TOKEN_MUTATION } from '@/graphql/auth/mutations'
 
 const VALID_HOSPITALS = ['anam', 'guro', 'ansan']
 
-function getHospitalIdFromURL(): string | null {
-  if (typeof window === 'undefined') return null
-  const firstSegment = window.location.pathname.split('/')[1]
-  return VALID_HOSPITALS.includes(firstSegment) ? firstSegment : null
-}
-
-function getHospitalCodeFromURL(): string {
-  const hospitalId = getHospitalIdFromURL()
-  return (hospitalId || process.env.NEXT_PUBLIC_HOSPITAL_ID || '').toUpperCase()
+function getHospitalCode(): string {
+  // hostname 감지 > 환경변수
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    for (const id of VALID_HOSPITALS) {
+      if (hostname.includes(id)) return id.toUpperCase()
+    }
+  }
+  return (process.env.NEXT_PUBLIC_HOSPITAL_ID || '').toUpperCase()
 }
 
 const AUTH_TOKEN_KEY = 'auth_token'
@@ -57,7 +57,7 @@ export function makeClient() {
       headers: {
         ...prevContext.headers,
         authorization: token ? `Bearer ${token}` : '',
-        'x-hospital-code': getHospitalCodeFromURL()
+        'x-hospital-code': getHospitalCode()
       }
     }
   })
@@ -78,8 +78,6 @@ export function makeClient() {
     const refreshToken = typeof window !== 'undefined' ? localStorage.getItem(AUTH_REFRESH_TOKEN_KEY) : null
 
     if (!refreshToken) {
-      // 저장된 토큰이 있을 때만 인증 초기화 및 로그인 리다이렉트
-      // (비로그인 상태에서 401 응답은 무시 — 공개 페이지에서 불필요한 리다이렉트 방지)
       const storedToken = typeof window !== 'undefined' ? localStorage.getItem(AUTH_TOKEN_KEY) : null
       if (storedToken) {
         clearStoredAuth()
@@ -172,7 +170,5 @@ function clearStoredAuth() {
   localStorage.removeItem(AUTH_TOKEN_KEY)
   localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY)
   localStorage.removeItem(AUTH_USER_KEY)
-  // URL에서 병원 ID를 추출하여 해당 병원 로그인 페이지로 리다이렉트
-  const hospitalId = getHospitalIdFromURL()
-  window.location.href = hospitalId ? `/${hospitalId}/login` : '/login'
+  window.location.href = '/login'
 }

@@ -2,14 +2,12 @@
 
 import React from 'react'
 import NextLink from 'next/link'
-import { usePathname } from 'next/navigation'
-import { getHospitalFromPath, prefixHospitalPath } from '@/utils/hospital'
 
 type LinkProps = React.ComponentProps<typeof NextLink>
 
 /**
- * 병원 prefix를 자동으로 추가하는 Link 컴포넌트
- * next/link의 Link를 대체하여 사용
+ * Link 컴포넌트 (서브도메인 별도 배포 방식에서는 prefix 불필요)
+ * 기존 import 경로 호환을 위해 유지
  *
  * 사용법: import Link from '@/components/atoms/HospitalLink'
  */
@@ -17,20 +15,7 @@ const HospitalLink = React.forwardRef<HTMLAnchorElement, LinkProps>(function Hos
   { href, ...props },
   ref
 ) {
-  const pathname = usePathname()
-  const hospitalId = getHospitalFromPath(pathname)
-
-  let resolvedHref = href
-  if (hospitalId && typeof href === 'string') {
-    resolvedHref = prefixHospitalPath(href, hospitalId)
-  } else if (hospitalId && typeof href === 'object' && href.pathname) {
-    resolvedHref = {
-      ...href,
-      pathname: prefixHospitalPath(href.pathname, hospitalId)
-    }
-  }
-
-  return <NextLink ref={ref} href={resolvedHref} {...props} />
+  return <NextLink ref={ref} href={href} {...props} />
 })
 
 export default HospitalLink
