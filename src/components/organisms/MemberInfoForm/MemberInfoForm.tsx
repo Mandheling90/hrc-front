@@ -519,6 +519,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='-없이 입력해주세요'
               value={formData.licenseNumber}
               onChange={handleInputChange}
+              disabled={isFieldDisabled('licenseNumber')}
               rightElement={
                 <Checkbox
                   checked={formData.isDirector}

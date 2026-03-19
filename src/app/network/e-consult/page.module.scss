@@ -44,8 +44,8 @@
 }
 
 .formSection {
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-9);
   border-radius: 20px;
   padding: $spacing-10;
   display: flex;
@@ -75,7 +75,7 @@
   font-weight: $font-weight-semibold;
   line-height: 48px; // Figma 기준
   letter-spacing: -1.28px;
-  color: $color-primary;
+  color: var(--color-primary);
   margin: 0;
 
   @include tablet {
@@ -96,7 +96,7 @@
   font-weight: $font-weight-normal;
   line-height: 27px; // Figma 기준
   letter-spacing: -0.72px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   margin: 0;
 
   @include tablet {
@@ -114,7 +114,7 @@
 
 .divider {
   height: 1.5px;
-  background-color: $gray-8;
+  background-color: var(--gray-8);
   width: 100%;
   max-width: 100%;
   margin-top: $spacing-2;
@@ -163,12 +163,12 @@
   font-weight: $font-weight-semibold;
   line-height: 30px; // Figma 기준
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 
   .required {
     width: 7px;
     height: 7px;
-    background-color: $color-primary;
+    background-color: var(--color-primary);
     border-radius: 0;
   }
 
@@ -204,7 +204,7 @@
   padding: 8px 15px;
   flex: 1;
   min-width: fit-content;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -215,7 +215,7 @@
     font-weight: $font-weight-semibold;
     line-height: 30px; // Figma 기준
     letter-spacing: -0.8px;
-    color: $color-white;
+    color: #fff;
   }
 
   svg {
