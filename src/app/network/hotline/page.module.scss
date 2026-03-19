@@ -25,8 +25,8 @@
 .tableHeader {
   display: flex;
   align-items: center;
-  background-color: $gray-2;
-  border: 1px solid $gray-9;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   gap: $spacing-2;
@@ -42,7 +42,7 @@
   font-weight: $font-weight-semibold;
   line-height: 36px; // Figma 기준 36px
   letter-spacing: -0.96px;
-  color: $gray-12;
+  color: var(--color-darken);
   text-align: center;
 
   // 태블릿 (769px ~ 1429px) - Figma 기준 고정 너비
@@ -66,7 +66,7 @@
 .separator {
   width: 1px;
   height: 18px;
-  background-color: $gray-9;
+  background-color: var(--color-border);
   flex-shrink: 0;
 }
 
@@ -83,8 +83,8 @@
 .tableRow {
   display: flex;
   align-items: center;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px 20px;
   gap: $spacing-2;
@@ -96,7 +96,7 @@
   font-weight: $font-weight-normal;
   line-height: 36px; // Figma 기준 36px
   letter-spacing: -0.96px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   text-align: center;
 
   // 태블릿 (769px ~ 1429px) - Figma 기준 고정 너비
@@ -122,7 +122,7 @@
 }
 
 .hotlineLink {
-  color: $gray-11;
+  color: var(--color-text-secondary);
   text-decoration: none;
   font-weight: $font-weight-semibold;
   pointer-events: none;
@@ -148,8 +148,8 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-2;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px;
   width: 100%;
@@ -160,7 +160,7 @@
   font-weight: $font-weight-semibold; // 600
   line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
-  color: $gray-11; // #636363
+  color: var(--color-text-secondary); // #636363
 }
 
 .mobileCardInfo {
@@ -174,13 +174,13 @@
   font-weight: $font-weight-normal; // 400
   line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
-  color: $gray-11; // #636363
+  color: var(--color-text-secondary); // #636363
 }
 
 .mobileCardSeparator {
   width: 1px;
   height: 18px;
-  background-color: $gray-9; // #8C8C8C - Figma 모바일 기준
+  background-color: var(--color-border); // #8C8C8C - Figma 모바일 기준
   flex-shrink: 0;
   color: transparent; // 구분선만 표시
 }
@@ -190,6 +190,6 @@
   font-weight: $font-weight-semibold;
   line-height: 30px; // Figma 모바일 기준
   letter-spacing: -0.8px;
-  color: $gray-11; // #636363
+  color: var(--color-text-secondary); // #636363
   text-decoration: none;
 }

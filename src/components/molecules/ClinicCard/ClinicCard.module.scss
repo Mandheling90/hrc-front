@@ -9,16 +9,16 @@
   flex-direction: column;
   gap: $spacing-8; // Figma: 32px
   padding: 30px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   border: none;
-  border-bottom: 1px solid $gray-9;
+  border-bottom: 1px solid var(--color-border);
   border-radius: 0;
   box-sizing: border-box;
 
   @include mobile {
     padding: $spacing-5;
     gap: $spacing-4;
-    border-bottom-color: $gray-8;
+    border-bottom-color: var(--color-border);
   }
 
   // 선택된 카드 바로 위 카드의 하단 라인 숨김
@@ -28,8 +28,8 @@
 
   // 선택된 카드 (위치 버튼 클릭 시)
   &.highlighted {
-    background-color: #fef8f8; // Figma: primary/bg/bg--2
-    border: 3px solid $color-primary;
+    background-color: var(--color-accent-bg); // Figma: primary/bg/bg--2
+    border: 3px solid var(--color-primary);
     border-radius: 10px;
 
     .label {
@@ -70,7 +70,7 @@
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   letter-spacing: -1.28px;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
 
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
@@ -97,8 +97,8 @@
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
   white-space: nowrap;
-  background-color: $color-primary;
-  color: $color-white;
+  background-color: var(--color-primary);
+  color: #fff;
 }
 
 // ========================================
@@ -135,8 +135,8 @@
 
 // 지도 버튼 - 기본 (회색 테두리)
 .mapButtonNormal {
-  background-color: $color-white;
-  border: 1.5px solid $gray-6;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
 
   @include mobile {
     border-width: 1px;
@@ -144,18 +144,18 @@
 
   // Figma: hover 시 테두리 + 아이콘 primary 변경
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
 
     svg path {
-      fill: $color-primary;
+      fill: var(--color-primary);
     }
   }
 }
 
 // 지도 버튼 - 활성 (빨간 배경)
 .mapButtonActive {
-  background-color: $color-primary;
-  border: 1.5px solid $color-primary;
+  background-color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
 
   @include mobile {
     border-width: 1px;
@@ -168,26 +168,26 @@
 
 // 홈 버튼 - 기본 (회색 테두리)
 .homeButtonNormal {
-  background-color: $color-white;
-  border: 1.5px solid $gray-6;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
 
   @include mobile {
     border-width: 1px;
   }
 
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
 
     svg path {
-      fill: $color-primary;
+      fill: var(--color-primary);
     }
   }
 }
 
 // 홈 버튼 - 활성 (빨간 배경)
 .homeButtonActive {
-  background-color: $color-primary;
-  border: 1.5px solid $color-primary;
+  background-color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
 
   @include mobile {
     border-width: 1px;
@@ -242,7 +242,7 @@
   font-weight: $font-weight-normal; // Figma 기본: Regular
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
-  color: $gray-12;
+  color: var(--color-darken);
 
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 18px;
@@ -257,7 +257,7 @@
 
 .separator {
   font-size: $font-size-xl;
-  color: $gray-9;
+  color: var(--color-text-tertiary);
   margin: 0 0 0 auto;
 
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
@@ -274,7 +274,7 @@
   font-weight: $font-weight-normal;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   white-space: pre-wrap;
   word-break: break-word;
 
@@ -316,7 +316,7 @@
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
-  color: $color-primary;
+  color: var(--color-primary);
 
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 18px;
@@ -334,7 +334,7 @@
   font-weight: $font-weight-semibold;
   line-height: $line-height-normal;
   letter-spacing: -0.8px;
-  color: $gray-12;
+  color: var(--color-darken);
 
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
     font-size: 18px;
