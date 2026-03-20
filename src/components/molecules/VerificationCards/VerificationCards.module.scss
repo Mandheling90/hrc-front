@@ -19,7 +19,7 @@
 
 .verificationCard {
   flex: 1;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 50px;
   display: flex;
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fcebeb;
+  background-color: var(--color-accent-bg);
   border-radius: 50%;
 
   // 테블릿 (769px ~ 1429px)
@@ -111,7 +111,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: #000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.96px;
   margin: 0;
@@ -135,7 +135,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 18px;
   font-weight: 400;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   line-height: 1.5;
   letter-spacing: -0.72px;
   margin: 0;
@@ -173,7 +173,7 @@
   font-family: 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 600;
-  color: #000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.8px;
 
@@ -186,23 +186,23 @@
 .inputField {
   width: 100%;
   padding: 8px 10px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--color-white);
   font-family: 'Pretendard', sans-serif;
   font-size: 20px;
   font-weight: 400;
-  color: #000;
+  color: var(--color-darken);
   line-height: 1.5;
   letter-spacing: -0.8px;
 
   &::placeholder {
-    color: $gray-9;
+    color: var(--color-text-tertiary);
   }
 
   &:focus {
     outline: none;
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @media (max-width: $breakpoint-md) {

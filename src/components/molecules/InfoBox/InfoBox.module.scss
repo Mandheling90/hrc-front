@@ -1,34 +1,20 @@
 @import '@/styles/variables.scss';
 
 .infoBox {
-  background-color: var(--color-surface-elevated);
+  background-color: $color-secondary-bg;
   background-image: url('/images/common/boxBgImg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: 1px solid var(--color-border);
+  border: 1px solid $color-secondary-hover;
   border-radius: 10px;
   padding: 40px 20px;
   text-align: center;
 
   [data-theme='dark'] & {
-    background-color: transparent;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: rgba(0, 0, 0, 0.75);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    > * {
-      position: relative;
-      z-index: 1;
-    }
+    background-color: #555;
+    border-color: var(--color-border);
+    background-blend-mode: multiply;
   }
 
   &.contentLeft {
@@ -98,38 +84,24 @@
   }
 
   .infoBox {
-    background-color: var(--color-surface-elevated);
+    background-color: $color-secondary-bg;
     background-image: url('/images/common/boxBgImg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border: 1px solid var(--color-border);
+    border: 1px solid $color-secondary-hover;
     border-radius: 10px;
     padding: 30px;
     text-align: left;
     height: 116px;
-
-    [data-theme='dark'] & {
-      background-color: transparent;
-      position: relative;
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: rgba(0, 0, 0, 0.75);
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      > * {
-        position: relative;
-        z-index: 1;
-      }
-    }
     display: flex;
     align-items: center;
+
+    [data-theme='dark'] & {
+      background-color: #111;
+      border-color: var(--color-border);
+      background-blend-mode: multiply;
+    }
   }
 }
 
@@ -241,35 +213,21 @@
 
 // Guide variant
 .guide {
-  background-color: var(--color-surface-elevated);
+  background-color: $color-secondary-bg;
   background-image: url('/images/common/boxBgImg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: 1px solid var(--color-border);
+  border: 1px solid $color-secondary-hover;
   border-radius: 10px;
   padding: 40px 20px;
   display: flex;
   align-items: center;
 
   [data-theme='dark'] & {
-    background-color: transparent;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    > * {
-      position: relative;
-      z-index: 1;
-    }
+    background-color: #555;
+    border-color: var(--color-border);
+    background-blend-mode: multiply;
   }
   justify-content: flex-start;
 

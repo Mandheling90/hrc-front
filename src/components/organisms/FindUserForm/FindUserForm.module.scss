@@ -55,12 +55,12 @@
   align-items: center;
   gap: 32px;
   overflow: hidden;
-  border: 2px solid var(--gray-9);
+  border: 2px solid var(--color-border);
   cursor: pointer;
   transition: border-color 0.2s;
 
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @include tablet {
@@ -77,7 +77,7 @@
 }
 
 .cardSecondary {
-  border-color: var(--gray-9);
+  border-color: var(--color-border);
 }
 
 .cardIcon {
@@ -86,7 +86,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fcebeb;
+  background-color: var(--color-accent-bg);
   border-radius: 50%;
 
   [data-theme='dark'] & {
@@ -174,8 +174,8 @@
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 
   &:hover:not(:disabled) {
-    background-color: $color-primary !important;
-    border-color: $color-primary !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
     color: #fff !important;
   }
 
@@ -236,7 +236,7 @@
 
   &:focus {
     outline: none;
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @include mobile {
@@ -300,7 +300,7 @@
 .resultUserId {
   font-size: 32px;
   font-weight: 600;
-  color: $color-primary;
+  color: var(--color-primary);
   line-height: 1.5;
   letter-spacing: -0.04em;
   margin: 0;
