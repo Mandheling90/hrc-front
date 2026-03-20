@@ -43,7 +43,7 @@
 .userCard {
   flex: 1;
   padding: 40px;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: 1px solid transparent;
@@ -54,7 +54,7 @@
   transition: border-color $transition-base;
 
   &:hover {
-    border-color: $color-white;
+    border-color: var(--color-white);
   }
 
   @include tablet {
@@ -77,7 +77,7 @@
   font-size: 32px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-white;
+  color: #fff;
   margin: 0;
 
   @include tablet {
@@ -100,7 +100,7 @@
   font-size: 48px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-white;
+  color: #fff;
 
   @include tablet {
     font-size: 36px;
@@ -115,7 +115,7 @@
   font-size: 32px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-white;
+  color: #fff;
 
   @include tablet {
     font-size: 24px;
@@ -164,7 +164,7 @@
 }
 
 .userActionBtnPrimary {
-  background-color: #dbbf93;
+  background-color: var(--color-secondary);
   color: #3d3529;
   border: none;
 
@@ -174,12 +174,12 @@
 }
 
 .userActionBtn {
-  background-color: $color-white;
-  color: $gray-12;
-  border: 2px solid $gray-4;
+  background-color: var(--color-white);
+  color: var(--color-darken);
+  border: 2px solid var(--color-border);
 
   &:hover {
-    background-color: $gray-2;
+    background-color: var(--color-bg-hover);
   }
 }
 
@@ -187,7 +187,7 @@
 .downloadCard {
   flex: 1;
   padding: 40px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: 1px solid transparent;
@@ -197,7 +197,7 @@
   transition: border-color $transition-base;
 
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @include tablet {
@@ -214,7 +214,7 @@
   font-size: 32px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
 
   @include tablet {
@@ -239,16 +239,16 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   text-align: center;
-  color: $gray-12;
-  background-color: $color-white;
-  border: 2px solid $gray-4;
+  color: var(--color-darken);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
   border-radius: 5px;
   cursor: pointer;
   transition: all $transition-base;
 
   &:hover {
-    background-color: $gray-4;
-    border-color: $gray-11;
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-border);
   }
 
   @include mobile {
@@ -292,8 +292,8 @@
   width: 21px;
   height: 21px;
   border-radius: 4px;
-  border: 2px solid $color-primary;
-  background-color: $color-primary;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-primary);
   position: relative;
 
   &::after {
@@ -303,13 +303,13 @@
     left: 2px;
     width: 13px;
     height: 13px;
-    background-color: $color-primary;
+    background-color: var(--color-primary);
   }
 }
 
 .arrowBtn {
   padding: 15px;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border: none;
   border-radius: 45px;
   display: flex;
@@ -347,7 +347,7 @@
 .patientCard {
   width: 695px;
   padding: 40px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: 1px solid transparent;
@@ -357,7 +357,7 @@
   transition: border-color $transition-base;
 
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @include tablet {
@@ -410,8 +410,8 @@
   // CardList 카드 스타일 오버라이드
   :global(.card) {
     padding: 15px 20px;
-    background-color: $color-white;
-    border: 1px solid $gray-9;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     gap: 0;
   }
@@ -438,7 +438,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 }
 
 .patientMobileInfo {
@@ -451,7 +451,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 }
 
 .patientMobileDepartment {
@@ -459,7 +459,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 }
 
 .patientRow {
@@ -467,8 +467,8 @@
   align-items: center;
   gap: 8px;
   padding: 15px 20px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 
   @include mobile {
@@ -483,7 +483,7 @@
   font-size: 20px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 
   @include mobile {
     width: auto;
@@ -497,7 +497,7 @@
   font-size: 20px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 
   @include mobile {
     width: auto;
@@ -511,7 +511,7 @@
   font-size: 20px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 
   @include mobile {
     width: auto;
@@ -525,7 +525,7 @@
   font-size: 20px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--color-text-secondary);
 
   @include mobile {
     font-size: 14px;
@@ -535,7 +535,7 @@
 .divider {
   width: 1px;
   height: 18px;
-  background-color: $gray-9;
+  background-color: var(--color-border);
 
   @include mobile {
     height: 14px;
@@ -546,7 +546,7 @@
 .consultCard {
   flex: 1;
   padding: 40px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: 1px solid transparent;
@@ -556,7 +556,7 @@
   transition: border-color $transition-base;
 
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @include tablet {
@@ -630,18 +630,22 @@
 }
 
 .statCircleWaiting {
-  background-color: #fdf9f4;
-  border: 1px solid #e6cfad;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-secondary);
+
+  [data-theme='dark'] & {
+    background-color: rgba(192, 156, 99, 0.15);
+  }
 }
 
 .statCircleCompleted {
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border: 1px solid #720021;
 }
 
 .statCircleExpired {
-  background-color: $gray-5;
-  border: 1px solid $gray-8;
+  background-color: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
 }
 
 .statNumber {
@@ -650,15 +654,15 @@
   line-height: 1.5;
 
   .statCircleWaiting & {
-    color: #816331;
+    color: var(--color-secondary);
   }
 
   .statCircleCompleted & {
-    color: $color-white;
+    color: #fff;
   }
 
   .statCircleExpired & {
-    color: $gray-10;
+    color: var(--color-text-tertiary);
   }
 
   @include tablet {
@@ -676,15 +680,15 @@
   line-height: 1.5;
 
   .statCircleWaiting & {
-    color: #816331;
+    color: var(--color-secondary);
   }
 
   .statCircleCompleted & {
-    color: $color-white;
+    color: #fff;
   }
 
   .statCircleExpired & {
-    color: $gray-10;
+    color: var(--color-text-tertiary);
   }
 
   @include tablet {
@@ -700,7 +704,7 @@
   font-size: 24px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   margin: 0;
 
   @include tablet {
@@ -715,7 +719,7 @@
 .consultApplyBtn {
   width: 100%;
   padding: 15px 30px;
-  background-color: #dbbf93;
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 5px;
   display: flex;
@@ -756,14 +760,14 @@
 .withdrawCard {
   width: 695px;
   padding: 40px;
-  background-color: $color-white;
+  background-color: var(--color-white);
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: 1px solid transparent;
   transition: border-color $transition-base;
 
   &:hover {
-    border-color: $color-primary;
+    border-color: var(--color-primary);
   }
 
   @include tablet {

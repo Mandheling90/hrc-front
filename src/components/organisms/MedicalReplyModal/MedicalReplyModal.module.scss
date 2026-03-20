@@ -16,8 +16,8 @@
 }
 
 .modal {
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 0 39px rgba(0, 0, 0, 0.35);
   width: 100%;
@@ -48,7 +48,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 1px solid $gray-8;
+  border-bottom: 1px solid var(--color-border);
 
   @include mobile {
     align-items: flex-start;
@@ -72,12 +72,12 @@
   align-items: center;
   justify-content: center;
   padding: 4px 20px;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border-radius: 20px;
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-white;
+  color: #fff;
 
   @include tablet {
     font-size: 20px;
@@ -95,7 +95,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   letter-spacing: -1.28px;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
 
   @include tablet {
@@ -118,11 +118,11 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   padding: 0;
 
   &:hover {
-    color: $gray-12;
+    color: var(--color-darken);
   }
 }
 
@@ -139,8 +139,8 @@
 
 // 안내 문구 박스
 .noticeBox {
-  background-color: #fdf9f4;
-  border: 1px solid #dbbf93;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-secondary);
   border-radius: 10px;
   padding: 40px 20px;
   text-align: center;
@@ -158,7 +158,7 @@
     font-weight: $font-weight-normal;
     line-height: 1.5;
     letter-spacing: -0.8px;
-    color: #816331;
+    color: var(--color-secondary);
     margin: 0;
 
     @include tablet {
@@ -196,7 +196,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   letter-spacing: -0.96px;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
 
   @include tablet {
@@ -232,8 +232,8 @@
   align-items: center;
   gap: 16px;
   padding: 15px 20px;
-  background-color: $color-white;
-  border: 1px solid $gray-9;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 
   &.fullWidth {
@@ -248,7 +248,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-12;
+  color: var(--color-darken);
 
   @include tablet {
     font-size: 18px;
@@ -264,7 +264,7 @@
 .infoDivider {
   width: 0;
   height: 18px;
-  border-left: 1px solid $gray-11;
+  border-left: 1px solid var(--color-border);
 }
 
 .infoValue {
@@ -273,7 +273,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   text-align: right;
 
   @include tablet {
@@ -298,8 +298,8 @@
   display: flex;
   align-items: center;
   padding: 20px;
-  background-color: #fef8f8;
-  border: 1px solid $gray-9;
+  background-color: var(--color-accent-bg);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
@@ -309,7 +309,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   letter-spacing: -0.96px;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
 
   @include tablet {
@@ -325,7 +325,7 @@
 
 .opinionContent {
   padding: 40px;
-  border: 1px solid $gray-9;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   overflow: hidden;
 
@@ -343,7 +343,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-12;
+  color: var(--color-darken);
   margin: 0;
   white-space: pre-wrap;
 
@@ -364,8 +364,8 @@
   align-items: center;
   gap: 16px;
   padding: 15px 20px;
-  background-color: $gray-2;
-  border: 1px solid $gray-9;
+  background-color: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
@@ -376,7 +376,7 @@
   font-weight: $font-weight-semibold;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-12;
+  color: var(--color-darken);
 
   @include tablet {
     font-size: 18px;
@@ -392,7 +392,7 @@
 .dateDivider {
   width: 0;
   height: 18px;
-  border-left: 1px solid $gray-11;
+  border-left: 1px solid var(--color-border);
 }
 
 .dateValue {
@@ -401,7 +401,7 @@
   font-weight: $font-weight-normal;
   line-height: 1.5;
   letter-spacing: -0.72px;
-  color: $gray-12;
+  color: var(--color-darken);
   text-align: right;
 
   @include tablet {

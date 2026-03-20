@@ -52,7 +52,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--gray-8);
+  border-bottom: 1px solid var(--color-border);
 
   @include mobile {
     align-items: flex-start;
@@ -76,12 +76,12 @@
   align-items: center;
   justify-content: center;
   padding: 4px 20px;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border-radius: 20px;
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: #ffffff;
+  color: #fff;
 
   @include tablet {
     font-size: 20px;
@@ -99,7 +99,7 @@
   font-size: 32px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: var(--gray-12);
+  color: var(--color-darken);
   margin: 0;
 
   @include tablet {
@@ -138,7 +138,7 @@
   width: 100%;
   text-align: center;
   padding: $spacing-8 0;
-  color: var(--gray-6);
+  color: var(--color-text-secondary);
   font-size: 14px;
 }
 
@@ -188,22 +188,22 @@
 .legendBoxMin {
   width: 24px;
   height: 24px;
-  background-color: #f8efe2;
-  border: 1px solid #cba76e;
+  background-color: var(--color-accent-bg);
+  border: 1px solid var(--color-secondary);
 }
 
 .legendBoxMax {
   width: 24px;
   height: 24px;
-  background-color: #fcebeb;
-  border: 1px solid #de989b;
+  background-color: var(--color-accent-bg);
+  border: 1px solid var(--color-primary);
 }
 
 .legendText {
   font-size: 18px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: var(--gray-12);
+  color: var(--color-darken);
 
   @include tablet {
     font-size: 16px;
@@ -235,14 +235,14 @@
   align-items: center;
   gap: 8px;
   padding: 15px 20px;
-  background-color: var(--gray-2);
+  background-color: var(--color-bg-hover);
   border: 1px solid var(--color-border);
   border-radius: 10px;
 
   .tableCell {
     font-size: 20px;
     font-weight: $font-weight-semibold;
-    color: var(--gray-12);
+    color: var(--color-darken);
   }
 }
 
@@ -258,7 +258,7 @@
   .tableCell {
     font-size: 18px;
     font-weight: $font-weight-normal;
-    color: var(--gray-11);
+    color: var(--color-text-secondary);
     padding: 10px 0;
   }
 }
@@ -298,7 +298,7 @@
 .divider {
   width: 1px;
   height: 18px;
-  background-color: var(--gray-11);
+  background-color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
@@ -312,14 +312,14 @@
   font-weight: $font-weight-normal;
 
   &.low {
-    background-color: #f8efe2;
-    color: #816331;
+    background-color: var(--color-accent-bg);
+    color: var(--color-secondary);
     font-weight: $font-weight-semibold;
   }
 
   &.high {
-    background-color: #fcebeb;
-    color: $color-primary;
+    background-color: var(--color-accent-bg);
+    color: var(--color-primary);
     font-weight: $font-weight-semibold;
   }
 }
@@ -361,7 +361,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: var(--gray-3);
+  background-color: var(--color-bg-hover);
   border-radius: 5px;
 }
 
@@ -380,11 +380,11 @@
 
   &.resultRow {
     &.low {
-      background-color: #f8efe2;
+      background-color: var(--color-accent-bg);
     }
 
     &.high {
-      background-color: #fcebeb;
+      background-color: var(--color-accent-bg);
     }
   }
 }
@@ -400,7 +400,7 @@
   font-size: 18px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: var(--gray-12);
+  color: var(--color-darken);
 
   @include mobile {
     font-size: 18px;
@@ -411,22 +411,22 @@
   font-size: 16px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: var(--gray-11);
+  color: var(--color-text-secondary);
 }
 
 .mobileCardResultValue {
   font-size: 16px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: var(--gray-11);
+  color: var(--color-text-secondary);
 
   &.low {
-    color: #816331;
+    color: var(--color-secondary);
     font-weight: $font-weight-semibold;
   }
 
   &.high {
-    color: $color-primary;
+    color: var(--color-primary);
     font-weight: $font-weight-semibold;
   }
 }
@@ -444,7 +444,7 @@
   flex: 1;
   font-size: 16px;
   font-weight: $font-weight-normal;
-  color: var(--gray-11);
+  color: var(--color-text-secondary);
   line-height: 1.5;
   word-break: break-word;
 }

@@ -178,7 +178,7 @@
   font-size: 32px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-primary;
+  color: var(--color-primary);
   margin: 0;
 
   @include tablet {
@@ -277,7 +277,7 @@
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-primary;
+  color: var(--color-primary);
   white-space: nowrap;
 
   @include tablet {
@@ -348,7 +348,7 @@
   font-size: 28px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $color-primary;
+  color: var(--color-primary);
   margin: 0;
 
   @include tablet {
@@ -733,7 +733,7 @@
 // 상세 내역 보기 버튼
 .detailButton {
   padding: 5px 10px;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border: none;
   border-radius: 5px;
   font-size: 20px;
@@ -760,7 +760,7 @@
 .viewButton {
   width: 100px;
   padding: 5px 10px;
-  background-color: $color-primary;
+  background-color: var(--color-primary);
   border: none;
   border-radius: 5px;
   font-size: 20px;
@@ -851,7 +851,7 @@
   font-size: 20px;
   font-weight: $font-weight-normal;
   line-height: 1.5;
-  color: $color-primary;
+  color: var(--color-primary);
   text-decoration: underline;
   cursor: pointer;
   text-align: center;
