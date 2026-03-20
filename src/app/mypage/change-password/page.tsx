@@ -15,15 +15,13 @@ import styles from './page.module.scss'
 
 export default function ChangePasswordPage() {
   const router = useHospitalRouter()
-  const { user } = useAuthContext()
+  const { user, loginPassword, setLoginPassword } = useAuthContext()
   const { changePassword, loading } = useChangePassword()
 
   const [formData, setFormData] = useState({
-    oldPassword: '',
     newPassword: '',
     confirmPassword: ''
   })
-  const [showOldPassword, setShowOldPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -62,8 +60,8 @@ export default function ChangePasswordPage() {
     e.preventDefault()
     setErrorMessage('')
 
-    if (!formData.oldPassword) {
-      setErrorMessage('현재 비밀번호를 입력해주세요.')
+    if (!loginPassword) {
+      setErrorMessage('로그인 정보가 만료되었습니다. 다시 로그인해주세요.')
       return
     }
 
@@ -85,11 +83,12 @@ export default function ChangePasswordPage() {
 
     try {
       const result = await changePassword({
-        oldPassword: formData.oldPassword,
+        oldPassword: loginPassword,
         newPassword: formData.newPassword
       })
 
       if (result?.success) {
+        setLoginPassword(null)
         setAlertModal({ isOpen: true, message: '비밀번호가 성공적으로 변경되었습니다.', success: true })
       } else {
         setErrorMessage(result?.message || '비밀번호 변경에 실패했습니다.')
@@ -123,25 +122,6 @@ export default function ChangePasswordPage() {
               </div>
               <form onSubmit={handleSubmit} className={resetStyles.form}>
                 <div className={resetStyles.inputGroup}>
-                  <div className={resetStyles.passwordInputWrapper}>
-                    <Input
-                      type={showOldPassword ? 'text' : 'password'}
-                      id='oldPassword'
-                      name='oldPassword'
-                      placeholder='현재 비밀번호 (임시비밀번호)'
-                      value={formData.oldPassword}
-                      onChange={handleChange}
-                      className={resetStyles.input}
-                    />
-                    <button
-                      type='button'
-                      className={resetStyles.passwordToggle}
-                      onClick={() => setShowOldPassword(prev => !prev)}
-                      aria-label={showOldPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
-                    >
-                      <EyeIcon width={24} height={24} showPassword={showOldPassword} stroke='#636363' />
-                    </button>
-                  </div>
                   <div className={resetStyles.passwordInputWrapper}>
                     <Input
                       type={showNewPassword ? 'text' : 'password'}

@@ -4,6 +4,7 @@ import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { EyeIcon } from '@/components/icons/EyeIcon'
 import { useLogin } from '@/hooks/useAuth'
+import { useAuthContext } from '@/contexts/AuthContext'
 import Link from '@/components/atoms/HospitalLink'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
@@ -35,6 +36,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
   const router = useHospitalRouter()
   const { login, loading } = useLogin()
+  const { setLoginPassword } = useAuthContext()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     [usernameName]: '',
@@ -57,6 +59,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       const result = await login({ userId, password: formData.password })
       if (result) {
         if (result.mustChangePw) {
+          setLoginPassword(formData.password)
           setShowChangePwModal(true)
         } else {
           router.push(redirectTo)
