@@ -22,7 +22,7 @@
   padding: 0 10px;
   font-size: 18px;
   line-height: 27px;
-  border: 1px solid var(--color-input-border);
+  border: 1px solid var(--color-border);
   border-radius: 5px;
   background-color: var(--color-white);
   color: var(--color-darken);
@@ -47,8 +47,8 @@
   }
 
   &:disabled {
-    background-color: var(--color-input-disabled-bg);
-    border-color: var(--color-input-border);
+    background-color: var(--color-bg-active);
+    border-color: var(--color-border);
     color: var(--color-text-secondary);
     cursor: not-allowed;
     opacity: 1;

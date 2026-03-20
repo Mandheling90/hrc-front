@@ -5,7 +5,7 @@
   height: 43px !important;
   font-size: 18px !important;
   line-height: 27px !important;
-  border: 1px solid var(--color-input-border) !important;
+  border: 1px solid var(--color-border) !important;
   border-radius: 5px !important;
   background-color: var(--color-white) !important;
   font-family: $font-family-base !important;
@@ -13,7 +13,7 @@
   padding: 0 10px !important;
 
   &:hover {
-    border-color: var(--color-input-border) !important;
+    border-color: var(--color-border) !important;
   }
 
   &:focus,
@@ -46,8 +46,8 @@
   }
 
   &:global(.ant-picker-disabled) {
-    background-color: var(--color-input-disabled-bg) !important;
-    border-color: var(--color-input-border) !important;
+    background-color: var(--color-bg-active) !important;
+    border-color: var(--color-border) !important;
     color: var(--color-text-secondary) !important;
     cursor: not-allowed !important;
     opacity: 1 !important;

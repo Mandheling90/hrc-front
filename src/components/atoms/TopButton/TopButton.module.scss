@@ -23,7 +23,7 @@
   width: 48px;
   height: 48px;
   border-radius: $radius-full;
-  background-color: $color-bg;
+  background-color: var(--color-white);
   border: 1px solid $gray-8;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -31,7 +31,11 @@
   justify-content: center;
   cursor: pointer;
 
+  [data-theme='dark'] & {
+    border-color: var(--color-border);
+  }
+
   &:hover {
-    background-color: $gray-1;
+    background-color: var(--color-bg-hover);
   }
 }

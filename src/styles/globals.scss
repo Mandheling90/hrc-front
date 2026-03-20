@@ -86,8 +86,8 @@
   --color-surface-rgb: #{$gray-2-rgb};
   --color-surface-elevated: #{$color-white};
   --color-surface-elevated-rgb: #{$color-white-rgb};
-  --color-border: #{$gray-4};
-  --color-border-rgb: #{$gray-4-rgb};
+  --color-border: #{$gray-9};
+  --color-border-rgb: #{$gray-9-rgb};
   --color-text-secondary: #{$gray-11};
   --color-text-secondary-rgb: #{$gray-11-rgb};
   --color-text-tertiary: #{$gray-9};
@@ -96,8 +96,6 @@
   --color-bg-hover-rgb: #{$gray-3-rgb};
   --color-bg-active: #{$gray-4};
   --color-bg-active-rgb: #{$gray-4-rgb};
-  --color-input-border: #{$gray-9};
-  --color-input-disabled-bg: #{$gray-4};
   --color-accent-bg: #f8efe2;
   --color-accent-bg-rgb: 248, 239, 226;
 
@@ -182,8 +180,6 @@
   --color-bg-active-rgb: 51, 51, 51;
   --color-accent-bg: #2a1a1e;
   --color-accent-bg-rgb: 42, 26, 30;
-  --color-input-border: #555;
-  --color-input-disabled-bg: #2a2a2a;
 
   /* section-specific */
   --color-section-title: rgba(255, 255, 255, 0.7);
