@@ -96,6 +96,8 @@
   --color-bg-hover-rgb: #{$gray-3-rgb};
   --color-bg-active: #{$gray-4};
   --color-bg-active-rgb: #{$gray-4-rgb};
+  --color-input-border: #{$gray-9};
+  --color-input-disabled-bg: #{$gray-4};
   --color-accent-bg: #f8efe2;
   --color-accent-bg-rgb: 248, 239, 226;
 
@@ -180,6 +182,8 @@
   --color-bg-active-rgb: 51, 51, 51;
   --color-accent-bg: #2a1a1e;
   --color-accent-bg-rgb: 42, 26, 30;
+  --color-input-border: #555;
+  --color-input-disabled-bg: #2a2a2a;
 
   /* section-specific */
   --color-section-title: rgba(255, 255, 255, 0.7);
