@@ -21,6 +21,8 @@ export const LOGIN_MUTATION = gql`
           birthDate
           department
           gender
+          doctorType
+          isDirector
           hospAddress
           hospAddressDetail
           hospCode
@@ -135,6 +137,8 @@ export const REFRESH_TOKEN_MUTATION = gql`
           birthDate
           department
           gender
+          doctorType
+          isDirector
           hospAddress
           hospAddressDetail
           hospCode

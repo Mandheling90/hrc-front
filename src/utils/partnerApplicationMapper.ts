@@ -66,6 +66,7 @@ const INSTITUTION_TYPE_MAP: Record<string, InstitutionType> = {
   '기관': InstitutionType.Institution,
   '의원': InstitutionType.Clinic,
   '치과의원': InstitutionType.DentalClinic,
+  '한방': InstitutionType.Oriental,
   '한의원': InstitutionType.Oriental,
   '미분류': InstitutionType.Unclassified
 }
@@ -83,7 +84,7 @@ const INSTITUTION_TYPE_REVERSE: Record<string, string> = {
   [InstitutionType.Institution]: '기관',
   [InstitutionType.Clinic]: '의원',
   [InstitutionType.DentalClinic]: '치과의원',
-  [InstitutionType.Oriental]: '한의원',
+  [InstitutionType.Oriental]: '한방',
   [InstitutionType.Unclassified]: '미분류'
 }
 

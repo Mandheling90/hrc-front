@@ -28,6 +28,7 @@ import type {
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
 import { HospitalCode } from '@/graphql/__generated__/types'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import {
   mapClinicStepsToApiInput,
   mapApiToClinicStepData,
@@ -196,9 +197,12 @@ export default function ClinicApplicationPage() {
 
         await applyPartnerHospital(input)
         setIsComplete(true)
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('협력의원 신청 실패:', error)
-        setAlertModal({ isOpen: true, message: '신청 중 오류가 발생했습니다.' })
+        const message = CombinedGraphQLErrors.is(error)
+          ? error.errors[0]?.message ?? '신청 중 오류가 발생했습니다.'
+          : '신청 중 오류가 발생했습니다.'
+        setAlertModal({ isOpen: true, message })
       }
     }
     window.scrollTo(0, 0)
@@ -240,8 +244,12 @@ export default function ClinicApplicationPage() {
         setDraftId(hospital.id, result.id)
       }
       setAlertModal({ isOpen: true, message: '임시저장이 완료되었습니다.' })
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('임시저장 실패:', error)
+      const message = CombinedGraphQLErrors.is(error)
+        ? error.errors[0]?.message ?? '임시저장 중 오류가 발생했습니다.'
+        : '임시저장 중 오류가 발생했습니다.'
+      setAlertModal({ isOpen: true, message })
     }
   }
 
