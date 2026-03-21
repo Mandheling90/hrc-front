@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_URL = process.env.API_URL || 'http://api-service:8000/graphql'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || 'http://api-service:8000/graphql'
 
 export async function POST(request: NextRequest) {
   try {
