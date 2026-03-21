@@ -45,7 +45,7 @@ function resolvePendingRequests() {
 }
 
 export function makeClient() {
-  const graphqlUri = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql'
+  const graphqlUri = '/api/graphql'
 
   const authLink = new SetContextLink((prevContext, operation) => {
     const isConsultantOp = operation.operationName && CONSULTANT_OPERATIONS.includes(operation.operationName)
