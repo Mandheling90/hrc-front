@@ -37,8 +37,8 @@ export function useApplyPartnerHospital() {
 
   const applyPartnerHospital = async (input: ApplyPartnerHospitalMutationVariables['input']) => {
     const result = await applyMutation({ variables: { input } })
-    if (result.errors && result.errors.length > 0) {
-      throw result.errors[0]
+    if (result.error) {
+      throw result.error
     }
     return result.data?.applyPartnerHospital ?? null
   }
