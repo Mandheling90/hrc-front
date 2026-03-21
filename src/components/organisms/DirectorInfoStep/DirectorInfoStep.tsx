@@ -8,6 +8,7 @@ import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { DatePicker } from '@/components/atoms/DatePicker/DatePicker'
 import { DEPARTMENT_OPTIONS, SCHOOL_OPTIONS } from '@/types/hospital-application'
+import { useEnums } from '@/hooks'
 import type { DirectorInfoStepData, StepRef } from '@/types/partner-application'
 import styles from './DirectorInfoStep.module.scss'
 import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
@@ -26,6 +27,19 @@ export interface DirectorInfoStepProps {
 
 export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, DirectorInfoStepProps>(
   ({ currentStep = 2, totalSteps = 8, institutionType = '병원', defaultValues }, ref) => {
+    const { getOptions } = useEnums()
+
+    // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
+    const schoolOptions = React.useMemo(() => {
+      const enumOpts = getOptions('School')
+      return enumOpts.length > 0 ? [{ value: '', label: '선택해주세요' }, ...enumOpts] : SCHOOL_OPTIONS
+    }, [getOptions])
+
+    const departmentOptions = React.useMemo(() => {
+      const enumOpts = getOptions('MedicalDepartment')
+      return enumOpts.length > 0 ? enumOpts : DEPARTMENT_OPTIONS
+    }, [getOptions])
+
     const [directorName, setDirectorName] = React.useState(defaultValues?.directorName ?? '')
     const [birthDate, setBirthDate] = React.useState(defaultValues?.birthDate ?? '')
     const [licenseNumber, setLicenseNumber] = React.useState(defaultValues?.licenseNumber ?? '')
@@ -205,7 +219,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             <InputLabel htmlFor='school' required>
               출신학교
             </InputLabel>
-            <Select id='school' name='school' options={SCHOOL_OPTIONS} value={school} onChange={setSchool} />
+            <Select id='school' name='school' options={schoolOptions} value={school} onChange={setSchool} />
           </div>
 
           {/* 졸업년도 */}
@@ -244,7 +258,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             <Select
               id='department'
               name='department'
-              options={DEPARTMENT_OPTIONS}
+              options={departmentOptions}
               value={department}
               onChange={setDepartment}
             />

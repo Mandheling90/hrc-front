@@ -53,6 +53,19 @@ const toInt = (v?: string): number | undefined => {
   return isNaN(n) ? undefined : n
 }
 
+/** 담당구분 한글 → 코드 변환 (부서:'B', 진료과:'A') */
+const toStaffDeptTypeCode = (v?: string): string | undefined => {
+  if (v === '부서') return 'B'
+  if (v === '진료과') return 'A'
+  return emptyToUndef(v)
+}
+
+/** 담당구분 코드 → 한글 역변환 ('B':'부서', 'A':'진료과') */
+const fromStaffDeptTypeCode = (v?: string): '부서' | '진료과' => {
+  if (v === 'A') return '진료과'
+  return '부서'
+}
+
 /** 의료기관 유형 한글 → 백엔드 InstitutionType enum 변환 */
 const INSTITUTION_TYPE_MAP: Record<string, InstitutionType> = {
   '상급종합병원': InstitutionType.TertiaryHospital,
@@ -235,7 +248,7 @@ export function mapStepsToApiInput(
 
     // Step 3: 실무자 정보
     staffName: emptyToUndef(step3?.staffName),
-    staffDeptType: emptyToUndef(step3?.deptType),
+    staffDeptType: toStaffDeptTypeCode(step3?.deptType),
     staffDeptValue: emptyToUndef(step3?.department),
     staffPosition: emptyToUndef(step3?.position),
     staffTel: emptyToUndef(step3?.contactNumber),
@@ -355,7 +368,7 @@ export function mapApiToStepData(api: any): AllStepData {
     },
     step3: {
       staffName: api.staffName ?? '',
-      deptType: (api.staffDeptType as '부서' | '진료과') ?? '부서',
+      deptType: fromStaffDeptTypeCode(api.staffDeptType),
       department: api.staffDeptValue ?? '',
       position: api.staffPosition ?? '',
       contactNumber: api.staffTel ?? '',
@@ -511,7 +524,7 @@ export function mapClinicStepsToApiInput(
 
     // Step 3: 실무자 정보
     staffName: emptyToUndef(step3?.staffName),
-    staffDeptType: emptyToUndef(step3?.deptType),
+    staffDeptType: toStaffDeptTypeCode(step3?.deptType),
     staffDeptValue: emptyToUndef(step3?.department),
     staffPosition: emptyToUndef(step3?.position),
     staffTel: emptyToUndef(step3?.contactNumber),
@@ -588,7 +601,7 @@ export function mapApiToClinicStepData(api: any): ClinicAllStepData {
     },
     step3: {
       staffName: api.staffName ?? '',
-      deptType: (api.staffDeptType as '부서' | '진료과') ?? '부서',
+      deptType: fromStaffDeptTypeCode(api.staffDeptType),
       department: api.staffDeptValue ?? '',
       position: api.staffPosition ?? '',
       contactNumber: api.staffTel ?? '',

@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
+import { useEnums } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -21,6 +22,9 @@ export default function EditClinicPage() {
   const router = useHospitalRouter()
   const { user } = useAuthContext()
   const [currentStep, setCurrentStep] = useState(1)
+
+  // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
+  useEnums()
 
   // 원장여부 체크 - 원장이 아니면 마이페이지로 리다이렉트
   useEffect(() => {

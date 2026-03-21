@@ -33,6 +33,9 @@ export {
   usePartnerApplicationById
 } from '@/hooks/usePartnerApplication'
 
+// Enum Hooks - 코드 목록 조회
+export { useEnums } from '@/hooks/useEnum'
+
 // NICE 본인인증
 export { useNiceVerification } from '@/hooks/useNiceVerification'
 

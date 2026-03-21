@@ -6,7 +6,7 @@ import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
-import { useHospital } from '@/hooks'
+import { useHospital, useEnums } from '@/hooks'
 import type { StaffInfoStepData, StepRef } from '@/types/partner-application'
 import styles from './StaffInfoStep.module.scss'
 
@@ -40,6 +40,18 @@ const ANSAN_INSTITUTION_OPTIONS = [
 export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoStepProps>(
   ({ currentStep = 3, totalSteps = 8, defaultValues }, ref) => {
     const { isGuro, isAnsan } = useHospital()
+    const { getOptions } = useEnums()
+
+    // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
+    const staffDeptOptions = useMemo(() => {
+      const enumOpts = getOptions('Division')
+      return enumOpts.length > 0 ? enumOpts : STAFF_DEPARTMENT_OPTIONS
+    }, [getOptions])
+
+    const medicalDeptOptions = useMemo(() => {
+      const enumOpts = getOptions('MedicalDepartment')
+      return enumOpts.length > 0 ? enumOpts : MEDICAL_DEPARTMENT_OPTIONS
+    }, [getOptions])
 
     const [staffName, setStaffName] = useState(defaultValues?.staffName ?? '')
     const [deptType, setDeptType] = useState<'부서' | '진료과'>(defaultValues?.deptType ?? '부서')
@@ -136,7 +148,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
                 placeholder='선택'
                 value={department}
                 onChange={setDepartment}
-                options={deptType === '부서' ? STAFF_DEPARTMENT_OPTIONS : MEDICAL_DEPARTMENT_OPTIONS}
+                options={deptType === '부서' ? staffDeptOptions : medicalDeptOptions}
               />
             </div>
 

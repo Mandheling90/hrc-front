@@ -16,7 +16,7 @@ import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalChar
 import { LoadSaveModal } from '@/components/molecules/LoadSaveModal/LoadSaveModal'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
-import { useHospital } from '@/hooks'
+import { useHospital, useEnums } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useDraftApplication } from '@/contexts/DraftApplicationContext'
 import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById } from '@/hooks'
@@ -55,6 +55,9 @@ export default function ClinicApplicationPage() {
   const { hospital } = useHospital()
   const { user, isAuthenticated } = useAuthContext()
   const { getDraftId, setDraftId } = useDraftApplication()
+
+  // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
+  useEnums()
 
   // 현재 단계 상태
   const [currentStep, setCurrentStep] = useState(1)
@@ -196,9 +199,14 @@ export default function ClinicApplicationPage() {
 
         await applyPartnerHospital(input)
         setIsComplete(true)
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.error('협력의원 신청 실패:', error)
-        setAlertModal({ isOpen: true, message: '신청 중 오류가 발생했습니다.' })
+        const message =
+          error?.graphQLErrors?.[0]?.message ||
+          error?.message ||
+          '신청 중 오류가 발생했습니다.'
+        setAlertModal({ isOpen: true, message })
       }
     }
     window.scrollTo(0, 0)

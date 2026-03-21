@@ -9,6 +9,7 @@ import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGrou
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/LabelInputRowGroup'
 import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
+import { useEnums } from '@/hooks'
 import type { StepRef, ClinicStaffInfoStepData } from '@/types/partner-application'
 import styles from './ClinicStaffInfoStep.module.scss'
 
@@ -25,6 +26,19 @@ export interface ClinicStaffInfoStepProps {
 
 export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, ClinicStaffInfoStepProps>(
   ({ currentStep = 3, totalSteps = 4, defaultValues, showHospitalDetail = true }, ref) => {
+    const { getOptions } = useEnums()
+
+    // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
+    const staffDeptOptions = React.useMemo(() => {
+      const enumOpts = getOptions('Division')
+      return enumOpts.length > 0 ? enumOpts : STAFF_DEPARTMENT_OPTIONS
+    }, [getOptions])
+
+    const medicalDeptOptions = React.useMemo(() => {
+      const enumOpts = getOptions('MedicalDepartment')
+      return enumOpts.length > 0 ? enumOpts : MEDICAL_DEPARTMENT_OPTIONS
+    }, [getOptions])
+
     // 의료기관 유형 상태
     const [medicalInstitutionType, setMedicalInstitutionType] = useState<string>(
       defaultValues?.medicalInstitutionType ?? '의원'
@@ -160,7 +174,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
                 placeholder='선택'
                 value={department}
                 onChange={setDepartment}
-                options={deptType === '부서' ? STAFF_DEPARTMENT_OPTIONS : MEDICAL_DEPARTMENT_OPTIONS}
+                options={deptType === '부서' ? staffDeptOptions : medicalDeptOptions}
               />
             </div>
 
