@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
       headers['x-hospital-code'] = hospitalCode
     }
 
+    console.log('[API Proxy] →', API_URL)
+
     const res = await fetch(API_URL, {
       method: 'POST',
       headers,
