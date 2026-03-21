@@ -31,7 +31,7 @@
     width: max-content;
     min-width: 100%;
     padding: 5px;
-    background-color: $color-primary;
+    background-color: var(--color-primary);
     border-radius: 30px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   }
@@ -44,21 +44,25 @@
   font-size: 20px;
   font-weight: $font-weight-semibold;
   line-height: 1.5;
-  color: $gray-11;
+  color: var(--color-text-secondary);
   background: none;
   border: none;
-  border-bottom: 1px solid $gray-8;
+  border-bottom: 1px solid var(--color-border);
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 
-  &:hover {
-    color: $gray-12;
+  &:hover:not(.active) {
+    color: var(--color-darken);
+
+    [data-theme='dark'] & {
+      color: var(--color-text-tertiary);
+    }
   }
 
   &.active {
-    color: $color-white;
-    background-color: $color-primary;
+    color: #fff;
+    background-color: var(--color-primary);
     border-radius: 30px;
     border-bottom: none;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
@@ -73,19 +77,19 @@
     flex: 0 0 auto;
     padding: 10px 10px;
     font-size: 18px;
-    color: $color-white;
+    color: #fff;
     border-bottom: none;
     border-radius: 20px;
     white-space: nowrap;
     box-shadow: none;
 
     &:hover {
-      color: $color-white;
+      color: #fff;
     }
 
     &.active {
-      color: $color-primary;
-      background-color: $color-white;
+      color: var(--color-primary);
+      background-color: var(--color-white);
       box-shadow: none;
     }
   }
@@ -124,7 +128,7 @@
     gap: 0;
 
     @include mobile {
-      background-color: $color-primary;
+      background-color: var(--color-primary);
       border-radius: 30px; // Figma: 30px
       padding: 5px; // Figma: 5px
       gap: 16px; // Figma: 16px
@@ -144,8 +148,8 @@
     font-size: 24px;
     font-weight: $font-weight-semibold;
     line-height: 36px; // Figma: 36px
-    color: $gray-11; // Figma: #636363
-    border-bottom: 1px solid $gray-8; // Figma: #BBBBBB
+    color: var(--color-text-secondary); // Figma: #636363
+    border-bottom: 1px solid var(--color-border); // Figma: #BBBBBB
     border-radius: 0;
     box-shadow: none;
     cursor: default;
@@ -154,32 +158,32 @@
       font-size: 24px;
       font-weight: $font-weight-semibold; // Figma: 600
       line-height: 36px;
-      color: $gray-11;
+      color: var(--color-text-secondary);
     }
 
     .tabLabel {
       font-size: 24px;
       font-weight: $font-weight-semibold; // Figma: 600
       line-height: 36px;
-      color: $gray-11;
+      color: var(--color-text-secondary);
     }
 
     &:hover {
-      color: $gray-11;
+      color: var(--color-text-secondary);
     }
 
     &.active {
-      background-color: $color-primary; // Figma: #9F1836
+      background-color: var(--color-primary); // Figma: #9F1836
       border-radius: 40px; // Figma: 40px
       border-bottom: none;
       box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2); // Figma: 0px 20px 20px rgba(0, 0, 0, 0.20)
 
       .stepNumber {
-        color: $color-white;
+        color: #fff;
       }
 
       .tabLabel {
-        color: $color-white;
+        color: #fff;
       }
     }
 
@@ -214,7 +218,7 @@
       padding: 0 10px; // Figma: padding-left: 10px, padding-right: 10px
       font-size: 18px; // Figma: 18px
       line-height: 27px; // Figma: 27px
-      color: $color-white;
+      color: #fff;
       border-bottom: none;
       white-space: nowrap;
 
@@ -226,15 +230,15 @@
         font-size: 18px; // Figma: 18px
         font-weight: $font-weight-semibold; // Figma: 600
         line-height: 27px; // Figma: 27px
-        color: $color-white;
+        color: #fff;
       }
 
       &:hover {
-        color: $color-white;
+        color: #fff;
       }
 
       &.active {
-        background-color: $color-white;
+        background-color: var(--color-white);
         border-radius: 20px; // Figma: 20px
         box-shadow: none;
 
@@ -243,7 +247,7 @@
         }
 
         .tabLabel {
-          color: $color-primary;
+          color: var(--color-primary);
         }
       }
     }

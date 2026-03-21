@@ -8,8 +8,10 @@ interface AuthContextType {
   token: string | null
   isAuthenticated: boolean
   isLoading: boolean
+  loginPassword: string | null
   setAuth: (token: string, refreshToken: string, user: AuthUser) => void
   clearAuth: () => void
+  setLoginPassword: (password: string | null) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -22,6 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<AuthUser | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [loginPassword, setLoginPassword] = useState<string | null>(null)
 
   useEffect(() => {
     const storedToken = localStorage.getItem(AUTH_TOKEN_KEY)
@@ -56,6 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem(AUTH_USER_KEY)
     setToken(null)
     setUser(null)
+    setLoginPassword(null)
   }, [])
 
   const value = useMemo<AuthContextType>(
@@ -64,10 +68,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       token,
       isAuthenticated: !!token && !!user,
       isLoading,
+      loginPassword,
       setAuth,
-      clearAuth
+      clearAuth,
+      setLoginPassword
     }),
-    [user, token, isLoading, setAuth, clearAuth]
+    [user, token, isLoading, loginPassword, setAuth, clearAuth]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

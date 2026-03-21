@@ -36,11 +36,10 @@ import type {
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
 import { HospitalCode } from '@/graphql/__generated__/types'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { mapStepsToApiInput, mapApiToStepData, type AllStepData } from '@/utils/partnerApplicationMapper'
 import { uploadFile } from '@/lib/upload'
-import {
-  DEV_DIRECTOR_EXTRA
-} from '@/utils/devDefaultData'
+import { DEV_DIRECTOR_EXTRA } from '@/utils/devDefaultData'
 import styles from './page.module.scss'
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -208,13 +207,11 @@ export default function HospitalApplicationPage() {
 
         await applyPartnerHospital(input)
         setIsComplete(true)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('협력병원 신청 실패:', error)
-        const message =
-          error?.graphQLErrors?.[0]?.message ||
-          error?.message ||
-          '신청 중 오류가 발생했습니다.'
+        const message = CombinedGraphQLErrors.is(error)
+          ? (error.errors[0]?.message ?? '신청 중 오류가 발생했습니다.')
+          : '신청 중 오류가 발생했습니다.'
         setAlertModal({ isOpen: true, message })
       }
     }
@@ -257,8 +254,12 @@ export default function HospitalApplicationPage() {
         setDraftId(hospital.id, result.id)
       }
       setAlertModal({ isOpen: true, message: '임시저장이 완료되었습니다.' })
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('임시저장 실패:', error)
+      const message = CombinedGraphQLErrors.is(error)
+        ? (error.errors[0]?.message ?? '임시저장 중 오류가 발생했습니다.')
+        : '임시저장 중 오류가 발생했습니다.'
+      setAlertModal({ isOpen: true, message })
     }
   }
 

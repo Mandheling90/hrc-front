@@ -46,7 +46,7 @@
   }
 
   &:global(.ant-picker-disabled) {
-    background-color: var(--color-bg-hover) !important;
+    background-color: var(--color-bg-active) !important;
     border-color: var(--color-border) !important;
     color: var(--color-text-secondary) !important;
     cursor: not-allowed !important;
