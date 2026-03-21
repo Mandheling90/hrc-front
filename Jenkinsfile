@@ -139,9 +139,6 @@ pipeline {
         }
 
         stage('Update GitOps') {
-            when {
-                branch 'main'
-            }
             steps {
                 container('git') {
                     echo "Updating GitOps repository..."
