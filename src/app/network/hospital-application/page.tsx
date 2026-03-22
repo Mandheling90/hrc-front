@@ -503,7 +503,7 @@ export default function HospitalApplicationPage() {
           setExistingApplicationModal(false)
           const institutionType = existingApplications[0]?.institutionType
           const clinicTypes = ['CLINIC', 'DENTAL_CLINIC', 'ORIENTAL']
-          const editPath = clinicTypes.includes(institutionType)
+          const editPath = institutionType && clinicTypes.includes(institutionType)
             ? '/mypage/edit-clinic'
             : '/mypage/edit-hospital'
           router.push(editPath)

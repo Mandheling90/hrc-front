@@ -20,6 +20,8 @@ import type {
   SubmitPartnerApplicationMutationVariables,
   CancelPartnerApplicationMutation,
   CancelPartnerApplicationMutationVariables,
+  UpdatePartnerApplicationMutation,
+  UpdatePartnerApplicationMutationVariables,
   MyPartnerApplicationQuery,
   MyPartnerApplicationQueryVariables,
   MyPartnerApplicationsQuery,
@@ -135,12 +137,15 @@ export function useMyPartnerApplications(pagination?: { page?: number; limit?: n
 
 /** 협력 병·의원 정보 수정 (APPROVED 상태면 수정요청 생성) */
 export function useUpdatePartnerApplication() {
-  const [updateMutation, { loading, error }] = useMutation(UPDATE_PARTNER_APPLICATION_MUTATION)
+  const [updateMutation, { loading, error }] = useMutation<
+    UpdatePartnerApplicationMutation,
+    UpdatePartnerApplicationMutationVariables
+  >(UPDATE_PARTNER_APPLICATION_MUTATION)
 
   const updatePartnerApplication = async (input: UpdatePartnerApplicationInput) => {
     const result = await updateMutation({ variables: { input } })
-    if (result.errors) {
-      throw result.errors
+    if (result.error) {
+      throw result.error
     }
     return result.data?.updatePartnerApplication ?? null
   }
