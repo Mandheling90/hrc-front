@@ -464,7 +464,14 @@ export function mapApiToStepData(api: any): AllStepData {
     },
     step8: {
       hospitalCharacteristics: api.remarks ?? '',
-      files: []
+      files: [],
+      existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({
+        id: a.id,
+        originalName: a.originalName,
+        storedPath: a.storedPath,
+        mimeType: a.mimeType,
+        fileSize: a.fileSize
+      }))
     }
   }
 }
@@ -636,7 +643,14 @@ export function mapApiToClinicStepData(api: any): ClinicAllStepData {
     },
     step4: {
       hospitalCharacteristics: api.remarks ?? '',
-      files: []
+      files: [],
+      existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({
+        id: a.id,
+        originalName: a.originalName,
+        storedPath: a.storedPath,
+        mimeType: a.mimeType,
+        fileSize: a.fileSize
+      }))
     }
   }
 }

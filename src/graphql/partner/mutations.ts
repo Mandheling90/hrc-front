@@ -67,3 +67,35 @@ export const CANCEL_PARTNER_APPLICATION_MUTATION = gql`
     cancelPartnerApplication(id: $id)
   }
 `
+
+export const UPDATE_PARTNER_APPLICATION_MUTATION = gql`
+  mutation UpdatePartnerApplication($input: UpdatePartnerApplicationInput!) {
+    updatePartnerApplication(input: $input) {
+      id
+      status
+      hospitalCode
+      hospitalId
+      institutionType
+      hospital {
+        id
+        name
+        address
+        addressDetail
+        phone
+        website
+        zipCode
+        phisCode
+        faxNumber
+      }
+      directorName
+      directorPhone
+      directorEmail
+      staffName
+      staffPhone
+      staffEmail
+      remarks
+      createdAt
+      updatedAt
+    }
+  }
+`

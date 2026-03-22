@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useMemo, useCallback } from 'react'
+import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
@@ -19,7 +19,7 @@ import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useHospital, useEnums } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useDraftApplication } from '@/contexts/DraftApplicationContext'
-import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById } from '@/hooks'
+import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById, useMyPartnerApplications } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,
@@ -36,6 +36,7 @@ import {
 } from '@/utils/partnerApplicationMapper'
 import { uploadFile } from '@/lib/upload'
 import { DEV_DIRECTOR_EXTRA } from '@/utils/devDefaultData'
+import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import styles from './page.module.scss'
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -54,6 +55,7 @@ export default function ClinicApplicationPage() {
   const { hospital } = useHospital()
   const { user, isAuthenticated } = useAuthContext()
   const { getDraftId, setDraftId } = useDraftApplication()
+  const router = useHospitalRouter()
 
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
@@ -72,6 +74,20 @@ export default function ClinicApplicationPage() {
     isOpen: false,
     message: ''
   })
+  // 이미 신청된 내역 존재 여부 모달
+  const [existingApplicationModal, setExistingApplicationModal] = useState(false)
+
+  // 기존 신청 내역 조회
+  const { applications: existingApplications, loading: existingLoading } = useMyPartnerApplications(
+    { page: 1, limit: 1 }
+  )
+
+  // 페이지 진입 시 기존 신청 내역 확인
+  useEffect(() => {
+    if (!existingLoading && existingApplications.length > 0) {
+      setExistingApplicationModal(true)
+    }
+  }, [existingLoading, existingApplications])
 
   // Step별 ref
   const step1Ref = useRef<StepRef<HospitalInfoStepData>>(null)
@@ -421,6 +437,22 @@ export default function ClinicApplicationPage() {
         closeButtonText='확인'
         onClose={() => setAlertModal({ isOpen: false, message: '' })}
         closeOnBackdropClick={true}
+      />
+
+      {/* 기존 신청 내역 존재 시 수정 페이지로 이동 모달 */}
+      <AlertModal
+        isOpen={existingApplicationModal}
+        message='이미 신청된 내역이 있습니다. 수정으로 이동합니다.'
+        closeButtonText='확인'
+        onClose={() => {
+          setExistingApplicationModal(false)
+          const institutionType = existingApplications[0]?.institutionType
+          const clinicTypes = ['CLINIC', 'DENTAL_CLINIC', 'ORIENTAL']
+          const editPath = clinicTypes.includes(institutionType)
+            ? '/mypage/edit-clinic'
+            : '/mypage/edit-hospital'
+          router.push(editPath)
+        }}
       />
     </div>
   )

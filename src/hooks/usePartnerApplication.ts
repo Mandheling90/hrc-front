@@ -3,7 +3,8 @@ import {
   APPLY_PARTNER_HOSPITAL_MUTATION,
   SAVE_DRAFT_PARTNER_APPLICATION_MUTATION,
   SUBMIT_PARTNER_APPLICATION_MUTATION,
-  CANCEL_PARTNER_APPLICATION_MUTATION
+  CANCEL_PARTNER_APPLICATION_MUTATION,
+  UPDATE_PARTNER_APPLICATION_MUTATION
 } from '@/graphql/partner/mutations'
 import {
   MY_PARTNER_APPLICATION_QUERY,
@@ -26,7 +27,7 @@ import type {
   PartnerApplicationByIdQuery,
   PartnerApplicationByIdQueryVariables
 } from '@/graphql/__generated__/types'
-import { HospitalCode } from '@/graphql/__generated__/types'
+import { HospitalCode, UpdatePartnerApplicationInput } from '@/graphql/__generated__/types'
 
 /** 협력 병·의원 신청 (저장+제출) */
 export function useApplyPartnerHospital() {
@@ -130,6 +131,21 @@ export function useMyPartnerApplications(pagination?: { page?: number; limit?: n
     refetch,
     fetchMore
   }
+}
+
+/** 협력 병·의원 정보 수정 (APPROVED 상태면 수정요청 생성) */
+export function useUpdatePartnerApplication() {
+  const [updateMutation, { loading, error }] = useMutation(UPDATE_PARTNER_APPLICATION_MUTATION)
+
+  const updatePartnerApplication = async (input: UpdatePartnerApplicationInput) => {
+    const result = await updateMutation({ variables: { input } })
+    if (result.errors) {
+      throw result.errors
+    }
+    return result.data?.updatePartnerApplication ?? null
+  }
+
+  return { updatePartnerApplication, loading, error }
 }
 
 /** 협력 신청 상세 조회 (ID 기준) */

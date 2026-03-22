@@ -30,7 +30,8 @@ export {
   useCancelPartnerApplication,
   useMyPartnerApplication,
   useMyPartnerApplications,
-  usePartnerApplicationById
+  usePartnerApplicationById,
+  useUpdatePartnerApplication
 } from '@/hooks/usePartnerApplication'
 
 // Enum Hooks - 코드 목록 조회

@@ -90,7 +90,7 @@ const myPageMenu: MenuItem = {
   label: '마이페이지',
   subItems: [
     { href: '/mypage/edit-profile', label: '회원정보 수정' },
-    { href: '/mypage/edit-clinic', label: '협력병의원 정보수정' },
+    { href: '/mypage/edit-partner', label: '협력병의원 정보수정' },
     { href: '/mypage/patient-inquiry', label: '의뢰환자 조회' },
     { href: '/mypage/e-consult', label: 'e-Consult 조회' }
   ]
@@ -155,7 +155,7 @@ const HeaderInner: React.FC = () => {
     if (user?.profile?.isDirector) return myPageMenu
     return {
       ...myPageMenu,
-      subItems: myPageMenu.subItems.filter(item => item.href !== '/mypage/edit-clinic')
+      subItems: myPageMenu.subItems.filter(item => item.href !== '/mypage/edit-partner')
     }
   }, [user?.profile?.isDirector])
 

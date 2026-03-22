@@ -107,6 +107,7 @@ export const MY_PARTNER_APPLICATIONS_QUERY = gql`
     myPartnerApplications(pagination: $pagination) {
       items {
         id
+        applicantId
         hospitalCode
         hospitalId
         institutionType
@@ -115,11 +116,89 @@ export const MY_PARTNER_APPLICATIONS_QUERY = gql`
           id
           name
           address
+          addressDetail
           phone
+          website
+          zipCode
           phisCode
+          faxNumber
+          representative
         }
+        isDirector
         directorName
+        directorBirthDate
+        directorGender
+        directorLicenseNo
+        directorSchool
+        directorGraduationYear
+        directorTrainingHospital
+        directorDepartment
+        directorSubSpecialty
+        directorCarNo
+        directorPhone
+        directorEmail
+        directorSmsConsent
+        directorEmailConsent
+        directorReplyConsent
         staffName
+        staffPosition
+        staffDeptType
+        staffDeptValue
+        staffPhone
+        staffTel
+        staffEmail
+        totalBedCount
+        activeBedCount
+        icuCount
+        premiumRoomCount
+        multiRoomCount
+        erCount
+        totalStaffCount
+        specialistCount
+        nurseCount
+        hasIcu
+        hasEr
+        hasOperatingRoom
+        hasPhysicalTherapy
+        hasDialysisRoom
+        hasHospice
+        hasPsychGeneral
+        hasPsychClosed
+        hasIntegratedNursing
+        hasGuardianCare
+        hasSharedCare
+        isolationRoomCount
+        isolationSingleCount
+        isolationDoubleCount
+        isolationTripleCount
+        isolationTypes
+        isolationCareType
+        isolationRehabType
+        hasRehabPt
+        hasRehabOt
+        hasRehabSt
+        hasRehabSwallow
+        hasRehabIsolation
+        departmentSpecialists
+        availableTreatments
+        clinicMedicationType
+        clinicHasHemodialysis
+        clinicHasPeritoneal
+        clinicHasPhototherapy
+        clinicHasExcimerLaser
+        majorEquipment
+        remarks
+        attachments
+        attachmentRows {
+          id
+          originalName
+          storedPath
+          mimeType
+          fileSize
+          createdAt
+        }
+        rejectReason
+        approvedAt
         createdAt
         updatedAt
       }

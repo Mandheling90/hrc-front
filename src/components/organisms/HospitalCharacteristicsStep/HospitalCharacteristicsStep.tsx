@@ -7,7 +7,7 @@ import { FileUploadIcon } from '@/components/icons/FileUploadIcon'
 import { FileRemoveIcon } from '@/components/icons/FileRemoveIcon'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useHospital } from '@/hooks'
-import type { HospitalCharacteristicsStepData, StepRef } from '@/types/partner-application'
+import type { HospitalCharacteristicsStepData, StepRef, ExistingAttachment } from '@/types/partner-application'
 import styles from './HospitalCharacteristicsStep.module.scss'
 
 export interface HospitalCharacteristicsStepProps {
@@ -32,6 +32,9 @@ export const HospitalCharacteristicsStep = forwardRef<
 
   // 첨부파일 상태
   const [files, setFiles] = useState<File[]>(defaultValues?.files ?? [])
+  const [existingAttachments, setExistingAttachments] = useState<ExistingAttachment[]>(
+    defaultValues?.existingAttachments ?? []
+  )
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // AlertModal 상태
@@ -43,7 +46,8 @@ export const HospitalCharacteristicsStep = forwardRef<
   useImperativeHandle(ref, () => ({
     getData: () => ({
       hospitalCharacteristics,
-      files
+      files,
+      existingAttachments
     })
   }))
 
@@ -74,11 +78,12 @@ export const HospitalCharacteristicsStep = forwardRef<
         }
         return true
       })
-      // 최대 2개까지만 허용
+      // 최대 2개까지만 허용 (기존 파일 포함)
+      const maxNew = 2 - existingAttachments.length
       const totalFiles = [...files, ...validFiles]
-      const newFiles = totalFiles.slice(0, 2)
+      const newFiles = totalFiles.slice(0, Math.max(0, maxNew))
       setFiles(newFiles)
-      if (totalFiles.length > 2) {
+      if (totalFiles.length > maxNew) {
         setAlertModal({
           isOpen: true,
           message: '첨부 파일 업로드 개수 초과입니다. (최대 2개)'
@@ -121,11 +126,12 @@ export const HospitalCharacteristicsStep = forwardRef<
         }
         return true
       })
-      // 최대 2개까지만 허용
+      // 최대 2개까지만 허용 (기존 파일 포함)
+      const maxNew = 2 - existingAttachments.length
       const totalFiles = [...files, ...validFiles]
-      const newFiles = totalFiles.slice(0, 2)
+      const newFiles = totalFiles.slice(0, Math.max(0, maxNew))
       setFiles(newFiles)
-      if (totalFiles.length > 2) {
+      if (totalFiles.length > maxNew) {
         setAlertModal({
           isOpen: true,
           message: '첨부 파일 업로드 개수 초과입니다. (최대 2개)'
@@ -227,12 +233,25 @@ export const HospitalCharacteristicsStep = forwardRef<
 
           {/* 파일 업로드 영역 */}
           <div className={styles.fileUploadArea} onDragOver={handleDragOver} onDrop={handleDrop}>
-            {/* 업로드된 파일 목록 */}
-            {files.length > 0 && (
+            {/* 기존 첨부파일 + 새 파일 목록 */}
+            {(existingAttachments.length > 0 || files.length > 0) && (
               <>
                 <div className={styles.fileList}>
+                  {existingAttachments.map((attachment, index) => (
+                    <div key={`existing-${attachment.id}`} className={styles.fileItem}>
+                      <FileRemoveIcon
+                        width={22}
+                        height={22}
+                        stroke='var(--gray-11)'
+                        onClick={() => setExistingAttachments(prev => prev.filter((_, i) => i !== index))}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <span className={styles.fileName}>{attachment.originalName}</span>
+                      <span className={styles.fileSize}>{formatFileSize(attachment.fileSize)}</span>
+                    </div>
+                  ))}
                   {files.map((file, index) => (
-                    <div key={index} className={styles.fileItem}>
+                    <div key={`new-${index}`} className={styles.fileItem}>
                       <FileRemoveIcon
                         width={22}
                         height={22}

@@ -149,8 +149,18 @@ export interface ClinicStaffInfoStepData {
   other: { surgicalSiteDisinfection: boolean; stitchOut: boolean; chemoportNeedleOut: boolean }
 }
 
+/** 서버에서 조회한 기존 첨부파일 정보 */
+export interface ExistingAttachment {
+  id: string
+  originalName: string
+  storedPath: string
+  mimeType: string
+  fileSize: number
+}
+
 /** Step 8: 병원특성 및 기타사항 */
 export interface HospitalCharacteristicsStepData {
   hospitalCharacteristics: string
   files: File[]
+  existingAttachments?: ExistingAttachment[]
 }
