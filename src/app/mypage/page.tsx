@@ -183,7 +183,7 @@ export default function MyPage() {
                   >
                     진료의뢰서 서식
                   </a>
-                  {hospitalId === 'anam' ? (
+                  {hospitalId === 'anam' && (
                     <a
                       href='/application_patient_form_anam.hwp'
                       download
@@ -191,10 +191,6 @@ export default function MyPage() {
                     >
                       환자 개인정보 동의서 서식
                     </a>
-                  ) : (
-                    <button type='button' className={styles.downloadBtn}>
-                      환자 개인정보 동의서 서식
-                    </button>
                   )}
                 </div>
               </div>
