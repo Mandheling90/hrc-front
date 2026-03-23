@@ -156,7 +156,7 @@ pipeline {
 
                             cd gitops
 
-                            # Development 환경 Frontend 이미지 태그만 업데이트
+                            # Production 환경 Frontend 이미지 태그만 업데이트
                             awk -v image_name="FRONTEND_IMAGE_PLACEHOLDER" -v image_tag="${IMAGE_TAG}" '
                                 $0 ~ "^  - name: " image_name "$" {
                                     print
@@ -168,8 +168,8 @@ pipeline {
                                     next
                                 }
                                 { print }
-                            ' overlays/development/kustomization.yaml > overlays/development/kustomization.yaml.tmp
-                            mv overlays/development/kustomization.yaml.tmp overlays/development/kustomization.yaml
+                            ' overlays/production/kustomization.yaml > overlays/production/kustomization.yaml.tmp
+                            mv overlays/production/kustomization.yaml.tmp overlays/production/kustomization.yaml
 
                             # Git 설정
                             git config user.email "jenkins@kumc.example.com"
