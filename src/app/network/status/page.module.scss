@@ -39,6 +39,7 @@
   @include mobile {
     width: 100%;
     max-width: 100%;
+    margin-bottom: $spacing-4;
   }
 }
 
@@ -281,11 +282,13 @@
   position: relative;
 
   @include tablet {
-    min-height: 300px;
+    flex: none;
+    height: 300px;
   }
 
   @include mobile {
-    min-height: 200px;
+    flex: none;
+    height: 200px;
   }
 }
 

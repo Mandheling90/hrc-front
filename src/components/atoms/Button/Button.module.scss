@@ -50,12 +50,18 @@
 .outline {
   background-color: var(--color-white);
   color: var(--color-darken);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--gray-4);
   font-weight: 600;
+  letter-spacing: -0.96px;
 
   &:hover:not(:disabled) {
-    background-color: var(--color-bg-hover);
-    border-color: var(--color-text-tertiary);
+    background-color: var(--color-white);
+    border-color: var(--color-primary);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--gray-4);
+    border-color: var(--gray-11);
   }
 }
 

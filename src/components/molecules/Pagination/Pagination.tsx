@@ -25,12 +25,14 @@ export const Pagination: React.FC<PaginationProps> = ({
   maxVisiblePages = 5,
   className = ''
 }) => {
+  const effectiveMaxVisible = maxVisiblePages
+
   // 페이지 번호 배열 생성
   const getPageNumbers = () => {
     const pages: (number | string)[] = []
-    const halfVisible = Math.floor(maxVisiblePages / 2)
+    const halfVisible = Math.floor(effectiveMaxVisible / 2)
 
-    if (totalPages <= maxVisiblePages) {
+    if (totalPages <= effectiveMaxVisible) {
       // 전체 페이지가 표시 가능한 수보다 적으면 모두 표시
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i)
@@ -38,7 +40,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     } else {
       // 시작 부분
       if (currentPage <= halfVisible + 1) {
-        for (let i = 1; i <= maxVisiblePages - 2; i++) {
+        for (let i = 1; i <= effectiveMaxVisible - 2; i++) {
           pages.push(i)
         }
         pages.push('ellipsis')
@@ -48,7 +50,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       else if (currentPage >= totalPages - halfVisible) {
         pages.push(1)
         pages.push('ellipsis')
-        for (let i = totalPages - (maxVisiblePages - 3); i <= totalPages; i++) {
+        for (let i = totalPages - (effectiveMaxVisible - 3); i <= totalPages; i++) {
           pages.push(i)
         }
       }
@@ -67,28 +69,25 @@ export const Pagination: React.FC<PaginationProps> = ({
     return pages
   }
 
+  const changePage = (page: number) => {
+    onPageChange(page)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1)
-    }
+    if (currentPage > 1) changePage(currentPage - 1)
   }
 
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1)
-    }
+    if (currentPage < totalPages) changePage(currentPage + 1)
   }
 
   const handleFirst = () => {
-    if (currentPage > 1) {
-      onPageChange(1)
-    }
+    if (currentPage > 1) changePage(1)
   }
 
   const handleLast = () => {
-    if (currentPage < totalPages) {
-      onPageChange(totalPages)
-    }
+    if (currentPage < totalPages) changePage(totalPages)
   }
 
   const pageNumbers = getPageNumbers()
@@ -142,7 +141,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             key={pageNum}
             type='button'
             className={`${styles.pageButton} ${isActive ? styles.active : ''}`}
-            onClick={() => onPageChange(pageNum)}
+            onClick={() => changePage(pageNum)}
             aria-label={`${pageNum}페이지로 이동`}
             aria-current={isActive ? 'page' : undefined}
           >

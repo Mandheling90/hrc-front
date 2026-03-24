@@ -1,10 +1,15 @@
 @import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
 
 .pagination {
   display: flex;
   align-items: center;
   gap: 16px;
   justify-content: center;
+
+  @include mobile {
+    gap: 4px;
+  }
 }
 
 .navButton {
@@ -19,6 +24,7 @@
   cursor: pointer;
   transition: all $transition-base;
   position: relative;
+  flex-shrink: 0;
 
   &:hover:not(:disabled) {
     background-color: var(--color-accent-bg);
@@ -29,6 +35,16 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  @include mobile {
+    width: 28px;
+    height: 28px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
 }
 
 .doubleArrowContainer {
@@ -38,11 +54,20 @@
   justify-content: center;
   width: 24px;
   height: 24px;
+
+  @include mobile {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .doubleArrow {
   position: absolute;
   left: 4px;
+
+  @include mobile {
+    left: 3px;
+  }
 }
 
 .pageButton {
@@ -72,6 +97,13 @@
     color: #fff;
     font-weight: $font-weight-normal;
   }
+
+  @include mobile {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 4px;
+    font-size: $font-size-lg;
+  }
 }
 
 .ellipsis {
@@ -82,4 +114,10 @@
   height: 32px;
   color: var(--color-text-tertiary);
   font-size: $font-size-2xl;
+
+  @include mobile {
+    min-width: 20px;
+    height: 28px;
+    font-size: $font-size-lg;
+  }
 }
