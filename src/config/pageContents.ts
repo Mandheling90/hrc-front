@@ -58,7 +58,7 @@ const anamContent: HospitalPageContent = {
         id: 'phone-request',
         icon: 'PhoneRequestIcon',
         title: '전화의뢰',
-        description: ['T. 02-920-5964~4', '평일 08:30~17:30', '토요일 09:00~12:30'],
+        description: ['T. 02-920-5892', '평일 08:30~17:30', '토요일 09:00~12:30'],
         href: '#',
         mobileSpan: 2,
         layoutType: 'icon-title'
@@ -129,7 +129,7 @@ const anamContent: HospitalPageContent = {
         text: '승인 (거점의료기관 승인 -> 한국보건의료정보원 최종 승인)'
       }
     ],
-    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5964'
+    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
   },
   referralHira: {
     pageTitle: '심평원중계시스템 의뢰',
@@ -186,7 +186,7 @@ const anamContent: HospitalPageContent = {
         ]
       }
     ],
-    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5964'
+    contact: '고려대학교 안암병원 진료협력센터 : 02-920-5892'
   },
   network: {
     intro: [

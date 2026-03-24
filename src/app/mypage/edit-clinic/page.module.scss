@@ -30,8 +30,6 @@
 
 .pageTitle {
   @include page-title-large;
-  text-align: center;
-  margin-bottom: $spacing-10;
 }
 
 .content {
@@ -87,10 +85,6 @@
 }
 
 @include mobile {
-  .pageTitle {
-    margin-bottom: $spacing-8;
-  }
-
   .sectionTitle {
     font-size: $font-size-xl;
   }
