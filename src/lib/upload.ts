@@ -120,7 +120,7 @@ async function executeUpload(file: File): Promise<UploadResult> {
     headers['x-hospital-code'] = hospitalCode
   }
 
-  const response = await fetch(`${getApiBaseUrl()}/upload`, {
+  const response = await fetch('/api/upload', {
     method: 'POST',
     headers,
     body: formData
