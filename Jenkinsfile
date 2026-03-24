@@ -163,7 +163,7 @@ pipeline {
                                     getline
                                     print
                                     getline
-                                    sub(/newTag:.*/, "newTag: " image_tag)
+                                    sub(/newTag:.*/, "newTag: \"" image_tag "\"")
                                     print
                                     next
                                 }
