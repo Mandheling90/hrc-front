@@ -354,6 +354,7 @@
   width: 100%;
   flex-shrink: 0;
   background-color: var(--color-white);
+  border-top: 1px solid var(--color-border); // Figma: 첫 번째 카드 위 구분선
 }
 
 .emptyState {
@@ -370,7 +371,7 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-8;
-  padding: 30px;
+  padding: $spacing-6; // Figma: 24px
   border-bottom: 1px solid var(--color-border);
 
   @include mobile {
