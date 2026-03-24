@@ -105,6 +105,7 @@ export interface UpdateDoctorProfileInput {
 }
 
 export function useUpdateProfile() {
+  const { updateUser } = useAuthContext()
   const [updateProfileMutation, { loading, error }] = useMutation<{ updateDoctorProfile: AuthUser }>(
     UPDATE_DOCTOR_PROFILE_MUTATION,
     { refetchQueries: [{ query: MY_PROFILE_QUERY }] }
@@ -112,7 +113,11 @@ export function useUpdateProfile() {
 
   const updateProfile = async (input: UpdateDoctorProfileInput) => {
     const { data } = await updateProfileMutation({ variables: { input } })
-    return data?.updateDoctorProfile ?? null
+    const updatedUser = data?.updateDoctorProfile ?? null
+    if (updatedUser) {
+      updateUser(updatedUser)
+    }
+    return updatedUser
   }
 
   return { updateProfile, loading, error }
