@@ -157,19 +157,7 @@ pipeline {
                             cd gitops
 
                             # Production 환경 Frontend 이미지 태그만 업데이트
-                            awk -v image_name="FRONTEND_IMAGE_PLACEHOLDER" -v image_tag="${IMAGE_TAG}" '
-                                $0 ~ "^  - name: " image_name "$" {
-                                    print
-                                    getline
-                                    print
-                                    getline
-                                    sub(/newTag:.*/, "newTag: " image_tag)
-                                    print
-                                    next
-                                }
-                                { print }
-                            ' overlays/production/kustomization.yaml > overlays/production/kustomization.yaml.tmp
-                            mv overlays/production/kustomization.yaml.tmp overlays/production/kustomization.yaml
+                            sed -i '/name: FRONTEND_IMAGE_PLACEHOLDER/{n;n;s|newTag:.*|    newTag: "'"${IMAGE_TAG}"'"|;}' overlays/production/kustomization.yaml
 
                             # Git 설정
                             git config user.email "jenkins@kumc.example.com"
