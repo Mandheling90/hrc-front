@@ -305,7 +305,7 @@ const anamContent: HospitalPageContent = {
           icon: 'OperationPhoneFaxIcon',
           title: '전용 전화 및 팩스',
           rows: [
-            { label: 'Tel', value: '02-920-5964' },
+            { label: 'Tel', value: '02-920-5892' },
             { label: 'Fax', value: '02-920-6523' }
           ]
         }

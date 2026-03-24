@@ -164,9 +164,10 @@
 }
 
 .userActionBtnPrimary {
-  background-color: var(--color-secondary);
-  color: #3d3529;
+  background-color: #dbbf93; // Figma: secondary/normal/normal---hover (Active)
+  color: #3d3529; // Figma: secondary/deep/deep---active
   border: none;
+  letter-spacing: -0.96px;
 
   &:hover {
     background-color: darken(#dbbf93, 5%);
@@ -176,10 +177,11 @@
 .userActionBtn {
   background-color: var(--color-white);
   color: var(--color-darken);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--gray-4); // Figma: #E8E8E8
+  letter-spacing: -0.96px;
 
   &:hover {
-    background-color: var(--color-bg-hover);
+    background-color: var(--gray-4); // Figma: hover 시 배경색 변경
   }
 }
 
@@ -719,7 +721,7 @@
 .consultApplyBtn {
   width: 100%;
   padding: 15px 30px;
-  background-color: var(--color-secondary);
+  background-color: #dbbf93; // Figma: secondary/normal/normal---hover
   border: none;
   border-radius: 5px;
   display: flex;
