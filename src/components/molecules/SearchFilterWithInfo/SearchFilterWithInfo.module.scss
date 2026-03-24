@@ -8,13 +8,13 @@
   align-items: center;
   justify-content: space-between;
   gap: $spacing-4;
-  margin-bottom: $spacing-2;
+  margin-bottom: $spacing-4;
 
   @include tablet {
     flex-direction: column;
     align-items: stretch;
     gap: 32px; // Figma: 검색 섹션과 안내 메시지 사이 32px
-    margin-bottom: 8px; // Figma: 카드 리스트와의 간격
+    margin-bottom: $spacing-4; // Figma: 카드 리스트와의 간격 16px
   }
 
   @include mobile {
