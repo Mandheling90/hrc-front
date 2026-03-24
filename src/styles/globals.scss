@@ -69,6 +69,7 @@
   --color-secondary: #{$color-secondary};
   --color-secondary-rgb: #{$color-secondary-rgb};
   --color-secondary-light: #f8efe2;
+  --color-secondary-bg: #fdf9f4;
   --color-secondary-deep-hover: #816331;
   --color-darken: #{$color-darken};
   --color-darken-rgb: #{$color-darken-rgb};
@@ -182,6 +183,9 @@
   --color-bg-active-rgb: 51, 51, 51;
   --color-accent-bg: #2a1a1e;
   --color-accent-bg-rgb: 42, 26, 30;
+  --color-secondary-light: #2a1a1e;
+  --color-secondary-bg: #2a1a1e;
+  --color-secondary-deep-hover: #c09c63;
 
   /* section-specific */
   --color-section-title: rgba(255, 255, 255, 0.7);

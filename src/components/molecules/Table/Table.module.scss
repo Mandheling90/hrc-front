@@ -10,16 +10,32 @@
   min-height: 0;
 
   // 호버 스타일 CSS 변수 (외부에서 오버라이드 가능)
-  --table-row-hover-bg: var(--color-accent-bg);
-  --table-row-hover-title-color: var(--color-secondary);
+  --table-row-hover-bg: var(--color-secondary-light);
+  --table-row-hover-title-color: var(--color-secondary-deep-hover);
 
   // 호버 스타일 활성화 시에만 적용
   &.hoverEnabled {
     .tableRow.clickable:hover {
       background-color: var(--table-row-hover-bg);
+      border-color: var(--color-border);
 
       // 호버 시 제목 컬럼 색상 변경 (CSS 변수 전달)
       --notice-title-color: var(--table-row-hover-title-color);
+
+      // 호버 시 제목, 신청자, 의료기관명 컬럼 semibold + 갈색
+      .dataCell {
+        &[data-column-id='title'],
+        &[data-column-id='applicant'],
+        &[data-column-id='hospitalName'] {
+          color: var(--color-secondary-deep-hover);
+          font-weight: $font-weight-semibold;
+        }
+
+        :global(.badge) {
+          background-color: var(--color-secondary-bg, #fdf9f4);
+          color: var(--color-secondary-deep-hover);
+        }
+      }
     }
   }
 }
@@ -231,7 +247,7 @@
 
   // 하이라이트된 행 스타일
   &.highlighted {
-    background-color: var(--color-accent-bg);
+    background-color: var(--color-secondary-light);
     border-color: var(--color-border);
 
     .dataCell {
@@ -240,8 +256,8 @@
 
       // 하이라이트된 행의 StatusBadge 스타일
       :global(.badge) {
-        background-color: var(--color-surface);
-        color: var(--color-secondary);
+        background-color: var(--color-secondary-bg, #fdf9f4);
+        color: var(--color-secondary-deep-hover);
         border: none;
       }
 
@@ -249,7 +265,7 @@
       &[data-column-id='title'],
       &[data-column-id='applicant'],
       &[data-column-id='hospitalName'] {
-        color: var(--color-secondary);
+        color: var(--color-secondary-deep-hover);
         font-weight: $font-weight-semibold;
       }
     }
