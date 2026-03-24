@@ -79,7 +79,7 @@ export default function EConsultPage() {
       setApplicantName(user.userName || '')
       setHospitalName(user.profile?.hospName || DEFAULT_HOSPITAL_NAME[hospitalId] || '')
       setEmail(user.email || '')
-      setEmailConsent(user.profile?.emailConsent ? 'agree' : 'disagree')
+      setEmailConsent('agree')
     }
   }, [user, hospitalId])
 
@@ -318,9 +318,7 @@ export default function EConsultPage() {
                     id='content'
                     value={content}
                     onChange={handleContentChange}
-                    placeholder='입력예시 : 내원 시 미열(37.8℃), 기침과 객담 호소, 약간의 호습곤란 있음.
-활력징후: 혈압 130/80mmHg, 맥박 92회/분, 호흡수 18회/분, 체온 37.8℃.
-주호소: 1주일 전부터 심해진 기침과 무기력.'
+                    placeholder='내용을 입력하세요'
                     rows={10}
                     className={styles.textarea}
                     maxLength={1500}
