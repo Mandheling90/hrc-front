@@ -41,11 +41,9 @@ function getHospitalCodeFromURL(): string {
 }
 
 function getGraphqlUrl(): string {
-  return process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql'
-}
-
-function getApiBaseUrl(): string {
-  return getGraphqlUrl().replace(/\/graphql$/, '')
+  return process.env.NODE_ENV === 'development'
+    ? (process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql')
+    : '/api/graphql'
 }
 
 // ── 토큰 리프레시 (동시 호출 시 하나의 요청만 수행) ──
@@ -120,7 +118,7 @@ async function executeUpload(file: File): Promise<UploadResult> {
     headers['x-hospital-code'] = hospitalCode
   }
 
-  const response = await fetch('/api/upload', {
+  const response = await fetch('/upload', {
     method: 'POST',
     headers,
     body: formData
