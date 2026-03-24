@@ -17,7 +17,7 @@
 
 .modal {
   background-color: var(--color-white);
-  border: 1px solid var(--color-border);
+  border: 1px solid $gray-9;
   border-radius: 10px;
   box-shadow: 0 0 39px rgba(0, 0, 0, 0.35);
   width: 100%;
@@ -137,42 +137,6 @@
   }
 }
 
-// 안내 문구 박스
-.noticeBox {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-secondary);
-  border-radius: 10px;
-  padding: 40px 20px;
-  text-align: center;
-
-  @include tablet {
-    padding: 20px;
-  }
-
-  @include mobile {
-    padding: 20px;
-  }
-
-  p {
-    font-size: 20px;
-    font-weight: $font-weight-normal;
-    line-height: 1.5;
-    letter-spacing: -0.8px;
-    color: var(--color-secondary);
-    margin: 0;
-
-    @include tablet {
-      font-size: 18px;
-      letter-spacing: -0.72px;
-    }
-
-    @include mobile {
-      font-size: 18px;
-      letter-spacing: -0.72px;
-    }
-  }
-}
-
 // 섹션 (환자 및 의뢰정보)
 .section {
   display: flex;
@@ -233,7 +197,7 @@
   gap: 16px;
   padding: 15px 20px;
   background-color: var(--color-white);
-  border: 1px solid var(--color-border);
+  border: 1px solid $gray-9;
   border-radius: 10px;
 
   &.fullWidth {
@@ -264,7 +228,7 @@
 .infoDivider {
   width: 0;
   height: 18px;
-  border-left: 1px solid var(--color-border);
+  border-left: 1px solid $gray-11;
 }
 
 .infoValue {
@@ -298,8 +262,8 @@
   display: flex;
   align-items: center;
   padding: 20px;
-  background-color: var(--color-accent-bg);
-  border: 1px solid var(--color-border);
+  background-color: #fef8f8;
+  border: 1px solid $gray-9;
   border-radius: 10px;
 }
 
@@ -325,7 +289,7 @@
 
 .opinionContent {
   padding: 40px;
-  border: 1px solid var(--color-border);
+  border: 1px solid $gray-9;
   border-radius: 10px;
   overflow: hidden;
 
@@ -364,8 +328,8 @@
   align-items: center;
   gap: 16px;
   padding: 15px 20px;
-  background-color: var(--color-bg-hover);
-  border: 1px solid var(--color-border);
+  background-color: $gray-2;
+  border: 1px solid $gray-9;
   border-radius: 10px;
 }
 
@@ -392,7 +356,7 @@
 .dateDivider {
   width: 0;
   height: 18px;
-  border-left: 1px solid var(--color-border);
+  border-left: 1px solid $gray-11;
 }
 
 .dateValue {

@@ -396,9 +396,8 @@
 .replyDisplayHeader {
   height: 59px; // Figma: 59px
   padding: 20px 40px; // Figma: padding
-  background-color: var(--color-secondary-bg); // Figma: Secondary Light
-  border-radius: 10px; // Figma: 10px top radius
-  border-bottom: 1px solid var(--color-secondary); // Figma: Secondary Normal hover
+  background-color: #f8efe2; // Figma: secondary/light/light
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;

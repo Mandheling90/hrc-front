@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useQuery } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
@@ -10,6 +10,7 @@ import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Button } from '@/components/atoms/Button/Button'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
+import { ReplyLetterModal, ReplyLetterData } from '@/components/molecules/ReplyLetterModal/ReplyLetterModal'
 import styles from './page.module.scss'
 
 // API 응답 타입
@@ -62,6 +63,7 @@ export default function MypageEConsultDetailPage() {
   const { user } = useAuthContext()
   const params = useParams()
   const id = params.id as string
+  const [isReplyLetterOpen, setIsReplyLetterOpen] = useState(false)
 
   const { data, loading } = useQuery<EConsultByIdData>(ECONSULT_BY_ID_QUERY, {
     variables: { id },
@@ -99,6 +101,23 @@ export default function MypageEConsultDetailPage() {
   const replyDate = eConsultData?.reply?.createdAt ? formatDateTime(eConsultData.reply.createdAt) : undefined
   const consultantDepartment = eConsultData?.consultant?.department || '-'
   const consultantName = eConsultData?.consultant?.name || '-'
+
+  // 진료회신서 데이터
+  const replyLetterData: ReplyLetterData = {
+    referralHospital: hospitalName,
+    referralDoctor: applicant,
+    referralDate: registeredDate,
+    patientName: '-',
+    gender: '-',
+    birthDate: '-',
+    department: consultantDepartment,
+    doctor: consultantName,
+    treatmentPeriod: registeredDate !== '-' && replyDate ? `${registeredDate} ~ ${replyDate.split(' ')[0]}` : '-',
+    registrationNo: '-',
+    diagnosis: '-',
+    opinion: replyContent || '-',
+    writtenDate: replyDate ? replyDate.split(' ')[0] : '-'
+  }
 
   const handleBackToList = () => {
     router.push('/mypage/e-consult')
@@ -221,6 +240,11 @@ export default function MypageEConsultDetailPage() {
                 </div>
                 <div className={styles.replyDisplayText}>{replyContent || '답변 내용이 없습니다.'}</div>
               </div>
+              <div className={styles.replyLetterButtonWrap}>
+                <Button variant='gray' size='medium' onClick={() => setIsReplyLetterOpen(true)}>
+                  회신서 조회
+                </Button>
+              </div>
             </div>
           ) : isExpired ? (
             /* 기간 만료: 만료 안내 메시지 */
@@ -240,6 +264,15 @@ export default function MypageEConsultDetailPage() {
         </div>
       </main>
       <Footer />
+
+      {/* 진료회신서 팝업 */}
+      {isCompleted && (
+        <ReplyLetterModal
+          isOpen={isReplyLetterOpen}
+          onClose={() => setIsReplyLetterOpen(false)}
+          data={replyLetterData}
+        />
+      )}
     </div>
   )
 }

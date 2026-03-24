@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { ServiceTitleIcon } from '@/components/icons/ServiceTitleIcon'
+import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
 import styles from './MedicalReplyModal.module.scss'
 
 export interface MedicalReplyData {
@@ -117,10 +118,14 @@ export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, on
         {/* 본문 */}
         <div className={styles.body}>
           {/* 안내 문구 */}
-          <div className={styles.noticeBox}>
-            <p>항상 저희 병원에 많은 관심과 도움을 주셔서 감사드립니다.</p>
-            <p>의뢰해 주신 환자의 진료결과를 다음과 같이 알려드립니다.</p>
-          </div>
+          <InfoBox
+            messages={[
+              '항상 저희 병원에 많은 관심과 도움을 주셔서 감사드립니다.',
+              '의뢰해 주신 환자의 진료결과를 다음과 같이 알려드립니다.'
+            ]}
+            contentAlign='center'
+            textAlign='center'
+          />
 
           {/* 환자 및 의뢰정보 */}
           <div className={styles.section}>
