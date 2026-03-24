@@ -14,7 +14,7 @@ import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/Hospit
 import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
-import { HospitalCode, PartnerStatus } from '@/graphql/__generated__/types'
+import { HospitalCode } from '@/graphql/__generated__/types'
 import { mapApiToStepData, mapStepsToApiInput, type AllStepData } from '@/utils/partnerApplicationMapper'
 import { uploadFile } from '@/lib/upload'
 import type { StepRef } from '@/types/partner-application'
@@ -98,16 +98,6 @@ export default function EditHospitalPage() {
     }
   }, [applicationLoading, application, router])
 
-  // 체결 대기중이면 수정 불가 → 알림 후 마이페이지로 리다이렉트
-  useEffect(() => {
-    if (!applicationLoading && application?.status === PartnerStatus.Pending) {
-      setAlertModal({
-        isOpen: true,
-        message: '현재 수정 요청이 검토 중입니다. 검토가 완료된 후 다시 시도해 주세요.',
-        onClose: () => router.push('/mypage')
-      })
-    }
-  }, [applicationLoading, application?.status, router])
 
   const guideMessages = useMemo(() => {
     return [
