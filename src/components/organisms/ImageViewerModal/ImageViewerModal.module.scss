@@ -227,11 +227,11 @@
   flex-shrink: 0;
 
   &:hover {
-    border-color: var(--color-border);
+    border-color: var(--color-primary);
   }
 
   &.selected {
-    border: 5px solid var(--color-primary);
+    border: 3px solid var(--color-primary);
   }
 
   @include tablet {
@@ -372,6 +372,7 @@
 .detailImage {
   width: 512px;
   height: 512px;
+  border: 2px solid var(--color-primary); // #9f1836
   border-radius: 5px;
   object-fit: cover;
 

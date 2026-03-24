@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback, useState } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -11,6 +11,7 @@ import { ProcedureList } from '@/components/molecules/ProcedureList/ProcedureLis
 import { ServiceSection, ServiceItem } from '@/components/organisms/ServiceSection/ServiceSection'
 import { Button } from '@/components/atoms/Button/Button'
 import { ConfirmButtons } from '@/components/molecules/ConfirmButtons/ConfirmButtons'
+import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { FaxIcon } from '@/components/icons/FaxIcon'
 import { FileDownloadIcon } from '@/components/icons/FileDownloadIcon'
 import { DocumentIcon } from '@/components/icons/DocumentIcon'
@@ -19,6 +20,7 @@ import { ApprovalIcon } from '@/components/icons/ApprovalIcon'
 import { HandshakeIcon } from '@/components/icons/HandshakeIcon'
 import { CertificateIcon } from '@/components/icons/CertificateIcon'
 import { useHospital } from '@/hooks'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
 import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
@@ -26,6 +28,21 @@ import { PhoneRequestIcon } from '@/components/icons/PhoneRequestIcon'
 export default function NetworkPage() {
   const router = useHospitalRouter()
   const { pageContent } = useHospital()
+  const { user } = useAuthContext()
+  const [alertModal, setAlertModal] = useState(false)
+
+  // 원장여부 체크 - 원장이 아니면 신청 페이지로 이동 불가
+  const handleApplicationClick = useCallback((path: string) => {
+    if (!user) {
+      router.push('/login')
+      return
+    }
+    if (!user.profile?.isDirector) {
+      setAlertModal(true)
+      return
+    }
+    router.push(path)
+  }, [user, router])
 
   // pageContent에서 network 페이지 정보 가져오기
   const networkInfo = pageContent.network
@@ -196,12 +213,12 @@ export default function NetworkPage() {
               className={styles.networkConfirmButtons}
               secondaryButton={{
                 label: '협력병원 온라인 신청',
-                onClick: () => router.push('/network/hospital-application'),
+                onClick: () => handleApplicationClick('/network/hospital-application'),
                 variant: 'primaryOutline'
               }}
               primaryButton={{
                 label: '협력의원 온라인 신청',
-                onClick: () => router.push('/network/clinic-application')
+                onClick: () => handleApplicationClick('/network/clinic-application')
               }}
               swapOnHover
             />
@@ -209,6 +226,15 @@ export default function NetworkPage() {
         </div>
       </main>
       <Footer />
+
+      {/* 원장이 아닌 경우 알림 모달 */}
+      <AlertModal
+        isOpen={alertModal}
+        message='원장만 협력네트워크 신청이 가능합니다.'
+        closeButtonText='확인'
+        onClose={() => setAlertModal(false)}
+        closeOnBackdropClick={true}
+      />
     </div>
   )
 }

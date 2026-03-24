@@ -15,8 +15,8 @@
 
 // 신청자 정보 섹션
 .applicantSection {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-secondary-bg);
+  border: 1px solid var(--gray-8);
   border-radius: 20px;
   padding: 30px;
   margin-bottom: 56px; // Figma: gap 56px
@@ -50,7 +50,7 @@
 .sectionDivider {
   width: 100%;
   height: 2px; // Figma: 2px
-  background-color: var(--color-border); // Figma: #BBBBBB
+  background-color: var(--gray-5); // Figma: #E1E1E1
 }
 
 .infoGrid {
@@ -76,7 +76,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: var(--color-white);
-  border: 1px solid #e9b0b2;
+  border: 1px solid #dbbf93;
   border-radius: 10px;
   padding: 10px 20px;
 }
@@ -97,7 +97,7 @@
 .infoCardDivider {
   width: 100%;
   height: 1px;
-  background-color: #e9b0b2;
+  background-color: #dbbf93;
 }
 
 .infoCardValue {

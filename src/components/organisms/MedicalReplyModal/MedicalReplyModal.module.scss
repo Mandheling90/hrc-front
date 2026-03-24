@@ -137,6 +137,13 @@
   }
 }
 
+// 안내 문구 InfoBox 텍스트 색상 오버라이드
+.noticeInfoBox {
+  p {
+    color: var(--color-secondary-deep-hover) !important; // Figma: #816331
+  }
+}
+
 // 섹션 (환자 및 의뢰정보)
 .section {
   display: flex;

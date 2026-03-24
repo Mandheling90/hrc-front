@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useHospital, useMyPartnerApplications } from '@/hooks'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 
@@ -10,8 +11,16 @@ const CLINIC_TYPES = ['CLINIC', 'DENTAL_CLINIC', 'ORIENTAL']
 export default function EditPartnerRedirectPage() {
   const router = useHospitalRouter()
   const { hospital } = useHospital()
+  const { user } = useAuthContext()
   const { applications, loading } = useMyPartnerApplications({ page: 1, limit: 1 })
   const [showAlert, setShowAlert] = useState(false)
+
+  // 원장여부 체크 - 원장이 아니면 마이페이지로 리다이렉트
+  useEffect(() => {
+    if (user && !user.profile?.isDirector) {
+      router.replace('/mypage')
+    }
+  }, [user, router])
 
   useEffect(() => {
     if (loading) return

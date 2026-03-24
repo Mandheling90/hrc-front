@@ -125,6 +125,7 @@ export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, on
             ]}
             contentAlign='center'
             textAlign='center'
+            className={styles.noticeInfoBox}
           />
 
           {/* 환자 및 의뢰정보 */}

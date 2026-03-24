@@ -68,6 +68,14 @@ export default function HospitalApplicationPage() {
     }
   }, [isAuthenticated, router])
 
+  // 원장여부 체크
+  const [directorAlertOpen, setDirectorAlertOpen] = useState(false)
+  useEffect(() => {
+    if (user && !user.profile?.isDirector) {
+      setDirectorAlertOpen(true)
+    }
+  }, [user])
+
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
 
@@ -514,6 +522,17 @@ export default function HospitalApplicationPage() {
             ? '/mypage/edit-clinic'
             : '/mypage/edit-hospital'
           router.push(editPath)
+        }}
+      />
+
+      {/* 원장이 아닌 경우 알림 모달 */}
+      <AlertModal
+        isOpen={directorAlertOpen}
+        message='원장만 협력네트워크 신청이 가능합니다.'
+        closeButtonText='확인'
+        onClose={() => {
+          setDirectorAlertOpen(false)
+          router.replace('/network')
         }}
       />
     </div>
