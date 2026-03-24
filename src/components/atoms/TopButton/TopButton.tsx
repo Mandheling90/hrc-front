@@ -23,7 +23,7 @@ export const TopButton: React.FC = () => {
 
   return (
     <div className={`${styles.floatingButtons} ${visible ? styles.visible : ''}`}>
-      {process.env.NODE_ENV === 'development' && <ThemeToggle />}
+      <ThemeToggle />
       <button
         className={styles.topButton}
         onClick={scrollToTop}
