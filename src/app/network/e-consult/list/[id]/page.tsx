@@ -182,7 +182,7 @@ export default function EConsultDetailPage() {
           {/* 신청자 정보 섹션 */}
           <div className={styles.applicantSection}>
             <div className={styles.applicantHeader}>
-              <h2 className={styles.sectionTitle}>신청자 정보</h2>
+              <h2 className={styles.sectionTitle}>e-Consult 신청 정보</h2>
               <div className={styles.sectionDivider} />
             </div>
 

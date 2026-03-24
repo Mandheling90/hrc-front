@@ -58,7 +58,9 @@ export default function EConsultPage() {
   const [emailConsent, setEmailConsent] = useState('agree')
   const [consultingDoctor, setConsultingDoctor] = useState(
     hasPreselected
-      ? preselectedDepartment ? `${preselectedDepartment} ${preselectedDoctorName}` : preselectedDoctorName
+      ? preselectedDepartment
+        ? `${preselectedDepartment} ${preselectedDoctorName}`
+        : preselectedDoctorName
       : ''
   )
   const [selectedDoctorId, setSelectedDoctorId] = useState(preselectedDoctorId)
@@ -110,9 +112,7 @@ export default function EConsultPage() {
   const handleDoctorConfirm = (selectedDoctors: Doctor[]) => {
     if (selectedDoctors.length > 0) {
       const doctor = selectedDoctors[0]
-      const doctorNames = selectedDoctors
-        .map(d => (d.department ? `${d.department} ${d.name}` : d.name))
-        .join(', ')
+      const doctorNames = selectedDoctors.map(d => (d.department ? `${d.department} ${d.name}` : d.name)).join(', ')
       setConsultingDoctor(doctorNames)
       setSelectedDoctorId(doctor.id || doctor.doctorId || '')
       setSelectedDoctorName(doctor.name || '')
@@ -155,7 +155,10 @@ export default function EConsultPage() {
         }
       })
 
-      setAlertModal({ isOpen: true, message: 'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.' })
+      setAlertModal({
+        isOpen: true,
+        message: 'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.'
+      })
     } catch (err) {
       const message = err instanceof Error ? err.message : 'e-Consult 신청에 실패했습니다.'
       setAlertModal({ isOpen: true, message })
@@ -164,7 +167,9 @@ export default function EConsultPage() {
 
   // 알림 모달 닫기 핸들러
   const handleAlertClose = () => {
-    const wasSuccess = alertModal.message === 'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.'
+    const wasSuccess =
+      alertModal.message ===
+      'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.'
     setAlertModal({ isOpen: false, message: '' })
     if (wasSuccess) {
       router.push('/mypage/e-consult')
