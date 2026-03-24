@@ -157,7 +157,7 @@ pipeline {
                             cd gitops
 
                             # Production 환경 Frontend 이미지 태그만 업데이트
-                            sed -i '/name: FRONTEND_IMAGE_PLACEHOLDER/{n;n;s|newTag:.*|    newTag: "'"${IMAGE_TAG}"'"|;}' overlays/production/kustomization.yaml
+                            sed -i '/name: FRONTEND_IMAGE_PLACEHOLDER/{n;n;s|newTag:.*|newTag: "'"${IMAGE_TAG}"'"|;}' overlays/production/kustomization.yaml
 
                             # Git 설정
                             git config user.email "jenkins@kumc.example.com"
