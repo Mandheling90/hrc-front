@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next'
 
-const API_BACKEND = process.env.API_URL || 'http://api-service:8000'
+const API_BACKEND = (process.env.API_URL || 'http://api-service:8000/graphql').replace(/\/graphql$/, '')
 
 const nextConfig: NextConfig = {
   output: 'standalone',
