@@ -137,12 +137,8 @@ $header-height-mobile: 56px;
   position: relative;
   z-index: -1;
   background: var(--color-white);
-  border-bottom: 1px solid $gray-8;
+  border-bottom: 1px solid var(--gray-8);
   border-radius: 0 0 20px 20px;
-
-  [data-theme='dark'] & {
-    border-bottom-color: var(--color-border);
-  }
   height: 71px;
   display: flex;
   align-items: stretch;
@@ -210,7 +206,7 @@ $header-height-mobile: 56px;
   }
 
   &:hover {
-    background-color: rgba(var(--color-accent-bg-rgb), 0.5);
+    background-color: var(--color-secondary-bg);
 
     [data-theme='dark'] & {
       background-color: rgba(var(--color-primary-rgb), 0.15);
@@ -220,14 +216,14 @@ $header-height-mobile: 56px;
 
 // 브래드크럼 버튼 활성 상태 (드롭다운 열림)
 .breadcrumbButtonActive {
-  background-color: var(--color-accent-bg);
+  background-color: var(--color-secondary-bg);
 
   [data-theme='dark'] & {
     background-color: rgba(var(--color-primary-rgb), 0.2);
   }
 
   &:hover {
-    background-color: var(--color-accent-bg);
+    background-color: var(--color-secondary-bg);
 
     [data-theme='dark'] & {
       background-color: rgba(var(--color-primary-rgb), 0.2);
@@ -347,7 +343,7 @@ $header-height-mobile: 56px;
   cursor: pointer;
 
   &:hover {
-    background-color: var(--color-bg-hover);
+    background-color: var(--color-secondary-bg);
 
     [data-theme='dark'] & {
       background-color: rgba(var(--color-primary-rgb), 0.15);
@@ -362,7 +358,7 @@ $header-height-mobile: 56px;
 
 // 드롭다운 활성 아이템
 .breadcrumbDropdownItemActive {
-  background-color: var(--color-accent-bg);
+  background-color: var(--color-secondary-bg);
   border-radius: 15px;
   color: var(--color-secondary);
 
@@ -372,7 +368,7 @@ $header-height-mobile: 56px;
   }
 
   &:hover {
-    background-color: var(--color-accent-bg);
+    background-color: var(--color-secondary-bg);
 
     [data-theme='dark'] & {
       background-color: rgba(var(--color-primary-rgb), 0.2);

@@ -15,7 +15,7 @@
 
 // 신청자 정보 섹션
 .applicantSection {
-  background-color: var(--color-accent-bg);
+  background-color: var(--color-secondary-bg);
   border: 1px solid var(--gray-9);
   border-radius: 20px;
   padding: 30px;
@@ -225,7 +225,7 @@
 
 // 답변 입력 섹션
 .replySection {
-  background-color: var(--color-accent-bg);
+  background-color: var(--color-secondary-bg);
   border: 1px solid var(--color-secondary);
   border-radius: 10px;
   padding: 30px;
@@ -396,7 +396,7 @@
 .replyDisplayHeader {
   height: 59px; // Figma: 59px
   padding: 20px 40px; // Figma: padding
-  background-color: var(--color-accent-bg); // Figma: Secondary Light
+  background-color: var(--color-secondary-bg); // Figma: Secondary Light
   border-radius: 10px; // Figma: 10px top radius
   border-bottom: 1px solid var(--color-secondary); // Figma: Secondary Normal hover
   display: flex;

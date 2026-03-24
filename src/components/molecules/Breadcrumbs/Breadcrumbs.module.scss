@@ -3,7 +3,7 @@
 .breadcrumbs {
   padding: $spacing-4 0;
   font-size: $font-size-sm;
-  color: $gray-10;
+  color: var(--gray-10);
 }
 
 .list {
@@ -27,7 +27,7 @@
 }
 
 .separator {
-  color: $gray-8;
+  color: var(--gray-8);
   margin: 0 $spacing-2;
   user-select: none;
 }
@@ -36,21 +36,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: $gray-10;
+  color: var(--gray-10);
   flex-shrink: 0;
 }
 
 .link {
-  color: $gray-10;
+  color: var(--gray-10);
   text-decoration: none;
   transition: color $transition-base;
 
   &:hover {
-    color: $color-primary;
+    color: var(--color-primary);
   }
 }
 
 .current {
-  color: $gray-11;
+  color: var(--gray-11);
   font-weight: $font-weight-medium;
 }
