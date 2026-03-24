@@ -77,27 +77,38 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
 
   useEffect(() => {
     if (items.length === 0) return
+    let cancelled = false
     const fetchAll = async () => {
+      const BATCH_SIZE = 5
       const entries: [string, ImagingOverlayResult | null][] = []
-      await Promise.all(
-        items.map(async (item, index) => {
-          const key = `${item.orderCode}-${index}`
-          try {
-            const result = await fetchOverlay({
-              ptntNo,
-              examDate: item.examDate ?? item.orderDate ?? '',
-              orderCode: item.orderCode ?? '',
-              pacsAccessNo: item.pacsAccessNo
-            })
-            entries.push([key, result])
-          } catch {
-            entries.push([key, null])
-          }
-        })
-      )
-      setOverlayMap(Object.fromEntries(entries))
+      for (let i = 0; i < items.length; i += BATCH_SIZE) {
+        if (cancelled) return
+        const batch = items.slice(i, i + BATCH_SIZE)
+        const batchResults = await Promise.all(
+          batch.map(async (item, batchIndex) => {
+            const index = i + batchIndex
+            const key = `${item.orderCode}-${index}`
+            try {
+              const result = await fetchOverlay({
+                ptntNo,
+                examDate: item.examDate ?? item.orderDate ?? '',
+                orderCode: item.orderCode ?? '',
+                pacsAccessNo: item.pacsAccessNo
+              })
+              return [key, result] as [string, ImagingOverlayResult | null]
+            } catch {
+              return [key, null] as [string, ImagingOverlayResult | null]
+            }
+          })
+        )
+        entries.push(...batchResults)
+        if (!cancelled) {
+          setOverlayMap(Object.fromEntries(entries))
+        }
+      }
     }
     fetchAll()
+    return () => { cancelled = true }
   }, [items, ptntNo, fetchOverlay])
 
   const allRows = useMemo(() =>
@@ -206,6 +217,7 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
   const otherExamColumns: TableColumn<OtherExamRow>[] = useMemo(() => [
     { id: 'department', label: '진료과', field: 'department', width: '160px', align: 'center' },
     { id: 'doctor', label: '진료의', field: 'doctor', width: '130px', align: 'center' },
+    { id: 'examDate', label: '검사일', field: 'examDate', width: '130px', align: 'center' },
     { id: 'examName', label: '검사명', field: 'examName', width: '1fr', align: 'center' },
     {
       id: 'image',
@@ -240,6 +252,10 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
             <span className={styles.tabletCardValue}>{item.doctor}</span>
           </div>
           <div className={styles.tabletCardRow}>
+            <span className={styles.tabletCardLabel}>검사일</span>
+            <span className={styles.tabletCardValue}>{item.examDate}</span>
+          </div>
+          <div className={styles.tabletCardRow}>
             <span className={styles.tabletCardLabel}>검사명</span>
             <span className={styles.tabletCardValue}>{item.examName}</span>
           </div>
@@ -270,6 +286,10 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
           <div className={styles.mobileCardRow}>
             <span className={styles.mobileCardLabel}>진료의</span>
             <span className={styles.mobileCardValue}>{item.doctor}</span>
+          </div>
+          <div className={styles.mobileCardRow}>
+            <span className={styles.mobileCardLabel}>검사일</span>
+            <span className={styles.mobileCardValue}>{item.examDate}</span>
           </div>
           <div className={styles.mobileCardRow}>
             <span className={styles.mobileCardLabel}>검사명</span>

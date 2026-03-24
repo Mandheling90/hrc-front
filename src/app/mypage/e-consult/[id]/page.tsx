@@ -97,7 +97,8 @@ export default function MypageEConsultDetailPage() {
   const registeredDate = eConsultData?.createdAt ? formatDate(eConsultData.createdAt) : '-'
   const replyContent = eConsultData?.reply?.content
   const replyDate = eConsultData?.reply?.createdAt ? formatDateTime(eConsultData.reply.createdAt) : undefined
-  const replier = eConsultData?.reply?.repliedBy?.userName || eConsultData?.consultant?.name
+  const consultantDepartment = eConsultData?.consultant?.department || '-'
+  const consultantName = eConsultData?.consultant?.name || '-'
 
   const handleBackToList = () => {
     router.push('/mypage/e-consult')
@@ -148,7 +149,7 @@ export default function MypageEConsultDetailPage() {
           {/* 신청자 정보 섹션 */}
           <div className={styles.applicantSection}>
             <div className={styles.applicantHeader}>
-              <h2 className={styles.sectionTitle}>신청자 정보</h2>
+              <h2 className={styles.sectionTitle}>e-Consult 신청 정보</h2>
               <div className={styles.sectionDivider} />
             </div>
 
@@ -208,9 +209,15 @@ export default function MypageEConsultDetailPage() {
               </div>
               <div className={styles.replyDisplayContent}>
                 <div className={styles.replyDisplayMeta}>
-                  <span className={styles.replyDisplayName}>{replier || applicant}</span>
+                  <span className={styles.replyDisplayName}>{consultantDepartment}</span>
                   <span className={styles.replyMetaDivider} />
-                  {replyDate && <span className={styles.replyDisplayDate}>{replyDate}</span>}
+                  <span className={styles.replyDisplayName}>{consultantName}</span>
+                  {replyDate && (
+                    <>
+                      <span className={styles.replyMetaDivider} />
+                      <span className={styles.replyDisplayDate}>{replyDate}</span>
+                    </>
+                  )}
                 </div>
                 <div className={styles.replyDisplayText}>{replyContent || '답변 내용이 없습니다.'}</div>
               </div>

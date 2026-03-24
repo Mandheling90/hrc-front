@@ -58,7 +58,9 @@ export default function EConsultPage() {
   const [emailConsent, setEmailConsent] = useState('agree')
   const [consultingDoctor, setConsultingDoctor] = useState(
     hasPreselected
-      ? preselectedDepartment ? `${preselectedDepartment} ${preselectedDoctorName}` : preselectedDoctorName
+      ? preselectedDepartment
+        ? `${preselectedDepartment} ${preselectedDoctorName}`
+        : preselectedDoctorName
       : ''
   )
   const [selectedDoctorId, setSelectedDoctorId] = useState(preselectedDoctorId)
@@ -79,7 +81,7 @@ export default function EConsultPage() {
       setApplicantName(user.userName || '')
       setHospitalName(user.profile?.hospName || DEFAULT_HOSPITAL_NAME[hospitalId] || '')
       setEmail(user.email || '')
-      setEmailConsent(user.profile?.emailConsent ? 'agree' : 'disagree')
+      setEmailConsent('agree')
     }
   }, [user, hospitalId])
 
@@ -110,9 +112,7 @@ export default function EConsultPage() {
   const handleDoctorConfirm = (selectedDoctors: Doctor[]) => {
     if (selectedDoctors.length > 0) {
       const doctor = selectedDoctors[0]
-      const doctorNames = selectedDoctors
-        .map(d => (d.department ? `${d.department} ${d.name}` : d.name))
-        .join(', ')
+      const doctorNames = selectedDoctors.map(d => (d.department ? `${d.department} ${d.name}` : d.name)).join(', ')
       setConsultingDoctor(doctorNames)
       setSelectedDoctorId(doctor.id || doctor.doctorId || '')
       setSelectedDoctorName(doctor.name || '')
@@ -155,7 +155,10 @@ export default function EConsultPage() {
         }
       })
 
-      setAlertModal({ isOpen: true, message: 'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.' })
+      setAlertModal({
+        isOpen: true,
+        message: 'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.'
+      })
     } catch (err) {
       const message = err instanceof Error ? err.message : 'e-Consult 신청에 실패했습니다.'
       setAlertModal({ isOpen: true, message })
@@ -164,7 +167,9 @@ export default function EConsultPage() {
 
   // 알림 모달 닫기 핸들러
   const handleAlertClose = () => {
-    const wasSuccess = alertModal.message === 'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.'
+    const wasSuccess =
+      alertModal.message ===
+      'e-Consult 신청이 완료되었습니다.\n자문의 답변 완료 시 등록하신 이메일을 통해 안내드리겠습니다.'
     setAlertModal({ isOpen: false, message: '' })
     if (wasSuccess) {
       router.push('/mypage/e-consult')
@@ -318,9 +323,7 @@ export default function EConsultPage() {
                     id='content'
                     value={content}
                     onChange={handleContentChange}
-                    placeholder='입력예시 : 내원 시 미열(37.8℃), 기침과 객담 호소, 약간의 호습곤란 있음.
-활력징후: 혈압 130/80mmHg, 맥박 92회/분, 호흡수 18회/분, 체온 37.8℃.
-주호소: 1주일 전부터 심해진 기침과 무기력.'
+                    placeholder='내용을 입력하세요'
                     rows={10}
                     className={styles.textarea}
                     maxLength={1500}

@@ -23,16 +23,6 @@
 
 .pageTitle {
   @include page-title-large;
-  text-align: center;
-  margin-bottom: $spacing-8;
-
-  @include tablet {
-    margin-bottom: $spacing-6;
-  }
-
-  @include mobile {
-    margin-bottom: 32px; // Figma mobile: 32px gap
-  }
 }
 
 .content {

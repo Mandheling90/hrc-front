@@ -46,7 +46,8 @@ interface EConsultData {
   title: string
   applicant: string
   hospitalName: string
-  department: string // Figma 태블릿에서 표시되는 진료과
+  department: string
+  consultantName: string
   status: 'waiting' | 'expired' | 'completed'
   registeredDate: string
 }
@@ -158,6 +159,7 @@ export default function MypageEConsultListPage() {
       applicant: item.requester?.userName || user?.userName || '-',
       hospitalName: item.requester?.profile?.hospName || user?.profile?.hospName || '-',
       department: item.consultant?.department || '-',
+      consultantName: item.consultant?.name || '-',
       status: mapApiStatus(item.status),
       registeredDate: formatDate(item.createdAt)
     }))
@@ -170,8 +172,8 @@ export default function MypageEConsultListPage() {
     return items.filter(
       item =>
         item.title.toLowerCase().includes(query) ||
-        item.applicant.toLowerCase().includes(query) ||
-        item.hospitalName.toLowerCase().includes(query)
+        item.department.toLowerCase().includes(query) ||
+        item.consultantName.toLowerCase().includes(query)
     )
   }, [items, searchQuery])
 
@@ -197,17 +199,17 @@ export default function MypageEConsultListPage() {
         align: 'left'
       },
       {
-        id: 'applicant',
-        label: '신청자',
-        width: '120px',
-        field: 'applicant',
+        id: 'department',
+        label: '진료과',
+        width: '150px',
+        field: 'department',
         align: 'center'
       },
       {
-        id: 'hospitalName',
-        label: '의료기관명',
-        width: '150px',
-        field: 'hospitalName',
+        id: 'consultantName',
+        label: '자문의',
+        width: '120px',
+        field: 'consultantName',
         align: 'center'
       },
       {
@@ -256,12 +258,12 @@ export default function MypageEConsultListPage() {
             selectValue={selectedStatus}
             onSelectChange={setSelectedStatus}
             selectWidth={180}
-            searchPlaceholder='제목, 신청자, 의료기관명을 입력해주세요.'
+            searchPlaceholder='제목, 진료과, 자문의를 입력해주세요.'
             searchValue={searchQuery}
             onSearchValueChange={setSearchQuery}
             onSearch={handleSearch}
             searchFieldWidth={400}
-            infoMessage='신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.'
+            // infoMessage='신청일 기준 1달 이내에 e-Consult 답변이 가능합니다.'
           />
 
           {/* 테이블 또는 카드 리스트 */}
@@ -288,13 +290,13 @@ export default function MypageEConsultListPage() {
                         rightContent: null
                       },
                       {
-                        id: 'hospitalName',
-                        leftContent: <span className={styles.cardHospital}>{item.hospitalName}</span>,
+                        id: 'department',
+                        leftContent: <span className={styles.cardDepartment}>{item.department}</span>,
                         rightContent: null
                       },
                       {
-                        id: 'applicant',
-                        leftContent: <span className={styles.cardApplicant}>{item.applicant}</span>,
+                        id: 'consultantName',
+                        leftContent: <span className={styles.cardApplicant}>{item.consultantName}</span>,
                         rightContent: null
                       },
                       {
@@ -323,8 +325,8 @@ export default function MypageEConsultListPage() {
                       rightContent: null
                     },
                     {
-                      id: 'applicant',
-                      leftContent: <span className={styles.cardApplicant}>{item.applicant}</span>,
+                      id: 'consultantName',
+                      leftContent: <span className={styles.cardApplicant}>{item.consultantName}</span>,
                       rightContent: null
                     },
                     {

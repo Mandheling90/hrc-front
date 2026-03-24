@@ -28,6 +28,8 @@ interface PrescriptionRow {
   dailyFrequency: string
   days: string
   category: string
+  methodWhen: string
+  methodHow: string
   _raw: DrugOrderItem
 }
 
@@ -43,6 +45,8 @@ function toRow(item: DrugOrderItem, index: number): PrescriptionRow {
     dailyFrequency: item.frequency ?? item.count ?? '-',
     days: item.days ?? item.useDay ?? '-',
     category: item.usage ?? item.type ?? '-',
+    methodWhen: item.methodWhen ?? '-',
+    methodHow: item.methodHow ?? '-',
     _raw: item
   }
 }
@@ -121,6 +125,8 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
 
   const prescriptionColumns: TableColumn<PrescriptionRow>[] = [
     { id: 'prescriptionDate', label: '처방일', field: 'prescriptionDate', width: '120px', align: 'center' },
+    { id: 'department', label: '진료과', field: 'department', width: '130px', align: 'center' },
+    { id: 'doctor', label: '진료의', field: 'doctor', width: '100px', align: 'center' },
     {
       id: 'drugName',
       label: '약품명',
@@ -136,7 +142,9 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
     { id: 'unit', label: '단위', field: 'unit', width: '60px', align: 'center' },
     { id: 'dailyFrequency', label: '1일 회수', field: 'dailyFrequency', width: '70px', align: 'center' },
     { id: 'days', label: '일수', field: 'days', width: '50px', align: 'center' },
-    { id: 'category', label: '구분', field: 'category', width: '100px', align: 'center' }
+    { id: 'category', label: '구분', field: 'category', width: '100px', align: 'center' },
+    { id: 'methodWhen', label: '복용시간', field: 'methodWhen', width: '100px', align: 'center' },
+    { id: 'methodHow', label: '복용방법', field: 'methodHow', width: '100px', align: 'center' }
   ]
 
   const renderPrescriptionTabletCard = (item: PrescriptionRow) => (
@@ -146,6 +154,14 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
         <span className={styles.tabletCardHeaderValue}>{item.prescriptionDate}</span>
       </div>
       <div className={styles.tabletCardBody}>
+        <div className={styles.tabletCardRow}>
+          <span className={styles.tabletCardLabel}>진료과</span>
+          <span className={styles.tabletCardValue}>{item.department}</span>
+        </div>
+        <div className={styles.tabletCardRow}>
+          <span className={styles.tabletCardLabel}>진료의</span>
+          <span className={styles.tabletCardValue}>{item.doctor}</span>
+        </div>
         <div className={styles.tabletCardRow}>
           <span className={styles.tabletCardLabel}>약품명</span>
           <button type='button' className={styles.drugNameLink} onClick={() => handleDrugNameClick(item)}>
@@ -176,6 +192,14 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
           </div>
         </div>
         <div className={styles.tabletCardRow}>
+          <span className={styles.tabletCardLabel}>복용시간</span>
+          <span className={styles.tabletCardValue}>{item.methodWhen}</span>
+        </div>
+        <div className={styles.tabletCardRow}>
+          <span className={styles.tabletCardLabel}>복용방법</span>
+          <span className={styles.tabletCardValue}>{item.methodHow}</span>
+        </div>
+        <div className={styles.tabletCardRow}>
           <span className={styles.tabletCardLabel}>구분</span>
           <span className={styles.tabletCardValue}>{item.category}</span>
         </div>
@@ -190,6 +214,14 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
         <span className={styles.mobileCardHeaderValue}>{item.prescriptionDate}</span>
       </div>
       <div className={styles.mobileCardBody}>
+        <div className={styles.mobileCardRow}>
+          <span className={styles.mobileCardLabel}>진료과</span>
+          <span className={styles.mobileCardValue}>{item.department}</span>
+        </div>
+        <div className={styles.mobileCardRow}>
+          <span className={styles.mobileCardLabel}>진료의</span>
+          <span className={styles.mobileCardValue}>{item.doctor}</span>
+        </div>
         <div className={styles.mobileCardRow}>
           <span className={styles.mobileCardLabel}>약품명</span>
           <button type='button' className={styles.drugNameLink} onClick={() => handleDrugNameClick(item)}>
@@ -212,6 +244,14 @@ export const PrescriptionTab: React.FC<PrescriptionTabProps> = ({
         <div className={styles.mobileCardRow}>
           <span className={styles.mobileCardLabel}>일수</span>
           <span className={styles.mobileCardValue}>{item.days}</span>
+        </div>
+        <div className={styles.mobileCardRow}>
+          <span className={styles.mobileCardLabel}>복용시간</span>
+          <span className={styles.mobileCardValue}>{item.methodWhen}</span>
+        </div>
+        <div className={styles.mobileCardRow}>
+          <span className={styles.mobileCardLabel}>복용방법</span>
+          <span className={styles.mobileCardValue}>{item.methodHow}</span>
         </div>
         <div className={styles.mobileCardRow}>
           <span className={styles.mobileCardLabel}>구분</span>

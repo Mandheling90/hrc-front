@@ -10,6 +10,7 @@ interface AuthContextType {
   isLoading: boolean
   loginPassword: string | null
   setAuth: (token: string, refreshToken: string, user: AuthUser) => void
+  updateUser: (updatedUser: AuthUser) => void
   clearAuth: () => void
   setLoginPassword: (password: string | null) => void
 }
@@ -53,6 +54,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(newUser)
   }, [])
 
+  const updateUser = useCallback((updatedUser: AuthUser) => {
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(updatedUser))
+    setUser(updatedUser)
+  }, [])
+
   const clearAuth = useCallback(() => {
     localStorage.removeItem(AUTH_TOKEN_KEY)
     localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY)
@@ -70,10 +76,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isLoading,
       loginPassword,
       setAuth,
+      updateUser,
       clearAuth,
       setLoginPassword
     }),
-    [user, token, isLoading, loginPassword, setAuth, clearAuth]
+    [user, token, isLoading, loginPassword, setAuth, updateUser, clearAuth]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

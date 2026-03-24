@@ -338,7 +338,6 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                               <span className={styles.doctorName}>{doctor.name}</span>
                               <span className={styles.doctorDepartment}>{doctor.department}</span>
                             </div>
-                            {doctor.email && <p className={styles.doctorEmail}>{doctor.email}</p>}
                             {doctor.specialty && (
                               <div className={styles.doctorBio}>
                                 <span className={styles.doctorBioLabel}>전문분야</span>

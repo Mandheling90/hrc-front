@@ -88,16 +88,16 @@ export default function ExchangePage() {
                   <Image
                     src='/images/referral/exchange/myChartTitle-d.png'
                     alt='보건복지부 마이차트'
-                    width={335}
-                    height={75}
+                    width={336}
+                    height={88}
                     className={styles.mychartImageDesktop}
                     priority
                   />
                   <Image
                     src='/images/referral/exchange/myChartTitle-m.png'
                     alt='보건복지부 마이차트'
-                    width={280}
-                    height={63}
+                    width={288}
+                    height={68}
                     className={styles.mychartImageMobile}
                     priority
                   />

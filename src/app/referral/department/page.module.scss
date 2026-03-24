@@ -11,26 +11,20 @@
 
 .pageTitle {
   @include page-title-large;
-  text-align: center;
-  margin-bottom: 0; // gap handled by .content margin-top
-
-  @include tablet {
-    margin-bottom: 0;
-  }
 }
 
 .content {
   display: grid;
   grid-template-columns: 400px minmax(0, 1fr); // Figma: 400px
   gap: 48px; // Figma: 48px
-  margin-top: $spacing-20; // Figma: 80px gap after title
+  margin-top: 0;
   align-items: stretch;
   min-width: 0;
 
   @include tablet {
     grid-template-columns: 1fr;
     gap: $spacing-6;
-    margin-top: $spacing-6;
+    margin-top: 0;
   }
 }
 

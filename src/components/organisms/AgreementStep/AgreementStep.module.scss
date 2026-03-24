@@ -324,11 +324,7 @@
 
 .termsSection {
   align-self: stretch;
-  padding-left: 32px; // Figma: padding-left 32px
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px; // Figma: gap 10px
+  padding-left: 32px;
 
   @media (max-width: $breakpoint-md) {
     padding-left: 24px;
@@ -353,7 +349,7 @@
 }
 
 .termsIndent {
-  padding-left: 32px; // Figma 디자인에 맞게 32px 들여쓰기
+  padding-left: 0;
 
   p {
     font-family: 'Pretendard', sans-serif;
@@ -371,8 +367,6 @@
 
   // 테블릿 (769px ~ 1429px)
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    padding-left: 32px;
-
     p {
       font-size: 20px;
       letter-spacing: -0.8px;
@@ -380,8 +374,6 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    padding-left: 24px;
-
     p {
       font-size: 18px;
       line-height: 27px;

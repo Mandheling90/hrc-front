@@ -182,7 +182,7 @@ export default function EConsultDetailPage() {
           {/* 신청자 정보 섹션 */}
           <div className={styles.applicantSection}>
             <div className={styles.applicantHeader}>
-              <h2 className={styles.sectionTitle}>신청자 정보</h2>
+              <h2 className={styles.sectionTitle}>e-Consult 신청 정보</h2>
               <div className={styles.sectionDivider} />
             </div>
 
@@ -239,8 +239,6 @@ export default function EConsultDetailPage() {
               </div>
               <div className={styles.replyDisplayContent}>
                 <div className={styles.replyDisplayMeta}>
-                  <span className={styles.replyDisplayName}>{replier || '-'}</span>
-                  <span className={styles.replyMetaDivider} />
                   {replyDate && <span className={styles.replyDisplayDate}>{replyDate}</span>}
                 </div>
                 <div className={styles.replyDisplayText}>{replyData?.content || '답변 내용이 없습니다.'}</div>

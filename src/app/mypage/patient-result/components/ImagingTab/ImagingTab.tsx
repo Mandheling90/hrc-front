@@ -75,30 +75,42 @@ export const ImagingTab: React.FC<ImagingTabProps> = ({
     }
   }, [hospitalCode, ptntNo, slipCd, mcdpCd, searchSpecialExamResults])
 
-  // 검사 결과가 로드되면 각 행의 overlay 상태 조회
+  // 검사 결과가 로드되면 각 행의 overlay 상태 조회 (동시 요청 수 제한)
   useEffect(() => {
     if (items.length === 0) return
+    let cancelled = false
     const fetchAll = async () => {
+      const BATCH_SIZE = 5
       const entries: [string, ImagingOverlayResult | null][] = []
-      await Promise.all(
-        items.map(async (item, index) => {
-          const key = `${item.orderCode}-${index}`
-          try {
-            const result = await fetchOverlay({
-              ptntNo,
-              examDate: item.examDate ?? item.orderDate ?? '',
-              orderCode: item.orderCode ?? '',
-              pacsAccessNo: item.pacsAccessNo
-            })
-            entries.push([key, result])
-          } catch {
-            entries.push([key, null])
-          }
-        })
-      )
-      setOverlayMap(Object.fromEntries(entries))
+      for (let i = 0; i < items.length; i += BATCH_SIZE) {
+        if (cancelled) return
+        const batch = items.slice(i, i + BATCH_SIZE)
+        const batchResults = await Promise.all(
+          batch.map(async (item, batchIndex) => {
+            const index = i + batchIndex
+            const key = `${item.orderCode}-${index}`
+            try {
+              const result = await fetchOverlay({
+                ptntNo,
+                examDate: item.examDate ?? item.orderDate ?? '',
+                orderCode: item.orderCode ?? '',
+                pacsAccessNo: item.pacsAccessNo
+              })
+              return [key, result] as [string, ImagingOverlayResult | null]
+            } catch {
+              return [key, null] as [string, ImagingOverlayResult | null]
+            }
+          })
+        )
+        entries.push(...batchResults)
+        // 배치별로 점진적 업데이트
+        if (!cancelled) {
+          setOverlayMap(Object.fromEntries(entries))
+        }
+      }
     }
     fetchAll()
+    return () => { cancelled = true }
   }, [items, ptntNo, fetchOverlay])
 
   const allRows = useMemo(() =>
@@ -207,6 +219,7 @@ export const ImagingTab: React.FC<ImagingTabProps> = ({
   const imagingColumns: TableColumn<ImagingRow>[] = useMemo(() => [
     { id: 'department', label: '진료과', field: 'department', width: '160px', align: 'center' },
     { id: 'doctor', label: '진료의', field: 'doctor', width: '130px', align: 'center' },
+    { id: 'examDate', label: '검사일', field: 'examDate', width: '130px', align: 'center' },
     { id: 'examName', label: '검사명', field: 'examName', width: '1fr', align: 'center' },
     {
       id: 'image',
@@ -241,6 +254,10 @@ export const ImagingTab: React.FC<ImagingTabProps> = ({
             <span className={styles.tabletCardValue}>{item.doctor}</span>
           </div>
           <div className={styles.tabletCardRow}>
+            <span className={styles.tabletCardLabel}>검사일</span>
+            <span className={styles.tabletCardValue}>{item.examDate}</span>
+          </div>
+          <div className={styles.tabletCardRow}>
             <span className={styles.tabletCardLabel}>검사명</span>
             <span className={styles.tabletCardValue}>{item.examName}</span>
           </div>
@@ -271,6 +288,10 @@ export const ImagingTab: React.FC<ImagingTabProps> = ({
           <div className={styles.mobileCardRow}>
             <span className={styles.mobileCardLabel}>진료의</span>
             <span className={styles.mobileCardValue}>{item.doctor}</span>
+          </div>
+          <div className={styles.mobileCardRow}>
+            <span className={styles.mobileCardLabel}>검사일</span>
+            <span className={styles.mobileCardValue}>{item.examDate}</span>
           </div>
           <div className={styles.mobileCardRow}>
             <span className={styles.mobileCardLabel}>검사명</span>
