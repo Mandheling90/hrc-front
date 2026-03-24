@@ -207,8 +207,6 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
   const handleBackToDepartment = () => {
     setStep('department')
-    setSelectedDepartmentCode(null)
-    setSelectedDepartmentName(null)
     setSearchQuery('')
     setSelectedDoctorId(null)
   }
