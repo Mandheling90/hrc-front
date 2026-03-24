@@ -57,6 +57,13 @@ export default function ClinicApplicationPage() {
   const { getDraftId, setDraftId } = useDraftApplication()
   const router = useHospitalRouter()
 
+  // 비회원 접근 차단
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login')
+    }
+  }, [isAuthenticated, router])
+
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
 
@@ -214,9 +221,12 @@ export default function ClinicApplicationPage() {
 
         await applyPartnerHospital(input)
         setIsComplete(true)
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('협력의원 신청 실패:', error)
-        setAlertModal({ isOpen: true, message: '신청 중 오류가 발생했습니다.' })
+        const message = CombinedGraphQLErrors.is(error)
+          ? (error.errors[0]?.message ?? '신청 중 오류가 발생했습니다.')
+          : '신청 중 오류가 발생했습니다.'
+        setAlertModal({ isOpen: true, message })
       }
     }
     window.scrollTo(0, 0)
@@ -320,7 +330,7 @@ export default function ClinicApplicationPage() {
               <CompleteStep
                 userId={user?.userId ?? ''}
                 email={user?.email ?? ''}
-                title='고려대학교 안암병원 진료협력센터 협력의원 신청이 완료되었습니다.'
+                title={`${hospital.name.full} 협력의원 신청이 완료되었습니다.`}
                 description={`담당자 확인 후 승인 절차가 진행되며, 승인 완료 시 협력의원 체결이 최종 완료됩니다.\n승인 결과는 등록하신 이메일 및 문자로 안내드릴 예정입니다.`}
                 buttonText='메인으로 이동'
                 onGoToMain={() => {

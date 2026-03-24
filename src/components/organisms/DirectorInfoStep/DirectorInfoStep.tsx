@@ -88,7 +88,6 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
         if (!graduationYear.trim()) missing.push('졸업년도')
         if (!trainingHospital.trim()) missing.push('수련병원')
         if (!department) missing.push('진료과')
-        if (!specialty.trim()) missing.push('세부전공')
         if (!smsConsent) missing.push('SMS 수신 동의여부')
         if (!emailConsent) missing.push('E-mail 수신 동의여부')
         if (!replyConsent) missing.push('회신서 수신 동의 여부')
@@ -267,7 +266,6 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
           {/* 세부전공 */}
           <FormField
             label='세부전공'
-            required
             id='specialty'
             name='specialty'
             type='text'
