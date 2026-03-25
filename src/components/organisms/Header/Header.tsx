@@ -99,6 +99,7 @@ const myPageMenu: MenuItem = {
 const HeaderInner: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false)
   const [activeMenu, setActiveMenu] = useState<number>(0)
   const [activeMobileMenu, setActiveMobileMenu] = useState(0)
   const [openBreadcrumbDropdown, setOpenBreadcrumbDropdown] = useState<number | null>(null)
@@ -110,6 +111,7 @@ const HeaderInner: React.FC = () => {
   const { logout } = useLogout()
 
   const logoUrl = `/images/common/${hospitalId}/logo-top.png`
+  const logoWhiteUrl = `/images/common/${hospitalId}/logo-top-w.png`
   const pathname = usePathname()
   const searchParams = useSearchParams()
   // 쿼리스트링 포함 경로 (예: /content?id=xxx) - API 메뉴 매칭용
@@ -343,13 +345,15 @@ const HeaderInner: React.FC = () => {
       {/* 헤더 */}
       <header
         className={`${styles.header} ${isMainPage ? styles.transparent : ''} ${isMainPage && isDropdownOpen ? styles.headerActive : ''}`}
+        onMouseEnter={() => setIsHeaderHovered(true)}
+        onMouseLeave={() => setIsHeaderHovered(false)}
       >
         <div className={styles.headerTop}>
           <div className={styles.container}>
             <div className={styles.headerInner}>
               {/* 로고 */}
               <h1 className={styles.logo}>
-                <Link href='/' aria-label={`${hospital.name.full} 홈`} style={{ backgroundImage: `url(${logoUrl})` }}>
+                <Link href='/' aria-label={`${hospital.name.full} 홈`} style={{ backgroundImage: `url(${isMainPage && !isHeaderHovered && !isDropdownOpen ? logoWhiteUrl : logoUrl})` }}>
                   {hospital.name.full}
                 </Link>
               </h1>

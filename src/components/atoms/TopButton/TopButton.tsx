@@ -6,10 +6,10 @@ import { ThemeToggle } from '@/components/atoms/ThemeToggle/ThemeToggle'
 import styles from './TopButton.module.scss'
 
 export const TopButton: React.FC = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
 
   const handleScroll = useCallback(() => {
-    setVisible(window.scrollY > 200)
+    setVisible(true)
   }, [])
 
   useEffect(() => {

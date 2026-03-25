@@ -111,7 +111,7 @@ function BoardDetailPageInner() {
       ? attachment.storedPath
       : `${storageBase}/${attachment.storedPath}`
     try {
-      const res = await fetch(url)
+      const res = await fetch(url, { signal: AbortSignal.timeout(300_000) })
       const blob = await res.blob()
       const blobUrl = URL.createObjectURL(blob)
       const link = document.createElement('a')

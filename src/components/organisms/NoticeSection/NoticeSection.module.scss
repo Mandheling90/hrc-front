@@ -1,7 +1,7 @@
 @import '@/styles/variables.scss';
 
 .section2 {
-  padding: 80px 0;
+  padding: 64px 0 0;
 
   @media (max-width: $breakpoint-lg) {
     padding: 60px 0;
@@ -105,7 +105,7 @@
 .sectionTitle {
   font-size: 32px;
   font-weight: 600;
-  font-family: 'Paperlogy', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   line-height: 48px;
   letter-spacing: -0.32px;
   color: var(--color-section-title, #000);
@@ -134,52 +134,23 @@
 }
 
 .moreBtn {
-  width: 48px;
-  height: 48px;
-  min-width: 40px;
-  background: var(--color-bg-hover);
-  border: none;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s;
   flex-shrink: 0;
   padding: 0;
-  color: var(--color-text-secondary);
+  background: none;
+  border: none;
 
-  @media (max-width: $breakpoint-2xl) {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
+  img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.5s ease;
   }
 
-  @media (max-width: $breakpoint-xl) {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-  }
-
-  @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-  }
-
-  @media (max-width: $breakpoint-md) {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-  }
-
-  &:hover {
-    background: var(--color-bg-active);
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
+  &:hover img {
+    transform: rotate(360deg);
   }
 }
 

@@ -120,7 +120,7 @@ export const SNSSection: React.FC = () => {
                         alt={post.title}
                         width={270}
                         height={150}
-                        style={{ borderRadius: '20px', objectFit: 'cover' }}
+                        style={{ borderRadius: '0', objectFit: 'cover' }}
                       />
                     </div>
                     <p className={styles.thumbTitle}>{post.title}</p>
@@ -140,7 +140,7 @@ export const SNSSection: React.FC = () => {
                 <button className={styles.prev} type='button' onClick={handlePrev} aria-label='Previous'>
                   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path
-                      d='M15 4L7 12L15 20'
+                      d='M9.50027 16.5L5.00027 11.75M5.00027 11.75L9.50027 7M5.00027 11.75H19'
                       stroke='#636363'
                       strokeWidth='2'
                       strokeLinecap='round'
@@ -149,9 +149,9 @@ export const SNSSection: React.FC = () => {
                   </svg>
                 </button>
                 <button className={styles.next} type='button' onClick={handleNext} aria-label='Next'>
-                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' style={{ transform: 'scaleX(-1)' }}>
                     <path
-                      d='M9 4L17 12L9 20'
+                      d='M9.50027 16.5L5.00027 11.75M5.00027 11.75L9.50027 7M5.00027 11.75H19'
                       stroke='#636363'
                       strokeWidth='2'
                       strokeLinecap='round'

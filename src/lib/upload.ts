@@ -61,7 +61,8 @@ async function refreshAccessToken(): Promise<boolean> {
       body: JSON.stringify({
         query: print(REFRESH_TOKEN_MUTATION),
         variables: { refreshToken }
-      })
+      }),
+      signal: AbortSignal.timeout(300_000), // 5분
     })
 
     const json = await res.json()
@@ -121,7 +122,8 @@ async function executeUpload(file: File): Promise<UploadResult> {
   const response = await fetch('/api/upload', {
     method: 'POST',
     headers,
-    body: formData
+    body: formData,
+    signal: AbortSignal.timeout(300_000), // 5분
   })
 
   if (!response.ok) {

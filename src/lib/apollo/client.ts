@@ -139,7 +139,10 @@ export function makeClient() {
     })
   })
 
-  const httpLink = new HttpLink({ uri: graphqlUri })
+  const httpLink = new HttpLink({
+    uri: graphqlUri,
+    fetchOptions: { signal: AbortSignal.timeout(300_000) }, // 5분
+  })
 
   return new ApolloClient({
     cache: new InMemoryCache(),
@@ -160,7 +163,8 @@ async function fetchRefreshToken(uri: string, refreshToken: string): Promise<Ref
     body: JSON.stringify({
       query: print(REFRESH_TOKEN_MUTATION),
       variables: { refreshToken }
-    })
+    }),
+    signal: AbortSignal.timeout(300_000), // 5분
   })
 
   const json = await response.json()

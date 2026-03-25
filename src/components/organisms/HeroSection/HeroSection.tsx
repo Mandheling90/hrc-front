@@ -937,17 +937,14 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Scroll Down 인디케이터 - section1 기준 absolute, container 밖 */}
+      {/* Scroll Down 인디케이터 - section1 기준 absolute, 중앙 배치 */}
       {isAtTop && !isInquiryOpen && !isDownloadOpen && (
-        <div
-          className={styles.scrollDown}
-          style={scrollDownRight !== null ? { right: `${scrollDownRight}px` } : undefined}
-        >
+        <div className={styles.scrollDown}>
           <span className={styles.scrollDownText}>Scroll Down</span>
           <div className={styles.scrollDownIcon}>
-            <svg width='23' height='23' viewBox='0 0 23 23' fill='none' xmlns='http://www.w3.org/2000/svg'>
+            <svg width='10' height='10' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
-                d='M7 10L11.5 14.5L16 10'
+                d='M4 6L8 10L12 6'
                 stroke='white'
                 strokeWidth='1.5'
                 strokeLinecap='round'
