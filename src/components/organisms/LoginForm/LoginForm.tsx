@@ -3,7 +3,7 @@
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { EyeIcon } from '@/components/icons/EyeIcon'
-import { useLogin } from '@/hooks/useAuth'
+import { useLogin, useSendTestEmail } from '@/hooks/useAuth'
 import { useAuthContext } from '@/contexts/AuthContext'
 import Link from '@/components/atoms/HospitalLink'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
@@ -36,6 +36,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
   const router = useHospitalRouter()
   const { login, loading } = useLogin()
+  const { sendTestEmail, loading: testEmailLoading } = useSendTestEmail()
   const { setLoginPassword } = useAuthContext()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -43,6 +44,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     password: ''
   })
   const [errorMessage, setErrorMessage] = useState('')
+  const [testEmailMessage, setTestEmailMessage] = useState('')
   const [showChangePwModal, setShowChangePwModal] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +60,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     try {
       const result = await login({ userId, password: formData.password })
       if (result) {
+        setTestEmailMessage('')
         if (result.mustChangePw) {
           setLoginPassword(formData.password)
           setShowChangePwModal(true)
@@ -68,6 +71,30 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     } catch (err) {
       const message = err instanceof Error ? err.message : '로그인에 실패했습니다.'
       setErrorMessage(message)
+    }
+  }
+
+  const handleSendTestEmail = async () => {
+    setErrorMessage('')
+    setTestEmailMessage('')
+
+    try {
+      const result = await sendTestEmail(formData[usernameName])
+
+      if (!result) {
+        setTestEmailMessage('테스트 메일 응답이 없습니다.')
+        return
+      }
+
+      if (result.success) {
+        setTestEmailMessage('테스트 메일 발송 요청을 보냈습니다.')
+        return
+      }
+
+      setTestEmailMessage(result.errorMessage || '테스트 메일 발송에 실패했습니다.')
+    } catch (err) {
+      const message = err instanceof Error ? err.message : '테스트 메일 발송에 실패했습니다.'
+      setTestEmailMessage(message)
     }
   }
 
@@ -145,6 +172,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         >
           {loading ? '로그인 중...' : '로그인'}
         </Button>
+        <div
+          className={styles.hiddenTestEmailTrigger}
+          onClick={handleSendTestEmail}
+          aria-label={testEmailLoading ? '테스트 메일 전송 중' : '테스트 메일 보내기'}
+        />
+        {testEmailMessage && <p className={styles.testEmailMessage}>{testEmailMessage}</p>}
       </form>
       {showLinks && (
         <div className={styles.links}>
