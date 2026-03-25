@@ -66,7 +66,7 @@ export const SearchFilterWithInfo: React.FC<SearchFilterWithInfoProps> = ({
           />
         )}
         <div
-          className={styles.searchField}
+          className={`${styles.searchField} ${searchValue ? styles.hasValue : ''}`}
           style={{ width: typeof searchFieldWidth === 'number' ? `${searchFieldWidth}px` : searchFieldWidth }}
         >
           <Input

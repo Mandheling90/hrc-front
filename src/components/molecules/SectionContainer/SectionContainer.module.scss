@@ -3,8 +3,10 @@
 
 .sectionContainer {
   background-color: var(--color-white);
-  border: 1px solid var(--color-border); // Figma: #8C8C8C
-  border-radius: 10px; // Figma: 10px
+  border: none;
+  border-radius: 10px;
+  outline: 1px solid $gray-9;
+  outline-offset: -1px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
