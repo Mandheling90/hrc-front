@@ -55,9 +55,9 @@ export const serviceIconRegistry: Record<string, React.ReactNode> = {
   DoctorIcon: <DoctorIcon width={60} height={60} stroke={SECONDARY_COLOR} />,
 
   // About Intro page icons
-  OperationTimeIcon: <OperationTimeIcon width={60} height={60} stroke='#8e2b3e' />,
-  OperationPhoneFaxIcon: <OperationPhoneFaxIcon width={60} height={60} stroke='#8e2b3e' />,
-  EmergencyNightIcon: <EmergencyNightIcon width={60} height={60} stroke='#8e2b3e' />,
+  OperationTimeIcon: <OperationTimeIcon width={60} height={60} stroke='#9f1836' />,
+  OperationPhoneFaxIcon: <OperationPhoneFaxIcon width={60} height={60} stroke='#9f1836' />,
+  EmergencyNightIcon: <EmergencyNightIcon width={60} height={60} stroke='#9f1836' />,
   FlowStep01Icon: <FlowStep01Icon />,
   FlowStep02Icon: <FlowStep02Icon />,
   FlowStep03Icon: <FlowStep03Icon />,
