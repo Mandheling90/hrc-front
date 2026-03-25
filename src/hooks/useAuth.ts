@@ -3,7 +3,7 @@ import { useAuthContext } from '@/contexts/AuthContext'
 import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_DOCTOR_PROFILE_MUTATION, CHANGE_PASSWORD_MUTATION, WITHDRAW_MEMBER_MUTATION, SEND_TEST_EMAIL_MUTATION } from '@/graphql/auth/mutations'
 import { ME_QUERY, MY_PROFILE_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
-import { getCurrentHospitalId } from '@/utils/hospital'
+import { useHospital } from '@/contexts/HospitalContext'
 
 type HospitalCode = 'ANAM' | 'GURO' | 'ANSAN'
 
@@ -87,13 +87,13 @@ export function useLogin() {
 }
 
 export function useSendTestEmail() {
+  const { hospitalId } = useHospital()
   const [sendTestEmailMutation, { loading, error }] = useMutation<
     { sendTestEmail: SendTestEmailResult },
     SendTestEmailVariables
   >(SEND_TEST_EMAIL_MUTATION)
 
   const sendTestEmail = async (userId: string) => {
-    const hospitalId = getCurrentHospitalId()
     const hospitalCode = HOSPITAL_CODE_MAP[hospitalId]
     const now = new Date().toISOString()
 

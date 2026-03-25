@@ -10,7 +10,7 @@ import { DoctorInfoIcon } from '@/components/icons/DoctorInfoIcon'
 import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { MEDICAL_STAFF_DEPARTMENT_LIST_QUERY } from '@/graphql/hospital/medical-staff-queries'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
-import { getCurrentHospitalConfig } from '@/config/hospitals'
+import { useHospital } from '@/contexts/HospitalContext'
 import styles from './DoctorSearchModal.module.scss'
 
 export interface Doctor {
@@ -78,6 +78,7 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
   externalDoctors,
   externalLoading
 }) => {
+  const { hospital } = useHospital()
   const useExternal = !!externalDoctors
 
   // 1뎁스: 모든 진료과 목록 조회
@@ -372,9 +373,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                             className={styles.doctorInfoButton}
                             onClick={() => {
                               if (!doctor.drNo) return
-                              const hospitalConfig = getCurrentHospitalConfig()
                               window.open(
-                                `${hospitalConfig.links.homepage}/kr/doctor-department/doctor/view.do?drNo=${doctor.drNo}`,
+                                `${hospital.links.homepage}/kr/doctor-department/doctor/view.do?drNo=${doctor.drNo}`,
                                 '_blank',
                                 'noopener,noreferrer'
                               )

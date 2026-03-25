@@ -35,6 +35,11 @@ function getRefreshTokenValue(): string | null {
 
 function getHospitalCodeFromURL(): string {
   if (typeof window === 'undefined') return ''
+  // 서브도메인 감지 우선 > pathname > 환경변수
+  const hostname = window.location.hostname
+  for (const id of VALID_HOSPITALS) {
+    if (hostname.includes(id)) return id.toUpperCase()
+  }
   const firstSegment = window.location.pathname.split('/')[1]
   const hospitalId = VALID_HOSPITALS.includes(firstSegment) ? firstSegment : null
   return (hospitalId || process.env.NEXT_PUBLIC_HOSPITAL_ID || '').toUpperCase()

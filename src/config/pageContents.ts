@@ -744,7 +744,10 @@ const guroContent: HospitalPageContent = {
       phone: '02-6464-8446',
       fax: '02-2626-1681'
     },
-    downloadLink: '/application_form/application_form_guro.hwp',
+    downloadLinks: [
+      { label: '협력병원 신청서 다운로드', href: '/application_form/application_form_guro.hwp' },
+      { label: '협력의원 신청서 다운로드', href: '/application_form/application_form_guro.hwp' }
+    ],
     applicationLinks: {
       hospital: '#',
       clinic: '#'
@@ -1457,7 +1460,10 @@ const ansanContent: HospitalPageContent = {
       phone: '031-412-3211',
       fax: '031-412-4266'
     },
-    downloadLink: '/application_form/application_form_ansan.hwp',
+    downloadLinks: [
+      { label: '협력병원 신청서 다운로드', href: '/application_form/application_form_ansan.hwp' },
+      { label: '협력의원 신청서 다운로드', href: '/application_form/application_form_ansan.hwp' }
+    ],
     applicationLinks: {
       hospital: '#',
       clinic: '#'

@@ -14,7 +14,7 @@ import { LinkIcon } from '@/components/icons/LinkIcon'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useMedicalStaff, MedicalStaffItem, WeeklyScheduleItem } from '@/hooks/useMedicalStaff'
-import { getCurrentHospitalConfig } from '@/config/hospitals'
+import { useHospital } from '@/contexts/HospitalContext'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
@@ -90,6 +90,7 @@ function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, Sched
 
 export default function DepartmentPage() {
   const router = useHospitalRouter()
+  const { hospital } = useHospital()
   const { departmentList, deptLoading, fetchMedicalStaff, staffList, loading: staffLoading, fetchWeeklySchedule, scheduleList, scheduleLoading } = useMedicalStaff()
 
   // 현재 주간 날짜 상태
@@ -213,8 +214,7 @@ export default function DepartmentPage() {
   const handleDoctorInfoClick = (doctorId: string) => {
     const doctor = doctors.find(d => d.id === doctorId)
     if (!doctor?.drNo) return
-    const hospitalConfig = getCurrentHospitalConfig()
-    const url = `${hospitalConfig.links.homepage}/kr/doctor-department/doctor/view.do?drNo=${doctor.drNo}`
+    const url = `${hospital.links.homepage}/kr/doctor-department/doctor/view.do?drNo=${doctor.drNo}`
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
