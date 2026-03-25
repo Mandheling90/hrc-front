@@ -54,7 +54,7 @@ const DISPLAY_LABELS: Record<ImagingDisplayState, string> = {
 }
 
 export const OtherExamTab: React.FC<OtherExamTabProps> = ({
-  hospitalCode, ptntNo, slipCd = 'L10', mcdpCd,
+  hospitalCode, ptntNo, slipCd = 'S', mcdpCd,
   sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
 }) => {
   const { searchSpecialExamResults, items, loading } = useSpecialExamResults()

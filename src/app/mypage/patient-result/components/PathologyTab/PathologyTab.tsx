@@ -108,7 +108,7 @@ const getPathologyMobileCard = (onViewClick: (item: PathologyRow) => void) => (i
 )
 
 export const PathologyTab: React.FC<PathologyTabProps> = ({
-  hospitalCode, ptntNo, slipCd = 'G', mcdpCd,
+  hospitalCode, ptntNo, slipCd = 'L08', mcdpCd,
   sortOrder, searchFilter, currentPage, pageSize, onTotalCountChange
 }) => {
   const { searchSpecialExamResults, items, loading } = useSpecialExamResults()
