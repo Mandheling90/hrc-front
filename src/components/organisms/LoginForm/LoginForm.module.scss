@@ -154,6 +154,14 @@
   }
 }
 
+.testEmailMessage {
+  margin-top: 8px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+}
+
 .links {
   display: flex;
   justify-content: center;
@@ -190,4 +198,14 @@
   width: 1px;
   height: 11px;
   background-color: var(--color-text-secondary);
+}
+
+.hiddenTestEmailTrigger {
+  width: 8px;
+  height: 8px;
+  margin: 6px auto 0;
+  opacity: 0;
+  cursor: default;
+  background: transparent;
+  display: block;
 }

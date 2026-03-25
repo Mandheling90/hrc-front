@@ -1,8 +1,23 @@
 import { useMutation, useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_DOCTOR_PROFILE_MUTATION, CHANGE_PASSWORD_MUTATION, WITHDRAW_MEMBER_MUTATION } from '@/graphql/auth/mutations'
+import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_DOCTOR_PROFILE_MUTATION, CHANGE_PASSWORD_MUTATION, WITHDRAW_MEMBER_MUTATION, SEND_TEST_EMAIL_MUTATION } from '@/graphql/auth/mutations'
 import { ME_QUERY, MY_PROFILE_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
+import { getCurrentHospitalId } from '@/utils/hospital'
+
+type HospitalCode = 'ANAM' | 'GURO' | 'ANSAN'
+
+interface SendTestEmailResult {
+  success: boolean
+  status: string
+  errorMessage?: string | null
+}
+
+const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
+  anam: 'ANAM',
+  guro: 'GURO',
+  ansan: 'ANSAN'
+}
 
 interface LoginInput {
   userId: string
@@ -46,6 +61,13 @@ interface AuthPayload {
   user: AuthUser
 }
 
+interface SendTestEmailVariables {
+  to: string
+  subject: string
+  body: string
+  hospitalCode?: HospitalCode
+}
+
 export function useLogin() {
   const { setAuth } = useAuthContext()
   const [loginMutation, { loading, error }] = useMutation<{ login: AuthPayload }>(LOGIN_MUTATION)
@@ -62,6 +84,37 @@ export function useLogin() {
   }
 
   return { login, loading, error }
+}
+
+export function useSendTestEmail() {
+  const [sendTestEmailMutation, { loading, error }] = useMutation<
+    { sendTestEmail: SendTestEmailResult },
+    SendTestEmailVariables
+  >(SEND_TEST_EMAIL_MUTATION)
+
+  const sendTestEmail = async (userId: string) => {
+    const hospitalId = getCurrentHospitalId()
+    const hospitalCode = HOSPITAL_CODE_MAP[hospitalId]
+    const now = new Date().toISOString()
+
+    const { data } = await sendTestEmailMutation({
+      variables: {
+        to: 'jhw811@gmail.com',
+        subject: '[KUMC 진료협력센터] 로그인 화면 테스트 메일',
+        body: [
+          `<p>로그인 화면 테스트 메일입니다.</p>`,
+          `<p>입력 아이디: ${userId || '-'}</p>`,
+          `<p>병원코드: ${hospitalCode ?? '-'}</p>`,
+          `<p>발송 시각: ${now}</p>`
+        ].join(''),
+        hospitalCode
+      }
+    })
+
+    return data?.sendTestEmail ?? null
+  }
+
+  return { sendTestEmail, loading, error }
 }
 
 export function useSignup() {
