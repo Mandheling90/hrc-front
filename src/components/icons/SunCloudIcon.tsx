@@ -10,7 +10,7 @@ interface SunCloudIconProps {
 export const SunCloudIcon: React.FC<SunCloudIconProps> = ({
   width = 51,
   height = 51,
-  stroke = '#720021',
+  stroke = '#9f1836',
   className
 }) => {
   return (

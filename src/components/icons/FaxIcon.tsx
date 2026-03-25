@@ -7,7 +7,7 @@ export interface FaxIconProps {
   stroke?: string
 }
 
-export const FaxIcon: React.FC<FaxIconProps> = ({ width = 60, height = 60, className = '', stroke = '#720021' }) => {
+export const FaxIcon: React.FC<FaxIconProps> = ({ width = 60, height = 60, className = '', stroke = '#9f1836' }) => {
   return (
     <svg
       width={width}

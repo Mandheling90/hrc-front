@@ -3,9 +3,9 @@
 
 .scheduleTitle {
   background-color: var(--color-surface); // Figma: #F9F9F9
-  border: 1px solid var(--color-border); // Figma: #8C8C8C
+  border: 1px solid $gray-9; // Figma: #8C8C8C
   border-radius: 10px; // Figma: 10px
-  padding: 20px 50px; // Figma: 20px 50px
+  padding: 10px 50px;
   margin-bottom: 0;
   display: flex;
   align-items: center;
@@ -19,7 +19,7 @@
 }
 
 .title {
-  font-size: 32px; // Figma: 32px
+  font-size: 24px;
   font-weight: $font-weight-semibold; // Figma: 600
   color: var(--color-darken);
   margin: 0;

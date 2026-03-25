@@ -8,8 +8,8 @@ export interface SearchIconProps {
 }
 
 export const SearchIcon: React.FC<SearchIconProps> = ({
-  width = 20,
-  height = 20,
+  width = 24,
+  height = 24,
   className = '',
   fill = 'currentColor'
 }) => {
@@ -17,19 +17,17 @@ export const SearchIcon: React.FC<SearchIconProps> = ({
     <svg
       width={width}
       height={height}
-      viewBox='0 0 20 20'
+      viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       className={className}
     >
       <path
-        d='M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z'
+        d='M10.5 17C14.0899 17 17 14.0899 17 10.5C17 6.91015 14.0899 4 10.5 4C6.91015 4 4 6.91015 4 10.5C4 14.0899 6.91015 17 10.5 17Z'
         stroke={fill}
-        strokeWidth='2'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        strokeMiterlimit='10'
       />
-      <path d='M19 19L14.65 14.65' stroke={fill} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+      <path d='M15 15L20 20' stroke={fill} />
     </svg>
   )
 }

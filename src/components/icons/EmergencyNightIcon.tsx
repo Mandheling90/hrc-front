@@ -12,7 +12,7 @@ export const EmergencyNightIcon: React.FC<EmergencyNightIconProps> = ({
   width = 60,
   height = 60,
   className = '',
-  stroke = '#720021',
+  stroke = '#9f1836',
   strokeWidth = 3.75
 }) => {
   return (
