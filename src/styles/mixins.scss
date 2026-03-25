@@ -206,7 +206,7 @@ $header-bp-mobile: 768px;
 // 메인 콘텐츠 영역
 // $padding-top, $padding-bottom: 데스크탑 기준 패딩
 // $container-width: 컨테이너 최대 너비 (기본값: $container-max-width)
-@mixin page-main($padding-top: $spacing-16, $padding-bottom: $spacing-16, $container-width: $container-max-width) {
+@mixin page-main($padding-top: $spacing-16, $padding-bottom: $spacing-20, $container-width: $container-max-width) {
   flex: 1;
   padding: $padding-top 0 $padding-bottom;
 

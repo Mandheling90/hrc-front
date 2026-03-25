@@ -12,8 +12,8 @@ export const PatientIcon: React.FC<PatientIconProps> = ({
   width = 49,
   height = 54,
   className = '',
-  fill = '#720021',
-  stroke = '#720021'
+  fill = '#9f1836',
+  stroke = '#9f1836'
 }) => {
   return (
     <svg

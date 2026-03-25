@@ -11,7 +11,7 @@ export const PhoneRequestIcon: React.FC<PhoneRequestIconProps> = ({
   width = 60,
   height = 60,
   className = '',
-  stroke = '#720021'
+  stroke = '#9f1836'
 }) => {
   return (
     <svg

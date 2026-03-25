@@ -12,8 +12,8 @@ export const NetworkIcon: React.FC<NetworkIconProps> = ({
   width = 60,
   height = 60,
   className = '',
-  fill = '#720021',
-  stroke = '#720021'
+  fill = '#9f1836',
+  stroke = '#9f1836'
 }) => {
   return (
     <svg

@@ -11,7 +11,7 @@ export const ReferralIcon: React.FC<ReferralIconProps> = ({
   width = 60,
   height = 60,
   className = '',
-  fill = '#720021'
+  fill = '#9f1836'
 }) => {
   return (
     <svg

@@ -28,7 +28,7 @@ import { HomeIcon } from '@/components/icons/HomeIcon'
 import { ChevronDownIcon } from '@/components/icons/ChevronDownIcon'
 
 // 기본 색상
-const PRIMARY_COLOR = '#720021'
+const PRIMARY_COLOR = '#9f1836'
 const SECONDARY_COLOR = '#9f1836'
 
 // 서비스 아이콘 레지스트리 (60x60 크기)

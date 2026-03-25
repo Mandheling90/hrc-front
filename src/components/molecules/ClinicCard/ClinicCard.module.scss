@@ -11,7 +11,7 @@
   padding: $spacing-6; // Figma: 24px
   background-color: var(--color-white);
   border: none;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--gray-9, #8c8c8c);
   border-radius: 0;
   box-sizing: border-box;
 
@@ -129,22 +129,21 @@
   }
 }
 
-// 지도 버튼 - 기본 (회색 테두리)
+// 지도 버튼 - 기본 (primary 테두리)
 .mapButtonNormal {
   background-color: var(--color-white);
-  border: 1.5px solid var(--gray-6);
+  border: 1.5px solid var(--color-primary);
 
   @include mobile {
     border-width: 1px;
   }
 
-  // Figma: hover 시 테두리 + 아이콘 primary 변경
-  &:hover {
-    border-color: var(--color-primary);
+  svg path {
+    fill: var(--color-primary);
+  }
 
-    svg path {
-      fill: var(--color-primary);
-    }
+  &:hover {
+    opacity: 0.85;
   }
 }
 

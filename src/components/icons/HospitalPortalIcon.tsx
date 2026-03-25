@@ -11,7 +11,7 @@ export const HospitalPortalIcon: React.FC<HospitalPortalIconProps> = ({
   width = 60,
   height = 60,
   className = '',
-  stroke = '#720021'
+  stroke = '#9f1836'
 }) => {
   return (
     <svg
