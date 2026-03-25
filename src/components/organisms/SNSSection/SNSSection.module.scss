@@ -347,6 +347,8 @@
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
+  border-radius: 0 0 40px 40px;
+  overflow: hidden;
 
   &.fading {
     opacity: 0;
