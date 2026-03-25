@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { CloseIcon } from '@/components/icons/CloseIcon'
 import { ServiceTitleIcon } from '@/components/icons/ServiceTitleIcon'
 import { InfoBox } from '@/components/molecules/InfoBox/InfoBox'
+import { useHospital } from '@/contexts/HospitalContext'
 import styles from './MedicalReplyModal.module.scss'
 
 export interface MedicalReplyData {
@@ -64,6 +65,8 @@ const InfoRow: React.FC<InfoRowProps> = ({ label, value, fullWidth }) => (
 )
 
 export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, onClose, data, className = '' }) => {
+  const { hospital } = useHospital()
+
   // ESC 키로 닫기
   useEffect(() => {
     if (!isOpen) return
@@ -183,7 +186,7 @@ export const MedicalReplyModal: React.FC<MedicalReplyModalProps> = ({ isOpen, on
         {/* 병원 서명 */}
         <div className={styles.signature}>
           <div className={styles.signatureLogo}>
-            <Image src='/images/common/anam/logo-top.png' alt='고려대학교 안암병원' width={300} height={48} />
+            <Image src={hospital.logo.footer} alt={hospital.name.hospital} width={300} height={48} />
           </div>
         </div>
       </div>
