@@ -98,7 +98,7 @@ export default function MypageEConsultDetailPage() {
   const hospitalName = eConsultData?.requester?.profile?.hospName || user?.profile?.hospName || eConsultData?.consultant?.department || '-'
   const registeredDate = eConsultData?.createdAt ? formatDate(eConsultData.createdAt) : '-'
   const replyContent = eConsultData?.reply?.content
-  const replyDate = eConsultData?.reply?.createdAt ? formatDateTime(eConsultData.reply.createdAt) : undefined
+  const replyDate = eConsultData?.answeredAt ? formatDateTime(eConsultData.answeredAt) : undefined
   const consultantDepartment = eConsultData?.consultant?.department || '-'
   const consultantName = eConsultData?.consultant?.name || '-'
 
