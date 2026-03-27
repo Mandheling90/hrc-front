@@ -62,9 +62,7 @@ export const ResetPasswordForm: React.FC = () => {
       <div className={styles.resetPasswordForm}>
         <div className={styles.headerSection}>
           <h2 className={styles.title}>임시비밀번호 발급</h2>
-          <p className={styles.description}>
-            임시비밀번호를 발급하고 있습니다...
-          </p>
+          <p className={styles.description}>임시비밀번호를 발급하고 있습니다...</p>
         </div>
       </div>
     )
@@ -77,7 +75,8 @@ export const ResetPasswordForm: React.FC = () => {
         <div className={styles.headerSection}>
           <h2 className={styles.title}>임시비밀번호 발급 완료</h2>
           <p className={styles.description}>
-            가입하신 이메일로 임시비밀번호가 발송되었습니다.<br />
+            가입하신 휴대폰 번호로 임시비밀번호가 발송되었습니다.
+            <br />
             임시비밀번호로 로그인 후 비밀번호를 변경해주세요.
           </p>
         </div>
@@ -103,9 +102,7 @@ export const ResetPasswordForm: React.FC = () => {
       <div className={styles.resetPasswordForm}>
         <div className={styles.headerSection}>
           <h2 className={styles.title}>비밀번호 재설정</h2>
-          <p className={styles.description}>
-            잘못된 접근입니다. 비밀번호 찾기를 다시 진행해주세요.
-          </p>
+          <p className={styles.description}>잘못된 접근입니다. 비밀번호 찾기를 다시 진행해주세요.</p>
         </div>
         <div className={styles.buttonWrapper}>
           <Button
@@ -128,9 +125,7 @@ export const ResetPasswordForm: React.FC = () => {
     <div className={styles.resetPasswordForm}>
       <div className={styles.headerSection}>
         <h2 className={styles.title}>임시비밀번호 발급</h2>
-        <p className={styles.description}>
-          {errorMessage}
-        </p>
+        <p className={styles.description}>{errorMessage}</p>
       </div>
       <div className={styles.buttonWrapper}>
         <Button
