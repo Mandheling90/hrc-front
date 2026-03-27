@@ -36,6 +36,7 @@ interface RequestInput {
   ptntNo: string
   examDate: string
   orderCode: string
+  examType?: 'RADIOLOGY' | 'ENDOSCOPY' | 'OTHER'
   pacsAccessNo?: string | null
 }
 

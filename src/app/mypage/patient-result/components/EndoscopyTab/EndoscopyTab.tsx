@@ -144,6 +144,7 @@ export const EndoscopyTab: React.FC<EndoscopyTabProps> = ({
         ptntNo,
         examDate: item._raw.examDate ?? item._raw.orderDate ?? '',
         orderCode: item._raw.orderCode ?? '',
+        examType: 'ENDOSCOPY',
         pacsAccessNo: item._raw.pacsAccessNo
       })
       if (result) {
