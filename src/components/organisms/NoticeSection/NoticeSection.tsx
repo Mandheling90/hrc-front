@@ -77,8 +77,7 @@ export const NoticeSection: React.FC = () => {
     fetchPolicy: 'cache-and-network'
   })
 
-  // 공지(isPinned) 제외 일반 게시글 3건
-  const posts = (boardData?.boardPosts?.items ?? []).filter(post => !post.isPinned).slice(0, 3)
+  const posts = (boardData?.boardPosts?.items ?? []).slice(0, 3)
 
   const formatDate = (dateStr: string) => {
     return dateStr.slice(0, 10).replace(/-/g, '.')

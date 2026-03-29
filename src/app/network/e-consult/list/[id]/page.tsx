@@ -112,7 +112,7 @@ export default function EConsultDetailPage() {
   const hospitalName = eConsultData?.requester?.profile?.hospName || '-'
   const registeredDate = eConsultData?.createdAt ? formatDate(eConsultData.createdAt) : '-'
   const replyData = eConsultData?.reply
-  const replyDate = replyData?.createdAt ? formatDateTime(replyData.createdAt) : undefined
+  const replyDate = eConsultData?.answeredAt ? formatDateTime(eConsultData.answeredAt) : undefined
   const replier = replyData?.repliedBy?.userName || eConsultData?.consultant?.name || '-'
 
   const maxLength = 1500

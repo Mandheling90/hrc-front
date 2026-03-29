@@ -144,6 +144,7 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
         ptntNo,
         examDate: item._raw.examDate ?? item._raw.orderDate ?? '',
         orderCode: item._raw.orderCode ?? '',
+        examType: 'OTHER',
         pacsAccessNo: item._raw.pacsAccessNo
       })
       if (result) {

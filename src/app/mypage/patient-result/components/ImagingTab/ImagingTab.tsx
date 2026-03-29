@@ -146,6 +146,7 @@ export const ImagingTab: React.FC<ImagingTabProps> = ({
         ptntNo,
         examDate: item._raw.examDate ?? item._raw.orderDate ?? '',
         orderCode: item._raw.orderCode ?? '',
+        examType: 'RADIOLOGY',
         pacsAccessNo: item._raw.pacsAccessNo
       })
       if (result) {
