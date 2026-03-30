@@ -238,7 +238,8 @@ export default function DepartmentPage() {
         imageUrl: doctor.imageUrl,
         specialties: doctor.specialties,
         schedule: doctor.schedule as ScheduleSlot[],
-        hasEConsulting: doctor.hasEConsulting,
+        // TODO: 구로/안산 이컨설트 오픈 시 `hospital.id === 'anam' &&` 제거하여 롤백
+        hasEConsulting: hospital.id === 'anam' && doctor.hasEConsulting,
         drNo: doctor.drNo
       })),
     [doctors]
@@ -356,7 +357,8 @@ export default function DepartmentPage() {
                       imageUrl={doctor.imageUrl}
                       specialties={doctor.specialties}
                       schedule={doctor.schedule as ScheduleSlot[]}
-                      hasEConsulting={doctor.hasEConsulting}
+                      // TODO: 구로/안산 이컨설트 오픈 시 `hospital.id === 'anam' &&` 제거하여 롤백
+                      hasEConsulting={hospital.id === 'anam' && doctor.hasEConsulting}
                       onEConsultingClick={() => handleEConsultingClick(doctor.id)}
                       onDoctorInfoClick={() => handleDoctorInfoClick(doctor.id)}
                     />
