@@ -44,18 +44,16 @@ function ContentPageInner() {
     <div className={styles.wrap}>
       <Header />
       <main className={styles.main}>
-        <div className='container'>
-          {loading && (
-            <div>
-              <Skeleton width='60%' height={24} variant='text' />
-              <div style={{ height: 16 }} />
-              <Skeleton width='100%' height={300} variant='rounded' />
-            </div>
-          )}
-          {error && <div className={styles.error}>콘텐츠를 불러올 수 없습니다.</div>}
-          {content && <div className={styles.contentBody} dangerouslySetInnerHTML={{ __html: content.body }} />}
-          {!loading && !error && !content && id && <div className={styles.error}>콘텐츠를 찾을 수 없습니다.</div>}
-        </div>
+        {loading && (
+          <div className='container'>
+            <Skeleton width='60%' height={24} variant='text' />
+            <div style={{ height: 16 }} />
+            <Skeleton width='100%' height={300} variant='rounded' />
+          </div>
+        )}
+        {error && <div className={`container ${styles.error}`}>콘텐츠를 불러올 수 없습니다.</div>}
+        {content && <div className={styles.contentBody} dangerouslySetInnerHTML={{ __html: content.body }} />}
+        {!loading && !error && !content && id && <div className={`container ${styles.error}`}>콘텐츠를 찾을 수 없습니다.</div>}
       </main>
       <Footer />
     </div>
