@@ -55,6 +55,32 @@ white-space: normal;
 <p>진료정보교류와 심평원 중계포털을<br>이용한 전자의뢰가 가능합니다.</p>
 ```
 
+### 1-4. `font-family`는 원본 컴포넌트의 선언을 그대로 따를 것
+
+원본 React 컴포넌트에서 `font-family`를 명시적으로 선언한 요소만 HTML에서도 `font-family`를 지정한다. 나머지는 `body`의 `var(--font-family)` (Pretendard Variable + 폴백)를 상속받으므로 추가하지 않는다.
+
+원본에서 `font-family`를 명시하는 컴포넌트 확인 방법:
+```bash
+grep -r "font-family" src/components/molecules/해당컴포넌트/
+```
+
+예시 (referral 페이지 기준):
+- `.guide-box p` → `font-family: "Pretendard", sans-serif` **명시** (원본 InfoBox의 `.guideMessage`에 선언됨)
+- `.page-title`, `.section-title`, `.card-title`, `.card-description` → `font-family` **미지정** (body 상속)
+
+```css
+/* X 잘못된 예 - 원본에 없는 font-family를 임의로 추가 */
+.page-title {
+  font-family: "Pretendard", sans-serif;
+  font-size: 40px;
+}
+
+/* O 올바른 예 - 원본에 font-family가 없으면 생략 */
+.page-title {
+  font-size: 40px;
+}
+```
+
 ---
 
 ## 2. 다크모드 처리 규칙
