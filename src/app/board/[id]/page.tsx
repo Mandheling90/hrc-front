@@ -2,7 +2,7 @@
 
 import React, { Suspense, useCallback, useMemo } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
-import { useQuery } from '@apollo/client/react'
+import { useApolloClient, useQuery } from '@apollo/client/react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -12,7 +12,8 @@ import { PrevNextNavigation } from '@/components/molecules/PrevNextNavigation/Pr
 import {
   BOARD_POST_BY_ID_QUERY,
   BOARD_POSTS_QUERY,
-  ATTACHMENTS_QUERY
+  ATTACHMENTS_QUERY,
+  PRESIGNED_DOWNLOAD_URL_QUERY
 } from '@/graphql/menu/queries'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import styles from './page.module.scss'
@@ -52,6 +53,10 @@ interface AttachmentsData {
   attachments: Attachment[]
 }
 
+interface PresignedDownloadUrlData {
+  presignedDownloadUrl: string
+}
+
 export default function BoardDetailPage() {
   return (
     <Suspense>
@@ -61,6 +66,7 @@ export default function BoardDetailPage() {
 }
 
 function BoardDetailPageInner() {
+  const client = useApolloClient()
   const params = useParams<{ id: string }>()
   const searchParams = useSearchParams()
   const boardId = searchParams.get('boardId')
@@ -106,23 +112,22 @@ function BoardDetailPageInner() {
   }, [listData, params.id])
 
   const handleDownload = useCallback(async (attachment: Attachment) => {
-    const storageBase = process.env.NEXT_PUBLIC_STORAGE_BASE_URL || ''
-    const url = attachment.storedPath.startsWith('http')
-      ? attachment.storedPath
-      : `${storageBase}/${attachment.storedPath}`
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(300_000) })
-      const blob = await res.blob()
-      const blobUrl = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = blobUrl
-      link.download = attachment.originalName
-      link.click()
-      URL.revokeObjectURL(blobUrl)
+      const { data } = await client.query<PresignedDownloadUrlData>({
+        query: PRESIGNED_DOWNLOAD_URL_QUERY,
+        variables: { attachmentId: attachment.id },
+        fetchPolicy: 'no-cache'
+      })
+
+      if (!data?.presignedDownloadUrl) {
+        throw new Error('다운로드 URL을 가져오지 못했습니다.')
+      }
+
+      window.open(data.presignedDownloadUrl, '_blank', 'noopener,noreferrer')
     } catch {
-      window.open(url, '_blank')
+      window.alert('첨부파일 다운로드에 실패했습니다.')
     }
-  }, [])
+  }, [client])
 
   const handleBackToList = () => {
     router.push(`/board?boardId=${boardId}`)
