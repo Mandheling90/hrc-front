@@ -12,17 +12,7 @@ export interface MedicalStaffItem {
   photoUrl: string | null
   departmentCode: string
   departmentName: string
-  bio: string | null
   hospitalCode: string
-  mcdpAbrvCd: string | null
-  mcdpDvsnCd: string | null
-  mcdpSqncVl: string | null
-  apstYmd: string | null
-  apfnYmd: string | null
-  smcrYn: string | null
-  frvsMdcrPsblYn: string | null
-  revsMdcrPsblYn: string | null
-  fastMdcrDt: string | null
   specialty: string | null
   drNo: string | null
 }

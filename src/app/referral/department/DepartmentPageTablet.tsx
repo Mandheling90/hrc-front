@@ -24,7 +24,6 @@ export interface Doctor {
   imageUrl?: string
   specialties: string[]
   schedule: ScheduleSlot[]
-  hasEConsulting: boolean
   drNo?: string
 }
 
@@ -206,16 +205,14 @@ export const DepartmentPageTablet: React.FC<DepartmentPageTabletProps> = ({
                       </div>
 
                       <div className={styles.doctorActions}>
-                        {doctor.hasEConsulting && (
-                          <button
-                            type='button'
-                            className={styles.eConsultButton}
-                            onClick={() => onEConsultingClick(doctor.id)}
-                          >
-                            <EConsultingIcon width={48} height={48} fill='white' />
-                            <span>e-Consult 신청</span>
-                          </button>
-                        )}
+                        <button
+                          type='button'
+                          className={styles.eConsultButton}
+                          onClick={() => onEConsultingClick(doctor.id)}
+                        >
+                          <EConsultingIcon width={48} height={48} fill='white' />
+                          <span>e-Consult 신청</span>
+                        </button>
                         <button
                           type='button'
                           className={styles.doctorInfoButton}

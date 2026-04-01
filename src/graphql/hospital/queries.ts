@@ -222,17 +222,7 @@ export const MEDICAL_STAFF_LIST_QUERY = gql`
         photoUrl
         departmentCode
         departmentName
-        bio
         hospitalCode
-        mcdpAbrvCd
-        mcdpDvsnCd
-        mcdpSqncVl
-        apstYmd
-        apfnYmd
-        smcrYn
-        frvsMdcrPsblYn
-        revsMdcrPsblYn
-        fastMdcrDt
         specialty
         drNo
       }
