@@ -7,6 +7,7 @@ export const MEDICAL_STAFF_DEPARTMENT_LIST_QUERY = gql`
     medicalStaffDepartmentList {
       items {
         departmentCode
+        publicDepartmentCode
         departmentName
       }
       totalCount

@@ -18,6 +18,9 @@ type AdmapHomepageDepartmentListItem {
   """진료과 코드"""
   departmentCode: String!
 
+  """공개 홈페이지 진료과 코드(doctorApi/department.do 기준)"""
+  publicDepartmentCode: String
+
   """진료과명"""
   departmentName: String!
 

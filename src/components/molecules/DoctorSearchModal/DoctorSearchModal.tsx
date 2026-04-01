@@ -83,7 +83,14 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
 
   // 1뎁스: 모든 진료과 목록 조회
   const { data: deptData, loading: deptLoading } = useQuery<{
-    medicalStaffDepartmentList: { items: { departmentCode: string; departmentName: string }[]; totalCount: number }
+    medicalStaffDepartmentList: {
+      items: {
+        departmentCode: string
+        publicDepartmentCode?: string | null
+        departmentName: string
+      }[]
+      totalCount: number
+    }
   }>(MEDICAL_STAFF_DEPARTMENT_LIST_QUERY, {
     skip: useExternal,
     fetchPolicy: 'cache-and-network'
@@ -266,10 +273,20 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
                   </button>
                   {departments.map(dept => (
                     <button
-                      key={dept.departmentCode}
+                      key={dept.publicDepartmentCode || dept.departmentCode}
                       type='button'
-                      onClick={() => handleDepartmentClick(dept.departmentCode, dept.departmentName)}
-                      className={`${styles.departmentChip} ${selectedDepartmentCode === dept.departmentCode ? styles.active : ''}`}
+                      onClick={() =>
+                        handleDepartmentClick(
+                          dept.publicDepartmentCode || dept.departmentCode,
+                          dept.departmentName
+                        )
+                      }
+                      className={`${styles.departmentChip} ${
+                        selectedDepartmentCode ===
+                        (dept.publicDepartmentCode || dept.departmentCode)
+                          ? styles.active
+                          : ''
+                      }`}
                     >
                       {dept.departmentName}
                     </button>
