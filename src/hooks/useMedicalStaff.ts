@@ -19,6 +19,7 @@ export interface MedicalStaffItem {
 
 export interface DepartmentItem {
   departmentCode: string
+  publicDepartmentCode?: string | null
   departmentName: string
 }
 

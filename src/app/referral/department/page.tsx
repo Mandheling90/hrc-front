@@ -99,6 +99,11 @@ export default function DepartmentPage() {
   // 선택된 진료과 상태
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<string | undefined>(undefined)
 
+  const selectedDepartment = useMemo(
+    () => departmentList.find(dept => dept.departmentCode === selectedDepartmentId),
+    [departmentList, selectedDepartmentId]
+  )
+
   // 높이 동기화를 위한 refs
   const mainContentRef = useRef<HTMLDivElement>(null)
   const sidebarHeightRef = useRef<number | null>(null)
@@ -127,11 +132,13 @@ export default function DepartmentPage() {
 
   // 진료과 선택 시 의료진 목록 + 스케줄 조회
   useEffect(() => {
-    if (selectedDepartmentId) {
-      fetchMedicalStaff({ mcdpCd: selectedDepartmentId })
-      fetchWeeklySchedule(selectedDepartmentId, formatYmd(weekDates.startDate))
+    if (selectedDepartmentId && selectedDepartment) {
+      fetchMedicalStaff({
+        mcdpCd: selectedDepartment.publicDepartmentCode || selectedDepartment.departmentCode
+      })
+      fetchWeeklySchedule(selectedDepartment.departmentCode, formatYmd(weekDates.startDate))
     }
-  }, [selectedDepartmentId, fetchMedicalStaff, fetchWeeklySchedule, weekDates.startDate])
+  }, [selectedDepartmentId, selectedDepartment, fetchMedicalStaff, fetchWeeklySchedule, weekDates.startDate])
 
   // 스케줄 데이터를 doctorId별 Map으로 변환
   const scheduleMap = useMemo(() => {
