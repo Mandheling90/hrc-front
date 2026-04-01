@@ -165,7 +165,7 @@
   font-weight: $font-weight-semibold;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: var(--notice-title-color, $color-darken); // 기본: black, 호버 시 CSS 변수로 변경
+  color: var(--notice-title-color, var(--color-darken)); // 기본: black, 호버 시 CSS 변수로 변경
   transition: color 0.2s;
   // 텍스트 오버플로우 처리
   display: block;

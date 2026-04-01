@@ -243,7 +243,7 @@
   font-weight: $font-weight-semibold;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: var(--notice-title-color, $color-darken);
+  color: var(--notice-title-color, var(--color-darken));
   transition: color 0.2s;
   display: block;
   width: 100%;
