@@ -113,13 +113,14 @@ export const MedicationDetailModal: React.FC<MedicationDetailModalProps> = ({ is
             </div>
           </div>
 
-          {/* 상세정보 */}
+          {/* 상세정보 - 임시 주석처리
           <div className={styles.detailSection}>
             <SectionTitle title='상세정보' size='small' noMargin />
             <div className={styles.detailContent}>
               <p className={styles.detailText}>{data.detail}</p>
             </div>
           </div>
+          */}
         </div>
       </div>
     </div>,

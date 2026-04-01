@@ -25,8 +25,8 @@ function getInitial(char: string): string {
   const code = char.charCodeAt(0)
   // 한글 유니코드 범위: 0xAC00 ~ 0xD7A3
   if (code < 0xac00 || code > 0xd7a3) return ''
-  const initialCode = Math.floor((code - 0xac00) / 0x24c)
-  const initials = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
+  const initialCode = Math.floor((code - 0xac00) / 588)
+  const initials = ['ㄱ', 'ㄱ', 'ㄴ', 'ㄷ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅂ', 'ㅅ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
   return initials[initialCode] || 'ㅇ' // 기본값은 ㅇ
 }
 
