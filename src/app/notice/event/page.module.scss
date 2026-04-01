@@ -234,7 +234,7 @@
   font-weight: $font-weight-normal;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--gray-11);
 }
 
 // 제목 텍스트 스타일
@@ -258,7 +258,7 @@
   font-weight: $font-weight-normal;
   line-height: 30px;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: var(--gray-11);
 }
 
 // 게시판형 모바일 카드
