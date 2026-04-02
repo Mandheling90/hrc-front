@@ -88,9 +88,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       const result = await login({ userId, password: formData.password })
       if (result) {
         setTestEmailMessage('')
-        // 로그인 성공 → NICE 본인인증 요청
-        setPendingLogin({ mustChangePw: !!result.mustChangePw })
-        requestVerification()
+        if (process.env.NODE_ENV === 'development') {
+          // 개발 모드: NICE 인증 없이 바로 로그인 처리
+          if (result.mustChangePw) {
+            setLoginPassword(formData.password)
+            setShowChangePwModal(true)
+          } else {
+            router.push(redirectTo)
+          }
+        } else {
+          // 운영 모드: NICE 본인인증 요청
+          setPendingLogin({ mustChangePw: !!result.mustChangePw })
+          requestVerification()
+        }
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : '로그인에 실패했습니다.'
