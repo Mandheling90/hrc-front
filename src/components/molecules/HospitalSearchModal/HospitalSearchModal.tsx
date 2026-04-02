@@ -95,6 +95,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   const [regAddress, setRegAddress] = useState('')
   const [regDetailAddress, setRegDetailAddress] = useState('')
   const [regPhone, setRegPhone] = useState('')
+  const [regWebsite, setRegWebsite] = useState('')
   const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string }>({
     isOpen: false,
     message: ''
@@ -151,6 +152,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       setRegAddress('')
       setRegDetailAddress('')
       setRegPhone('')
+      setRegWebsite('')
     }
   }, [isOpen])
 
@@ -247,7 +249,8 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
             zipCode: regZipCode.trim(),
             address: regAddress.trim(),
             addressDetail: regDetailAddress.trim() || undefined,
-            phone: regPhone.trim()
+            phone: regPhone.trim(),
+            website: regWebsite.trim() || undefined
           }
         }
       })
@@ -339,7 +342,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                         placeholder='요양기관번호를 입력해주세요.'
                         value={careNumber}
                         onChange={e => {
-                          const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+                          const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 8)
                           setCareNumber(filtered)
                         }}
                         onKeyDown={e => {
@@ -502,7 +505,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       placeholder='요양기관번호를 입력해주세요.'
                       value={regCareNumber}
                       onChange={e => {
-                        const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+                        const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 8)
                         setRegCareNumber(filtered)
                       }}
                     />
@@ -556,6 +559,19 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                         const filtered = e.target.value.replace(/[^0-9]/g, '')
                         setRegPhone(filtered)
                       }}
+                    />
+                  </div>
+
+                  {/* 병원 홈페이지 주소 */}
+                  <div data-testid='reg-website-field'>
+                    <FormField
+                      label='병원 홈페이지 주소'
+                      id='reg-website'
+                      name='regWebsite'
+                      type='text'
+                      placeholder='예) https://refer.kumc.or.kr'
+                      value={regWebsite}
+                      onChange={e => setRegWebsite(e.target.value)}
                     />
                   </div>
                 </div>

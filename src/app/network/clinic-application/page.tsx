@@ -394,6 +394,7 @@ export default function ClinicApplicationPage() {
                     totalSteps={4}
                     defaultValues={stepDataCache.step2 ?? userDirectorDefaults}
                     institutionType='의원'
+                    readOnly
                   />
                 )}
 
