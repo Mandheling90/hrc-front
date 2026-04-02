@@ -259,6 +259,7 @@ export default function EditHospitalPage() {
                 currentStep={2}
                 totalSteps={totalSteps}
                 defaultValues={stepDataCache.step2 ?? stepData?.step2}
+                readOnly
               />
             )}
 

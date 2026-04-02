@@ -23,10 +23,12 @@ export interface DirectorInfoStepProps {
   institutionType?: '병원' | '의원'
   /** 초기값 (임시저장 불러오기용) */
   defaultValues?: Partial<DirectorInfoStepData>
+  /** 읽기 전용 모드 (로그인 사용자 정보 표시, 수정 불가) */
+  readOnly?: boolean
 }
 
 export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, DirectorInfoStepProps>(
-  ({ currentStep = 2, totalSteps = 8, institutionType = '병원', defaultValues }, ref) => {
+  ({ currentStep = 2, totalSteps = 8, institutionType = '병원', defaultValues, readOnly = false }, ref) => {
     const { getOptions } = useEnums()
 
     // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
@@ -77,6 +79,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
         replyConsent
       }),
       validate: () => {
+        if (readOnly) return null
         const missing: string[] = []
         if (!directorName.trim()) missing.push('병원장명')
         if (!birthDate.trim()) missing.push('생년월일')
@@ -122,6 +125,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             placeholder='병원장명을 입력해주세요.'
             value={directorName}
             onChange={e => setDirectorName(e.target.value)}
+            disabled={readOnly}
           />
 
           {/* 생년월일 */}
@@ -136,6 +140,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               value={birthDate}
               onChange={setBirthDate}
               maxDate={new Date()}
+              disabled={readOnly}
             />
           </div>
 
@@ -148,9 +153,13 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             type='text'
             placeholder='-없이 입력해주세요'
             value={licenseNumber}
-            onChange={e => setLicenseNumber(e.target.value)}
+            onChange={e => {
+              const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 6)
+              setLicenseNumber(filtered)
+            }}
+            disabled={readOnly}
             rightElement={
-              <Checkbox checked={isDirector} onChange={() => setIsDirector(!isDirector)} label='원장여부' />
+              <Checkbox checked={isDirector} onChange={() => setIsDirector(!isDirector)} label='원장여부' disabled={readOnly} />
             }
             helperText={`※ 원장여부 체크 시에만 협력${institutionType} 신청/정보수정이 가능합니다.`}
           />
@@ -168,6 +177,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               const filtered = e.target.value.replace(/[^0-9]/g, '')
               setPhone(filtered)
             }}
+            disabled={readOnly}
           />
 
           {/* 성별 */}
@@ -183,6 +193,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
                 { value: '여자', label: '여자' }
               ]}
               onChange={setGender}
+              disabled={readOnly}
             />
           </div>
 
@@ -196,6 +207,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               placeholder='차량번호를 입력해주세요.'
               value={carNumber}
               onChange={e => setCarNumber(e.target.value)}
+              disabled={readOnly}
             />
 
             <InfoNote message='무료 주차등록 희망시, 하단 차량등록증 첨부 필요.' />
@@ -211,6 +223,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             placeholder='이메일을 입력해주세요.'
             value={email}
             onChange={e => setEmail(e.target.value)}
+            disabled={readOnly}
           />
 
           {/* 출신학교 */}
@@ -218,7 +231,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             <InputLabel htmlFor='school' required>
               출신학교
             </InputLabel>
-            <Select id='school' name='school' options={schoolOptions} value={school} onChange={setSchool} />
+            <Select id='school' name='school' options={schoolOptions} value={school} onChange={setSchool} disabled={readOnly} />
           </div>
 
           {/* 졸업년도 */}
@@ -234,6 +247,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               onChange={setGraduationYear}
               showYearPicker
               maxDate={new Date()}
+              disabled={readOnly}
             />
           </div>
 
@@ -247,6 +261,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             placeholder='수련병원을 입력해주세요.'
             value={trainingHospital}
             onChange={e => setTrainingHospital(e.target.value)}
+            disabled={readOnly}
           />
 
           {/* 진료과 */}
@@ -260,6 +275,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               options={departmentOptions}
               value={department}
               onChange={setDepartment}
+              disabled={readOnly}
             />
           </div>
 
@@ -272,6 +288,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             placeholder=''
             value={specialty}
             onChange={e => setSpecialty(e.target.value)}
+            disabled={readOnly}
           />
 
           {/* SMS 수신 동의여부 */}
@@ -287,6 +304,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
                 { value: '비동의', label: '비동의' }
               ]}
               onChange={setSmsConsent}
+              disabled={readOnly}
             />
           </div>
 
@@ -303,6 +321,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
                 { value: '비동의', label: '비동의' }
               ]}
               onChange={setEmailConsent}
+              disabled={readOnly}
             />
           </div>
 
@@ -319,6 +338,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
                 { value: '비동의', label: '비동의' }
               ]}
               onChange={setReplyConsent}
+              disabled={readOnly}
             />
 
             <InfoNote message='동의 여부 변경 시 진료협력센터로 연락 주시기 바랍니다.' />

@@ -518,7 +518,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               type='text'
               placeholder='-없이 입력해주세요'
               value={formData.licenseNumber}
-              onChange={handleInputChange}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 6)
+                setFormData(prev => ({ ...prev, licenseNumber: filtered }))
+              }}
               disabled={isFieldDisabled('licenseNumber')}
               rightElement={
                 <Checkbox
@@ -664,6 +667,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 placeholder='상세주소를 입력해주세요'
                 value={formData.addressDetail}
                 onChange={handleInputChange}
+                disabled={true}
               />
             </FormField>
 
@@ -687,6 +691,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               placeholder='예) https://refer.kumc.or.kr'
               value={formData.hospitalWebsite}
               onChange={handleInputChange}
+              disabled={true}
             />
           </div>
         </div>

@@ -5,10 +5,11 @@ import { Input } from '@/components/atoms/Input/Input'
 import { EyeIcon } from '@/components/icons/EyeIcon'
 import { useLogin, useSendTestEmail } from '@/hooks/useAuth'
 import { useAuthContext } from '@/contexts/AuthContext'
+import { useNiceVerification } from '@/hooks/useNiceVerification'
 import Link from '@/components/atoms/HospitalLink'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './LoginForm.module.scss'
 
 export interface LoginFormProps {
@@ -37,7 +38,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const router = useHospitalRouter()
   const { login, loading } = useLogin()
   const { sendTestEmail, loading: testEmailLoading } = useSendTestEmail()
-  const { setLoginPassword } = useAuthContext()
+  const { setLoginPassword, clearAuth } = useAuthContext()
+  const { requestVerification, isVerified, isLoading: niceLoading, error: niceError, reset: resetNice } = useNiceVerification()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     [usernameName]: '',
@@ -46,6 +48,31 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [errorMessage, setErrorMessage] = useState('')
   const [testEmailMessage, setTestEmailMessage] = useState('')
   const [showChangePwModal, setShowChangePwModal] = useState(false)
+  // 로그인 성공 후 NICE 인증 대기 상태
+  const [pendingLogin, setPendingLogin] = useState<{ mustChangePw: boolean } | null>(null)
+
+  // NICE 인증 완료 시 최종 로그인 처리
+  useEffect(() => {
+    if (isVerified && pendingLogin) {
+      if (pendingLogin.mustChangePw) {
+        setLoginPassword(formData.password)
+        setShowChangePwModal(true)
+      } else {
+        router.push(redirectTo)
+      }
+      setPendingLogin(null)
+    }
+  }, [isVerified, pendingLogin, formData.password, redirectTo, router, setLoginPassword])
+
+  // NICE 인증 에러 시 로그인 상태 초기화
+  useEffect(() => {
+    if (niceError && pendingLogin) {
+      clearAuth()
+      setErrorMessage(niceError)
+      setPendingLogin(null)
+      resetNice()
+    }
+  }, [niceError, pendingLogin, clearAuth, resetNice])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -61,11 +88,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       const result = await login({ userId, password: formData.password })
       if (result) {
         setTestEmailMessage('')
-        if (result.mustChangePw) {
-          setLoginPassword(formData.password)
-          setShowChangePwModal(true)
+        if (process.env.NODE_ENV === 'development') {
+          // 개발 모드: NICE 인증 없이 바로 로그인 처리
+          if (result.mustChangePw) {
+            setLoginPassword(formData.password)
+            setShowChangePwModal(true)
+          } else {
+            router.push(redirectTo)
+          }
         } else {
-          router.push(redirectTo)
+          // 운영 모드: NICE 본인인증 요청
+          setPendingLogin({ mustChangePw: !!result.mustChangePw })
+          requestVerification()
         }
       }
     } catch (err) {
@@ -168,9 +202,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           size='medium'
           fullWidth
           className={styles.loginButton}
-          disabled={loading}
+          disabled={loading || niceLoading}
         >
-          {loading ? '로그인 중...' : '로그인'}
+          {loading ? '로그인 중...' : niceLoading ? '본인인증 중...' : '로그인'}
         </Button>
         <div
           className={styles.hiddenTestEmailTrigger}

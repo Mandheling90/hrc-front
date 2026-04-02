@@ -87,7 +87,7 @@ export const ClinicInfoStep: React.FC = () => {
               placeholder='요양기관번호를 입력해주세요.'
               value={medicalInstitutionNumber}
               onChange={e => {
-                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 8)
                 setMedicalInstitutionNumber(filtered)
               }}
               error=''
@@ -129,6 +129,7 @@ export const ClinicInfoStep: React.FC = () => {
                 placeholder='상세주소를 입력해주세요.'
                 value={detailAddress}
                 onChange={e => setDetailAddress(e.target.value)}
+                disabled
                 className={styles.detailAddressInput}
               />
             </FormField>

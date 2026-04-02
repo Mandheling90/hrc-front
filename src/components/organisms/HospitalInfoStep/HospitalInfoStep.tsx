@@ -113,7 +113,7 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             type='text'
             value={medicalInstitutionNumber}
             onChange={e => {
-              const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+              const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 8)
               setMedicalInstitutionNumber(filtered)
             }}
             placeholder='요양기관번호를 입력해주세요.'
@@ -148,6 +148,7 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
               placeholder='상세주소를 입력해 주세요.'
               value={detailAddress}
               onChange={e => setDetailAddress(e.target.value)}
+              disabled
             />
           </FormField>
 
@@ -188,6 +189,7 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             placeholder='ex) https://refer.kumc.or.kr/'
             value={website}
             onChange={e => setWebsite(e.target.value)}
+            disabled
           />
         </div>
 

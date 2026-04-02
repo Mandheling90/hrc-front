@@ -402,6 +402,7 @@ export default function HospitalApplicationPage() {
                     currentStep={2}
                     totalSteps={8}
                     defaultValues={stepDataCache.step2 ?? userDirectorDefaults}
+                    readOnly
                   />
                 )}
 

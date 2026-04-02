@@ -261,6 +261,7 @@ export default function EditClinicPage() {
                 totalSteps={totalSteps}
                 institutionType='의원'
                 defaultValues={stepDataCache.step2 ?? stepData?.step2}
+                readOnly
               />
             )}
 
