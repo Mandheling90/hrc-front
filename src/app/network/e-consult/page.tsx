@@ -52,6 +52,7 @@ export default function EConsultPage() {
 
   // 폼 상태
   const [privacyConsent, setPrivacyConsent] = useState(false)
+  const [serviceConsent, setServiceConsent] = useState(false)
   const [applicantName, setApplicantName] = useState('')
   const [hospitalName, setHospitalName] = useState('')
   const [email, setEmail] = useState('')
@@ -123,6 +124,7 @@ export default function EConsultPage() {
   // 유효성 검사
   const validateForm = (): string | null => {
     if (!privacyConsent) return '개인정보 수집 및 이용 목적에 동의해주세요.'
+    if (!serviceConsent) return 'e-Consult 서비스 이용에 동의해주세요.'
     if (!applicantName.trim()) return '신청자명을 입력해주세요.'
     if (!hospitalName.trim()) return '의료기관명을 입력해주세요.'
     if (!email.trim()) return '이메일을 입력해주세요.'
@@ -364,6 +366,23 @@ export default function EConsultPage() {
                   {
                     type: 'paragraph',
                     text: "4. 동의를 거부할 권리 / 동의거부에 따른 안내 개인정보 수집 및 이용에 대해 거부할 권리가 있으며 다만, 개인정보 수집동의 거부 시에는 'e-Consult' 서비스 이용이 제한됩니다."
+                  }
+                ]}
+              />
+            </div>
+
+            {/* e-Consult 서비스 이용 동의 */}
+            <div className={styles.section}>
+              <PrivacyConsentContent
+                checkboxId='service-consent'
+                checked={serviceConsent}
+                onChange={setServiceConsent}
+                checkboxLabel='e-Consult 서비스 이용 동의'
+                required={true}
+                items={[
+                  {
+                    type: 'paragraph',
+                    text: '본 프로그램을 통해 제공되는 모든 의견 및 정보는 일반적인 의학적 지식에 기반한 참고자료로, 개별 환자에 대한 직접 진찰이나 임상정보에 근거한 진단 또는 치료 지시가 아님을 이해합니다.\n\n이에 따라 실제 진료에 있어서는 환자의 상태 및 임상적 상황을 종합하여 담당 의료진이 독립적으로 판단하여야 하며, 본 서비스를 운영하는 기관 및 자문 제공자는 환자의 진단·치료 및 그 결과에 대해 어떠한 법적 책임도 부담하지 않음을 확인합니다.'
                   }
                 ]}
               />
