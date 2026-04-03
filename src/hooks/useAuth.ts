@@ -69,18 +69,11 @@ interface SendTestEmailVariables {
 }
 
 export function useLogin() {
-  const { setAuth } = useAuthContext()
   const [loginMutation, { loading, error }] = useMutation<{ login: AuthPayload }>(LOGIN_MUTATION)
 
   const login = async (input: LoginInput) => {
     const { data } = await loginMutation({ variables: { input } })
-
-    if (data?.login) {
-      setAuth(data.login.accessToken, data.login.refreshToken, data.login.user)
-      return data.login
-    }
-
-    return null
+    return data?.login ?? null
   }
 
   return { login, loading, error }

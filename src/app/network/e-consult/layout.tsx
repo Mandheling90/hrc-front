@@ -33,7 +33,7 @@ export default function EConsultLayout({ children }: { children: React.ReactNode
       return
     }
 
-    // 그 외 e-consult 페이지: 일반 로그인 체크
+    // 그 외 e-consult 페이지: 일반 로그인 + NICE 인증 체크
     if (!isLoading && !isAuthenticated) {
       router.push('/login')
     } else if (!isLoading) {

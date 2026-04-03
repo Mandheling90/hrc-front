@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { useLazyQuery } from '@apollo/client/react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -15,6 +16,7 @@ import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useMedicalStaff, MedicalStaffItem, WeeklyScheduleItem } from '@/hooks/useMedicalStaff'
 import { useHospital } from '@/contexts/HospitalContext'
+import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
@@ -83,15 +85,23 @@ function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, Sched
     imageUrl: item.photoUrl || undefined,
     specialties,
     schedule: scheduleMap.get(item.doctorId) ?? ([] as ScheduleSlot[]),
-    hasEConsulting: item.frvsMdcrPsblYn === 'Y' || item.revsMdcrPsblYn === 'Y',
     drNo: item.drNo || undefined
   }
+}
+
+interface ConsultantDoctor {
+  id: string
+  doctorId: string
+  name: string
+  hospitalCode: string
 }
 
 export default function DepartmentPage() {
   const router = useHospitalRouter()
   const { hospital } = useHospital()
   const { departmentList, deptLoading, fetchMedicalStaff, staffList, loading: staffLoading, fetchWeeklySchedule, scheduleList, scheduleLoading } = useMedicalStaff()
+  const [fetchConsultantDoctors] = useLazyQuery<{ consultantDoctors: ConsultantDoctor[] }>(CONSULTANT_DOCTORS_QUERY, { fetchPolicy: 'network-only' })
+  const [consultantDoctorIds, setConsultantDoctorIds] = useState<Set<string>>(new Set())
 
   // 현재 주간 날짜 상태
   const [currentWeek, setCurrentWeek] = useState(new Date())
@@ -126,13 +136,22 @@ export default function DepartmentPage() {
     }
   }, [departments, selectedDepartmentId])
 
-  // 진료과 선택 시 의료진 목록 + 스케줄 조회
+  // 진료과 선택 시 의료진 목록 + 스케줄 + 자문의 조회
   useEffect(() => {
     if (selectedDepartmentId) {
       fetchMedicalStaff({ mcdpCd: selectedDepartmentId })
       fetchWeeklySchedule(selectedDepartmentId, formatYmd(weekDates.startDate))
+      const hospitalCodeUpper = hospital.id.toUpperCase()
+      fetchConsultantDoctors({ variables: { departmentCode: selectedDepartmentId } }).then(({ data }) => {
+        const ids = new Set(
+          (data?.consultantDoctors ?? [])
+            .filter(d => d.hospitalCode === hospitalCodeUpper)
+            .map(d => d.doctorId)
+        )
+        setConsultantDoctorIds(ids)
+      })
     }
-  }, [selectedDepartmentId, fetchMedicalStaff, fetchWeeklySchedule, weekDates.startDate])
+  }, [selectedDepartmentId, fetchMedicalStaff, fetchWeeklySchedule, fetchConsultantDoctors, weekDates.startDate])
 
   // 스케줄 데이터를 doctorId별 Map으로 변환
   const scheduleMap = useMemo(() => {
@@ -238,11 +257,10 @@ export default function DepartmentPage() {
         imageUrl: doctor.imageUrl,
         specialties: doctor.specialties,
         schedule: doctor.schedule as ScheduleSlot[],
-        // TODO: 구로/안산 이컨설트 오픈 시 `hospital.id === 'anam' &&` 제거하여 롤백
-        hasEConsulting: hospital.id === 'anam' && doctor.hasEConsulting,
+        hasEConsulting: consultantDoctorIds.has(doctor.id),
         drNo: doctor.drNo
       })),
-    [doctors]
+    [doctors, consultantDoctorIds]
   )
 
   // 태블릿/모바일 여부 확인 useEffect
@@ -357,8 +375,7 @@ export default function DepartmentPage() {
                       imageUrl={doctor.imageUrl}
                       specialties={doctor.specialties}
                       schedule={doctor.schedule as ScheduleSlot[]}
-                      // TODO: 구로/안산 이컨설트 오픈 시 `hospital.id === 'anam' &&` 제거하여 롤백
-                      hasEConsulting={hospital.id === 'anam' && doctor.hasEConsulting}
+                      hasEConsulting={consultantDoctorIds.has(doctor.id)}
                       onEConsultingClick={() => handleEConsultingClick(doctor.id)}
                       onDoctorInfoClick={() => handleDoctorInfoClick(doctor.id)}
                     />
