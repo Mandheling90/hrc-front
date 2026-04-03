@@ -141,17 +141,17 @@ export default function DepartmentPage() {
     if (selectedDepartmentId) {
       fetchMedicalStaff({ mcdpCd: selectedDepartmentId })
       fetchWeeklySchedule(selectedDepartmentId, formatYmd(weekDates.startDate))
-      const hospitalCodeUpper = hospital.id.toUpperCase()
-      fetchConsultantDoctors({ variables: { departmentCode: selectedDepartmentId } }).then(({ data }) => {
-        const ids = new Set(
-          (data?.consultantDoctors ?? [])
-            .filter(d => d.hospitalCode === hospitalCodeUpper)
-            .map(d => d.doctorId)
-        )
-        setConsultantDoctorIds(ids)
-      })
+      // 안암병원만 e-Consult 자문의 조회
+      if (hospital.id === 'anam') {
+        fetchConsultantDoctors({ variables: { departmentCode: selectedDepartmentId } }).then(({ data }) => {
+          const ids = new Set((data?.consultantDoctors ?? []).map(d => d.doctorId))
+          setConsultantDoctorIds(ids)
+        })
+      } else {
+        setConsultantDoctorIds(new Set())
+      }
     }
-  }, [selectedDepartmentId, fetchMedicalStaff, fetchWeeklySchedule, fetchConsultantDoctors, weekDates.startDate])
+  }, [selectedDepartmentId, fetchMedicalStaff, fetchWeeklySchedule, fetchConsultantDoctors, weekDates.startDate, hospital.id])
 
   // 스케줄 데이터를 doctorId별 Map으로 변환
   const scheduleMap = useMemo(() => {
