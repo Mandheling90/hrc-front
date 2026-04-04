@@ -38,6 +38,8 @@ interface SignupInput {
   school: string
   department: string
   specialty?: string
+  graduationYear?: string
+  trainingHospital?: string
   smsConsent: boolean
   emailConsent: boolean
   replyConsent: boolean

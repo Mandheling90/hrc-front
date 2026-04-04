@@ -9,7 +9,6 @@ import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useSignup } from '@/hooks/useAuth'
 import { useHospital } from '@/contexts/HospitalContext'
 import { MemberInfoFormData } from '@/components/organisms/MemberInfoForm/MemberInfoForm'
-import { DoctorType } from '@/types/auth'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import type { NiceVerifiedData } from '@/lib/nice/types'
 
@@ -22,11 +21,12 @@ import React, { useState } from 'react'
 import styles from './SignupForm.module.scss'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 
-// MemberInfoForm의 memberType → 백엔드 DoctorType 매핑
-const DOCTOR_TYPE_MAP: Record<string, DoctorType> = {
-  의사: 'DOCTOR',
-  치과의사: 'DENTIST',
-  한의사: 'ORIENTAL_DOCTOR'
+
+// DB enum DoctorType key → GraphQL DoctorType enum 매핑
+const DOCTOR_TYPE_GQL_MAP: Record<string, string> = {
+  '1': 'DOCTOR',
+  '2': 'ORIENTAL_DOCTOR',
+  '3': 'DENTIST'
 }
 
 export const SignupForm: React.FC = () => {
@@ -92,15 +92,13 @@ export const SignupForm: React.FC = () => {
   }
 
   const handleSignup = async (formData: MemberInfoFormData) => {
-    const doctorType = DOCTOR_TYPE_MAP[formData.memberType] || 'DOCTOR'
-
     try {
       const hospitalCodeEnum = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
       const result = await signup({
         userName: formData.name,
         birthDate: formData.birthDate,
         phone: formData.phone,
-        doctorType,
+        doctorType: DOCTOR_TYPE_GQL_MAP[formData.memberType] || formData.memberType,
         userId: formData.userId,
         password: formData.password,
         passwordConfirm: formData.passwordConfirm,
@@ -110,6 +108,8 @@ export const SignupForm: React.FC = () => {
         school: formData.school,
         department: formData.department,
         specialty: formData.specialty || undefined,
+        graduationYear: formData.graduationYear || undefined,
+        trainingHospital: formData.trainingHospital || undefined,
         smsConsent: formData.smsConsent === 'Y',
         emailConsent: formData.emailConsent === 'Y',
         replyConsent: formData.replyConsent === 'Y',
@@ -192,7 +192,8 @@ export const SignupForm: React.FC = () => {
                 ? {
                     name: verifiedData.name,
                     birthDate: verifiedData.birthDate,
-                    phone: verifiedData.phone || ''
+                    phone: verifiedData.phone || '',
+                    gender: verifiedData.gender || ''
                   }
                 : undefined
             }

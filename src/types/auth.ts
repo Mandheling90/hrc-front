@@ -57,7 +57,7 @@ export interface SignupFormData {
   userName: string
   birthDate: string
   phone: string
-  doctorType: DoctorType
+  doctorType: string
   userId: string
   password: string
   passwordConfirm: string
@@ -67,6 +67,8 @@ export interface SignupFormData {
   school: string
   department: string
   specialty?: string
+  graduationYear?: string
+  trainingHospital?: string
   smsConsent: boolean
   emailConsent: boolean
   replyConsent: boolean

@@ -18,6 +18,7 @@ import { SCHOOL_OPTIONS } from '@/types/hospital-application'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useLazyQuery } from '@apollo/client/react'
 import { CHECK_USER_ID_QUERY } from '@/graphql/auth/queries'
+import { useEnums } from '@/hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import styles from './MemberInfoForm.module.scss'
 
@@ -38,6 +39,9 @@ export interface MemberInfoFormData {
   school: string
   department: string
   specialty: string
+  graduationYear: string
+  trainingHospital: string
+  gender: string
   smsConsent: string
   emailConsent: string
   replyConsent: string
@@ -55,7 +59,7 @@ export interface MemberInfoFormData {
 export const defaultFormData: MemberInfoFormData = {
   name: '',
   birthDate: '',
-  memberType: '의사',
+  memberType: 'DOCTOR',
   phone: '',
   userId: '',
   currentPassword: '',
@@ -65,8 +69,11 @@ export const defaultFormData: MemberInfoFormData = {
   licenseNumber: '',
   isDirector: false,
   school: '',
-  department: '전체',
+  department: '',
   specialty: '',
+  graduationYear: '',
+  trainingHospital: '',
+  gender: '',
   smsConsent: 'Y',
   emailConsent: 'Y',
   replyConsent: 'Y',
@@ -106,9 +113,22 @@ export interface MemberInfoFormProps {
   onWithdraw?: () => void
 }
 
-// 진료과 옵션
-const departmentOptions = [
-  { value: '전체', label: '전체' },
+// 동의 옵션
+const consentOptions = [
+  { value: 'Y', label: '동의' },
+  { value: 'N', label: '비동의' }
+]
+
+// 회원구분 옵션 (fallback - enum 조회 실패 시)
+const MEMBER_TYPE_OPTIONS_FALLBACK = [
+  { value: 'DOCTOR', label: '의사' },
+  { value: 'DENTIST', label: '치과의사' },
+  { value: 'ORIENTAL_DOCTOR', label: '한의사' }
+]
+
+// 진료과 옵션 (fallback)
+const DEPARTMENT_OPTIONS_FALLBACK = [
+  { value: '', label: '선택해주세요' },
   { value: '내과', label: '내과' },
   { value: '외과', label: '외과' },
   { value: '정형외과', label: '정형외과' },
@@ -131,18 +151,6 @@ const departmentOptions = [
   { value: '신경과', label: '신경과' }
 ]
 
-// 회원구분 옵션
-const memberTypeOptions = [
-  { value: '의사', label: '의사' },
-  { value: '치과의사', label: '치과의사' },
-  { value: '한의사', label: '한의사' }
-]
-
-// 동의 옵션
-const consentOptions = [
-  { value: 'Y', label: '동의' },
-  { value: 'N', label: '비동의' }
-]
 
 export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   mode,
@@ -159,8 +167,32 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   showWithdrawButton = false,
   onWithdraw
 }) => {
+  const { getOptions } = useEnums()
+
+  // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
+  const schoolOptions = useMemo(() => {
+    const enumOpts = getOptions('School')
+    return enumOpts.length > 0 ? [{ value: '', label: '선택해주세요' }, ...enumOpts] : SCHOOL_OPTIONS
+  }, [getOptions])
+
+  const departmentOptions = useMemo(() => {
+    const enumOpts = getOptions('MedicalDepartment')
+    return enumOpts.length > 0 ? [{ value: '', label: '선택해주세요' }, ...enumOpts] : DEPARTMENT_OPTIONS_FALLBACK
+  }, [getOptions])
+
+  const memberTypeOptions = useMemo(() => {
+    const enumOpts = getOptions('DoctorType')
+    return enumOpts.length > 0 ? enumOpts : MEMBER_TYPE_OPTIONS_FALLBACK
+  }, [getOptions])
+
+  // enum 로드 시 memberType 기본값을 첫 번째 enum 옵션으로 설정
+  const defaultMemberType = useMemo(() => {
+    return memberTypeOptions.length > 0 ? memberTypeOptions[0].value : 'DOCTOR'
+  }, [memberTypeOptions])
+
   const [formData, setFormData] = useState<MemberInfoFormData>({
     ...defaultFormData,
+    memberType: defaultMemberType,
     ...initialData
   })
   const [isHospitalSearchOpen, setIsHospitalSearchOpen] = useState(false)
@@ -183,6 +215,17 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
       }))
     }
   }, [initialData])
+
+  // enum 로드 후 memberType 기본값 동기화
+  useEffect(() => {
+    setFormData(prev => {
+      const isCurrentValueValid = memberTypeOptions.some(opt => opt.value === prev.memberType)
+      if (!isCurrentValueValid && memberTypeOptions.length > 0) {
+        return { ...prev, memberType: memberTypeOptions[0].value }
+      }
+      return prev
+    })
+  }, [memberTypeOptions])
 
   const isFieldDisabled = (fieldName: keyof MemberInfoFormData): boolean => {
     return disabledFields.includes(fieldName)
@@ -538,10 +581,49 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               <Select
                 id='school'
                 name='school'
-                options={SCHOOL_OPTIONS}
+                options={schoolOptions}
                 value={formData.school}
                 onChange={handleSelectChange('school')}
                 disabled={isFieldDisabled('school')}
+              />
+            </div>
+
+            <FormField
+              label='졸업년도'
+              id='graduationYear'
+              name='graduationYear'
+              type='text'
+              placeholder='졸업년도를 입력해주세요 (예: 2020)'
+              value={formData.graduationYear}
+              onChange={e => {
+                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 4)
+                setFormData(prev => ({ ...prev, graduationYear: filtered }))
+              }}
+            />
+
+            <FormField
+              label='수련병원명'
+              id='trainingHospital'
+              name='trainingHospital'
+              type='text'
+              placeholder='수련병원명을 입력해주세요'
+              value={formData.trainingHospital}
+              onChange={handleInputChange}
+            />
+
+            <div className={styles.formField}>
+              <InputLabel htmlFor='gender' required>
+                성별
+              </InputLabel>
+              <Radio
+                name='gender'
+                value={formData.gender}
+                options={[
+                  { value: 'M', label: '남성' },
+                  { value: 'F', label: '여성' }
+                ]}
+                onChange={() => {}}
+                disabled={true}
               />
             </div>
 
