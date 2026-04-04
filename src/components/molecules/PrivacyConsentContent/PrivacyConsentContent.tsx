@@ -60,7 +60,7 @@ export const PrivacyConsentContent: React.FC<PrivacyConsentContentProps> = ({
       <div className={styles.consentContent}>
         {items.map((item, index) => {
           if (item.type === 'paragraph') {
-            return <p key={index}>{item.text}</p>
+            return <p key={index} style={item.text.includes('\n') ? { whiteSpace: 'pre-line' } : undefined}>{item.text}</p>
           } else if (item.type === 'subList') {
             return (
               <div key={index} className={styles.consentSubList}>

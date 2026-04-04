@@ -152,21 +152,34 @@ const HeaderInner: React.FC = () => {
       .filter(menu => menu.subItems.length > 0)
   }, [apiMenus])
 
-  // 원장여부에 따라 마이페이지 메뉴 필터링
+  // 원장여부 및 병원별 마이페이지 메뉴 필터링
   const filteredMyPageMenu: MenuItem = useMemo(() => {
-    if (user?.profile?.isDirector) return myPageMenu
-    return {
-      ...myPageMenu,
-      subItems: myPageMenu.subItems.filter(item => item.href !== '/mypage/edit-partner')
+    let subItems = myPageMenu.subItems
+    // 원장이 아닌 경우 협력병의원 정보수정 숨김
+    if (!user?.profile?.isDirector) {
+      subItems = subItems.filter(item => item.href !== '/mypage/edit-partner')
     }
-  }, [user?.profile?.isDirector])
+    // 안암 외 병원은 e-Consult 조회 숨김 (미오픈)
+    if (hospitalId !== 'anam') {
+      subItems = subItems.filter(item => item.href !== '/mypage/e-consult')
+    }
+    return { ...myPageMenu, subItems }
+  }, [user?.profile?.isDirector, hospitalId])
 
   // GNB 표시용 메뉴 (API 데이터 우선, 없으면 하드코딩 fallback)
   const menuItems = useMemo(() => {
-    const baseMenus = apiMenuItems.length > 0 ? apiMenuItems : commonMenuItems
+    let baseMenus = apiMenuItems.length > 0 ? apiMenuItems : commonMenuItems
+
+    // 안암 외 병원은 e-Consult 신청 메뉴 숨김 (미오픈)
+    if (hospitalId !== 'anam') {
+      baseMenus = baseMenus.map(menu => ({
+        ...menu,
+        subItems: menu.subItems.filter(item => item.href !== '/network/e-consult')
+      }))
+    }
 
     return isLoggedIn ? [...baseMenus, filteredMyPageMenu] : baseMenus
-  }, [isLoggedIn, apiMenuItems, filteredMyPageMenu])
+  }, [isLoggedIn, apiMenuItems, filteredMyPageMenu, hospitalId])
 
   // Breadcrumb 매칭용 메뉴 (API 메뉴 + 하드코딩 메뉴 모두 포함)
   const breadcrumbMenuItems = useMemo(() => {

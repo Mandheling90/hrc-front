@@ -193,9 +193,13 @@
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   border: none;
-  outline: 1px solid $color-primary; // Figma: #9F1836
-  outline-offset: -1px;
+  outline: none;
   overflow: hidden;
+
+  &:hover {
+    outline: 1px solid $color-primary;
+    outline-offset: -1px;
+  }
   display: flex;
   flex-direction: column;
   gap: 24px;

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { useLazyQuery } from '@apollo/client/react'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
 import { Breadcrumbs } from '@/components/molecules/Breadcrumbs/Breadcrumbs'
@@ -15,6 +16,7 @@ import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { useMedicalStaff, MedicalStaffItem, WeeklyScheduleItem } from '@/hooks/useMedicalStaff'
 import { useHospital } from '@/contexts/HospitalContext'
+import { CONSULTANT_DOCTORS_QUERY } from '@/graphql/econsult/queries'
 import { DepartmentPageTablet, Department as TabletDepartment, Doctor } from './DepartmentPageTablet'
 import styles from './page.module.scss'
 import { ScheduleSlot } from '@/components/molecules/ScheduleTable/ScheduleTable'
@@ -87,10 +89,19 @@ function mapStaffToDoctor(item: MedicalStaffItem, scheduleMap: Map<string, Sched
   }
 }
 
+interface ConsultantDoctor {
+  id: string
+  doctorId: string
+  name: string
+  hospitalCode: string
+}
+
 export default function DepartmentPage() {
   const router = useHospitalRouter()
   const { hospital } = useHospital()
   const { departmentList, deptLoading, fetchMedicalStaff, staffList, loading: staffLoading, fetchWeeklySchedule, scheduleList, scheduleLoading } = useMedicalStaff()
+  const [fetchConsultantDoctors] = useLazyQuery<{ consultantDoctors: ConsultantDoctor[] }>(CONSULTANT_DOCTORS_QUERY, { fetchPolicy: 'network-only' })
+  const [consultantDoctorIds, setConsultantDoctorIds] = useState<Set<string>>(new Set())
 
   // 현재 주간 날짜 상태
   const [currentWeek, setCurrentWeek] = useState(new Date())
@@ -130,15 +141,24 @@ export default function DepartmentPage() {
     }
   }, [departments, selectedDepartmentId])
 
-  // 진료과 선택 시 의료진 목록 + 스케줄 조회
+  // 진료과 선택 시 의료진 목록 + 스케줄 + 자문의 조회
   useEffect(() => {
     if (selectedDepartmentId && selectedDepartment) {
       fetchMedicalStaff({
         mcdpCd: selectedDepartment.publicDepartmentCode || selectedDepartment.departmentCode
       })
       fetchWeeklySchedule(selectedDepartment.departmentCode, formatYmd(weekDates.startDate))
+      // 안암병원만 e-Consult 자문의 조회
+      if (hospital.id === 'anam') {
+        fetchConsultantDoctors({ variables: { departmentCode: selectedDepartment.departmentCode } }).then(({ data }) => {
+          const ids = new Set((data?.consultantDoctors ?? []).map(d => d.doctorId))
+          setConsultantDoctorIds(ids)
+        })
+      } else {
+        setConsultantDoctorIds(new Set())
+      }
     }
-  }, [selectedDepartmentId, selectedDepartment, fetchMedicalStaff, fetchWeeklySchedule, weekDates.startDate])
+  }, [selectedDepartmentId, selectedDepartment, fetchMedicalStaff, fetchWeeklySchedule, fetchConsultantDoctors, weekDates.startDate, hospital.id])
 
   // 스케줄 데이터를 doctorId별 Map으로 변환
   const scheduleMap = useMemo(() => {
@@ -244,9 +264,10 @@ export default function DepartmentPage() {
         imageUrl: doctor.imageUrl,
         specialties: doctor.specialties,
         schedule: doctor.schedule as ScheduleSlot[],
+        hasEConsulting: consultantDoctorIds.has(doctor.id),
         drNo: doctor.drNo
       })),
-    [doctors]
+    [doctors, consultantDoctorIds]
   )
 
   // 태블릿/모바일 여부 확인 useEffect
@@ -361,6 +382,7 @@ export default function DepartmentPage() {
                       imageUrl={doctor.imageUrl}
                       specialties={doctor.specialties}
                       schedule={doctor.schedule as ScheduleSlot[]}
+                      hasEConsulting={consultantDoctorIds.has(doctor.id)}
                       onEConsultingClick={() => handleEConsultingClick(doctor.id)}
                       onDoctorInfoClick={() => handleDoctorInfoClick(doctor.id)}
                     />

@@ -60,7 +60,7 @@ const guroConfig: HospitalConfig = {
     phone: '1577-9966',
     fax: '02-2626-1691',
     reservation: '1577-9966',
-    referralCenter: '02-6464-8446'
+    referralCenter: '02-2626-1681'
   },
   address: {
     zipCode: '08308',

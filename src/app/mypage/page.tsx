@@ -224,44 +224,46 @@ export default function MyPage() {
                 )}
               </div>
 
-              {/* e-Consult 조회 카드 */}
-              <div className={styles.consultCard}>
-                <div className={styles.cardHeader}>
-                  <SectionTitle title='e-Consult 조회' noMargin />
-                  <Link href='/mypage/e-consult' className={styles.arrowBtn}>
-                    <ArrowRightLargeIcon width={24} height={24} stroke='white' />
-                  </Link>
-                </div>
-                <div className={styles.consultContent}>
-                  <div className={styles.consultStats}>
-                    <div className={styles.statItem}>
-                      <div className={`${styles.statCircle} ${styles.statCircleWaiting}`}>
-                        <span className={styles.statNumber}>{consultData.waiting}</span>
-                        <span className={styles.statUnit}>건</span>
-                      </div>
-                      <p className={styles.statLabel}>답변 대기</p>
-                    </div>
-                    <div className={styles.statItem}>
-                      <div className={`${styles.statCircle} ${styles.statCircleCompleted}`}>
-                        <span className={styles.statNumber}>{consultData.completed}</span>
-                        <span className={styles.statUnit}>건</span>
-                      </div>
-                      <p className={styles.statLabel}>답변 완료</p>
-                    </div>
-                    <div className={styles.statItem}>
-                      <div className={`${styles.statCircle} ${styles.statCircleExpired}`}>
-                        <span className={styles.statNumber}>{consultData.expired}</span>
-                        <span className={styles.statUnit}>건</span>
-                      </div>
-                      <p className={styles.statLabel}>기간 만료</p>
-                    </div>
+              {/* e-Consult 조회 카드 (안암병원만 노출) */}
+              {hospitalId === 'anam' && (
+                <div className={styles.consultCard}>
+                  <div className={styles.cardHeader}>
+                    <SectionTitle title='e-Consult 조회' noMargin />
+                    <Link href='/mypage/e-consult' className={styles.arrowBtn}>
+                      <ArrowRightLargeIcon width={24} height={24} stroke='white' />
+                    </Link>
                   </div>
-                  <Link href='/network/e-consult' className={styles.consultApplyBtn}>
-                    <ConsultIcon width={36} height={36} />
-                    <span>e-Consulting 신청</span>
-                  </Link>
+                  <div className={styles.consultContent}>
+                    <div className={styles.consultStats}>
+                      <div className={styles.statItem}>
+                        <div className={`${styles.statCircle} ${styles.statCircleWaiting}`}>
+                          <span className={styles.statNumber}>{consultData.waiting}</span>
+                          <span className={styles.statUnit}>건</span>
+                        </div>
+                        <p className={styles.statLabel}>답변 대기</p>
+                      </div>
+                      <div className={styles.statItem}>
+                        <div className={`${styles.statCircle} ${styles.statCircleCompleted}`}>
+                          <span className={styles.statNumber}>{consultData.completed}</span>
+                          <span className={styles.statUnit}>건</span>
+                        </div>
+                        <p className={styles.statLabel}>답변 완료</p>
+                      </div>
+                      <div className={styles.statItem}>
+                        <div className={`${styles.statCircle} ${styles.statCircleExpired}`}>
+                          <span className={styles.statNumber}>{consultData.expired}</span>
+                          <span className={styles.statUnit}>건</span>
+                        </div>
+                        <p className={styles.statLabel}>기간 만료</p>
+                      </div>
+                    </div>
+                    <Link href='/network/e-consult' className={styles.consultApplyBtn}>
+                      <ConsultIcon width={36} height={36} />
+                      <span>e-Consulting 신청</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* 회원탈퇴 카드 */}

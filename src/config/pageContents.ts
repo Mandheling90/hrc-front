@@ -742,7 +742,7 @@ const guroContent: HospitalPageContent = {
     ],
     contact: {
       phone: '02-6464-8446',
-      fax: '02-2626-1681'
+      fax: '02-2626-1691'
     },
     downloadLinks: [
       { label: '협력병원 신청서 다운로드', href: '/application_form/application_form_guro.hwp' },

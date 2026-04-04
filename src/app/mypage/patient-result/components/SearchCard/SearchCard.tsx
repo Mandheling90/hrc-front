@@ -16,8 +16,7 @@ const PERIOD_OPTIONS = [
   { value: 'all', label: '전체' },
   { value: '1month', label: '1개월' },
   { value: '6month', label: '6개월' },
-  { value: '1year', label: '1년' },
-  { value: '3year', label: '3년' }
+  { value: '1year', label: '1년' }
 ]
 
 // 검색 카테고리 옵션
@@ -52,7 +51,6 @@ function calcStartDate(period: string, end: string): string {
     case '1month': d.setMonth(d.getMonth() - 1); break
     case '6month': d.setMonth(d.getMonth() - 6); break
     case '1year': d.setFullYear(d.getFullYear() - 1); break
-    case '3year': d.setFullYear(d.getFullYear() - 3); break
   }
   return formatDate(d)
 }
