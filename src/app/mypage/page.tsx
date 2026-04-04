@@ -173,7 +173,7 @@ export default function MyPage() {
                   <a
                     href={
                       hospitalId === 'guro'
-                        ? '/medical_referral_form/Medical_referral_form_guro.hwp'
+                        ? '/medical_referral_form/Medical_referral_form_guro.pdf'
                         : hospitalId === 'ansan'
                           ? '/medical_referral_form/Medical_referral_form_asan.hwp'
                           : '/medical_referral_form/Medical_referral_form_anam.pdf'

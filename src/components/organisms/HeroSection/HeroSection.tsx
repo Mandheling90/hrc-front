@@ -137,7 +137,7 @@ const downloadLinksByHospital: Record<string, { href: string; label: string; dow
     { href: '/application_patient_form_anam.hwp', label: '진료정보공개동의서', download: true }
   ],
   guro: [
-    { href: '/medical_referral_form/Medical_referral_form_guro.hwp', label: '진료의뢰서', download: true },
+    { href: '/medical_referral_form/Medical_referral_form_guro.pdf', label: '진료의뢰서', download: true },
     { href: '/application_form/application_form_guro.hwp', label: '협력병의원 체결 신청서류', download: true }
   ],
   ansan: [

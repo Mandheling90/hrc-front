@@ -13,6 +13,7 @@ export interface DoctorCardProps {
   imageUrl?: string
   specialties: string[]
   schedule: ScheduleSlot[]
+  hasEConsulting?: boolean
   onEConsultingClick?: () => void
   onDoctorInfoClick?: () => void
   className?: string
@@ -24,6 +25,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
   imageUrl,
   specialties,
   schedule,
+  hasEConsulting = true,
   onEConsultingClick,
   onDoctorInfoClick,
   className = ''
@@ -78,10 +80,12 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
           </div>
 
           <div className={styles.actions}>
-            <button type='button' className={styles.eConsultButton} onClick={onEConsultingClick}>
-              <EConsultingIcon width={48} height={48} fill='white' />
-              <span>e-Consult 신청</span>
-            </button>
+            {hasEConsulting && (
+              <button type='button' className={styles.eConsultButton} onClick={onEConsultingClick}>
+                <EConsultingIcon width={48} height={48} fill='white' />
+                <span>e-Consult 신청</span>
+              </button>
+            )}
             <button type='button' className={styles.doctorInfoButton} onClick={onDoctorInfoClick}>
               <DoctorInfoIcon width={48} height={48} stroke='var(--gray-9)' />
               <span>의료진 소개</span>
