@@ -13,7 +13,6 @@ export const LOGIN_MUTATION = gql`
         userName
         userType
         hospitalCode
-        hospitalId
         phone
         status
         mustChangePw
@@ -45,18 +44,8 @@ export const LOGIN_MUTATION = gql`
 `
 
 export const SEND_TEST_EMAIL_MUTATION = gql`
-  mutation SendTestEmail(
-    $to: String!
-    $subject: String!
-    $body: String!
-    $hospitalCode: HospitalCode
-  ) {
-    sendTestEmail(
-      to: $to
-      subject: $subject
-      body: $body
-      hospitalCode: $hospitalCode
-    ) {
+  mutation SendTestEmail($to: String!, $subject: String!, $body: String!, $hospitalCode: HospitalCode) {
+    sendTestEmail(to: $to, subject: $subject, body: $body, hospitalCode: $hospitalCode) {
       success
       status
       errorMessage
@@ -149,7 +138,6 @@ export const REFRESH_TOKEN_MUTATION = gql`
         userName
         userType
         hospitalCode
-        hospitalId
         phone
         status
         mustChangePw
