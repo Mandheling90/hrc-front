@@ -6,18 +6,18 @@ export const APPLY_PARTNER_HOSPITAL_MUTATION = gql`
       id
       applicantId
       hospitalCode
-      hospitalId
+      careInstitutionNo
+      partnerType
+      hospitalName
+      hospitalAddress
+      hospitalAddressDetail
+      hospitalPhone
+      hospitalRepresentative
+      hospitalZipCode
+      hospitalFaxNumber
+      hospitalWebsite
       institutionType
       status
-      hospital {
-        id
-        name
-        address
-        addressDetail
-        phone
-        zipCode
-        phisCode
-      }
       createdAt
       updatedAt
     }
@@ -30,18 +30,18 @@ export const SAVE_DRAFT_PARTNER_APPLICATION_MUTATION = gql`
       id
       applicantId
       hospitalCode
-      hospitalId
+      careInstitutionNo
+      partnerType
+      hospitalName
+      hospitalAddress
+      hospitalAddressDetail
+      hospitalPhone
+      hospitalRepresentative
+      hospitalZipCode
+      hospitalFaxNumber
+      hospitalWebsite
       institutionType
       status
-      hospital {
-        id
-        name
-        address
-        addressDetail
-        phone
-        zipCode
-        phisCode
-      }
       createdAt
       updatedAt
     }
@@ -54,7 +54,9 @@ export const SUBMIT_PARTNER_APPLICATION_MUTATION = gql`
       id
       status
       hospitalCode
-      hospitalId
+      careInstitutionNo
+      partnerType
+      hospitalName
       institutionType
       createdAt
       updatedAt
@@ -74,19 +76,17 @@ export const UPDATE_PARTNER_APPLICATION_MUTATION = gql`
       id
       status
       hospitalCode
-      hospitalId
+      careInstitutionNo
+      partnerType
+      hospitalName
+      hospitalAddress
+      hospitalAddressDetail
+      hospitalPhone
+      hospitalRepresentative
+      hospitalZipCode
+      hospitalFaxNumber
+      hospitalWebsite
       institutionType
-      hospital {
-        id
-        name
-        address
-        addressDetail
-        phone
-        website
-        zipCode
-        phisCode
-        faxNumber
-      }
       directorName
       directorPhone
       directorEmail
