@@ -6,18 +6,21 @@ export const APPLY_PARTNER_HOSPITAL_MUTATION = gql`
       id
       applicantId
       hospitalCode
-      careInstitutionNo
-      partnerType
-      hospitalName
-      hospitalAddress
-      hospitalAddressDetail
-      hospitalPhone
-      hospitalRepresentative
-      hospitalZipCode
-      hospitalFaxNumber
-      hospitalWebsite
+      hospitalId
       institutionType
       status
+      hospital {
+        id
+        name
+        address
+        addressDetail
+        phone
+        zipCode
+        phisCode
+        faxNumber
+        website
+        representative
+      }
       createdAt
       updatedAt
     }
@@ -30,18 +33,21 @@ export const SAVE_DRAFT_PARTNER_APPLICATION_MUTATION = gql`
       id
       applicantId
       hospitalCode
-      careInstitutionNo
-      partnerType
-      hospitalName
-      hospitalAddress
-      hospitalAddressDetail
-      hospitalPhone
-      hospitalRepresentative
-      hospitalZipCode
-      hospitalFaxNumber
-      hospitalWebsite
+      hospitalId
       institutionType
       status
+      hospital {
+        id
+        name
+        address
+        addressDetail
+        phone
+        zipCode
+        phisCode
+        faxNumber
+        website
+        representative
+      }
       createdAt
       updatedAt
     }
@@ -54,9 +60,7 @@ export const SUBMIT_PARTNER_APPLICATION_MUTATION = gql`
       id
       status
       hospitalCode
-      careInstitutionNo
-      partnerType
-      hospitalName
+      hospitalId
       institutionType
       createdAt
       updatedAt
@@ -76,17 +80,20 @@ export const UPDATE_PARTNER_APPLICATION_MUTATION = gql`
       id
       status
       hospitalCode
-      careInstitutionNo
-      partnerType
-      hospitalName
-      hospitalAddress
-      hospitalAddressDetail
-      hospitalPhone
-      hospitalRepresentative
-      hospitalZipCode
-      hospitalFaxNumber
-      hospitalWebsite
+      hospitalId
       institutionType
+      hospital {
+        id
+        name
+        address
+        addressDetail
+        phone
+        website
+        zipCode
+        phisCode
+        faxNumber
+        representative
+      }
       directorName
       directorPhone
       directorEmail

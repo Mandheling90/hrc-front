@@ -268,3 +268,4 @@ export const EHR_HOSPITAL_INFO_QUERY = gql`
     }
   }
 `
+

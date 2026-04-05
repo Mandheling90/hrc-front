@@ -13,6 +13,7 @@ export const LOGIN_MUTATION = gql`
         userName
         userType
         hospitalCode
+        hospitalId
         phone
         status
         mustChangePw
@@ -148,6 +149,7 @@ export const REFRESH_TOKEN_MUTATION = gql`
         userName
         userType
         hospitalCode
+        hospitalId
         phone
         status
         mustChangePw
