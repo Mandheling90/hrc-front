@@ -3425,10 +3425,10 @@ enum PartnerStatus {
 """협력병의원 유형 (EHR hsptClsfCd 기준)"""
 enum PartnerType {
   """협력병원"""
-  H
+  A
 
   """협력의원"""
-  M
+  B
 }
 
 """EHR 환자 날짜별 조회 입력 - 환자번호 + 날짜 기반"""
