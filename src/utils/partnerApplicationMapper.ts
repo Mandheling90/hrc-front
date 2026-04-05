@@ -1,4 +1,4 @@
-import { InstitutionType } from '@/graphql/__generated__/types'
+import { InstitutionType, PartnerType } from '@/graphql/__generated__/types'
 import type { HospitalCode, ApplyPartnerHospitalInput } from '@/graphql/__generated__/types'
 import type {
   HospitalInfoStepData,
@@ -138,6 +138,7 @@ export function mapStepsToApiInput(
 
   return {
     hospitalCode,
+    partnerType: PartnerType.A,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
     institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
 
@@ -419,6 +420,7 @@ export function mapClinicStepsToApiInput(
 
   return {
     hospitalCode,
+    partnerType: PartnerType.B,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
     institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
 
