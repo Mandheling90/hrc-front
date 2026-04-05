@@ -1,7 +1,25 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
 
+const graphqlEndpoint =
+  process.env.CODEGEN_SCHEMA_URL ||
+  process.env.NEXT_PUBLIC_GRAPHQL_URL ||
+  'http://localhost:8000/graphql'
+
+const hospitalCodeHeader =
+  process.env.CODEGEN_HOSPITAL_CODE ||
+  process.env.NEXT_PUBLIC_HOSPITAL_CODE ||
+  'ANAM'
+
 const config: CodegenConfig = {
-  schema: './src/graphql/schema.graphql',
+  schema: [
+    {
+      [graphqlEndpoint]: {
+        headers: {
+          'x-hospital-code': hospitalCodeHeader
+        }
+      }
+    }
+  ],
   documents: [
     'src/graphql/**/*.ts',
     '!src/graphql/econsult/**/*.ts',
