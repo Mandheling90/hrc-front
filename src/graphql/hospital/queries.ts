@@ -251,3 +251,20 @@ export const EHR_HOSPITAL_SEARCH_QUERY = gql`
     }
   }
 `
+
+export const EHR_HOSPITAL_INFO_QUERY = gql`
+  query EhrGetCollaboratingHospitalInfo($input: GetCollaboratingHospitalInfoInput!) {
+    ehrGetCollaboratingHospitalInfo(input: $input) {
+      name
+      careInstitutionNo
+      address
+      addressDetail
+      zipCode
+      phone
+      fax
+      website
+      representative
+      classificationCode
+    }
+  }
+`

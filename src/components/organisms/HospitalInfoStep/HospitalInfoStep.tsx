@@ -18,10 +18,12 @@ export interface HospitalInfoStepProps {
   totalSteps?: number
   /** 초기값 (임시저장 불러오기용) */
   defaultValues?: Partial<HospitalInfoStepData>
+  /** 병원 검색 버튼 숨김 */
+  hideSearch?: boolean
 }
 
 export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, HospitalInfoStepProps>(
-  ({ currentStep = 1, totalSteps = 8, defaultValues }, ref) => {
+  ({ currentStep = 1, totalSteps = 8, defaultValues, hideSearch }, ref) => {
     const [hospitalName, setHospitalName] = useState(defaultValues?.hospitalName ?? '')
     const [medicalInstitutionNumber, setMedicalInstitutionNumber] = useState(
       defaultValues?.medicalInstitutionNumber ?? ''
@@ -99,9 +101,11 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             value={hospitalName}
             onChange={e => setHospitalName(e.target.value)}
             disabled
-            buttonText='병원 검색'
-            onButtonClick={handleHospitalSearch}
-            buttonIcon={<SearchIcon width={20} height={20} fill='#fff' />}
+            {...(!hideSearch && {
+              buttonText: '병원 검색',
+              onButtonClick: handleHospitalSearch,
+              buttonIcon: <SearchIcon width={20} height={20} fill='#fff' />
+            })}
           />
 
           {/* 요양기관번호 */}

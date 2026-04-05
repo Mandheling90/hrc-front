@@ -42,7 +42,7 @@ export interface DirectorInfoStepData {
 /** Step 3: 실무자 정보 */
 export interface StaffInfoStepData {
   staffName: string
-  deptType: '부서' | '진료과'
+  deptType: 'B' | 'A'
   department: string
   position: string
   contactNumber: string
@@ -129,7 +129,7 @@ export interface BasicTreatmentStepData {
 /** 의원 Step 3: 실무자 정보 + 병상/시설/장비 + 세부정보 */
 export interface ClinicStaffInfoStepData {
   staffName: string
-  deptType: '부서' | '진료과'
+  deptType: 'B' | 'A'
   department: string
   position: string
   contactNumber: string

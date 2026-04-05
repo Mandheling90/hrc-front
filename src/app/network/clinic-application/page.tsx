@@ -16,7 +16,7 @@ import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalChar
 import { LoadSaveModal } from '@/components/molecules/LoadSaveModal/LoadSaveModal'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
-import { useHospital, useEnums } from '@/hooks'
+import { useHospital, useEnums, useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useMyProfile } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useDraftApplication } from '@/contexts/DraftApplicationContext'
 import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById, useMyPartnerApplications } from '@/hooks'
@@ -110,30 +110,122 @@ export default function ClinicApplicationPage() {
   const step3Ref = useRef<StepRef<ClinicStaffInfoStepData>>(null)
   const step4Ref = useRef<StepRef<HospitalCharacteristicsStepData>>(null)
 
-  // 로그인 시 유저 프로필에서 병원 정보 초기값 생성
-  const userHospitalDefaults = useMemo<Partial<HospitalInfoStepData> | undefined>(() => {
-    if (!user?.profile) return undefined
-    return {
-      hospitalName: user.profile.hospName ?? '',
-      medicalInstitutionNumber: user.profile.careInstitutionNo ?? '',
-      zipCode: user.profile.hospZipCode ?? '',
-      address: user.profile.hospAddress ?? '',
-      detailAddress: user.profile.hospAddressDetail ?? '',
-      phoneNumber: user.profile.hospPhone ?? '',
-      website: user.profile.hospWebsite ?? ''
+  // 서버에서 최신 프로필 조회 (localStorage에 profile이 없을 수 있으므로)
+  const { user: profileUser, loading: profileLoading } = useMyProfile()
+
+  // ehrGetCollaboratingHospitalInfo로 병원 정보 조회하여 초기값 생성
+  const { getHospitalInfo } = useGetCollaboratingHospitalInfo()
+  const { searchHospitals } = useSearchCollaboratingHospitals()
+  const [userHospitalDefaults, setUserHospitalDefaults] = useState<Partial<HospitalInfoStepData> | undefined>(undefined)
+  const [hospitalInfoLoading, setHospitalInfoLoading] = useState(true)
+  const hospitalInfoFetched = useRef(false)
+
+  useEffect(() => {
+    if (profileLoading || hospitalInfoFetched.current) return
+
+    const profile = profileUser?.profile
+    const hospName = profile?.hospName
+    const careInstitutionNo = profile?.careInstitutionNo
+
+    if (!hospName && !careInstitutionNo) {
+      setHospitalInfoLoading(false)
+      return
     }
-  }, [user])
+
+    hospitalInfoFetched.current = true
+
+    // myProfile 기반 기본값 (API 응답에 빈 필드가 있으면 이 값으로 채움)
+    const profileDefaults: Partial<HospitalInfoStepData> = {
+      hospitalName: hospName ?? '',
+      medicalInstitutionNumber: careInstitutionNo ?? '',
+      zipCode: profile?.hospZipCode || '00000',
+      address: profile?.hospAddress ?? '',
+      detailAddress: profile?.hospAddressDetail || '000-000',
+      phoneNumber: profile?.hospPhone ?? '',
+      website: profile?.hospWebsite ?? ''
+    }
+
+    const mergeWithDefaults = (data: Partial<HospitalInfoStepData>): Partial<HospitalInfoStepData> => {
+      const merged: Partial<HospitalInfoStepData> = { ...profileDefaults }
+      for (const [key, value] of Object.entries(data)) {
+        if (value) merged[key as keyof HospitalInfoStepData] = value
+      }
+      return merged
+    }
+
+    const fetchHospitalInfo = async () => {
+      try {
+        // 요양기관번호가 있으면 ehrGetCollaboratingHospitalInfo로 직접 조회
+        if (careInstitutionNo) {
+          const info = await getHospitalInfo({
+            hospitalCode: toHospitalCode(hospital.id),
+            rcisNo: careInstitutionNo
+          })
+          if (info) {
+            setUserHospitalDefaults(mergeWithDefaults({
+              hospitalName: info.name ?? '',
+              medicalInstitutionNumber: info.careInstitutionNo ?? '',
+              zipCode: info.zipCode ?? '',
+              address: info.address ?? '',
+              detailAddress: info.addressDetail ?? '',
+              phoneNumber: info.phone ?? '',
+              faxNumber: info.fax ?? '',
+              website: info.website ?? ''
+            }))
+            setHospitalInfoLoading(false)
+            return
+          }
+        }
+
+        // 요양기관번호 조회 실패 시 병원명으로 검색
+        if (hospName) {
+          const result = await searchHospitals({
+            hospitalCode: toHospitalCode(hospital.id),
+            hsptNm: hospName
+          })
+          const matched = result?.hospitals?.find(
+            h => h.phisCode === careInstitutionNo
+          ) ?? result?.hospitals?.[0]
+
+          if (matched) {
+            setUserHospitalDefaults(mergeWithDefaults({
+              hospitalName: matched.name ?? '',
+              medicalInstitutionNumber: matched.phisCode ?? '',
+              zipCode: matched.zipCode ?? '',
+              address: matched.address ?? '',
+              detailAddress: matched.addressDetail ?? '',
+              phoneNumber: matched.phone ?? '',
+              faxNumber: matched.faxNumber ?? '',
+              website: matched.website ?? ''
+            }))
+            setHospitalInfoLoading(false)
+            return
+          }
+        }
+
+        // 둘 다 실패 시 프로필 기본값
+        setUserHospitalDefaults(profileDefaults)
+      } catch (err) {
+        console.error('[병원정보 조회] 에러:', err)
+        setUserHospitalDefaults(profileDefaults)
+      } finally {
+        setHospitalInfoLoading(false)
+      }
+    }
+
+    fetchHospitalInfo()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileLoading, profileUser, hospital.id])
 
   // 로그인 시 유저 프로필에서 병원장 정보 초기값 생성
   const userDirectorDefaults = useMemo<Partial<DirectorInfoStepData> | undefined>(() => {
     if (!user) return undefined
-    const genderMap: Record<string, string> = { M: '남자', F: '여자' }
     const defaults: Partial<DirectorInfoStepData> = {
       directorName: user.userName ?? '',
       birthDate: user.profile?.birthDate?.slice(0, 10) ?? '',
       licenseNumber: user.profile?.licenseNo ?? '',
       phone: user.phone ?? '',
-      gender: user.profile?.gender ? (genderMap[user.profile.gender] ?? '') : '',
+      gender: user.profile?.gender ?? '',
       email: user.email ?? '',
       school: user.profile?.school ?? '',
       department: user.profile?.department ?? '',
@@ -375,13 +467,14 @@ export default function ClinicApplicationPage() {
                 )}
 
                 {/* 1단계: 병원 정보 */}
-                {currentStep === 1 && (
+                {currentStep === 1 && !hospitalInfoLoading && (
                   <HospitalInfoStep
                     key={`step1-${reloadKey}`}
                     ref={step1Ref}
                     currentStep={1}
                     totalSteps={4}
                     defaultValues={stepDataCache.step1 ?? userHospitalDefaults}
+                    hideSearch
                   />
                 )}
 

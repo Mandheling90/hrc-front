@@ -36,6 +36,10 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
       return [{ value: '', label: '선택해주세요' }, ...enumOpts]
     }, [getOptions])
 
+    const genderOptions = React.useMemo(() => {
+      return getOptions('Gender')
+    }, [getOptions])
+
     const departmentOptions = React.useMemo(() => {
       return getOptions('MedicalDepartment')
     }, [getOptions])
@@ -186,10 +190,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             <Radio
               name='gender'
               value={gender}
-              options={[
-                { value: '남자', label: '남자' },
-                { value: '여자', label: '여자' }
-              ]}
+              options={genderOptions}
               onChange={setGender}
               disabled={readOnly}
             />

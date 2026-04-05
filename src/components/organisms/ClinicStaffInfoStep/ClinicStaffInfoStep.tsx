@@ -37,13 +37,20 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
     }, [getOptions])
 
     // 의료기관 유형 상태
+    // enum 데이터에서 의원 유형 옵션 조회 (의원: 50, 치과의원: 51, 한의원: 90)
+    const clinicTypeOptions = React.useMemo(() => {
+      const allOptions = getOptions('InstitutionType')
+      const clinicKeys = new Set(['50', '51', '90'])
+      return allOptions.filter(opt => clinicKeys.has(opt.value))
+    }, [getOptions])
+
     const [medicalInstitutionType, setMedicalInstitutionType] = useState<string>(
-      defaultValues?.medicalInstitutionType ?? '의원'
+      defaultValues?.medicalInstitutionType ?? '50'
     )
 
     // 실무자 정보 상태
     const [staffName, setStaffName] = useState<string>(defaultValues?.staffName ?? '')
-    const [deptType, setDeptType] = useState<'부서' | '진료과'>(defaultValues?.deptType ?? '부서')
+    const [deptType, setDeptType] = useState<'B' | 'A'>(defaultValues?.deptType as 'B' | 'A' ?? 'B')
     const [department, setDepartment] = useState<string>(defaultValues?.department ?? '')
     const [position, setPosition] = useState<string>(defaultValues?.position ?? '')
     const [contactNumber, setContactNumber] = useState<string>(defaultValues?.contactNumber ?? '')
@@ -155,11 +162,11 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
                   name='deptType'
                   value={deptType}
                   options={[
-                    { value: '부서', label: '부서' },
-                    { value: '진료과', label: '진료과' }
+                    { value: 'B', label: '부서' },
+                    { value: 'A', label: '진료과' }
                   ]}
                   onChange={val => {
-                    setDeptType(val as '부서' | '진료과')
+                    setDeptType(val as 'B' | 'A')
                     setDepartment('')
                   }}
                   className={styles.deptTypeRadio}
@@ -171,7 +178,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
                 placeholder='선택'
                 value={department}
                 onChange={setDepartment}
-                options={deptType === '부서' ? staffDeptOptions : medicalDeptOptions}
+                options={deptType === 'B' ? staffDeptOptions : medicalDeptOptions}
               />
             </div>
 
@@ -231,11 +238,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
             <Radio
               name='medicalInstitutionType'
               value={medicalInstitutionType}
-              options={[
-                { value: '의원', label: '의원' },
-                { value: '치과의원', label: '치과의원' },
-                { value: '한의원', label: '한의원' }
-              ]}
+              options={clinicTypeOptions}
               onChange={setMedicalInstitutionType}
               minWidth='180px'
             />

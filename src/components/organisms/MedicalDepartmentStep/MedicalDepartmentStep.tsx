@@ -1,10 +1,11 @@
 'use client'
 
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, { forwardRef, useImperativeHandle, useState, useMemo } from 'react'
 import { LabelInputRow } from '@/components/molecules/LabelInputRow/LabelInputRow'
 import { Checkbox } from '@/components/atoms/Checkbox/Checkbox'
 import { Button } from '@/components/atoms/Button/Button'
 import { PlusIcon } from '@/components/icons/PlusIcon'
+import { useEnums } from '@/hooks'
 import type { MedicalDepartmentStepData, StepRef } from '@/types/partner-application'
 import styles from './MedicalDepartmentStep.module.scss'
 
@@ -19,33 +20,13 @@ export interface MedicalDepartmentStepProps {
   showEquipment?: boolean
 }
 
-const DEFAULT_DEPARTMENTS: Record<string, { checked: boolean; count: string }> = {
-  familyMedicine: { checked: false, count: '' },
-  internalMedicine: { checked: false, count: '' },
-  anesthesiology: { checked: false, count: '' },
-  radiationOncology: { checked: false, count: '' },
-  pathology: { checked: false, count: '' },
-  urology: { checked: false, count: '' },
-  obstetricsGynecology: { checked: false, count: '' },
-  plasticSurgery: { checked: false, count: '' },
-  pediatrics: { checked: false, count: '' },
-  neurology: { checked: false, count: '' },
-  neurosurgery: { checked: false, count: '' },
-  nephrology: { checked: false, count: '' },
-  ophthalmology: { checked: false, count: '' },
-  radiology: { checked: false, count: '' },
-  surgery: { checked: false, count: '' },
-  emergencyMedicine: { checked: false, count: '' },
-  otorhinolaryngology: { checked: false, count: '' },
-  rehabilitationMedicine: { checked: false, count: '' },
-  psychiatry: { checked: false, count: '' },
-  orthopedicSurgery: { checked: false, count: '' },
-  laboratoryMedicine: { checked: false, count: '' },
-  dentistry: { checked: false, count: '' },
-  dermatology: { checked: false, count: '' },
-  cardiothoracicSurgery: { checked: false, count: '' },
-  koreanMedicine: { checked: false, count: '' },
-  other: { checked: false, count: '' }
+/** enum 옵션으로부터 기본 departments 객체 생성 */
+const buildDefaultDepartments = (options: { value: string }[]): Record<string, { checked: boolean; count: string }> => {
+  const map: Record<string, { checked: boolean; count: string }> = {}
+  for (const opt of options) {
+    map[opt.value] = { checked: false, count: '' }
+  }
+  return map
 }
 
 const DEFAULT_EQUIPMENT: Record<string, boolean> = {
@@ -73,9 +54,21 @@ const DEFAULT_EQUIPMENT: Record<string, boolean> = {
 
 export const MedicalDepartmentStep = forwardRef<StepRef<MedicalDepartmentStepData>, MedicalDepartmentStepProps>(
   ({ currentStep = 6, totalSteps = 8, defaultValues, showEquipment = true }, ref) => {
+    const { getOptions, error: enumError } = useEnums()
+    if (enumError) throw enumError
+
+    // enum에서 진료과 목록 조회
+    const departmentList = useMemo(() => {
+      return getOptions('MedicalDepartment').map(opt => ({ key: opt.value, label: opt.label }))
+    }, [getOptions])
+
+    const defaultDepartments = useMemo(() => {
+      return buildDefaultDepartments(getOptions('MedicalDepartment'))
+    }, [getOptions])
+
     // 진료과 운영 현황 상태
     const [departments, setDepartments] = useState<Record<string, { checked: boolean; count: string }>>(
-      defaultValues?.departments ?? DEFAULT_DEPARTMENTS
+      defaultValues?.departments ?? defaultDepartments
     )
 
     // 주요 보유 장비 상태
@@ -128,36 +121,6 @@ export const MedicalDepartmentStep = forwardRef<StepRef<MedicalDepartmentStepDat
         return newEquipment
       })
     }
-
-    // 진료과 목록
-    const departmentList = [
-      { key: 'familyMedicine', label: '가정의학과' },
-      { key: 'internalMedicine', label: '내과' },
-      { key: 'anesthesiology', label: '마취통증의학과' },
-      { key: 'radiationOncology', label: '방사선종양학과' },
-      { key: 'pathology', label: '병리과' },
-      { key: 'urology', label: '비뇨의학과' },
-      { key: 'obstetricsGynecology', label: '산부인과' },
-      { key: 'plasticSurgery', label: '성형외과' },
-      { key: 'pediatrics', label: '소아청소년과' },
-      { key: 'neurology', label: '신경과' },
-      { key: 'neurosurgery', label: '신경외과' },
-      { key: 'nephrology', label: '신장내과' },
-      { key: 'ophthalmology', label: '안과' },
-      { key: 'radiology', label: '영상의학과' },
-      { key: 'surgery', label: '외과' },
-      { key: 'emergencyMedicine', label: '응급의학과' },
-      { key: 'otorhinolaryngology', label: '이비인후과' },
-      { key: 'rehabilitationMedicine', label: '재활의학과' },
-      { key: 'psychiatry', label: '정신건강의학과' },
-      { key: 'orthopedicSurgery', label: '정형외과' },
-      { key: 'laboratoryMedicine', label: '진단검사의학과' },
-      { key: 'dentistry', label: '치과' },
-      { key: 'dermatology', label: '피부과' },
-      { key: 'cardiothoracicSurgery', label: '심장혈관흉부외과' },
-      { key: 'koreanMedicine', label: '한의학과' },
-      { key: 'other', label: '기타' }
-    ]
 
     // 장비 목록
     const equipmentList = [

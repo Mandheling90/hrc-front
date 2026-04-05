@@ -8,7 +8,7 @@ export { useLogin, useSignup, useMe, useMyProfile, useWithdrawMember, useLogout 
 export { useAuthContext } from '@/contexts/AuthContext'
 
 // Hospital Hooks - 협력 병·의원 관련
-export { useSearchCollaboratingHospitals, useRegisterHospital } from '@/hooks/useCollaboratingHospital'
+export { useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useRegisterHospital } from '@/hooks/useCollaboratingHospital'
 
 // Referral Patient Hooks - 의뢰환자 조회
 export { useReferralPatients } from '@/hooks/useReferralPatients'

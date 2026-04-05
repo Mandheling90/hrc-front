@@ -26,7 +26,7 @@ export const DEV_DIRECTOR_EXTRA: Partial<DirectorInfoStepData> = {
 
 export const DEV_STAFF_INFO: Partial<StaffInfoStepData> = {
   staffName: '[DEV] 김실무',
-  deptType: '부서',
+  deptType: 'B',
   department: '진료협력팀',
   position: '팀장',
   contactNumber: '02-1234-5670',
@@ -46,7 +46,7 @@ export const DEV_BED_FACILITY: Partial<BedAndFacilityStepData> = {
 
 export const DEV_CLINIC_STAFF_INFO: Partial<ClinicStaffInfoStepData> = {
   staffName: '[DEV] 김실무',
-  deptType: '부서',
+  deptType: 'B',
   department: '원무과',
   position: '실장',
   contactNumber: '02-9876-5432',

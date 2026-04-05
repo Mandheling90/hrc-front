@@ -39,12 +39,8 @@ const toBool = (v?: string): boolean => v === '유'
 /** 동의/비동의 → boolean */
 const toConsent = (v?: string): boolean => v === '동의'
 
-/** 남자/여자 → M/F (성별 코드 변환) */
-const toGenderCode = (v?: string): string | undefined => {
-  if (v === '남자') return 'M'
-  if (v === '여자') return 'F'
-  return emptyToUndef(v)
-}
+/** 성별 코드 (enum key: M/F 그대로 전달) */
+const toGenderCode = (v?: string): string | undefined => emptyToUndef(v)
 
 /** 문자열 → number | undefined */
 const toInt = (v?: string): number | undefined => {
@@ -53,128 +49,56 @@ const toInt = (v?: string): number | undefined => {
   return isNaN(n) ? undefined : n
 }
 
-/** 담당구분 한글 → 코드 변환 (부서:'B', 진료과:'A') */
-const toStaffDeptTypeCode = (v?: string): string | undefined => {
-  if (v === '부서') return 'B'
-  if (v === '진료과') return 'A'
-  return emptyToUndef(v)
+/** 담당구분 코드 (B/A 그대로 전달) */
+const toStaffDeptTypeCode = (v?: string): string | undefined => emptyToUndef(v)
+
+/** 숫자 코드 → GraphQL InstitutionType enum 변환 */
+const CODE_TO_INSTITUTION_TYPE: Record<string, InstitutionType> = {
+  '10': InstitutionType.TertiaryHospital,
+  '20': InstitutionType.GeneralHospital,
+  '30': InstitutionType.Hospital,
+  '31': InstitutionType.DentalHospital,
+  '32': InstitutionType.MentalHospital,
+  '40': InstitutionType.NursingHospital,
+  '50': InstitutionType.Clinic,
+  '51': InstitutionType.DentalClinic,
+  '60': InstitutionType.PublicHealth,
+  '70': InstitutionType.Institution,
+  '80': InstitutionType.Unclassified,
+  '90': InstitutionType.Oriental,
+  '99': InstitutionType.OrientalHospital
 }
 
-/** 담당구분 코드 → 한글 역변환 ('B':'부서', 'A':'진료과') */
-const fromStaffDeptTypeCode = (v?: string): '부서' | '진료과' => {
-  if (v === 'A') return '진료과'
-  return '부서'
-}
+/** GraphQL InstitutionType → 숫자 코드 역변환 */
+const INSTITUTION_TYPE_TO_CODE: Record<string, string> = Object.fromEntries(
+  Object.entries(CODE_TO_INSTITUTION_TYPE).map(([code, type]) => [type, code])
+)
 
-/** 의료기관 유형 한글 → 백엔드 InstitutionType enum 변환 */
-const INSTITUTION_TYPE_MAP: Record<string, InstitutionType> = {
-  '상급종합병원': InstitutionType.TertiaryHospital,
-  '종합병원': InstitutionType.GeneralHospital,
-  '병원': InstitutionType.Hospital,
-  '요양병원': InstitutionType.NursingHospital,
-  '한방병원': InstitutionType.OrientalHospital,
-  '치과병원': InstitutionType.DentalHospital,
-  '정신병원': InstitutionType.MentalHospital,
-  '보건기관': InstitutionType.PublicHealth,
-  '기관': InstitutionType.Institution,
-  '의원': InstitutionType.Clinic,
-  '치과의원': InstitutionType.DentalClinic,
-  '한방': InstitutionType.Oriental,
-  '한의원': InstitutionType.Oriental,
-  '미분류': InstitutionType.Unclassified
-}
-
-/** 백엔드 코드 → 의료기관 유형 한글 역변환 (ORIENTAL 중복 방지를 위해 수동 정의) */
-const INSTITUTION_TYPE_REVERSE: Record<string, string> = {
-  [InstitutionType.TertiaryHospital]: '상급종합병원',
-  [InstitutionType.GeneralHospital]: '종합병원',
-  [InstitutionType.Hospital]: '병원',
-  [InstitutionType.NursingHospital]: '요양병원',
-  [InstitutionType.OrientalHospital]: '한방병원',
-  [InstitutionType.DentalHospital]: '치과병원',
-  [InstitutionType.MentalHospital]: '정신병원',
-  [InstitutionType.PublicHealth]: '보건기관',
-  [InstitutionType.Institution]: '기관',
-  [InstitutionType.Clinic]: '의원',
-  [InstitutionType.DentalClinic]: '치과의원',
-  [InstitutionType.Oriental]: '한방',
-  [InstitutionType.Unclassified]: '미분류'
-}
-
-/** 의료기관 유형 한글 → 백엔드 InstitutionType enum */
+/** 숫자 코드 또는 GraphQL enum → InstitutionType 변환 */
 const toInstitutionTypeCode = (v?: string): InstitutionType | undefined => {
   if (!v || !v.trim()) return undefined
-  return INSTITUTION_TYPE_MAP[v] ?? undefined
+  // 숫자 코드인 경우
+  if (CODE_TO_INSTITUTION_TYPE[v]) return CODE_TO_INSTITUTION_TYPE[v]
+  // 이미 GraphQL enum 값인 경우
+  if (Object.values(InstitutionType).includes(v as InstitutionType)) return v as InstitutionType
+  return undefined
 }
 
-/** 백엔드 코드 → 의료기관 유형 한글 */
-const fromInstitutionTypeCode = (v?: string): string => {
-  if (!v) return ''
-  return INSTITUTION_TYPE_REVERSE[v] ?? v
-}
-
-/** 진료과 key → 한글 라벨 */
-const DEPARTMENT_LABEL_MAP: Record<string, string> = {
-  familyMedicine: '가정의학과',
-  internalMedicine: '내과',
-  anesthesiology: '마취통증의학과',
-  radiationOncology: '방사선종양학과',
-  pathology: '병리과',
-  urology: '비뇨의학과',
-  obstetricsGynecology: '산부인과',
-  plasticSurgery: '성형외과',
-  pediatrics: '소아청소년과',
-  neurology: '신경과',
-  neurosurgery: '신경외과',
-  nephrology: '신장내과',
-  ophthalmology: '안과',
-  radiology: '영상의학과',
-  surgery: '외과',
-  emergencyMedicine: '응급의학과',
-  otorhinolaryngology: '이비인후과',
-  rehabilitationMedicine: '재활의학과',
-  psychiatry: '정신건강의학과',
-  orthopedicSurgery: '정형외과',
-  laboratoryMedicine: '진단검사의학과',
-  dentistry: '치과',
-  dermatology: '피부과',
-  cardiothoracicSurgery: '심장혈관흉부외과',
-  koreanMedicine: '한의학과',
-  other: '기타'
-}
-
-/** departments 객체에서 checked된 진료과목을 콤마 구분 문자열로 변환 */
+/** departments 객체에서 checked된 진료과목 코드를 콤마 구분 문자열로 변환 */
 const toDepartmentString = (
   departments?: Record<string, { checked: boolean; count: string }>
 ): string | undefined => {
   if (!departments) return undefined
-  const labels = Object.entries(departments)
+  const codes = Object.entries(departments)
     .filter(([, v]) => v.checked)
-    .map(([k]) => DEPARTMENT_LABEL_MAP[k] ?? k)
-  return labels.length > 0 ? labels.join(',') : undefined
-}
-
-/** InstitutionType enum → 병원종별코드 (EHR hsptClsfCd) */
-const INSTITUTION_CODE_MAP: Record<string, string> = {
-  [InstitutionType.TertiaryHospital]: '10',
-  [InstitutionType.GeneralHospital]: '20',
-  [InstitutionType.Hospital]: '30',
-  [InstitutionType.DentalHospital]: '31',
-  [InstitutionType.MentalHospital]: '32',
-  [InstitutionType.NursingHospital]: '40',
-  [InstitutionType.Clinic]: '50',
-  [InstitutionType.DentalClinic]: '51',
-  [InstitutionType.PublicHealth]: '60',
-  [InstitutionType.Institution]: '70',
-  [InstitutionType.Unclassified]: '80',
-  [InstitutionType.Oriental]: '90',
-  [InstitutionType.OrientalHospital]: '99'
+    .map(([k]) => k)
+  return codes.length > 0 ? codes.join(',') : undefined
 }
 
 /** InstitutionType → 병원종별코드 문자열 */
 const toInstitutionCode = (type?: InstitutionType): string | undefined => {
   if (!type) return undefined
-  return INSTITUTION_CODE_MAP[type] ?? undefined
+  return INSTITUTION_TYPE_TO_CODE[type] ?? undefined
 }
 
 /** 격리 중 간병: 영문 key → 한글 라벨 */
@@ -355,7 +279,7 @@ export function mapApiToStepData(api: any): AllStepData {
       licenseNumber: api.directorLicenseNo ?? '',
       isDirector: api.isDirector ?? false,
       phone: api.directorPhone ?? '',
-      gender: api.directorGender === 'M' ? '남자' : api.directorGender === 'F' ? '여자' : (api.directorGender ?? ''),
+      gender: api.directorGender ?? '',
       carNumber: api.directorCarNo ?? '',
       email: api.directorEmail ?? '',
       school: api.directorSchool ?? '',
@@ -369,13 +293,13 @@ export function mapApiToStepData(api: any): AllStepData {
     },
     step3: {
       staffName: api.staffName ?? '',
-      deptType: fromStaffDeptTypeCode(api.staffDeptType),
+      deptType: api.staffDeptType ?? 'B',
       department: api.staffDeptValue ?? '',
       position: api.staffPosition ?? '',
       contactNumber: api.staffTel ?? '',
       mobilePhone: api.staffPhone ?? '',
       staffEmail: api.staffEmail ?? '',
-      medicalInstitutionType: fromInstitutionTypeCode(api.institutionType),
+      medicalInstitutionType: api.institutionType ? (INSTITUTION_TYPE_TO_CODE[api.institutionType] ?? api.institutionType) : '',
       totalEmployees: api.totalStaffCount?.toString() ?? '',
       specialists: api.specialistCount?.toString() ?? '',
       nurses: api.nurseCount?.toString() ?? ''
@@ -595,7 +519,7 @@ export function mapApiToClinicStepData(api: any): ClinicAllStepData {
       licenseNumber: api.directorLicenseNo ?? '',
       isDirector: api.isDirector ?? false,
       phone: api.directorPhone ?? '',
-      gender: api.directorGender === 'M' ? '남자' : api.directorGender === 'F' ? '여자' : (api.directorGender ?? ''),
+      gender: api.directorGender ?? '',
       carNumber: api.directorCarNo ?? '',
       email: api.directorEmail ?? '',
       school: api.directorSchool ?? '',
@@ -609,13 +533,13 @@ export function mapApiToClinicStepData(api: any): ClinicAllStepData {
     },
     step3: {
       staffName: api.staffName ?? '',
-      deptType: fromStaffDeptTypeCode(api.staffDeptType),
+      deptType: api.staffDeptType ?? 'B',
       department: api.staffDeptValue ?? '',
       position: api.staffPosition ?? '',
       contactNumber: api.staffTel ?? '',
       mobilePhone: api.staffPhone ?? '',
       staffEmail: api.staffEmail ?? '',
-      medicalInstitutionType: fromInstitutionTypeCode(api.institutionType) || '의원',
+      medicalInstitutionType: api.institutionType ? (INSTITUTION_TYPE_TO_CODE[api.institutionType] ?? api.institutionType) : '50',
       totalBeds: api.totalBedCount?.toString() ?? '',
       totalStaff: api.totalStaffCount?.toString() ?? '',
       specialists: api.specialistCount?.toString() ?? '',

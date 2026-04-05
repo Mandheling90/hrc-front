@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/client/react'
-import { EHR_HOSPITAL_SEARCH_QUERY } from '@/graphql/hospital/queries'
+import { EHR_HOSPITAL_SEARCH_QUERY, EHR_HOSPITAL_INFO_QUERY } from '@/graphql/hospital/queries'
 import { REGISTER_HOSPITAL_MUTATION } from '@/graphql/hospital/mutations'
 
 interface HospitalModel {
@@ -57,6 +57,38 @@ export function useSearchCollaboratingHospitals() {
     loading,
     error
   }
+}
+
+interface CollaboratingHospitalDetail {
+  name?: string
+  careInstitutionNo?: string
+  address?: string
+  addressDetail?: string
+  zipCode?: string
+  phone?: string
+  fax?: string
+  website?: string
+  representative?: string
+  classificationCode?: string
+}
+
+interface GetCollaboratingHospitalInfoInput {
+  hospitalCode: string
+  rcisNo?: string
+  drlcNo?: string
+}
+
+export function useGetCollaboratingHospitalInfo() {
+  const [query, { loading, error }] = useLazyQuery<{
+    ehrGetCollaboratingHospitalInfo: CollaboratingHospitalDetail
+  }>(EHR_HOSPITAL_INFO_QUERY)
+
+  const getHospitalInfo = useCallback(async (input: GetCollaboratingHospitalInfoInput) => {
+    const result = await query({ variables: { input } })
+    return result.data?.ehrGetCollaboratingHospitalInfo ?? null
+  }, [query])
+
+  return { getHospitalInfo, loading, error }
 }
 
 export function useRegisterHospital() {

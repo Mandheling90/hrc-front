@@ -18,23 +18,10 @@ export interface StaffInfoStepProps {
   defaultValues?: Partial<StaffInfoStepData>
 }
 
-// 병원별 의료기관 유형 옵션
-const ANAM_INSTITUTION_OPTIONS = [
-  ['상급종합병원', '종합병원', '병원'],
-  ['요양병원', '한방']
-]
-
-const GURO_INSTITUTION_OPTIONS = [
-  ['상급종합병원', '종합병원', '병원'],
-  ['요양병원', '한방병원', '치과병원'],
-  ['정신병원', '보건기관', '기관']
-]
-
-const ANSAN_INSTITUTION_OPTIONS = [
-  ['상급종합병원', '종합병원', '병원'],
-  ['요양병원', '한방병원', '치과병원'],
-  ['정신병원', '보건기관']
-]
+// 병원별로 노출할 의료기관 유형 코드 (enum key 기준)
+const ANAM_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '90'])
+const GURO_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32', '60', '70'])
+const ANSAN_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32', '60'])
 
 export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoStepProps>(
   ({ currentStep = 3, totalSteps = 8, defaultValues }, ref) => {
@@ -51,12 +38,12 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
     }, [getOptions])
 
     const [staffName, setStaffName] = useState(defaultValues?.staffName ?? '')
-    const [deptType, setDeptType] = useState<'부서' | '진료과'>(defaultValues?.deptType ?? '부서')
+    const [deptType, setDeptType] = useState<'B' | 'A'>(defaultValues?.deptType as 'B' | 'A' ?? 'B')
     const [department, setDepartment] = useState(defaultValues?.department ?? '')
     const [position, setPosition] = useState(defaultValues?.position ?? '')
     const [contactNumber, setContactNumber] = useState(defaultValues?.contactNumber ?? '')
     const [mobilePhone, setMobilePhone] = useState(defaultValues?.mobilePhone ?? '')
-    const [medicalInstitutionType, setMedicalInstitutionType] = useState(defaultValues?.medicalInstitutionType ?? '상급종합병원')
+    const [medicalInstitutionType, setMedicalInstitutionType] = useState(defaultValues?.medicalInstitutionType ?? '10')
     const [totalEmployees, setTotalEmployees] = useState(defaultValues?.totalEmployees ?? '')
     const [specialists, setSpecialists] = useState(defaultValues?.specialists ?? '')
     const [nurses, setNurses] = useState(defaultValues?.nurses ?? '')
@@ -84,12 +71,11 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
       }
     }))
 
-    // 병원별 의료기관 유형 옵션 선택
-    const institutionOptionRows = useMemo(() => {
-      if (isGuro) return GURO_INSTITUTION_OPTIONS
-      if (isAnsan) return ANSAN_INSTITUTION_OPTIONS
-      return ANAM_INSTITUTION_OPTIONS
-    }, [isGuro, isAnsan])
+    // enum 데이터에서 InstitutionType 옵션 조회 (병원별 필터 적용)
+    const institutionTypeOptions = useMemo(() => {
+      const allowedKeys = isGuro ? GURO_INSTITUTION_KEYS : isAnsan ? ANSAN_INSTITUTION_KEYS : ANAM_INSTITUTION_KEYS
+      return getOptions('InstitutionType').filter(opt => allowedKeys.has(opt.value))
+    }, [getOptions, isGuro, isAnsan])
 
     return (
       <div className={styles.stepContainer}>
@@ -129,11 +115,11 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
                   name='deptType'
                   value={deptType}
                   options={[
-                    { value: '부서', label: '부서' },
-                    { value: '진료과', label: '진료과' }
+                    { value: 'B', label: '부서' },
+                    { value: 'A', label: '진료과' }
                   ]}
                   onChange={val => {
-                    setDeptType(val as '부서' | '진료과')
+                    setDeptType(val as 'B' | 'A')
                     setDepartment('')
                   }}
                   className={styles.deptTypeRadio}
@@ -145,7 +131,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
                 placeholder='선택'
                 value={department}
                 onChange={setDepartment}
-                options={deptType === '부서' ? staffDeptOptions : medicalDeptOptions}
+                options={deptType === 'B' ? staffDeptOptions : medicalDeptOptions}
               />
             </div>
 
@@ -203,12 +189,12 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
 
           <div className={styles.formContent}>
             <div className={styles.radioGroupContainer}>
-              {institutionOptionRows.map((row, rowIndex) => (
-                <div key={rowIndex} className={styles.radioRow}>
+              {Array.from({ length: Math.ceil(institutionTypeOptions.length / 3) }, (_, i) => (
+                <div key={i} className={styles.radioRow}>
                   <Radio
                     name='medicalInstitutionType'
                     value={medicalInstitutionType}
-                    options={row.map(value => ({ value, label: value }))}
+                    options={institutionTypeOptions.slice(i * 3, i * 3 + 3)}
                     onChange={setMedicalInstitutionType}
                     className={styles.medicalInstitutionRadio}
                   />
