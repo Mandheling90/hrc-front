@@ -438,25 +438,22 @@ input ApplyPartnerHospitalInput {
   """신청 대상 병원 코드 (안암/구로/안산)"""
   hospitalCode: HospitalCode!
 
-  """병원 팩스번호 (Hospital 테이블 업데이트)"""
+  """병원 팩스번호"""
   hospitalFaxNumber: String
 
-  """병원 ID (Hospital 테이블)"""
-  hospitalId: String!
-
-  """병원명 (Hospital 테이블 업데이트)"""
+  """병원명"""
   hospitalName: String
 
-  """병원 대표전화 (Hospital 테이블 업데이트)"""
+  """병원 대표전화"""
   hospitalPhone: String
 
-  """병원 홈페이지 주소 (Hospital 테이블 업데이트)"""
+  """병원 홈페이지 주소"""
   hospitalWebsite: String
 
-  """병원 우편번호 (Hospital 테이블 업데이트)"""
+  """병원 우편번호"""
   hospitalZipCode: String
 
-  """요양기관번호 (Hospital 테이블 업데이트)"""
+  """요양기관번호"""
   hospitalPhisCode: String
 
   """중환자실 수"""
@@ -3088,17 +3085,14 @@ type PartnerApplicationModel {
   """병원장 연락처"""
   directorPhone: String
 
-  """협력 병의원 정보"""
-  hospital: HospitalModel!
-
   """소속 병원 코드"""
   hospitalCode: HospitalCode!
 
-  """병원 ID"""
-  hospitalId: String!
-
   """신청 ID"""
   id: ID!
+
+  """의료기관 유형"""
+  institutionType: InstitutionType
 
   """반려 사유"""
   rejectReason: String
@@ -3274,14 +3268,41 @@ type PartnerHospitalModel {
   """공동 간병 유무"""
   hasSharedCare: Boolean
 
-  """병원 정보"""
-  hospital: HospitalModel!
+  """요양기관번호"""
+  careInstitutionNo: String
+
+  """협력 유형"""
+  partnerType: PartnerType
+
+  """병원명"""
+  hospitalName: String
+
+  """병원 주소"""
+  hospitalAddress: String
+
+  """병원 상세주소"""
+  hospitalAddressDetail: String
+
+  """병원 전화번호"""
+  hospitalPhone: String
+
+  """병원 대표자"""
+  hospitalRepresentative: String
+
+  """병원 우편번호"""
+  hospitalZipCode: String
+
+  """병원 팩스번호"""
+  hospitalFaxNumber: String
+
+  """병원 홈페이지"""
+  hospitalWebsite: String
+
+  """병원 진료과목"""
+  hospitalSpecialties: String
 
   """신청 대상 병원 코드"""
   hospitalCode: HospitalCode!
-
-  """병원 ID (FK)"""
-  hospitalId: String!
 
   """중환자실 수"""
   icuCount: Int
@@ -4617,13 +4638,10 @@ input SaveDraftPartnerInput {
   """신청 대상 병원 코드 (안암/구로/안산)"""
   hospitalCode: HospitalCode
 
-  """병원 팩스번호 (Hospital 테이블 업데이트)"""
+  """병원 팩스번호"""
   hospitalFaxNumber: String
 
-  """병원 ID (Hospital 테이블)"""
-  hospitalId: String!
-
-  """병원명 (Hospital 테이블 업데이트)"""
+  """병원명"""
   hospitalName: String
 
   """병원 대표전화 (Hospital 테이블 업데이트)"""

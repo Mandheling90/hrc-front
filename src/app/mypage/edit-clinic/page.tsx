@@ -152,8 +152,7 @@ export default function EditClinicPage() {
       if (!application?.id) return
 
       const allData = collectAllData()
-      const hospitalId = application.hospitalId ?? ''
-      const mapped = mapClinicStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
+      const mapped = mapClinicStepsToApiInput(allData, toHospitalCode(hospital.id))
 
       try {
         // 새 첨부파일 업로드
@@ -182,7 +181,6 @@ export default function EditClinicPage() {
 
         // UpdatePartnerApplicationInput에 없는 필드 제거 후 id 추가
         const {
-          hospitalId: _hId,
           hospitalCode: _hCode,
           hospitalPhisCode: _phisCode,
           institutionCode: _instCode,

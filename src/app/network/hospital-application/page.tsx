@@ -312,8 +312,7 @@ export default function HospitalApplicationPage() {
     } else if (currentStep === totalSteps) {
       // 마지막 단계 → 신청 제출
       const allData = collectAllData()
-      const hospitalId = user?.hospitalId ?? user?.id ?? ''
-      const input = mapStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
+      const input = mapStepsToApiInput(allData, toHospitalCode(hospital.id))
 
       try {
         // 첨부파일 업로드
@@ -353,8 +352,7 @@ export default function HospitalApplicationPage() {
   // 임시저장 핸들러
   const handleSaveDraft = async () => {
     const allData = collectAllData()
-    const hospitalId = user?.hospitalId ?? user?.id ?? ''
-    const input = mapStepsToApiInput(allData, hospitalId, toHospitalCode(hospital.id))
+    const input = mapStepsToApiInput(allData, toHospitalCode(hospital.id))
 
     try {
       // 첨부파일 업로드

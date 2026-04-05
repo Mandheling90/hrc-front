@@ -132,13 +132,11 @@ const toKoreanLabels = (
  */
 export function mapStepsToApiInput(
   data: AllStepData,
-  hospitalId: string,
   hospitalCode: HospitalCode
 ): ApplyPartnerHospitalInput {
   const { step1, step2, step3, step4, step5, step6, step7, step8 } = data
 
   return {
-    hospitalId,
     hospitalCode,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
     institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
@@ -415,13 +413,11 @@ export interface ClinicAllStepData {
  */
 export function mapClinicStepsToApiInput(
   data: ClinicAllStepData,
-  hospitalId: string,
   hospitalCode: HospitalCode
 ): ApplyPartnerHospitalInput {
   const { step1, step2, step3, step4 } = data
 
   return {
-    hospitalId,
     hospitalCode,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
     institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),

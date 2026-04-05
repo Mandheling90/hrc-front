@@ -6,21 +6,19 @@ export const MY_PARTNER_APPLICATION_QUERY = gql`
       id
       applicantId
       hospitalCode
-      hospitalId
+      careInstitutionNo
+      partnerType
+      hospitalName
+      hospitalAddress
+      hospitalAddressDetail
+      hospitalPhone
+      hospitalRepresentative
+      hospitalZipCode
+      hospitalFaxNumber
+      hospitalWebsite
+      hospitalSpecialties
       institutionType
       status
-      hospital {
-        id
-        name
-        address
-        addressDetail
-        phone
-        website
-        zipCode
-        phisCode
-        faxNumber
-        representative
-      }
       isDirector
       directorName
       directorBirthDate
@@ -109,21 +107,19 @@ export const MY_PARTNER_APPLICATIONS_QUERY = gql`
         id
         applicantId
         hospitalCode
-        hospitalId
+        careInstitutionNo
+        partnerType
+        hospitalName
+        hospitalAddress
+        hospitalAddressDetail
+        hospitalPhone
+        hospitalRepresentative
+        hospitalZipCode
+        hospitalFaxNumber
+        hospitalWebsite
+        hospitalSpecialties
         institutionType
         status
-        hospital {
-          id
-          name
-          address
-          addressDetail
-          phone
-          website
-          zipCode
-          phisCode
-          faxNumber
-          representative
-        }
         isDirector
         directorName
         directorBirthDate
@@ -215,21 +211,19 @@ export const PARTNER_APPLICATION_BY_ID_QUERY = gql`
       id
       applicantId
       hospitalCode
-      hospitalId
+      careInstitutionNo
+      partnerType
+      hospitalName
+      hospitalAddress
+      hospitalAddressDetail
+      hospitalPhone
+      hospitalRepresentative
+      hospitalZipCode
+      hospitalFaxNumber
+      hospitalWebsite
+      hospitalSpecialties
       institutionType
       status
-      hospital {
-        id
-        name
-        phisCode
-        address
-        addressDetail
-        phone
-        zipCode
-        faxNumber
-        website
-        representative
-      }
       isDirector
       directorName
       directorBirthDate
