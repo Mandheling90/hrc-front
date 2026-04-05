@@ -14,7 +14,6 @@ import {
   HospitalSearchModal,
   HospitalSearchResult
 } from '@/components/molecules/HospitalSearchModal/HospitalSearchModal'
-import { SCHOOL_OPTIONS } from '@/types/hospital-application'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { useLazyQuery } from '@apollo/client/react'
 import { CHECK_USER_ID_QUERY } from '@/graphql/auth/queries'
@@ -119,37 +118,6 @@ const consentOptions = [
   { value: 'N', label: '비동의' }
 ]
 
-// 회원구분 옵션 (fallback - enum 조회 실패 시)
-const MEMBER_TYPE_OPTIONS_FALLBACK = [
-  { value: 'DOCTOR', label: '의사' },
-  { value: 'DENTIST', label: '치과의사' },
-  { value: 'ORIENTAL_DOCTOR', label: '한의사' }
-]
-
-// 진료과 옵션 (fallback)
-const DEPARTMENT_OPTIONS_FALLBACK = [
-  { value: '', label: '선택해주세요' },
-  { value: '내과', label: '내과' },
-  { value: '외과', label: '외과' },
-  { value: '정형외과', label: '정형외과' },
-  { value: '신경외과', label: '신경외과' },
-  { value: '산부인과', label: '산부인과' },
-  { value: '소아과', label: '소아과' },
-  { value: '이비인후과', label: '이비인후과' },
-  { value: '안과', label: '안과' },
-  { value: '피부과', label: '피부과' },
-  { value: '정신건강의학과', label: '정신건강의학과' },
-  { value: '재활의학과', label: '재활의학과' },
-  { value: '마취통증의학과', label: '마취통증의학과' },
-  { value: '영상의학과', label: '영상의학과' },
-  { value: '병리과', label: '병리과' },
-  { value: '진단검사의학과', label: '진단검사의학과' },
-  { value: '응급의학과', label: '응급의학과' },
-  { value: '소화기내과', label: '소화기내과' },
-  { value: '심장내과', label: '심장내과' },
-  { value: '호흡기내과', label: '호흡기내과' },
-  { value: '신경과', label: '신경과' }
-]
 
 
 export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
@@ -167,27 +135,23 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   showWithdrawButton = false,
   onWithdraw
 }) => {
-  const { getOptions } = useEnums()
+  const { getOptions, loading: enumLoading, error: enumError } = useEnums()
+  if (enumError) throw enumError
 
-  // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
   const schoolOptions = useMemo(() => {
-    const enumOpts = getOptions('School')
-    return enumOpts.length > 0 ? [{ value: '', label: '선택해주세요' }, ...enumOpts] : SCHOOL_OPTIONS
+    return [{ value: '', label: '선택해주세요' }, ...getOptions('School')]
   }, [getOptions])
 
   const departmentOptions = useMemo(() => {
-    const enumOpts = getOptions('MedicalDepartment')
-    return enumOpts.length > 0 ? [{ value: '', label: '선택해주세요' }, ...enumOpts] : DEPARTMENT_OPTIONS_FALLBACK
+    return [{ value: '', label: '선택해주세요' }, ...getOptions('MedicalDepartment')]
   }, [getOptions])
 
   const memberTypeOptions = useMemo(() => {
-    const enumOpts = getOptions('DoctorType')
-    return enumOpts.length > 0 ? enumOpts : MEMBER_TYPE_OPTIONS_FALLBACK
+    return getOptions('DoctorType')
   }, [getOptions])
 
-  // enum 로드 시 memberType 기본값을 첫 번째 enum 옵션으로 설정
   const defaultMemberType = useMemo(() => {
-    return memberTypeOptions.length > 0 ? memberTypeOptions[0].value : 'DOCTOR'
+    return memberTypeOptions.length > 0 ? memberTypeOptions[0].value : ''
   }, [memberTypeOptions])
 
   const [formData, setFormData] = useState<MemberInfoFormData>({

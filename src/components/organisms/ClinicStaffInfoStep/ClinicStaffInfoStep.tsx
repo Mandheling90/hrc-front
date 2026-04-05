@@ -8,7 +8,6 @@ import { Select } from '@/components/atoms/Select/Select'
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup/CheckboxGroup'
 import { Textarea } from '@/components/atoms/Textarea/Textarea'
 import { LabelInputRowGroup } from '@/components/molecules/LabelInputRowGroup/LabelInputRowGroup'
-import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import { useEnums } from '@/hooks'
 import type { StepRef, ClinicStaffInfoStepData } from '@/types/partner-application'
 import styles from './ClinicStaffInfoStep.module.scss'
@@ -26,17 +25,15 @@ export interface ClinicStaffInfoStepProps {
 
 export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, ClinicStaffInfoStepProps>(
   ({ currentStep = 3, totalSteps = 4, defaultValues, showHospitalDetail = true }, ref) => {
-    const { getOptions } = useEnums()
+    const { getOptions, loading: enumLoading, error: enumError } = useEnums()
+    if (enumError) throw enumError
 
-    // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
     const staffDeptOptions = React.useMemo(() => {
-      const enumOpts = getOptions('Division')
-      return enumOpts.length > 0 ? enumOpts : STAFF_DEPARTMENT_OPTIONS
+      return getOptions('Division')
     }, [getOptions])
 
     const medicalDeptOptions = React.useMemo(() => {
-      const enumOpts = getOptions('MedicalDepartment')
-      return enumOpts.length > 0 ? enumOpts : MEDICAL_DEPARTMENT_OPTIONS
+      return getOptions('MedicalDepartment')
     }, [getOptions])
 
     // 의료기관 유형 상태

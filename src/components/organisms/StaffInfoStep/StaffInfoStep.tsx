@@ -5,7 +5,6 @@ import { FormField } from '@/components/molecules/FormField/FormField'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
-import { STAFF_DEPARTMENT_OPTIONS, MEDICAL_DEPARTMENT_OPTIONS } from '@/types/hospital-application'
 import { useHospital, useEnums } from '@/hooks'
 import type { StaffInfoStepData, StepRef } from '@/types/partner-application'
 import styles from './StaffInfoStep.module.scss'
@@ -40,17 +39,15 @@ const ANSAN_INSTITUTION_OPTIONS = [
 export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoStepProps>(
   ({ currentStep = 3, totalSteps = 8, defaultValues }, ref) => {
     const { isGuro, isAnsan } = useHospital()
-    const { getOptions } = useEnums()
+    const { getOptions, loading: enumLoading, error: enumError } = useEnums()
+    if (enumError) throw enumError
 
-    // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
     const staffDeptOptions = useMemo(() => {
-      const enumOpts = getOptions('Division')
-      return enumOpts.length > 0 ? enumOpts : STAFF_DEPARTMENT_OPTIONS
+      return getOptions('Division')
     }, [getOptions])
 
     const medicalDeptOptions = useMemo(() => {
-      const enumOpts = getOptions('MedicalDepartment')
-      return enumOpts.length > 0 ? enumOpts : MEDICAL_DEPARTMENT_OPTIONS
+      return getOptions('MedicalDepartment')
     }, [getOptions])
 
     const [staffName, setStaffName] = useState(defaultValues?.staffName ?? '')

@@ -7,7 +7,6 @@ import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
 import { DatePicker } from '@/components/atoms/DatePicker/DatePicker'
-import { DEPARTMENT_OPTIONS, SCHOOL_OPTIONS } from '@/types/hospital-application'
 import { useEnums } from '@/hooks'
 import type { DirectorInfoStepData, StepRef } from '@/types/partner-application'
 import styles from './DirectorInfoStep.module.scss'
@@ -29,17 +28,16 @@ export interface DirectorInfoStepProps {
 
 export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, DirectorInfoStepProps>(
   ({ currentStep = 2, totalSteps = 8, institutionType = '병원', defaultValues, readOnly = false }, ref) => {
-    const { getOptions } = useEnums()
+    const { getOptions, loading: enumLoading, error: enumError } = useEnums()
+    if (enumError) throw enumError
 
-    // enum에서 가져온 옵션 (없으면 하드코딩 fallback)
     const schoolOptions = React.useMemo(() => {
       const enumOpts = getOptions('School')
-      return enumOpts.length > 0 ? [{ value: '', label: '선택해주세요' }, ...enumOpts] : SCHOOL_OPTIONS
+      return [{ value: '', label: '선택해주세요' }, ...enumOpts]
     }, [getOptions])
 
     const departmentOptions = React.useMemo(() => {
-      const enumOpts = getOptions('MedicalDepartment')
-      return enumOpts.length > 0 ? enumOpts : DEPARTMENT_OPTIONS
+      return getOptions('MedicalDepartment')
     }, [getOptions])
 
     const [directorName, setDirectorName] = React.useState(defaultValues?.directorName ?? '')
