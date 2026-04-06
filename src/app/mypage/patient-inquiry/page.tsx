@@ -108,7 +108,8 @@ function mapApiToPatientData(item: ReferralPatientItem): PatientData {
 const periodOptions = [
   { value: '1month', label: '1개월' },
   { value: '6months', label: '6개월' },
-  { value: '1year', label: '1년' }
+  { value: '1year', label: '1년' },
+  { value: '3years', label: '3년' }
 ]
 
 const sortOptions = [
@@ -133,6 +134,7 @@ function calcDateRange(periodValue: string) {
     case '1month': from.setMonth(from.getMonth() - 1); break
     case '6months': from.setMonth(from.getMonth() - 6); break
     case '1year': from.setFullYear(from.getFullYear() - 1); break
+    case '3years': from.setFullYear(from.getFullYear() - 3); break
   }
   const fmt = (d: Date) => d.toISOString().split('T')[0]
   return { start: fmt(from), end: fmt(now) }
@@ -141,7 +143,7 @@ function calcDateRange(periodValue: string) {
 export default function PatientInquiryPage() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [period, setPeriod] = useState('1year')
+  const [period, setPeriod] = useState('3years')
   const [sortBy, setSortBy] = useState('latest')
   const [searchType, setSearchType] = useState('all')
   const [searchKeyword, setSearchKeyword] = useState('')
