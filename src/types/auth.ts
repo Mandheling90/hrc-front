@@ -29,6 +29,8 @@ export interface UserProfile {
   emailConsent: boolean
   replyConsent: boolean
   specialty: string | null
+  graduationYear: string | null
+  trainingHospital: string | null
 }
 
 export interface AuthUser {

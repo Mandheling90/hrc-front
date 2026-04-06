@@ -84,14 +84,24 @@ export const UPDATE_DOCTOR_PROFILE_MUTATION = gql`
   mutation UpdateDoctorProfile($input: UpdateDoctorProfileInput!) {
     updateDoctorProfile(input: $input) {
       id
+      userId
       userName
+      email
+      phone
+      userType
+      status
+      hospitalCode
       profile {
+        birthDate
+        gender
         doctorType
         licenseNo
         isDirector
         school
         specialty
         department
+        graduationYear
+        trainingHospital
         smsConsent
         emailConsent
         replyConsent
