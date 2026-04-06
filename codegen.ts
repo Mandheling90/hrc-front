@@ -3,7 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 const graphqlEndpoint =
   process.env.CODEGEN_SCHEMA_URL ||
   process.env.NEXT_PUBLIC_GRAPHQL_URL ||
-  'http://localhost:8000/graphql'
+  'http://api-service:8000/graphql'
 
 const hospitalCodeHeader =
   process.env.CODEGEN_HOSPITAL_CODE ||
