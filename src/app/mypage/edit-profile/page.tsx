@@ -64,12 +64,6 @@ const mapUserToFormData = (user: AuthUser): Partial<MemberInfoFormData> => {
   }
 }
 
-/** 폼 라디오 value → 서버 enum 매핑 */
-const FORM_TO_DOCTOR_TYPE: Record<string, string> = {
-  '1': 'DOCTOR',
-  '2': 'ORIENTAL_DOCTOR',
-  '3': 'DENTIST'
-}
 
 /** 폼 데이터를 API 입력 형식으로 변환 */
 const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput => {
@@ -77,7 +71,7 @@ const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput 
     userName: data.name,
     email: data.email,
     phone: data.phone,
-    doctorType: FORM_TO_DOCTOR_TYPE[data.memberType] || data.memberType,
+    doctorType: data.memberType,
     licenseNo: data.licenseNumber,
     isDirector: data.isDirector,
     school: data.school,
