@@ -41,8 +41,13 @@ export function useReferralPatients() {
   }>(EHR_REFERRAL_PATIENTS_QUERY, { fetchPolicy: 'network-only' })
 
   const searchReferralPatients = useCallback(async (input: ReferralPatientQueryInput) => {
-    const result = await searchQuery({ variables: { input } })
-    return result.data?.ehrGetReferralPatients ?? null
+    try {
+      const result = await searchQuery({ variables: { input } })
+      return result.data?.ehrGetReferralPatients ?? null
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return null
+      throw err
+    }
   }, [searchQuery])
 
   return {

@@ -146,6 +146,10 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
     return [{ value: '', label: '선택해주세요' }, ...getOptions('MedicalDepartment')]
   }, [getOptions])
 
+  const genderOptions = useMemo(() => {
+    return getOptions('Gender')
+  }, [getOptions])
+
   const memberTypeOptions = useMemo(() => {
     return getOptions('DoctorType')
   }, [getOptions])
@@ -582,10 +586,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               <Radio
                 name='gender'
                 value={formData.gender}
-                options={[
-                  { value: 'M', label: '남성' },
-                  { value: 'F', label: '여성' }
-                ]}
+                options={genderOptions}
                 onChange={() => {}}
                 disabled={true}
               />
