@@ -197,6 +197,26 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }, [isOpen])
 
+  // 2뎁스 로딩 완료 후 자문의가 없으면 알림 모달 표시
+  useEffect(() => {
+    if (step === 'doctor' && !useExternal && !consultantLoading && consultantData) {
+      const list = consultantData.consultantDoctors ?? []
+      if (list.length === 0 && selectedDepartmentCode !== null) {
+        setNoDoctorAlert(true)
+      }
+    }
+  }, [step, useExternal, consultantLoading, consultantData, selectedDepartmentCode])
+
+  const handleNoDoctorAlertClose = () => {
+    setNoDoctorAlert(false)
+    // 확인 누르면 1뎁스(진료과 선택)로 복귀
+    setStep('department')
+    setSelectedDepartmentCode(null)
+    setSelectedDepartmentName(null)
+    setSearchQuery('')
+    setSelectedDoctorId(null)
+  }
+
   if (!isOpen) return null
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -205,30 +225,14 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
     }
   }
 
-  const handleDepartmentClick = async (deptCode: string | null, deptName: string | null) => {
-    // "전체"는 기존처럼 바로 2뎁스로 이동
-    if (!deptCode) {
-      setSelectedDepartmentCode(null)
-      setSelectedDepartmentName(null)
-      setStep('doctor')
-      fetchConsultants({ variables: {} })
-      return
-    }
-
-    // 선택한 진료과 코드로 자문의 목록 조회 후 결과 확인
-    const result = await fetchConsultants({
-      variables: { departmentCode: deptCode }
-    })
-
-    const doctors = result.data?.consultantDoctors ?? []
-    if (doctors.length === 0) {
-      setNoDoctorAlert(true)
-      return
-    }
-
+  const handleDepartmentClick = (deptCode: string | null, deptName: string | null) => {
     setSelectedDepartmentCode(deptCode)
     setSelectedDepartmentName(deptName)
     setStep('doctor')
+    // 선택한 진료과 코드로 자문의 목록 조회
+    fetchConsultants({
+      variables: deptCode ? { departmentCode: deptCode } : {}
+    })
   }
 
   const handleBackToDepartment = () => {
@@ -445,8 +449,8 @@ export const DoctorSearchModal: React.FC<DoctorSearchModalProps> = ({
       <AlertModal
         isOpen={noDoctorAlert}
         message='해당 진료과는 등록된 자문의가 없습니다.'
-        onClose={() => setNoDoctorAlert(false)}
-        closeOnBackdropClick
+        closeButtonText='확인'
+        onClose={handleNoDoctorAlertClose}
       />
     </>
   )
