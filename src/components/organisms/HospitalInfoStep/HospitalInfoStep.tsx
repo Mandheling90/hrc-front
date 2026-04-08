@@ -43,11 +43,11 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
     const handleHospitalSelect = (hospital: HospitalSearchResult) => {
       setHospitalName(hospital.hospitalName)
       setMedicalInstitutionNumber(hospital.careNumber)
-      if (hospital.zipCode) setZipCode(hospital.zipCode)
-      if (hospital.address) setAddress(hospital.address)
-      if (hospital.addressDetail) setDetailAddress(hospital.addressDetail)
-      if (hospital.phone) setPhoneNumber(hospital.phone)
-      if (hospital.website) setWebsite(hospital.website)
+      setZipCode(hospital.zipCode ?? '')
+      setAddress(hospital.address ?? '')
+      setDetailAddress(hospital.addressDetail ?? '')
+      setPhoneNumber(hospital.phone ?? '')
+      setWebsite(hospital.website ?? '')
       setIsHospitalSearchOpen(false)
     }
 

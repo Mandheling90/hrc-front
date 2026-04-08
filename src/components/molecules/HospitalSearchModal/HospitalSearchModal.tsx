@@ -289,7 +289,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       label: '병원 주소',
       width: '1fr',
       align: 'center',
-      field: 'address'
+      renderCell: item => [item.address, item.addressDetail].filter(Boolean).join(' ')
     }
   ]
 
@@ -410,7 +410,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                         data-testid={`hospital-result-mobile-${index}`}
                       >
                         <span className={styles.mobileHospitalName}>{item.hospitalName}</span>
-                        <span className={styles.mobileAddress}>{item.address}</span>
+                        <span className={styles.mobileAddress}>{[item.address, item.addressDetail].filter(Boolean).join(' ')}</span>
                       </div>
                     )}
                   />
