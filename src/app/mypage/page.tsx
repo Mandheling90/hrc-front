@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Link from '@/components/atoms/HospitalLink'
 import { useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
@@ -16,7 +16,6 @@ import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { CardList, CardRow } from '@/components/molecules/CardList/CardList'
 import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
-import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import styles from './page.module.scss'
 
 interface PatientData {
@@ -64,7 +63,7 @@ export default function MyPage() {
   const { user } = useAuthContext()
   const { hospitalId } = useHospital()
   const { searchReferralPatients, patients, loading: patientsLoading } = useReferralPatients()
-  const [showAlert, setShowAlert] = useState(false)
+
 
   const hospitalCode = toHospitalCode(hospitalId)
 
@@ -167,9 +166,19 @@ export default function MyPage() {
               <div className={styles.downloadCard}>
                 <h2 className={styles.cardTitle}>서식 다운로드</h2>
                 <div className={styles.downloadList}>
-                  <button type='button' className={styles.downloadBtn} onClick={() => setShowAlert(true)}>
+                  <a
+                    href={
+                      hospitalId === 'guro'
+                        ? '/userManual/(구로)고려대학교의료원_리퍼홈페이지_사용자매뉴얼.pdf'
+                        : hospitalId === 'ansan'
+                          ? '/userManual/(안산)고려대학교의료원_리퍼홈페이지_사용자매뉴얼.pdf'
+                          : '/userManual/(안암)고려대학교의료원_리퍼홈페이지_사용자매뉴얼.pdf'
+                    }
+                    download
+                    className={styles.downloadBtn}
+                  >
                     사용자 매뉴얼
-                  </button>
+                  </a>
                   <a
                     href={
                       hospitalId === 'guro'
@@ -279,7 +288,6 @@ export default function MyPage() {
         </div>
       </main>
       <Footer />
-      <AlertModal isOpen={showAlert} message='준비중입니다.' onClose={() => setShowAlert(false)} />
     </div>
   )
 }
