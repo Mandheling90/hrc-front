@@ -57,13 +57,25 @@ export const ME_QUERY = gql`
         birthDate
         department
         gender
+        doctorType
+        isDirector
         hospName
         careInstitutionNo
+        hospZipCode
+        hospAddress
+        hospAddressDetail
+        hospPhone
+        hospWebsite
+        hospCode
         licenseNo
         school
         specialty
         graduationYear
         trainingHospital
+        smsConsent
+        emailConsent
+        replyConsent
+        representative
       }
     }
   }
