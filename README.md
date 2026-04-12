@@ -415,6 +415,7 @@ cp .env.example .env.local
 
 | 변수명 | 설명 | 필수 | 예시 |
 | --- | --- | --- | --- |
+| `SKIP_CODEGEN` | GraphQL codegen 스킵 | - | `true` (빌드 시 codegen 생략) |
 | `NICE_CLIENT_ID` | NICE CheckPlus 클라이언트 ID | - | (운영 시 필요) |
 | `NICE_CLIENT_SECRET` | NICE CheckPlus 시크릿 | - | (운영 시 필요) |
 | `NICE_PRODUCT_ID` | NICE 상품 ID | - | `2101979031` |
