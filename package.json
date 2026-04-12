@@ -7,7 +7,7 @@
     "dev:anam": "cross-env NEXT_PUBLIC_HOSPITAL_ID=anam next dev --port 3000",
     "dev:guro": "cross-env NEXT_PUBLIC_HOSPITAL_ID=guro next dev --port 3001",
     "dev:ansan": "cross-env NEXT_PUBLIC_HOSPITAL_ID=ansan next dev --port 3002",
-    "prebuild": "node -e \"const fs=require('fs'),p=require('path');let s=process.env.SKIP_CODEGEN;if(!s){try{const e=fs.readFileSync(p.join(__dirname,'.env.local'),'utf8');const m=e.match(/^SKIP_CODEGEN=(.*)$/m);if(m)s=m[1].trim()}catch(e){}}if(s==='true'){console.log('Skipping codegen')}else{require('child_process').execSync('npx graphql-codegen --config codegen.ts',{stdio:'inherit'})}\"",
+    "_prebuild_disabled": "graphql-codegen --config codegen.ts",
     "build": "next build",
     "start": "next start",
     "prd": "npm run build && npm run start",
