@@ -40,8 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# graphql-codegen
-src/graphql/__generated__/
+# graphql-codegen (CI에서 codegen 미실행으로 git 추적 필요)
+# src/graphql/__generated__/
 
 # IDEs and editors
 .vscode/
