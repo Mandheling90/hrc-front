@@ -409,7 +409,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_HOSPITAL_ID` | 기본 병원 (URL 프리픽스 없을 때 폴백) | O | `anam` |
 | `NEXT_PUBLIC_GRAPHQL_URL` | GraphQL API 엔드포인트 | O | `http://localhost:4000/graphql` |
 | `NEXT_PUBLIC_KAKAO_MAP_KEY` | 카카오맵 JavaScript 키 | - | Kakao Developers에서 발급 |
-| `NEXT_PUBLIC_NICE_DEV_MODE` | NICE 본인인증 개발모드 | - | `true` (더미 데이터 사용) |
+| `NEXT_PUBLIC_SKIP_NICE` | NICE 본인인증 스킵 | - | `true` (인증 없이 로그인) |
 
 ### 서버 전용
 
