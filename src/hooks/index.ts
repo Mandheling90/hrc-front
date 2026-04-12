@@ -25,9 +25,6 @@ export { useExamResults, useExamSlips, useSpecialExamResults, useDrugOrders } fr
 // Partner Application Hooks - 협력 병·의원 신청
 export {
   useApplyPartnerHospital,
-  useSaveDraftPartnerApplication,
-  useSubmitPartnerApplication,
-  useCancelPartnerApplication,
   useMyPartnerApplication,
   useMyPartnerApplications,
   usePartnerApplicationById,

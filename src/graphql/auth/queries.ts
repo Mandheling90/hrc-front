@@ -30,8 +30,6 @@ export const MY_PROFILE_QUERY = gql`
         school
         specialty
         department
-        graduationYear
-        trainingHospital
         smsConsent
         emailConsent
         replyConsent
@@ -57,25 +55,13 @@ export const ME_QUERY = gql`
         birthDate
         department
         gender
-        doctorType
-        isDirector
         hospName
         careInstitutionNo
-        hospZipCode
-        hospAddress
-        hospAddressDetail
-        hospPhone
-        hospWebsite
-        hospCode
         licenseNo
         school
         specialty
         graduationYear
         trainingHospital
-        smsConsent
-        emailConsent
-        replyConsent
-        representative
       }
     }
   }

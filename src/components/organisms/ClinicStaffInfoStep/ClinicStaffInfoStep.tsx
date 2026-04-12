@@ -19,12 +19,14 @@ export interface ClinicStaffInfoStepProps {
   totalSteps?: number
   /** 임시저장 불러오기용 초기값 */
   defaultValues?: Partial<ClinicStaffInfoStepData>
+  /** 실무자 정보 섹션 표시 여부 (기본값: true) */
+  showStaffInfo?: boolean
   /** 병원 세부 정보 섹션 표시 여부 (기본값: true) */
   showHospitalDetail?: boolean
 }
 
 export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, ClinicStaffInfoStepProps>(
-  ({ currentStep = 3, totalSteps = 4, defaultValues, showHospitalDetail = true }, ref) => {
+  ({ currentStep = 3, totalSteps = 4, defaultValues, showStaffInfo = true, showHospitalDetail = true }, ref) => {
     const { getOptions, loading: enumLoading, error: enumError } = useEnums()
     if (enumError) throw enumError
 
@@ -112,7 +114,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
       }),
       validate: () => {
         const missing: string[] = []
-        if (!staffName.trim()) missing.push('실무자명')
+        if (showStaffInfo && !staffName.trim()) missing.push('실무자명')
         if (missing.length > 0) return `다음 필수 항목을 입력해주세요:\n${missing.join(', ')}`
         return null
       }
@@ -127,6 +129,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
     return (
       <div className={styles.stepContainer}>
         {/* 실무자 정보 섹션 */}
+        {showStaffInfo && (
         <div className={styles.formSection}>
           <div className={styles.formHeader}>
             <div className={styles.formHeaderLeft}>
@@ -223,6 +226,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
 
           </div>
         </div>
+        )}
 
         {/* 의료기관 유형 섹션 */}
         <div className={styles.formSection}>

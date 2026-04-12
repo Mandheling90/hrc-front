@@ -11,16 +11,18 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Button } from '@/components/atoms/Button/Button'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
-import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import { HospitalCode } from '@/graphql/__generated__/types'
-import { mapApiToStepData, mapStepsToApiInput, type AllStepData } from '@/utils/partnerApplicationMapper'
+import {
+  mapApiToHospitalEditStepData,
+  mapHospitalEditStepsToApiInput,
+  type HospitalEditStepData
+} from '@/utils/partnerApplicationMapper'
 import { uploadFile } from '@/lib/upload'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,
-  DirectorInfoStepData,
   StaffInfoStepData,
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
@@ -41,7 +43,7 @@ export default function EditHospitalPage() {
   const { hospital } = useHospital()
   const { user } = useAuthContext()
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 4
+  const totalSteps = 3
 
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
@@ -55,11 +57,11 @@ export default function EditHospitalPage() {
   // API 응답 → Step 데이터 매핑
   const stepData = useMemo(() => {
     if (!application) return null
-    return mapApiToStepData(application)
+    return mapApiToHospitalEditStepData(application)
   }, [application])
 
   // Step 데이터 캐시
-  const [stepDataCache, setStepDataCache] = useState<AllStepData>({})
+  const [stepDataCache, setStepDataCache] = useState<HospitalEditStepData>({})
 
   // stepData가 로드되면 캐시에 반영
   useEffect(() => {
@@ -70,9 +72,8 @@ export default function EditHospitalPage() {
 
   // Step별 ref
   const step1Ref = useRef<StepRef<HospitalInfoStepData>>(null)
-  const step2Ref = useRef<StepRef<DirectorInfoStepData>>(null)
-  const step3Ref = useRef<StepRef<StaffInfoStepData>>(null)
-  const step4Ref = useRef<StepRef<HospitalCharacteristicsStepData>>(null)
+  const step2Ref = useRef<StepRef<StaffInfoStepData>>(null)
+  const step3Ref = useRef<StepRef<HospitalCharacteristicsStepData>>(null)
 
   // AlertModal 상태
   const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string; onClose?: () => void }>({
@@ -109,31 +110,28 @@ export default function EditHospitalPage() {
 
   /** 현재 Step 데이터를 캐시에 저장 */
   const saveCurrentStepData = useCallback(() => {
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const refs = [step1Ref, step2Ref, step3Ref]
     const ref = refs[currentStep - 1]
     const data = ref.current?.getData()
     if (data) {
-      // step4는 실제로 step8 데이터 (병원특성)
-      const key = currentStep === 4 ? 'step8' : `step${currentStep}`
-      setStepDataCache(prev => ({ ...prev, [key]: data }))
+      setStepDataCache(prev => ({ ...prev, [`step${currentStep}`]: data }))
     }
   }, [currentStep])
 
   /** 모든 Step 데이터 수집 */
-  const collectAllData = useCallback((): AllStepData => {
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+  const collectAllData = useCallback((): HospitalEditStepData => {
+    const refs = [step1Ref, step2Ref, step3Ref]
     const currentRef = refs[currentStep - 1]
     const currentData = currentRef.current?.getData()
-    const key = currentStep === 4 ? 'step8' : `step${currentStep}`
     return {
       ...stepDataCache,
-      [key]: currentData ?? stepDataCache[key as keyof AllStepData]
+      [`step${currentStep}`]: currentData ?? stepDataCache[`step${currentStep}` as keyof HospitalEditStepData]
     }
   }, [currentStep, stepDataCache])
 
   const handleNext = async () => {
     // 필수값 검증
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const refs = [step1Ref, step2Ref, step3Ref]
     const currentRef = refs[currentStep - 1]
     const validationError = currentRef.current?.validate?.()
     if (validationError) {
@@ -151,11 +149,11 @@ export default function EditHospitalPage() {
       if (!application?.id) return
 
       const allData = collectAllData()
-      const mapped = mapStepsToApiInput(allData, toHospitalCode(hospital.id))
+      const mapped = mapHospitalEditStepsToApiInput(allData, toHospitalCode(hospital.id))
 
       try {
         // 새 첨부파일 업로드
-        const files = allData.step8?.files ?? []
+        const files = allData.step3?.files ?? []
         if (files.length > 0) {
           const uploadResults = await Promise.all(files.map(f => uploadFile(f)))
           mapped.attachments = uploadResults.map(r => ({
@@ -167,7 +165,7 @@ export default function EditHospitalPage() {
         }
 
         // 기존 첨부파일 유지
-        const existingAttachments = allData.step8?.existingAttachments ?? []
+        const existingAttachments = allData.step3?.existingAttachments ?? []
         if (existingAttachments.length > 0) {
           const existing = existingAttachments.map(a => ({
             originalName: a.originalName,
@@ -178,15 +176,18 @@ export default function EditHospitalPage() {
           mapped.attachments = [...existing, ...(mapped.attachments ?? [])]
         }
 
-        // UpdatePartnerApplicationInput에 없는 필드 제거 후 id 추가
-        const {
-          hospitalCode: _hCode,
-          hospitalPhisCode: _phisCode,
-          institutionCode: _instCode,
-          medicalDepartment: _medDept,
-          ...updateFields
-        } = mapped
-        await updatePartnerApplication({ id: application.id, ...updateFields })
+        // UpdatePartnerApplicationInput에 허용된 필드만 추출
+        await updatePartnerApplication({
+          id: application.id,
+          institutionType: mapped.institutionType,
+          totalBedCount: mapped.totalBedCount,
+          totalStaffCount: mapped.totalStaffCount,
+          specialistCount: mapped.specialistCount,
+          nurseCount: mapped.nurseCount,
+          majorEquipment: mapped.majorEquipment,
+          remarks: mapped.remarks,
+          attachments: mapped.attachments
+        })
 
         setAlertModal({
           isOpen: true,
@@ -250,34 +251,24 @@ export default function EditHospitalPage() {
               />
             )}
 
-            {/* 2단계: 병원장 정보 */}
+            {/* 2단계: 의료기관 유형 + 인력현황 */}
             {currentStep === 2 && (
-              <DirectorInfoStep
+              <StaffInfoStep
                 ref={step2Ref}
                 currentStep={2}
                 totalSteps={totalSteps}
+                showStaffInfo={false}
                 defaultValues={stepDataCache.step2 ?? stepData?.step2}
-                readOnly
               />
             )}
 
-            {/* 3단계: 실무자 정보 + 의료기관 유형 + 인력현황 */}
+            {/* 3단계: 병원특성 및 기타사항 + 첨부파일 */}
             {currentStep === 3 && (
-              <StaffInfoStep
+              <HospitalCharacteristicsStep
                 ref={step3Ref}
                 currentStep={3}
                 totalSteps={totalSteps}
                 defaultValues={stepDataCache.step3 ?? stepData?.step3}
-              />
-            )}
-
-            {/* 4단계: 병원특성 및 기타사항 + 첨부파일 */}
-            {currentStep === 4 && (
-              <HospitalCharacteristicsStep
-                ref={step4Ref}
-                currentStep={4}
-                totalSteps={totalSteps}
-                defaultValues={stepDataCache.step8 ?? stepData?.step8}
               />
             )}
 
@@ -287,7 +278,7 @@ export default function EditHospitalPage() {
                 이전 단계
               </Button>
               <Button variant='primary' size='large' onClick={handleNext} disabled={updateLoading}>
-                {currentStep === totalSteps ? '수정 요청' : '다음 단계'}
+                {currentStep === totalSteps ? '협력병원 정보수정' : '다음 단계'}
               </Button>
             </div>
           </div>

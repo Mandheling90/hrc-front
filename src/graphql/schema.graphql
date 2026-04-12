@@ -247,6 +247,18 @@ type AdminEconsultConsultantModel {
   updatedAt: DateTime!
 }
 
+"""관리자 로그인 입력"""
+input AdminLoginInput {
+  """로그인 대상 병원 코드"""
+  hospitalCode: HospitalCode!
+
+  """비밀번호"""
+  password: String!
+
+  """아이디"""
+  userId: String!
+}
+
 """관리자 회원 수정 입력"""
 input AdminUpdateUserInput {
   """이메일"""
@@ -283,15 +295,15 @@ input AdminUserFilterInput {
   userType: UserType
 }
 
-"""협력병의원 신청 입력 - 제출 시 필수값 검증은 서비스 레벨에서 수행"""
+"""협력병의원 신청 입력"""
 input ApplyPartnerHospitalInput {
   """가동 병상 수"""
   activeBedCount: Int
 
-  """첨부파일 메타데이터 (JSON 배열)"""
+  """첨부파일 메타데이터(JSON 배열)"""
   attachments: JSON
 
-  """기본 처치 가능 항목 (JSON)"""
+  """기본 처치 가능 항목(JSON)"""
   availableTreatments: JSON
 
   """엑시머레이저 가능 여부"""
@@ -309,103 +321,103 @@ input ApplyPartnerHospitalInput {
   """투약 유형"""
   clinicMedicationType: String
 
-  """진료과별 전문의 현황 (JSON)"""
+  """진료과별 전문의 현황(JSON)"""
   departmentSpecialists: JSON
 
-  """병원장 생년월일 (YYYY-MM-DD)"""
+  """원장 생년월일"""
   directorBirthDate: String
 
-  """병원장 차량번호"""
+  """원장 차량번호"""
   directorCarNo: String
 
-  """병원장 진료과"""
+  """원장 진료과"""
   directorDepartment: String
 
-  """병원장 이메일"""
+  """원장 이메일"""
   directorEmail: String
 
-  """E-mail 수신 동의"""
+  """이메일 수신 동의"""
   directorEmailConsent: Boolean
 
-  """병원장 성별 (M/F)"""
+  """원장 성별"""
   directorGender: String
 
-  """병원장 졸업년도"""
+  """원장 졸업년도"""
   directorGraduationYear: String
 
   """의사면허번호"""
   directorLicenseNo: String
 
-  """병원장 성명"""
+  """원장 성명"""
   directorName: String
 
-  """병원장 휴대전화"""
+  """원장 휴대전화"""
   directorPhone: String
 
   """회신서 수신 동의"""
   directorReplyConsent: Boolean
 
-  """병원장 출신학교"""
+  """원장 출신학교"""
   directorSchool: String
 
   """SMS 수신 동의"""
   directorSmsConsent: Boolean
 
-  """병원장 세부전공"""
+  """원장 세부전공"""
   directorSubSpecialty: String
 
-  """병원장 수련병원"""
+  """원장 수련병원"""
   directorTrainingHospital: String
 
   """응급실 수"""
   erCount: Int
 
-  """인공신장실 유무"""
+  """인공신장실 운영 여부"""
   hasDialysisRoom: Boolean
 
-  """응급실 유무"""
+  """응급실 운영 여부"""
   hasEr: Boolean
 
-  """보호자 간병 유무"""
+  """보호자 간병 운영 여부"""
   hasGuardianCare: Boolean
 
-  """호스피스 유무"""
+  """호스피스 운영 여부"""
   hasHospice: Boolean
 
-  """중환자실 유무"""
+  """중환자실 운영 여부"""
   hasIcu: Boolean
 
-  """간호간병통합서비스 유무"""
+  """간호간병통합서비스 운영 여부"""
   hasIntegratedNursing: Boolean
 
-  """수술실 유무"""
+  """수술실 운영 여부"""
   hasOperatingRoom: Boolean
 
-  """물리치료실 유무"""
+  """물리치료 가능 여부"""
   hasPhysicalTherapy: Boolean
 
-  """정신과 병동 폐쇄"""
+  """정신과 폐쇄병동 운영 여부"""
   hasPsychClosed: Boolean
 
-  """정신과 병동 일반"""
+  """정신과 일반병동 운영 여부"""
   hasPsychGeneral: Boolean
 
-  """재활치료실 격리"""
+  """재활 격리치료 운영 여부"""
   hasRehabIsolation: Boolean
 
-  """재활치료실 작업"""
+  """재활 작업치료 운영 여부"""
   hasRehabOt: Boolean
 
-  """재활치료실 물리"""
+  """재활 물리치료 운영 여부"""
   hasRehabPt: Boolean
 
-  """재활치료실 언어"""
+  """재활 언어치료 운영 여부"""
   hasRehabSt: Boolean
 
-  """재활치료실 연하"""
+  """재활 연하치료 운영 여부"""
   hasRehabSwallow: Boolean
 
-  """공동 간병 유무"""
+  """공동 간병 운영 여부"""
   hasSharedCare: Boolean
 
   """병원 주소"""
@@ -414,7 +426,7 @@ input ApplyPartnerHospitalInput {
   """병원 상세주소"""
   hospitalAddressDetail: String
 
-  """신청 대상 병원 코드 (안암/구로/안산)"""
+  """신청 대상 병원 코드"""
   hospitalCode: HospitalCode!
 
   """병원 팩스번호"""
@@ -429,7 +441,7 @@ input ApplyPartnerHospitalInput {
   """병원 대표전화"""
   hospitalPhone: String
 
-  """병원 홈페이지 주소"""
+  """병원 홈페이지"""
   hospitalWebsite: String
 
   """병원 우편번호"""
@@ -437,9 +449,6 @@ input ApplyPartnerHospitalInput {
 
   """중환자실 수"""
   icuCount: Int
-
-  """병원종별코드"""
-  institutionCode: String
 
   """의료기관 유형"""
   institutionType: InstitutionType
@@ -465,7 +474,7 @@ input ApplyPartnerHospitalInput {
   """격리 3인실 수"""
   isolationTripleCount: Int
 
-  """격리 유형 (JSON 배열)"""
+  """격리 유형(JSON)"""
   isolationTypes: JSON
 
   """격리병상 운영 여부"""
@@ -483,13 +492,13 @@ input ApplyPartnerHospitalInput {
   """간호사 수"""
   nurseCount: Int
 
-  """신청 유형 (A: 협력병원, B: 협력의원)"""
+  """신청 유형"""
   partnerType: PartnerType!
 
   """상급병실 수"""
   premiumRoomCount: Int
 
-  """병원특성 및 기타사항"""
+  """병원 특성/비고"""
   remarks: String
 
   """전문의 수"""
@@ -513,7 +522,7 @@ input ApplyPartnerHospitalInput {
   """실무자 직급"""
   staffPosition: String
 
-  """실무자 연락처 (유선)"""
+  """실무자 유선전화"""
   staffTel: String
 
   """총 병상 수"""
@@ -535,19 +544,10 @@ input ApproveImagingRequestInput {
 """첨부파일 연결 대상 유형"""
 enum AttachmentEntityType {
   BANNER
-
-  """게시판"""
   BOARD
-
-  """eConsult"""
   ECONSULT
   IMAGING_REQUEST
-
-  """협력병의원 신청"""
-  PARTNER_APPLICATION
   POPUP
-
-  """프로필"""
   PROFILE
 }
 
@@ -1920,16 +1920,7 @@ enum HospitalCode {
   GURO
 }
 
-"""DB 병원 검색 필터"""
-input HospitalFilterInput {
-  """검색 대상 병원 코드 (안암/구로/안산)"""
-  hospitalCode: HospitalCode!
-
-  """병원명 (부분 일치 검색)"""
-  name: String
-}
-
-"""협력 병의원 (DB 등록 + EHR 검색 결과 공통)"""
+"""협력병의원 검색/등록 결과"""
 type HospitalModel {
   """주소"""
   address: String
@@ -1940,7 +1931,7 @@ type HospitalModel {
   """병원분류코드 (H=병원, M=의원)"""
   classificationCode: String
 
-  """등록일시 (DB 등록된 경우에만)"""
+  """등록일시"""
   createdAt: DateTime
 
   """팩스번호"""
@@ -1949,14 +1940,14 @@ type HospitalModel {
   """소속 병원 코드 (안암/구로/안산)"""
   hospitalCode: HospitalCode
 
-  """병원 고유 ID (DB 등록된 경우에만)"""
+  """검색 결과 식별자"""
   id: ID
 
   """병원명"""
   name: String!
 
-  """협력 유형 (M=의원/H=병원)"""
-  partnerType: PartnerType
+  """기관 유형 코드 (A=병원, B=의원)"""
+  partnerType: String
 
   """요양기관번호 (PHIS 코드)"""
   phisCode: String
@@ -1970,7 +1961,7 @@ type HospitalModel {
   """진료과목"""
   specialties: String
 
-  """수정일시 (DB 등록된 경우에만)"""
+  """수정일시"""
   updatedAt: DateTime
 
   """홈페이지"""
@@ -2245,20 +2236,56 @@ type MeEhrProfile {
   """진료과 코드"""
   department: String
 
+  """의사 세부유형"""
+  doctorType: String
+
+  """이메일 동의여부"""
+  emailConsent: Boolean!
+
   """성별코드 (M/F)"""
   gender: String
 
   """졸업연도"""
   graduationYear: String
 
+  """병원주소"""
+  hospAddress: String
+
+  """병원 상세주소"""
+  hospAddressDetail: String
+
+  """병원코드"""
+  hospCode: String
+
   """소속 병원명"""
   hospName: String
+
+  """대표전화"""
+  hospPhone: String
+
+  """병원 홈페이지 주소"""
+  hospWebsite: String
+
+  """병원 우편번호"""
+  hospZipCode: String
+
+  """원장여부"""
+  isDirector: Boolean!
 
   """의사면허번호"""
   licenseNo: String
 
+  """회신서 수신 동의 여부"""
+  replyConsent: Boolean!
+
+  """대표자명"""
+  representative: String
+
   """출신학교 코드"""
   school: String
+
+  """SMS 동의여부"""
+  smsConsent: Boolean!
 
   """세부전공"""
   specialty: String
@@ -2466,6 +2493,9 @@ type Mutation {
     id: String!
   ): Boolean!
 
+  """관리자 로그인 - 관리자 계정에만 Access Token(15분)과 Refresh Token(7일) 발급"""
+  adminLogin(input: AdminLoginInput!): AuthPayload!
+
   """관리자 비밀번호 초기화 (임시 비밀번호 SMS 발송)"""
   adminResetPassword(
     """대상 사용자 ID"""
@@ -2480,10 +2510,7 @@ type Mutation {
   ): User!
 
   """협력병의원 신청 - 병의원 정보를 입력하여 협력 신청"""
-  applyPartnerHospital(
-    """협력병의원 신청 정보"""
-    input: ApplyPartnerHospitalInput!
-  ): PartnerHospitalModel!
+  applyPartnerHospital(input: ApplyPartnerHospitalInput!): PartnerHospitalModel!
 
   """관리자 영상검사 요청 승인"""
   approveImagingRequest(
@@ -2494,12 +2521,18 @@ type Mutation {
 
   """협력병의원 신청 승인"""
   approvePartnerApplication(
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
     """신청 ID"""
     id: String!
-  ): PartnerApplicationModel!
+  ): PartnerHospitalModel!
 
   """협력병의원 수정요청 승인"""
   approvePartnerUpdateRequest(
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
     """수정요청 ID"""
     id: String!
   ): PartnerUpdateRequestModel!
@@ -2526,12 +2559,6 @@ type Mutation {
   cancelEConsult(
     """eConsult ID"""
     id: String!
-  ): Boolean!
-
-  """협력병의원 신청 취소 - 대기 중이거나 임시저장 상태의 신청만 취소 가능"""
-  cancelPartnerApplication(
-    """신청 ID"""
-    id: ID!
   ): Boolean!
 
   """비밀번호 변경 - 현재 비밀번호 확인 후 새 비밀번호로 변경"""
@@ -2711,15 +2738,21 @@ type Mutation {
 
   """협력병의원 신청 반려"""
   rejectPartnerApplication(
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
     """신청 ID"""
     id: String!
 
     """반려 사유"""
     reason: String!
-  ): PartnerApplicationModel!
+  ): PartnerHospitalModel!
 
   """협력병의원 수정요청 반려"""
   rejectPartnerUpdateRequest(
+    """대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
     """수정요청 ID"""
     id: String!
   ): PartnerUpdateRequestModel!
@@ -2765,12 +2798,6 @@ type Mutation {
 
   """비밀번호 재설정 (본인인증) - NICE 본인인증 후 새 비밀번호 설정"""
   resetPasswordByVerification(input: ResetPasswordByVerificationInput!): MessageResponse!
-
-  """협력병의원 임시저장 - 기존 DRAFT/REJECTED가 있으면 덮어쓰기, 없으면 새로 생성"""
-  saveDraftPartnerApplication(
-    """협력병의원 임시저장 정보"""
-    input: SaveDraftPartnerInput!
-  ): PartnerHospitalModel!
 
   """이메일 발송 테스트 (인증 불필요)"""
   sendTestEmail(
@@ -2820,21 +2847,6 @@ type Mutation {
 
   """회원가입 - 일반회원은 즉시 활성화, 병원/의사는 승인대기 상태로 생성"""
   signup(input: SignupInput!): AuthPayload!
-
-  """협력병의원 신청 제출 - DRAFT → PENDING 전환, 필수값 검증 수행"""
-  submitPartnerApplication(
-    """임시저장 ID"""
-    id: ID!
-  ): PartnerHospitalModel!
-
-  """협력병의원 해지 - 승인된 협력병의원을 해지 처리"""
-  terminatePartnerApplication(
-    """신청 ID"""
-    id: String!
-
-    """해지 사유"""
-    reason: String!
-  ): PartnerApplicationModel!
 
   """게시글 수정 - 관리자 전용"""
   updateBoardPost(
@@ -2898,11 +2910,8 @@ type Mutation {
     input: UpdateMenuPermissionGroupInput!
   ): MenuPermissionGroupModel!
 
-  """협력병의원 정보 수정 - 기존 신청의 필드를 수정 (승인 후 정보수정 포함, EHR 동기화)"""
-  updatePartnerApplication(
-    """협력병의원 정보 수정 입력"""
-    input: UpdatePartnerApplicationInput!
-  ): PartnerHospitalModel!
+  """협력병의원 수정요청 생성"""
+  updatePartnerApplication(input: UpdatePartnerApplicationInput!): PartnerHospitalModel!
 
   """팝업/배너 수정"""
   updatePopup(
@@ -2933,7 +2942,7 @@ type PaginatedAdminDoctorResponse {
   totalCount: Int!
 }
 
-"""관리자용 협력병의원 신청 페이지네이션 응답"""
+"""관리자 협력병의원 신청 페이지네이션 응답"""
 type PaginatedAdminPartnerApplicationResponse {
   """다음 페이지 커서"""
   cursor: String
@@ -2942,7 +2951,7 @@ type PaginatedAdminPartnerApplicationResponse {
   hasNextPage: Boolean!
 
   """항목 목록"""
-  items: [PartnerApplicationModel!]!
+  items: [PartnerHospitalModel!]!
 
   """전체 항목 수"""
   totalCount: Int!
@@ -3008,21 +3017,6 @@ type PaginatedEConsultResponse {
   totalCount: Int!
 }
 
-"""협력병의원 현황 페이지네이션 응답"""
-type PaginatedHospitalResponse {
-  """다음 페이지 커서"""
-  cursor: String
-
-  """다음 페이지 존재 여부"""
-  hasNextPage: Boolean!
-
-  """항목 목록"""
-  items: [HospitalModel!]!
-
-  """전체 항목 수"""
-  totalCount: Int!
-}
-
 """영상검사 요청 페이지네이션 응답"""
 type PaginatedImagingRequestResponse {
   """다음 페이지 커서"""
@@ -3080,99 +3074,6 @@ input PaginationInput {
   page: Int = 1
 }
 
-"""협력병의원 신청 (관리자용)"""
-type PartnerApplicationModel {
-  """신청자 ID"""
-  applicantId: String
-
-  """승인일시"""
-  approvedAt: DateTime
-
-  """요양기관번호"""
-  careInstitutionNo: String
-
-  """협력 상태 코드 (clbrDvsnCd1)"""
-  clbrDvsnCd1: String
-
-  """생성일시"""
-  createdAt: DateTime!
-
-  """병원장명"""
-  directorName: String
-
-  """병원장 연락처"""
-  directorPhone: String
-
-  """병원 주소 snapshot"""
-  hospitalAddress: String
-
-  """병원 상세주소 snapshot"""
-  hospitalAddressDetail: String
-
-  """소속 병원 코드"""
-  hospitalCode: HospitalCode!
-
-  """병원 팩스번호 snapshot"""
-  hospitalFaxNumber: String
-
-  """병원명 snapshot"""
-  hospitalName: String
-
-  """병원 대표전화 snapshot"""
-  hospitalPhone: String
-
-  """병원 대표자명 snapshot"""
-  hospitalRepresentative: String
-
-  """병원 홈페이지 snapshot"""
-  hospitalWebsite: String
-
-  """병원 우편번호 snapshot"""
-  hospitalZipCode: String
-
-  """신청 ID"""
-  id: ID!
-
-  """협력기관 유형 snapshot"""
-  partnerType: PartnerType
-
-  """반려 사유"""
-  rejectReason: String
-
-  """검토일시"""
-  reviewedAt: DateTime
-
-  """검토자 ID"""
-  reviewedById: String
-
-  """실무자 이메일"""
-  staffEmail: String
-
-  """실무자명"""
-  staffName: String
-
-  """실무자 연락처"""
-  staffPhone: String
-
-  """상태"""
-  status: PartnerStatus!
-
-  """해지일시"""
-  terminatedAt: DateTime
-
-  """수정일시"""
-  updatedAt: DateTime!
-}
-
-"""협력병의원 필터"""
-input PartnerHospitalFilterInput {
-  """병원명 검색"""
-  search: String
-
-  """진료과목 검색"""
-  specialty: String
-}
-
 """협력병의원 신청"""
 type PartnerHospitalModel {
   """가동 병상 수"""
@@ -3184,19 +3085,19 @@ type PartnerHospitalModel {
   """승인일시"""
   approvedAt: DateTime
 
-  """첨부파일 목록 (Attachment FK)"""
+  """첨부파일 목록"""
   attachmentRows: [AttachmentModel!]
 
   """첨부파일 메타데이터"""
   attachments: JSON
 
-  """기본 처치 가능 항목 (JSON)"""
+  """기본 처치 가능 항목(JSON)"""
   availableTreatments: JSON
 
   """요양기관번호"""
   careInstitutionNo: String
 
-  """협력 상태 코드 (clbrDvsnCd1)"""
+  """협력 상태 코드 (현재 병원 EHR 기준)"""
   clbrDvsnCd1: String
 
   """엑시머레이저 가능 여부"""
@@ -3217,7 +3118,7 @@ type PartnerHospitalModel {
   """생성일시"""
   createdAt: DateTime!
 
-  """진료과별 전문의 현황 (JSON)"""
+  """진료과별 전문의 현황(JSON)"""
   departmentSpecialists: JSON
 
   """병원장 생년월일"""
@@ -3232,7 +3133,7 @@ type PartnerHospitalModel {
   """병원장 이메일"""
   directorEmail: String
 
-  """E-mail 수신 동의"""
+  """이메일 수신 동의"""
   directorEmailConsent: Boolean
 
   """병원장 성별"""
@@ -3349,11 +3250,8 @@ type PartnerHospitalModel {
   """중환자실 수"""
   icuCount: Int
 
-  """고유 ID"""
+  """신청 ID"""
   id: ID!
-
-  """병원종별코드"""
-  institutionCode: String
 
   """의료기관 유형"""
   institutionType: InstitutionType
@@ -3379,7 +3277,7 @@ type PartnerHospitalModel {
   """격리 3인실 수"""
   isolationTripleCount: Int
 
-  """격리 유형 (JSON)"""
+  """격리 유형(JSON)"""
   isolationTypes: JSON
 
   """격리병상 운영 여부"""
@@ -3387,9 +3285,6 @@ type PartnerHospitalModel {
 
   """주요 보유 장비"""
   majorEquipment: String
-
-  """진료과목/표방과목"""
-  medicalDepartment: String
 
   """다인실 수"""
   multiRoomCount: Int
@@ -3406,7 +3301,7 @@ type PartnerHospitalModel {
   """반려 사유"""
   rejectReason: String
 
-  """병원특성 및 기타사항"""
+  """병원 특성 및 기타사항"""
   remarks: String
 
   """심사일시"""
@@ -3436,7 +3331,7 @@ type PartnerHospitalModel {
   """실무자 직급"""
   staffPosition: String
 
-  """실무자 연락처 (유선)"""
+  """실무자 연락처(유선)"""
   staffTel: String
 
   """상태"""
@@ -3455,7 +3350,7 @@ type PartnerHospitalModel {
   updatedAt: DateTime!
 }
 
-"""협력병의원 상태"""
+"""협력병의원 신청 상태"""
 enum PartnerStatus {
   """승인"""
   APPROVED
@@ -3473,7 +3368,7 @@ enum PartnerStatus {
   TERMINATED
 }
 
-"""협력병의원 유형 (EHR hsptClsfCd 기준)"""
+"""협력병의원 유형"""
 enum PartnerType {
   """협력병원"""
   A
@@ -3482,7 +3377,7 @@ enum PartnerType {
   B
 }
 
-"""협력병의원 수정 요청"""
+"""협력병의원 수정요청"""
 type PartnerUpdateRequestModel {
   """생성일시"""
   createdAt: DateTime!
@@ -3788,6 +3683,9 @@ type Query {
 
   """관리자 협력병의원 신청 상세 조회"""
   adminPartnerApplicationById(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
     """신청 ID"""
     id: String!
   ): PartnerHospitalModel!
@@ -3800,7 +3698,7 @@ type Query {
     """페이지네이션"""
     pagination: PaginationInput
 
-    """협력병원(H) / 협력의원(M) 필터"""
+    """협력기관 유형 필터"""
     partnerType: PartnerType
 
     """상태 필터"""
@@ -3809,6 +3707,9 @@ type Query {
 
   """관리자 협력병의원 수정요청 상세 조회"""
   adminPartnerUpdateRequestById(
+    """조회 대상 병원 코드 (통합관리자 선택용)"""
+    hospitalCode: HospitalCode
+
     """수정요청 ID"""
     id: String!
   ): PartnerUpdateRequestModel!
@@ -4175,7 +4076,7 @@ type Query {
     hospitalCode: HospitalCode!
   ): PartnerHospitalModel
 
-  """내 협력병의원 신청 목록 조회"""
+  """내 협력병의원 신청 목록 조회 (현재 병원 컨텍스트 기준)"""
   myPartnerApplications(
     """페이지네이션"""
     pagination: PaginationInput
@@ -4184,7 +4085,7 @@ type Query {
   """내 협력병의원 수정요청 조회"""
   myPartnerUpdateRequest(
     """협력병의원 신청 ID"""
-    partnerApplicationId: ID!
+    partnerApplicationId: String!
   ): PartnerUpdateRequestModel
 
   """내 프로필 조회 - 현재 로그인한 사용자의 상세 프로필 반환"""
@@ -4193,23 +4094,8 @@ type Query {
   """협력병의원 신청 상세 조회 (ID 기준)"""
   partnerApplicationById(
     """신청 ID"""
-    id: ID!
+    id: String!
   ): PartnerHospitalModel!
-
-  """협력병의원 상세 조회"""
-  partnerHospitalById(
-    """협력병의원 ID"""
-    id: ID!
-  ): HospitalModel!
-
-  """협력병의원 현황 목록 조회 (승인된 병의원만) - URL 병원 경로(/anam|/guro|/ansan) 기반 병원 필터"""
-  partnerHospitals(
-    """필터 조건"""
-    filter: PartnerHospitalFilterInput
-
-    """페이지네이션"""
-    pagination: PaginationInput
-  ): PaginatedHospitalResponse!
 
   """권한그룹에 배정된 관리자 목록 조회"""
   permissionGroupMembers(
@@ -4231,12 +4117,6 @@ type Query {
     """첨부파일 ID"""
     attachmentId: ID!
   ): String!
-
-  """DB 병원 검색 - 우리 DB에 등록된 협력병원 목록 조회 (비인증)"""
-  searchHospitals(
-    """병원 검색 필터"""
-    filter: HospitalFilterInput!
-  ): [HospitalModel!]!
 
   """슬라이드 배너 목록 조회 - URL 병원 경로(/anam|/guro|/ansan) 필요"""
   slideBanners: [PopupModel!]!
@@ -4428,6 +4308,9 @@ input RegisterHospitalEhrInput {
   """담당자 전화"""
   cnpnDscrCtn: String
 
+  """허가병상수"""
+  crptSckbCnt: Int
+
   """면허번호"""
   drlcNo: String
 
@@ -4439,6 +4322,9 @@ input RegisterHospitalEhrInput {
 
   """이메일회신동의 (Y/N)"""
   emailRplyAgrmYn1: String
+
+  """장비현황"""
+  eqpmCtn: String
 
   """팩스번호"""
   fxno: String
@@ -4508,6 +4394,9 @@ input RegisterHospitalEhrInput {
 
   """대표자명"""
   userNm: String
+
+  """차량번호"""
+  vhclNo: String
 }
 
 """병원 신규등록 입력 - 의사 가입 시 병원검색에서 없을 때 간이 등록 (화면설계서 기준)"""
@@ -4623,246 +4512,6 @@ input ResetPasswordInput {
 
   """비밀번호 재설정 토큰"""
   token: String!
-}
-
-"""협력병의원 임시저장 입력 - 필수값 없이 저장 가능"""
-input SaveDraftPartnerInput {
-  """가동 병상 수 (H전용)"""
-  activeBedCount: Int
-
-  """첨부파일 메타데이터 (JSON 배열)"""
-  attachments: JSON
-
-  """기본 처치 가능 항목 (JSON) (H전용)"""
-  availableTreatments: JSON
-
-  """엑시머레이저 가능 여부 (M전용)"""
-  clinicHasExcimerLaser: Boolean
-
-  """혈액투석 가능 여부 (M전용)"""
-  clinicHasHemodialysis: Boolean
-
-  """복막투석 가능 여부 (M전용)"""
-  clinicHasPeritoneal: Boolean
-
-  """광선치료 가능 여부 (M전용)"""
-  clinicHasPhototherapy: Boolean
-
-  """투약 유형 (투약불가능/G-CSF피하주사가능) (M전용)"""
-  clinicMedicationType: String
-
-  """진료과별 전문의 현황 (JSON) (H전용)"""
-  departmentSpecialists: JSON
-
-  """병원장 생년월일 (YYYY-MM-DD)"""
-  directorBirthDate: String
-
-  """병원장 차량번호"""
-  directorCarNo: String
-
-  """병원장 진료과"""
-  directorDepartment: String
-
-  """병원장 이메일"""
-  directorEmail: String
-
-  """E-mail 수신 동의"""
-  directorEmailConsent: Boolean
-
-  """병원장 성별 (M/F)"""
-  directorGender: String
-
-  """병원장 졸업년도"""
-  directorGraduationYear: String
-
-  """의사면허번호"""
-  directorLicenseNo: String
-
-  """병원장 성명"""
-  directorName: String
-
-  """병원장 휴대전화"""
-  directorPhone: String
-
-  """회신서 수신 동의"""
-  directorReplyConsent: Boolean
-
-  """병원장 출신학교"""
-  directorSchool: String
-
-  """SMS 수신 동의"""
-  directorSmsConsent: Boolean
-
-  """병원장 세부전공"""
-  directorSubSpecialty: String
-
-  """병원장 수련병원"""
-  directorTrainingHospital: String
-
-  """응급실 수 (H전용)"""
-  erCount: Int
-
-  """인공신장실 유무 (H전용)"""
-  hasDialysisRoom: Boolean
-
-  """응급실 유무 (H전용)"""
-  hasEr: Boolean
-
-  """보호자 간병 유무 (H전용)"""
-  hasGuardianCare: Boolean
-
-  """호스피스 유무 (H전용)"""
-  hasHospice: Boolean
-
-  """중환자실 유무 (H전용)"""
-  hasIcu: Boolean
-
-  """간호간병통합서비스 유무 (H전용)"""
-  hasIntegratedNursing: Boolean
-
-  """수술실 유무 (H전용)"""
-  hasOperatingRoom: Boolean
-
-  """물리치료실 유무 (M전용)"""
-  hasPhysicalTherapy: Boolean
-
-  """정신과 병동 폐쇄 (H전용)"""
-  hasPsychClosed: Boolean
-
-  """정신과 병동 일반 (H전용)"""
-  hasPsychGeneral: Boolean
-
-  """재활치료실 격리 (H전용)"""
-  hasRehabIsolation: Boolean
-
-  """재활치료실 작업 (H전용)"""
-  hasRehabOt: Boolean
-
-  """재활치료실 물리 (H전용)"""
-  hasRehabPt: Boolean
-
-  """재활치료실 언어 (H전용)"""
-  hasRehabSt: Boolean
-
-  """재활치료실 연하 (H전용)"""
-  hasRehabSwallow: Boolean
-
-  """공동 간병 유무 (H전용)"""
-  hasSharedCare: Boolean
-
-  """병원 주소"""
-  hospitalAddress: String
-
-  """병원 상세주소"""
-  hospitalAddressDetail: String
-
-  """신청 대상 병원 코드 (안암/구로/안산)"""
-  hospitalCode: HospitalCode
-
-  """병원 팩스번호"""
-  hospitalFaxNumber: String
-
-  """병원명"""
-  hospitalName: String
-
-  """요양기관번호"""
-  hospitalPhisCode: String
-
-  """병원 대표전화"""
-  hospitalPhone: String
-
-  """병원 홈페이지 주소"""
-  hospitalWebsite: String
-
-  """병원 우편번호"""
-  hospitalZipCode: String
-
-  """중환자실 수 (H전용)"""
-  icuCount: Int
-
-  """병원종별코드"""
-  institutionCode: String
-
-  """의료기관 유형"""
-  institutionType: InstitutionType
-
-  """원장 여부"""
-  isDirector: Boolean
-
-  """격리 중 간병 유형 (공동/개인/보호자) (H전용)"""
-  isolationCareType: String
-
-  """격리 2인실 수 (H전용)"""
-  isolationDoubleCount: Int
-
-  """격리 중 재활 유형 (No/침상/격리병동재활실) (H전용)"""
-  isolationRehabType: String
-
-  """격리병실 수 (H전용)"""
-  isolationRoomCount: Int
-
-  """격리 1인실 수 (H전용)"""
-  isolationSingleCount: Int
-
-  """격리 3인실 수 (H전용)"""
-  isolationTripleCount: Int
-
-  """격리 유형 (VRE/CRE/CPE/TB/기타) (H전용)"""
-  isolationTypes: JSON
-
-  """격리병상 운영 여부 (H전용)"""
-  isolationWardOperation: Boolean
-
-  """주요 보유 장비 (M전용)"""
-  majorEquipment: String
-
-  """진료과목/표방과목"""
-  medicalDepartment: String
-
-  """다인실 수 (H전용)"""
-  multiRoomCount: Int
-
-  """간호사 수"""
-  nurseCount: Int
-
-  """신청 유형 (A: 협력병원, B: 협력의원)"""
-  partnerType: PartnerType
-
-  """상급병실 수 (H전용)"""
-  premiumRoomCount: Int
-
-  """병원특성 및 기타사항"""
-  remarks: String
-
-  """전문의 수"""
-  specialistCount: Int
-
-  """실무자 부서/진료과 유형 (부서/진료과)"""
-  staffDeptType: String
-
-  """실무자 부서/진료과 값"""
-  staffDeptValue: String
-
-  """실무자 이메일"""
-  staffEmail: String
-
-  """실무자 성명"""
-  staffName: String
-
-  """실무자 휴대전화"""
-  staffPhone: String
-
-  """실무자 직급"""
-  staffPosition: String
-
-  """실무자 연락처 (유선)"""
-  staffTel: String
-
-  """총 병상 수"""
-  totalBedCount: Int
-
-  """총 직원 수"""
-  totalStaffCount: Int
 }
 
 """EHR 협력병원 리스트 조회 입력 - 병원명/주소/분류코드로 검색 (최소 1개 필터 필수)"""
@@ -5254,6 +4903,9 @@ input UpdateHospitalEhrInput {
   """담당자 전화"""
   cnpnDscrCtn: String
 
+  """허가병상수"""
+  crptSckbCnt: Int
+
   """면허번호"""
   drlcNo: String
 
@@ -5265,6 +4917,9 @@ input UpdateHospitalEhrInput {
 
   """이메일회신동의 (Y/N)"""
   emailRplyAgrmYn1: String
+
+  """장비현황"""
+  eqpmCtn: String
 
   """팩스번호"""
   fxno: String
@@ -5334,6 +4989,9 @@ input UpdateHospitalEhrInput {
 
   """대표자명"""
   userNm: String
+
+  """차량번호"""
+  vhclNo: String
 }
 
 """EHR 회원상태코드 변경 입력"""
@@ -5396,240 +5054,30 @@ input UpdateMenuPermissionGroupInput {
   name: String!
 }
 
-"""협력병의원 정보 수정 입력 - 기존 신청의 필드를 수정 (승인 후 정보수정 포함)"""
+"""협력병의원 수정요청 입력"""
 input UpdatePartnerApplicationInput {
-  """가동 병상 수"""
-  activeBedCount: Int
-
-  """첨부파일 메타데이터 (JSON 배열)"""
+  """첨부파일 메타데이터(JSON 배열)"""
   attachments: JSON
 
-  """기본 처치 가능 항목 (JSON)"""
-  availableTreatments: JSON
-
-  """엑시머레이저 가능 여부"""
-  clinicHasExcimerLaser: Boolean
-
-  """혈액투석 가능 여부"""
-  clinicHasHemodialysis: Boolean
-
-  """복막투석 가능 여부"""
-  clinicHasPeritoneal: Boolean
-
-  """광선치료 가능 여부"""
-  clinicHasPhototherapy: Boolean
-
-  """투약 유형"""
-  clinicMedicationType: String
-
-  """진료과별 전문의 현황 (JSON)"""
-  departmentSpecialists: JSON
-
-  """병원장 생년월일 (YYYY-MM-DD)"""
-  directorBirthDate: String
-
-  """병원장 차량번호"""
-  directorCarNo: String
-
-  """병원장 진료과"""
-  directorDepartment: String
-
-  """병원장 이메일"""
-  directorEmail: String
-
-  """E-mail 수신 동의"""
-  directorEmailConsent: Boolean
-
-  """병원장 성별 (M/F)"""
-  directorGender: String
-
-  """병원장 졸업년도"""
-  directorGraduationYear: String
-
-  """의사면허번호"""
-  directorLicenseNo: String
-
-  """병원장 성명"""
-  directorName: String
-
-  """병원장 휴대전화"""
-  directorPhone: String
-
-  """회신서 수신 동의"""
-  directorReplyConsent: Boolean
-
-  """병원장 출신학교"""
-  directorSchool: String
-
-  """SMS 수신 동의"""
-  directorSmsConsent: Boolean
-
-  """병원장 세부전공"""
-  directorSubSpecialty: String
-
-  """병원장 수련병원"""
-  directorTrainingHospital: String
-
-  """응급실 수"""
-  erCount: Int
-
-  """인공신장실 유무"""
-  hasDialysisRoom: Boolean
-
-  """응급실 유무"""
-  hasEr: Boolean
-
-  """보호자 간병 유무"""
-  hasGuardianCare: Boolean
-
-  """호스피스 유무"""
-  hasHospice: Boolean
-
-  """중환자실 유무"""
-  hasIcu: Boolean
-
-  """간호간병통합서비스 유무"""
-  hasIntegratedNursing: Boolean
-
-  """수술실 유무"""
-  hasOperatingRoom: Boolean
-
-  """물리치료실 유무"""
-  hasPhysicalTherapy: Boolean
-
-  """정신과 병동 폐쇄"""
-  hasPsychClosed: Boolean
-
-  """정신과 병동 일반"""
-  hasPsychGeneral: Boolean
-
-  """재활치료실 격리"""
-  hasRehabIsolation: Boolean
-
-  """재활치료실 작업"""
-  hasRehabOt: Boolean
-
-  """재활치료실 물리"""
-  hasRehabPt: Boolean
-
-  """재활치료실 언어"""
-  hasRehabSt: Boolean
-
-  """재활치료실 연하"""
-  hasRehabSwallow: Boolean
-
-  """공동 간병 유무"""
-  hasSharedCare: Boolean
-
-  """병원 주소 snapshot"""
-  hospitalAddress: String
-
-  """병원 상세주소 snapshot"""
-  hospitalAddressDetail: String
-
-  """병원 팩스번호 snapshot"""
-  hospitalFaxNumber: String
-
-  """병원명 snapshot"""
-  hospitalName: String
-
-  """요양기관번호 snapshot"""
-  hospitalPhisCode: String
-
-  """병원 대표전화 snapshot"""
-  hospitalPhone: String
-
-  """병원 홈페이지 주소 snapshot"""
-  hospitalWebsite: String
-
-  """병원 우편번호 snapshot"""
-  hospitalZipCode: String
-
-  """중환자실 수"""
-  icuCount: Int
-
-  """수정할 신청 ID"""
+  """수정 대상 신청 ID"""
   id: ID!
-
-  """병원종별코드"""
-  institutionCode: String
 
   """의료기관 유형"""
   institutionType: InstitutionType
 
-  """원장 여부"""
-  isDirector: Boolean
-
-  """격리 중 간병 유형"""
-  isolationCareType: String
-
-  """격리 2인실 수"""
-  isolationDoubleCount: Int
-
-  """격리 중 재활 유형"""
-  isolationRehabType: String
-
-  """격리병실 수"""
-  isolationRoomCount: Int
-
-  """격리 1인실 수"""
-  isolationSingleCount: Int
-
-  """격리 3인실 수"""
-  isolationTripleCount: Int
-
-  """격리 유형 (JSON 배열)"""
-  isolationTypes: JSON
-
-  """격리병상 운영 여부"""
-  isolationWardOperation: Boolean
-
-  """주요 보유 장비"""
+  """주요 보유 장비(협력의원 전용)"""
   majorEquipment: String
-
-  """진료과목/표방과목"""
-  medicalDepartment: String
-
-  """다인실 수"""
-  multiRoomCount: Int
 
   """간호사 수"""
   nurseCount: Int
 
-  """신청 유형 (A: 협력병원, B: 협력의원)"""
-  partnerType: PartnerType
-
-  """상급병실 수"""
-  premiumRoomCount: Int
-
-  """병원특성 및 기타사항"""
+  """병원 특성 및 기타사항"""
   remarks: String
 
   """전문의 수"""
   specialistCount: Int
 
-  """실무자 부서/진료과 유형"""
-  staffDeptType: String
-
-  """실무자 부서/진료과 값"""
-  staffDeptValue: String
-
-  """실무자 이메일"""
-  staffEmail: String
-
-  """실무자 성명"""
-  staffName: String
-
-  """실무자 휴대전화"""
-  staffPhone: String
-
-  """실무자 직급"""
-  staffPosition: String
-
-  """실무자 연락처 (유선)"""
-  staffTel: String
-
-  """총 병상 수"""
+  """총 병상 수(협력의원 전용)"""
   totalBedCount: Int
 
   """총 직원 수"""

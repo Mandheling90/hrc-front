@@ -213,12 +213,24 @@ export type AdminEconsultConsultantModel = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+/** 관리자 로그인 입력 */
+export type AdminLoginInput = {
+  /** 로그인 대상 병원 코드 */
+  hospitalCode: HospitalCode;
+  /** 비밀번호 */
+  password: Scalars['String']['input'];
+  /** 아이디 */
+  userId: Scalars['String']['input'];
+};
+
 /** 관리자 회원 수정 입력 */
 export type AdminUpdateUserInput = {
   /** 이메일 */
   email?: InputMaybe<Scalars['String']['input']>;
   /** 허용 IP (설정 시 해당 IP에서만 로그인 가능, 빈 문자열로 해제) */
   ipAddress?: InputMaybe<Scalars['String']['input']>;
+  /** 새 비밀번호 (8자 이상, 영문+숫자+특수문자) */
+  password?: InputMaybe<Scalars['String']['input']>;
   /** 전화번호 */
   phone?: InputMaybe<Scalars['String']['input']>;
   /** 상태 */
@@ -239,13 +251,13 @@ export type AdminUserFilterInput = {
   userType?: InputMaybe<UserType>;
 };
 
-/** 협력병의원 신청 입력 - 제출 시 필수값 검증은 서비스 레벨에서 수행 */
+/** 협력병의원 신청 입력 */
 export type ApplyPartnerHospitalInput = {
   /** 가동 병상 수 */
   activeBedCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 첨부파일 메타데이터 (JSON 배열) */
+  /** 첨부파일 메타데이터(JSON 배열) */
   attachments?: InputMaybe<Scalars['JSON']['input']>;
-  /** 기본 처치 가능 항목 (JSON) */
+  /** 기본 처치 가능 항목(JSON) */
   availableTreatments?: InputMaybe<Scalars['JSON']['input']>;
   /** 엑시머레이저 가능 여부 */
   clinicHasExcimerLaser?: InputMaybe<Scalars['Boolean']['input']>;
@@ -257,77 +269,77 @@ export type ApplyPartnerHospitalInput = {
   clinicHasPhototherapy?: InputMaybe<Scalars['Boolean']['input']>;
   /** 투약 유형 */
   clinicMedicationType?: InputMaybe<Scalars['String']['input']>;
-  /** 진료과별 전문의 현황 (JSON) */
+  /** 진료과별 전문의 현황(JSON) */
   departmentSpecialists?: InputMaybe<Scalars['JSON']['input']>;
-  /** 병원장 생년월일 (YYYY-MM-DD) */
+  /** 원장 생년월일 */
   directorBirthDate?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 차량번호 */
+  /** 원장 차량번호 */
   directorCarNo?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 진료과 */
+  /** 원장 진료과 */
   directorDepartment?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 이메일 */
+  /** 원장 이메일 */
   directorEmail?: InputMaybe<Scalars['String']['input']>;
-  /** E-mail 수신 동의 */
+  /** 이메일 수신 동의 */
   directorEmailConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 성별 (M/F) */
+  /** 원장 성별 */
   directorGender?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 졸업년도 */
+  /** 원장 졸업년도 */
   directorGraduationYear?: InputMaybe<Scalars['String']['input']>;
   /** 의사면허번호 */
   directorLicenseNo?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 성명 */
+  /** 원장 성명 */
   directorName?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 휴대전화 */
+  /** 원장 휴대전화 */
   directorPhone?: InputMaybe<Scalars['String']['input']>;
   /** 회신서 수신 동의 */
   directorReplyConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 출신학교 */
+  /** 원장 출신학교 */
   directorSchool?: InputMaybe<Scalars['String']['input']>;
   /** SMS 수신 동의 */
   directorSmsConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 세부전공 */
+  /** 원장 세부전공 */
   directorSubSpecialty?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 수련병원 */
+  /** 원장 수련병원 */
   directorTrainingHospital?: InputMaybe<Scalars['String']['input']>;
   /** 응급실 수 */
   erCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 인공신장실 유무 */
+  /** 인공신장실 운영 여부 */
   hasDialysisRoom?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 응급실 유무 */
+  /** 응급실 운영 여부 */
   hasEr?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 보호자 간병 유무 */
+  /** 보호자 간병 운영 여부 */
   hasGuardianCare?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 호스피스 유무 */
+  /** 호스피스 운영 여부 */
   hasHospice?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 중환자실 유무 */
+  /** 중환자실 운영 여부 */
   hasIcu?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 간호간병통합서비스 유무 */
+  /** 간호간병통합서비스 운영 여부 */
   hasIntegratedNursing?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 수술실 유무 */
+  /** 수술실 운영 여부 */
   hasOperatingRoom?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 물리치료실 유무 */
+  /** 물리치료 가능 여부 */
   hasPhysicalTherapy?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 정신과 병동 폐쇄 */
+  /** 정신과 폐쇄병동 운영 여부 */
   hasPsychClosed?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 정신과 병동 일반 */
+  /** 정신과 일반병동 운영 여부 */
   hasPsychGeneral?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 격리 */
+  /** 재활 격리치료 운영 여부 */
   hasRehabIsolation?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 작업 */
+  /** 재활 작업치료 운영 여부 */
   hasRehabOt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 물리 */
+  /** 재활 물리치료 운영 여부 */
   hasRehabPt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 언어 */
+  /** 재활 언어치료 운영 여부 */
   hasRehabSt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 연하 */
+  /** 재활 연하치료 운영 여부 */
   hasRehabSwallow?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 공동 간병 유무 */
+  /** 공동 간병 운영 여부 */
   hasSharedCare?: InputMaybe<Scalars['Boolean']['input']>;
   /** 병원 주소 */
   hospitalAddress?: InputMaybe<Scalars['String']['input']>;
   /** 병원 상세주소 */
   hospitalAddressDetail?: InputMaybe<Scalars['String']['input']>;
-  /** 신청 대상 병원 코드 (안암/구로/안산) */
+  /** 신청 대상 병원 코드 */
   hospitalCode: HospitalCode;
   /** 병원 팩스번호 */
   hospitalFaxNumber?: InputMaybe<Scalars['String']['input']>;
@@ -337,14 +349,12 @@ export type ApplyPartnerHospitalInput = {
   hospitalPhisCode?: InputMaybe<Scalars['String']['input']>;
   /** 병원 대표전화 */
   hospitalPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 홈페이지 주소 */
+  /** 병원 홈페이지 */
   hospitalWebsite?: InputMaybe<Scalars['String']['input']>;
   /** 병원 우편번호 */
   hospitalZipCode?: InputMaybe<Scalars['String']['input']>;
   /** 중환자실 수 */
   icuCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 병원종별코드 */
-  institutionCode?: InputMaybe<Scalars['String']['input']>;
   /** 의료기관 유형 */
   institutionType?: InputMaybe<InstitutionType>;
   /** 원장 여부 */
@@ -361,7 +371,7 @@ export type ApplyPartnerHospitalInput = {
   isolationSingleCount?: InputMaybe<Scalars['Int']['input']>;
   /** 격리 3인실 수 */
   isolationTripleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 유형 (JSON 배열) */
+  /** 격리 유형(JSON) */
   isolationTypes?: InputMaybe<Scalars['JSON']['input']>;
   /** 격리병상 운영 여부 */
   isolationWardOperation?: InputMaybe<Scalars['Boolean']['input']>;
@@ -373,11 +383,11 @@ export type ApplyPartnerHospitalInput = {
   multiRoomCount?: InputMaybe<Scalars['Int']['input']>;
   /** 간호사 수 */
   nurseCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 신청 유형 (A: 협력병원, B: 협력의원) */
+  /** 신청 유형 */
   partnerType: PartnerType;
   /** 상급병실 수 */
   premiumRoomCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 병원특성 및 기타사항 */
+  /** 병원 특성/비고 */
   remarks?: InputMaybe<Scalars['String']['input']>;
   /** 전문의 수 */
   specialistCount?: InputMaybe<Scalars['Int']['input']>;
@@ -393,7 +403,7 @@ export type ApplyPartnerHospitalInput = {
   staffPhone?: InputMaybe<Scalars['String']['input']>;
   /** 실무자 직급 */
   staffPosition?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 연락처 (유선) */
+  /** 실무자 유선전화 */
   staffTel?: InputMaybe<Scalars['String']['input']>;
   /** 총 병상 수 */
   totalBedCount?: InputMaybe<Scalars['Int']['input']>;
@@ -412,15 +422,10 @@ export type ApproveImagingRequestInput = {
 /** 첨부파일 연결 대상 유형 */
 export enum AttachmentEntityType {
   Banner = 'BANNER',
-  /** 게시판 */
   Board = 'BOARD',
-  /** eConsult */
   Econsult = 'ECONSULT',
   ImagingRequest = 'IMAGING_REQUEST',
-  /** 협력병의원 신청 */
-  PartnerApplication = 'PARTNER_APPLICATION',
   Popup = 'POPUP',
-  /** 프로필 */
   Profile = 'PROFILE'
 }
 
@@ -1498,15 +1503,7 @@ export enum HospitalCode {
   Guro = 'GURO'
 }
 
-/** DB 병원 검색 필터 */
-export type HospitalFilterInput = {
-  /** 검색 대상 병원 코드 (안암/구로/안산) */
-  hospitalCode: HospitalCode;
-  /** 병원명 (부분 일치 검색) */
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** 협력 병의원 (DB 등록 + EHR 검색 결과 공통) */
+/** 협력병의원 검색/등록 결과 */
 export type HospitalModel = {
   __typename?: 'HospitalModel';
   /** 주소 */
@@ -1515,18 +1512,18 @@ export type HospitalModel = {
   addressDetail: Maybe<Scalars['String']['output']>;
   /** 병원분류코드 (H=병원, M=의원) */
   classificationCode: Maybe<Scalars['String']['output']>;
-  /** 등록일시 (DB 등록된 경우에만) */
+  /** 등록일시 */
   createdAt: Maybe<Scalars['DateTime']['output']>;
   /** 팩스번호 */
   faxNumber: Maybe<Scalars['String']['output']>;
   /** 소속 병원 코드 (안암/구로/안산) */
   hospitalCode: Maybe<HospitalCode>;
-  /** 병원 고유 ID (DB 등록된 경우에만) */
+  /** 검색 결과 식별자 */
   id: Maybe<Scalars['ID']['output']>;
   /** 병원명 */
   name: Scalars['String']['output'];
-  /** 협력 유형 (M=의원/H=병원) */
-  partnerType: Maybe<PartnerType>;
+  /** 기관 유형 코드 (A=병원, B=의원) */
+  partnerType: Maybe<Scalars['String']['output']>;
   /** 요양기관번호 (PHIS 코드) */
   phisCode: Maybe<Scalars['String']['output']>;
   /** 대표전화 */
@@ -1535,7 +1532,7 @@ export type HospitalModel = {
   representative: Maybe<Scalars['String']['output']>;
   /** 진료과목 */
   specialties: Maybe<Scalars['String']['output']>;
-  /** 수정일시 (DB 등록된 경우에만) */
+  /** 수정일시 */
   updatedAt: Maybe<Scalars['DateTime']['output']>;
   /** 홈페이지 */
   website: Maybe<Scalars['String']['output']>;
@@ -1748,16 +1745,40 @@ export type MeEhrProfile = {
   careInstitutionNo: Maybe<Scalars['String']['output']>;
   /** 진료과 코드 */
   department: Maybe<Scalars['String']['output']>;
+  /** 의사 세부유형 */
+  doctorType: Maybe<Scalars['String']['output']>;
+  /** 이메일 동의여부 */
+  emailConsent: Scalars['Boolean']['output'];
   /** 성별코드 (M/F) */
   gender: Maybe<Scalars['String']['output']>;
   /** 졸업연도 */
   graduationYear: Maybe<Scalars['String']['output']>;
+  /** 병원주소 */
+  hospAddress: Maybe<Scalars['String']['output']>;
+  /** 병원 상세주소 */
+  hospAddressDetail: Maybe<Scalars['String']['output']>;
+  /** 병원코드 */
+  hospCode: Maybe<Scalars['String']['output']>;
   /** 소속 병원명 */
   hospName: Maybe<Scalars['String']['output']>;
+  /** 대표전화 */
+  hospPhone: Maybe<Scalars['String']['output']>;
+  /** 병원 홈페이지 주소 */
+  hospWebsite: Maybe<Scalars['String']['output']>;
+  /** 병원 우편번호 */
+  hospZipCode: Maybe<Scalars['String']['output']>;
+  /** 원장여부 */
+  isDirector: Scalars['Boolean']['output'];
   /** 의사면허번호 */
   licenseNo: Maybe<Scalars['String']['output']>;
+  /** 회신서 수신 동의 여부 */
+  replyConsent: Scalars['Boolean']['output'];
+  /** 대표자명 */
+  representative: Maybe<Scalars['String']['output']>;
   /** 출신학교 코드 */
   school: Maybe<Scalars['String']['output']>;
+  /** SMS 동의여부 */
+  smsConsent: Scalars['Boolean']['output'];
   /** 세부전공 */
   specialty: Maybe<Scalars['String']['output']>;
   /** 수련병원명 */
@@ -1919,6 +1940,8 @@ export type Mutation = {
   adminCreateUser: User;
   /** 관리자 계정 삭제 (비활성화) */
   adminDeleteUser: Scalars['Boolean']['output'];
+  /** 관리자 로그인 - 관리자 계정에만 Access Token(15분)과 Refresh Token(7일) 발급 */
+  adminLogin: AuthPayload;
   /** 관리자 비밀번호 초기화 (임시 비밀번호 SMS 발송) */
   adminResetPassword: MessageResponse;
   /** 관리자 회원 정보 수정 */
@@ -1928,7 +1951,7 @@ export type Mutation = {
   /** 관리자 영상검사 요청 승인 */
   approveImagingRequest: ImagingRequestModel;
   /** 협력병의원 신청 승인 */
-  approvePartnerApplication: PartnerApplicationModel;
+  approvePartnerApplication: PartnerHospitalModel;
   /** 협력병의원 수정요청 승인 */
   approvePartnerUpdateRequest: PartnerUpdateRequestModel;
   /** 회원 승인 - 승인대기 상태를 정상으로 변경 */
@@ -1937,8 +1960,6 @@ export type Mutation = {
   assignPermissionGroup: Scalars['Boolean']['output'];
   /** eConsult 취소 - 대기 상태의 본인 상담만 취소 가능 */
   cancelEConsult: Scalars['Boolean']['output'];
-  /** 협력병의원 신청 취소 - 대기 중이거나 임시저장 상태의 신청만 취소 가능 */
-  cancelPartnerApplication: Scalars['Boolean']['output'];
   /** 비밀번호 변경 - 현재 비밀번호 확인 후 새 비밀번호로 변경 */
   changePassword: MessageResponse;
   /** NICE 본인인증 완료 - 콜백에서 받은 web_transaction_id로 결과 조회 후 복호화 결과 반환 */
@@ -1995,8 +2016,6 @@ export type Mutation = {
   ehrRegisterHospital: EhrRegisterResult;
   /** EHR 병원정보 등록 (의뢰처용) - 의뢰처 경로를 통한 병원정보 등록 */
   ehrRegisterHospitalReferSite: EhrRegisterResult;
-  /** EHR 의사정보 수정 - 등록된 의사정보 업데이트 */
-  ehrUpdateDoctorInfo: EhrRegisterResult;
   /** EHR 병원정보 수정 - 등록된 병원정보 업데이트 */
   ehrUpdateHospitalInfo: EhrRegisterResult;
   /** EHR 회원상태코드 변경 - 회원 상태 업데이트 (1:일반/2:휴면/3:삭제/4:미가입) */
@@ -2020,7 +2039,7 @@ export type Mutation = {
   /** 관리자 영상검사 요청 반려 */
   rejectImagingRequest: ImagingRequestModel;
   /** 협력병의원 신청 반려 */
-  rejectPartnerApplication: PartnerApplicationModel;
+  rejectPartnerApplication: PartnerHospitalModel;
   /** 협력병의원 수정요청 반려 */
   rejectPartnerUpdateRequest: PartnerUpdateRequestModel;
   /** 회원 거부 - 승인대기 상태를 거부로 변경 */
@@ -2039,8 +2058,6 @@ export type Mutation = {
   resetPassword: MessageResponse;
   /** 비밀번호 재설정 (본인인증) - NICE 본인인증 후 새 비밀번호 설정 */
   resetPasswordByVerification: MessageResponse;
-  /** 협력병의원 임시저장 - 기존 DRAFT/REJECTED가 있으면 덮어쓰기, 없으면 새로 생성 */
-  saveDraftPartnerApplication: PartnerHospitalModel;
   /** 이메일 발송 테스트 (인증 불필요) */
   sendTestEmail: EmailTestResult;
   /** SMS 발송 테스트 (인증 불필요) */
@@ -2051,10 +2068,6 @@ export type Mutation = {
   setPermissionGroupMembers: Scalars['Boolean']['output'];
   /** 회원가입 - 일반회원은 즉시 활성화, 병원/의사는 승인대기 상태로 생성 */
   signup: AuthPayload;
-  /** 협력병의원 신청 제출 - DRAFT → PENDING 전환, 필수값 검증 수행 */
-  submitPartnerApplication: PartnerHospitalModel;
-  /** 협력병의원 해지 - 승인된 협력병의원을 해지 처리 */
-  terminatePartnerApplication: PartnerApplicationModel;
   /** 게시글 수정 - 관리자 전용 */
   updateBoardPost: BoardPost;
   /** 게시판 설정 수정 */
@@ -2073,7 +2086,7 @@ export type Mutation = {
   updateMenu: MenuModel;
   /** 권한그룹 수정 */
   updateMenuPermissionGroup: MenuPermissionGroupModel;
-  /** 협력병의원 정보 수정 - 기존 신청의 필드를 수정 (승인 후 정보수정 포함, EHR 동기화) */
+  /** 협력병의원 수정요청 생성 */
   updatePartnerApplication: PartnerHospitalModel;
   /** 팝업/배너 수정 */
   updatePopup: PopupModel;
@@ -2091,6 +2104,11 @@ export type MutationAdminCreateUserArgs = {
 
 export type MutationAdminDeleteUserArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationAdminLoginArgs = {
+  input: AdminLoginInput;
 };
 
 
@@ -2117,11 +2135,13 @@ export type MutationApproveImagingRequestArgs = {
 
 
 export type MutationApprovePartnerApplicationArgs = {
+  hospitalCode?: InputMaybe<HospitalCode>;
   id: Scalars['String']['input'];
 };
 
 
 export type MutationApprovePartnerUpdateRequestArgs = {
+  hospitalCode?: InputMaybe<HospitalCode>;
   id: Scalars['String']['input'];
 };
 
@@ -2140,11 +2160,6 @@ export type MutationAssignPermissionGroupArgs = {
 
 export type MutationCancelEConsultArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type MutationCancelPartnerApplicationArgs = {
-  id: Scalars['ID']['input'];
 };
 
 
@@ -2292,11 +2307,6 @@ export type MutationEhrRegisterHospitalReferSiteArgs = {
 };
 
 
-export type MutationEhrUpdateDoctorInfoArgs = {
-  input: UpdateDoctorEhrInput;
-};
-
-
 export type MutationEhrUpdateHospitalInfoArgs = {
   input: UpdateHospitalEhrInput;
 };
@@ -2349,12 +2359,14 @@ export type MutationRejectImagingRequestArgs = {
 
 
 export type MutationRejectPartnerApplicationArgs = {
+  hospitalCode?: InputMaybe<HospitalCode>;
   id: Scalars['String']['input'];
   reason: Scalars['String']['input'];
 };
 
 
 export type MutationRejectPartnerUpdateRequestArgs = {
+  hospitalCode?: InputMaybe<HospitalCode>;
   id: Scalars['String']['input'];
 };
 
@@ -2402,11 +2414,6 @@ export type MutationResetPasswordByVerificationArgs = {
 };
 
 
-export type MutationSaveDraftPartnerApplicationArgs = {
-  input: SaveDraftPartnerInput;
-};
-
-
 export type MutationSendTestEmailArgs = {
   body: Scalars['String']['input'];
   hospitalCode?: InputMaybe<HospitalCode>;
@@ -2437,17 +2444,6 @@ export type MutationSetPermissionGroupMembersArgs = {
 
 export type MutationSignupArgs = {
   input: SignupInput;
-};
-
-
-export type MutationSubmitPartnerApplicationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationTerminatePartnerApplicationArgs = {
-  id: Scalars['String']['input'];
-  reason: Scalars['String']['input'];
 };
 
 
@@ -2538,7 +2534,7 @@ export type PaginatedAdminDoctorResponse = {
   totalCount: Scalars['Int']['output'];
 };
 
-/** 관리자용 협력병의원 신청 페이지네이션 응답 */
+/** 관리자 협력병의원 신청 페이지네이션 응답 */
 export type PaginatedAdminPartnerApplicationResponse = {
   __typename?: 'PaginatedAdminPartnerApplicationResponse';
   /** 다음 페이지 커서 */
@@ -2546,7 +2542,7 @@ export type PaginatedAdminPartnerApplicationResponse = {
   /** 다음 페이지 존재 여부 */
   hasNextPage: Scalars['Boolean']['output'];
   /** 항목 목록 */
-  items: Array<PartnerApplicationModel>;
+  items: Array<PartnerHospitalModel>;
   /** 전체 항목 수 */
   totalCount: Scalars['Int']['output'];
 };
@@ -2603,19 +2599,6 @@ export type PaginatedEConsultResponse = {
   totalCount: Scalars['Int']['output'];
 };
 
-/** 협력병의원 현황 페이지네이션 응답 */
-export type PaginatedHospitalResponse = {
-  __typename?: 'PaginatedHospitalResponse';
-  /** 다음 페이지 커서 */
-  cursor: Maybe<Scalars['String']['output']>;
-  /** 다음 페이지 존재 여부 */
-  hasNextPage: Scalars['Boolean']['output'];
-  /** 항목 목록 */
-  items: Array<HospitalModel>;
-  /** 전체 항목 수 */
-  totalCount: Scalars['Int']['output'];
-};
-
 /** 영상검사 요청 페이지네이션 응답 */
 export type PaginatedImagingRequestResponse = {
   __typename?: 'PaginatedImagingRequestResponse';
@@ -2665,73 +2648,6 @@ export type PaginationInput = {
   page?: InputMaybe<Scalars['Int']['input']>;
 };
 
-/** 협력병의원 신청 (관리자용) */
-export type PartnerApplicationModel = {
-  __typename?: 'PartnerApplicationModel';
-  /** 신청자 ID */
-  applicantId: Maybe<Scalars['String']['output']>;
-  /** 승인일시 */
-  approvedAt: Maybe<Scalars['DateTime']['output']>;
-  /** 요양기관번호 */
-  careInstitutionNo: Maybe<Scalars['String']['output']>;
-  /** 협력 상태 코드 (clbrDvsnCd1) */
-  clbrDvsnCd1: Maybe<Scalars['String']['output']>;
-  /** 생성일시 */
-  createdAt: Scalars['DateTime']['output'];
-  /** 병원장명 */
-  directorName: Maybe<Scalars['String']['output']>;
-  /** 병원장 연락처 */
-  directorPhone: Maybe<Scalars['String']['output']>;
-  /** 병원 주소 snapshot */
-  hospitalAddress: Maybe<Scalars['String']['output']>;
-  /** 병원 상세주소 snapshot */
-  hospitalAddressDetail: Maybe<Scalars['String']['output']>;
-  /** 소속 병원 코드 */
-  hospitalCode: HospitalCode;
-  /** 병원 팩스번호 snapshot */
-  hospitalFaxNumber: Maybe<Scalars['String']['output']>;
-  /** 병원명 snapshot */
-  hospitalName: Maybe<Scalars['String']['output']>;
-  /** 병원 대표전화 snapshot */
-  hospitalPhone: Maybe<Scalars['String']['output']>;
-  /** 병원 대표자명 snapshot */
-  hospitalRepresentative: Maybe<Scalars['String']['output']>;
-  /** 병원 홈페이지 snapshot */
-  hospitalWebsite: Maybe<Scalars['String']['output']>;
-  /** 병원 우편번호 snapshot */
-  hospitalZipCode: Maybe<Scalars['String']['output']>;
-  /** 신청 ID */
-  id: Scalars['ID']['output'];
-  /** 협력기관 유형 snapshot */
-  partnerType: Maybe<PartnerType>;
-  /** 반려 사유 */
-  rejectReason: Maybe<Scalars['String']['output']>;
-  /** 검토일시 */
-  reviewedAt: Maybe<Scalars['DateTime']['output']>;
-  /** 검토자 ID */
-  reviewedById: Maybe<Scalars['String']['output']>;
-  /** 실무자 이메일 */
-  staffEmail: Maybe<Scalars['String']['output']>;
-  /** 실무자명 */
-  staffName: Maybe<Scalars['String']['output']>;
-  /** 실무자 연락처 */
-  staffPhone: Maybe<Scalars['String']['output']>;
-  /** 상태 */
-  status: PartnerStatus;
-  /** 해지일시 */
-  terminatedAt: Maybe<Scalars['DateTime']['output']>;
-  /** 수정일시 */
-  updatedAt: Scalars['DateTime']['output'];
-};
-
-/** 협력병의원 필터 */
-export type PartnerHospitalFilterInput = {
-  /** 병원명 검색 */
-  search?: InputMaybe<Scalars['String']['input']>;
-  /** 진료과목 검색 */
-  specialty?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** 협력병의원 신청 */
 export type PartnerHospitalModel = {
   __typename?: 'PartnerHospitalModel';
@@ -2741,15 +2657,15 @@ export type PartnerHospitalModel = {
   applicantId: Scalars['String']['output'];
   /** 승인일시 */
   approvedAt: Maybe<Scalars['DateTime']['output']>;
-  /** 첨부파일 목록 (Attachment FK) */
+  /** 첨부파일 목록 */
   attachmentRows: Maybe<Array<AttachmentModel>>;
   /** 첨부파일 메타데이터 */
   attachments: Maybe<Scalars['JSON']['output']>;
-  /** 기본 처치 가능 항목 (JSON) */
+  /** 기본 처치 가능 항목(JSON) */
   availableTreatments: Maybe<Scalars['JSON']['output']>;
   /** 요양기관번호 */
   careInstitutionNo: Maybe<Scalars['String']['output']>;
-  /** 협력 상태 코드 (clbrDvsnCd1) */
+  /** 협력 상태 코드 (현재 병원 EHR 기준) */
   clbrDvsnCd1: Maybe<Scalars['String']['output']>;
   /** 엑시머레이저 가능 여부 */
   clinicHasExcimerLaser: Maybe<Scalars['Boolean']['output']>;
@@ -2763,7 +2679,7 @@ export type PartnerHospitalModel = {
   clinicMedicationType: Maybe<Scalars['String']['output']>;
   /** 생성일시 */
   createdAt: Scalars['DateTime']['output'];
-  /** 진료과별 전문의 현황 (JSON) */
+  /** 진료과별 전문의 현황(JSON) */
   departmentSpecialists: Maybe<Scalars['JSON']['output']>;
   /** 병원장 생년월일 */
   directorBirthDate: Maybe<Scalars['String']['output']>;
@@ -2773,7 +2689,7 @@ export type PartnerHospitalModel = {
   directorDepartment: Maybe<Scalars['String']['output']>;
   /** 병원장 이메일 */
   directorEmail: Maybe<Scalars['String']['output']>;
-  /** E-mail 수신 동의 */
+  /** 이메일 수신 동의 */
   directorEmailConsent: Maybe<Scalars['Boolean']['output']>;
   /** 병원장 성별 */
   directorGender: Maybe<Scalars['String']['output']>;
@@ -2851,10 +2767,8 @@ export type PartnerHospitalModel = {
   hospitalZipCode: Maybe<Scalars['String']['output']>;
   /** 중환자실 수 */
   icuCount: Maybe<Scalars['Int']['output']>;
-  /** 고유 ID */
+  /** 신청 ID */
   id: Scalars['ID']['output'];
-  /** 병원종별코드 */
-  institutionCode: Maybe<Scalars['String']['output']>;
   /** 의료기관 유형 */
   institutionType: Maybe<InstitutionType>;
   /** 원장 여부 */
@@ -2871,14 +2785,12 @@ export type PartnerHospitalModel = {
   isolationSingleCount: Maybe<Scalars['Int']['output']>;
   /** 격리 3인실 수 */
   isolationTripleCount: Maybe<Scalars['Int']['output']>;
-  /** 격리 유형 (JSON) */
+  /** 격리 유형(JSON) */
   isolationTypes: Maybe<Scalars['JSON']['output']>;
   /** 격리병상 운영 여부 */
   isolationWardOperation: Maybe<Scalars['Boolean']['output']>;
   /** 주요 보유 장비 */
   majorEquipment: Maybe<Scalars['String']['output']>;
-  /** 진료과목/표방과목 */
-  medicalDepartment: Maybe<Scalars['String']['output']>;
   /** 다인실 수 */
   multiRoomCount: Maybe<Scalars['Int']['output']>;
   /** 간호사 수 */
@@ -2889,7 +2801,7 @@ export type PartnerHospitalModel = {
   premiumRoomCount: Maybe<Scalars['Int']['output']>;
   /** 반려 사유 */
   rejectReason: Maybe<Scalars['String']['output']>;
-  /** 병원특성 및 기타사항 */
+  /** 병원 특성 및 기타사항 */
   remarks: Maybe<Scalars['String']['output']>;
   /** 심사일시 */
   reviewedAt: Maybe<Scalars['DateTime']['output']>;
@@ -2909,7 +2821,7 @@ export type PartnerHospitalModel = {
   staffPhone: Maybe<Scalars['String']['output']>;
   /** 실무자 직급 */
   staffPosition: Maybe<Scalars['String']['output']>;
-  /** 실무자 연락처 (유선) */
+  /** 실무자 연락처(유선) */
   staffTel: Maybe<Scalars['String']['output']>;
   /** 상태 */
   status: PartnerStatus;
@@ -2923,7 +2835,7 @@ export type PartnerHospitalModel = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
-/** 협력병의원 상태 */
+/** 협력병의원 신청 상태 */
 export enum PartnerStatus {
   /** 승인 */
   Approved = 'APPROVED',
@@ -2937,7 +2849,7 @@ export enum PartnerStatus {
   Terminated = 'TERMINATED'
 }
 
-/** 협력병의원 유형 (EHR hsptClsfCd 기준) */
+/** 협력병의원 유형 */
 export enum PartnerType {
   /** 협력병원 */
   A = 'A',
@@ -2945,7 +2857,7 @@ export enum PartnerType {
   B = 'B'
 }
 
-/** 협력병의원 수정 요청 */
+/** 협력병의원 수정요청 */
 export type PartnerUpdateRequestModel = {
   __typename?: 'PartnerUpdateRequestModel';
   /** 생성일시 */
@@ -3258,7 +3170,7 @@ export type Query = {
   myMenuPermissions: Array<MenuPermissionEntryModel>;
   /** 내 협력병의원 신청 조회 (hospitalCode 기준, 단일) - 없으면 null */
   myPartnerApplication: Maybe<PartnerHospitalModel>;
-  /** 내 협력병의원 신청 목록 조회 */
+  /** 내 협력병의원 신청 목록 조회 (현재 병원 컨텍스트 기준) */
   myPartnerApplications: PaginatedPartnerHospitalResponse;
   /** 내 협력병의원 수정요청 조회 */
   myPartnerUpdateRequest: Maybe<PartnerUpdateRequestModel>;
@@ -3266,18 +3178,12 @@ export type Query = {
   myProfile: User;
   /** 협력병의원 신청 상세 조회 (ID 기준) */
   partnerApplicationById: PartnerHospitalModel;
-  /** 협력병의원 상세 조회 */
-  partnerHospitalById: HospitalModel;
-  /** 협력병의원 현황 목록 조회 (승인된 병의원만) - URL 병원 경로(/anam|/guro|/ansan) 기반 병원 필터 */
-  partnerHospitals: PaginatedHospitalResponse;
   /** 권한그룹에 배정된 관리자 목록 조회 */
   permissionGroupMembers: Array<User>;
   /** 상단 고정 게시글 목록 조회 */
   pinnedPosts: Array<BoardPost>;
   /** 파일 다운로드용 Presigned URL 발급 (1시간 유효) */
   presignedDownloadUrl: Scalars['String']['output'];
-  /** DB 병원 검색 - 우리 DB에 등록된 협력병원 목록 조회 (비인증) */
-  searchHospitals: Array<HospitalModel>;
   /** 슬라이드 배너 목록 조회 - URL 병원 경로(/anam|/guro|/ansan) 필요 */
   slideBanners: Array<PopupModel>;
   /** 사용자 상세 조회 - 관리자 전용, ID로 사용자 정보 조회 */
@@ -3338,6 +3244,7 @@ export type QueryAdminMenusArgs = {
 
 
 export type QueryAdminPartnerApplicationByIdArgs = {
+  hospitalCode?: InputMaybe<HospitalCode>;
   id: Scalars['String']['input'];
 };
 
@@ -3351,6 +3258,7 @@ export type QueryAdminPartnerApplicationsArgs = {
 
 
 export type QueryAdminPartnerUpdateRequestByIdArgs = {
+  hospitalCode?: InputMaybe<HospitalCode>;
   id: Scalars['String']['input'];
 };
 
@@ -3636,23 +3544,12 @@ export type QueryMyPartnerApplicationsArgs = {
 
 
 export type QueryMyPartnerUpdateRequestArgs = {
-  partnerApplicationId: Scalars['ID']['input'];
+  partnerApplicationId: Scalars['String']['input'];
 };
 
 
 export type QueryPartnerApplicationByIdArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryPartnerHospitalByIdArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryPartnerHospitalsArgs = {
-  filter?: InputMaybe<PartnerHospitalFilterInput>;
-  pagination?: InputMaybe<PaginationInput>;
+  id: Scalars['String']['input'];
 };
 
 
@@ -3669,11 +3566,6 @@ export type QueryPinnedPostsArgs = {
 
 export type QueryPresignedDownloadUrlArgs = {
   attachmentId: Scalars['ID']['input'];
-};
-
-
-export type QuerySearchHospitalsArgs = {
-  filter: HospitalFilterInput;
 };
 
 
@@ -3824,6 +3716,8 @@ export type RegisterHospitalEhrInput = {
   clbrDvsnCd3?: InputMaybe<Scalars['String']['input']>;
   /** 담당자 전화 */
   cnpnDscrCtn?: InputMaybe<Scalars['String']['input']>;
+  /** 허가병상수 */
+  crptSckbCnt?: InputMaybe<Scalars['Int']['input']>;
   /** 면허번호 */
   drlcNo?: InputMaybe<Scalars['String']['input']>;
   /** 세부전공 */
@@ -3832,6 +3726,8 @@ export type RegisterHospitalEhrInput = {
   emadNm?: InputMaybe<Scalars['String']['input']>;
   /** 이메일회신동의 (Y/N) */
   emailRplyAgrmYn1?: InputMaybe<Scalars['String']['input']>;
+  /** 장비현황 */
+  eqpmCtn?: InputMaybe<Scalars['String']['input']>;
   /** 팩스번호 */
   fxno?: InputMaybe<Scalars['String']['input']>;
   /** 성별 (M/F) */
@@ -3878,6 +3774,8 @@ export type RegisterHospitalEhrInput = {
   tragHsptNm?: InputMaybe<Scalars['String']['input']>;
   /** 대표자명 */
   userNm?: InputMaybe<Scalars['String']['input']>;
+  /** 차량번호 */
+  vhclNo?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** 병원 신규등록 입력 - 의사 가입 시 병원검색에서 없을 때 간이 등록 (화면설계서 기준) */
@@ -3980,168 +3878,6 @@ export type ResetPasswordInput = {
   newPassword: Scalars['String']['input'];
   /** 비밀번호 재설정 토큰 */
   token: Scalars['String']['input'];
-};
-
-/** 협력병의원 임시저장 입력 - 필수값 없이 저장 가능 */
-export type SaveDraftPartnerInput = {
-  /** 가동 병상 수 (H전용) */
-  activeBedCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 첨부파일 메타데이터 (JSON 배열) */
-  attachments?: InputMaybe<Scalars['JSON']['input']>;
-  /** 기본 처치 가능 항목 (JSON) (H전용) */
-  availableTreatments?: InputMaybe<Scalars['JSON']['input']>;
-  /** 엑시머레이저 가능 여부 (M전용) */
-  clinicHasExcimerLaser?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 혈액투석 가능 여부 (M전용) */
-  clinicHasHemodialysis?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 복막투석 가능 여부 (M전용) */
-  clinicHasPeritoneal?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 광선치료 가능 여부 (M전용) */
-  clinicHasPhototherapy?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 투약 유형 (투약불가능/G-CSF피하주사가능) (M전용) */
-  clinicMedicationType?: InputMaybe<Scalars['String']['input']>;
-  /** 진료과별 전문의 현황 (JSON) (H전용) */
-  departmentSpecialists?: InputMaybe<Scalars['JSON']['input']>;
-  /** 병원장 생년월일 (YYYY-MM-DD) */
-  directorBirthDate?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 차량번호 */
-  directorCarNo?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 진료과 */
-  directorDepartment?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 이메일 */
-  directorEmail?: InputMaybe<Scalars['String']['input']>;
-  /** E-mail 수신 동의 */
-  directorEmailConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 성별 (M/F) */
-  directorGender?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 졸업년도 */
-  directorGraduationYear?: InputMaybe<Scalars['String']['input']>;
-  /** 의사면허번호 */
-  directorLicenseNo?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 성명 */
-  directorName?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 휴대전화 */
-  directorPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 회신서 수신 동의 */
-  directorReplyConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 출신학교 */
-  directorSchool?: InputMaybe<Scalars['String']['input']>;
-  /** SMS 수신 동의 */
-  directorSmsConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 세부전공 */
-  directorSubSpecialty?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 수련병원 */
-  directorTrainingHospital?: InputMaybe<Scalars['String']['input']>;
-  /** 응급실 수 (H전용) */
-  erCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 인공신장실 유무 (H전용) */
-  hasDialysisRoom?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 응급실 유무 (H전용) */
-  hasEr?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 보호자 간병 유무 (H전용) */
-  hasGuardianCare?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 호스피스 유무 (H전용) */
-  hasHospice?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 중환자실 유무 (H전용) */
-  hasIcu?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 간호간병통합서비스 유무 (H전용) */
-  hasIntegratedNursing?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 수술실 유무 (H전용) */
-  hasOperatingRoom?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 물리치료실 유무 (M전용) */
-  hasPhysicalTherapy?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 정신과 병동 폐쇄 (H전용) */
-  hasPsychClosed?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 정신과 병동 일반 (H전용) */
-  hasPsychGeneral?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 격리 (H전용) */
-  hasRehabIsolation?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 작업 (H전용) */
-  hasRehabOt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 물리 (H전용) */
-  hasRehabPt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 언어 (H전용) */
-  hasRehabSt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 연하 (H전용) */
-  hasRehabSwallow?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 공동 간병 유무 (H전용) */
-  hasSharedCare?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원 주소 */
-  hospitalAddress?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 상세주소 */
-  hospitalAddressDetail?: InputMaybe<Scalars['String']['input']>;
-  /** 신청 대상 병원 코드 (안암/구로/안산) */
-  hospitalCode?: InputMaybe<HospitalCode>;
-  /** 병원 팩스번호 */
-  hospitalFaxNumber?: InputMaybe<Scalars['String']['input']>;
-  /** 병원명 */
-  hospitalName?: InputMaybe<Scalars['String']['input']>;
-  /** 요양기관번호 */
-  hospitalPhisCode?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 대표전화 */
-  hospitalPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 홈페이지 주소 */
-  hospitalWebsite?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 우편번호 */
-  hospitalZipCode?: InputMaybe<Scalars['String']['input']>;
-  /** 중환자실 수 (H전용) */
-  icuCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 병원종별코드 */
-  institutionCode?: InputMaybe<Scalars['String']['input']>;
-  /** 의료기관 유형 */
-  institutionType?: InputMaybe<InstitutionType>;
-  /** 원장 여부 */
-  isDirector?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 격리 중 간병 유형 (공동/개인/보호자) (H전용) */
-  isolationCareType?: InputMaybe<Scalars['String']['input']>;
-  /** 격리 2인실 수 (H전용) */
-  isolationDoubleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 중 재활 유형 (No/침상/격리병동재활실) (H전용) */
-  isolationRehabType?: InputMaybe<Scalars['String']['input']>;
-  /** 격리병실 수 (H전용) */
-  isolationRoomCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 1인실 수 (H전용) */
-  isolationSingleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 3인실 수 (H전용) */
-  isolationTripleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 유형 (VRE/CRE/CPE/TB/기타) (H전용) */
-  isolationTypes?: InputMaybe<Scalars['JSON']['input']>;
-  /** 격리병상 운영 여부 (H전용) */
-  isolationWardOperation?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 주요 보유 장비 (M전용) */
-  majorEquipment?: InputMaybe<Scalars['String']['input']>;
-  /** 진료과목/표방과목 */
-  medicalDepartment?: InputMaybe<Scalars['String']['input']>;
-  /** 다인실 수 (H전용) */
-  multiRoomCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 간호사 수 */
-  nurseCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 신청 유형 (A: 협력병원, B: 협력의원) */
-  partnerType?: InputMaybe<PartnerType>;
-  /** 상급병실 수 (H전용) */
-  premiumRoomCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 병원특성 및 기타사항 */
-  remarks?: InputMaybe<Scalars['String']['input']>;
-  /** 전문의 수 */
-  specialistCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 실무자 부서/진료과 유형 (부서/진료과) */
-  staffDeptType?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 부서/진료과 값 */
-  staffDeptValue?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 이메일 */
-  staffEmail?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 성명 */
-  staffName?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 휴대전화 */
-  staffPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 직급 */
-  staffPosition?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 연락처 (유선) */
-  staffTel?: InputMaybe<Scalars['String']['input']>;
-  /** 총 병상 수 */
-  totalBedCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 총 직원 수 */
-  totalStaffCount?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** EHR 협력병원 리스트 조회 입력 - 병원명/주소/분류코드로 검색 (최소 1개 필터 필수) */
@@ -4333,24 +4069,6 @@ export type UpdateContentInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** EHR 의사정보 수정 입력 */
-export type UpdateDoctorEhrInput = {
-  /** 진료과 */
-  department?: InputMaybe<Scalars['String']['input']>;
-  /** 이메일 */
-  email?: InputMaybe<Scalars['String']['input']>;
-  /** 대상 병원 */
-  hospitalCode: HospitalCode;
-  /** 전문분야 */
-  specialty?: InputMaybe<Scalars['String']['input']>;
-  /** 전화번호 */
-  telNo?: InputMaybe<Scalars['String']['input']>;
-  /** 의사명 */
-  userNm?: InputMaybe<Scalars['String']['input']>;
-  /** 웹 사용자 ID */
-  wwwUserId: Scalars['String']['input'];
-};
-
 /** 의료진 수정 입력 */
 export type UpdateDoctorInput = {
   /** 진료과 */
@@ -4451,6 +4169,8 @@ export type UpdateHospitalEhrInput = {
   clbrDvsnCd3?: InputMaybe<Scalars['String']['input']>;
   /** 담당자 전화 */
   cnpnDscrCtn?: InputMaybe<Scalars['String']['input']>;
+  /** 허가병상수 */
+  crptSckbCnt?: InputMaybe<Scalars['Int']['input']>;
   /** 면허번호 */
   drlcNo?: InputMaybe<Scalars['String']['input']>;
   /** 세부전공 */
@@ -4459,6 +4179,8 @@ export type UpdateHospitalEhrInput = {
   emadNm?: InputMaybe<Scalars['String']['input']>;
   /** 이메일회신동의 (Y/N) */
   emailRplyAgrmYn1?: InputMaybe<Scalars['String']['input']>;
+  /** 장비현황 */
+  eqpmCtn?: InputMaybe<Scalars['String']['input']>;
   /** 팩스번호 */
   fxno?: InputMaybe<Scalars['String']['input']>;
   /** 성별 (M/F) */
@@ -4505,6 +4227,8 @@ export type UpdateHospitalEhrInput = {
   tragHsptNm?: InputMaybe<Scalars['String']['input']>;
   /** 대표자명 */
   userNm?: InputMaybe<Scalars['String']['input']>;
+  /** 차량번호 */
+  vhclNo?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** EHR 회원상태코드 변경 입력 */
@@ -4553,163 +4277,23 @@ export type UpdateMenuPermissionGroupInput = {
   name: Scalars['String']['input'];
 };
 
-/** 협력병의원 정보 수정 입력 - 기존 신청의 필드를 수정 (승인 후 정보수정 포함) */
+/** 협력병의원 수정요청 입력 */
 export type UpdatePartnerApplicationInput = {
-  /** 가동 병상 수 */
-  activeBedCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 첨부파일 메타데이터 (JSON 배열) */
+  /** 첨부파일 메타데이터(JSON 배열) */
   attachments?: InputMaybe<Scalars['JSON']['input']>;
-  /** 기본 처치 가능 항목 (JSON) */
-  availableTreatments?: InputMaybe<Scalars['JSON']['input']>;
-  /** 엑시머레이저 가능 여부 */
-  clinicHasExcimerLaser?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 혈액투석 가능 여부 */
-  clinicHasHemodialysis?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 복막투석 가능 여부 */
-  clinicHasPeritoneal?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 광선치료 가능 여부 */
-  clinicHasPhototherapy?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 투약 유형 */
-  clinicMedicationType?: InputMaybe<Scalars['String']['input']>;
-  /** 진료과별 전문의 현황 (JSON) */
-  departmentSpecialists?: InputMaybe<Scalars['JSON']['input']>;
-  /** 병원장 생년월일 (YYYY-MM-DD) */
-  directorBirthDate?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 차량번호 */
-  directorCarNo?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 진료과 */
-  directorDepartment?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 이메일 */
-  directorEmail?: InputMaybe<Scalars['String']['input']>;
-  /** E-mail 수신 동의 */
-  directorEmailConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 성별 (M/F) */
-  directorGender?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 졸업년도 */
-  directorGraduationYear?: InputMaybe<Scalars['String']['input']>;
-  /** 의사면허번호 */
-  directorLicenseNo?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 성명 */
-  directorName?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 휴대전화 */
-  directorPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 회신서 수신 동의 */
-  directorReplyConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 출신학교 */
-  directorSchool?: InputMaybe<Scalars['String']['input']>;
-  /** SMS 수신 동의 */
-  directorSmsConsent?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원장 세부전공 */
-  directorSubSpecialty?: InputMaybe<Scalars['String']['input']>;
-  /** 병원장 수련병원 */
-  directorTrainingHospital?: InputMaybe<Scalars['String']['input']>;
-  /** 응급실 수 */
-  erCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 인공신장실 유무 */
-  hasDialysisRoom?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 응급실 유무 */
-  hasEr?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 보호자 간병 유무 */
-  hasGuardianCare?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 호스피스 유무 */
-  hasHospice?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 중환자실 유무 */
-  hasIcu?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 간호간병통합서비스 유무 */
-  hasIntegratedNursing?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 수술실 유무 */
-  hasOperatingRoom?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 물리치료실 유무 */
-  hasPhysicalTherapy?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 정신과 병동 폐쇄 */
-  hasPsychClosed?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 정신과 병동 일반 */
-  hasPsychGeneral?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 격리 */
-  hasRehabIsolation?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 작업 */
-  hasRehabOt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 물리 */
-  hasRehabPt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 언어 */
-  hasRehabSt?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 재활치료실 연하 */
-  hasRehabSwallow?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 공동 간병 유무 */
-  hasSharedCare?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 병원 주소 snapshot */
-  hospitalAddress?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 상세주소 snapshot */
-  hospitalAddressDetail?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 팩스번호 snapshot */
-  hospitalFaxNumber?: InputMaybe<Scalars['String']['input']>;
-  /** 병원명 snapshot */
-  hospitalName?: InputMaybe<Scalars['String']['input']>;
-  /** 요양기관번호 snapshot */
-  hospitalPhisCode?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 대표전화 snapshot */
-  hospitalPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 홈페이지 주소 snapshot */
-  hospitalWebsite?: InputMaybe<Scalars['String']['input']>;
-  /** 병원 우편번호 snapshot */
-  hospitalZipCode?: InputMaybe<Scalars['String']['input']>;
-  /** 중환자실 수 */
-  icuCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 수정할 신청 ID */
+  /** 수정 대상 신청 ID */
   id: Scalars['ID']['input'];
-  /** 병원종별코드 */
-  institutionCode?: InputMaybe<Scalars['String']['input']>;
   /** 의료기관 유형 */
   institutionType?: InputMaybe<InstitutionType>;
-  /** 원장 여부 */
-  isDirector?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 격리 중 간병 유형 */
-  isolationCareType?: InputMaybe<Scalars['String']['input']>;
-  /** 격리 2인실 수 */
-  isolationDoubleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 중 재활 유형 */
-  isolationRehabType?: InputMaybe<Scalars['String']['input']>;
-  /** 격리병실 수 */
-  isolationRoomCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 1인실 수 */
-  isolationSingleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 3인실 수 */
-  isolationTripleCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 격리 유형 (JSON 배열) */
-  isolationTypes?: InputMaybe<Scalars['JSON']['input']>;
-  /** 격리병상 운영 여부 */
-  isolationWardOperation?: InputMaybe<Scalars['Boolean']['input']>;
-  /** 주요 보유 장비 */
+  /** 주요 보유 장비(협력의원 전용) */
   majorEquipment?: InputMaybe<Scalars['String']['input']>;
-  /** 진료과목/표방과목 */
-  medicalDepartment?: InputMaybe<Scalars['String']['input']>;
-  /** 다인실 수 */
-  multiRoomCount?: InputMaybe<Scalars['Int']['input']>;
   /** 간호사 수 */
   nurseCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 신청 유형 (A: 협력병원, B: 협력의원) */
-  partnerType?: InputMaybe<PartnerType>;
-  /** 상급병실 수 */
-  premiumRoomCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 병원특성 및 기타사항 */
+  /** 병원 특성 및 기타사항 */
   remarks?: InputMaybe<Scalars['String']['input']>;
   /** 전문의 수 */
   specialistCount?: InputMaybe<Scalars['Int']['input']>;
-  /** 실무자 부서/진료과 유형 */
-  staffDeptType?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 부서/진료과 값 */
-  staffDeptValue?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 이메일 */
-  staffEmail?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 성명 */
-  staffName?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 휴대전화 */
-  staffPhone?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 직급 */
-  staffPosition?: InputMaybe<Scalars['String']['input']>;
-  /** 실무자 연락처 (유선) */
-  staffTel?: InputMaybe<Scalars['String']['input']>;
-  /** 총 병상 수 */
+  /** 총 병상 수(협력의원 전용) */
   totalBedCount?: InputMaybe<Scalars['Int']['input']>;
   /** 총 직원 수 */
   totalStaffCount?: InputMaybe<Scalars['Int']['input']>;
@@ -5005,7 +4589,7 @@ export type UpdateDoctorProfileMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDoctorProfileMutation = { __typename?: 'Mutation', updateDoctorProfile: { __typename?: 'User', id: string, userName: string, profile: { __typename?: 'UserProfile', doctorType: DoctorType | null, licenseNo: string | null, isDirector: boolean, school: string | null, specialty: string | null, department: string | null, smsConsent: boolean, emailConsent: boolean, replyConsent: boolean, hospName: string | null, careInstitutionNo: string | null, hospZipCode: string | null, hospAddress: string | null, hospAddressDetail: string | null, hospPhone: string | null, hospWebsite: string | null } | null } };
+export type UpdateDoctorProfileMutation = { __typename?: 'Mutation', updateDoctorProfile: { __typename?: 'User', id: string, userId: string, userName: string, email: string, phone: string | null, userType: UserType, status: UserStatus, hospitalCode: HospitalCode | null, profile: { __typename?: 'UserProfile', birthDate: any | null, gender: Gender | null, doctorType: DoctorType | null, licenseNo: string | null, isDirector: boolean, school: string | null, specialty: string | null, department: string | null, smsConsent: boolean, emailConsent: boolean, replyConsent: boolean, hospName: string | null, careInstitutionNo: string | null, hospZipCode: string | null, hospAddress: string | null, hospAddressDetail: string | null, hospPhone: string | null, hospWebsite: string | null } | null } };
 
 export type ChangePasswordMutationVariables = Exact<{
   input: ChangePasswordInput;
@@ -5235,27 +4819,6 @@ export type ApplyPartnerHospitalMutationVariables = Exact<{
 
 export type ApplyPartnerHospitalMutation = { __typename?: 'Mutation', applyPartnerHospital: { __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, status: PartnerStatus, createdAt: any, updatedAt: any } };
 
-export type SaveDraftPartnerApplicationMutationVariables = Exact<{
-  input: SaveDraftPartnerInput;
-}>;
-
-
-export type SaveDraftPartnerApplicationMutation = { __typename?: 'Mutation', saveDraftPartnerApplication: { __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, status: PartnerStatus, createdAt: any, updatedAt: any } };
-
-export type SubmitPartnerApplicationMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type SubmitPartnerApplicationMutation = { __typename?: 'Mutation', submitPartnerApplication: { __typename?: 'PartnerHospitalModel', id: string, status: PartnerStatus, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, institutionType: InstitutionType | null, createdAt: any, updatedAt: any } };
-
-export type CancelPartnerApplicationMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type CancelPartnerApplicationMutation = { __typename?: 'Mutation', cancelPartnerApplication: boolean };
-
 export type UpdatePartnerApplicationMutationVariables = Exact<{
   input: UpdatePartnerApplicationInput;
 }>;
@@ -5263,26 +4826,28 @@ export type UpdatePartnerApplicationMutationVariables = Exact<{
 
 export type UpdatePartnerApplicationMutation = { __typename?: 'Mutation', updatePartnerApplication: { __typename?: 'PartnerHospitalModel', id: string, status: PartnerStatus, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, directorName: string | null, directorPhone: string | null, directorEmail: string | null, staffName: string | null, staffPhone: string | null, staffEmail: string | null, remarks: string | null, createdAt: any, updatedAt: any } };
 
+export type PartnerHospitalFieldsFragment = { __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalSpecialties: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, isolationWardOperation: boolean | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, approvedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null };
+
 export type MyPartnerApplicationQueryVariables = Exact<{
   hospitalCode: HospitalCode;
 }>;
 
 
-export type MyPartnerApplicationQuery = { __typename?: 'Query', myPartnerApplication: { __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, hospitalSpecialties: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, approvedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null } | null };
+export type MyPartnerApplicationQuery = { __typename?: 'Query', myPartnerApplication: { __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalSpecialties: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, isolationWardOperation: boolean | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, approvedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null } | null };
 
 export type MyPartnerApplicationsQueryVariables = Exact<{
   pagination?: InputMaybe<PaginationInput>;
 }>;
 
 
-export type MyPartnerApplicationsQuery = { __typename?: 'Query', myPartnerApplications: { __typename?: 'PaginatedPartnerHospitalResponse', totalCount: number, hasNextPage: boolean, cursor: string | null, items: Array<{ __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, hospitalSpecialties: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, approvedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null }> } };
+export type MyPartnerApplicationsQuery = { __typename?: 'Query', myPartnerApplications: { __typename?: 'PaginatedPartnerHospitalResponse', totalCount: number, hasNextPage: boolean, cursor: string | null, items: Array<{ __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalSpecialties: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, isolationWardOperation: boolean | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, approvedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null }> } };
 
 export type PartnerApplicationByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type PartnerApplicationByIdQuery = { __typename?: 'Query', partnerApplicationById: { __typename?: 'PartnerHospitalModel', id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, hospitalSpecialties: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, reviewedAt: any | null, reviewedById: string | null, approvedAt: any | null, terminatedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null } };
+export type PartnerApplicationByIdQuery = { __typename?: 'Query', partnerApplicationById: { __typename?: 'PartnerHospitalModel', reviewedAt: any | null, reviewedById: string | null, terminatedAt: any | null, id: string, applicantId: string, hospitalCode: HospitalCode, careInstitutionNo: string | null, partnerType: PartnerType | null, hospitalName: string | null, hospitalAddress: string | null, hospitalAddressDetail: string | null, hospitalPhone: string | null, hospitalRepresentative: string | null, hospitalSpecialties: string | null, hospitalZipCode: string | null, hospitalFaxNumber: string | null, hospitalWebsite: string | null, institutionType: InstitutionType | null, status: PartnerStatus, isDirector: boolean | null, directorName: string | null, directorBirthDate: string | null, directorGender: string | null, directorLicenseNo: string | null, directorSchool: string | null, directorGraduationYear: string | null, directorTrainingHospital: string | null, directorDepartment: string | null, directorSubSpecialty: string | null, directorCarNo: string | null, directorPhone: string | null, directorEmail: string | null, directorSmsConsent: boolean | null, directorEmailConsent: boolean | null, directorReplyConsent: boolean | null, staffName: string | null, staffPosition: string | null, staffDeptType: string | null, staffDeptValue: string | null, staffPhone: string | null, staffTel: string | null, staffEmail: string | null, totalBedCount: number | null, activeBedCount: number | null, icuCount: number | null, premiumRoomCount: number | null, multiRoomCount: number | null, erCount: number | null, totalStaffCount: number | null, specialistCount: number | null, nurseCount: number | null, hasIcu: boolean | null, hasEr: boolean | null, hasOperatingRoom: boolean | null, hasPhysicalTherapy: boolean | null, hasDialysisRoom: boolean | null, hasHospice: boolean | null, hasPsychGeneral: boolean | null, hasPsychClosed: boolean | null, hasIntegratedNursing: boolean | null, hasGuardianCare: boolean | null, hasSharedCare: boolean | null, isolationRoomCount: number | null, isolationSingleCount: number | null, isolationDoubleCount: number | null, isolationTripleCount: number | null, isolationTypes: any | null, isolationCareType: string | null, isolationRehabType: string | null, isolationWardOperation: boolean | null, hasRehabPt: boolean | null, hasRehabOt: boolean | null, hasRehabSt: boolean | null, hasRehabSwallow: boolean | null, hasRehabIsolation: boolean | null, departmentSpecialists: any | null, availableTreatments: any | null, clinicMedicationType: string | null, clinicHasHemodialysis: boolean | null, clinicHasPeritoneal: boolean | null, clinicHasPhototherapy: boolean | null, clinicHasExcimerLaser: boolean | null, majorEquipment: string | null, remarks: string | null, attachments: any | null, rejectReason: string | null, approvedAt: any | null, createdAt: any, updatedAt: any, attachmentRows: Array<{ __typename?: 'AttachmentModel', id: string, originalName: string, storedPath: string, mimeType: string, fileSize: number, createdAt: any | null }> | null } };
 
 export type SlideBannersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5334,12 +4899,12 @@ export type CheckVerificationDuplicateQueryVariables = Exact<{
 
 export type CheckVerificationDuplicateQuery = { __typename?: 'Query', checkVerificationDuplicate: { __typename?: 'VerificationDuplicateResult', isDuplicate: boolean, message: string | null } };
 
-
+export const PartnerHospitalFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PartnerHospitalFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PartnerHospitalModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationWardOperation"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<PartnerHospitalFieldsFragment, unknown>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"mustChangePw"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"mustChangePw"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"department"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"doctorType"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospName"}},{"kind":"Field","name":{"kind":"Name","value":"hospPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"hospZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"licenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"representative"}},{"kind":"Field","name":{"kind":"Name","value":"school"}},{"kind":"Field","name":{"kind":"Name","value":"smsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"emailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"replyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"specialty"}}]}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const SendTestEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendTestEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"to"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subject"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hospitalCode"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"HospitalCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendTestEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"to"},"value":{"kind":"Variable","name":{"kind":"Name","value":"to"}}},{"kind":"Argument","name":{"kind":"Name","value":"subject"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subject"}}},{"kind":"Argument","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"Argument","name":{"kind":"Name","value":"hospitalCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hospitalCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"errorMessage"}}]}}]}}]} as unknown as DocumentNode<SendTestEmailMutation, SendTestEmailMutationVariables>;
 export const SignupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"mustChangePw"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"mustChangePw"}}]}}]}}]}}]} as unknown as DocumentNode<SignupMutation, SignupMutationVariables>;
 export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
-export const UpdateDoctorProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDoctorProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateDoctorProfileInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDoctorProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"doctorType"}},{"kind":"Field","name":{"kind":"Name","value":"licenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"school"}},{"kind":"Field","name":{"kind":"Name","value":"specialty"}},{"kind":"Field","name":{"kind":"Name","value":"department"}},{"kind":"Field","name":{"kind":"Name","value":"smsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"emailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"replyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"hospName"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"hospZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospWebsite"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateDoctorProfileMutation, UpdateDoctorProfileMutationVariables>;
+export const UpdateDoctorProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDoctorProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateDoctorProfileInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDoctorProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"doctorType"}},{"kind":"Field","name":{"kind":"Name","value":"licenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"school"}},{"kind":"Field","name":{"kind":"Name","value":"specialty"}},{"kind":"Field","name":{"kind":"Name","value":"department"}},{"kind":"Field","name":{"kind":"Name","value":"smsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"emailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"replyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"hospName"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"hospZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospWebsite"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateDoctorProfileMutation, UpdateDoctorProfileMutationVariables>;
 export const ChangePasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangePassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChangePasswordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changePassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const WithdrawMemberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"WithdrawMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"WithdrawMemberInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"withdrawMember"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<WithdrawMemberMutation, WithdrawMemberMutationVariables>;
 export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RefreshToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refreshToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"mustChangePw"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"userName"}},{"kind":"Field","name":{"kind":"Name","value":"userType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"mustChangePw"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"department"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"doctorType"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospName"}},{"kind":"Field","name":{"kind":"Name","value":"hospPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"hospZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"licenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"representative"}},{"kind":"Field","name":{"kind":"Name","value":"school"}},{"kind":"Field","name":{"kind":"Name","value":"smsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"emailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"replyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"specialty"}}]}}]}}]}}]}}]} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
@@ -5372,13 +4937,10 @@ export const AttachmentsDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const PresignedDownloadUrlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PresignedDownloadUrl"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"attachmentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"presignedDownloadUrl"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"attachmentId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"attachmentId"}}}]}]}}]} as unknown as DocumentNode<PresignedDownloadUrlQuery, PresignedDownloadUrlQueryVariables>;
 export const ContentByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ContentById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contentById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"contentGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<ContentByIdQuery, ContentByIdQueryVariables>;
 export const ApplyPartnerHospitalDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ApplyPartnerHospital"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ApplyPartnerHospitalInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"applyPartnerHospital"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<ApplyPartnerHospitalMutation, ApplyPartnerHospitalMutationVariables>;
-export const SaveDraftPartnerApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SaveDraftPartnerApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SaveDraftPartnerInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"saveDraftPartnerApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<SaveDraftPartnerApplicationMutation, SaveDraftPartnerApplicationMutationVariables>;
-export const SubmitPartnerApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitPartnerApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"submitPartnerApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<SubmitPartnerApplicationMutation, SubmitPartnerApplicationMutationVariables>;
-export const CancelPartnerApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CancelPartnerApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cancelPartnerApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<CancelPartnerApplicationMutation, CancelPartnerApplicationMutationVariables>;
 export const UpdatePartnerApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePartnerApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePartnerApplicationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePartnerApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdatePartnerApplicationMutation, UpdatePartnerApplicationMutationVariables>;
-export const MyPartnerApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyPartnerApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hospitalCode"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"HospitalCode"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myPartnerApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hospitalCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hospitalCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<MyPartnerApplicationQuery, MyPartnerApplicationQueryVariables>;
-export const MyPartnerApplicationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyPartnerApplications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myPartnerApplications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}}]} as unknown as DocumentNode<MyPartnerApplicationsQuery, MyPartnerApplicationsQueryVariables>;
-export const PartnerApplicationByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PartnerApplicationById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partnerApplicationById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"reviewedAt"}},{"kind":"Field","name":{"kind":"Name","value":"reviewedById"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"terminatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<PartnerApplicationByIdQuery, PartnerApplicationByIdQueryVariables>;
+export const MyPartnerApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyPartnerApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hospitalCode"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"HospitalCode"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myPartnerApplication"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"hospitalCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hospitalCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PartnerHospitalFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PartnerHospitalFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PartnerHospitalModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationWardOperation"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<MyPartnerApplicationQuery, MyPartnerApplicationQueryVariables>;
+export const MyPartnerApplicationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyPartnerApplications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myPartnerApplications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PartnerHospitalFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PartnerHospitalFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PartnerHospitalModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationWardOperation"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<MyPartnerApplicationsQuery, MyPartnerApplicationsQueryVariables>;
+export const PartnerApplicationByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PartnerApplicationById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partnerApplicationById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PartnerHospitalFields"}},{"kind":"Field","name":{"kind":"Name","value":"reviewedAt"}},{"kind":"Field","name":{"kind":"Name","value":"reviewedById"}},{"kind":"Field","name":{"kind":"Name","value":"terminatedAt"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PartnerHospitalFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PartnerHospitalModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"applicantId"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"careInstitutionNo"}},{"kind":"Field","name":{"kind":"Name","value":"partnerType"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalName"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddress"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalAddressDetail"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalPhone"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalRepresentative"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalSpecialties"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalZipCode"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalFaxNumber"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalWebsite"}},{"kind":"Field","name":{"kind":"Name","value":"institutionType"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isDirector"}},{"kind":"Field","name":{"kind":"Name","value":"directorName"}},{"kind":"Field","name":{"kind":"Name","value":"directorBirthDate"}},{"kind":"Field","name":{"kind":"Name","value":"directorGender"}},{"kind":"Field","name":{"kind":"Name","value":"directorLicenseNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorSchool"}},{"kind":"Field","name":{"kind":"Name","value":"directorGraduationYear"}},{"kind":"Field","name":{"kind":"Name","value":"directorTrainingHospital"}},{"kind":"Field","name":{"kind":"Name","value":"directorDepartment"}},{"kind":"Field","name":{"kind":"Name","value":"directorSubSpecialty"}},{"kind":"Field","name":{"kind":"Name","value":"directorCarNo"}},{"kind":"Field","name":{"kind":"Name","value":"directorPhone"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmail"}},{"kind":"Field","name":{"kind":"Name","value":"directorSmsConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorEmailConsent"}},{"kind":"Field","name":{"kind":"Name","value":"directorReplyConsent"}},{"kind":"Field","name":{"kind":"Name","value":"staffName"}},{"kind":"Field","name":{"kind":"Name","value":"staffPosition"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptType"}},{"kind":"Field","name":{"kind":"Name","value":"staffDeptValue"}},{"kind":"Field","name":{"kind":"Name","value":"staffPhone"}},{"kind":"Field","name":{"kind":"Name","value":"staffTel"}},{"kind":"Field","name":{"kind":"Name","value":"staffEmail"}},{"kind":"Field","name":{"kind":"Name","value":"totalBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeBedCount"}},{"kind":"Field","name":{"kind":"Name","value":"icuCount"}},{"kind":"Field","name":{"kind":"Name","value":"premiumRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"multiRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"erCount"}},{"kind":"Field","name":{"kind":"Name","value":"totalStaffCount"}},{"kind":"Field","name":{"kind":"Name","value":"specialistCount"}},{"kind":"Field","name":{"kind":"Name","value":"nurseCount"}},{"kind":"Field","name":{"kind":"Name","value":"hasIcu"}},{"kind":"Field","name":{"kind":"Name","value":"hasEr"}},{"kind":"Field","name":{"kind":"Name","value":"hasOperatingRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasPhysicalTherapy"}},{"kind":"Field","name":{"kind":"Name","value":"hasDialysisRoom"}},{"kind":"Field","name":{"kind":"Name","value":"hasHospice"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychGeneral"}},{"kind":"Field","name":{"kind":"Name","value":"hasPsychClosed"}},{"kind":"Field","name":{"kind":"Name","value":"hasIntegratedNursing"}},{"kind":"Field","name":{"kind":"Name","value":"hasGuardianCare"}},{"kind":"Field","name":{"kind":"Name","value":"hasSharedCare"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRoomCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationSingleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationDoubleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTripleCount"}},{"kind":"Field","name":{"kind":"Name","value":"isolationTypes"}},{"kind":"Field","name":{"kind":"Name","value":"isolationCareType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationRehabType"}},{"kind":"Field","name":{"kind":"Name","value":"isolationWardOperation"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabPt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabOt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSt"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabSwallow"}},{"kind":"Field","name":{"kind":"Name","value":"hasRehabIsolation"}},{"kind":"Field","name":{"kind":"Name","value":"departmentSpecialists"}},{"kind":"Field","name":{"kind":"Name","value":"availableTreatments"}},{"kind":"Field","name":{"kind":"Name","value":"clinicMedicationType"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasHemodialysis"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPeritoneal"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasPhototherapy"}},{"kind":"Field","name":{"kind":"Name","value":"clinicHasExcimerLaser"}},{"kind":"Field","name":{"kind":"Name","value":"majorEquipment"}},{"kind":"Field","name":{"kind":"Name","value":"remarks"}},{"kind":"Field","name":{"kind":"Name","value":"attachments"}},{"kind":"Field","name":{"kind":"Name","value":"attachmentRows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"originalName"}},{"kind":"Field","name":{"kind":"Name","value":"storedPath"}},{"kind":"Field","name":{"kind":"Name","value":"mimeType"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rejectReason"}},{"kind":"Field","name":{"kind":"Name","value":"approvedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]} as unknown as DocumentNode<PartnerApplicationByIdQuery, PartnerApplicationByIdQueryVariables>;
 export const SlideBannersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SlideBanners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slideBanners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"popupType"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"alwaysVisible"}},{"kind":"Field","name":{"kind":"Name","value":"targetBlank"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"imageDarkUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mobileImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mobileDarkImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkUrl"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"mainSlogan"}},{"kind":"Field","name":{"kind":"Name","value":"subSlogan"}},{"kind":"Field","name":{"kind":"Name","value":"mediaType"}},{"kind":"Field","name":{"kind":"Name","value":"videoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"sortOrder"}}]}}]}}]} as unknown as DocumentNode<SlideBannersQuery, SlideBannersQueryVariables>;
 export const MiniBannersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MiniBanners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"miniBanners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"popupType"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"targetBlank"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mobileImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkUrl"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"sortOrder"}}]}}]}}]} as unknown as DocumentNode<MiniBannersQuery, MiniBannersQueryVariables>;
 export const ActivePopupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ActivePopups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activePopups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hospitalCode"}},{"kind":"Field","name":{"kind":"Name","value":"popupType"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"alwaysVisible"}},{"kind":"Field","name":{"kind":"Name","value":"targetBlank"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"imageDarkUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mobileImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mobileDarkImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"linkUrl"}},{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"mainSlogan"}},{"kind":"Field","name":{"kind":"Name","value":"subSlogan"}},{"kind":"Field","name":{"kind":"Name","value":"mediaType"}},{"kind":"Field","name":{"kind":"Name","value":"videoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"sortOrder"}}]}}]}}]} as unknown as DocumentNode<ActivePopupsQuery, ActivePopupsQueryVariables>;

@@ -17,13 +17,11 @@ import { CareSystemStep } from '@/components/organisms/CareSystemStep/CareSystem
 import { MedicalDepartmentStep } from '@/components/organisms/MedicalDepartmentStep/MedicalDepartmentStep'
 import { BasicTreatmentStep } from '@/components/organisms/BasicTreatmentStep/BasicTreatmentStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
-import { LoadSaveModal } from '@/components/molecules/LoadSaveModal/LoadSaveModal'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useHospital, useEnums, useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useMyProfile } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { useDraftApplication } from '@/contexts/DraftApplicationContext'
-import { useApplyPartnerHospital, useSaveDraftPartnerApplication, usePartnerApplicationById, useMyPartnerApplications } from '@/hooks'
+import { useApplyPartnerHospital, useMyPartnerApplications } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,
@@ -37,7 +35,8 @@ import type {
 } from '@/types/partner-application'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import { CombinedGraphQLErrors } from '@apollo/client/errors'
-import { mapStepsToApiInput, mapApiToStepData, type AllStepData } from '@/utils/partnerApplicationMapper'
+import { mapStepsToApiInput, type AllStepData } from '@/utils/partnerApplicationMapper'
+import { saveDraftToCookie, loadDraftFromCookie, clearDraftCookie } from '@/utils/draftCookie'
 import { uploadFile } from '@/lib/upload'
 import { DEV_DIRECTOR_EXTRA } from '@/utils/devDefaultData'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
@@ -58,7 +57,6 @@ const toHospitalCode = (id: string): HospitalCode => {
 export default function HospitalApplicationPage() {
   const { hospital } = useHospital()
   const { user, isAuthenticated } = useAuthContext()
-  const { getDraftId, setDraftId } = useDraftApplication()
   const router = useHospitalRouter()
 
   // 비회원 접근 차단
@@ -84,8 +82,6 @@ export default function HospitalApplicationPage() {
   const totalSteps = 8
   // Step 리마운트 키 (불러오기 시 강제 리마운트용)
   const [reloadKey, setReloadKey] = useState(0)
-  // 임시저장 불러오기 모달 상태
-  const [isLoadModalOpen, setIsLoadModalOpen] = useState(false)
   // 완료 상태
   const [isComplete, setIsComplete] = useState(false)
   // AlertModal 상태
@@ -258,8 +254,6 @@ export default function HospitalApplicationPage() {
 
   // GraphQL 훅
   const { applyPartnerHospital, loading: applyLoading } = useApplyPartnerHospital()
-  const { saveDraft, loading: saveDraftLoading } = useSaveDraftPartnerApplication()
-  const { getPartnerApplication } = usePartnerApplicationById()
 
   // 안내 메시지
   const guideMessages = useMemo(() => {
@@ -328,6 +322,7 @@ export default function HospitalApplicationPage() {
         }
 
         await applyPartnerHospital(input)
+        clearDraftCookie('hospital', hospital.id)
         setIsComplete(true)
       } catch (error: unknown) {
         console.error('협력병원 신청 실패:', error)
@@ -349,80 +344,26 @@ export default function HospitalApplicationPage() {
     }
   }
 
-  // 임시저장 핸들러
-  const handleSaveDraft = async () => {
+  // 임시저장 핸들러 (쿠키 기반, 유효기간 7일)
+  const handleSaveDraft = () => {
     const allData = collectAllData()
-    const input = mapStepsToApiInput(allData, toHospitalCode(hospital.id))
-
-    try {
-      // 첨부파일 업로드
-      const files = allData.step8?.files ?? []
-      if (files.length > 0) {
-        const uploadResults = await Promise.all(files.map(f => uploadFile(f)))
-        input.attachments = uploadResults.map(r => ({
-          originalName: r.originalName,
-          storedPath: r.storedPath,
-          mimeType: r.mimeType,
-          fileSize: r.fileSize
-        }))
-      }
-
-      const result = await saveDraft({
-        ...input,
-        hospitalCode: toHospitalCode(hospital.id)
-      })
-      if (result?.id) {
-        setDraftId(hospital.id, result.id)
-      }
-      setAlertModal({ isOpen: true, message: '임시저장이 완료되었습니다.' })
-    } catch (error: unknown) {
-      console.error('임시저장 실패:', error)
-      const message = CombinedGraphQLErrors.is(error)
-        ? (error.errors[0]?.message ?? '임시저장 중 오류가 발생했습니다.')
-        : '임시저장 중 오류가 발생했습니다.'
-      setAlertModal({ isOpen: true, message })
-    }
+    saveDraftToCookie('hospital', hospital.id, allData as unknown as Record<string, unknown>)
+    setAlertModal({ isOpen: true, message: '임시저장이 완료되었습니다.' })
   }
 
-  // partnerApplicationById로 임시저장 데이터 불러오기
-  const loadById = async (id: string) => {
-    const application = await getPartnerApplication(id)
-    if (application) {
-      const loaded = mapApiToStepData(application)
+  // 임시저장 불러오기 핸들러 (쿠키에서 불러오기)
+  const handleLoadButtonClick = () => {
+    const loaded = loadDraftFromCookie('hospital', hospital.id) as AllStepData | null
+    if (loaded) {
       setStepDataCache(loaded)
-      setIsLoadModalOpen(false)
-      // key 변경으로 현재 스텝 컴포넌트 강제 리마운트
       setReloadKey(prev => prev + 1)
+      setAlertModal({ isOpen: true, message: '임시저장 데이터를 불러왔습니다.' })
     } else {
       setAlertModal({ isOpen: true, message: '임시저장된 데이터가 없습니다.' })
     }
   }
 
-  // 임시저장 불러오기 핸들러 (로그인 시 바로 불러오기, 비로그인 시 모달에서 호출)
-  const handleLoadButtonClick = async () => {
-    if (isAuthenticated) {
-      const id = getDraftId(hospital.id)
-      if (id) {
-        try {
-          await loadById(id)
-        } catch {
-          setAlertModal({ isOpen: true, message: '임시저장 불러오기에 실패했습니다.' })
-        }
-      } else {
-        setAlertModal({ isOpen: true, message: '임시저장된 데이터가 없습니다.' })
-      }
-    } else {
-      // 비로그인 상태: 모달 열기
-      setIsLoadModalOpen(true)
-    }
-  }
-
-  const handleLoadDraft = async (_doctorLicense: string, _medicalInstitutionNumber: string) => {
-    // TODO: 비로그인 시 면허번호/기관번호로 조회하는 API 연동
-    setIsLoadModalOpen(false)
-  }
-
-  const isSubmitting = applyLoading || saveDraftLoading
+  const isSubmitting = applyLoading
 
   return (
     <div className={styles.wrap}>
@@ -583,14 +524,6 @@ export default function HospitalApplicationPage() {
         </div>
       </main>
       <Footer />
-
-      {/* 임시저장 불러오기 모달 */}
-      <LoadSaveModal
-        isOpen={isLoadModalOpen}
-        onClose={() => setIsLoadModalOpen(false)}
-        onLoad={handleLoadDraft}
-        closeOnBackdropClick={true}
-      />
 
       {/* 알림 모달 */}
       <AlertModal

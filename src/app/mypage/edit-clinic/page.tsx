@@ -11,20 +11,18 @@ import { SectionTitle } from '@/components/molecules/SectionTitle/SectionTitle'
 import { Button } from '@/components/atoms/Button/Button'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
-import { DirectorInfoStep } from '@/components/organisms/DirectorInfoStep/DirectorInfoStep'
 import { ClinicStaffInfoStep } from '@/components/organisms/ClinicStaffInfoStep/ClinicStaffInfoStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import {
-  mapApiToClinicStepData,
-  mapClinicStepsToApiInput,
-  type ClinicAllStepData
+  mapApiToClinicEditStepData,
+  mapClinicEditStepsToApiInput,
+  type ClinicEditStepData
 } from '@/utils/partnerApplicationMapper'
 import { uploadFile } from '@/lib/upload'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,
-  DirectorInfoStepData,
   ClinicStaffInfoStepData,
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
@@ -45,7 +43,7 @@ export default function EditClinicPage() {
   const { hospital } = useHospital()
   const { user } = useAuthContext()
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 4
+  const totalSteps = 3
 
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
@@ -59,11 +57,11 @@ export default function EditClinicPage() {
   // API 응답 → Step 데이터 매핑
   const stepData = useMemo(() => {
     if (!application) return null
-    return mapApiToClinicStepData(application)
+    return mapApiToClinicEditStepData(application)
   }, [application])
 
   // Step 데이터 캐시
-  const [stepDataCache, setStepDataCache] = useState<ClinicAllStepData>({})
+  const [stepDataCache, setStepDataCache] = useState<ClinicEditStepData>({})
 
   // stepData가 로드되면 캐시에 반영
   useEffect(() => {
@@ -74,9 +72,8 @@ export default function EditClinicPage() {
 
   // Step별 ref
   const step1Ref = useRef<StepRef<HospitalInfoStepData>>(null)
-  const step2Ref = useRef<StepRef<DirectorInfoStepData>>(null)
-  const step3Ref = useRef<StepRef<ClinicStaffInfoStepData>>(null)
-  const step4Ref = useRef<StepRef<HospitalCharacteristicsStepData>>(null)
+  const step2Ref = useRef<StepRef<ClinicStaffInfoStepData>>(null)
+  const step3Ref = useRef<StepRef<HospitalCharacteristicsStepData>>(null)
 
   // AlertModal 상태
   const [alertModal, setAlertModal] = useState<{ isOpen: boolean; message: string; onClose?: () => void }>({
@@ -113,7 +110,7 @@ export default function EditClinicPage() {
 
   /** 현재 Step 데이터를 캐시에 저장 */
   const saveCurrentStepData = useCallback(() => {
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const refs = [step1Ref, step2Ref, step3Ref]
     const ref = refs[currentStep - 1]
     const data = ref.current?.getData()
     if (data) {
@@ -122,19 +119,19 @@ export default function EditClinicPage() {
   }, [currentStep])
 
   /** 모든 Step 데이터 수집 */
-  const collectAllData = useCallback((): ClinicAllStepData => {
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+  const collectAllData = useCallback((): ClinicEditStepData => {
+    const refs = [step1Ref, step2Ref, step3Ref]
     const currentRef = refs[currentStep - 1]
     const currentData = currentRef.current?.getData()
     return {
       ...stepDataCache,
-      [`step${currentStep}`]: currentData ?? stepDataCache[`step${currentStep}` as keyof ClinicAllStepData]
+      [`step${currentStep}`]: currentData ?? stepDataCache[`step${currentStep}` as keyof ClinicEditStepData]
     }
   }, [currentStep, stepDataCache])
 
   const handleNext = async () => {
     // 필수값 검증
-    const refs = [step1Ref, step2Ref, step3Ref, step4Ref]
+    const refs = [step1Ref, step2Ref, step3Ref]
     const currentRef = refs[currentStep - 1]
     const validationError = currentRef.current?.validate?.()
     if (validationError) {
@@ -152,11 +149,11 @@ export default function EditClinicPage() {
       if (!application?.id) return
 
       const allData = collectAllData()
-      const mapped = mapClinicStepsToApiInput(allData, toHospitalCode(hospital.id))
+      const mapped = mapClinicEditStepsToApiInput(allData, toHospitalCode(hospital.id))
 
       try {
         // 새 첨부파일 업로드
-        const files = allData.step4?.files ?? []
+        const files = allData.step3?.files ?? []
         if (files.length > 0) {
           const uploadResults = await Promise.all(files.map(f => uploadFile(f)))
           mapped.attachments = uploadResults.map(r => ({
@@ -168,7 +165,7 @@ export default function EditClinicPage() {
         }
 
         // 기존 첨부파일 유지
-        const existingAttachments = allData.step4?.existingAttachments ?? []
+        const existingAttachments = allData.step3?.existingAttachments ?? []
         if (existingAttachments.length > 0) {
           const existing = existingAttachments.map(a => ({
             originalName: a.originalName,
@@ -179,15 +176,18 @@ export default function EditClinicPage() {
           mapped.attachments = [...existing, ...(mapped.attachments ?? [])]
         }
 
-        // UpdatePartnerApplicationInput에 없는 필드 제거 후 id 추가
-        const {
-          hospitalCode: _hCode,
-          hospitalPhisCode: _phisCode,
-          institutionCode: _instCode,
-          medicalDepartment: _medDept,
-          ...updateFields
-        } = mapped
-        await updatePartnerApplication({ id: application.id, ...updateFields })
+        // UpdatePartnerApplicationInput에 허용된 필드만 추출
+        await updatePartnerApplication({
+          id: application.id,
+          institutionType: mapped.institutionType,
+          totalBedCount: mapped.totalBedCount,
+          totalStaffCount: mapped.totalStaffCount,
+          specialistCount: mapped.specialistCount,
+          nurseCount: mapped.nurseCount,
+          majorEquipment: mapped.majorEquipment,
+          remarks: mapped.remarks,
+          attachments: mapped.attachments
+        })
 
         setAlertModal({
           isOpen: true,
@@ -251,36 +251,25 @@ export default function EditClinicPage() {
               />
             )}
 
-            {/* 2단계: 병원장 정보 */}
+            {/* 2단계: 의료기관 유형 + 병상, 시설 및 장비 현황 */}
             {currentStep === 2 && (
-              <DirectorInfoStep
+              <ClinicStaffInfoStep
                 ref={step2Ref}
                 currentStep={2}
                 totalSteps={totalSteps}
-                institutionType='의원'
+                showStaffInfo={false}
+                showHospitalDetail={false}
                 defaultValues={stepDataCache.step2 ?? stepData?.step2}
-                readOnly
               />
             )}
 
-            {/* 3단계: 실무자 정보 */}
+            {/* 3단계: 병원특성 및 기타사항 */}
             {currentStep === 3 && (
-              <ClinicStaffInfoStep
+              <HospitalCharacteristicsStep
                 ref={step3Ref}
                 currentStep={3}
                 totalSteps={totalSteps}
-                showHospitalDetail={false}
                 defaultValues={stepDataCache.step3 ?? stepData?.step3}
-              />
-            )}
-
-            {/* 4단계: 병원특성 및 기타사항 */}
-            {currentStep === 4 && (
-              <HospitalCharacteristicsStep
-                ref={step4Ref}
-                currentStep={4}
-                totalSteps={totalSteps}
-                defaultValues={stepDataCache.step4 ?? stepData?.step4}
               />
             )}
 
@@ -290,7 +279,7 @@ export default function EditClinicPage() {
                 이전 단계
               </Button>
               <Button variant='primary' size='large' onClick={handleNext} disabled={updateLoading}>
-                {currentStep === totalSteps ? '수정 요청' : '다음 단계'}
+                {currentStep === totalSteps ? '협력의원 정보수정' : '다음 단계'}
               </Button>
             </div>
           </div>

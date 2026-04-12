@@ -16,6 +16,8 @@ export interface StaffInfoStepProps {
   totalSteps?: number
   /** 초기값 (임시저장 불러오기용) */
   defaultValues?: Partial<StaffInfoStepData>
+  /** 실무자 정보 섹션 표시 여부 (기본값: true) */
+  showStaffInfo?: boolean
 }
 
 // 병원별로 노출할 의료기관 유형 코드 (enum key 기준)
@@ -24,7 +26,7 @@ const GURO_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32',
 const ANSAN_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32', '60'])
 
 export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoStepProps>(
-  ({ currentStep = 3, totalSteps = 8, defaultValues }, ref) => {
+  ({ currentStep = 3, totalSteps = 8, defaultValues, showStaffInfo = true }, ref) => {
     const { isGuro, isAnsan } = useHospital()
     const { getOptions, loading: enumLoading, error: enumError } = useEnums()
     if (enumError) throw enumError
@@ -80,6 +82,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
     return (
       <div className={styles.stepContainer}>
         {/* 실무자 정보 섹션 */}
+        {showStaffInfo && (
         <div className={styles.formSection}>
           <div className={styles.formHeader}>
             <div className={styles.formHeaderLeft}>
@@ -176,6 +179,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
 
           </div>
         </div>
+        )}
 
         {/* 의료기관 유형 섹션 */}
         <div className={styles.formSection}>

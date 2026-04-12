@@ -24,6 +24,13 @@ export interface AllStepData {
   step8?: Partial<HospitalCharacteristicsStepData>
 }
 
+/** 병원 정보수정 3개 Step 데이터 타입 */
+export interface HospitalEditStepData {
+  step1?: Partial<HospitalInfoStepData>
+  step2?: Partial<StaffInfoStepData>
+  step3?: Partial<HospitalCharacteristicsStepData>
+}
+
 /** 빈 문자열 → undefined (빈 값 전송 방지) */
 const emptyToUndef = (v?: string): string | undefined => (v && v.trim() ? v : undefined)
 
@@ -140,7 +147,7 @@ export function mapStepsToApiInput(
     hospitalCode,
     partnerType: PartnerType.A,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
-    institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
+    // institutionCode는 현재 서버 스키마에 없음
 
     // Step 1: 병원 정보
     hospitalName: emptyToUndef(step1?.hospitalName),
@@ -263,14 +270,14 @@ export function mapStepsToApiInput(
 export function mapApiToStepData(api: any): AllStepData {
   return {
     step1: {
-      hospitalName: api.hospital?.name ?? '',
-      medicalInstitutionNumber: api.hospital?.phisCode ?? '',
-      zipCode: api.hospital?.zipCode ?? '',
-      address: api.hospital?.address ?? '',
-      detailAddress: api.hospital?.addressDetail ?? '',
-      phoneNumber: api.hospital?.phone ?? '',
-      faxNumber: api.hospital?.faxNumber ?? '',
-      website: api.hospital?.website ?? ''
+      hospitalName: api.hospitalName ?? '',
+      medicalInstitutionNumber: api.careInstitutionNo ?? '',
+      zipCode: api.hospitalZipCode ?? '',
+      address: api.hospitalAddress ?? '',
+      detailAddress: api.hospitalAddressDetail ?? '',
+      phoneNumber: api.hospitalPhone ?? '',
+      faxNumber: api.hospitalFaxNumber ?? '',
+      website: api.hospitalWebsite ?? ''
     },
     step2: {
       directorName: api.directorName ?? '',
@@ -409,6 +416,13 @@ export interface ClinicAllStepData {
   step4?: Partial<HospitalCharacteristicsStepData>
 }
 
+/** 의원 정보수정 3개 Step 데이터 타입 */
+export interface ClinicEditStepData {
+  step1?: Partial<HospitalInfoStepData>
+  step2?: Partial<ClinicStaffInfoStepData>
+  step3?: Partial<HospitalCharacteristicsStepData>
+}
+
 /**
  * 의원 4개 Step 데이터 → ApplyPartnerHospitalInput 변환
  */
@@ -422,7 +436,7 @@ export function mapClinicStepsToApiInput(
     hospitalCode,
     partnerType: PartnerType.B,
     institutionType: toInstitutionTypeCode(step3?.medicalInstitutionType),
-    institutionCode: toInstitutionCode(toInstitutionTypeCode(step3?.medicalInstitutionType)),
+    // institutionCode는 현재 서버 스키마에 없음
 
     // Step 1: 병원 정보
     hospitalName: emptyToUndef(step1?.hospitalName),
@@ -502,14 +516,14 @@ export function mapClinicStepsToApiInput(
 export function mapApiToClinicStepData(api: any): ClinicAllStepData {
   return {
     step1: {
-      hospitalName: api.hospital?.name ?? '',
-      medicalInstitutionNumber: api.hospital?.phisCode ?? '',
-      zipCode: api.hospital?.zipCode ?? '',
-      address: api.hospital?.address ?? '',
-      detailAddress: api.hospital?.addressDetail ?? '',
-      phoneNumber: api.hospital?.phone ?? '',
-      faxNumber: api.hospital?.faxNumber ?? '',
-      website: api.hospital?.website ?? ''
+      hospitalName: api.hospitalName ?? '',
+      medicalInstitutionNumber: api.careInstitutionNo ?? '',
+      zipCode: api.hospitalZipCode ?? '',
+      address: api.hospitalAddress ?? '',
+      detailAddress: api.hospitalAddressDetail ?? '',
+      phoneNumber: api.hospitalPhone ?? '',
+      faxNumber: api.hospitalFaxNumber ?? '',
+      website: api.hospitalWebsite ?? ''
     },
     step2: {
       directorName: api.directorName ?? '',
@@ -564,6 +578,206 @@ export function mapApiToClinicStepData(api: any): ClinicAllStepData {
       }
     },
     step4: {
+      hospitalCharacteristics: api.remarks ?? '',
+      files: [],
+      existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({
+        id: a.id,
+        originalName: a.originalName,
+        storedPath: a.storedPath,
+        mimeType: a.mimeType,
+        fileSize: a.fileSize
+      }))
+    }
+  }
+}
+
+// ─── 협력병원 정보수정 전용 매퍼 (3 Step) ───
+
+/**
+ * 병원 정보수정 3개 Step 데이터 → ApplyPartnerHospitalInput 변환
+ */
+export function mapHospitalEditStepsToApiInput(
+  data: HospitalEditStepData,
+  hospitalCode: HospitalCode
+): ApplyPartnerHospitalInput {
+  const { step1, step2, step3 } = data
+
+  return {
+    hospitalCode,
+    partnerType: PartnerType.A,
+    institutionType: toInstitutionTypeCode(step2?.medicalInstitutionType),
+
+    // Step 1: 병원 정보
+    hospitalName: emptyToUndef(step1?.hospitalName),
+    hospitalPhisCode: emptyToUndef(step1?.medicalInstitutionNumber),
+    hospitalZipCode: emptyToUndef(step1?.zipCode),
+    hospitalAddress: emptyToUndef(step1?.address),
+    hospitalAddressDetail: emptyToUndef(step1?.detailAddress),
+    hospitalPhone: emptyToUndef(step1?.phoneNumber),
+    hospitalFaxNumber: emptyToUndef(step1?.faxNumber),
+    hospitalWebsite: emptyToUndef(step1?.website),
+
+    // Step 2: 인력현황
+    totalStaffCount: toInt(step2?.totalEmployees),
+    specialistCount: toInt(step2?.specialists),
+    nurseCount: toInt(step2?.nurses),
+
+    // Step 3: 병원특성 및 기타사항
+    remarks: emptyToUndef(step3?.hospitalCharacteristics)
+  }
+}
+
+/**
+ * API 응답 → HospitalEditStepData 변환 (병원 정보수정 불러오기용)
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function mapApiToHospitalEditStepData(api: any): HospitalEditStepData {
+  return {
+    step1: {
+      hospitalName: api.hospitalName ?? '',
+      medicalInstitutionNumber: api.careInstitutionNo ?? '',
+      zipCode: api.hospitalZipCode ?? '',
+      address: api.hospitalAddress ?? '',
+      detailAddress: api.hospitalAddressDetail ?? '',
+      phoneNumber: api.hospitalPhone ?? '',
+      faxNumber: api.hospitalFaxNumber ?? '',
+      website: api.hospitalWebsite ?? ''
+    },
+    step2: {
+      staffName: api.staffName ?? '',
+      deptType: api.staffDeptType ?? 'B',
+      department: api.staffDeptValue ?? '',
+      position: api.staffPosition ?? '',
+      contactNumber: api.staffTel ?? '',
+      mobilePhone: api.staffPhone ?? '',
+      staffEmail: api.staffEmail ?? '',
+      medicalInstitutionType: api.institutionType ? (INSTITUTION_TYPE_TO_CODE[api.institutionType] ?? api.institutionType) : '10',
+      totalEmployees: api.totalStaffCount?.toString() ?? '',
+      specialists: api.specialistCount?.toString() ?? '',
+      nurses: api.nurseCount?.toString() ?? ''
+    },
+    step3: {
+      hospitalCharacteristics: api.remarks ?? '',
+      files: [],
+      existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({
+        id: a.id,
+        originalName: a.originalName,
+        storedPath: a.storedPath,
+        mimeType: a.mimeType,
+        fileSize: a.fileSize
+      }))
+    }
+  }
+}
+
+// ─── 협력의원 정보수정 전용 매퍼 (3 Step) ───
+
+/**
+ * 의원 정보수정 3개 Step 데이터 → ApplyPartnerHospitalInput 변환
+ */
+export function mapClinicEditStepsToApiInput(
+  data: ClinicEditStepData,
+  hospitalCode: HospitalCode
+): ApplyPartnerHospitalInput {
+  const { step1, step2, step3 } = data
+
+  return {
+    hospitalCode,
+    partnerType: PartnerType.B,
+    institutionType: toInstitutionTypeCode(step2?.medicalInstitutionType),
+
+    // Step 1: 병원 정보
+    hospitalName: emptyToUndef(step1?.hospitalName),
+    hospitalPhisCode: emptyToUndef(step1?.medicalInstitutionNumber),
+    hospitalZipCode: emptyToUndef(step1?.zipCode),
+    hospitalAddress: emptyToUndef(step1?.address),
+    hospitalAddressDetail: emptyToUndef(step1?.detailAddress),
+    hospitalPhone: emptyToUndef(step1?.phoneNumber),
+    hospitalFaxNumber: emptyToUndef(step1?.faxNumber),
+    hospitalWebsite: emptyToUndef(step1?.website),
+
+    // Step 2: 병상/직원
+    totalBedCount: toInt(step2?.totalBeds),
+    activeBedCount: toInt(step2?.totalBeds),
+    totalStaffCount: toInt(step2?.totalStaff),
+    specialistCount: toInt(step2?.specialists),
+    nurseCount: toInt(step2?.nurses),
+
+    // Step 2: 장비 (의원은 텍스트 그대로)
+    majorEquipment: emptyToUndef(step2?.mainEquipment),
+
+    // Step 2: 세부정보
+    hasPhysicalTherapy: toBool(step2?.physicalTherapyRoom),
+    clinicHasHemodialysis: step2?.dialysis?.blood ?? false,
+    clinicHasPeritoneal: step2?.dialysis?.peritoneal ?? false,
+    clinicMedicationType: emptyToUndef(step2?.medication),
+    clinicHasPhototherapy: step2?.dermatology?.phototherapy ?? false,
+    clinicHasExcimerLaser: step2?.dermatology?.excimerLaser ?? false,
+
+    // Step 2: 이비인후과 + 기타 → availableTreatments JSON
+    availableTreatments: step2
+      ? {
+          otolaryngology: step2.otolaryngology,
+          other: step2.other
+        }
+      : undefined,
+
+    // Step 3: 병원특성 및 기타사항
+    remarks: emptyToUndef(step3?.hospitalCharacteristics)
+  }
+}
+
+/**
+ * API 응답 → ClinicEditStepData 변환 (의원 정보수정 불러오기용)
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function mapApiToClinicEditStepData(api: any): ClinicEditStepData {
+  return {
+    step1: {
+      hospitalName: api.hospitalName ?? '',
+      medicalInstitutionNumber: api.careInstitutionNo ?? '',
+      zipCode: api.hospitalZipCode ?? '',
+      address: api.hospitalAddress ?? '',
+      detailAddress: api.hospitalAddressDetail ?? '',
+      phoneNumber: api.hospitalPhone ?? '',
+      faxNumber: api.hospitalFaxNumber ?? '',
+      website: api.hospitalWebsite ?? ''
+    },
+    step2: {
+      staffName: api.staffName ?? '',
+      deptType: api.staffDeptType ?? 'B',
+      department: api.staffDeptValue ?? '',
+      position: api.staffPosition ?? '',
+      contactNumber: api.staffTel ?? '',
+      mobilePhone: api.staffPhone ?? '',
+      staffEmail: api.staffEmail ?? '',
+      medicalInstitutionType: api.institutionType ? (INSTITUTION_TYPE_TO_CODE[api.institutionType] ?? api.institutionType) : '50',
+      totalBeds: api.totalBedCount?.toString() ?? '',
+      totalStaff: api.totalStaffCount?.toString() ?? '',
+      specialists: api.specialistCount?.toString() ?? '',
+      nurses: api.nurseCount?.toString() ?? '',
+      mainEquipment: api.majorEquipment ?? '',
+      physicalTherapyRoom: api.hasPhysicalTherapy ? '유' : '무',
+      dialysis: {
+        blood: api.clinicHasHemodialysis ?? false,
+        peritoneal: api.clinicHasPeritoneal ?? false
+      },
+      medication: api.clinicMedicationType ?? '',
+      dermatology: {
+        phototherapy: api.clinicHasPhototherapy ?? false,
+        excimerLaser: api.clinicHasExcimerLaser ?? false
+      },
+      otolaryngology: api.availableTreatments?.otolaryngology ?? {
+        earSurgeryDisinfection: false,
+        betadineSoaking: false
+      },
+      other: api.availableTreatments?.other ?? {
+        surgicalSiteDisinfection: false,
+        stitchOut: false,
+        chemoportNeedleOut: false
+      }
+    },
+    step3: {
       hospitalCharacteristics: api.remarks ?? '',
       files: [],
       existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({

@@ -100,8 +100,6 @@ export const UPDATE_DOCTOR_PROFILE_MUTATION = gql`
         school
         specialty
         department
-        graduationYear
-        trainingHospital
         smsConsent
         emailConsent
         replyConsent

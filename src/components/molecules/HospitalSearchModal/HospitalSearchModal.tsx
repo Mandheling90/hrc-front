@@ -25,6 +25,8 @@ import { HospitalCode } from '@/graphql/__generated__/types'
 import styles from './HospitalSearchModal.module.scss'
 
 export interface HospitalSearchResult {
+  /** Hospital 테이블 ID */
+  hospitalId?: string
   /** 병원명 */
   hospitalName: string
   /** 요양기관번호 */
@@ -197,6 +199,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       if (hospitals && hospitals.length > 0) {
         setSearchResults(
           hospitals.map(h => ({
+            hospitalId: h.id || '',
             hospitalName: h.name || '',
             careNumber: h.phisCode || '',
             address: h.address || '',
