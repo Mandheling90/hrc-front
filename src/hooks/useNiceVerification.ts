@@ -6,20 +6,6 @@ import { INITIATE_VERIFICATION_MUTATION, COMPLETE_VERIFICATION_MUTATION } from '
 import { CHECK_VERIFICATION_DUPLICATE_QUERY } from '@/graphql/verification/queries'
 import type { NiceVerifiedData, NiceCallbackData, UseNiceVerificationReturn, UseNiceVerificationOptions } from '@/lib/nice/types'
 
-const DEV_MODE = process.env.NEXT_PUBLIC_NICE_DEV_MODE === 'true'
-
-const DEV_DUMMY_DATA: NiceVerifiedData = {
-  name: '홍길동',
-  phone: '010-1234-5678',
-  birthDate: '1990-01-01',
-  gender: 'M',
-  di: 'DEV_DI_' + Date.now(),
-  ci: 'DEV_CI_' + Date.now(),
-  authMethod: 'M',
-  nationalInfo: null,
-  verificationToken: 'DEV_TOKEN_' + Date.now()
-}
-
 export function useNiceVerification(options?: UseNiceVerificationOptions): UseNiceVerificationReturn {
   const checkDuplicate = options?.checkDuplicate ?? false
   const [isVerified, setIsVerified] = useState(false)
@@ -142,15 +128,6 @@ export function useNiceVerification(options?: UseNiceVerificationOptions): UseNi
   const requestVerification = useCallback(async () => {
     setIsLoading(true)
     setError(null)
-
-    // 개발 모드: 시뮬레이션
-    if (DEV_MODE) {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      setVerifiedData(DEV_DUMMY_DATA)
-      setIsVerified(true)
-      setIsLoading(false)
-      return
-    }
 
     try {
       const returnUrl = `${window.location.origin}/nice/callback`

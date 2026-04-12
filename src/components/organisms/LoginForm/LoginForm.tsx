@@ -90,8 +90,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       const result = await login({ userId, password: formData.password })
       if (result) {
         setTestEmailMessage('')
-        if (process.env.NODE_ENV === 'development') {
-          // 개발 모드: NICE 인증 없이 바로 로그인 처리
+        if (process.env.NEXT_PUBLIC_SKIP_NICE === 'true') {
+          // NICE 인증 스킵 모드: 바로 로그인 처리
           setAuth(result.accessToken, result.refreshToken, result.user)
           if (result.mustChangePw) {
             setLoginPassword(formData.password)
