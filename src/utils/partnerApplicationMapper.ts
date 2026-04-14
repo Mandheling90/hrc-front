@@ -46,8 +46,15 @@ const toBool = (v?: string): boolean => v === '유'
 /** 동의/비동의 → boolean */
 const toConsent = (v?: string): boolean => v === '동의'
 
-/** 성별 코드 (enum key: M/F 그대로 전달) */
-const toGenderCode = (v?: string): string | undefined => emptyToUndef(v)
+/** 성별 코드 → M/F 변환 (DB VarChar(1)) */
+const toGenderCode = (v?: string): string | undefined => {
+  if (!v || !v.trim()) return undefined
+  const normalized = v.trim()
+  if (normalized === 'M' || normalized === 'F') return normalized
+  if (normalized.startsWith('남')) return 'M'
+  if (normalized.startsWith('여')) return 'F'
+  return undefined
+}
 
 /** 문자열 → number | undefined */
 const toInt = (v?: string): number | undefined => {
@@ -215,6 +222,7 @@ export function mapStepsToApiInput(
     hasIntegratedNursing: toBool(step5?.integratedNursingCare),
     hasGuardianCare: toBool(step5?.guardianNursingCare),
     hasSharedCare: toBool(step5?.jointNursingCare),
+    isolationWardOperation: toBool(step5?.isolationWardOperation),
     isolationSingleCount: toInt(step5?.singleRoom),
     isolationDoubleCount: toInt(step5?.doubleRoom),
     isolationTripleCount: toInt(step5?.tripleRoom),

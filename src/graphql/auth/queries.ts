@@ -30,6 +30,8 @@ export const MY_PROFILE_QUERY = gql`
         school
         specialty
         department
+        graduationYear
+        trainingHospital
         smsConsent
         emailConsent
         replyConsent
