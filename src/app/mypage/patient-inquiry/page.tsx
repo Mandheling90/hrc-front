@@ -308,17 +308,17 @@ export default function PatientInquiryPage() {
           </Button>
         ) : null
     },
-    {
+    ...(user?.profile?.replyConsent ? [{
       id: 'reply',
       label: '회신서 조회',
       width: '120px',
-      renderCell: item =>
+      renderCell: (item: PatientData) =>
         item.hasReply && !item.isExpired ? (
           <Button variant='primary' size='small' className={styles.viewBtn} onClick={() => handleReplyView(item)}>
             조회
           </Button>
         ) : null
-    }
+    }] : [])
   ]
 
   const handleReplyView = async (item: PatientData) => {
@@ -584,26 +584,28 @@ export default function PatientInquiryPage() {
                             }
                           />
                         ),
-                        rightContent: (
-                          <InfoRowContent
-                            label='회신서 조회'
-                            value={
-                              item.hasReply && !item.isExpired ? (
-                                <Button
-                                  variant='primary'
-                                  size='small'
-                                  className={styles.cardViewBtn}
-                                  onClick={() => handleReplyView(item)}
-                                >
-                                  조회
-                                </Button>
-                              ) : (
-                                '-'
-                              )
-                            }
-                          />
-                        ),
-                        infoRow: true
+                        ...(user?.profile?.replyConsent ? {
+                          rightContent: (
+                            <InfoRowContent
+                              label='회신서 조회'
+                              value={
+                                item.hasReply && !item.isExpired ? (
+                                  <Button
+                                    variant='primary'
+                                    size='small'
+                                    className={styles.cardViewBtn}
+                                    onClick={() => handleReplyView(item)}
+                                  >
+                                    조회
+                                  </Button>
+                                ) : (
+                                  '-'
+                                )
+                              }
+                            />
+                          ),
+                          infoRow: true
+                        } : {})
                       }
                     ])}
                     getCardKey={(_, index) => index}
