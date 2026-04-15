@@ -17,7 +17,7 @@ import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
 import { useHospital, useEnums, useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useMyProfile } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { useApplyPartnerHospital, useMyPartnerApplications } from '@/hooks'
+import { useApplyPartnerHospital } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
 import type {
   HospitalInfoStepData,
@@ -82,20 +82,10 @@ export default function ClinicApplicationPage() {
     isOpen: false,
     message: ''
   })
-  // 이미 신청된 내역 존재 여부 모달
+  // 이미 승인된 병원 여부 모달
   const [existingApplicationModal, setExistingApplicationModal] = useState(false)
-
-  // 기존 신청 내역 조회
-  const { applications: existingApplications, loading: existingLoading } = useMyPartnerApplications(
-    { page: 1, limit: 1 }
-  )
-
-  // 페이지 진입 시 기존 신청 내역 확인
-  useEffect(() => {
-    if (!existingLoading && existingApplications.length > 0) {
-      setExistingApplicationModal(true)
-    }
-  }, [existingLoading, existingApplications])
+  const [approvedPartnerType, setApprovedPartnerType] = useState<string | null>(null)
+  const approvalChecked = useRef(false)
 
   // Step별 ref
   const step1Ref = useRef<StepRef<HospitalInfoStepData>>(null)
@@ -155,6 +145,14 @@ export default function ClinicApplicationPage() {
             rcisNo: careInstitutionNo
           })
           if (info) {
+            // 이미 승인된 협력병의원이면 수정 페이지로 이동
+            const code = info.collaborationDivisionCode
+            if (!approvalChecked.current && (code === 'A' || code === 'B')) {
+              approvalChecked.current = true
+              setApprovedPartnerType(code)
+              setExistingApplicationModal(true)
+            }
+
             setUserHospitalDefaults(mergeWithDefaults({
               hospitalName: info.name ?? '',
               medicalInstitutionNumber: (info.careInstitutionNo ?? '').slice(0, 8),
@@ -473,18 +471,14 @@ export default function ClinicApplicationPage() {
         closeOnBackdropClick={true}
       />
 
-      {/* 기존 신청 내역 존재 시 수정 페이지로 이동 모달 */}
+      {/* 이미 승인된 병원인 경우 수정 페이지로 이동 모달 */}
       <AlertModal
         isOpen={existingApplicationModal}
-        message='이미 신청된 내역이 있습니다. 수정으로 이동합니다.'
+        message='이미 승인된 협력병의원입니다. 수정 페이지로 이동합니다.'
         closeButtonText='확인'
         onClose={() => {
           setExistingApplicationModal(false)
-          const institutionType = existingApplications[0]?.institutionType
-          const clinicTypes = ['CLINIC', 'DENTAL_CLINIC', 'ORIENTAL']
-          const editPath = institutionType && clinicTypes.includes(institutionType)
-            ? '/mypage/edit-clinic'
-            : '/mypage/edit-hospital'
+          const editPath = approvedPartnerType === 'B' ? '/mypage/edit-clinic' : '/mypage/edit-hospital'
           router.push(editPath)
         }}
       />

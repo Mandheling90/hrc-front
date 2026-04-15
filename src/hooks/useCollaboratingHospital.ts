@@ -70,6 +70,7 @@ interface CollaboratingHospitalDetail {
   website?: string
   representative?: string
   classificationCode?: string
+  collaborationDivisionCode?: string
 }
 
 interface GetCollaboratingHospitalInfoInput {
