@@ -87,7 +87,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
         if (!birthDate.trim()) missing.push('생년월일')
         if (!licenseNumber.trim()) missing.push('의사면허번호')
         if (!phone.trim()) missing.push('휴대전화')
-        if (!gender) missing.push('성별')
+        // if (!gender) missing.push('성별')
         if (!email.trim()) missing.push('이메일')
         if (!school.trim()) missing.push('출신학교')
         if (!graduationYear.trim()) missing.push('졸업년도')
@@ -182,8 +182,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
             disabled={readOnly}
           />
 
-          {/* 성별 */}
-          <div className={styles.formField}>
+          {/* <div className={styles.formField}>
             <InputLabel htmlFor='gender' required>
               성별
             </InputLabel>
@@ -194,7 +193,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               onChange={setGender}
               disabled={readOnly}
             />
-          </div>
+          </div> */}
 
           {/* 차량번호 */}
           <div className={styles.formField}>

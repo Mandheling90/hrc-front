@@ -161,7 +161,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
             {/* 부서/진료과 */}
             <div className={styles.formField}>
               <div className={styles.deptLabelRow}>
-                <InputLabel htmlFor='department'>부서/진료과</InputLabel>
+                <InputLabel htmlFor='department' required>부서/진료과</InputLabel>
                 <Radio
                   name='deptType'
                   value={deptType}
