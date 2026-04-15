@@ -201,7 +201,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
           hospitals.map(h => ({
             hospitalId: h.id || '',
             hospitalName: h.name || '',
-            careNumber: h.phisCode || '',
+            careNumber: (h.phisCode || '').slice(0, 8),
             address: h.address || '',
             addressDetail: h.addressDetail || '',
             zipCode: h.zipCode || '',
@@ -262,7 +262,7 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
         const h = data.registerHospital
         onSelect({
           hospitalName: h.name,
-          careNumber: h.phisCode || '',
+          careNumber: (h.phisCode || '').slice(0, 8),
           address: h.address || '',
           addressDetail: h.addressDetail || '',
           zipCode: h.zipCode || '',

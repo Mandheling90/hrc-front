@@ -579,7 +579,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
               onChange={handleInputChange}
             />
 
-            <div className={styles.formField}>
+            {/* <div className={styles.formField}>
               <InputLabel htmlFor='gender' required>
                 성별
               </InputLabel>
@@ -590,7 +590,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
                 onChange={() => {}}
                 disabled={true}
               />
-            </div>
+            </div> */}
 
             <div className={styles.formField}>
               <InputLabel htmlFor='department'>진료과</InputLabel>

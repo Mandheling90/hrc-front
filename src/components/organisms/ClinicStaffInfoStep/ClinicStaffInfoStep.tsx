@@ -115,6 +115,7 @@ export const ClinicStaffInfoStep = forwardRef<StepRef<ClinicStaffInfoStepData>, 
       validate: () => {
         const missing: string[] = []
         if (showStaffInfo && !staffName.trim()) missing.push('실무자명')
+        if (showStaffInfo && !department) missing.push('부서/진료과')
         if (missing.length > 0) return `다음 필수 항목을 입력해주세요:\n${missing.join(', ')}`
         return null
       }

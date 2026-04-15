@@ -65,6 +65,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
       }),
       validate: () => {
         const missing: string[] = []
+        if (!department) missing.push('부서/진료과')
         if (!totalEmployees.trim()) missing.push('총 직원 수')
         if (!specialists.trim()) missing.push('전문의 수')
         if (!nurses.trim()) missing.push('간호사 수')

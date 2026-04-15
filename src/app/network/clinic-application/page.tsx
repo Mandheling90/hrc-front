@@ -132,7 +132,7 @@ export default function ClinicApplicationPage() {
     // myProfile 기반 기본값 (API 응답에 빈 필드가 있으면 이 값으로 채움)
     const profileDefaults: Partial<HospitalInfoStepData> = {
       hospitalName: hospName ?? '',
-      medicalInstitutionNumber: careInstitutionNo ?? '',
+      medicalInstitutionNumber: (careInstitutionNo ?? '').slice(0, 8),
       zipCode: profile?.hospZipCode || '00000',
       address: profile?.hospAddress ?? '',
       detailAddress: profile?.hospAddressDetail || '000-000',
@@ -159,7 +159,7 @@ export default function ClinicApplicationPage() {
           if (info) {
             setUserHospitalDefaults(mergeWithDefaults({
               hospitalName: info.name ?? '',
-              medicalInstitutionNumber: info.careInstitutionNo ?? '',
+              medicalInstitutionNumber: (info.careInstitutionNo ?? '').slice(0, 8),
               zipCode: info.zipCode ?? '',
               address: info.address ?? '',
               detailAddress: info.addressDetail ?? '',
@@ -185,7 +185,7 @@ export default function ClinicApplicationPage() {
           if (matched) {
             setUserHospitalDefaults(mergeWithDefaults({
               hospitalName: matched.name ?? '',
-              medicalInstitutionNumber: matched.phisCode ?? '',
+              medicalInstitutionNumber: (matched.phisCode ?? '').slice(0, 8),
               zipCode: matched.zipCode ?? '',
               address: matched.address ?? '',
               detailAddress: matched.addressDetail ?? '',

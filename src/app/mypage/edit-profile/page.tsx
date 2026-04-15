@@ -55,7 +55,7 @@ const mapUserToFormData = (user: AuthUser): Partial<MemberInfoFormData> => {
     emailConsent: profile?.emailConsent ? 'Y' : 'N',
     replyConsent: profile?.replyConsent ? 'Y' : 'N',
     hospitalName: profile?.hospName || '',
-    careNumber: profile?.careInstitutionNo || '',
+    careNumber: (profile?.careInstitutionNo || '').slice(0, 8),
     zipCode: profile?.hospZipCode || '',
     address: profile?.hospAddress || '',
     addressDetail: profile?.hospAddressDetail || '',
@@ -133,7 +133,7 @@ export default function EditProfilePage() {
           if (info) {
             setHospitalData({
               hospitalName: info.name || '',
-              careNumber: info.careInstitutionNo || '',
+              careNumber: (info.careInstitutionNo || '').slice(0, 8),
               zipCode: info.zipCode || '',
               address: info.address || '',
               addressDetail: info.addressDetail || '',
@@ -151,7 +151,7 @@ export default function EditProfilePage() {
           if (matched) {
             setHospitalData({
               hospitalName: matched.name || '',
-              careNumber: matched.phisCode || '',
+              careNumber: (matched.phisCode || '').slice(0, 8),
               zipCode: matched.zipCode || '',
               address: matched.address || '',
               addressDetail: matched.addressDetail || '',
