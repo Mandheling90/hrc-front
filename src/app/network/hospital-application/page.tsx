@@ -38,11 +38,9 @@ import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { mapStepsToApiInput, type AllStepData } from '@/utils/partnerApplicationMapper'
 import { saveDraftToCookie, loadDraftFromCookie, clearDraftCookie } from '@/utils/draftCookie'
 import { uploadFile } from '@/lib/upload'
-import { DEV_DIRECTOR_EXTRA } from '@/utils/devDefaultData'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import styles from './page.module.scss'
 
-const isDev = process.env.NODE_ENV === 'development'
 
 /** HospitalId → HospitalCode 변환 */
 const toHospitalCode = (id: string): HospitalCode => {
@@ -142,9 +140,9 @@ export default function HospitalApplicationPage() {
     const profileDefaults: Partial<HospitalInfoStepData> = {
       hospitalName: hospName ?? '',
       medicalInstitutionNumber: (careInstitutionNo ?? '').slice(0, 8),
-      zipCode: profile?.hospZipCode || '00000',
+      zipCode: profile?.hospZipCode ?? '',
       address: profile?.hospAddress ?? '',
-      detailAddress: profile?.hospAddressDetail || '000-000',
+      detailAddress: profile?.hospAddressDetail ?? '',
       phoneNumber: profile?.hospPhone ?? '',
       website: profile?.hospWebsite ?? ''
     }
@@ -238,13 +236,6 @@ export default function HospitalApplicationPage() {
       smsConsent: user.profile ? (user.profile.smsConsent ? '동의' : '비동의') : '',
       emailConsent: user.profile ? (user.profile.emailConsent ? '동의' : '비동의') : '',
       replyConsent: user.profile ? (user.profile.replyConsent ? '동의' : '비동의') : ''
-    }
-    if (isDev) {
-      // dev 보충값: 유저 프로필에서 빈 값인 필드만 채움
-      for (const [key, val] of Object.entries(DEV_DIRECTOR_EXTRA)) {
-        const k = key as keyof DirectorInfoStepData
-        if (!defaults[k]) defaults[k] = val as never
-      }
     }
     return defaults
   }, [user])

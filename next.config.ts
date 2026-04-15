@@ -21,7 +21,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'guro.kumc.or.kr' },
       { protocol: 'https', hostname: 'ansan.kumc.or.kr' },
       { protocol: 'https', hostname: 'img.youtube.com' },
-      { protocol: 'https', hostname: 'fxkowcvsrqduevavurff.supabase.co' }
+      { protocol: 'https', hostname: 'fxkowcvsrqduevavurff.supabase.co' },
+      { protocol: 'https', hostname: 'kr.object.ncloudstorage.com' }
     ]
   }
 }

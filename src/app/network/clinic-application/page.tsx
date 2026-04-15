@@ -33,11 +33,9 @@ import {
 } from '@/utils/partnerApplicationMapper'
 import { saveDraftToCookie, loadDraftFromCookie, clearDraftCookie } from '@/utils/draftCookie'
 import { uploadFile } from '@/lib/upload'
-import { DEV_DIRECTOR_EXTRA } from '@/utils/devDefaultData'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import styles from './page.module.scss'
 
-const isDev = process.env.NODE_ENV === 'development'
 
 /** HospitalId → HospitalCode 변환 */
 const toHospitalCode = (id: string): HospitalCode => {
@@ -133,9 +131,9 @@ export default function ClinicApplicationPage() {
     const profileDefaults: Partial<HospitalInfoStepData> = {
       hospitalName: hospName ?? '',
       medicalInstitutionNumber: (careInstitutionNo ?? '').slice(0, 8),
-      zipCode: profile?.hospZipCode || '00000',
+      zipCode: profile?.hospZipCode ?? '',
       address: profile?.hospAddress ?? '',
-      detailAddress: profile?.hospAddressDetail || '000-000',
+      detailAddress: profile?.hospAddressDetail ?? '',
       phoneNumber: profile?.hospPhone ?? '',
       website: profile?.hospWebsite ?? ''
     }
@@ -229,12 +227,6 @@ export default function ClinicApplicationPage() {
       smsConsent: user.profile ? (user.profile.smsConsent ? '동의' : '비동의') : '',
       emailConsent: user.profile ? (user.profile.emailConsent ? '동의' : '비동의') : '',
       replyConsent: user.profile ? (user.profile.replyConsent ? '동의' : '비동의') : ''
-    }
-    if (isDev) {
-      for (const [key, val] of Object.entries(DEV_DIRECTOR_EXTRA)) {
-        const k = key as keyof DirectorInfoStepData
-        if (!defaults[k]) defaults[k] = val as never
-      }
     }
     return defaults
   }, [user])

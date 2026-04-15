@@ -33,6 +33,11 @@ const FaxIcon = () => (
   </svg>
 )
 
+// 브레드크럼 경로 별칭 (GNB에는 없지만 브레드크럼에 표시할 페이지)
+const BREADCRUMB_ALIASES: Record<string, { parentHref: string; label: string }> = {
+  '/mypage/patient-result': { parentHref: '/mypage/patient-inquiry', label: '의뢰환자 결과조회' },
+}
+
 // 메뉴 데이터 타입
 interface SubMenuItem {
   href: string
@@ -263,6 +268,19 @@ const HeaderInner: React.FC = () => {
           bestMatchLength = sub.href.length
           currentCategory = menu
           currentSubItem = sub
+        }
+      }
+    }
+
+    // 메뉴에 없는 경로는 별칭으로 브레드크럼 매칭
+    if (!currentCategory && BREADCRUMB_ALIASES[pathname]) {
+      const alias = BREADCRUMB_ALIASES[pathname]
+      for (const menu of breadcrumbMenuItems) {
+        const parentSub = menu.subItems.find(sub => sub.href === alias.parentHref)
+        if (parentSub) {
+          currentCategory = menu
+          currentSubItem = { ...parentSub, label: alias.label }
+          break
         }
       }
     }
