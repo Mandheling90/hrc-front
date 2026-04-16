@@ -665,13 +665,7 @@ export function mapApiToHospitalEditStepData(api: any): HospitalEditStepData {
     step3: {
       hospitalCharacteristics: api.remarks ?? '',
       files: [],
-      existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({
-        id: a.id,
-        originalName: a.originalName,
-        storedPath: a.storedPath,
-        mimeType: a.mimeType,
-        fileSize: a.fileSize
-      }))
+      existingAttachments: []
     }
   }
 }
@@ -786,13 +780,7 @@ export function mapApiToClinicEditStepData(api: any): ClinicEditStepData {
     step3: {
       hospitalCharacteristics: api.remarks ?? '',
       files: [],
-      existingAttachments: (api.attachmentRows ?? []).map((a: any) => ({
-        id: a.id,
-        originalName: a.originalName,
-        storedPath: a.storedPath,
-        mimeType: a.mimeType,
-        fileSize: a.fileSize
-      }))
+      existingAttachments: []
     }
   }
 }

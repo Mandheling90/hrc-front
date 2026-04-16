@@ -14,8 +14,7 @@ import styles from './page.module.scss'
 // 탈퇴 안내 사항
 const withdrawNoticeItems = [
   '회원 탈퇴 시 고려대학교병원 진료협력센터(안암/구로/안산) 홈페이지에서 온라인 서비스를 이용하실 수 없습니다.',
-  '회원 탈퇴 시 회원님의 회원정보가 모두 삭제되며 복구할 수 없습니다.',
-  '탈퇴한 회원 ID와 동일한 ID로의 재가입은 불가합니다.'
+  '회원 탈퇴 시 회원님의 회원정보가 모두 삭제되며 복구할 수 없습니다.'
 ]
 
 const breadcrumbItems = [{ label: '마이페이지', href: '/mypage' }, { label: '회원탈퇴' }]

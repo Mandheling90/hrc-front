@@ -17,6 +17,8 @@ export interface PathologyResultModalProps {
   result: string
   /** 배경 클릭 시 닫기 여부 (기본값: true) */
   closeOnBackdropClick?: boolean
+  /** 뱃지 라벨 (기본값: '병리검사') */
+  badgeLabel?: string
 }
 
 export const PathologyResultModal: React.FC<PathologyResultModalProps> = ({
@@ -24,7 +26,8 @@ export const PathologyResultModal: React.FC<PathologyResultModalProps> = ({
   onClose,
   examName,
   result,
-  closeOnBackdropClick = true
+  closeOnBackdropClick = true,
+  badgeLabel = '병리검사'
 }) => {
   // ESC 키로 닫기
   useEffect(() => {
@@ -69,7 +72,7 @@ export const PathologyResultModal: React.FC<PathologyResultModalProps> = ({
         {/* 헤더 */}
         <div className={styles.header}>
           <div className={styles.titleWrapper}>
-            <span className={styles.badge}>병리검사</span>
+            <span className={styles.badge}>{badgeLabel}</span>
             <h2 className={styles.title}>{examName}</h2>
           </div>
           <button type='button' className={styles.closeButton} onClick={onClose} aria-label='닫기'>

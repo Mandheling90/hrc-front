@@ -336,6 +336,7 @@ export const EndoscopyTab: React.FC<EndoscopyTabProps> = ({
           onClose={handleCloseResultModal}
           examName={selectedRow.examName}
           result={selectedRow._raw.resultContent || selectedRow._raw.grossResult || ''}
+          badgeLabel='내시경검사'
         />
       )}
 

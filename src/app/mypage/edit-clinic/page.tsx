@@ -164,18 +164,6 @@ export default function EditClinicPage() {
           }))
         }
 
-        // 기존 첨부파일 유지
-        const existingAttachments = allData.step3?.existingAttachments ?? []
-        if (existingAttachments.length > 0) {
-          const existing = existingAttachments.map(a => ({
-            originalName: a.originalName,
-            storedPath: a.storedPath,
-            mimeType: a.mimeType,
-            fileSize: a.fileSize
-          }))
-          mapped.attachments = [...existing, ...(mapped.attachments ?? [])]
-        }
-
         // UpdatePartnerApplicationInput에 허용된 필드만 추출
         await updatePartnerApplication({
           id: application.id,

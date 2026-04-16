@@ -256,7 +256,6 @@ export default function EConsultDetailPage() {
             <div className={styles.replySection}>
               <div className={styles.replyTop}>
                 <div className={styles.replyHeader}>
-                  <span className={styles.replierName}>{eConsultData?.consultant?.name || '-'}</span>
                   <span className={styles.replyLabel}></span>
                 </div>
                 <Textarea

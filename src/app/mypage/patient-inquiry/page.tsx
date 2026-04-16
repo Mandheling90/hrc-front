@@ -254,7 +254,7 @@ export default function PatientInquiryPage() {
       width: '110px',
       renderCell: item => (
         <div className={styles.doctorCell}>
-          {item.doctorCanConsult ? (
+          {item.doctorCanConsult && hospitalId === 'anam' ? (
             <button
               type='button'
               className={styles.consultableBtn}
@@ -382,12 +382,6 @@ export default function PatientInquiryPage() {
                   <span className={styles.noticeBadge}>1</span>
                   <span className={styles.noticeText}>{user?.userName || ''} 선생님께서 의뢰하신 의뢰환자정보입니다.</span>
                 </div>
-                <div className={styles.noticeItem}>
-                  <span className={styles.noticeBadge}>2</span>
-                  <span className={styles.noticeText}>
-                    의뢰환자정보는 의뢰일자로부터 3년, 결과조회 및 회신서 조회는 1년 이내의 자료만 조회가 가능합니다.
-                  </span>
-                </div>
               </div>
 
               {/* 검색/조회 카드 */}
@@ -480,15 +474,17 @@ export default function PatientInquiryPage() {
             <div className={styles.listSection}>
               <SectionTitle title='의뢰환자 목록' />
 
-              <InfoNote
-                message={
-                  <>
-                    <ConsultBadgeIcon />
-                    표시가 있는 진료의는 의료자문 요청이 가능합니다.
-                  </>
-                }
-                className={styles.listInfo}
-              />
+              {hospitalId === 'anam' && (
+                <InfoNote
+                  message={
+                    <>
+                      <ConsultBadgeIcon />
+                      표시가 있는 진료의는 의료자문 요청이 가능합니다.
+                    </>
+                  }
+                  className={styles.listInfo}
+                />
+              )}
 
               <div className={styles.tableWrapper}>
                 {isTablet ? (
@@ -517,7 +513,7 @@ export default function PatientInquiryPage() {
                             <InfoRowContent
                               label='진료의'
                               value={
-                                item.doctorCanConsult ? (
+                                item.doctorCanConsult && hospitalId === 'anam' ? (
                                   <button
                                     type='button'
                                     className={styles.consultableBtn}
@@ -539,7 +535,7 @@ export default function PatientInquiryPage() {
                                   item.doctor
                                 )
                               }
-                              accent={item.doctorCanConsult}
+                              accent={item.doctorCanConsult && hospitalId === 'anam'}
                             />
                           </div>
                         ),

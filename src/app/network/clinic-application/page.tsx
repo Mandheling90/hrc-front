@@ -219,6 +219,8 @@ export default function ClinicApplicationPage() {
       gender: user.profile?.gender ?? '',
       email: user.email ?? '',
       school: user.profile?.school ?? '',
+      graduationYear: user.profile?.graduationYear ?? '',
+      trainingHospital: user.profile?.trainingHospital ?? '',
       department: user.profile?.department ?? '',
       specialty: user.profile?.specialty ?? '',
       isDirector: user.profile?.isDirector ?? false,

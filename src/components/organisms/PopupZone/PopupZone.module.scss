@@ -184,14 +184,14 @@
   }
 }
 
-// 팝업 2개: 양쪽 정렬
+// 팝업 2개: 왼쪽부터 순서대로 정렬
 .cardsPair {
-  justify-content: space-between;
+  justify-content: center;
+  gap: 32px;
 
   .card {
     flex: 0 0 auto;
-    width: calc(50% - 12px);
-    max-width: 408px;
+    width: 408px;
 
     @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
       width: calc(50% - 10px);

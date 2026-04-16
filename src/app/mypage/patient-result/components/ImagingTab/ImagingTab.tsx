@@ -338,6 +338,7 @@ export const ImagingTab: React.FC<ImagingTabProps> = ({
           onClose={handleCloseResultModal}
           examName={selectedRow.examName}
           result={selectedRow._raw.resultContent || selectedRow._raw.grossResult || ''}
+          badgeLabel='영상검사'
         />
       )}
 
