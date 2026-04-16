@@ -205,7 +205,6 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
               placeholder='차량번호를 입력해주세요.'
               value={carNumber}
               onChange={e => setCarNumber(e.target.value)}
-              disabled={readOnly}
             />
 
             <InfoNote message='무료 주차등록 희망시, 하단 차량등록증 첨부 필요.' />

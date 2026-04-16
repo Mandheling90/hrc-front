@@ -114,18 +114,6 @@ const hospitalTypeOptionsByHospital: Record<string, { value: string; label: stri
   ]
 }
 
-// Haversine 거리 계산 (km)
-function getDistanceKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6371
-  const dLat = ((lat2 - lat1) * Math.PI) / 180
-  const dLng = ((lng2 - lng1) * Math.PI) / 180
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) *
-    Math.sin(dLng / 2) * Math.sin(dLng / 2)
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-}
-
 export default function ClinicStatusPage() {
   const { hospitalId } = useHospital()
   const { searchHospitals, loading: apiLoading } = useSearchCollaboratingHospitals()
@@ -136,81 +124,20 @@ export default function ClinicStatusPage() {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedClinicId, setSelectedClinicId] = useState<string>('')
   const [dataLoading, setDataLoading] = useState(true)
-  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
-  const [sortingByDistance, setSortingByDistance] = useState(false)
   const [mapLoaded, setMapLoaded] = useState(false)
 
-  const isLoading = dataLoading || apiLoading || sortingByDistance
+  const isLoading = dataLoading || apiLoading
   const itemsPerPage = 4
   const geocodeCacheRef = useRef<Map<string, { lat: number; lng: number }>>(new Map())
-  const sortedRef = useRef(false)
-
   const hospitalTypeOptions = useMemo(
     () => hospitalTypeOptionsByHospital[hospitalId] ?? hospitalTypeOptionsByHospital.anam,
     [hospitalId]
   )
 
-  // 사용자 현재 위치 가져오기
-  useEffect(() => {
-    if (!navigator.geolocation) return
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        setUserLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
-      },
-      () => {
-        // 위치 권한 거부 또는 에러 시 무시 (기본 순서 유지)
-      },
-      { enableHighAccuracy: false, timeout: 5000 }
-    )
-  }, [])
-
-  // 병원 목록을 현재 위치 기준 거리순으로 정렬
-  const sortClinicsByDistance = useCallback(async (clinicList: ClinicData[], userLoc: { lat: number; lng: number }) => {
-    setSortingByDistance(true)
-    try {
-      // 모든 병원 주소를 geocode하여 좌표 확보
-      const geocoded = await Promise.all(
-        clinicList.map(async clinic => {
-          if (clinic.latitude !== 0 && clinic.longitude !== 0) {
-            return clinic
-          }
-          if (!clinic.baseAddress) return clinic
-
-          const cached = geocodeCacheRef.current.get(clinic.baseAddress)
-          if (cached) {
-            return { ...clinic, latitude: cached.lat, longitude: cached.lng }
-          }
-
-          const coords = await geocodeAddress(clinic.baseAddress)
-          if (coords) {
-            geocodeCacheRef.current.set(clinic.baseAddress, coords)
-            return { ...clinic, latitude: coords.lat, longitude: coords.lng }
-          }
-          return clinic
-        })
-      )
-
-      // 좌표가 있는 병원은 거리순, 없는 병원은 뒤로
-      return geocoded.sort((a, b) => {
-        const aHasCoords = a.latitude !== 0 && a.longitude !== 0
-        const bHasCoords = b.latitude !== 0 && b.longitude !== 0
-        if (!aHasCoords && !bHasCoords) return 0
-        if (!aHasCoords) return 1
-        if (!bHasCoords) return -1
-        const distA = getDistanceKm(userLoc.lat, userLoc.lng, a.latitude, a.longitude)
-        const distB = getDistanceKm(userLoc.lat, userLoc.lng, b.latitude, b.longitude)
-        return distA - distB
-      })
-    } finally {
-      setSortingByDistance(false)
-    }
-  }, [])
-
   // API 데이터 로드 + Geocoding
   const fetchClinics = useCallback(async (options?: { hsptNm?: string; adrsNm?: string; hsptClsfCd?: string }) => {
     const hospitalCode = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
     setDataLoading(true)
-    sortedRef.current = false
     try {
       const result = await searchHospitals({
         hospitalCode,
@@ -252,20 +179,6 @@ export default function ClinicStatusPage() {
     fetchClinics()
   }, [fetchClinics])
 
-  // 사용자 위치 확보 후 병원 목록을 거리순으로 정렬
-  useEffect(() => {
-    if (!userLocation || clinics.length === 0) return
-    if (sortedRef.current) return
-    if (!window.kakao?.maps?.services) return
-
-    sortedRef.current = true
-    sortClinicsByDistance(clinics, userLocation).then(sorted => {
-      setClinics(sorted)
-      if (sorted.length > 0) {
-        setSelectedClinicId(sorted[0].id)
-      }
-    })
-  }, [userLocation, clinics, mapLoaded, sortClinicsByDistance])
 
   const selectedClinic = clinics.find(c => c.id === selectedClinicId)
 
@@ -603,10 +516,6 @@ export default function ClinicStatusPage() {
 
           {/* 지도 및 병의원 리스트 */}
           <div className={styles.contentSection}>
-            {/* 위치 기반 검색 안내 */}
-
-            <InfoNote message='현재 내 위치에서 가장 가까운 병의원이 검색됩니다.' />
-
             {/* 지도와 카드 영역 */}
             <div className={styles.mapAndListContainer}>
               {/* 지도 영역 */}
