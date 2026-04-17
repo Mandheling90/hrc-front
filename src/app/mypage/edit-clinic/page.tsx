@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useHospital, useEnums, useMyPartnerApplication, useUpdatePartnerApplication } from '@/hooks'
+import { useHospital, useEnums, useMyPartnerApplication, useUpdatePartnerApplication, useMyProfile } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -81,12 +81,13 @@ export default function EditClinicPage() {
     message: ''
   })
 
-  // 원장여부 체크 - 원장이 아니면 마이페이지로 리다이렉트
+  // 원장여부 체크 - 서버 최신 프로필 기준으로 판단
+  const { user: profileUser, loading: profileLoading } = useMyProfile()
   useEffect(() => {
-    if (user && !user.profile?.isDirector) {
+    if (!profileLoading && profileUser && !profileUser.profile?.isDirector) {
       router.push('/mypage')
     }
-  }, [user, router])
+  }, [profileLoading, profileUser, router])
 
   // 신청 데이터가 없으면 신청 페이지로 리다이렉트
   useEffect(() => {

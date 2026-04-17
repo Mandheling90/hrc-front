@@ -4,7 +4,7 @@ import React, { useEffect, useMemo } from 'react'
 import Link from '@/components/atoms/HospitalLink'
 import { useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { useHospital } from '@/hooks'
+import { useHospital, useMyProfile } from '@/hooks'
 import { useReferralPatients } from '@/hooks/useReferralPatients'
 import { HospitalCode } from '@/graphql/__generated__/types'
 import { MY_ECONSULTS_QUERY } from '@/graphql/econsult/queries'
@@ -61,6 +61,7 @@ interface MyEConsultsData {
 
 export default function MyPage() {
   const { user } = useAuthContext()
+  const { user: profileUser } = useMyProfile()
   const { hospitalId } = useHospital()
   const { searchReferralPatients, patients, loading: patientsLoading } = useReferralPatients()
 
@@ -154,7 +155,7 @@ export default function MyPage() {
                   <Link href='/mypage/edit-profile' className={styles.userActionBtnPrimary}>
                     회원정보 수정
                   </Link>
-                  {user?.profile?.isDirector && (
+                  {profileUser?.profile?.isDirector && (
                     <Link href='/mypage/edit-partner' className={styles.userActionBtn}>
                       협력병•의원 정보수정
                     </Link>

@@ -19,7 +19,7 @@ import { ReviewIcon } from '@/components/icons/ReviewIcon'
 import { ApprovalIcon } from '@/components/icons/ApprovalIcon'
 import { HandshakeIcon } from '@/components/icons/HandshakeIcon'
 import { CertificateIcon } from '@/components/icons/CertificateIcon'
-import { useHospital } from '@/hooks'
+import { useHospital, useMyProfile } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { mapBreadcrumbItems } from '@/utils'
 import styles from './page.module.scss'
@@ -29,20 +29,22 @@ export default function NetworkPage() {
   const router = useHospitalRouter()
   const { pageContent } = useHospital()
   const { user } = useAuthContext()
+  const { user: profileUser, loading: profileLoading } = useMyProfile()
   const [alertModal, setAlertModal] = useState(false)
 
-  // 원장여부 체크 - 원장이 아니면 신청 페이지로 이동 불가
+  // 원장여부 체크 - 서버 최신 프로필 기준으로 판단
   const handleApplicationClick = useCallback((path: string) => {
     if (!user) {
       router.push('/login')
       return
     }
-    if (!user.profile?.isDirector) {
+    if (profileLoading) return
+    if (!profileUser?.profile?.isDirector) {
       setAlertModal(true)
       return
     }
     router.push(path)
-  }, [user, router])
+  }, [user, profileUser, profileLoading, router])
 
   // pageContent에서 network 페이지 정보 가져오기
   const networkInfo = pageContent.network

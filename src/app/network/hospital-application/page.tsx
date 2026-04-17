@@ -64,14 +64,6 @@ export default function HospitalApplicationPage() {
     }
   }, [isAuthenticated, router])
 
-  // 원장여부 체크
-  const [directorAlertOpen, setDirectorAlertOpen] = useState(false)
-  useEffect(() => {
-    if (user && !user.profile?.isDirector) {
-      setDirectorAlertOpen(true)
-    }
-  }, [user])
-
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
 
@@ -104,6 +96,14 @@ export default function HospitalApplicationPage() {
 
   // 서버에서 최신 프로필 조회 (localStorage에 profile이 없을 수 있으므로)
   const { user: profileUser, loading: profileLoading } = useMyProfile()
+
+  // 원장여부 체크 (서버 최신 프로필 기준)
+  const [directorAlertOpen, setDirectorAlertOpen] = useState(false)
+  useEffect(() => {
+    if (!profileLoading && profileUser && !profileUser.profile?.isDirector) {
+      setDirectorAlertOpen(true)
+    }
+  }, [profileLoading, profileUser])
 
   // ehrGetCollaboratingHospitalInfo로 병원 정보 조회하여 초기값 생성
   const { getHospitalInfo } = useGetCollaboratingHospitalInfo()
