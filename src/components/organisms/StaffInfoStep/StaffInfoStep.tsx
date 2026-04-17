@@ -189,6 +189,13 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               <h3 className={styles.formTitle}>의료기관 유형</h3>
               <p className={styles.formSubtitle}>필수 입력 항목을 모두 입력해주세요.</p>
             </div>
+            {!showStaffInfo && (
+              <div className={styles.stepIndicator}>
+                <span className={styles.stepNumber}>{currentStep}</span>
+                <span className={styles.stepSeparator}>/</span>
+                <span className={styles.stepTotal}>{totalSteps}</span>
+              </div>
+            )}
           </div>
           <div className={styles.formDivider}></div>
 
