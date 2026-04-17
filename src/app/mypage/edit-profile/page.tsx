@@ -64,7 +64,6 @@ const mapUserToFormData = (user: AuthUser): Partial<MemberInfoFormData> => {
   }
 }
 
-
 /** 폼 데이터를 API 입력 형식으로 변환 */
 const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput => {
   const input: UpdateDoctorProfileInput = {
@@ -77,6 +76,8 @@ const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput 
     school: data.school,
     department: data.department,
     specialty: data.specialty || undefined,
+    graduationYear: data.graduationYear,
+    trainingHospital: data.trainingHospital || undefined,
     smsConsent: data.smsConsent === 'Y',
     emailConsent: data.emailConsent === 'Y',
     replyConsent: data.replyConsent === 'Y',
@@ -238,7 +239,16 @@ export default function EditProfilePage() {
               onCancel={handleCancel}
               submitButtonText={updating ? '저장 중...' : '저장'}
               cancelButtonText='취소'
-              disabledFields={['name', 'birthDate', 'memberType', 'phone', 'userId', 'licenseNumber', 'school', 'careNumber']}
+              disabledFields={[
+                'name',
+                'birthDate',
+                'memberType',
+                'phone',
+                'userId',
+                'licenseNumber',
+                'school',
+                'careNumber'
+              ]}
               showWithdrawButton={true}
               onWithdraw={handleWithdraw}
             />
@@ -247,11 +257,7 @@ export default function EditProfilePage() {
       </main>
       <Footer />
 
-      <AlertModal
-        isOpen={alertModal.isOpen}
-        message={alertModal.message}
-        onClose={handleAlertClose}
-      />
+      <AlertModal isOpen={alertModal.isOpen} message={alertModal.message} onClose={handleAlertClose} />
     </div>
   )
 }
