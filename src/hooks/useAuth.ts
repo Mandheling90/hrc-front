@@ -1,6 +1,14 @@
 import { useMutation, useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { LOGIN_MUTATION, SIGNUP_MUTATION, LOGOUT_MUTATION, UPDATE_DOCTOR_PROFILE_MUTATION, CHANGE_PASSWORD_MUTATION, WITHDRAW_MEMBER_MUTATION, SEND_TEST_EMAIL_MUTATION } from '@/graphql/auth/mutations'
+import {
+  LOGIN_MUTATION,
+  SIGNUP_MUTATION,
+  LOGOUT_MUTATION,
+  UPDATE_DOCTOR_PROFILE_MUTATION,
+  CHANGE_PASSWORD_MUTATION,
+  WITHDRAW_MEMBER_MUTATION,
+  SEND_TEST_EMAIL_MUTATION
+} from '@/graphql/auth/mutations'
 import { ME_QUERY, MY_PROFILE_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
 import { useHospital } from '@/contexts/HospitalContext'
@@ -138,6 +146,8 @@ export interface UpdateDoctorProfileInput {
   school?: string
   department?: string
   specialty?: string
+  graduationYear?: string
+  trainingHospital?: string
   smsConsent?: boolean
   emailConsent?: boolean
   replyConsent?: boolean
