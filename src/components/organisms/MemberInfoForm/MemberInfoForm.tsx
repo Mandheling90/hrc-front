@@ -139,7 +139,7 @@ export const MemberInfoForm: React.FC<MemberInfoFormProps> = ({
   if (enumError) throw enumError
 
   const schoolOptions = useMemo(() => {
-    return [{ value: '', label: '선택해주세요' }, ...getOptions('School')]
+    return [{ value: '', label: '선택해주세요' }, ...getOptions('School').sort((a, b) => a.label.localeCompare(b.label, 'ko'))]
   }, [getOptions])
 
   const departmentOptions = useMemo(() => {

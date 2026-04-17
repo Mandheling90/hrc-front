@@ -32,7 +32,7 @@ export const DirectorInfoStep = forwardRef<StepRef<DirectorInfoStepData>, Direct
     if (enumError) throw enumError
 
     const schoolOptions = React.useMemo(() => {
-      const enumOpts = getOptions('School')
+      const enumOpts = getOptions('School').sort((a, b) => a.label.localeCompare(b.label, 'ko'))
       return [{ value: '', label: '선택해주세요' }, ...enumOpts]
     }, [getOptions])
 
