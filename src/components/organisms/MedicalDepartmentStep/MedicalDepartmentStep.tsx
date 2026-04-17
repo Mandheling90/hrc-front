@@ -82,7 +82,12 @@ export const MedicalDepartmentStep = forwardRef<StepRef<MedicalDepartmentStepDat
         departments,
         equipment,
         otherEquipment
-      })
+      }),
+      validate: () => {
+        const hasUncounted = Object.values(departments).some(d => d.checked && !d.count.trim())
+        if (hasUncounted) return '체크한 진료과 전문의 수를 입력해주세요.'
+        return null
+      }
     }))
 
     // 숫자만 입력 가능한 핸들러

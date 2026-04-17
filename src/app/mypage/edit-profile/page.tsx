@@ -77,6 +77,8 @@ const mapFormDataToInput = (data: MemberInfoFormData): UpdateDoctorProfileInput 
     school: data.school,
     department: data.department,
     specialty: data.specialty || undefined,
+    graduationYear: data.graduationYear || undefined,
+    trainingHospital: data.trainingHospital || undefined,
     smsConsent: data.smsConsent === 'Y',
     emailConsent: data.emailConsent === 'Y',
     replyConsent: data.replyConsent === 'Y',
