@@ -217,28 +217,28 @@ export default function HospitalApplicationPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileLoading, profileUser, hospital.id])
 
-  // 로그인 시 유저 프로필에서 병원장 정보 초기값 생성
+  // MyProfile에서 조회한 최신 프로필로 병원장 정보 초기값 생성
   const userDirectorDefaults = useMemo<Partial<DirectorInfoStepData> | undefined>(() => {
-    if (!user) return undefined
+    if (!profileUser) return undefined
     const defaults: Partial<DirectorInfoStepData> = {
-      directorName: user.userName ?? '',
-      birthDate: user.profile?.birthDate?.slice(0, 10) ?? '',
-      licenseNumber: user.profile?.licenseNo ?? '',
-      phone: user.phone ?? '',
-      gender: user.profile?.gender ?? '',
-      email: user.email ?? '',
-      school: user.profile?.school ?? '',
-      graduationYear: user.profile?.graduationYear ?? '',
-      trainingHospital: user.profile?.trainingHospital ?? '',
-      department: user.profile?.department ?? '',
-      specialty: user.profile?.specialty ?? '',
-      isDirector: user.profile?.isDirector ?? false,
-      smsConsent: user.profile ? (user.profile.smsConsent ? '동의' : '비동의') : '',
-      emailConsent: user.profile ? (user.profile.emailConsent ? '동의' : '비동의') : '',
-      replyConsent: user.profile ? (user.profile.replyConsent ? '동의' : '비동의') : ''
+      directorName: profileUser.userName ?? '',
+      birthDate: profileUser.profile?.birthDate?.slice(0, 10) ?? '',
+      licenseNumber: profileUser.profile?.licenseNo ?? '',
+      phone: profileUser.phone ?? '',
+      gender: profileUser.profile?.gender ?? '',
+      email: profileUser.email ?? '',
+      school: profileUser.profile?.school ?? '',
+      graduationYear: profileUser.profile?.graduationYear ?? '',
+      trainingHospital: profileUser.profile?.trainingHospital ?? '',
+      department: profileUser.profile?.department ?? '',
+      specialty: profileUser.profile?.specialty ?? '',
+      isDirector: profileUser.profile?.isDirector ?? false,
+      smsConsent: profileUser.profile ? (profileUser.profile.smsConsent ? '동의' : '비동의') : '',
+      emailConsent: profileUser.profile ? (profileUser.profile.emailConsent ? '동의' : '비동의') : '',
+      replyConsent: profileUser.profile ? (profileUser.profile.replyConsent ? '동의' : '비동의') : ''
     }
     return defaults
-  }, [user])
+  }, [profileUser])
 
   // Step 데이터 캐시 (조건부 렌더링으로 언마운트되는 Step 데이터 보존)
   const [stepDataCache, setStepDataCache] = useState<AllStepData>({})
