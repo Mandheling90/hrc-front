@@ -33,7 +33,7 @@ import type {
   BasicTreatmentStepData,
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
-import { HospitalCode, PartnerStatus } from '@/graphql/__generated__/types'
+import { HospitalCode, PartnerStatus, PartnerType } from '@/graphql/__generated__/types'
 import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { mapStepsToApiInput, type AllStepData } from '@/utils/partnerApplicationMapper'
 import { saveDraftToCookie, loadDraftFromCookie, clearDraftCookie } from '@/utils/draftCookie'
@@ -150,8 +150,9 @@ export default function HospitalApplicationPage() {
   const { searchHospitals } = useSearchCollaboratingHospitals()
 
   // 진입 접근체크: 원장 + EHR 체결상태(A/B) → 수정 페이지로 이동
+  // 분기 기준: 신청한 partnerType(A/B) 우선, 없으면 EHR classificationCode 폴백
   useEffect(() => {
-    if (profileLoading || accessCheckStarted.current) return
+    if (profileLoading || myApplicationLoading || accessCheckStarted.current) return
     const profile = profileUser?.profile
     if (!profile?.isDirector) return
     const rcisNo = profile.careInstitutionNo
@@ -169,18 +170,33 @@ export default function HospitalApplicationPage() {
         if (code !== 'A' && code !== 'B') return
         if (approvalChecked.current) return
         approvalChecked.current = true
-        const clsf = info?.classificationCode
-        const editPath =
-          clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf)
-            ? '/mypage/edit-clinic'
-            : '/mypage/edit-hospital'
+
+        let editPath: string
+        if (myApplication?.partnerType === PartnerType.B) {
+          editPath = '/mypage/edit-clinic'
+        } else if (myApplication?.partnerType === PartnerType.A) {
+          editPath = '/mypage/edit-hospital'
+        } else {
+          const clsf = info?.classificationCode
+          editPath =
+            clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf)
+              ? '/mypage/edit-clinic'
+              : '/mypage/edit-hospital'
+        }
         setExistingEditPath(editPath)
         setExistingApplicationModal(true)
       } catch (err) {
         console.error('[협력병원 접근체크] EHR 조회 실패:', err)
       }
     })()
-  }, [profileLoading, profileUser, hospital.id, getHospitalInfo])
+  }, [
+    profileLoading,
+    myApplicationLoading,
+    profileUser,
+    myApplication,
+    hospital.id,
+    getHospitalInfo
+  ])
   const [userHospitalDefaults, setUserHospitalDefaults] = useState<Partial<HospitalInfoStepData> | undefined>(undefined)
   const [hospitalInfoLoading, setHospitalInfoLoading] = useState(true)
   const hospitalInfoFetched = useRef(false)

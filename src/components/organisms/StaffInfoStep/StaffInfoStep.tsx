@@ -237,7 +237,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               placeholder='총 직원 수를 입력해주세요.'
               value={totalEmployees}
               onChange={e => {
-                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 5)
                 setTotalEmployees(filtered)
               }}
             />
@@ -252,7 +252,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               placeholder='전문의 수를 입력해주세요.'
               value={specialists}
               onChange={e => {
-                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 5)
                 setSpecialists(filtered)
               }}
             />
@@ -267,7 +267,7 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
               placeholder='간호사 수를 입력해주세요.'
               value={nurses}
               onChange={e => {
-                const filtered = e.target.value.replace(/[^0-9]/g, '')
+                const filtered = e.target.value.replace(/[^0-9]/g, '').slice(0, 5)
                 setNurses(filtered)
               }}
             />

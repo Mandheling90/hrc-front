@@ -110,9 +110,9 @@ export const CareSystemStep = forwardRef<StepRef<CareSystemStepData>, CareSystem
       }
     }))
 
-    // 숫자만 입력 가능한 핸들러
+    // 숫자만 입력 가능한 핸들러 (최대 5자리 - 99,999)
     const handleNumberChange = (value: string, setter: (value: string) => void) => {
-      const numericValue = value.replace(/[^0-9]/g, '')
+      const numericValue = value.replace(/[^0-9]/g, '').slice(0, 5)
       setter(numericValue)
     }
 
