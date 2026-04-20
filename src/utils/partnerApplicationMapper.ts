@@ -623,6 +623,9 @@ export function mapHospitalEditStepsToApiInput(
     hospitalFaxNumber: emptyToUndef(step1?.faxNumber),
     hospitalWebsite: emptyToUndef(step1?.website),
 
+    // Step 1: 원장 차량번호 (정보수정 모드에서 병원 정보 섹션에 노출)
+    directorCarNo: emptyToUndef(step1?.carNumber),
+
     // Step 2: 인력현황
     totalStaffCount: toInt(step2?.totalEmployees),
     specialistCount: toInt(step2?.specialists),
@@ -647,7 +650,8 @@ export function mapApiToHospitalEditStepData(api: any): HospitalEditStepData {
       detailAddress: api.hospitalAddressDetail ?? '',
       phoneNumber: api.hospitalPhone ?? '',
       faxNumber: api.hospitalFaxNumber ?? '',
-      website: api.hospitalWebsite ?? ''
+      website: api.hospitalWebsite ?? '',
+      carNumber: api.directorCarNo ?? ''
     },
     step2: {
       staffName: api.staffName ?? '',
@@ -696,6 +700,9 @@ export function mapClinicEditStepsToApiInput(
     hospitalFaxNumber: emptyToUndef(step1?.faxNumber),
     hospitalWebsite: emptyToUndef(step1?.website),
 
+    // Step 1: 원장 차량번호 (정보수정 모드에서 병원 정보 섹션에 노출)
+    directorCarNo: emptyToUndef(step1?.carNumber),
+
     // Step 2: 병상/직원
     totalBedCount: toInt(step2?.totalBeds),
     activeBedCount: toInt(step2?.totalBeds),
@@ -741,7 +748,8 @@ export function mapApiToClinicEditStepData(api: any): ClinicEditStepData {
       detailAddress: api.hospitalAddressDetail ?? '',
       phoneNumber: api.hospitalPhone ?? '',
       faxNumber: api.hospitalFaxNumber ?? '',
-      website: api.hospitalWebsite ?? ''
+      website: api.hospitalWebsite ?? '',
+      carNumber: api.directorCarNo ?? ''
     },
     step2: {
       staffName: api.staffName ?? '',

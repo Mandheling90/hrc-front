@@ -219,7 +219,8 @@ export default function EditClinicPage() {
           nurseCount: mapped.nurseCount,
           majorEquipment: mapped.majorEquipment,
           remarks: mapped.remarks,
-          attachments: mapped.attachments
+          attachments: mapped.attachments,
+          directorCarNo: mapped.directorCarNo
         })
 
         setAlertModal({
@@ -282,6 +283,7 @@ export default function EditClinicPage() {
                 totalSteps={totalSteps}
                 defaultValues={stepDataCache.step1 ?? stepData?.step1}
                 hideSearch
+                showCarNumber
               />
             )}
 

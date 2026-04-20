@@ -15,7 +15,7 @@ import { ClinicStaffInfoStep } from '@/components/organisms/ClinicStaffInfoStep/
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
-import { useHospital, useEnums, useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useMyProfile } from '@/hooks'
+import { useHospital, useEnums, useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useMyProfile, useMyPartnerApplication } from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useApplyPartnerHospital } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
@@ -25,7 +25,7 @@ import type {
   ClinicStaffInfoStepData,
   HospitalCharacteristicsStepData
 } from '@/types/partner-application'
-import { HospitalCode } from '@/graphql/__generated__/types'
+import { HospitalCode, PartnerStatus } from '@/graphql/__generated__/types'
 import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import {
   mapClinicStepsToApiInput,
@@ -46,6 +46,9 @@ const toHospitalCode = (id: string): HospitalCode => {
   }
   return map[id] ?? HospitalCode.Anam
 }
+
+// 의원 계열 분기용 EHR InstitutionType 코드 (50=의원, 51=치과의원, 90=한방/한의원)
+const CLINIC_CLASSIFICATION_CODES = ['50', '51', '90']
 
 export default function ClinicApplicationPage() {
   const { hospital } = useHospital()
@@ -74,10 +77,17 @@ export default function ClinicApplicationPage() {
     isOpen: false,
     message: ''
   })
-  // 이미 승인된 병원 여부 모달
+  // 이미 승인된 병원 여부 모달 (A/B 체결 상태 → 수정 페이지로 이동)
   const [existingApplicationModal, setExistingApplicationModal] = useState(false)
-  const [approvedPartnerType, setApprovedPartnerType] = useState<string | null>(null)
+  const [existingEditPath, setExistingEditPath] = useState<string>('/mypage/edit-hospital')
   const approvalChecked = useRef(false)
+  const accessCheckStarted = useRef(false)
+  // 기존 신청(PENDING/TERMINATED) 차단 모달
+  const [blockingApplicationModal, setBlockingApplicationModal] = useState<{
+    isOpen: boolean
+    message: string
+  }>({ isOpen: false, message: '' })
+  const applicationStatusChecked = useRef(false)
 
   // Step별 ref
   const step1Ref = useRef<StepRef<HospitalInfoStepData>>(null)
@@ -96,9 +106,72 @@ export default function ClinicApplicationPage() {
     }
   }, [profileLoading, profileUser])
 
-  // ehrGetCollaboratingHospitalInfo로 병원 정보 조회하여 초기값 생성
+  // 진입 시점: 이미 제출된 신청(PENDING/APPROVED/TERMINATED) 존재 여부 체크
+  const { application: myApplication, loading: myApplicationLoading } = useMyPartnerApplication(
+    toHospitalCode(hospital.id)
+  )
+  useEffect(() => {
+    if (myApplicationLoading || applicationStatusChecked.current || !myApplication) return
+    applicationStatusChecked.current = true
+
+    if (myApplication.status === PartnerStatus.Pending) {
+      setBlockingApplicationModal({
+        isOpen: true,
+        message: '이미 신청 진행 중인 협력병의원이 있습니다.\n심사 완료 후 다시 이용해주세요.'
+      })
+    } else if (myApplication.status === PartnerStatus.Approved) {
+      if (!approvalChecked.current) {
+        approvalChecked.current = true
+        setExistingEditPath(
+          myApplication.partnerType === 'B' ? '/mypage/edit-clinic' : '/mypage/edit-hospital'
+        )
+        setExistingApplicationModal(true)
+      }
+    } else if (myApplication.status === PartnerStatus.Terminated) {
+      setBlockingApplicationModal({
+        isOpen: true,
+        message: '해지된 협력 이력이 있어 재신청이 불가합니다.\n관리자에게 문의해주세요.'
+      })
+    }
+    // DRAFT, REJECTED: 백엔드가 기존 레코드를 업데이트하므로 진행 허용
+  }, [myApplication, myApplicationLoading])
+
+  // EHR 조회 훅 (접근체크 + 초기값 로딩에서 공유)
   const { getHospitalInfo } = useGetCollaboratingHospitalInfo()
   const { searchHospitals } = useSearchCollaboratingHospitals()
+
+  // 진입 접근체크: 원장 + EHR 체결상태(A/B) → 수정 페이지로 이동
+  useEffect(() => {
+    if (profileLoading || accessCheckStarted.current) return
+    const profile = profileUser?.profile
+    if (!profile?.isDirector) return
+    const rcisNo = profile.careInstitutionNo
+    if (!rcisNo) return
+
+    accessCheckStarted.current = true
+
+    void (async () => {
+      try {
+        const info = await getHospitalInfo({
+          hospitalCode: toHospitalCode(hospital.id),
+          rcisNo
+        })
+        const code = info?.collaborationDivisionCode
+        if (code !== 'A' && code !== 'B') return
+        if (approvalChecked.current) return
+        approvalChecked.current = true
+        const clsf = info?.classificationCode
+        const editPath =
+          clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf)
+            ? '/mypage/edit-clinic'
+            : '/mypage/edit-hospital'
+        setExistingEditPath(editPath)
+        setExistingApplicationModal(true)
+      } catch (err) {
+        console.error('[협력의원 접근체크] EHR 조회 실패:', err)
+      }
+    })()
+  }, [profileLoading, profileUser, hospital.id, getHospitalInfo])
   const [userHospitalDefaults, setUserHospitalDefaults] = useState<Partial<HospitalInfoStepData> | undefined>(undefined)
   const [hospitalInfoLoading, setHospitalInfoLoading] = useState(true)
   const hospitalInfoFetched = useRef(false)
@@ -145,14 +218,6 @@ export default function ClinicApplicationPage() {
             rcisNo: careInstitutionNo
           })
           if (info) {
-            // 이미 승인된 협력병의원이면 수정 페이지로 이동
-            const code = info.collaborationDivisionCode
-            if (!approvalChecked.current && (code === 'A' || code === 'B')) {
-              approvalChecked.current = true
-              setApprovedPartnerType(code)
-              setExistingApplicationModal(true)
-            }
-
             setUserHospitalDefaults(mergeWithDefaults({
               hospitalName: info.name ?? '',
               medicalInstitutionNumber: (info.careInstitutionNo ?? '').slice(0, 8),
@@ -480,8 +545,18 @@ export default function ClinicApplicationPage() {
         closeButtonText='확인'
         onClose={() => {
           setExistingApplicationModal(false)
-          const editPath = approvedPartnerType === 'B' ? '/mypage/edit-clinic' : '/mypage/edit-hospital'
-          router.push(editPath)
+          router.push(existingEditPath)
+        }}
+      />
+
+      {/* 진행 중(PENDING) / 해지(TERMINATED) 신청 존재 시 차단 모달 */}
+      <AlertModal
+        isOpen={blockingApplicationModal.isOpen}
+        message={blockingApplicationModal.message}
+        closeButtonText='확인'
+        onClose={() => {
+          setBlockingApplicationModal({ isOpen: false, message: '' })
+          router.replace('/network')
         }}
       />
 

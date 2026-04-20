@@ -17,6 +17,8 @@ export interface HospitalInfoStepData {
   phoneNumber: string
   faxNumber: string
   website: string
+  /** 원장 차량번호 (정보수정 모드 전용 - 병원 정보 섹션에 노출) */
+  carNumber?: string
 }
 
 /** Step 2: 병원장 정보 */

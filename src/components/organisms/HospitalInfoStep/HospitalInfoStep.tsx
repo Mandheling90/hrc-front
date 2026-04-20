@@ -20,10 +20,12 @@ export interface HospitalInfoStepProps {
   defaultValues?: Partial<HospitalInfoStepData>
   /** 병원 검색 버튼 숨김 */
   hideSearch?: boolean
+  /** 원장 차량번호 입력 노출 (정보수정 모드 전용) */
+  showCarNumber?: boolean
 }
 
 export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, HospitalInfoStepProps>(
-  ({ currentStep = 1, totalSteps = 8, defaultValues, hideSearch }, ref) => {
+  ({ currentStep = 1, totalSteps = 8, defaultValues, hideSearch, showCarNumber }, ref) => {
     const [hospitalName, setHospitalName] = useState(defaultValues?.hospitalName ?? '')
     const [medicalInstitutionNumber, setMedicalInstitutionNumber] = useState(
       defaultValues?.medicalInstitutionNumber ?? ''
@@ -34,6 +36,7 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
     const [phoneNumber, setPhoneNumber] = useState(defaultValues?.phoneNumber ?? '')
     const [faxNumber, setFaxNumber] = useState(defaultValues?.faxNumber ?? '')
     const [website, setWebsite] = useState(defaultValues?.website ?? '')
+    const [carNumber, setCarNumber] = useState(defaultValues?.carNumber ?? '')
     const [isHospitalSearchOpen, setIsHospitalSearchOpen] = useState(false)
 
     const handleHospitalSearch = () => {
@@ -60,7 +63,8 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
         detailAddress,
         phoneNumber,
         faxNumber,
-        website
+        website,
+        carNumber
       }),
       validate: () => {
         const missing: string[] = []
@@ -195,6 +199,19 @@ export const HospitalInfoStep = forwardRef<StepRef<HospitalInfoStepData>, Hospit
             onChange={e => setWebsite(e.target.value)}
             disabled
           />
+
+          {/* 원장 차량번호 (정보수정 모드 전용) */}
+          {showCarNumber && (
+            <FormField
+              label='차량번호'
+              id='carNumber'
+              name='carNumber'
+              type='text'
+              placeholder='차량번호를 입력해주세요.'
+              value={carNumber}
+              onChange={e => setCarNumber(e.target.value)}
+            />
+          )}
         </div>
 
         {/* 병원 검색 팝업 */}
