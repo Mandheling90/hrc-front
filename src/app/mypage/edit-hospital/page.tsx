@@ -2,7 +2,14 @@
 
 import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
-import { useHospital, useEnums, useMyPartnerApplication, useUpdatePartnerApplication, useMyProfile } from '@/hooks'
+import {
+  useHospital,
+  useEnums,
+  useMyPartnerApplication,
+  useUpdatePartnerApplication,
+  useMyProfile,
+  useGetCollaboratingHospitalInfo
+} from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { Header } from '@/components/organisms/Header/Header'
 import { Footer } from '@/components/organisms/Footer/Footer'
@@ -81,13 +88,50 @@ export default function EditHospitalPage() {
     message: ''
   })
 
-  // 원장여부 체크 - 서버 최신 프로필 기준으로 판단
+  // 원장여부 + 체결상태(A/B) 체크 - 서버 최신 프로필 기준으로 판단
   const { user: profileUser, loading: profileLoading } = useMyProfile()
+  const { getHospitalInfo } = useGetCollaboratingHospitalInfo()
+  const collaborationCheckedRef = useRef(false)
   useEffect(() => {
-    if (!profileLoading && profileUser && !profileUser.profile?.isDirector) {
+    if (profileLoading || collaborationCheckedRef.current) return
+    const profile = profileUser?.profile
+    if (!profile) return
+
+    if (!profile.isDirector) {
+      collaborationCheckedRef.current = true
       router.push('/mypage')
+      return
     }
-  }, [profileLoading, profileUser, router])
+
+    const careInstitutionNo = profile.careInstitutionNo
+    if (!careInstitutionNo) return
+
+    collaborationCheckedRef.current = true
+
+    void (async () => {
+      try {
+        const info = await getHospitalInfo({
+          hospitalCode: toHospitalCode(hospital.id),
+          rcisNo: careInstitutionNo
+        })
+        const code = info?.collaborationDivisionCode
+        if (code !== 'A' && code !== 'B') {
+          setAlertModal({
+            isOpen: true,
+            message: '현재 협력네트워크 신청이 없습니다. 협력 네트워크 신청 페이지로 이동합니다.',
+            onClose: () => router.push('/network')
+          })
+        }
+      } catch (err) {
+        console.error('협력병원 정보 조회 실패:', err)
+        setAlertModal({
+          isOpen: true,
+          message: '현재 협력네트워크 신청이 없습니다. 협력 네트워크 신청 페이지로 이동합니다.',
+          onClose: () => router.push('/network')
+        })
+      }
+    })()
+  }, [profileLoading, profileUser, hospital.id, getHospitalInfo, router])
 
   // 신청 데이터가 없으면 신청 페이지로 리다이렉트
   useEffect(() => {

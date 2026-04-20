@@ -14,6 +14,8 @@ export interface PaginationProps {
   onPageChange: (page: number) => void
   /** 표시할 최대 페이지 번호 수 (기본값: 5) */
   maxVisiblePages?: number
+  /** 페이지 변경 시 window를 상단으로 스크롤할지 여부 (기본값: true) */
+  scrollToTopOnChange?: boolean
   /** className */
   className?: string
 }
@@ -23,6 +25,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
   maxVisiblePages = 5,
+  scrollToTopOnChange = true,
   className = ''
 }) => {
   const effectiveMaxVisible = maxVisiblePages
@@ -43,7 +46,9 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   const changePage = (page: number) => {
     onPageChange(page)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (scrollToTopOnChange) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   const handlePrevious = () => {

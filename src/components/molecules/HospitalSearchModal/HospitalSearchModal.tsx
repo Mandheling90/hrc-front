@@ -10,6 +10,7 @@ import { InfoNote } from '@/components/molecules/InfoNote/InfoNote'
 import { FormField } from '@/components/molecules/FormField/FormField'
 import { Table, TableColumn } from '@/components/molecules/Table/Table'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
+import { Pagination } from '@/components/molecules/Pagination/Pagination'
 import { Skeleton } from '@/components/atoms/Skeleton/Skeleton'
 import { useDaumPostcode } from '@/hooks/useDaumPostcode'
 import { useHospital } from '@/contexts/HospitalContext'
@@ -64,6 +65,8 @@ const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
   ansan: HospitalCode.Ansan
 }
 
+const HOSPITAL_SEARCH_PAGE_SIZE = 10
+
 export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   isOpen,
   onClose,
@@ -87,6 +90,8 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
   const [careNumber, setCareNumber] = useState('')
   const [view, setView] = useState<'search' | 'results' | 'registration'>('search')
   const [searchResults, setSearchResults] = useState<HospitalSearchResult[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
   const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 768 : false))
 
   // 신규등록 폼 상태
@@ -147,6 +152,8 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
       setCareNumber('')
       setView('search')
       setSearchResults([])
+      setCurrentPage(1)
+      setTotalCount(0)
       setRegHospitalName('')
       setRegRepresentativeName('')
       setRegCareNumber('')
@@ -173,15 +180,9 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
     }
   }
 
-  const handleSearch = async () => {
-    if (!hospitalName.trim() && !careNumber.trim()) {
-      setAlertModal({ isOpen: true, message: '병원명 또는 요양기관번호를 기입해주세요.' })
-      return
-    }
-
-    // 검색 시작 시 결과 화면으로 전환 (스켈레톤 표시)
+  const fetchHospitals = async (page: number) => {
     setSearchResults([])
-    setView('results')
+    setCurrentPage(page)
 
     const hospitalCodeEnum = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
     try {
@@ -190,12 +191,15 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
           input: {
             hospitalCode: hospitalCodeEnum,
             ...(hospitalName.trim() && { hsptNm: hospitalName.trim() }),
-            ...(careNumber.trim() && { hsptClsfCd: careNumber.trim() })
+            ...(careNumber.trim() && { hsptClsfCd: careNumber.trim() }),
+            pageCnt: HOSPITAL_SEARCH_PAGE_SIZE,
+            offset: (page - 1) * HOSPITAL_SEARCH_PAGE_SIZE
           }
         }
       })
 
       const hospitals = data?.ehrGetCollaboratingHospitals?.hospitals
+      setTotalCount(data?.ehrGetCollaboratingHospitals?.totalCount ?? 0)
       if (hospitals && hospitals.length > 0) {
         setSearchResults(
           hospitals.map(h => ({
@@ -216,7 +220,23 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
     } catch (err) {
       console.error('병원 검색 오류:', err)
       setSearchResults([])
+      setTotalCount(0)
     }
+  }
+
+  const handleSearch = () => {
+    if (!hospitalName.trim() && !careNumber.trim()) {
+      setAlertModal({ isOpen: true, message: '병원명 또는 요양기관번호를 기입해주세요.' })
+      return
+    }
+
+    // 검색 시작 시 결과 화면으로 전환 (스켈레톤 표시)
+    setView('results')
+    fetchHospitals(1)
+  }
+
+  const handlePageChange = (page: number) => {
+    fetchHospitals(page)
   }
 
   const handleHospitalClick = (hospital: HospitalSearchResult) => {
@@ -432,6 +452,15 @@ export const HospitalSearchModal: React.FC<HospitalSearchModalProps> = ({
                       <span>검색결과가 존재하지 않습니다.</span>
                     </div>
                   </div>
+                )}
+
+                {!searchLoading && totalCount > HOSPITAL_SEARCH_PAGE_SIZE && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(totalCount / HOSPITAL_SEARCH_PAGE_SIZE)}
+                    onPageChange={handlePageChange}
+                    scrollToTopOnChange={false}
+                  />
                 )}
 
                 {/* 결과 안내 텍스트 */}

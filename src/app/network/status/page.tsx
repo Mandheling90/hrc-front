@@ -36,10 +36,28 @@ const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
 }
 
 // classificationCode → type 매핑 (의원 계열은 'clinic', 나머지는 'hospital')
-const CLINIC_CLASSIFICATION_CODES = ['11', '21', '31'] // 의원, 치과의원, 한의원
+// EHR InstitutionType 코드: 50=의원, 51=치과의원, 90=한방/한의원
+const CLINIC_CLASSIFICATION_CODES = ['50', '51', '90']
 function mapClassificationToType(code?: string): 'hospital' | 'clinic' {
   if (!code) return 'clinic'
   return CLINIC_CLASSIFICATION_CODES.includes(code) ? 'clinic' : 'hospital'
+}
+
+// 프론트 Select value → EHR hsptClsfCd (InstitutionType) 매핑
+const HOSPITAL_TYPE_CODE_MAP: Record<string, string> = {
+  'superior-general': '10', // 상급종합병원
+  general: '20', // 종합병원
+  hospital: '30', // 병원
+  'dental-hospital': '31', // 치과병원
+  mental: '32', // 정신병원
+  nursing: '40', // 요양병원
+  clinic: '50', // 의원
+  'dental-clinic': '51', // 치과의원
+  'public-health': '60', // 보건기관
+  institution: '70', // 기관
+  oriental: '90', // 한방 (anam 통합 옵션)
+  'oriental-clinic': '90', // 한의원
+  'oriental-hospital': '99' // 한방병원
 }
 
 // 주소 → 좌표 변환 (카카오 Geocoder)
@@ -118,6 +136,7 @@ export default function ClinicStatusPage() {
   const { hospitalId } = useHospital()
   const { searchHospitals, loading: apiLoading } = useSearchCollaboratingHospitals()
   const [clinics, setClinics] = useState<ClinicData[]>([])
+  const [totalCount, setTotalCount] = useState<number>(0)
   const [selectedRegion, setSelectedRegion] = useState<string>('all')
   const [selectedHospitalType, setSelectedHospitalType] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -128,6 +147,7 @@ export default function ClinicStatusPage() {
 
   const isLoading = dataLoading || apiLoading
   const itemsPerPage = 4
+  const lastFiltersRef = useRef<{ hsptNm?: string; adrsNm?: string; hsptClsfCd?: string }>({})
   const geocodeCacheRef = useRef<Map<string, { lat: number; lng: number }>>(new Map())
   const hospitalTypeOptions = useMemo(
     () => hospitalTypeOptionsByHospital[hospitalId] ?? hospitalTypeOptionsByHospital.anam,
@@ -135,16 +155,24 @@ export default function ClinicStatusPage() {
   )
 
   // API 데이터 로드 + Geocoding
-  const fetchClinics = useCallback(async (options?: { hsptNm?: string; adrsNm?: string; hsptClsfCd?: string }) => {
+  const fetchClinics = useCallback(async (
+    page: number,
+    filters: { hsptNm?: string; adrsNm?: string; hsptClsfCd?: string } = {}
+  ) => {
     const hospitalCode = HOSPITAL_CODE_MAP[hospitalId] || HospitalCode.Anam
+    lastFiltersRef.current = filters
     setDataLoading(true)
+    setCurrentPage(page)
     try {
       const result = await searchHospitals({
         hospitalCode,
-        ...options
+        ...filters,
+        pageCnt: itemsPerPage,
+        offset: (page - 1) * itemsPerPage
       })
       if (!result) {
         setClinics([])
+        setTotalCount(0)
         return
       }
 
@@ -162,22 +190,21 @@ export default function ClinicStatusPage() {
       }))
 
       setClinics(mapped)
+      setTotalCount(result.totalCount)
       if (mapped.length > 0) {
         setSelectedClinicId(mapped[0].id)
+      } else {
+        setSelectedClinicId('')
       }
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return
       console.error('병원 데이터 조회 실패:', err)
       setClinics([])
+      setTotalCount(0)
     } finally {
       setDataLoading(false)
     }
   }, [hospitalId, searchHospitals])
-
-  // 초기 데이터 로드
-  useEffect(() => {
-    fetchClinics()
-  }, [fetchClinics])
 
 
   const selectedClinic = clinics.find(c => c.id === selectedClinicId)
@@ -384,40 +411,10 @@ export default function ClinicStatusPage() {
     ]
   }, [])
 
-  // 필터링된 데이터 (검색어 + 지역 프론트 필터링)
-  const filteredClinics = useMemo(() => {
-    return clinics.filter(clinic => {
-      // 지역 필터
-      if (selectedRegion !== 'all') {
-        const regionLabel = regionOptions.find(r => r.value === selectedRegion)?.label
-        if (regionLabel && !clinic.address.includes(regionLabel)) {
-          return false
-        }
-      }
-      // 검색어 필터
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase()
-        return (
-          clinic.name.toLowerCase().includes(query) ||
-          clinic.address.toLowerCase().includes(query) ||
-          clinic.phone.includes(query)
-        )
-      }
-      return true
-    })
-  }, [clinics, searchQuery, selectedRegion])
+  // 전체 페이지 수 (서버 totalCount 기반)
+  const totalPages = Math.ceil(totalCount / itemsPerPage)
 
-  // 페이지네이션된 데이터
-  const paginatedClinics = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return filteredClinics.slice(startIndex, endIndex)
-  }, [filteredClinics, currentPage])
-
-  // 전체 페이지 수
-  const totalPages = Math.ceil(filteredClinics.length / itemsPerPage)
-
-  // 지역/유형 필터 변경 시 API 재조회
+  // 초기 로드 + 지역/유형 필터 변경 시 API 재조회 (페이지 1로 리셋)
   useEffect(() => {
     const options: { adrsNm?: string; hsptClsfCd?: string } = {}
     if (selectedRegion !== 'all') {
@@ -425,15 +422,14 @@ export default function ClinicStatusPage() {
       if (regionLabel) options.adrsNm = regionLabel
     }
     if (selectedHospitalType !== 'all') {
-      options.hsptClsfCd = selectedHospitalType
+      const code = HOSPITAL_TYPE_CODE_MAP[selectedHospitalType]
+      if (code) options.hsptClsfCd = code
     }
-    fetchClinics(options)
-    setCurrentPage(1)
-  }, [selectedRegion, selectedHospitalType])
+    fetchClinics(1, options)
+  }, [selectedRegion, selectedHospitalType, fetchClinics])
 
   // 검색 핸들러
   const handleSearch = () => {
-    setCurrentPage(1)
     const options: { hsptNm?: string; adrsNm?: string; hsptClsfCd?: string } = {}
     if (searchQuery.trim()) {
       options.hsptNm = searchQuery.trim()
@@ -443,9 +439,14 @@ export default function ClinicStatusPage() {
       if (regionLabel) options.adrsNm = regionLabel
     }
     if (selectedHospitalType !== 'all') {
-      options.hsptClsfCd = selectedHospitalType
+      const code = HOSPITAL_TYPE_CODE_MAP[selectedHospitalType]
+      if (code) options.hsptClsfCd = code
     }
-    fetchClinics(options)
+    fetchClinics(1, options)
+  }
+
+  const handlePageChange = (page: number) => {
+    fetchClinics(page, lastFiltersRef.current)
   }
 
   // 지도 버튼 클릭 핸들러
@@ -476,19 +477,13 @@ export default function ClinicStatusPage() {
                 <Select
                   options={regionOptions}
                   value={selectedRegion}
-                  onChange={value => {
-                    setSelectedRegion(value)
-                    setCurrentPage(1)
-                  }}
+                  onChange={setSelectedRegion}
                   className={styles.regionSelect}
                 />
                 <Select
                   options={hospitalTypeOptions}
                   value={selectedHospitalType}
-                  onChange={value => {
-                    setSelectedHospitalType(value)
-                    setCurrentPage(1)
-                  }}
+                  onChange={setSelectedHospitalType}
                   className={styles.hospitalTypeSelect}
                 />
               </div>
@@ -550,9 +545,9 @@ export default function ClinicStatusPage() {
                         </div>
                       ))}
                     </>
-                  ) : paginatedClinics.length > 0 ? (
+                  ) : clinics.length > 0 ? (
                     <>
-                      {paginatedClinics.map((clinic, index) => (
+                      {clinics.map((clinic, index) => (
                         <ClinicCard
                           key={clinic.id}
                           name={clinic.name}
@@ -584,7 +579,7 @@ export default function ClinicStatusPage() {
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                onPageChange={setCurrentPage}
+                onPageChange={handlePageChange}
                 maxVisiblePages={5}
               />
             </div>

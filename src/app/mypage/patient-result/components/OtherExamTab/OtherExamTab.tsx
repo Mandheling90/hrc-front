@@ -336,6 +336,7 @@ export const OtherExamTab: React.FC<OtherExamTabProps> = ({
           onClose={handleCloseResultModal}
           examName={selectedRow.examName}
           result={selectedRow._raw.resultContent || selectedRow._raw.grossResult || ''}
+          badgeLabel='기타검사'
         />
       )}
 

@@ -27,6 +27,8 @@ interface SearchCollaboratingHospitalsInput {
   hsptNm?: string
   adrsNm?: string
   hsptClsfCd?: string
+  pageCnt?: number
+  offset?: number
 }
 
 interface RegisterHospitalInput {
