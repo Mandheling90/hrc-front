@@ -6,6 +6,7 @@ import {
   useHospital,
   useEnums,
   useMyPartnerApplication,
+  useMyPartnerUpdateRequest,
   useUpdatePartnerApplication,
   useMyProfile,
   useGetCollaboratingHospitalInfo
@@ -20,7 +21,8 @@ import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { HospitalInfoStep } from '@/components/organisms/HospitalInfoStep/HospitalInfoStep'
 import { StaffInfoStep } from '@/components/organisms/StaffInfoStep/StaffInfoStep'
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
-import { HospitalCode } from '@/graphql/__generated__/types'
+import { HospitalCode, PartnerUpdateRequestStatus } from '@/graphql/__generated__/types'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import {
   mapApiToHospitalEditStepData,
   mapHospitalEditStepsToApiInput,
@@ -60,6 +62,10 @@ export default function EditHospitalPage() {
 
   // 수정 mutation
   const { updatePartnerApplication, loading: updateLoading } = useUpdatePartnerApplication()
+
+  // 이미 승인 대기 중인 수정요청이 있는지 확인
+  const { updateRequest } = useMyPartnerUpdateRequest(application?.id, !application?.id)
+  const pendingUpdateCheckedRef = useRef(false)
 
   // API 응답 → Step 데이터 매핑
   const stepData = useMemo(() => {
@@ -143,6 +149,19 @@ export default function EditHospitalPage() {
       })
     }
   }, [applicationLoading, application, router])
+
+  // 이미 승인 대기 중인 수정요청이 있으면 진입 차단
+  useEffect(() => {
+    if (pendingUpdateCheckedRef.current) return
+    if (updateRequest?.status === PartnerUpdateRequestStatus.Pending) {
+      pendingUpdateCheckedRef.current = true
+      setAlertModal({
+        isOpen: true,
+        message: '이미 승인 대기 중인 수정요청이 있습니다.\n검토 완료 후 다시 시도해 주세요.',
+        onClose: () => router.push('/mypage')
+      })
+    }
+  }, [updateRequest, router])
 
 
   const guideMessages = useMemo(() => {
@@ -230,7 +249,10 @@ export default function EditHospitalPage() {
         })
       } catch (error) {
         console.error('협력병원 정보수정 실패:', error)
-        setAlertModal({ isOpen: true, message: '정보수정 중 오류가 발생했습니다.' })
+        const message = CombinedGraphQLErrors.is(error)
+          ? (error.errors[0]?.message ?? '정보수정 중 오류가 발생했습니다.')
+          : '정보수정 중 오류가 발생했습니다.'
+        setAlertModal({ isOpen: true, message })
       }
     }
   }

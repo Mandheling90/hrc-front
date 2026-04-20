@@ -133,3 +133,13 @@ export const PARTNER_APPLICATION_BY_ID_QUERY = gql`
     }
   }
 `
+
+export const MY_PARTNER_UPDATE_REQUEST_QUERY = gql`
+  query MyPartnerUpdateRequest($partnerApplicationId: String!) {
+    myPartnerUpdateRequest(partnerApplicationId: $partnerApplicationId) {
+      id
+      status
+      partnerApplicationId
+    }
+  }
+`

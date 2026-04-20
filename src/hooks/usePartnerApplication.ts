@@ -6,6 +6,7 @@ import {
 import {
   MY_PARTNER_APPLICATION_QUERY,
   MY_PARTNER_APPLICATIONS_QUERY,
+  MY_PARTNER_UPDATE_REQUEST_QUERY,
   PARTNER_APPLICATION_BY_ID_QUERY
 } from '@/graphql/partner/queries'
 import type {
@@ -18,9 +19,21 @@ import type {
   MyPartnerApplicationsQuery,
   MyPartnerApplicationsQueryVariables,
   PartnerApplicationByIdQuery,
-  PartnerApplicationByIdQueryVariables
+  PartnerApplicationByIdQueryVariables,
+  PartnerUpdateRequestModel,
+  PartnerUpdateRequestStatus
 } from '@/graphql/__generated__/types'
 import { HospitalCode, UpdatePartnerApplicationInput } from '@/graphql/__generated__/types'
+
+type MyPartnerUpdateRequestResult = Pick<PartnerUpdateRequestModel, 'id' | 'partnerApplicationId'> & {
+  status: PartnerUpdateRequestStatus
+}
+type MyPartnerUpdateRequestQuery = {
+  myPartnerUpdateRequest: MyPartnerUpdateRequestResult | null
+}
+type MyPartnerUpdateRequestQueryVariables = {
+  partnerApplicationId: string
+}
 
 /** 협력 병·의원 신청 (저장+제출) */
 export function useApplyPartnerHospital() {
@@ -97,6 +110,26 @@ export function useUpdatePartnerApplication() {
   }
 
   return { updatePartnerApplication, loading, error }
+}
+
+/** 내 협력 수정요청 단건 조회 (partnerApplicationId 기준) */
+export function useMyPartnerUpdateRequest(partnerApplicationId: string | undefined, skip?: boolean) {
+  const { data, loading, error, refetch } = useQuery<
+    MyPartnerUpdateRequestQuery,
+    MyPartnerUpdateRequestQueryVariables
+  >(MY_PARTNER_UPDATE_REQUEST_QUERY, {
+    variables: { partnerApplicationId: partnerApplicationId ?? '' },
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'ignore',
+    skip: skip || !partnerApplicationId
+  })
+
+  return {
+    updateRequest: data?.myPartnerUpdateRequest ?? null,
+    loading,
+    error,
+    refetch
+  }
 }
 
 /** 협력 신청 상세 조회 (ID 기준) */

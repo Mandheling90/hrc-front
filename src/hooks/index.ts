@@ -27,6 +27,7 @@ export {
   useApplyPartnerHospital,
   useMyPartnerApplication,
   useMyPartnerApplications,
+  useMyPartnerUpdateRequest,
   usePartnerApplicationById,
   useUpdatePartnerApplication
 } from '@/hooks/usePartnerApplication'
