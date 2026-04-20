@@ -1,10 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useGetCollaboratingHospitalInfo, useHospital, useMyProfile } from '@/hooks'
+import {
+  useGetCollaboratingHospitalInfo,
+  useHospital,
+  useMyProfile,
+  useMyPartnerApplication
+} from '@/hooks'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
-import { HospitalCode } from '@/graphql/__generated__/types'
+import { HospitalCode, PartnerType } from '@/graphql/__generated__/types'
 
 // 의원 계열 분기용 EHR InstitutionType 코드 (50=의원, 51=치과의원, 90=한방/한의원)
 const CLINIC_CLASSIFICATION_CODES = ['50', '51', '90']
@@ -23,12 +28,16 @@ export default function EditPartnerRedirectPage() {
   const { hospital } = useHospital()
   const { user: profileUser, loading: profileLoading } = useMyProfile()
   const { getHospitalInfo } = useGetCollaboratingHospitalInfo()
+  const { application, loading: applicationLoading } = useMyPartnerApplication(
+    toHospitalCode(hospital.id)
+  )
   const [showAlert, setShowAlert] = useState(false)
   const checkedRef = useRef(false)
 
   // 수정 가능 조건: 원장 + 체결상태(collaborationDivisionCode) A or B
+  // 분기 기준: 신청한 partnerType(A=병원, B=의원) 우선, 없으면 EHR classificationCode 폴백
   useEffect(() => {
-    if (profileLoading || checkedRef.current) return
+    if (profileLoading || applicationLoading || checkedRef.current) return
 
     const profile = profileUser?.profile
     if (!profile) return
@@ -59,18 +68,33 @@ export default function EditPartnerRedirectPage() {
           return
         }
 
-        const clsf = info?.classificationCode
-        const editPath =
-          clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf)
-            ? '/mypage/edit-clinic'
-            : '/mypage/edit-hospital'
+        let editPath: string
+        if (application?.partnerType === PartnerType.B) {
+          editPath = '/mypage/edit-clinic'
+        } else if (application?.partnerType === PartnerType.A) {
+          editPath = '/mypage/edit-hospital'
+        } else {
+          const clsf = info?.classificationCode
+          editPath =
+            clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf)
+              ? '/mypage/edit-clinic'
+              : '/mypage/edit-hospital'
+        }
         router.replace(editPath)
       } catch (err) {
         console.error('협력병원 정보 조회 실패:', err)
         setShowAlert(true)
       }
     })()
-  }, [profileLoading, profileUser, hospital.id, getHospitalInfo, router])
+  }, [
+    profileLoading,
+    applicationLoading,
+    profileUser,
+    application,
+    hospital.id,
+    getHospitalInfo,
+    router
+  ])
 
   return (
     <AlertModal
