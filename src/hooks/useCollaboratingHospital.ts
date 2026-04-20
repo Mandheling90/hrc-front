@@ -45,10 +45,13 @@ export function useSearchCollaboratingHospitals() {
     ehrGetCollaboratingHospitals: HospitalSearchResult
   }>(EHR_HOSPITAL_SEARCH_QUERY)
 
-  const searchHospitals = useCallback(async (input: SearchCollaboratingHospitalsInput) => {
-    const result = await searchQuery({ variables: { input } })
-    return result.data?.ehrGetCollaboratingHospitals ?? null
-  }, [searchQuery])
+  const searchHospitals = useCallback(
+    async (input: SearchCollaboratingHospitalsInput) => {
+      const result = await searchQuery({ variables: { input } })
+      return result.data?.ehrGetCollaboratingHospitals ?? null
+    },
+    [searchQuery]
+  )
 
   return {
     searchHospitals,
@@ -76,7 +79,6 @@ interface CollaboratingHospitalDetail {
 interface GetCollaboratingHospitalInfoInput {
   hospitalCode: string
   rcisNo?: string
-  drlcNo?: string
 }
 
 export function useGetCollaboratingHospitalInfo() {
@@ -84,10 +86,13 @@ export function useGetCollaboratingHospitalInfo() {
     ehrGetCollaboratingHospitalInfo: CollaboratingHospitalDetail
   }>(EHR_HOSPITAL_INFO_QUERY)
 
-  const getHospitalInfo = useCallback(async (input: GetCollaboratingHospitalInfoInput) => {
-    const result = await query({ variables: { input } })
-    return result.data?.ehrGetCollaboratingHospitalInfo ?? null
-  }, [query])
+  const getHospitalInfo = useCallback(
+    async (input: GetCollaboratingHospitalInfoInput) => {
+      const result = await query({ variables: { input } })
+      return result.data?.ehrGetCollaboratingHospitalInfo ?? null
+    },
+    [query]
+  )
 
   return { getHospitalInfo, loading, error }
 }

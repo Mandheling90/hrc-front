@@ -1857,11 +1857,8 @@ enum Gender {
   M
 }
 
-"""EHR 협력병원 상세정보 조회 입력 - 요양기관번호 또는 면허번호로 조회"""
+"""EHR 협력병원 상세정보 조회 입력 - 요양기관번호로 조회"""
 input GetCollaboratingHospitalInfoInput {
-  """면허번호"""
-  drlcNo: String
-
   """조회 대상 병원"""
   hospitalCode: HospitalCode!
 
@@ -2508,6 +2505,12 @@ type Mutation {
     id: String!
     input: AdminUpdateUserInput!
   ): User!
+
+  """회원 계정 탈퇴 처리 (실제 삭제)"""
+  adminWithdrawMember(
+    """사용자 ID"""
+    id: String!
+  ): Boolean!
 
   """협력병의원 신청 - 병의원 정보를 입력하여 협력 신청"""
   applyPartnerHospital(input: ApplyPartnerHospitalInput!): PartnerHospitalModel!
@@ -3382,8 +3385,17 @@ type PartnerUpdateRequestModel {
   """생성일시"""
   createdAt: DateTime!
 
+  """원장 성명"""
+  directorName: String
+
   """병원 코드"""
   hospitalCode: HospitalCode!
+
+  """병원명"""
+  hospitalName: String
+
+  """병원 대표전화"""
+  hospitalPhone: String
 
   """수정요청 ID"""
   id: ID!
@@ -3894,7 +3906,7 @@ type Query {
     rcisNo: String!
   ): EhrCheckResult!
 
-  """EHR 협력병원 상세정보 조회 - 요양기관번호 또는 면허번호로 협력병원 상세 조회"""
+  """EHR 협력병원 상세정보 조회 - 요양기관번호로 협력병원 상세 조회"""
   ehrGetCollaboratingHospitalInfo(input: GetCollaboratingHospitalInfoInput!): CollaboratingHospitalDetail!
 
   """협력병원 검색 - EHR 기반 병원 검색 결과만 반환한다."""
@@ -4321,7 +4333,7 @@ input RegisterHospitalEhrInput {
   emadNm: String
 
   """이메일회신동의 (Y/N)"""
-  emailRplyAgrmYn1: String
+  emailRplyAgrmYn: String
 
   """장비현황"""
   eqpmCtn: String
@@ -4527,6 +4539,12 @@ input SearchCollaboratingHospitalsInput {
 
   """병원명 (부분 검색 가능)"""
   hsptNm: String
+
+  """조회 시작 offset. 미전달 시 기존과 동일하게 전체 조회 동작을 유지한다"""
+  offset: Int
+
+  """페이지당 조회 건수. 미전달 시 기존과 동일하게 전체 조회 동작을 유지한다"""
+  pageCnt: Int
 }
 
 """메뉴 권한 설정 입력"""
@@ -4807,6 +4825,9 @@ input UpdateDoctorProfileInput {
   """이메일 수신 동의 여부"""
   emailConsent: Boolean
 
+  """졸업년도"""
+  graduationYear: String
+
   """병원 주소"""
   hospAddress: String
 
@@ -4851,6 +4872,9 @@ input UpdateDoctorProfileInput {
 
   """전문분야"""
   specialty: String
+
+  """수련병원명"""
+  trainingHospital: String
 
   """이름"""
   userName: String
@@ -4916,7 +4940,7 @@ input UpdateHospitalEhrInput {
   emadNm: String
 
   """이메일회신동의 (Y/N)"""
-  emailRplyAgrmYn1: String
+  emailRplyAgrmYn: String
 
   """장비현황"""
   eqpmCtn: String
@@ -5058,6 +5082,12 @@ input UpdateMenuPermissionGroupInput {
 input UpdatePartnerApplicationInput {
   """첨부파일 메타데이터(JSON 배열)"""
   attachments: JSON
+
+  """병원장 차량번호"""
+  directorCarNo: String
+
+  """병원 팩스번호"""
+  hospitalFaxNumber: String
 
   """수정 대상 신청 ID"""
   id: ID!
