@@ -1,7 +1,14 @@
 import React from 'react'
+import { useHospital } from '@/contexts/HospitalContext'
 import styles from '../AgreementStep.module.scss'
 
 export const PersonalInfoRequiredContent: React.FC = () => {
+  const { isAnam, isGuro, isAnsan, hospital } = useHospital()
+
+  if (isAnam || isGuro || isAnsan) {
+    return <ReferralCenterPersonalInfoRequiredContent hospitalName={hospital.name.hospital} />
+  }
+
   return (
     <>
       <div className={styles.agreementSection}>
@@ -105,5 +112,50 @@ export const PersonalInfoRequiredContent: React.FC = () => {
         </p>
       </div>
     </>
+  )
+}
+
+const ReferralCenterPersonalInfoRequiredContent: React.FC<{ hospitalName: string }> = ({ hospitalName }) => {
+  return (
+    <div className={styles.privacySection}>
+      <p>{`${hospitalName}은 개인정보보호법에 의거하여 귀하의 개인정보를 수집함에 있어 아래의 내용을 안내하고 있습니다.`}</p>
+
+      <div className={styles.privacySectionItem}>
+        <p className={styles.privacySectionTitle}>1. 개인정보 수집 및 이용 목적</p>
+        <div className={styles.privacySectionContent}>
+          <p>홈페이지 회원가입 및 관리, 홈페이지 이용 관련 서비스 제공</p>
+        </div>
+      </div>
+
+      <div className={styles.privacySectionItem}>
+        <p className={styles.privacySectionTitle}>2. 수집하려는 개인정보의 항목</p>
+        <div className={styles.privacySectionContent}>
+          <p>
+            - 필수 항목 : 아이디, 비밀번호, 성명, 생년월일, 회원구분, 의사면허번호, 휴대전화, SMS수신여부, E-mail,
+            E-mail 수신여부, 회신서 수신 동의 여부, 병원명, 요양기관번호, 주소, 대표전화
+          </p>
+        </div>
+      </div>
+
+      <div className={styles.privacySectionItem}>
+        <p className={styles.privacySectionTitle}>3. 개인정보의 보유 이용기간</p>
+        <div className={styles.privacySectionContent}>
+          <p>
+            홈페이지 회원가입 탈퇴시까지 혹은 회원에서 제명 처리된 일까지 (즉시 파기 처리함) 단, 진료서비스 제공을
+            위하여 수집된 경우 의료법 기준에 준함 (의료법 시행규칙 제15조에 명시된 기간)
+          </p>
+        </div>
+      </div>
+
+      <div className={styles.privacySectionItem}>
+        <p className={styles.privacySectionTitle}>4. 동의를 거부할 권리 / 동의거부에 따른 안내</p>
+        <div className={styles.privacySectionContent}>
+          <p>
+            고객께서는 본 안내에 따른 개인정보 수집에 대하여, 거부할 수 있는 권리가 있습니다. 본 개인정보에 대해 거부할
+            경우 회원에게 제공되는 서비스 이용에 제한될 수 있음을 알려드립니다.
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
