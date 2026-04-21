@@ -19,23 +19,75 @@
   }
 }
 
-.topButton {
-  width: 48px;
-  height: 48px;
+.switchBtnArea {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.floatingBtn {
+  position: absolute;
   border-radius: $radius-full;
-  background-color: var(--color-white);
-  border: 1px solid $gray-8;
-  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 0;
+  transform-origin: center center;
+  transition: opacity 0.2s ease;
+  will-change: transform, opacity;
+  user-select: none;
+}
 
-  [data-theme='dark'] & {
-    border-color: var(--color-border);
-  }
+.scrollBtn {
+  top: 0;
+  left: 0;
+  width: 110px;
+  height: 110px;
+  background-color: #7f7f7f;
+  border: 1px solid #ffffff;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.15);
+  gap: 4px;
 
   &:hover {
-    background-color: var(--color-bg-hover);
+    background-color: #6a6a6a;
+  }
+}
+
+.scrollBtnLabel {
+  color: #ffffff;
+  font-family: $font-family-base;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.3px;
+}
+
+.topBtn {
+  top: 17px;
+  left: 17px;
+  width: 76px;
+  height: 76px;
+  background-color: transparent;
+  border: 1px solid $color-primary;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.15);
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background-color: $color-primary;
+    border-radius: 50%;
+    z-index: -1;
+    transition: background-color 0.2s ease;
+  }
+
+  &:hover::before {
+    background-color: darken($color-primary, 5%);
   }
 }
