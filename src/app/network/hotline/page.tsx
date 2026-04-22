@@ -29,6 +29,12 @@ const mockHotlines: HotlineData[] = [
     hotline: '010-6389-4397'
   },
   {
+    id: '14',
+    department: '소화기내과 (위장관출혈)',
+    professorName: '최혁순',
+    hotline: '010-4909-0079'
+  },
+  {
     id: '3',
     department: '소화기내과 (췌담도)',
     professorName: '이재민',
@@ -93,12 +99,6 @@ const mockHotlines: HotlineData[] = [
     department: '응급의료센터',
     professorName: '당직교수',
     hotline: '010-4605-6534'
-  },
-  {
-    id: '14',
-    department: '진료협력센터장\n소화기내과 (위장관)',
-    professorName: '최혁순',
-    hotline: '010-4909-0079'
   }
 ]
 
