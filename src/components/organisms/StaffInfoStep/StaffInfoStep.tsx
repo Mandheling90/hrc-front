@@ -5,7 +5,7 @@ import { FormField } from '@/components/molecules/FormField/FormField'
 import { InputLabel } from '@/components/atoms/InputLabel/InputLabel'
 import { Radio } from '@/components/atoms/Radio/Radio'
 import { Select } from '@/components/atoms/Select/Select'
-import { useHospital, useEnums } from '@/hooks'
+import { useEnums } from '@/hooks'
 import type { StaffInfoStepData, StepRef } from '@/types/partner-application'
 import styles from './StaffInfoStep.module.scss'
 
@@ -20,14 +20,11 @@ export interface StaffInfoStepProps {
   showStaffInfo?: boolean
 }
 
-// 병원별로 노출할 의료기관 유형 코드 (enum key 기준)
-const ANAM_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '90'])
-const GURO_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32', '60', '70'])
-const ANSAN_INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32', '60'])
+// 노출할 의료기관 유형 코드 (enum key 기준) - 모든 병원 공통
+const INSTITUTION_KEYS = new Set(['10', '20', '30', '40', '99', '31', '32', '60', '70'])
 
 export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoStepProps>(
   ({ currentStep = 3, totalSteps = 8, defaultValues, showStaffInfo = true }, ref) => {
-    const { isGuro, isAnsan } = useHospital()
     const { getOptions, loading: enumLoading, error: enumError } = useEnums()
     if (enumError) throw enumError
 
@@ -74,11 +71,10 @@ export const StaffInfoStep = forwardRef<StepRef<StaffInfoStepData>, StaffInfoSte
       }
     }))
 
-    // enum 데이터에서 InstitutionType 옵션 조회 (병원별 필터 적용)
+    // enum 데이터에서 InstitutionType 옵션 조회 (모든 병원 공통)
     const institutionTypeOptions = useMemo(() => {
-      const allowedKeys = isGuro ? GURO_INSTITUTION_KEYS : isAnsan ? ANSAN_INSTITUTION_KEYS : ANAM_INSTITUTION_KEYS
-      return getOptions('InstitutionType').filter(opt => allowedKeys.has(opt.value))
-    }, [getOptions, isGuro, isAnsan])
+      return getOptions('InstitutionType').filter(opt => INSTITUTION_KEYS.has(opt.value))
+    }, [getOptions])
 
     return (
       <div className={styles.stepContainer}>
