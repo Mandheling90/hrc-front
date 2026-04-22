@@ -233,7 +233,6 @@ export default function EditHospitalPage() {
           id: application.id,
           institutionType: mapped.institutionType,
           hospitalFaxNumber: mapped.hospitalFaxNumber,
-          totalBedCount: mapped.totalBedCount,
           totalStaffCount: mapped.totalStaffCount,
           specialistCount: mapped.specialistCount,
           nurseCount: mapped.nurseCount,

@@ -58,7 +58,6 @@ export interface StaffInfoStepData {
 
 /** Step 4: 병상 및 시설 운영 현황 */
 export interface BedAndFacilityStepData {
-  totalBedCount: string
   operatingBeds: string
   premiumRoomChecked: boolean
   premiumRoomCount: string

@@ -21,7 +21,6 @@ export interface BedAndFacilityStepProps {
 export const BedAndFacilityStep = forwardRef<StepRef<BedAndFacilityStepData>, BedAndFacilityStepProps>(
   ({ currentStep = 4, totalSteps = 8, defaultValues }, ref) => {
     // 병상 운영 현황 상태
-    const [totalBedCount, setTotalBedCount] = useState(defaultValues?.totalBedCount ?? '')
     const [operatingBeds, setOperatingBeds] = useState(defaultValues?.operatingBeds ?? '')
     const [premiumRoomChecked, setPremiumRoomChecked] = useState(defaultValues?.premiumRoomChecked ?? false)
     const [premiumRoomCount, setPremiumRoomCount] = useState(defaultValues?.premiumRoomCount ?? '')
@@ -56,7 +55,6 @@ export const BedAndFacilityStep = forwardRef<StepRef<BedAndFacilityStepData>, Be
 
     useImperativeHandle(ref, () => ({
       getData: () => ({
-        totalBedCount,
         operatingBeds,
         premiumRoomChecked,
         premiumRoomCount,
@@ -76,7 +74,6 @@ export const BedAndFacilityStep = forwardRef<StepRef<BedAndFacilityStepData>, Be
       }),
       validate: () => {
         const missing: string[] = []
-        if (!totalBedCount.trim()) missing.push('총 병상 수')
         if (!operatingBeds.trim()) missing.push('가동 병상 수')
         if (missing.length > 0) return `다음 필수 항목을 입력해주세요:\n${missing.join(', ')}`
         return null
@@ -107,21 +104,6 @@ export const BedAndFacilityStep = forwardRef<StepRef<BedAndFacilityStepData>, Be
           <div className={styles.formDivider}></div>
 
           <div className={styles.formContent}>
-            {/* 총 병상 수 */}
-            <div className={styles.operatingBedsField}>
-              <FormField
-                label='총 병상 수'
-                required
-                id='totalBedCount'
-                name='totalBedCount'
-                type='text'
-                placeholder='총 병상 수를 입력해주세요.'
-                value={totalBedCount}
-                onChange={e => handleNumberChange(e.target.value, setTotalBedCount)}
-                rightElement={<span className={styles.unit}>병상</span>}
-              />
-            </div>
-
             {/* 가동 병상 수 */}
             <div className={styles.operatingBedsField}>
               <FormField

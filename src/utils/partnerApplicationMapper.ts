@@ -196,7 +196,6 @@ export function mapStepsToApiInput(
     nurseCount: toInt(step3?.nurses),
 
     // Step 4: 병상 및 시설 운영 현황
-    totalBedCount: toInt(step4?.totalBedCount),
     activeBedCount: toInt(step4?.operatingBeds),
     premiumRoomCount: step4?.premiumRoomChecked ? toInt(step4?.premiumRoomCount) : undefined,
     multiRoomCount: step4?.multiPersonRoomChecked ? toInt(step4?.multiPersonRoomCount) : undefined,
@@ -318,7 +317,6 @@ export function mapApiToStepData(api: any): AllStepData {
       nurses: api.nurseCount?.toString() ?? ''
     },
     step4: {
-      totalBedCount: api.totalBedCount?.toString() ?? '',
       operatingBeds: api.activeBedCount?.toString() ?? '',
       premiumRoomChecked: (api.premiumRoomCount ?? 0) > 0,
       premiumRoomCount: api.premiumRoomCount?.toString() ?? '',
