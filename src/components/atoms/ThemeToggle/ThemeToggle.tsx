@@ -30,17 +30,13 @@ export const ThemeToggle: React.FC = () => {
       className={`${styles.themeToggle} ${isDark ? styles.dark : ''}`}
       onClick={toggleTheme}
       aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
-      type="button"
+      type='button'
     >
-      <span className={styles.thumb}>
-        <span className={styles.thumbIcon}>
-          {isDark ? (
-            <MoonCloudIcon width={28} height={28} stroke="currentColor" />
-          ) : (
-            <SunCloudIcon width={28} height={28} stroke="currentColor" />
-          )}
-        </span>
-      </span>
+      {isDark ? (
+        <MoonCloudIcon width={32} height={32} stroke='currentColor' />
+      ) : (
+        <SunCloudIcon width={32} height={32} stroke='currentColor' />
+      )}
     </button>
   )
 }

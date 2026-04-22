@@ -1,84 +1,33 @@
 @use '@/styles/variables' as *;
 
 .themeToggle {
-  position: relative;
-  width: 48px;
-  height: 80px;
-  border-radius: 100px;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: $radius-full;
+  padding: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: #fff;
+  border: 3px solid $color-primary;
+  color: $color-primary;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    filter 0.2s ease;
 
-  // Light mode
-  background-color: $color-primary;
-  backdrop-filter: none;
-  border: 1.5px solid transparent;
+  &:hover {
+    filter: brightness(1.03);
+  }
 
   &.dark {
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(5px);
-    border: 1.5px solid $gray-10;
-  }
-}
-
-.thumb {
-  width: 40px;
-  height: 40px;
-  border-radius: 80px;
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  margin-left: -20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
-
-  // Light mode: thumb at top
-  transform: translateY(0);
-  background-color: #fff;
-  border: 1px solid $gray-4;
-  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.2);
-    pointer-events: none;
-    transition: box-shadow 0.3s ease;
-  }
-
-  // Dark mode: thumb at bottom
-  // 80px - 4px top padding - 4px bottom padding - 40px thumb = 32px
-  .dark & {
-    transform: translateY(32px);
-    background-color: $gray-10;
-    border: none;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-
-    &::after {
-      box-shadow: inset 0px -4px 4px rgba(0, 0, 0, 0.2);
-    }
-  }
-}
-
-.thumbIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $color-primary;
-
-  .dark & {
+    border-color: $color-white;
     color: #fff;
   }
 }
