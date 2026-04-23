@@ -1,15 +1,16 @@
 'use client'
 
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { Button } from '@/components/atoms/Button/Button'
 import { Input } from '@/components/atoms/Input/Input'
 import { EyeIcon } from '@/components/icons/EyeIcon'
-import { useLogin, useSendTestEmail } from '@/hooks/useAuth'
+import { useClaimExistingEhrUser, useLogin, useSendTestEmail } from '@/hooks/useAuth'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useNiceVerification } from '@/hooks/useNiceVerification'
 import Link from '@/components/atoms/HospitalLink'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './LoginForm.module.scss'
 
 export interface LoginFormProps {
@@ -27,6 +28,27 @@ export interface LoginFormProps {
   redirectTo?: string
 }
 
+const extractErrorMessage = (err: unknown, fallback: string) => {
+  if (CombinedGraphQLErrors.is(err)) {
+    return (
+      err.errors
+        .map(graphQLError => graphQLError.message)
+        .filter(Boolean)
+        .join('\n') || fallback
+    )
+  }
+
+  return err instanceof Error ? err.message : fallback
+}
+
+const isClaimRequiredError = (err: unknown) => {
+  if (CombinedGraphQLErrors.is(err)) {
+    return err.errors.some(graphQLError => graphQLError.message?.includes('CLAIM_REQUIRED'))
+  }
+
+  return err instanceof Error && err.message.includes('CLAIM_REQUIRED')
+}
+
 export const LoginForm: React.FC<LoginFormProps> = ({
   usernameLabel = '아이디',
   usernameName = 'id',
@@ -37,9 +59,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
   const router = useHospitalRouter()
   const { login, loading } = useLogin()
+  const { claimExistingEhrUser, loading: claimLoading } = useClaimExistingEhrUser()
   const { sendTestEmail, loading: testEmailLoading } = useSendTestEmail()
   const { setAuth, setLoginPassword } = useAuthContext()
-  const { requestVerification, isVerified, isLoading: niceLoading, error: niceError, reset: resetNice } = useNiceVerification()
+  const {
+    requestVerification,
+    isVerified,
+    verifiedData,
+    isLoading: niceLoading,
+    error: niceError,
+    reset: resetNice
+  } = useNiceVerification()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     [usernameName]: '',
@@ -49,28 +79,76 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const [testEmailMessage, setTestEmailMessage] = useState('')
   const [showChangePwModal, setShowChangePwModal] = useState(false)
   // 로그인 성공 후 NICE 인증 대기 중인 인증 정보
-  const pendingAuthRef = useRef<{ accessToken: string; refreshToken: string; user: any; mustChangePw: boolean } | null>(null)
+  const pendingAuthRef = useRef<{ accessToken: string; refreshToken: string; user: any; mustChangePw: boolean } | null>(
+    null
+  )
+  const pendingClaimRef = useRef<{ userId: string } | null>(null)
+
+  const finalizeLogin = useCallback(
+    (
+      result: { accessToken: string; refreshToken: string; user: any; mustChangePw: boolean },
+      password: string | null
+    ) => {
+      setAuth(result.accessToken, result.refreshToken, result.user)
+
+      if (result.mustChangePw) {
+        setLoginPassword(password)
+        setShowChangePwModal(true)
+        return
+      }
+
+      router.push(redirectTo)
+    },
+    [redirectTo, router, setAuth, setLoginPassword]
+  )
 
   // NICE 인증 완료 시 최종 로그인 처리
   useEffect(() => {
-    if (isVerified && pendingAuthRef.current) {
-      const { accessToken, refreshToken, user, mustChangePw } = pendingAuthRef.current
-      setAuth(accessToken, refreshToken, user)
-      pendingAuthRef.current = null
+    if (!isVerified) {
+      return
+    }
 
-      if (mustChangePw) {
-        setLoginPassword(formData.password)
-        setShowChangePwModal(true)
-      } else {
-        router.push(redirectTo)
+    if (pendingAuthRef.current) {
+      const { accessToken, refreshToken, user, mustChangePw } = pendingAuthRef.current
+      pendingAuthRef.current = null
+      finalizeLogin({ accessToken, refreshToken, user, mustChangePw }, formData.password)
+      return
+    }
+
+    if (!pendingClaimRef.current || !verifiedData?.verificationToken) {
+      return
+    }
+
+    const pendingClaim = pendingClaimRef.current
+    pendingClaimRef.current = null
+
+    const processClaim = async () => {
+      try {
+        const result = await claimExistingEhrUser({
+          userId: pendingClaim.userId,
+          verificationToken: verifiedData.verificationToken!
+        })
+
+        if (!result) {
+          throw new Error('기존 회원 인증 처리에 실패했습니다.')
+        }
+
+        setTestEmailMessage('')
+        finalizeLogin(result, null)
+      } catch (err) {
+        setErrorMessage(extractErrorMessage(err, '기존 회원 인증 처리에 실패했습니다.'))
+        resetNice()
       }
     }
-  }, [isVerified, formData.password, redirectTo, router, setAuth, setLoginPassword])
+
+    processClaim()
+  }, [claimExistingEhrUser, finalizeLogin, formData.password, isVerified, resetNice, verifiedData])
 
   // NICE 인증 에러 시 초기화
   useEffect(() => {
-    if (niceError && pendingAuthRef.current) {
+    if (niceError && (pendingAuthRef.current || pendingClaimRef.current)) {
       pendingAuthRef.current = null
+      pendingClaimRef.current = null
       setErrorMessage(niceError)
       resetNice()
     }
@@ -92,13 +170,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         setTestEmailMessage('')
         if (process.env.NEXT_PUBLIC_SKIP_NICE === 'true') {
           // NICE 인증 스킵 모드: 바로 로그인 처리
-          setAuth(result.accessToken, result.refreshToken, result.user)
-          if (result.mustChangePw) {
-            setLoginPassword(formData.password)
-            setShowChangePwModal(true)
-          } else {
-            router.push(redirectTo)
-          }
+          finalizeLogin(result, formData.password)
         } else {
           // 운영 모드: 인증 정보를 임시 보관하고 NICE 본인인증 요청
           pendingAuthRef.current = {
@@ -111,8 +183,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         }
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : '로그인에 실패했습니다.'
-      setErrorMessage(message)
+      if (isClaimRequiredError(err)) {
+        pendingClaimRef.current = {
+          userId
+        }
+        setTestEmailMessage('')
+        resetNice()
+        requestVerification()
+        return
+      }
+
+      setErrorMessage(extractErrorMessage(err, '로그인에 실패했습니다.'))
     }
   }
 
@@ -210,9 +291,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           size='medium'
           fullWidth
           className={styles.loginButton}
-          disabled={loading || niceLoading}
+          disabled={loading || claimLoading || niceLoading}
         >
-          {loading ? '로그인 중...' : niceLoading ? '본인인증 중...' : '로그인'}
+          {loading ? '로그인 중...' : claimLoading ? '계정 연동 중...' : niceLoading ? '본인인증 중...' : '로그인'}
         </Button>
         <div
           className={styles.hiddenTestEmailTrigger}
@@ -235,7 +316,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
       <AlertModal
         isOpen={showChangePwModal}
-        message='임시비밀번호로 로그인하셨습니다. 비밀번호를 변경해주세요.'
+        message='비밀번호 설정이 필요합니다. 비밀번호를 변경해주세요.'
         closeButtonText='확인'
         onClose={() => {
           setShowChangePwModal(false)

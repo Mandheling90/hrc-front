@@ -1,17 +1,18 @@
-import { useMutation, useQuery } from '@apollo/client/react'
 import { useAuthContext } from '@/contexts/AuthContext'
+import { useHospital } from '@/contexts/HospitalContext'
 import {
-  LOGIN_MUTATION,
-  SIGNUP_MUTATION,
-  LOGOUT_MUTATION,
-  UPDATE_DOCTOR_PROFILE_MUTATION,
   CHANGE_PASSWORD_MUTATION,
-  WITHDRAW_MEMBER_MUTATION,
-  SEND_TEST_EMAIL_MUTATION
+  CLAIM_EXISTING_EHR_USER_MUTATION,
+  LOGIN_MUTATION,
+  LOGOUT_MUTATION,
+  SEND_TEST_EMAIL_MUTATION,
+  SIGNUP_MUTATION,
+  UPDATE_DOCTOR_PROFILE_MUTATION,
+  WITHDRAW_MEMBER_MUTATION
 } from '@/graphql/auth/mutations'
 import { ME_QUERY, MY_PROFILE_QUERY } from '@/graphql/auth/queries'
 import { AuthUser } from '@/types/auth'
-import { useHospital } from '@/contexts/HospitalContext'
+import { useMutation, useQuery } from '@apollo/client/react'
 
 type HospitalCode = 'ANAM' | 'GURO' | 'ANSAN'
 
@@ -30,6 +31,11 @@ const HOSPITAL_CODE_MAP: Record<string, HospitalCode> = {
 interface LoginInput {
   userId: string
   password: string
+}
+
+interface ClaimExistingEhrUserInput {
+  userId: string
+  verificationToken: string
 }
 
 interface SignupInput {
@@ -87,6 +93,19 @@ export function useLogin() {
   }
 
   return { login, loading, error }
+}
+
+export function useClaimExistingEhrUser() {
+  const [claimExistingEhrUserMutation, { loading, error }] = useMutation<{
+    claimExistingEhrUser: AuthPayload
+  }>(CLAIM_EXISTING_EHR_USER_MUTATION)
+
+  const claimExistingEhrUser = async (input: ClaimExistingEhrUserInput) => {
+    const { data } = await claimExistingEhrUserMutation({ variables: { input } })
+    return data?.claimExistingEhrUser ?? null
+  }
+
+  return { claimExistingEhrUser, loading, error }
 }
 
 export function useSendTestEmail() {

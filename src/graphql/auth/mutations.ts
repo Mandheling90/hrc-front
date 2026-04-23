@@ -43,6 +43,49 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
+export const CLAIM_EXISTING_EHR_USER_MUTATION = gql`
+  mutation ClaimExistingEhrUser($input: ClaimExistingEhrUserInput!) {
+    claimExistingEhrUser(input: $input) {
+      accessToken
+      refreshToken
+      mustChangePw
+      user {
+        id
+        userId
+        email
+        userName
+        userType
+        hospitalCode
+        phone
+        status
+        mustChangePw
+        profile {
+          birthDate
+          department
+          gender
+          doctorType
+          isDirector
+          hospAddress
+          hospAddressDetail
+          hospCode
+          hospName
+          hospPhone
+          hospWebsite
+          hospZipCode
+          careInstitutionNo
+          licenseNo
+          representative
+          school
+          smsConsent
+          emailConsent
+          replyConsent
+          specialty
+        }
+      }
+    }
+  }
+`
+
 export const SEND_TEST_EMAIL_MUTATION = gql`
   mutation SendTestEmail($to: String!, $subject: String!, $body: String!, $hospitalCode: HospitalCode) {
     sendTestEmail(to: $to, subject: $subject, body: $body, hospitalCode: $hospitalCode) {

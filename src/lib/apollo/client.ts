@@ -30,11 +30,7 @@ const AUTH_USER_KEY = 'auth_user'
 const DOCTOR_ACCESS_TOKEN_KEY = 'doctorAccessToken'
 
 /** consultant 전용 오퍼레이션 이름 목록 */
-const CONSULTANT_OPERATIONS = [
-  'ConsultantAssignedEConsults',
-  'ConsultantEConsultById',
-  'ConsultantReplyEConsult'
-]
+const CONSULTANT_OPERATIONS = ['ConsultantAssignedEConsults', 'ConsultantEConsultById', 'ConsultantReplyEConsult']
 
 let isRefreshing = false
 let pendingRequests: Array<() => void> = []
@@ -49,9 +45,10 @@ export function makeClient() {
 
   const authLink = new SetContextLink((prevContext, operation) => {
     const isConsultantOp = operation.operationName && CONSULTANT_OPERATIONS.includes(operation.operationName)
-    const token = typeof window !== 'undefined'
-      ? localStorage.getItem(isConsultantOp ? DOCTOR_ACCESS_TOKEN_KEY : AUTH_TOKEN_KEY)
-      : null
+    const token =
+      typeof window !== 'undefined'
+        ? localStorage.getItem(isConsultantOp ? DOCTOR_ACCESS_TOKEN_KEY : AUTH_TOKEN_KEY)
+        : null
 
     return {
       headers: {
@@ -64,7 +61,16 @@ export function makeClient() {
 
   const errorLink = new ErrorLink(({ error, operation, forward }) => {
     // 인증이 불필요한 mutation은 토큰 리프레시/리다이렉트 스킵
-    const publicOperations = ['Login', 'Signup', 'FindUserIdByVerification', 'ResetPasswordByVerification', 'InitiateVerification', 'CompleteVerification', 'ConsultantLogin']
+    const publicOperations = [
+      'Login',
+      'Signup',
+      'ClaimExistingEhrUser',
+      'FindUserIdByVerification',
+      'ResetPasswordByVerification',
+      'InitiateVerification',
+      'CompleteVerification',
+      'ConsultantLogin'
+    ]
     if (operation.operationName && publicOperations.includes(operation.operationName)) return
 
     // 401 감지: GraphQL UNAUTHENTICATED 에러 또는 네트워크 401
@@ -139,7 +145,7 @@ export function makeClient() {
 
   const httpLink = new HttpLink({
     uri: graphqlUri,
-    fetchOptions: { signal: AbortSignal.timeout(300_000) }, // 5분
+    fetchOptions: { signal: AbortSignal.timeout(300_000) } // 5분
   })
 
   return new ApolloClient({
@@ -162,7 +168,7 @@ async function fetchRefreshToken(uri: string, refreshToken: string): Promise<Ref
       query: print(REFRESH_TOKEN_MUTATION),
       variables: { refreshToken }
     }),
-    signal: AbortSignal.timeout(300_000), // 5분
+    signal: AbortSignal.timeout(300_000) // 5분
   })
 
   const json = await response.json()

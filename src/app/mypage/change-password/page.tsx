@@ -60,7 +60,7 @@ export default function ChangePasswordPage() {
     e.preventDefault()
     setErrorMessage('')
 
-    if (!loginPassword) {
+    if (!loginPassword && !user?.mustChangePw) {
       setErrorMessage('로그인 정보가 만료되었습니다. 다시 로그인해주세요.')
       return
     }
@@ -83,7 +83,7 @@ export default function ChangePasswordPage() {
 
     try {
       const result = await changePassword({
-        oldPassword: loginPassword,
+        oldPassword: loginPassword ?? '',
         newPassword: formData.newPassword
       })
 
@@ -116,7 +116,8 @@ export default function ChangePasswordPage() {
               <div className={resetStyles.headerSection}>
                 <h2 className={resetStyles.title}>비밀번호 변경</h2>
                 <p className={resetStyles.description}>
-                  임시비밀번호로 로그인하셨습니다.<br />
+                  비밀번호 설정이 필요합니다.
+                  <br />
                   새로운 비밀번호를 설정해주세요.
                 </p>
               </div>
@@ -142,7 +143,9 @@ export default function ChangePasswordPage() {
                     </button>
                   </div>
                   <div className={resetStyles.passwordRules}>
-                    <p className={resetStyles.rule}>영문, 숫자, 특수문자 조합 8~12자리 사용 가능, 연속번호는 사용금지</p>
+                    <p className={resetStyles.rule}>
+                      영문, 숫자, 특수문자 조합 8~12자리 사용 가능, 연속번호는 사용금지
+                    </p>
                     <p className={resetStyles.rule}>특수문자 사용 가능 범위: ~!@#$%^&*_-</p>
                     <p className={resetStyles.rule}>동일문자 연속 4개 사용금지</p>
                     <p className={resetStyles.rule}>아이디와 동일한 문구 사용금지</p>
@@ -187,11 +190,7 @@ export default function ChangePasswordPage() {
       </main>
       <Footer />
 
-      <AlertModal
-        isOpen={alertModal.isOpen}
-        message={alertModal.message}
-        onClose={handleAlertClose}
-      />
+      <AlertModal isOpen={alertModal.isOpen} message={alertModal.message} onClose={handleAlertClose} />
     </div>
   )
 }
