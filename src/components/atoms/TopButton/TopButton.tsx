@@ -33,7 +33,10 @@ export const TopButton: React.FC = () => {
   return (
     <div className={`${styles.floatingButtons} ${visible ? styles.visible : ''}`}>
       <ThemeToggle />
-      <div className={styles.switchBtnArea}>
+      <div
+        className={styles.switchBtnArea}
+        style={{ height: `${110 - scrollProgress * 40}px` }}
+      >
         <button
           className={`${styles.floatingBtn} ${styles.scrollBtn}`}
           style={{

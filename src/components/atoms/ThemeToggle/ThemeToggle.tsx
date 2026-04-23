@@ -32,11 +32,9 @@ export const ThemeToggle: React.FC = () => {
       aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
       type='button'
     >
-      {isDark ? (
-        <MoonCloudIcon width={32} height={32} stroke='currentColor' />
-      ) : (
-        <SunCloudIcon width={32} height={32} stroke='currentColor' />
-      )}
+      <span className={styles.themeToggleInner}>
+        {isDark ? <MoonCloudIcon width={38} height={33} /> : <SunCloudIcon width={40} height={36} />}
+      </span>
     </button>
   )
 }

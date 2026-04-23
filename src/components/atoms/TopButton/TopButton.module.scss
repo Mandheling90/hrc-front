@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   z-index: $z-index-fixed;
   opacity: 0;
   visibility: hidden;
@@ -23,6 +23,7 @@
   position: relative;
   width: 110px;
   height: 110px;
+  // 스크롤 진행도에 따라 인라인 스타일로 110 → 70px 동적 변경
 }
 
 .floatingBtn {
@@ -41,34 +42,37 @@
 }
 
 .scrollBtn {
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 110px;
   height: 110px;
-  background-color: #7f7f7f;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.15);
   border: 1px solid #ffffff;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.15);
-  gap: 4px;
+  gap: 0;
 
   &:hover {
-    background-color: #6a6a6a;
+    background-color: rgba(255, 255, 255, 0.25);
   }
 }
 
 .scrollBtnLabel {
   color: #ffffff;
   font-family: $font-family-base;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.3px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.64px;
 }
 
 .topBtn {
-  top: 17px;
-  left: 17px;
-  width: 76px;
-  height: 76px;
+  bottom: 0;
+  left: 20px;
+  width: 70px;
+  height: 70px;
   background-color: transparent;
   border: 1px solid $color-primary;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.15);
@@ -77,10 +81,10 @@
   &::before {
     content: '';
     position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
     background-color: $color-primary;
     border-radius: 50%;
     z-index: -1;
@@ -89,5 +93,17 @@
 
   &:hover::before {
     background-color: darken($color-primary, 5%);
+  }
+
+  :global([data-theme='dark']) & {
+    border-color: #828282;
+
+    &::before {
+      background-color: #828282;
+    }
+
+    &:hover::before {
+      background-color: lighten(#828282, 5%);
+    }
   }
 }
