@@ -358,15 +358,15 @@
   }
 }
 
-// 핫라인 카드 (미니배너 588x439 기준)
+// 핫라인 카드 (미니배너 600x440 기준)
 .hotlineCard {
-  width: 588px;
+  width: 600px;
   flex-shrink: 0;
   position: relative;
   border-radius: 15px;
   overflow: hidden;
   background: #fff7e2;
-  aspect-ratio: 588 / 439;
+  aspect-ratio: 600 / 440;
 
   @media (max-width: $breakpoint-2xl) {
     width: 500px;
