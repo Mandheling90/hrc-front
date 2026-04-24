@@ -212,6 +212,11 @@
     height: auto;
   }
 
+  :global(.text-tiny) { font-size: 0.7em; }
+  :global(.text-small) { font-size: 0.85em; }
+  :global(.text-big) { font-size: 1.4em; }
+  :global(.text-huge) { font-size: 1.8em; }
+
   @include tablet {
     font-size: $font-size-lg;
     letter-spacing: -0.72px;
