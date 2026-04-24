@@ -603,11 +603,6 @@ export const HeroSection: React.FC = () => {
   const [isInquiryOpen, setIsInquiryOpen] = useState(false)
   const [isDownloadOpen, setIsDownloadOpen] = useState(false)
 
-  // 스크롤 최상단 여부
-  const [isAtTop, setIsAtTop] = useState(true)
-  const lastBoxRef = useRef<HTMLDivElement>(null)
-  const [scrollDownRight, setScrollDownRight] = useState<number | null>(null)
-
   const isMobile = useIsMobile()
   const isDark = useIsDark()
   const hasBanners = banners.length > 0
@@ -712,31 +707,6 @@ export const HeroSection: React.FC = () => {
       })
     }
   }, [hasBanners, fallbackVideoSrc])
-
-  // 스크롤 위치 감지
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsAtTop(window.scrollY <= 50)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // scrollDown의 right 위치를 .last 박스 오른쪽 끝에 맞춤 (1870px 미만일 때만)
-  useEffect(() => {
-    const updateScrollDownRight = () => {
-      if (window.innerWidth >= 1870) {
-        setScrollDownRight(null)
-      } else if (lastBoxRef.current) {
-        const rect = lastBoxRef.current.getBoundingClientRect()
-        const rightFromViewport = window.innerWidth - rect.right
-        setScrollDownRight(rightFromViewport)
-      }
-    }
-    updateScrollDownRight()
-    window.addEventListener('resize', updateScrollDownRight)
-    return () => window.removeEventListener('resize', updateScrollDownRight)
-  }, [])
 
   // 배너 클릭 핸들러
   const handleBannerClick = useCallback(() => {
@@ -918,7 +888,7 @@ export const HeroSection: React.FC = () => {
               })}
             </ul>
           </div>
-          <div ref={lastBoxRef} className={`${styles.box} ${styles.last}`}>
+          <div className={`${styles.box} ${styles.last}`}>
             <div className={styles.phoneIcon}>
               <span className={styles.phoneIconDesktop}>
                 <PhoneIcon />
@@ -937,23 +907,6 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Scroll Down 인디케이터 - section1 기준 absolute, 중앙 배치 */}
-      {isAtTop && !isInquiryOpen && !isDownloadOpen && (
-        <div className={styles.scrollDown}>
-          <span className={styles.scrollDownText}>Scroll Down</span>
-          <svg
-            className={styles.scrollDownIcon}
-            width='20'
-            height='12'
-            viewBox='0 0 20 12'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-            aria-hidden='true'
-          >
-            <path d='M2 2L10 10L18 2' stroke='white' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
-          </svg>
-        </div>
-      )}
     </section>
   )
 }
