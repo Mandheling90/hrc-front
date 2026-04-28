@@ -233,8 +233,8 @@ const anamContent: HospitalPageContent = {
       fax: '02-920-6523'
     },
     downloadLinks: [
-      { label: '협력병원 신청서 다운로드', href: '/application_form/application_form_anam.hwp' },
-      { label: '협력의원 신청서 다운로드', href: '/application_form/application_form_anam.hwp' }
+      { label: '협력병원 신청서 다운로드', href: '/application_form/application_form_anam_hospital.hwp' },
+      { label: '협력의원 신청서 다운로드', href: '/application_form/application_form_anam_clinic.hwp' }
     ],
     applicationLinks: {
       hospital: '#',
@@ -715,7 +715,7 @@ const guroContent: HospitalPageContent = {
       { text: '협력병·의원 지정 표시' }
     ],
     benefits: [
-      { text: '현판(협력병원), 협력증서(협력병·의원) 제공' },
+      { text: '협력증서(협력병·의원) 제공' },
       { text: '병원 주차장 무료 이용' },
       {
         text: '종합검진(기본검진 20% 감면) 및 장례식장(빈소사용료 일부) 감면\n감면대상 : 원장님 본인, 배우자, 본인의 직계존비속'
