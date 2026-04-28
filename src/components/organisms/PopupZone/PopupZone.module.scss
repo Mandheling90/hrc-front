@@ -344,7 +344,7 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.8px;
-  color: $gray-11;
+  color: #fff;
 
   // 태블릿
   @media (min-width: calc(#{$breakpoint-md} + 1px)) and (max-width: 1429px) {
