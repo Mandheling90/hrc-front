@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>교수직통 핫라인</title>
+  <style>
+    :root {
+      --color-primary: #9f1836;
+      --color-secondary: #c09c63;
+      --color-secondary-bg: #fdf9f4;
+      --color-secondary-hover: #dbbf93;
+      --color-white: #ffffff;
+      --color-darken: #000000;
+      --color-border: #bbbbbb;
+      --color-text-secondary: #636363;
+      --color-text-tertiary: #8c8c8c;
+      --color-accent-bg: #FEF8F8;
+      --color-surface: #f9f9f9;
+      --font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    }
+
+    [data-theme='dark'] {
+      --color-primary: #c9304e;
+      --color-secondary-bg: #2a1a1e;
+      --color-secondary-hover: #4a3028;
+      --color-white: #1e1e1e;
+      --color-darken: #bdbdbd;
+      --color-border: #333333;
+      --color-text-secondary: #bdbdbd;
+      --color-text-tertiary: #7b8393;
+      --color-accent-bg: #2a1a1e;
+      --color-surface: #111111;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; line-height: 1.5; -webkit-text-size-adjust: 100%; word-break: keep-all; }
+    body {
+      font-family: var(--font-family);
+      background-color: var(--color-white);
+      color: var(--color-darken);
+      min-height: 100vh; display: flex; flex-direction: column;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    .wrap { min-height: 100vh; display: flex; flex-direction: column; background-color: var(--color-white); }
+    .main { flex: 1; padding: 64px 0 80px; }
+    .container { max-width: 1530px; margin: 0 auto; padding: 0 50px; }
+
+    .page-title {
+      font-size: 40px; font-weight: 700; color: var(--color-darken);
+      text-align: center; margin: 0 0 64px; line-height: 1.5; letter-spacing: -1.6px;
+    }
+
+    /* Hotline Table */
+    .hotline-list {
+      display: flex; flex-direction: column; gap: 8px;
+      max-width: 1430px; margin: 0 auto; width: 100%;
+    }
+    .table-header {
+      display: flex; align-items: center;
+      background-color: var(--color-surface);
+      border-width: 1px; border-style: solid; border-color: #bbbbbb;
+      border-radius: 10px; padding: 15px 20px; gap: 8px;
+    }
+    [data-theme='dark'] .table-header { border-color: #333333; }
+    .header-cell {
+      flex: 1; font-size: 24px; font-weight: 600;
+      line-height: 36px; letter-spacing: -0.96px;
+      color: var(--color-darken); text-align: center;
+    }
+    .separator {
+      width: 1px; height: 18px;
+      background-color: var(--color-border); flex-shrink: 0;
+    }
+    .table-body { display: flex; flex-direction: column; gap: 8px; }
+    .table-row {
+      display: flex; align-items: center;
+      background-color: var(--color-white);
+      border-width: 1px; border-style: solid; border-color: #bbbbbb;
+      border-radius: 10px; padding: 15px 20px; gap: 8px;
+    }
+    [data-theme='dark'] .table-row { border-color: #333333; }
+    .data-cell {
+      flex: 1; font-size: 24px; font-weight: 400;
+      line-height: 36px; letter-spacing: -0.96px;
+      color: var(--color-text-secondary); text-align: center;
+    }
+    .hotline-cell { font-weight: 600; }
+    .hotline-link {
+      color: var(--color-text-secondary); text-decoration: none;
+      font-weight: 600; pointer-events: none;
+    }
+
+    /* Mobile Cards */
+    .mobile-card-list { display: none; }
+    .mobile-card {
+      display: flex; flex-direction: column; gap: 8px;
+      background-color: var(--color-white);
+      border-width: 1px; border-style: solid; border-color: #bbbbbb;
+      border-radius: 10px; padding: 15px; width: 100%;
+    }
+    [data-theme='dark'] .mobile-card { border-color: #333333; }
+    .mobile-card-department {
+      font-size: 20px; font-weight: 600; line-height: 30px;
+      letter-spacing: -0.8px; color: var(--color-text-secondary);
+    }
+    .mobile-card-info { display: flex; align-items: center; gap: 16px; }
+    .mobile-card-name {
+      font-size: 20px; font-weight: 400; line-height: 30px;
+      letter-spacing: -0.8px; color: var(--color-text-secondary);
+    }
+    .mobile-card-separator {
+      width: 1px; height: 18px;
+      background-color: var(--color-border); flex-shrink: 0; color: transparent;
+    }
+    .mobile-card-hotline {
+      font-size: 20px; font-weight: 600; line-height: 30px;
+      letter-spacing: -0.8px; color: var(--color-text-secondary);
+      text-decoration: none;
+    }
+
+    /* Tablet (769px ~ 1429px) - Figma 고정 너비 */
+    @media (min-width: 769px) and (max-width: 1429px) {
+      .main { padding: 40px 0 48px; }
+      .container { padding: 0 24px; }
+      .page-title { font-size: 36px; margin: 0 0 48px; letter-spacing: -1.44px; }
+
+      .header-cell:nth-child(1), .data-cell:nth-child(1) { flex: none; width: 230px; }
+      .header-cell:nth-child(3), .data-cell:nth-child(3) { flex: none; width: 160px; }
+      .header-cell:nth-child(5), .data-cell:nth-child(5) { flex: 1; }
+    }
+
+    /* Mobile (768px and below) */
+    @media (max-width: 768px) {
+      .main { padding: 24px 0 40px; }
+      .container { padding: 0 16px; }
+      .page-title { font-size: 24px; margin: 0 0 24px; letter-spacing: -0.96px; }
+
+      .table-header, .table-body { display: none; }
+      .hotline-link { pointer-events: auto; }
+      .mobile-card-list {
+        display: flex; flex-direction: column; gap: 8px; width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="main">
+      <div class="container">
+        <h1 class="page-title">교수직통 핫라인</h1>
+
+        <div class="hotline-list">
+          <!-- 데스크톱/태블릿: 테이블 헤더 -->
+          <div class="table-header">
+            <div class="header-cell">진료과</div>
+            <div class="separator"></div>
+            <div class="header-cell">교수명</div>
+            <div class="separator"></div>
+            <div class="header-cell">핫라인</div>
+          </div>
+
+          <!-- 데스크톱/태블릿: 테이블 본문 -->
+          <div class="table-body">
+            <div class="table-row">
+              <div class="data-cell">심혈관(협심증)</div>
+              <div class="separator"></div>
+              <div class="data-cell">박재형</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01093803992" class="hotline-link">010-9380-3992</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">심혈관(부정맥)</div>
+              <div class="separator"></div>
+              <div class="data-cell">김윤기</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01063894397" class="hotline-link">010-6389-4397</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">소화기내과 (위장관출혈)</div>
+              <div class="separator"></div>
+              <div class="data-cell">최혁순</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01049090079" class="hotline-link">010-4909-0079</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">소화기내과 (췌담도)</div>
+              <div class="separator"></div>
+              <div class="data-cell">이재민</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01089916294" class="hotline-link">010-8991-6294</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">이식혈관외과</div>
+              <div class="separator"></div>
+              <div class="data-cell">정철웅</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01089935558" class="hotline-link">010-8993-5558</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">정형외과</div>
+              <div class="separator"></div>
+              <div class="data-cell">양재혁</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01071021534" class="hotline-link">010-7102-1534</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">신경외과 (뇌손상, 뇌출혈)</div>
+              <div class="separator"></div>
+              <div class="data-cell">당직의</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01020108809" class="hotline-link">010-2010-8809</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">심장혈관흉부외과<br>(대동맥, 혈관, 심장수술)</div>
+              <div class="separator"></div>
+              <div class="data-cell">김희중</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01023235741" class="hotline-link">010-2323-5741</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">산부인과</div>
+              <div class="separator"></div>
+              <div class="data-cell">홍순철</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01047021065" class="hotline-link">010-4702-1065</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">신경과 (뇌졸중)</div>
+              <div class="separator"></div>
+              <div class="data-cell">유성욱</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01045994186" class="hotline-link">010-4599-4186</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">성형외과</div>
+              <div class="separator"></div>
+              <div class="data-cell">정재호</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01045661030" class="hotline-link">010-4566-1030</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">소아청소년과</div>
+              <div class="separator"></div>
+              <div class="data-cell">이주영</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01026934125" class="hotline-link">010-2693-4125</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">치과</div>
+              <div class="separator"></div>
+              <div class="data-cell">최연조</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01072258988" class="hotline-link">010-7225-8988</a></div>
+            </div>
+            <div class="table-row">
+              <div class="data-cell">응급의료센터</div>
+              <div class="separator"></div>
+              <div class="data-cell">당직교수</div>
+              <div class="separator"></div>
+              <div class="data-cell hotline-cell"><a href="tel:01046056534" class="hotline-link">010-4605-6534</a></div>
+            </div>
+          </div>
+
+          <!-- 모바일: 카드 형태 -->
+          <div class="mobile-card-list">
+            <div class="mobile-card">
+              <div class="mobile-card-department">심혈관(협심증)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">박재형</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01093803992" class="mobile-card-hotline">010-9380-3992</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">심혈관(부정맥)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">김윤기</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01063894397" class="mobile-card-hotline">010-6389-4397</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">소화기내과 (위장관출혈)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">최혁순</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01049090079" class="mobile-card-hotline">010-4909-0079</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">소화기내과 (췌담도)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">이재민</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01089916294" class="mobile-card-hotline">010-8991-6294</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">이식혈관외과</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">정철웅</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01089935558" class="mobile-card-hotline">010-8993-5558</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">정형외과</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">양재혁</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01071021534" class="mobile-card-hotline">010-7102-1534</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">신경외과 (뇌손상, 뇌출혈)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">당직의</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01020108809" class="mobile-card-hotline">010-2010-8809</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">심장혈관흉부외과<br>(대동맥, 혈관, 심장수술)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">김희중</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01023235741" class="mobile-card-hotline">010-2323-5741</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">산부인과</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">홍순철</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01047021065" class="mobile-card-hotline">010-4702-1065</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">신경과 (뇌졸중)</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">유성욱</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01045994186" class="mobile-card-hotline">010-4599-4186</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">성형외과</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">정재호</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01045661030" class="mobile-card-hotline">010-4566-1030</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">소아청소년과</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">이주영</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01026934125" class="mobile-card-hotline">010-2693-4125</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">치과</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">최연조</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01072258988" class="mobile-card-hotline">010-7225-8988</a>
+              </div>
+            </div>
+            <div class="mobile-card">
+              <div class="mobile-card-department">응급의료센터</div>
+              <div class="mobile-card-info">
+                <span class="mobile-card-name">당직교수</span>
+                <span class="mobile-card-separator">|</span>
+                <a href="tel:01046056534" class="mobile-card-hotline">010-4605-6534</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
