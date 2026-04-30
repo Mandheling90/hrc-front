@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>진료협력센터 소개</title>
+  <link rel="stylesheet" as="style" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <style>
     :root {
       --color-primary: #9f1836;
@@ -79,13 +80,13 @@
       background-size: cover; background-position: center; background-repeat: no-repeat;
       border-width: 1px; border-style: solid; border-color: #dbbf93;
       border-radius: 10px; padding: 40px 20px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
       transition: background-color 0.2s, border-color 0.2s;
     }
     [data-theme='dark'] .guide-box {
       background-color: #555; background-blend-mode: multiply; border-color: #4a3028;
     }
-    .guide-title {
+    .guide-box .guide-title {
       font-family: "Pretendard", sans-serif;
       font-size: 24px; font-weight: 600;
       color: var(--color-primary);
@@ -93,7 +94,7 @@
       margin: 0 0 16px 0; text-align: center;
     }
     @media (max-width: 1429px) {
-      .guide-title { font-size: 20px; line-height: 30px; letter-spacing: -0.8px; }
+      .guide-box .guide-title { font-size: 20px; line-height: 30px; letter-spacing: -0.8px; }
     }
     .guide-box p {
       font-family: "Pretendard", sans-serif;
@@ -174,6 +175,13 @@
       grid-area: rows; display: flex; align-items: center;
       gap: 16px; flex-wrap: nowrap; width: 100%;
     }
+    .info-row-group.vertical-rows {
+      flex-direction: column; align-items: stretch; gap: 0;
+    }
+    .info-subtitle {
+      font-size: 20px; font-weight: 400; color: var(--gray-11);
+      margin: 0; line-height: 1.5; letter-spacing: -0.8px;
+    }
     .info-row {
       display: flex; align-items: center; justify-content: space-between;
       gap: 8px; font-size: 20px; letter-spacing: -0.8px;
@@ -238,7 +246,7 @@
       .section { margin-top: 40px; }
 
       .guide-box { padding: 20px; }
-      .guide-title {
+      .guide-box .guide-title {
       font-family: "Pretendard", sans-serif;
       font-size: 24px; font-weight: 600;
       color: var(--color-primary);
@@ -246,7 +254,7 @@
       margin: 0 0 16px 0; text-align: center;
     }
     @media (max-width: 1429px) {
-      .guide-title { font-size: 20px; line-height: 30px; letter-spacing: -0.8px; }
+      .guide-box .guide-title { font-size: 20px; line-height: 30px; letter-spacing: -0.8px; }
     }
     .guide-box p { font-size: 18px; line-height: 27px; letter-spacing: -0.72px; }
 
@@ -264,6 +272,7 @@
       .info-icon-circle { width: 40px; height: 40px; border-radius: 28px; }
       .info-icon-circle svg { width: 24px; height: 24px; }
       .info-title { font-size: 20px; letter-spacing: -0.8px; }
+      .info-subtitle { font-size: 18px; letter-spacing: -0.72px; }
       .info-row-group {
         flex-direction: column; align-items: stretch; gap: 8px; width: 100%;
       }
@@ -295,7 +304,7 @@
       .section { margin-top: 32px; }
 
       .guide-box { padding: 20px; }
-      .guide-title {
+      .guide-box .guide-title {
       font-family: "Pretendard", sans-serif;
       font-size: 24px; font-weight: 600;
       color: var(--color-primary);
@@ -303,7 +312,7 @@
       margin: 0 0 16px 0; text-align: center;
     }
     @media (max-width: 1429px) {
-      .guide-title { font-size: 20px; line-height: 30px; letter-spacing: -0.8px; }
+      .guide-box .guide-title { font-size: 20px; line-height: 30px; letter-spacing: -0.8px; }
     }
     .guide-box p { font-size: 18px; line-height: 27px; letter-spacing: -0.72px; }
 
@@ -322,6 +331,7 @@
       .info-icon-circle { width: 40px; height: 40px; border-radius: 28px; }
       .info-icon-circle svg { width: 24px; height: 24px; }
       .info-title { font-size: 20px; letter-spacing: -0.8px; }
+      .info-subtitle { font-size: 18px; letter-spacing: -0.72px; }
       .info-row-group {
         flex-direction: column; align-items: flex-start; gap: 8px;
       }
@@ -429,7 +439,7 @@
               <div class="info-title-group">
                 <p class="info-title">전용 전화 및 팩스</p>
               </div>
-              <div class="info-row-group">
+              <div class="info-row-group vertical-rows">
                 <div class="info-row">
                   <span class="info-label">Tel</span>
                   <span class="info-value">031-412-5103</span>
@@ -442,11 +452,11 @@
             </div>
             <div class="info-card">
               <div class="info-icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none"><path d="M30 7.5L42.5 25L30 42.5L17.5 25L30 7.5Z" stroke="#9f1836" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 25V42.5M30 25L20 32.5M30 25L40 32.5M5 47.5H55" stroke="#9f1836" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none"><path d="M13 52H16.9667M47 52H43.0333M43.0333 52L36.657 30.433C36.4057 29.5832 35.6252 29 34.7391 29H25.2609C24.3748 29 23.5943 29.5832 23.343 30.433L16.9667 52M43.0333 52H16.9667" stroke="#9f1836" stroke-width="3.75" stroke-linecap="round"/><path d="M3 36H12.766M9.31915 17.3321L16.7872 24.3333M44.9362 24.3333L51.2553 17.3321M47.234 36H57M30 19.0833V8" stroke="#9f1836" stroke-width="3.75" stroke-linecap="round"/></svg>
               </div>
               <div class="info-title-group">
                 <p class="info-title">응급 및 야간</p>
-                <p class="info-subtitle" style="font-size:18px;color:#636363;margin:0;letter-spacing:-0.72px;">(응급 교수 직통 핫라인)</p>
+                <p class="info-subtitle">(응급 교수 직통 핫라인)</p>
               </div>
               <div class="info-row-group">
                 <div class="info-row">

@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>협력네트워크 소개 &amp; 신청</title>
+  <link rel="stylesheet" as="style" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <style>
     :root {
       --color-primary: #9f1836;
@@ -61,7 +62,7 @@
       background-size: cover; background-position: center; background-repeat: no-repeat;
       border-width: 1px; border-style: solid; border-color: #dbbf93;
       border-radius: 10px; padding: 40px 20px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
       transition: background-color 0.2s, border-color 0.2s;
       margin-bottom: 40px;
     }
@@ -239,17 +240,25 @@
       text-align: center; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
     }
-    .button-primary {
-      background-color: var(--color-primary); color: var(--color-white);
-      border-width: 2px; border-style: solid; border-color: #9f1836;
-    }
+    .button-primary,
     .button-primary-outline {
+      background-color: var(--color-white);
       color: var(--color-primary);
       border-width: 2px; border-style: solid; border-color: #9f1836;
-      background-color: var(--color-white);
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .button-primary:hover,
+    .button-primary-outline:hover {
+      background-color: var(--color-primary);
+      color: var(--color-white);
     }
     [data-theme='dark'] .button-primary,
     [data-theme='dark'] .button-primary-outline { border-color: #c9304e; }
+    [data-theme='dark'] .button-primary:hover,
+    [data-theme='dark'] .button-primary-outline:hover {
+      background-color: #c9304e;
+      color: var(--color-white);
+    }
 
     /* Tablet (769px ~ 1429px) */
     @media (min-width: 769px) and (max-width: 1429px) {
@@ -371,7 +380,9 @@
 
         <!-- 페이지 소개 InfoBox guide -->
         <div class="guide-box">
-          <p>고려대학교 안암병원은 진료, 교육, 연구에 관한 사항을 상호 협력함으로써 국민의료환경 및 의료의 질을 향상시키고<br>의료전달체계를 확립하여 의료계의 발전을 도모하고자 협력네트워크를 운영하고 있습니다.<br><br>원장님의 적극적인 지원과 관심으로 진료의뢰 및 회송체계를 활성화시키고자 노력하고 있으며,<br>더욱 원활한 의뢰·회송체계를 위해 협력병·의원 체결을 하고자 합니다.<br><br>협력병·의원 체결 신청을 해주시면 절차에 따라 체결 진행하겠습니다.</p>
+          <p>고려대학교 안암병원은 진료, 교육, 연구에 관한 사항을 상호 협력함으로써 국민의료환경 및 의료의 질을 향상시키고<br>의료전달체계를 확립하여 의료계의 발전을 도모하고자 협력네트워크를 운영하고 있습니다.</p>
+          <p>원장님의 적극적인 지원과 관심으로 진료의뢰 및 회송체계를 활성화시키고자 노력하고 있으며,<br>더욱 원활한 의뢰·회송체계를 위해 협력병·의원 체결을 하고자 합니다.</p>
+          <p>협력병·의원 체결 신청을 해주시면 절차에 따라 체결 진행하겠습니다.</p>
         </div>
 
         <!-- 협력병·의원 혜택안내 -->
@@ -450,7 +461,7 @@
               <div class="step-badge-grid">
                 <!-- Step 01 신청서 접수 -->
                 <div class="step-badge-card">
-                  <div class="step-badge">01</div>
+                  <div class="step-badge">STEP.01</div>
                   <div class="step-icon-wrapper">
                     <div class="step-icon-circle">
                       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
@@ -464,7 +475,7 @@
 
                 <!-- Step 02 원내심사 -->
                 <div class="step-badge-card">
-                  <div class="step-badge">02</div>
+                  <div class="step-badge">STEP.02</div>
                   <div class="step-icon-wrapper">
                     <div class="step-icon-circle">
                       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
@@ -478,7 +489,7 @@
 
                 <!-- Step 03 병원장 최종 승인 -->
                 <div class="step-badge-card">
-                  <div class="step-badge">03</div>
+                  <div class="step-badge">STEP.03</div>
                   <div class="step-icon-wrapper">
                     <div class="step-icon-circle">
                       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
@@ -494,7 +505,7 @@
 
                 <!-- Step 04 협약체결 -->
                 <div class="step-badge-card">
-                  <div class="step-badge">04</div>
+                  <div class="step-badge">STEP.04</div>
                   <div class="step-icon-wrapper">
                     <div class="step-icon-circle">
                       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
@@ -509,7 +520,7 @@
 
                 <!-- Step 05 협력증서 전달 -->
                 <div class="step-badge-card">
-                  <div class="step-badge">05</div>
+                  <div class="step-badge">STEP.05</div>
                   <div class="step-icon-wrapper">
                     <div class="step-icon-circle">
                       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">

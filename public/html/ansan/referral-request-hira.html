@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>심평원중계시스템 의뢰</title>
+  <link rel="stylesheet" as="style" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <style>
     :root {
       --color-primary: #9f1836;
@@ -59,7 +60,7 @@
       background-size: cover; background-position: center; background-repeat: no-repeat;
       border-width: 1px; border-style: solid; border-color: #dbbf93;
       border-radius: 10px; padding: 40px 20px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
       transition: background-color 0.2s, border-color 0.2s;
       margin-bottom: 40px;
     }
@@ -72,6 +73,50 @@
       line-height: 1.5; letter-spacing: -0.8px; margin: 0;
       text-align: center; white-space: normal;
     }
+    /* HorizontalServiceCard (businessPurposeServices) */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-auto-rows: 1fr;
+      gap: 24px;
+      width: 100%; max-width: 100%; min-width: 0;
+      overflow: hidden; padding-top: 5px;
+    }
+    .service-grid > * {
+      min-width: 0; max-width: 100%; box-sizing: border-box;
+      display: flex; flex-direction: column;
+    }
+    .service-card {
+      display: flex; flex-direction: row; align-items: center; justify-content: center;
+      gap: 56px; padding: 30px 50px;
+      background-color: var(--color-white);
+      border-width: 1px; border-style: solid; border-color: #bbbbbb;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+      text-align: center; min-width: 0; width: 100%; box-sizing: border-box;
+    }
+    [data-theme='dark'] .service-card { border-color: #333333; }
+    .icon-wrapper {
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .icon-circle {
+      width: 100px; height: 100px; border-radius: 50%;
+      background-color: var(--color-accent-bg);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary); flex-shrink: 0;
+    }
+    .icon-circle svg { width: 60px; height: 60px; }
+    .text-wrapper {
+      flex: 0 1 auto; min-width: 0;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      gap: 8px; width: auto;
+    }
+    .card-title {
+      font-size: 24px; font-weight: 600; color: var(--color-darken);
+      margin: 0; line-height: 1.5; letter-spacing: -0.96px;
+      text-align: center; word-break: keep-all; overflow-wrap: break-word;
+    }
+
     /* Section */
     .section { margin-bottom: 56px; }
     .section:last-child { margin-bottom: 0; }
@@ -195,6 +240,11 @@
 
     /* Tablet (769px ~ 1429px) */
     @media (min-width: 769px) and (max-width: 1429px) {
+      .service-card { padding: 16px; gap: 16px; }
+      .icon-circle { width: 64px; height: 64px; }
+      .icon-circle svg { width: 40px; height: 40px; }
+      .card-title { font-size: 18px; letter-spacing: -0.72px; }
+
       .section-title-row { margin-bottom: 16px; }
       .section-title { font-size: 24px; letter-spacing: -0.96px; }
       .procedure-item { font-size: 18px; letter-spacing: -0.72px; }
@@ -219,6 +269,16 @@
 
     /* Mobile (768px and below) */
     @media (max-width: 768px) {
+      .service-grid { grid-template-columns: 1fr; gap: 16px; }
+      .service-card {
+        padding: 16px; gap: 16px;
+        justify-content: flex-start;
+      }
+      .text-wrapper { align-items: flex-start; }
+      .icon-circle { width: 64px; height: 64px; }
+      .icon-circle svg { width: 40px; height: 40px; }
+      .card-title { font-size: 18px; letter-spacing: -0.72px; text-align: left; }
+
       .main { padding: 24px 0 40px; }
       .container { padding: 0 16px; }
       .page-title { font-size: 24px; margin: 0 0 32px; letter-spacing: -0.96px; }
@@ -260,7 +320,8 @@
 
         <!-- 페이지 소개 InfoBox guide -->
         <div class="guide-box">
-          <p>2020.11.1부터 [협력기관간 진료의뢰-회송 시범사업 지침] 개정으로 별도 신청없이 심평원 중계시스템을 통해 고려대학교 안산병원으로<br><br>의사의 판단에 따라 적절한 요양급여를 위해 상급종합병원으로 진료가 필요하고, 개인정보 제공에 동의한 환자를 진료의뢰 하실 수 있습니다.</p>
+          <p>2020.11.1부터 [협력기관간 진료의뢰-회송 시범사업 지침] 개정으로 별도 신청없이 심평원 중계시스템을 통해 고려대학교 안산병원으로</p>
+          <p>의사의 판단에 따라 적절한 요양급여를 위해 상급종합병원으로 진료가 필요하고, 개인정보 제공에 동의한 환자를 진료의뢰 하실 수 있습니다.</p>
         </div>
 
         <!-- 심평원 중계 시스템 사업 목적 -->
@@ -273,7 +334,7 @@
             <h2 class="section-title">심평원 중계 시스템 사업 목적</h2>
           </div>
 
-          <div class="service-grid" style="grid-template-columns: repeat(2, 1fr);">
+          <div class="service-grid">
             <div>
               <div class="service-card">
                 <div class="icon-wrapper">
