@@ -15,14 +15,22 @@ export function ScrollRevealProvider({ children }: { children: React.ReactNode }
   const pathname = usePathname()
   const observerRef = useRef<IntersectionObserver | null>(null)
   const mutationObserverRef = useRef<MutationObserver | null>(null)
+  const mutationRafRef = useRef<number | null>(null)
 
   useEffect(() => {
     // 이전 observer 정리
     observerRef.current?.disconnect()
     mutationObserverRef.current?.disconnect()
+    if (mutationRafRef.current !== null) {
+      cancelAnimationFrame(mutationRafRef.current)
+      mutationRafRef.current = null
+    }
+
+    let isActive = true
 
     const observer = new IntersectionObserver(
       entries => {
+        if (!isActive) return
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const target = entry.target as HTMLElement
@@ -37,6 +45,8 @@ export function ScrollRevealProvider({ children }: { children: React.ReactNode }
     observerRef.current = observer
 
     const init = () => {
+      if (!isActive) return
+
       const selectors = ['main .container > *', 'main#contents > section']
 
       const elements = document.querySelectorAll<HTMLElement>(selectors.join(', '))
@@ -46,7 +56,7 @@ export function ScrollRevealProvider({ children }: { children: React.ReactNode }
 
       elements.forEach(el => {
         // 이미 처리된 요소 스킵
-        if (el.getAttribute('data-reveal')) return
+        if (el.getAttribute('data-reveal') === 'visible') return
 
         const rect = el.getBoundingClientRect()
         const isAboveFold = rect.top < window.innerHeight * 0.85
@@ -65,7 +75,13 @@ export function ScrollRevealProvider({ children }: { children: React.ReactNode }
     // DOM 렌더 완료 후 실행
     const rafId = requestAnimationFrame(init)
     const mutationObserver = new MutationObserver(() => {
-      requestAnimationFrame(init)
+      if (mutationRafRef.current !== null) {
+        cancelAnimationFrame(mutationRafRef.current)
+      }
+      mutationRafRef.current = requestAnimationFrame(() => {
+        mutationRafRef.current = null
+        init()
+      })
     })
 
     mutationObserver.observe(document.body, {
@@ -75,7 +91,12 @@ export function ScrollRevealProvider({ children }: { children: React.ReactNode }
     mutationObserverRef.current = mutationObserver
 
     return () => {
+      isActive = false
       cancelAnimationFrame(rafId)
+      if (mutationRafRef.current !== null) {
+        cancelAnimationFrame(mutationRafRef.current)
+        mutationRafRef.current = null
+      }
       observerRef.current?.disconnect()
       mutationObserverRef.current?.disconnect()
     }
