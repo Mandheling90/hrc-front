@@ -19,7 +19,14 @@ import { BasicTreatmentStep } from '@/components/organisms/BasicTreatmentStep/Ba
 import { HospitalCharacteristicsStep } from '@/components/organisms/HospitalCharacteristicsStep/HospitalCharacteristicsStep'
 import { AlertModal } from '@/components/molecules/AlertModal/AlertModal'
 import { CompleteStep } from '@/components/organisms/CompleteStep/CompleteStep'
-import { useHospital, useEnums, useSearchCollaboratingHospitals, useGetCollaboratingHospitalInfo, useMyProfile, useMyPartnerApplication } from '@/hooks'
+import {
+  useHospital,
+  useEnums,
+  useSearchCollaboratingHospitals,
+  useGetCollaboratingHospitalInfo,
+  useMyProfile,
+  useMyPartnerApplication
+} from '@/hooks'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useApplyPartnerHospital } from '@/hooks'
 import type { StepRef } from '@/types/partner-application'
@@ -41,7 +48,6 @@ import { uploadFile } from '@/lib/upload'
 import { useHospitalRouter } from '@/hooks/useHospitalRouter'
 import styles from './page.module.scss'
 
-
 /** HospitalId → HospitalCode 변환 */
 const toHospitalCode = (id: string): HospitalCode => {
   const map: Record<string, HospitalCode> = {
@@ -57,15 +63,16 @@ const CLINIC_CLASSIFICATION_CODES = ['50', '51', '90']
 
 export default function HospitalApplicationPage() {
   const { hospital } = useHospital()
-  const { user, isAuthenticated } = useAuthContext()
+  const { user, isAuthenticated, isLoading } = useAuthContext()
   const router = useHospitalRouter()
 
   // 비회원 접근 차단
   useEffect(() => {
+    if (isLoading) return
     if (!isAuthenticated) {
       router.push('/login')
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, isLoading, router])
 
   // 페이지 진입 시 enum 코드 목록 미리 조회 (하위 Step에서 cache-first로 재사용)
   useEnums()
@@ -131,9 +138,7 @@ export default function HospitalApplicationPage() {
     } else if (myApplication.status === PartnerStatus.Approved) {
       if (!approvalChecked.current) {
         approvalChecked.current = true
-        setExistingEditPath(
-          myApplication.partnerType === 'B' ? '/mypage/edit-clinic' : '/mypage/edit-hospital'
-        )
+        setExistingEditPath(myApplication.partnerType === 'B' ? '/mypage/edit-clinic' : '/mypage/edit-hospital')
         setExistingApplicationModal(true)
       }
     } else if (myApplication.status === PartnerStatus.Terminated) {
@@ -179,9 +184,7 @@ export default function HospitalApplicationPage() {
         } else {
           const clsf = info?.classificationCode
           editPath =
-            clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf)
-              ? '/mypage/edit-clinic'
-              : '/mypage/edit-hospital'
+            clsf && CLINIC_CLASSIFICATION_CODES.includes(clsf) ? '/mypage/edit-clinic' : '/mypage/edit-hospital'
         }
         setExistingEditPath(editPath)
         setExistingApplicationModal(true)
@@ -189,14 +192,7 @@ export default function HospitalApplicationPage() {
         console.error('[협력병원 접근체크] EHR 조회 실패:', err)
       }
     })()
-  }, [
-    profileLoading,
-    myApplicationLoading,
-    profileUser,
-    myApplication,
-    hospital.id,
-    getHospitalInfo
-  ])
+  }, [profileLoading, myApplicationLoading, profileUser, myApplication, hospital.id, getHospitalInfo])
   const [userHospitalDefaults, setUserHospitalDefaults] = useState<Partial<HospitalInfoStepData> | undefined>(undefined)
   const [hospitalInfoLoading, setHospitalInfoLoading] = useState(true)
   const hospitalInfoFetched = useRef(false)
@@ -243,16 +239,18 @@ export default function HospitalApplicationPage() {
             rcisNo: careInstitutionNo
           })
           if (info) {
-            setUserHospitalDefaults(mergeWithDefaults({
-              hospitalName: info.name ?? '',
-              medicalInstitutionNumber: (info.careInstitutionNo ?? '').slice(0, 8),
-              zipCode: info.zipCode ?? '',
-              address: info.address ?? '',
-              detailAddress: info.addressDetail ?? '',
-              phoneNumber: info.phone ?? '',
-              faxNumber: info.fax ?? '',
-              website: info.website ?? ''
-            }))
+            setUserHospitalDefaults(
+              mergeWithDefaults({
+                hospitalName: info.name ?? '',
+                medicalInstitutionNumber: (info.careInstitutionNo ?? '').slice(0, 8),
+                zipCode: info.zipCode ?? '',
+                address: info.address ?? '',
+                detailAddress: info.addressDetail ?? '',
+                phoneNumber: info.phone ?? '',
+                faxNumber: info.fax ?? '',
+                website: info.website ?? ''
+              })
+            )
             setHospitalInfoLoading(false)
             return
           }
@@ -264,21 +262,21 @@ export default function HospitalApplicationPage() {
             hospitalCode: toHospitalCode(hospital.id),
             hsptNm: hospName
           })
-          const matched = result?.hospitals?.find(
-            h => h.phisCode === careInstitutionNo
-          ) ?? result?.hospitals?.[0]
+          const matched = result?.hospitals?.find(h => h.phisCode === careInstitutionNo) ?? result?.hospitals?.[0]
 
           if (matched) {
-            setUserHospitalDefaults(mergeWithDefaults({
-              hospitalName: matched.name ?? '',
-              medicalInstitutionNumber: (matched.phisCode ?? '').slice(0, 8),
-              zipCode: matched.zipCode ?? '',
-              address: matched.address ?? '',
-              detailAddress: matched.addressDetail ?? '',
-              phoneNumber: matched.phone ?? '',
-              faxNumber: matched.faxNumber ?? '',
-              website: matched.website ?? ''
-            }))
+            setUserHospitalDefaults(
+              mergeWithDefaults({
+                hospitalName: matched.name ?? '',
+                medicalInstitutionNumber: (matched.phisCode ?? '').slice(0, 8),
+                zipCode: matched.zipCode ?? '',
+                address: matched.address ?? '',
+                detailAddress: matched.addressDetail ?? '',
+                phoneNumber: matched.phone ?? '',
+                faxNumber: matched.faxNumber ?? '',
+                website: matched.website ?? ''
+              })
+            )
             setHospitalInfoLoading(false)
             return
           }
@@ -295,7 +293,7 @@ export default function HospitalApplicationPage() {
     }
 
     fetchHospitalInfo()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileLoading, profileUser, hospital.id])
 
   // MyProfile에서 조회한 최신 프로필로 병원장 정보 초기값 생성
