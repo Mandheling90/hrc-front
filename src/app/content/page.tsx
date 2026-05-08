@@ -43,7 +43,7 @@ function ContentPageInner() {
   return (
     <div className={styles.wrap}>
       <Header />
-      <main className={styles.main}>
+      <main id='contents' className={styles.main}>
         {loading && (
           <div className='container'>
             <Skeleton width='60%' height={24} variant='text' />
@@ -52,8 +52,12 @@ function ContentPageInner() {
           </div>
         )}
         {error && <div className={`container ${styles.error}`}>콘텐츠를 불러올 수 없습니다.</div>}
-        {content && <div className={styles.contentBody} dangerouslySetInnerHTML={{ __html: content.body }} />}
-        {!loading && !error && !content && id && <div className={`container ${styles.error}`}>콘텐츠를 찾을 수 없습니다.</div>}
+        {content && (
+          <section className={`container ${styles.contentBody}`} dangerouslySetInnerHTML={{ __html: content.body }} />
+        )}
+        {!loading && !error && !content && id && (
+          <div className={`container ${styles.error}`}>콘텐츠를 찾을 수 없습니다.</div>
+        )}
       </main>
       <Footer />
     </div>

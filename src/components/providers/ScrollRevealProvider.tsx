@@ -14,36 +14,37 @@ const STAGGER_DELAY = 120
 export function ScrollRevealProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const mutationObserverRef = useRef<MutationObserver | null>(null)
 
   useEffect(() => {
     // 이전 observer 정리
     observerRef.current?.disconnect()
+    mutationObserverRef.current?.disconnect()
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement
+            target.setAttribute('data-reveal', 'visible')
+            observer.unobserve(target)
+          }
+        })
+      },
+      { threshold: 0.05, rootMargin: '0px 0px -60px 0px' }
+    )
+
+    observerRef.current = observer
 
     const init = () => {
-      const selectors = [
-        'main .container > *',
-        'main#contents > section',
-      ]
+      const selectors = ['main .container > *', 'main#contents > section']
 
       const elements = document.querySelectorAll<HTMLElement>(selectors.join(', '))
       if (elements.length === 0) return
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              (entry.target as HTMLElement).setAttribute('data-reveal', 'visible')
-              observer.unobserve(entry.target)
-            }
-          })
-        },
-        { threshold: 0.05, rootMargin: '0px 0px -60px 0px' }
-      )
-
-      observerRef.current = observer
       let staggerIndex = 0
 
-      elements.forEach((el) => {
+      elements.forEach(el => {
         // 이미 처리된 요소 스킵
         if (el.getAttribute('data-reveal')) return
 
@@ -63,10 +64,20 @@ export function ScrollRevealProvider({ children }: { children: React.ReactNode }
 
     // DOM 렌더 완료 후 실행
     const rafId = requestAnimationFrame(init)
+    const mutationObserver = new MutationObserver(() => {
+      requestAnimationFrame(init)
+    })
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    })
+    mutationObserverRef.current = mutationObserver
 
     return () => {
       cancelAnimationFrame(rafId)
       observerRef.current?.disconnect()
+      mutationObserverRef.current?.disconnect()
     }
   }, [pathname])
 
